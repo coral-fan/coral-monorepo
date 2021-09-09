@@ -4,7 +4,7 @@
   "scripts": {
     "start": "yarn workspace run start",
     "start:client": "yarn workspace client start",
-    "clean": "yarn workspace run clean && rn"
+    "clean": "yarn workspace run clean && rm -rf node_modules"
   },
   "workspaces": [
     "client",
