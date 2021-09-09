@@ -7,7 +7,6 @@ interface props {
 
 export default function Web3Manager({ children }: props) {
   const { connector, activate } = useWeb3();
-  console.log(useWeb3());
 
   useEffect(() => {
     if (connector instanceof OpenLoginConnector) {
@@ -18,5 +17,6 @@ export default function Web3Manager({ children }: props) {
       });
     }
   }, []);
+
   return children;
 }
