@@ -18,8 +18,6 @@ export const torusAuth = functions.https.onRequest((request, response) => {
 
   const uid = '0xA494addbA803d75D3dA1b667C23ea596F31179b9';
 
-  console.log('aaa');
-
   admin
     .auth()
     .createCustomToken(uid)
