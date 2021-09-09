@@ -1,0 +1,18 @@
+{
+  "name": "crypto-music",
+  "private": true,
+  "scripts": {
+    "start": "yarn workspace run start",
+    "start:client": "yarn workspace client start",
+    "clean": "yarn workspace run clean && rn"
+  },
+  "workspaces": [
+    "client",
+    "functions"
+  ],
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "typescript": "^4.4.2"
+  }
+}
