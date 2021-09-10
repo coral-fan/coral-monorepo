@@ -1,7 +1,7 @@
 import { ConnectorUpdate } from '@web3-react/types';
 import { AbstractConnector } from '@web3-react/abstract-connector';
 import { Wallet } from '@ethersproject/wallet';
-import { JsonRpcProvider } from '@ethersproject/providers';
+import { JsonRpcProvider, Provider } from '@ethersproject/providers';
 
 // [fuji, mainnet]
 const SUPPORTED_CHAIN_IDS = [43113, 43114];
@@ -15,12 +15,19 @@ const OPEN_LOGIN = {
   clientId: process.env.NEXT_PUBLIC_OPEN_LOGIN_CLIENT_ID,
 };
 
+const OPEN_LOGIN_PROVIDER_ERROR = new Error('OpenLogin connector not activated yet.');
 export class OpenLoginConnector extends AbstractConnector {
   private openLogin: any;
   wallet?: Wallet;
 
   constructor() {
     super({ supportedChainIds: SUPPORTED_CHAIN_IDS });
+  }
+
+  private validateWallet() {
+    if (!this.wallet) {
+      throw new Error('OpenLogin connector not activated yet.');
+    }
   }
 
   async shouldEagerLoad(): Promise<boolean> {
@@ -56,13 +63,21 @@ export class OpenLoginConnector extends AbstractConnector {
     };
   }
 
-  async getProvider(): Promise<any> {
-    return this.openLogin?.provider;
+  async getProvider(): Promise<Provider> {
+    if (!this.wallet) {
+      throw OPEN_LOGIN_PROVIDER_ERROR;
+    }
+
+    return this.wallet.provider;
   }
 
   // TODO: Need to get the actual chainId somehow. Hard coded for now
-  async getChainId(): Promise<number | string> {
-    return 43113;
+  async getChainId(): Promise<number> {
+    if (!this.wallet) {
+      throw OPEN_LOGIN_PROVIDER_ERROR;
+    }
+
+    return this.wallet.getChainId();
   }
 
   async getAccount(): Promise<string | null> {
