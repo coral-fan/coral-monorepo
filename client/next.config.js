@@ -2,6 +2,7 @@
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 module.exports = {
   reactStrictMode: true,
+  pageExtensions: ['page.tsx'],
   webpack: (config, { isServer }) => {
     if (!isServer) {
       /*
