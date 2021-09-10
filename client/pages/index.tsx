@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
-import React from 'react';
 import useWeb3 from 'utils/hooks/web3';
+import { LOGIN_ROUTE } from 'utils/consts/routes';
 
 export default function Home() {
   const { deactivate } = useWeb3();
@@ -8,7 +8,7 @@ export default function Home() {
 
   const handleClick = () => {
     deactivate();
-    router.push('/login');
+    router.push(LOGIN_ROUTE);
   };
 
   return (
