@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import { verifyTypedData } from '@ethersproject/wallet';
+import { isAddress } from '@ethersproject/address';
 
 require('dotenv').config();
 
@@ -15,65 +16,53 @@ admin.initializeApp({
 });
 
 export const getNonce = functions.https.onRequest(async (request, response) => {
+  // TODO: CORS!!!
   response.set('Access-Control-Allow-Origin', '*');
 
-  if (request.method === 'OPTIONS') {
-    // Send responseponse to OPTIONS requests
-    response.set('Access-Control-Allow-Methods', 'POST');
-    response.set('Access-Control-Allow-Headers', 'Content-Type');
-    response.set('Access-Control-Max-Age', '3600');
-    response.status(204).send('');
-  } else {
-    const address = request.body.address;
-    console.log(address);
-    const nonceRef = await admin.firestore().collection('Nonce').doc(address).get();
+  const address = request.body.address;
+  if (!isAddress(address)) {
+    response.status(401).send('');
+  }
+  const nonceRef = await admin.firestore().doc(`Nonce/${address}`).get();
+  try {
     if (nonceRef.exists) {
       const nonce = nonceRef.data();
-      console.log(nonce);
       response.send(nonce);
     } else {
-      response.status(404).send('');
+      const newUserPost = await admin.firestore().collection('Nonce').add({
+        address: 1,
+      });
+      const newUserRef = await newUserPost.get();
+      const newUserNonce = newUserRef.data();
+      response.send(newUserNonce);
     }
+  } catch (error) {
+    response.status(401).send('');
   }
 });
 
 export const torusAuth = functions.https.onRequest(async (request, response) => {
-  functions.logger.info('Auth req sent!', { structuredData: true });
-
+  // TODO: CORS!!!
   response.set('Access-Control-Allow-Origin', '*');
 
-  if (request.method === 'OPTIONS') {
-    // Send responseponse to OPTIONS requests
-    response.set('Access-Control-Allow-Methods', 'POST');
-    response.set('Access-Control-Allow-Headers', 'Content-Type');
-    response.set('Access-Control-Allow-Credentials', 'true');
-    response.set('Access-Control-Max-Age', '3600');
-    response.status(204).send('');
-  } else {
-    const { address, signedMessage } = request.body;
-
+  const { address, signedMessage } = request.body;
+  if (!isAddress(address)) {
+    response.status(401).send('');
+  }
+  try {
     const derivedAddress = verifyTypedData(
       {},
       { Nonce: [{ name: 'nonce', type: 'uint256' }] },
       { nonce: '1' },
       signedMessage
     );
-
-    console.log(address, signedMessage, derivedAddress);
-
-    if (address === derivedAddress.toLowerCase()) {
-      admin
-        .auth()
-        .createCustomToken(derivedAddress)
-        .then((customToken) => {
-          // Send token back to client
-          response.send({ 'Bearer Token': customToken });
-        })
-        .catch((error) => {
-          console.log('Error creating custom token:', error);
-        });
+    if (address === derivedAddress) {
+      const customToken = await admin.auth().createCustomToken(derivedAddress);
+      response.send({ 'Bearer Token': customToken });
     } else {
-      response.status(404).send({ error: 'you fucked up' });
+      response.status(401).send('');
     }
+  } catch (error) {
+    response.status(401).send('');
   }
 });
