@@ -38,7 +38,6 @@ const App = ({ Component, pageProps }: AppProps) => {
   - https://colinhacks.com/essays/nextjs-firebase-authentication
 */
 App.getInitialProps = async (appContext: AppContext) => {
-  console.log(appContext);
   if (typeof window === 'undefined') {
     const { ctx } = appContext;
     const admin = await getFirebaseAdmin();
