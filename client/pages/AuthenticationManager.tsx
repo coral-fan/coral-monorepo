@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { LOGIN_ROUTE } from 'utils/consts/routes';
 import { useLogout } from 'utils/hooks/authentication';
-import useWeb3 from 'utils/hooks/web3';
 
 interface props {
   children: JSX.Element;
@@ -11,7 +10,6 @@ interface props {
 
 export default function AuthenticationManager({ children }: props) {
   const router = useRouter();
-  const { active } = useWeb3();
   const logout = useLogout();
 
   useEffect(() => {
@@ -24,7 +22,7 @@ export default function AuthenticationManager({ children }: props) {
 
   useEffect(() => {
     const { ethereum } = window;
-    if (active && ethereum?.on) {
+    if (ethereum?.on) {
       ethereum.on('accountsChanged', logout);
       ethereum.on('chainChanged', logout);
 
@@ -35,7 +33,7 @@ export default function AuthenticationManager({ children }: props) {
         };
       }
     }
-  }, [active]);
+  });
 
   return children;
 }

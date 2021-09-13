@@ -73,8 +73,13 @@ export const useLogout = () => {
 
   return async () => {
     deactivate();
-    await getAuth().signOut();
-    destroyCookie(undefined, 'token');
-    router.push(LOGIN_ROUTE);
+    /* check if current route is for login before performing Firebase & cookie authentication related clean up logic
+        this is necessary because the logout function is also used for MetaMask account/network change events
+    */
+    if (router.route !== LOGIN_ROUTE) {
+      await getAuth().signOut();
+      destroyCookie(undefined, 'token');
+      router.push(LOGIN_ROUTE);
+    }
   };
 };
