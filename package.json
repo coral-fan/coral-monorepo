@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "start": "yarn workspace run start",
-    "start:client": "yarn workspace client start",
+    "client:start": "yarn workspace client start",
+    "functions:start": "yarn workspace functions start",
     "clean": "yarn workspace run clean && rm -rf node_modules"
   },
   "workspaces": [
