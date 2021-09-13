@@ -9,5 +9,5 @@ const OPEN_LOGIN_CONNECTOR = new OpenLoginConnector();
 export default function useConnection() {
   const { connector } = useWeb3React();
 
-  return useMemo(() => connector ?? OPEN_LOGIN_CONNECTOR, [connector]);
+  return useMemo(() => connector ?? INJECTED_CONNECTOR, [connector]);
 }

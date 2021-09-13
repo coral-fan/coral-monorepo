@@ -1,10 +1,21 @@
+import type { AppContext, AppProps } from 'next/app';
+import Head from 'next/head';
 import { Web3ReactProvider } from '@web3-react/core';
 import { ExternalProvider, JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
-import type { AppProps } from 'next/app';
-import Head from 'next/head';
-import Web3Manager from 'pages/Web3Manager';
+import { parseCookies } from 'nookies';
 
-export default function App({ Component, pageProps }: AppProps) {
+import Web3Manager from 'pages/Web3Manager';
+import AuthenticationManager from './AuthenticationManager';
+
+import { initializeFirebaseApp, getFirebaseAdmin } from 'utils/firebase';
+import { LOGIN_ROUTE } from 'utils/consts/routes';
+
+initializeFirebaseApp();
+
+const getLibrary = (provider: ExternalProvider | JsonRpcProvider) =>
+  provider instanceof JsonRpcProvider ? provider : new Web3Provider(provider);
+
+const App = ({ Component, pageProps }: AppProps) => {
   // return fragment to ensure DOM isn't polluted with unnecessary elements
   return (
     <>
@@ -15,16 +26,45 @@ export default function App({ Component, pageProps }: AppProps) {
         {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
       <main>
-        <Web3ReactProvider
-          getLibrary={(provider: ExternalProvider | JsonRpcProvider) =>
-            provider instanceof JsonRpcProvider ? provider : new Web3Provider(provider)
-          }
-        >
+        <Web3ReactProvider getLibrary={getLibrary}>
           <Web3Manager>
-            <Component {...pageProps} />
+            <AuthenticationManager>
+              <Component {...pageProps} />
+            </AuthenticationManager>
           </Web3Manager>
         </Web3ReactProvider>
       </main>
     </>
   );
-}
+};
+
+/* implementation inspired by:
+  - https://colinhacks.com/essays/nextjs-firebase-authentication
+*/
+App.getInitialProps = async (appContext: AppContext) => {
+  const { ctx } = appContext;
+  const cookies = parseCookies(ctx);
+  // check if running server side since res object only exists on server side
+  if (ctx.res) {
+    if (cookies.token) {
+      const admin = await getFirebaseAdmin();
+      try {
+        await admin.auth().verifyIdToken(cookies.token ?? '');
+        if (ctx.pathname === LOGIN_ROUTE) {
+          ctx.res.writeHead(302, { Location: '/' });
+          ctx.res.end();
+        }
+      } catch (error) {
+        if (ctx.pathname !== LOGIN_ROUTE) {
+          ctx.res.writeHead(302, { Location: LOGIN_ROUTE });
+          ctx.res.end();
+        }
+      }
+    }
+  } else {
+    // client side logic goes here
+  }
+  return {};
+};
+
+export default App;
