@@ -68,11 +68,13 @@ export const useLogin = () => {
 };
 
 export const useLogout = () => {
-  const { deactivate } = useWeb3();
+  const { active, deactivate } = useWeb3();
   const router = useRouter();
 
   return async () => {
-    deactivate();
+    if (active) {
+      deactivate();
+    }
     /* check if current route is for login before performing Firebase & cookie authentication related clean up logic
         this is necessary because the logout function is also used for MetaMask account/network change events
     */

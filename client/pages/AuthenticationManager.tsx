@@ -9,16 +9,15 @@ interface props {
 }
 
 export default function AuthenticationManager({ children }: props) {
-  const router = useRouter();
   const logout = useLogout();
 
   useEffect(() => {
     return getAuth().onIdTokenChanged(async (user) => {
-      if (!user && router.route !== LOGIN_ROUTE) {
+      if (!user) {
         logout();
       }
     });
-  }, [router]);
+  }, []);
 
   useEffect(() => {
     const { ethereum } = window;
