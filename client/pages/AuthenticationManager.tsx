@@ -1,0 +1,41 @@
+import { getAuth } from '@firebase/auth';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { LOGIN_ROUTE } from 'utils/consts/routes';
+import { useLogout } from 'utils/hooks/authentication';
+import useWeb3 from 'utils/hooks/web3';
+
+interface props {
+  children: JSX.Element;
+}
+
+export default function AuthenticationManager({ children }: props) {
+  const router = useRouter();
+  const { active } = useWeb3();
+  const logout = useLogout();
+
+  useEffect(() => {
+    return getAuth().onIdTokenChanged(async (user) => {
+      if (!user && router.route !== LOGIN_ROUTE) {
+        logout();
+      }
+    });
+  }, [router]);
+
+  useEffect(() => {
+    const { ethereum } = window;
+    if (active && ethereum?.on) {
+      ethereum.on('accountsChanged', logout);
+      ethereum.on('chainChanged', logout);
+
+      if (ethereum.removeEventListener) {
+        return () => {
+          ethereum.removeEventListener('accountsChanged', logout);
+          ethereum.removeEventListener('chainChanged', logout);
+        };
+      }
+    }
+  }, [active]);
+
+  return children;
+}
