@@ -29,12 +29,9 @@ export const getNonce = functions.https.onRequest(async (request, response) => {
       const nonce = nonceRef.data();
       response.send(nonce);
     } else {
-      const newUserPost = await admin.firestore().collection('Nonce').add({
-        address: 1,
-      });
-      const newUserRef = await newUserPost.get();
-      const newUserNonce = newUserRef.data();
-      response.send(newUserNonce);
+      const newNonce = { nonce: 1 };
+      await admin.firestore().collection('Nonce').doc(address).set(newNonce);
+      response.send(newNonce);
     }
   } catch (error) {
     response.status(401).send('');
@@ -50,15 +47,24 @@ export const torusAuth = functions.https.onRequest(async (request, response) => 
     response.status(401).send('');
   }
   try {
-    const derivedAddress = verifyTypedData(
-      {},
-      { Nonce: [{ name: 'nonce', type: 'uint256' }] },
-      { nonce: '1' },
-      signedMessage
-    );
-    if (address === derivedAddress) {
-      const customToken = await admin.auth().createCustomToken(derivedAddress);
-      response.send({ 'Bearer Token': customToken });
+    const nonceRef = await admin.firestore().doc(`Nonce/${address}`).get();
+    if (nonceRef.exists) {
+      const nonceObj = nonceRef.data();
+      const nonce = nonceObj['nonce'] as number;
+      const derivedAddress = verifyTypedData(
+        {},
+        { Nonce: [{ name: 'nonce', type: 'uint256' }] },
+        { nonce: nonce },
+        signedMessage
+      );
+      if (address === derivedAddress) {
+        const nextNonce = nonce + 1;
+        await admin.firestore().doc(`Nonce/${derivedAddress}`).set({ nonce: nextNonce });
+        const customToken = await admin.auth().createCustomToken(derivedAddress);
+        response.send({ 'Bearer Token': customToken });
+      } else {
+        response.status(401).send('');
+      }
     } else {
       response.status(401).send('');
     }

@@ -45,7 +45,7 @@ export const useLogin = () => {
       'http://localhost:5001/torus-tutorial/us-central1/torusAuth',
       {
         address: address,
-        signedMessage,
+        signedMessage: signedMessage,
       },
       {
         headers: {
