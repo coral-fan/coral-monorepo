@@ -1,12 +1,13 @@
 import { useRouter } from 'next/router';
 import useWeb3 from './web3';
 import axios from 'axios';
-import { authentication } from './firebase';
-import { signInWithCustomToken } from '@firebase/auth';
-import { OpenLoginConnector } from 'utils/Connectors/OpenLoginConnector';
+import { signInWithCustomToken, getAuth } from 'firebase/auth';
 import { Web3Provider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
-import { stringify } from '@firebase/util';
+import { setCookie, destroyCookie } from 'nookies';
+
+import { OpenLoginConnector } from 'utils/Connectors/OpenLoginConnector';
+import { LOGIN_ROUTE } from 'utils/consts/routes';
 
 export const useLogin = () => {
   const { activate, connector } = useWeb3();
@@ -22,7 +23,7 @@ export const useLogin = () => {
 
     const address = await signer.getAddress();
 
-    const nonceRsp = await axios.post(
+    const nonceResponse = await axios.post<{ nonce: number }>(
       'http://localhost:5001/torus-tutorial/us-central1/getNonce',
       {
         address: address,
@@ -33,13 +34,11 @@ export const useLogin = () => {
         },
       }
     );
-    console.log(nonceRsp.data.nonce);
-    const nonce = stringify(nonceRsp.data.nonce);
 
     const signedMessage = await signer._signTypedData(
       {},
       { Nonce: [{ name: 'nonce', type: 'uint256' }] },
-      { nonce }
+      { nonce: nonceResponse.data.nonce }
     );
 
     const response = await axios.post(
@@ -57,10 +56,25 @@ export const useLogin = () => {
 
     const token = response.data['Bearer Token'];
 
-    const userCredentials = await signInWithCustomToken(authentication, token);
-    // console.log(userCredentials);
+    const userCredentials = await signInWithCustomToken(getAuth(), token);
+
+    const idToken = await userCredentials.user.getIdToken();
+
+    setCookie(undefined, 'token', idToken, { path: '/' });
 
     // needs to cast to string since redirect field is string | string[] | undefined
     router.push((router.query.redirect as string) ?? '/');
+  };
+};
+
+export const useLogout = () => {
+  const { deactivate } = useWeb3();
+  const router = useRouter();
+
+  return async () => {
+    deactivate();
+    await getAuth().signOut();
+    destroyCookie(undefined, 'token');
+    router.push(LOGIN_ROUTE);
   };
 };
