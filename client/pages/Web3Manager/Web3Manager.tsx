@@ -1,3 +1,5 @@
+import { isAddress } from '@ethersproject/address';
+import { InjectedConnector } from '@web3-react/injected-connector';
 import { useEffect } from 'react';
 import { OpenLoginConnector } from 'utils/Connectors/OpenLoginConnector';
 import useWeb3 from 'utils/hooks/web3';
@@ -10,11 +12,18 @@ export default function Web3Manager({ children }: props) {
 
   useEffect(() => {
     if (connector instanceof OpenLoginConnector) {
-      connector.shouldEagerLoad().then((shouldEagerLoad) => {
+      connector.shouldEagerConnect().then((shouldEagerLoad) => {
         if (shouldEagerLoad) {
           activate(connector);
         }
       });
+      if (connector instanceof InjectedConnector) {
+        connector.isAuthorized().then((isAuthorized) => {
+          if (isAuthorized) {
+            activate(connector);
+          }
+        });
+      }
     }
   }, []);
 
