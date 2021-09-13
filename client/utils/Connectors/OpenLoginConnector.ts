@@ -30,7 +30,7 @@ export class OpenLoginConnector extends AbstractConnector {
     }
   }
 
-  async shouldEagerLoad(): Promise<boolean> {
+  async shouldEagerConnect(): Promise<boolean> {
     const OpenLogin = await import('@toruslabs/openlogin').then(
       (module) => module.default ?? module
     );
