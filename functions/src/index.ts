@@ -24,12 +24,12 @@ export const getNonce = functions.https.onRequest(async (request, response) => {
     response.set('Access-Control-Max-Age', '3600');
     response.status(204).send('');
   } else {
-    const address = request.body.address;
-    console.log(address);
-    const nonceRef = await admin.firestore().collection('Nonce').doc(address).get();
-    if (nonceRef.exists) {
-      const nonce = nonceRef.data();
-      console.log(nonce);
+    // const address = request.body.address;
+    // placeholder logic
+    const address = '0xA494addbA803d75D3dA1b667C23ea596F31179b9';
+    const nonceReference = await admin.firestore().collection('Nonce').doc(address).get();
+    if (nonceReference.exists) {
+      const nonce = nonceReference.data();
       response.send(nonce);
     } else {
       response.status(404).send('');
@@ -50,18 +50,20 @@ export const torusAuth = functions.https.onRequest(async (request, response) => 
     response.set('Access-Control-Max-Age', '3600');
     response.status(204).send('');
   } else {
-    const { address, signedMessage } = request.body;
+    // const { address, signedMessage } = request.body;
 
-    const derivedAddress = verifyTypedData(
-      {},
-      { Nonce: [{ name: 'nonce', type: 'uint256' }] },
-      { nonce: '1' },
-      signedMessage
-    );
+    // const derivedAddress = verifyTypedData(
+    //   {},
+    //   { Nonce: [{ name: 'nonce', type: 'uint256' }] },
+    //   { nonce: 1 },
+    //   signedMessage
+    // );
 
-    console.log(address, signedMessage, derivedAddress);
+    const derivedAddress = '0xA494addbA803d75D3dA1b667C23ea596F31179b9';
 
-    if (address === derivedAddress.toLowerCase()) {
+    // if (address === derivedAddress.toLowerCase()) {
+    // placeholder logic
+    if (true) {
       admin
         .auth()
         .createCustomToken(derivedAddress)
@@ -73,7 +75,6 @@ export const torusAuth = functions.https.onRequest(async (request, response) => 
           console.log('Error creating custom token:', error);
         });
     } else {
-      response.status(404).send({ error: 'you fucked up' });
     }
   }
 });
