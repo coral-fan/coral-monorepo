@@ -2,18 +2,23 @@ import type { AppContext, AppProps } from 'next/app';
 import Head from 'next/head';
 import { Web3ReactProvider } from '@web3-react/core';
 import { ExternalProvider, JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
-import { parseCookies } from 'nookies';
+import { destroyCookie, parseCookies } from 'nookies';
 
-import Web3Manager from 'pages/Web3Manager';
+import Web3Manager from './Web3Manager';
 import AuthenticationManager from './AuthenticationManager';
 
 import { initializeFirebaseApp, getFirebaseAdmin } from 'utils/firebase';
 import { LOGIN_ROUTE } from 'utils/consts/routes';
+import { FirebaseError } from 'firebase-admin';
 
 initializeFirebaseApp();
 
-const getLibrary = (provider: ExternalProvider | JsonRpcProvider) =>
-  provider instanceof JsonRpcProvider ? provider : new Web3Provider(provider);
+const getLibrary = (provider: ExternalProvider | JsonRpcProvider | undefined) => {
+  if (provider) {
+    return provider instanceof JsonRpcProvider ? provider : new Web3Provider(provider);
+  }
+  return undefined;
+};
 
 const App = ({ Component, pageProps }: AppProps) => {
   // return fragment to ensure DOM isn't polluted with unnecessary elements
@@ -40,6 +45,8 @@ const App = ({ Component, pageProps }: AppProps) => {
 
 /* implementation inspired by:
   - https://colinhacks.com/essays/nextjs-firebase-authentication
+  - https://thmsmlr.com/blog/nextjs-firebase-cookie-auth
+  - https://ambrook.com/blog/seamless-authentication-with-next-js-and-firebase-auth
 */
 App.getInitialProps = async (appContext: AppContext) => {
   const { ctx } = appContext;
@@ -47,18 +54,25 @@ App.getInitialProps = async (appContext: AppContext) => {
   // check if running server side since res object only exists on server side
   if (ctx.res) {
     if (cookies.token) {
+      const { res } = ctx;
       const admin = await getFirebaseAdmin();
-      try {
-        await admin.auth().verifyIdToken(cookies.token ?? '');
-        if (ctx.pathname === LOGIN_ROUTE) {
-          ctx.res.writeHead(302, { Location: '/' });
-          ctx.res.end();
-        }
-      } catch (error) {
-        if (ctx.pathname !== LOGIN_ROUTE) {
-          ctx.res.writeHead(302, { Location: LOGIN_ROUTE });
-          ctx.res.end();
-        }
+
+      await admin
+        .auth()
+        .verifyIdToken(cookies.token)
+        .catch((error: FirebaseError) => {
+          console.log(error);
+          if (error.code === 'auth/id-token-expired') {
+            destroyCookie({ res }, 'token');
+          }
+          if (ctx.pathname !== LOGIN_ROUTE) {
+            res.writeHead(302, { Location: LOGIN_ROUTE });
+            res.end();
+          }
+        });
+      if (ctx.pathname === LOGIN_ROUTE) {
+        res.writeHead(302, { Location: '/' });
+        res.end();
       }
     }
   } else {
