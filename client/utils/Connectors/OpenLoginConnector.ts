@@ -17,43 +17,39 @@ const OPEN_LOGIN = {
 
 const OPEN_LOGIN_PROVIDER_ERROR = new Error('OpenLogin connector not activated yet.');
 export class OpenLoginConnector extends AbstractConnector {
-  private openLogin: any;
   wallet?: Wallet;
 
   constructor() {
     super({ supportedChainIds: SUPPORTED_CHAIN_IDS });
   }
 
-  private validateWallet() {
-    if (!this.wallet) {
-      throw new Error('OpenLogin connector not activated yet.');
-    }
-  }
+  private async getOpenLoginInstance() {
+    const OpenLogin = (await import('@toruslabs/openlogin')).default;
 
-  async shouldEagerConnect(): Promise<boolean> {
-    const OpenLogin = await import('@toruslabs/openlogin').then(
-      (module) => module.default ?? module
-    );
-
-    this.openLogin = new OpenLogin({
+    const openLogin = new OpenLogin({
       clientId: OPEN_LOGIN.clientId,
       network: 'testnet',
-      // uxMode: 'popup',
     });
 
-    await this.openLogin.init();
-    return this.openLogin.privKey !== undefined;
+    /* NOTE: OPEN LOGIN ONLY RETRIEVES THE PRIVATE KEY ONCE.
+       openLogin.init() should only be called ONCE per component render.
+    */
+    await openLogin.init();
+
+    return openLogin;
   }
 
-  async activate(...args: any[]): Promise<ConnectorUpdate> {
-    if (!this.openLogin.privKey) {
-      await this.openLogin.login({
-        loginProvider: OPEN_LOGIN.loginProvider,
-        redirectUrl: 'http://localhost:3000',
+  async activate(): Promise<ConnectorUpdate> {
+    const openLogin = await this.getOpenLoginInstance();
+
+    if (!openLogin.privKey) {
+      await openLogin.login({
+        loginProvider: '',
       });
+      window.sessionStorage.setItem('open_login_in_progress', 'true');
     }
 
-    this.wallet = new Wallet(this.openLogin.privKey).connect(
+    this.wallet = new Wallet(openLogin.privKey).connect(
       new JsonRpcProvider('https://api.avax-test.network/ext/bc/C/rpc')
     );
 
@@ -71,7 +67,6 @@ export class OpenLoginConnector extends AbstractConnector {
     return this.wallet.provider;
   }
 
-  // TODO: Need to get the actual chainId somehow. Hard coded for now
   async getChainId(): Promise<number> {
     if (!this.wallet) {
       throw OPEN_LOGIN_PROVIDER_ERROR;
@@ -84,7 +79,8 @@ export class OpenLoginConnector extends AbstractConnector {
     return this.wallet ? this.wallet.address : null;
   }
 
-  deactivate(): void {
-    this.openLogin?.logout;
+  async deactivate(): Promise<void> {
+    (await this.getOpenLoginInstance()).logout;
+    this.wallet = undefined;
   }
 }
