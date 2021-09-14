@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useWeb3 from './web3';
 import axios from 'axios';
@@ -10,16 +10,19 @@ import { OpenLoginConnector } from 'utils/Connectors/OpenLoginConnector';
 import { LOGIN_ROUTE } from 'utils/consts/routes';
 
 type LoginError = null | Record<string, string | number>;
+
 export const useLogin = () => {
-  const { activate, connector } = useWeb3();
+  const { activate, getConnector } = useWeb3();
   const router = useRouter();
 
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+
   const [loginError, setLoginError] = useState<LoginError>(null);
 
   const login = async () => {
     setIsLoggingIn(true);
     try {
+      const connector = getConnector();
       await activate(connector);
 
       const signer =
@@ -33,11 +36,6 @@ export const useLogin = () => {
         'http://localhost:5001/torus-tutorial/us-central1/getNonce',
         {
           address: address,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
         }
       );
 
@@ -52,11 +50,6 @@ export const useLogin = () => {
         {
           address: address,
           signedMessage: signedMessage,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
         }
       );
 
