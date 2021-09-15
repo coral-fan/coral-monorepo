@@ -43,11 +43,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 };
 
-/* implementation inspired by:
-  - https://colinhacks.com/essays/nextjs-firebase-authentication
-  - https://thmsmlr.com/blog/nextjs-firebase-cookie-auth
-  - https://ambrook.com/blog/seamless-authentication-with-next-js-and-firebase-auth
-*/
+// TODO: move this logic to a reusable createGetServerSideProps functions that can be shared for pages that require authentication?
 App.getInitialProps = async (appContext: AppContext) => {
   const { ctx } = appContext;
   const cookies = parseCookies(ctx);
@@ -62,9 +58,11 @@ App.getInitialProps = async (appContext: AppContext) => {
         .verifyIdToken(cookies.token)
         .catch((error: FirebaseError) => {
           console.log(error);
+          // remove id token cookie if the id token has expired
           if (error.code === 'auth/id-token-expired') {
             destroyCookie({ res }, 'token');
           }
+          // if the current route isn't the login route, redirect to the login route
           if (ctx.pathname !== LOGIN_ROUTE) {
             res.writeHead(302, { Location: LOGIN_ROUTE });
             res.end();
