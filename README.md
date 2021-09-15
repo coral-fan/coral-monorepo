@@ -27,8 +27,12 @@ Runs the entire application stack in development mode.
 
 Open [http://localhost:3000](http://localhost:3000) to view the application locally.
 
-### `yarn start:client`
+### `yarn client`
 
-Runs the front end in development mode.
+Shorthand for `yarn workspace client`. 
 
-Open [http://localhost:3000](http://localhost:3000) to view the application locally.
+#### Example Use Cases:
+##### `yarn client start`
+Runs the start script for the client.
+##### `yarn client add <PACKAGE>`
+Installs `<PACKAGE>` inside client workspace.
