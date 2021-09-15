@@ -33,7 +33,7 @@ export const useLogin = () => {
       const address = await signer.getAddress();
 
       const nonceResponse = await axios.post<{ nonce: number }>(
-        'http://localhost:5001/torus-tutorial/us-central1/getNonce',
+        'http://localhost:5001/torus-tutorial/us-central1/nonce',
         {
           address: address,
         }
@@ -45,13 +45,10 @@ export const useLogin = () => {
         { nonce: nonceResponse.data.nonce }
       );
 
-      const response = await axios.post(
-        'http://localhost:5001/torus-tutorial/us-central1/torusAuth',
-        {
-          address: address,
-          signedMessage: signedMessage,
-        }
-      );
+      const response = await axios.post('http://localhost:5001/torus-tutorial/us-central1/auth', {
+        address: address,
+        signedMessage: signedMessage,
+      });
 
       const token = response.data['Bearer Token'];
 
