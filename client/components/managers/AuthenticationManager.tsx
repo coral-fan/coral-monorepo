@@ -1,7 +1,5 @@
 import { getAuth } from '@firebase/auth';
-import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { LOGIN_ROUTE } from 'utils/consts/routes';
 import { useLogout } from 'utils/hooks/authentication';
 
 interface props {

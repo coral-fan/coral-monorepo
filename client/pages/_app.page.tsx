@@ -4,8 +4,7 @@ import { Web3ReactProvider } from '@web3-react/core';
 import { ExternalProvider, JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
 import { destroyCookie, parseCookies } from 'nookies';
 
-import Web3Manager from './Web3Manager';
-import AuthenticationManager from './AuthenticationManager';
+import { Web3Manager, AuthenticationManager } from 'components/managers';
 
 import { initializeFirebaseApp, getFirebaseAdmin } from 'utils/firebase';
 import { LOGIN_ROUTE } from 'utils/consts/routes';
@@ -64,7 +63,12 @@ App.getInitialProps = async (appContext: AppContext) => {
           }
           // if the current route isn't the login route, redirect to the login route
           if (ctx.pathname !== LOGIN_ROUTE) {
-            res.writeHead(302, { Location: LOGIN_ROUTE });
+            res.writeHead(302, {
+              Location:
+                ctx.pathname === '/'
+                  ? LOGIN_ROUTE
+                  : `${LOGIN_ROUTE}?redirect=${ctx.pathname.replace('/', '')}`,
+            });
             res.end();
           }
         });
