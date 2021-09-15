@@ -1,4 +1,4 @@
-# Monorepo For Music Crypto (Tentative)
+# Monorepo For Crypto Music (Tentative)
 
 Monorepo managed with [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces/).
 Front end written in [TypeScript](https://www.typescriptlang.org/) and built with [Next.js](https://nextjs.org/).
