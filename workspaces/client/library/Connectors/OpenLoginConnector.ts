@@ -2,6 +2,7 @@ import { ConnectorUpdate } from '@web3-react/types';
 import { AbstractConnector } from '@web3-react/abstract-connector';
 import { Wallet } from '@ethersproject/wallet';
 import { JsonRpcProvider, Provider } from '@ethersproject/providers';
+import { IS_OPEN_LOGIN_PENDING } from 'consts';
 
 // [fuji, mainnet]
 const SUPPORTED_CHAIN_IDS = [43113, 43114];
@@ -46,7 +47,7 @@ export class OpenLoginConnector extends AbstractConnector {
       await openLogin.login({
         loginProvider: '',
       });
-      window.sessionStorage.setItem('open_login_in_progress', 'true');
+      window.sessionStorage.setItem(IS_OPEN_LOGIN_PENDING, 'true');
     }
 
     this.wallet = new Wallet(openLogin.privKey).connect(

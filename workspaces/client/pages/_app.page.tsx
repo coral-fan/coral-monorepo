@@ -7,7 +7,7 @@ import { destroyCookie, parseCookies } from 'nookies';
 import { Web3Manager, AuthenticationManager } from 'components/managers';
 
 import { initializeFirebaseApp, getFirebaseAdmin } from 'library/utils/firebase';
-import { LOGIN_ROUTE } from 'consts/routes';
+import { LOGIN_ROUTE } from 'consts';
 import { FirebaseError } from 'firebase-admin';
 
 initializeFirebaseApp();

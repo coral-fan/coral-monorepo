@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import useWeb3 from '../web3';
 import { getAuth } from 'firebase/auth';
 import { destroyCookie, parseCookies } from 'nookies';
-import { LOGIN_ROUTE } from 'consts/routes';
+import { LOGIN_ROUTE } from 'consts';
 
 export const useLogout = () => {
   const { active, deactivate } = useWeb3();

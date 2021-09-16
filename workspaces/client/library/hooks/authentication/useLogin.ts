@@ -7,17 +7,17 @@ import { Web3Provider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
 import { setCookie } from 'nookies';
 import { OpenLoginConnector } from 'library/Connectors/OpenLoginConnector';
+import { IS_OPEN_LOGIN_PENDING } from 'consts';
 
 type LoginError = null | Record<string, string | number>;
 
 export const useLogin = () => {
   const { activate, getConnector } = useWeb3();
   const router = useRouter();
-
   const [isLoggingIn, setIsLoggingIn] = useState(true);
 
   useEffect(() => {
-    if (!sessionStorage.getItem('open_login_in_progress')) {
+    if (!sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) {
       setIsLoggingIn(false);
     }
   }, []);

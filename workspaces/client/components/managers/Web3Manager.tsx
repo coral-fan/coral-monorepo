@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { OpenLoginConnector } from 'library/Connectors/OpenLoginConnector';
 import useWeb3 from 'library/hooks/web3';
 import { useLogin } from 'library/hooks/authentication';
+import { IS_OPEN_LOGIN_PENDING } from 'consts';
 import { parseCookies } from 'nookies';
 
 interface props {
@@ -18,11 +19,11 @@ export default function Web3Manager({ children }: props) {
     const connector = getConnector();
 
     if (
-      (token || sessionStorage.getItem('open_login_in_progress')) &&
+      (token || sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) &&
       connector instanceof OpenLoginConnector
     ) {
       login().then(() => {
-        sessionStorage.removeItem('open_login_in_progress');
+        sessionStorage.removeItem(IS_OPEN_LOGIN_PENDING);
       });
     }
     if (token && connector instanceof InjectedConnector) {
