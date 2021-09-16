@@ -8,8 +8,7 @@
     "clean": "yarn workspace run clean && rm -rf node_modules"
   },
   "workspaces": [
-    "client",
-    "functions"
+    "workspaces/*"
   ],
   "devDependencies": {
     "eslint": "^7.32.0",
