@@ -1,4 +1,4 @@
-import { useLogout } from 'utils/hooks/authentication';
+import { useLogout } from 'library/hooks/authentication';
 
 export default function Home() {
   return (

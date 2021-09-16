@@ -6,8 +6,8 @@ import { signInWithCustomToken, getAuth } from 'firebase/auth';
 import { Web3Provider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
 import { setCookie, destroyCookie } from 'nookies';
-import { OpenLoginConnector } from 'utils/Connectors/OpenLoginConnector';
-import { LOGIN_ROUTE } from 'utils/consts/routes';
+import { OpenLoginConnector } from 'library/Connectors/OpenLoginConnector';
+import { LOGIN_ROUTE } from 'consts/routes';
 
 type LoginError = null | Record<string, string | number>;
 

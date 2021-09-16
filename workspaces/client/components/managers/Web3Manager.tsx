@@ -1,8 +1,8 @@
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { useEffect } from 'react';
-import { OpenLoginConnector } from 'utils/Connectors/OpenLoginConnector';
-import useWeb3 from 'utils/hooks/web3';
-import { useLogin } from 'utils/hooks/authentication';
+import { OpenLoginConnector } from 'library/Connectors/OpenLoginConnector';
+import useWeb3 from 'library/hooks/web3';
+import { useLogin } from 'library/hooks/authentication';
 import { parseCookies } from 'nookies';
 
 interface props {

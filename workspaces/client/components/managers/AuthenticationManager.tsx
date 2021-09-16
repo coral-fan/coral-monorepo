@@ -1,6 +1,6 @@
 import { getAuth } from '@firebase/auth';
 import { useEffect } from 'react';
-import { useLogout } from 'utils/hooks/authentication';
+import { useLogout } from 'library/hooks/authentication';
 
 interface props {
   children: JSX.Element;
