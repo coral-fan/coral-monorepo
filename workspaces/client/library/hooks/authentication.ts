@@ -5,7 +5,7 @@ import axios from 'axios';
 import { signInWithCustomToken, getAuth } from 'firebase/auth';
 import { Web3Provider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
-import { setCookie, destroyCookie } from 'nookies';
+import { setCookie, destroyCookie, parseCookies } from 'nookies';
 import { OpenLoginConnector } from 'library/Connectors/OpenLoginConnector';
 import { LOGIN_ROUTE } from 'consts/routes';
 
@@ -15,7 +15,13 @@ export const useLogin = () => {
   const { activate, getConnector } = useWeb3();
   const router = useRouter();
 
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(true);
+
+  useEffect(() => {
+    if (!sessionStorage.getItem('open_login_in_progress')) {
+      setIsLoggingIn(false);
+    }
+  }, []);
 
   const [loginError, setLoginError] = useState<LoginError>(null);
 
@@ -73,16 +79,19 @@ export const useLogin = () => {
 export const useLogout = () => {
   const { active, deactivate } = useWeb3();
   const router = useRouter();
+  const { token } = parseCookies();
   return async () => {
     if (active) {
       deactivate();
     }
+    if (token) {
+      destroyCookie(undefined, 'token');
+      await getAuth().signOut();
+    }
     /* check if current route is for login before performing Firebase & cookie authentication related clean up logic
-        this is necessary because the logout function is also used for MetaMask account/network change events
+       this is necessary because the logout function is also used for MetaMask account/network change events
     */
     if (router.route !== LOGIN_ROUTE) {
-      await getAuth().signOut();
-      destroyCookie(undefined, 'token');
       router.push(LOGIN_ROUTE);
     }
   };
