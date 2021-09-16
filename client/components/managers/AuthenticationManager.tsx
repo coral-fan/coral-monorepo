@@ -25,12 +25,13 @@ export default function AuthenticationManager({ children }: props) {
 
       if (ethereum.removeEventListener) {
         return () => {
+          console.info('event listener removed');
           ethereum.removeEventListener('accountsChanged', logout);
           ethereum.removeEventListener('chainChanged', logout);
         };
       }
     }
-  });
+  }, []);
 
   return children;
 }
