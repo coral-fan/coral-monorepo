@@ -10,9 +10,12 @@ export default function AuthenticationManager({ children }: props) {
   const logout = useLogout();
 
   useEffect(() => {
+    let isLoggingOut = false;
     return getAuth().onIdTokenChanged(async (user) => {
-      if (!user) {
-        logout();
+      if (!user && !isLoggingOut) {
+        isLoggingOut = true;
+        await logout();
+        isLoggingOut = false;
       }
     });
   }, []);
