@@ -75,7 +75,7 @@ See the Functions Directory section for information on how to run cloud function
 Runs the Firebase cloud functions locally on an emulator.
 It's recommended to run `yarn build --watch` in conjunction with this command so changes made to the source code are reflected in the development environmnt without having to restart the emulator.
 
-**NOTE:** Before running cloud functions locally, please make sure to have a `.env.local` environment variable file with the following values:
+**NOTE:** Before running cloud functions locally, please make sure to have a `.env` environment variable file with the following values:
 
 ```
 LOCAL_FIREBASE_CREDENTIALS="<LOCAL PATH TO FIREBASE ADMIN CREDENTIALS>"
