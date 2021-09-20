@@ -15,7 +15,8 @@
     "jsx": "preserve",
     // project specific compilerOptions starts here
     "baseUrl": ".",
-    "typeRoots": ["types"]
+    "typeRoots": ["types"],
+    "jsxImportSource": "@emotion/react" /* Enable React component to accept css prop */
   },
   "include": ["next-env.d.ts", "types/*.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
