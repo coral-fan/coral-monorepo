@@ -45,13 +45,12 @@ const App = ({ Component, pageProps }: AppProps) => {
 // TODO: move this logic to a reusable createGetServerSideProps functions that can be shared for pages that require authentication?
 App.getInitialProps = async (appContext: AppContext) => {
   const { ctx } = appContext;
-  const cookies = parseCookies(ctx);
   // check if running server side since res object only exists on server side
   if (ctx.res) {
+    const { res } = ctx;
+    const cookies = parseCookies(ctx);
     if (cookies.token) {
-      const { res } = ctx;
       const admin = await getFirebaseAdmin();
-
       await admin
         .auth()
         .verifyIdToken(cookies.token)
@@ -74,6 +73,17 @@ App.getInitialProps = async (appContext: AppContext) => {
         });
       if (ctx.pathname === LOGIN_ROUTE) {
         res.writeHead(302, { Location: '/' });
+        res.end();
+      }
+      // if cookie doesn't exist, redirect to login page
+    } else {
+      if (ctx.pathname !== LOGIN_ROUTE) {
+        res.writeHead(302, {
+          Location:
+            ctx.pathname === '/'
+              ? LOGIN_ROUTE
+              : `${LOGIN_ROUTE}?redirect=${ctx.pathname.replace('/', '')}`,
+        });
         res.end();
       }
     }
