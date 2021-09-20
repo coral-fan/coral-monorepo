@@ -15,7 +15,7 @@ const wyreTest = async () => {
   const createWalletOrderReservationResponse = await wyreAxios.post<{
     url: string;
     reservation: string;
-  }>('orders/reserve', { referrerAccountId: process.env.NEXT_WYRE_PUBLIC_REFERRER_ACCOUNT_ID });
+  }>('orders/reserve', { referrerAccountId: process.env.NEXT_PUBLIC_WYRE_REFERRER_ACCOUNT_ID });
 
   console.info(createWalletOrderReservationResponse);
 
@@ -47,7 +47,7 @@ const wyreTest = async () => {
     familyName: 'Bandicoot',
     email: 'test@sendwyre.com',
     phone: 18588255555,
-    referenceId: process.env.NEXT_PUBLIC_WYRE_REFERRER_ACCOUNT_I,
+    referenceId: process.env.NEXT_PUBLIC_WYRE_REFERRER_ACCOUNT_ID,
     ipAddress: '108.28.187.213',
   });
 
