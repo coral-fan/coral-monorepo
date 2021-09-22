@@ -1,14 +1,24 @@
 import type { AppContext, AppProps } from 'next/app';
 import Head from 'next/head';
+
 import { Web3ReactProvider } from '@web3-react/core';
 import { ExternalProvider, JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
+
 import { destroyCookie, parseCookies } from 'nookies';
+
+import { Global } from '@emotion/react';
 
 import { Web3Manager, AuthenticationManager } from 'components/managers';
 
-import { initializeFirebaseApp, getFirebaseAdmin } from 'library/utils/firebase';
-import { LOGIN_ROUTE } from 'consts';
 import { FirebaseError } from 'firebase-admin';
+
+import { initializeFirebaseApp, getFirebaseAdmin } from 'library/utils/firebase';
+
+import { LOGIN_ROUTE } from 'consts';
+
+import { globalTokens } from 'styles/tokens';
+
+import 'styles/global.css';
 
 initializeFirebaseApp();
 
@@ -23,6 +33,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   // return fragment to ensure DOM isn't polluted with unnecessary elements
   return (
     <>
+      <Global styles={globalTokens} />
       <Head>
         <title></title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
