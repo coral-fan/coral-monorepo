@@ -2,10 +2,9 @@
   "name": "crypto-music",
   "private": true,
   "scripts": {
-    "start": "yarn workspace run start",
     "client": "yarn workspace client",
     "functions": "yarn workspace functions",
-    "clean": "yarn workspace run clean && rm -rf node_modules"
+    "clean": "yarn workspaces run clean && rm -rf node_modules"
   },
   "workspaces": [
     "workspaces/*"
