@@ -5929,6 +5929,11 @@ text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
+theme-in-css@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/theme-in-css/-/theme-in-css-0.2.1.tgz#f7213152337f5cd22e7d22bbd1f0009c0178e7cf"
+  integrity sha512-ziHRf9FXEWLwfGx2C/U4XbomGJ230/IHB99qSMD8A8PeFt38jm4yIPZYLbT0VC9+krSATWYZY5egfABgnur6cQ==
+
 timers-browserify@2.0.12, timers-browserify@^2.0.4:
   version "2.0.12"
   resolved "https://registry.yarnpkg.com/timers-browserify/-/timers-browserify-2.0.12.tgz#44a45c11fbf407f34f97bccd1577c652361b00ee"
