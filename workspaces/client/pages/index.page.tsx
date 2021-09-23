@@ -15,7 +15,10 @@ const wyreTest = async () => {
   const createWalletOrderReservationResponse = await wyreAxios.post<{
     url: string;
     reservation: string;
-  }>('orders/reserve', { referrerAccountId: process.env.NEXT_PUBLIC_WYRE_REFERRER_ACCOUNT_ID });
+  }>('orders/reserve', {
+    referrerAccountId: process.env.NEXT_PUBLIC_WYRE_REFERRER_ACCOUNT_ID,
+    dest: 'avalanche:0x565001B4123F612Bb33ED3572603a328d31e5bDe',
+  });
 
   console.info(createWalletOrderReservationResponse);
 
@@ -23,7 +26,7 @@ const wyreTest = async () => {
     data: { reservation },
   } = createWalletOrderReservationResponse;
 
-  const transactionResponse = await wyreAxios.post('/debitcard/process/partner', {
+  const createOrderResponse = await wyreAxios.post('/debitcard/process/partner', {
     debitCard: {
       number: '4111111111111111',
       year: '2023',
@@ -51,7 +54,7 @@ const wyreTest = async () => {
     ipAddress: '108.28.187.213',
   });
 
-  console.log(transactionResponse);
+  console.log(createOrderResponse);
 };
 export default function Home() {
   useEffect(() => {
