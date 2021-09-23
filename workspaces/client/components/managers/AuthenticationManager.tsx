@@ -18,7 +18,7 @@ export default function AuthenticationManager({ children }: props) {
         isLoggingOut = false;
       }
     });
-  }, []);
+  }, [logout]);
 
   useEffect(() => {
     const { ethereum } = window;
