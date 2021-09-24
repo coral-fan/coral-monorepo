@@ -1,2 +1,7 @@
 node_modules
+
+# logs
 *.log
+
+#compiled files
+dist
