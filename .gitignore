@@ -5,3 +5,6 @@ node_modules
 
 #compiled files
 dist
+
+# miscellanious
+.DS_Store
