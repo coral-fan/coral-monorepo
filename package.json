@@ -4,6 +4,7 @@
   "scripts": {
     "client": "yarn workspace client",
     "functions": "yarn workspace functions",
+    "common/utils": "yarn workspace @common/utils",
     "clean": "yarn workspaces run clean && rm -rf node_modules"
   },
   "workspaces": [
