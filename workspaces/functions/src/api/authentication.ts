@@ -3,6 +3,8 @@ import { verifyTypedData } from '@ethersproject/wallet';
 import getExpress from '../utils/getExpress';
 import getFirebaseAdmin from '../utils/getFirebaseAdmin';
 
+import { getAuthenticationMessage } from '@common/utils';
+
 const app = getExpress();
 const admin = getFirebaseAdmin();
 
@@ -15,6 +17,7 @@ app.post('/', async (request, response) => {
     const nonceRef = await admin.firestore().doc(`Nonce/${address}`).get();
     if (nonceRef.exists) {
       const nonce = nonceRef.data()?.nonce;
+      console.log(getAuthenticationMessage(nonce));
       const derivedAddress = verifyTypedData(
         {},
         { Nonce: [{ name: 'nonce', type: 'uint256' }] },

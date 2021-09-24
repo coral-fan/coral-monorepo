@@ -8,6 +8,7 @@ import { Wallet } from '@ethersproject/wallet';
 import { setCookie } from 'nookies';
 import { OpenLoginConnector } from 'library/Connectors/OpenLoginConnector';
 import { IS_OPEN_LOGIN_PENDING } from 'consts';
+import { getAuthenticationMessage } from '@common/utils';
 
 type LoginError = null | Record<string, string | number>;
 
@@ -44,6 +45,8 @@ export const useLogin = () => {
         }
       );
 
+      console.log(await signer.signMessage(getAuthenticationMessage(nonceResponse.data.nonce)));
+
       const signedMessage = await signer._signTypedData(
         {},
         { Nonce: [{ name: 'nonce', type: 'uint256' }] },
@@ -67,7 +70,6 @@ export const useLogin = () => {
       router.push((router.query.redirect as string) ?? '/');
     } catch (error) {
       setLoginError(error as LoginError);
-    } finally {
       setIsLoggingIn(false);
     }
   };

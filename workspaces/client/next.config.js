@@ -3,6 +3,7 @@ module.exports = {
   reactStrictMode: true,
   pageExtensions: ['page.tsx'],
   webpack: (config, { isServer }) => {
+    // resolves issues with Firebase Admin
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
@@ -15,6 +16,10 @@ module.exports = {
         ['fast-crc32c']: false,
       };
     }
+
+    // let babel compile outside of src. necessary for code sharing within monorepo
+    delete config.module.rules.find((rule) => rule.test.toString().includes('tsx|ts')).include;
+
     return config;
   },
 };
