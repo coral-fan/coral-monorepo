@@ -3,7 +3,6 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   entry: path.resolve('src', 'index.ts'),
-  mode: 'production',
   output: {
     path: path.resolve('dist'),
     filename: 'index.js',
