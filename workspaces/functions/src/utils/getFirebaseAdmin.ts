@@ -1,6 +1,6 @@
 import admin from 'firebase-admin';
 
-export default function getFirebaseAdmin() {
+export const getFirebaseAdmin = () => {
   // checks if admin has been initialized already
   if (admin.apps.length < 1) {
     const credentialPath = (
@@ -14,4 +14,4 @@ export default function getFirebaseAdmin() {
     });
   }
   return admin;
-}
+};

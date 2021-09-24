@@ -3,7 +3,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
 
-export default function getExpress() {
+export const getExpress = () => {
   const app = express();
 
   app.use(helmet());
@@ -12,4 +12,4 @@ export default function getExpress() {
   app.use(morgan('combined'));
 
   return app;
-}
+};

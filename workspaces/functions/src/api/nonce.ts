@@ -1,6 +1,5 @@
 import { isAddress } from '@ethersproject/address';
-import getExpress from '../utils/getExpress';
-import getFirebaseAdmin from '../utils/getFirebaseAdmin';
+import { getExpress, getFirebaseAdmin, getNonce } from '../utils';
 
 const app = getExpress();
 const admin = getFirebaseAdmin();
@@ -16,7 +15,7 @@ app.post('/', async (request, response) => {
       const nonce = nonceRef.data();
       return response.send(nonce);
     }
-    const newNonce = { nonce: 1 };
+    const newNonce = { nonce: getNonce() };
     await admin.firestore().collection('Nonce').doc(address).set(newNonce);
     return response.send(newNonce);
   } catch (error) {

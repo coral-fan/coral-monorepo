@@ -45,12 +45,8 @@ export const useLogin = () => {
         }
       );
 
-      console.log(await signer.signMessage(getAuthenticationMessage(nonceResponse.data.nonce)));
-
-      const signedMessage = await signer._signTypedData(
-        {},
-        { Nonce: [{ name: 'nonce', type: 'uint256' }] },
-        { nonce: nonceResponse.data.nonce }
+      const signedMessage = await signer.signMessage(
+        getAuthenticationMessage(nonceResponse.data.nonce)
       );
 
       const response = await axios.post('http://localhost:5001/torus-tutorial/us-central1/auth', {
