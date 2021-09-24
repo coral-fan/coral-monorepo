@@ -1,0 +1,11 @@
+{
+  "name": "@common/utils",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/index",
+  "scripts": {
+    "test": "tsc"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
