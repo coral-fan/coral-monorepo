@@ -16,6 +16,9 @@
     "jsx": "preserve",
     // project specific compilerOptions starts here
     "baseUrl": ".",
+    "paths": {
+      "@common/*": ["../common/*/src"]
+    },
     "typeRoots": ["types"],
     "jsxImportSource": "@emotion/react" /* Enable React component to accept css prop */,
     "sourceMap": true
