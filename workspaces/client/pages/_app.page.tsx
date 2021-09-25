@@ -20,7 +20,7 @@ import { globalTokens } from 'styles/tokens';
 
 import 'styles/global.css';
 import { useEffect } from 'react';
-import { map } from 'rxjs';
+import { map, startWith } from 'rxjs';
 
 import { getChainId$ } from 'library/observables/metamask';
 
@@ -33,10 +33,13 @@ const getLibrary = (provider: ExternalProvider | JsonRpcProvider | undefined) =>
   return undefined;
 };
 
+const getIsNetworkSupported = (chainId: string) => SUPPORTED_NETWORKS.includes(parseInt(chainId));
 const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
+    const isNetworkSupported = getIsNetworkSupported(window.ethereum?.chainId ?? '0xa86a');
     const isNetworkSupported$ = getChainId$().pipe(
-      map((chainId) => SUPPORTED_NETWORKS.includes(parseInt(chainId)))
+      map(getIsNetworkSupported),
+      startWith(isNetworkSupported)
     );
 
     const subscription = isNetworkSupported$.subscribe((isNetworkSupported) =>
