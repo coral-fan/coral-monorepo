@@ -15,11 +15,11 @@ type LoginError = null | Record<string, string | number>;
 export const useLogin = () => {
   const { activate, getConnector } = useWeb3();
   const router = useRouter();
-  const [isLoggingIn, setIsLoggingIn] = useState(true);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   useEffect(() => {
-    if (!sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) {
-      setIsLoggingIn(false);
+    if (sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) {
+      setIsLoggingIn(true);
     }
   }, []);
 
