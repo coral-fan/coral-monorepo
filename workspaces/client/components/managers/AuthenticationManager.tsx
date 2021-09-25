@@ -27,8 +27,9 @@ export default function AuthenticationManager() {
 
       const accounts$ = fromEvent(target, 'accountsChanged');
 
-      const accountsSubscription = accounts$.subscribe(logout);
-      const chainIdSubscription = chainId$.subscribe(logout);
+      // TODO: not sure why I need to explictly invoke logout...need to look into this
+      const accountsSubscription = accounts$.subscribe(() => logout());
+      const chainIdSubscription = chainId$.subscribe(() => logout());
 
       return () =>
         [accountsSubscription, chainIdSubscription].forEach((subscription) =>
