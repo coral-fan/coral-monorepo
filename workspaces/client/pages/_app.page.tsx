@@ -41,7 +41,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
     const subscription = isSupportedNetwork$.subscribe((isSupportedNetwork) =>
       console.log(isSupportedNetwork)
-    );
+
 
     return () => subscription.unsubscribe();
   }, []);

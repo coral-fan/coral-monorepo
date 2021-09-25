@@ -10,7 +10,7 @@ interface props {
   children: JSX.Element;
 }
 
-export default function Web3Manager({ children }: props) {
+export default function Web3Manager() {
   const { getConnector, activate } = useWeb3();
   const { login } = useLogin();
 
@@ -35,5 +35,5 @@ export default function Web3Manager({ children }: props) {
     }
   }, []);
 
-  return children;
+  return <></>;
 }
