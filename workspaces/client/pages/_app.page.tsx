@@ -35,13 +35,13 @@ const getLibrary = (provider: ExternalProvider | JsonRpcProvider | undefined) =>
 
 const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
-    const isSupportedNetwork$ = getChainId$().pipe(
+    const isNetworkSupported$ = getChainId$().pipe(
       map((chainId) => SUPPORTED_NETWORKS.includes(parseInt(chainId)))
     );
 
-    const subscription = isSupportedNetwork$.subscribe((isSupportedNetwork) =>
-      console.log(isSupportedNetwork)
-
+    const subscription = isNetworkSupported$.subscribe((isNetworkSupported) =>
+      console.log(isNetworkSupported)
+    );
 
     return () => subscription.unsubscribe();
   }, []);
