@@ -5,12 +5,14 @@ import { InjectedConnector } from '@web3-react/injected-connector';
 
 import { OpenLoginConnector } from 'library/Connectors/OpenLoginConnector';
 
+import { SUPPORTED_NETWORKS } from 'consts';
+
 export default function useWeb3() {
   const { library, chainId, account, active, error, activate, deactivate, setError, connector } =
     useWeb3React<JsonRpcProvider | Web3Provider>();
 
   const injectedConnector = useMemo(
-    () => new InjectedConnector({ supportedChainIds: [1, 3, 4, 5, 42] }),
+    () => new InjectedConnector({ supportedChainIds: SUPPORTED_NETWORKS }),
     []
   );
   const openLoginConnector = useMemo(() => new OpenLoginConnector(), []);
@@ -22,7 +24,7 @@ export default function useWeb3() {
 
   const getConnector = useCallback(
     () => (connector ?? window.ethereum ? injectedConnector : openLoginConnector),
-    [connector]
+    [connector, injectedConnector, openLoginConnector]
   );
 
   return {
