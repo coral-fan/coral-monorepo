@@ -2,6 +2,7 @@ import { getAuth } from '@firebase/auth';
 import { useEffect } from 'react';
 import { useLogout } from 'library/hooks/authentication';
 import { fromEvent } from 'rxjs';
+import { getChainId$ } from 'library/observables/metamask';
 
 interface props {
   children: JSX.Element;
@@ -25,16 +26,16 @@ export default function AuthenticationManager({ children }: props) {
     const { ethereum } = window;
 
     if (ethereum) {
+      const chainId$ = getChainId$();
       const target = ethereum as any;
 
-      const accountsChanged$ = fromEvent(target, 'accountsChanged');
-      const chainChanged$ = fromEvent(target, 'chainChanged');
+      const accounts$ = fromEvent(target, 'accountsChanged');
 
-      const accountsChangedSubscription = accountsChanged$.subscribe(logout);
-      const chainChangedSubscription = chainChanged$.subscribe(logout);
+      const accountsSubscription = accounts$.subscribe(logout);
+      const chainIdSubscription = chainId$.subscribe(logout);
 
       return () =>
-        [accountsChangedSubscription, chainChangedSubscription].forEach((subscription) =>
+        [accountsSubscription, chainIdSubscription].forEach((subscription) =>
           subscription.unsubscribe()
         );
     }

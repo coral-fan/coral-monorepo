@@ -14,11 +14,15 @@ import { FirebaseError } from 'firebase-admin';
 
 import { initializeFirebaseApp, getFirebaseAdmin } from 'library/utils/firebase';
 
-import { LOGIN_ROUTE } from 'consts';
+import { LOGIN_ROUTE, SUPPORTED_NETWORKS } from 'consts';
 
 import { globalTokens } from 'styles/tokens';
 
 import 'styles/global.css';
+import { useEffect } from 'react';
+import { map } from 'rxjs';
+
+import { getChainId$ } from 'library/observables/metamask';
 
 initializeFirebaseApp();
 
@@ -30,7 +34,18 @@ const getLibrary = (provider: ExternalProvider | JsonRpcProvider | undefined) =>
 };
 
 const App = ({ Component, pageProps }: AppProps) => {
-  // return fragment to ensure DOM isn't polluted with unnecessary elements
+  useEffect(() => {
+    const isSupportedNetwork$ = getChainId$().pipe(
+      map((chainId) => SUPPORTED_NETWORKS.includes(parseInt(chainId)))
+    );
+
+    const subscription = isSupportedNetwork$.subscribe((isSupportedNetwork) =>
+      console.log(isSupportedNetwork)
+    );
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   return (
     <>
       <Global styles={globalTokens} />
@@ -42,11 +57,9 @@ const App = ({ Component, pageProps }: AppProps) => {
       </Head>
       <main>
         <Web3ReactProvider getLibrary={getLibrary}>
-          <Web3Manager>
-            <AuthenticationManager>
-              <Component {...pageProps} />
-            </AuthenticationManager>
-          </Web3Manager>
+          <Web3Manager />
+          <AuthenticationManager />
+          <Component {...pageProps} />
         </Web3ReactProvider>
       </main>
     </>
