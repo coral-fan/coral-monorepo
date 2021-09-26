@@ -14,10 +14,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    // project specific compilerOptions starts here
-    "baseUrl": ".",
+    /* custom compilerOptions starts here */
+    "baseUrl": ".", // this options enables aliases for directories in src (example: import library/hooks/...)
     "paths": {
-      "@common/*": ["../common/*/src"]
+      "@common/*": ["../common/*/src"] // because base url is now set to be inside the client directory, the paths for @common needs to be redefined
     },
     "typeRoots": ["types"],
     "jsxImportSource": "@emotion/react" /* Enable React component to accept css prop */
