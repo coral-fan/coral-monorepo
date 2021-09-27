@@ -1,15 +1,19 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
     "noImplicitReturns": true,
-    "noUnusedLocals": true,
     "outDir": "dist",
     "sourceMap": true,
     "strict": true,
     "target": "es2017",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    /* custom compilerOptions starts here */
+    "baseUrl": ".", // this options enables aliases for directories in src (example: import library/hooks/...)
+    "paths": {
+      "*": ["src/*"],
+      "@common/*": ["../common/*/src"]
+    }
+    /* custom compilerOptions ends here */
   },
-  "compileOnSave": true,
   "include": ["src"]
 }

@@ -3,9 +3,8 @@
   "version": "0.0.1",
   "scripts": {
     "lint": "eslint --ext .js,.ts .",
-    "build": "webpack --progress --color --stats-error-details",
-    "build:watch": "yarn build --watch --mode=development",
-    "start": "yarn build --mode=development && firebase emulators:start --only functions",
+    "build": "tsc",
+    "start": "yarn build && firebase emulators:start --only functions",
     "shell": "yarn build && firebase functions:shell",
     "serve": "yarn shell",
     "deploy": "firebase deploy --only functions",

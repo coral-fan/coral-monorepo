@@ -2,7 +2,7 @@ import { isAddress } from '@ethersproject/address';
 import { verifyMessage } from '@ethersproject/wallet';
 
 import { getAuthenticationMessage } from '@common/utils';
-import { getExpress, getFirebaseAdmin, getNonce } from '../utils';
+import { getExpress, getFirebaseAdmin, getNonce } from 'utils';
 
 const app = getExpress();
 const admin = getFirebaseAdmin();

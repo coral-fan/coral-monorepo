@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "sourceMap": true,
-    "baseUrl": ".",
-    "paths": {
-      "@common/*": ["workspaces/common/*/src"]
-    }
-  }
-}
