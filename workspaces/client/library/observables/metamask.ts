@@ -1,19 +1,26 @@
-import { fromEvent, Observable, share } from 'rxjs';
+import { fromEvent, share } from 'rxjs';
 
-// a ref is used to in order to memoize the chainId observable. Casted to any so properties can be modified
-const ref = {} as any;
+interface Reference<T> {
+  value: T | undefined;
+}
 
-export const getChainId$ = (): Observable<string> => {
-  if (typeof window === 'undefined') {
-    throw new Error('getChainId$ should only be called client side.');
-  }
-  // checks if chainId$ are both not undefined
-  if (!ref.chainId$) {
-    // pipes share so subscriptions can be multi-casted
-    const chainId$ = fromEvent<string>(window.ethereum as any, 'chainChanged').pipe(share());
+function getRefValue<T>(getValue: () => T, tag?: string): () => T {
+  const ref: Reference<T> = { value: undefined };
 
-    ref.chainId$ = chainId$;
-  }
+  return () => {
+    if (typeof window === 'undefined') {
+      throw new Error(`${tag ? tag : 'This function'} should only be called client side.`);
+    }
 
-  return ref.chainId$;
-};
+    if (!ref.value) {
+      ref.value = getValue();
+    }
+
+    return ref.value;
+  };
+}
+
+export const getChainId$ = getRefValue(
+  () => fromEvent<string>(window.ethereum as any, 'chainChanged').pipe(share()),
+  'getChainId$'
+);
