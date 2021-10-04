@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useWeb3 from '../web3';
 import axios from 'axios';
-import { signInWithCustomToken, getAuth, UserCredential } from 'firebase/auth';
+import { signInWithCustomToken, getAuth } from 'firebase/auth';
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
 import { setCookie } from 'nookies';
