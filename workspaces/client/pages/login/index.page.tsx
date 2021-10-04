@@ -1,7 +1,7 @@
 import { Button } from 'components/ui';
 import { useLogin } from 'library/hooks/authentication';
 
-export default function login() {
+export default function Login() {
   const { login, isLoggingIn, loginError } = useLogin();
 
   if (loginError) {
