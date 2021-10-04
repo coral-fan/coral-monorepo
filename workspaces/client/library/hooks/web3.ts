@@ -24,6 +24,7 @@ export default function useWeb3() {
 
   const getConnector = useCallback(
     () => (connector ?? window.ethereum ? injectedConnector : openLoginConnector),
+    /* eslint react-hooks/exhaustive-deps: 'off' -- connector will never change. */
     [connector]
   );
 

@@ -18,25 +18,29 @@ export default function AuthenticationManager() {
     });
   }, []);
 
-  useEffect(() => {
-    const { ethereum } = window;
+  useEffect(
+    () => {
+      const { ethereum } = window;
 
-    if (ethereum) {
-      const chainId$ = getChainId$();
-      const target = ethereum as any;
+      if (ethereum) {
+        const chainId$ = getChainId$();
+        const target = ethereum as any;
 
-      const accounts$ = fromEvent(target, 'accountsChanged');
+        const accounts$ = fromEvent(target, 'accountsChanged');
 
-      // TODO: not sure why I need to explictly invoke logout...need to look into this
-      const accountsSubscription = accounts$.subscribe(() => logout());
-      const chainIdSubscription = chainId$.subscribe(() => logout());
+        // TODO: not sure why I need to explictly invoke logout...need to look into this
+        const accountsSubscription = accounts$.subscribe(() => logout());
+        const chainIdSubscription = chainId$.subscribe(() => logout());
 
-      return () =>
-        [accountsSubscription, chainIdSubscription].forEach((subscription) =>
-          subscription.unsubscribe()
-        );
-    }
-  }, []);
+        return () =>
+          [accountsSubscription, chainIdSubscription].forEach((subscription) =>
+            subscription.unsubscribe()
+          );
+      }
+    },
+    /* eslint react-hooks/exhaustive-deps: 'off' -- logout will never change. */
+    []
+  );
 
   return <></>;
 }
