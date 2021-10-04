@@ -24,6 +24,7 @@ export default function AuthenticationManager() {
 
       if (ethereum) {
         const chainId$ = getChainId$();
+        /* eslint @typescript-eslint/no-explicit-any: 'off' -- window.ethereum must be coerced as any so that fromEvent will accept the value as a EventEmitter. */
         const target = ethereum as any;
 
         const accounts$ = fromEvent(target, 'accountsChanged');
