@@ -1,4 +1,4 @@
-import { fromEvent, Observable, share, startWith } from 'rxjs';
+import { fromEvent, Observable, share } from 'rxjs';
 
 // a ref is used to in order to memoize the chainId observable. Casted to any so properties can be modified
 const ref = {} as any;
