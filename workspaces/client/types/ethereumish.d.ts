@@ -1,9 +1,4 @@
-import {
-  ProviderMessage,
-  ProviderRpcError,
-  ProviderConnectInfo,
-  RequestArguments,
-} from 'hardhat/types';
+import { ProviderMessage, ProviderRpcError, ProviderConnectInfo } from 'hardhat/types';
 
 export interface EthereumEvent {
   connect: ProviderConnectInfo;
@@ -22,18 +17,11 @@ export interface Ethereumish {
   isMetaMask?: boolean;
   isStatus?: boolean;
   networkVersion: string;
-  selectedAddress: any;
 
   on<K extends EventKeys>(event: K, eventHandler: EventHandler<K>): void;
   removeEventListener<K extends EventKeys>(event: K, eventHandler: EventHandler<K>): void;
-  enable(): Promise<any>;
-  request?: (request: { method: string; params?: Array<any> }) => Promise<any>;
-  /**
-   * @deprecated
-   */
-  send?: (
-    request: { method: string; params?: Array<any> },
-    callback: (error: any, response: any) => void
-  ) => void;
-  sendAsync: (request: RequestArguments) => Promise<unknown>;
+  request?: (request: {
+    method: string;
+    params?: unknown[] | Record<string, unknown>;
+  }) => Promise<uknown>;
 }
