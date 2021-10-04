@@ -6,10 +6,6 @@ import { useLogin } from 'library/hooks/authentication';
 import { IS_OPEN_LOGIN_PENDING } from 'consts';
 import { parseCookies } from 'nookies';
 
-interface props {
-  children: JSX.Element;
-}
-
 export default function Web3Manager() {
   const { getConnector, activate } = useWeb3();
   const { login } = useLogin();
