@@ -1,4 +1,4 @@
-import { useLogout } from 'library/hooks/authentication';
+import { useLogout } from 'libraries/hooks/authentication';
 import axios from 'axios';
 import { useEffect } from 'react';
 

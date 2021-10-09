@@ -7,7 +7,7 @@ import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
 import { setCookie } from 'nookies';
 
-import { OpenLoginConnector } from 'library/Connectors/OpenLoginConnector';
+import { OpenLoginConnector } from 'libraries/Connectors/OpenLoginConnector';
 import { IS_OPEN_LOGIN_PENDING } from 'consts';
 import { getAuthenticationMessage } from '@common/utils';
 

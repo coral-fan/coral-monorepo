@@ -1,8 +1,8 @@
 import { getAuth } from '@firebase/auth';
 import { useEffect } from 'react';
-import { useLogout } from 'library/hooks/authentication';
+import { useLogout } from 'libraries/hooks/authentication';
 import { fromEvent } from 'rxjs';
-import { getChainId$ } from 'library/observables/metamask';
+import { getChainId$ } from 'libraries/observables/metamask';
 
 export default function AuthenticationManager() {
   const logout = useLogout();

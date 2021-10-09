@@ -3,7 +3,7 @@ import { JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
 import { useWeb3React } from '@web3-react/core';
 import { InjectedConnector } from '@web3-react/injected-connector';
 
-import { OpenLoginConnector } from 'library/Connectors/OpenLoginConnector';
+import { OpenLoginConnector } from 'libraries/Connectors/OpenLoginConnector';
 
 import { SUPPORTED_NETWORKS } from 'consts';
 

@@ -12,7 +12,7 @@ import { Web3Manager, AuthenticationManager } from 'components/managers';
 
 import { FirebaseError } from 'firebase-admin';
 
-import { initializeFirebaseApp, getFirebaseAdmin } from 'library/utils/firebase';
+import { initializeFirebaseApp, getFirebaseAdmin } from 'libraries/utils/firebase';
 
 import { LOGIN_ROUTE, SUPPORTED_NETWORKS } from 'consts';
 
@@ -22,7 +22,7 @@ import 'styles/global.css';
 import { useEffect } from 'react';
 import { map, startWith } from 'rxjs';
 
-import { getChainId$ } from 'library/observables/metamask';
+import { getChainId$ } from 'libraries/observables/metamask';
 
 initializeFirebaseApp();
 

@@ -1,8 +1,8 @@
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { useEffect } from 'react';
-import { OpenLoginConnector } from 'library/Connectors/OpenLoginConnector';
-import useWeb3 from 'library/hooks/web3';
-import { useLogin } from 'library/hooks/authentication';
+import { OpenLoginConnector } from 'libraries/Connectors/OpenLoginConnector';
+import useWeb3 from 'libraries/hooks/web3';
+import { useLogin } from 'libraries/hooks/authentication';
 import { IS_OPEN_LOGIN_PENDING } from 'consts';
 import { parseCookies } from 'nookies';
 
