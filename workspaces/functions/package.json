@@ -4,7 +4,8 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts .",
     "build": "webpack --progress --color --stats-error-details",
-    "start": "yarn build && firebase emulators:start --only functions",
+    "build:dev": "yarn build --mode=development",
+    "start": "yarn build:dev && firebase emulators:start --only functions",
     "shell": "yarn build && firebase functions:shell",
     "serve": "yarn shell",
     "deploy": "firebase deploy --only functions",
