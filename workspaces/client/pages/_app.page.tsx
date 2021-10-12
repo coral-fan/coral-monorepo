@@ -36,17 +36,19 @@ const getLibrary = (provider: ExternalProvider | JsonRpcProvider | undefined) =>
 const getIsNetworkSupported = (chainId: string) => SUPPORTED_NETWORKS.includes(parseInt(chainId));
 const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
-    const isNetworkSupported = getIsNetworkSupported(window.ethereum?.chainId ?? '0xa86a');
-    const isNetworkSupported$ = getChainId$().pipe(
-      map(getIsNetworkSupported),
-      startWith(isNetworkSupported)
-    );
+    if (window.ethereum) {
+      const isNetworkSupported = getIsNetworkSupported(window?.ethereum?.chainId ?? '0xa86a');
+      const isNetworkSupported$ = getChainId$().pipe(
+        map(getIsNetworkSupported),
+        startWith(isNetworkSupported)
+      );
 
-    const subscription = isNetworkSupported$.subscribe((isNetworkSupported) =>
-      console.log(isNetworkSupported)
-    );
+      const subscription = isNetworkSupported$.subscribe((isNetworkSupported) =>
+        console.log(isNetworkSupported)
+      );
 
-    return () => subscription.unsubscribe();
+      return () => subscription.unsubscribe();
+    }
   }, []);
 
   return (
