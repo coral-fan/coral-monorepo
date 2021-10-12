@@ -46,28 +46,33 @@ export const useLogin = () => {
 
     const connector = getConnector();
 
-    activate(connector);
+    await activate(connector);
 
     const signer =
       connector instanceof OpenLoginConnector
         ? (connector.wallet as Wallet)
         : new Web3Provider(await connector.getProvider()).getSigner();
 
-    const address = await signer.getAddress();
+    // check if signer exists in case user closes out of open login modal
+    if (signer) {
+      const address = await signer.getAddress();
 
-    fetchNonce(address)
-      .then(({ data: { nonce } }) => signAuthenticatedMessage(signer, nonce))
-      .then(fetchFirebaseAuthToken(address))
-      .then(({ data: { ['Bearer Token']: token } }) => signInWithCustomToken(getAuth(), token))
-      .then((userCredentials) => userCredentials.user.getIdToken())
-      .then((idToken) => {
-        setCookie(undefined, 'token', idToken, { path: '/' });
-        router.push((router.query.redirect as string) ?? '/');
-      })
-      .catch((error) => {
-        setLoginError(error);
-        setIsLoggingIn(false);
-      });
+      fetchNonce(address)
+        .then(({ data: { nonce } }) => signAuthenticatedMessage(signer, nonce))
+        .then(fetchFirebaseAuthToken(address))
+        .then(({ data: { ['Bearer Token']: token } }) => signInWithCustomToken(getAuth(), token))
+        .then((userCredentials) => userCredentials.user.getIdToken())
+        .then((idToken) => {
+          setCookie(undefined, 'token', idToken, { path: '/' });
+          router.push((router.query.redirect as string) ?? '/');
+        })
+        .catch((error) => {
+          setLoginError(error);
+          setIsLoggingIn(false);
+        });
+    } else {
+      setIsLoggingIn(false);
+    }
   };
 
   return { login, isLoggingIn, loginError };
