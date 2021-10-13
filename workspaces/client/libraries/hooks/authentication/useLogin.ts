@@ -46,7 +46,7 @@ export const useLogin = () => {
 
     const connector = getConnector();
 
-    await activate(connector);
+    await activate(connector, () => setIsLoggingIn(false));
 
     const signer =
       connector instanceof OpenLoginConnector
