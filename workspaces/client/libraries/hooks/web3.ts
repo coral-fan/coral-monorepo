@@ -5,14 +5,14 @@ import { InjectedConnector } from '@web3-react/injected-connector';
 
 import { OpenLoginConnector } from 'libraries/Connectors/OpenLoginConnector';
 
-import { SUPPORTED_NETWORKS } from 'consts';
+import { SUPPORTED_CHAIN_IDS } from 'consts';
 
 export default function useWeb3() {
   const { library, chainId, account, active, error, activate, deactivate, setError, connector } =
     useWeb3React<JsonRpcProvider | Web3Provider>();
 
   const injectedConnector = useMemo(
-    () => new InjectedConnector({ supportedChainIds: SUPPORTED_NETWORKS }),
+    () => new InjectedConnector({ supportedChainIds: SUPPORTED_CHAIN_IDS }),
     []
   );
   const openLoginConnector = useMemo(() => new OpenLoginConnector(), []);

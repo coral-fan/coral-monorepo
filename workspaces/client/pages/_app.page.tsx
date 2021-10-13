@@ -14,7 +14,7 @@ import { FirebaseError } from 'firebase-admin';
 
 import { initializeFirebaseApp, getFirebaseAdmin } from 'libraries/utils/firebase';
 
-import { LOGIN_ROUTE, SUPPORTED_NETWORKS } from 'consts';
+import { LOGIN_ROUTE, SUPPORTED_CHAIN_IDS } from 'consts';
 
 import { globalTokens } from 'styles/tokens';
 
@@ -33,7 +33,8 @@ const getLibrary = (provider: ExternalProvider | JsonRpcProvider | undefined) =>
   return undefined;
 };
 
-const getIsNetworkSupported = (chainId: string) => SUPPORTED_NETWORKS.includes(parseInt(chainId));
+const getIsNetworkSupported = (chainId: string) => SUPPORTED_CHAIN_IDS.includes(parseInt(chainId));
+
 const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
     if (window.ethereum) {
