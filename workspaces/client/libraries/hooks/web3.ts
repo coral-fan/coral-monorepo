@@ -22,11 +22,10 @@ export default function useWeb3() {
     [connector, library]
   );
 
-  // TODO: figure what why connector needed to be removed from dependency array
   const getConnector = useCallback(
-    () => (connector ?? window.ethereum ? injectedConnector : openLoginConnector),
+    () => connector ?? (window.ethereum ? injectedConnector : openLoginConnector),
     /* eslint react-hooks/exhaustive-deps: 'off' -- connector will never change. */
-    []
+    [connector]
   );
 
   return {
