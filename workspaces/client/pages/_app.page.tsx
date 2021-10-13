@@ -34,7 +34,7 @@ const getIsNetworkSupported = (chainId: string) => SUPPORTED_CHAIN_IDS.includes(
 const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
     if (window.ethereum) {
-      const isNetworkSupported = getIsNetworkSupported(window?.ethereum?.chainId ?? '0xa86a');
+      const isNetworkSupported = getIsNetworkSupported(window.ethereum.chainId);
       const isNetworkSupported$ = getChainId$().pipe(
         map(getIsNetworkSupported),
         startWith(isNetworkSupported)
