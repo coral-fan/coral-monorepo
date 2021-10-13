@@ -1,26 +1,22 @@
 import type { AppContext, AppProps } from 'next/app';
 import Head from 'next/head';
-
-import { Web3ReactProvider } from '@web3-react/core';
-import { ExternalProvider, JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
-
-import { destroyCookie, parseCookies } from 'nookies';
-
-import { Global } from '@emotion/react';
-
-import { Web3Manager, AuthenticationManager } from 'components/managers';
-
 import { FirebaseError } from 'firebase-admin';
+
+import { useEffect } from 'react';
+import { Global } from '@emotion/react';
+import { Web3ReactProvider } from '@web3-react/core';
+
+import { ExternalProvider, JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
+import { destroyCookie, parseCookies } from 'nookies';
+import { map, startWith } from 'rxjs';
 
 import { initializeFirebaseApp, getFirebaseAdmin } from 'libraries/utils/firebase';
 
 import { LOGIN_ROUTE, SUPPORTED_CHAIN_IDS } from 'consts';
 
 import { globalTokens } from 'styles/tokens';
-
 import 'styles/global.css';
-import { useEffect } from 'react';
-import { map, startWith } from 'rxjs';
+import { Web3Manager, AuthenticationManager } from 'components/managers';
 
 import { getChainId$ } from 'libraries/observables/metamask';
 
