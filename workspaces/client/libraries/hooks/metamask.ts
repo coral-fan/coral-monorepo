@@ -1,28 +1,23 @@
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { fromEvent, share } from 'rxjs';
 
-interface Reference<T> {
-  value: T | undefined;
-}
+function useRefValue<T>(getValue: () => T, tag?: string) {
+  const ref = useRef<undefined | T>(undefined);
 
-function getRefValue<T>(getValue: () => T, tag?: string): () => T {
-  const ref: Reference<T> = { value: undefined };
-
-  return () => {
+  return useCallback(() => {
     if (typeof window === 'undefined') {
       throw new Error(`${tag ? tag : 'This function'} should only be called client side.`);
     }
-
-    if (!ref.value) {
-      ref.value = getValue();
+    if (!ref.current) {
+      ref.current = getValue();
     }
-
-    return ref.value;
-  };
+    return ref.current;
+  }, [tag, getValue]);
 }
 
-export const getChainId$ = getRefValue(
-  /* eslint @typescript-eslint/no-explicit-any: 'off' -- window.ethereum must be coerced as any so that fromEvent will accept the value as a EventEmitter*/
-  () => fromEvent<string>(window.ethereum as any, 'chainChanged').pipe(share()),
-  'getChainId$'
-);
+export const useGetChainId$ = () =>
+  useRefValue(
+    /* eslint @typescript-eslint/no-explicit-any: 'off' -- window.ethereum must be coerced as any so that fromEvent will accept the value as a EventEmitter*/
+    () => fromEvent<string>(window.ethereum as any, 'chainChanged').pipe(share()),
+    'getChainId$'
+  );

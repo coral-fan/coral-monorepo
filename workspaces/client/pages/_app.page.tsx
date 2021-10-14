@@ -17,8 +17,7 @@ import { LOGIN_ROUTE, SUPPORTED_CHAIN_IDS } from 'consts';
 import { globalTokens } from 'styles/tokens';
 import 'styles/global.css';
 import { Web3Manager, AuthenticationManager } from 'components/managers';
-
-import { getChainId$ } from 'libraries/observables/metamask';
+import { useGetChainId$ } from 'libraries/hooks/metamask';
 
 initializeFirebaseApp();
 
@@ -32,6 +31,8 @@ const getLibrary = (provider: ExternalProvider | JsonRpcProvider | undefined) =>
 const getIsNetworkSupported = (chainId: string) => SUPPORTED_CHAIN_IDS.includes(parseInt(chainId));
 
 const App = ({ Component, pageProps }: AppProps) => {
+  const getChainId$ = useGetChainId$();
+
   useEffect(() => {
     if (window.ethereum) {
       const isNetworkSupported = getIsNetworkSupported(window.ethereum.chainId);
@@ -40,13 +41,11 @@ const App = ({ Component, pageProps }: AppProps) => {
         startWith(isNetworkSupported)
       );
 
-      const subscription = isNetworkSupported$.subscribe((isNetworkSupported) =>
-        console.log(isNetworkSupported)
-      );
+      const subscription = isNetworkSupported$.subscribe(console.log);
 
       return () => subscription.unsubscribe();
     }
-  }, []);
+  }, [getChainId$]);
 
   return (
     <>
