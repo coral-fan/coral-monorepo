@@ -1,7 +1,7 @@
 import { getAuth } from '@firebase/auth';
 import { useEffect } from 'react';
 import { useLogout } from 'libraries/hooks/authentication';
-import { fromEvent } from 'rxjs';
+import { fromEvent, merge } from 'rxjs';
 import { useGetChainId$ } from 'libraries/hooks/metamask';
 
 export default function AuthenticationManager() {
@@ -17,32 +17,19 @@ export default function AuthenticationManager() {
         isLoggingOut = false;
       }
     });
-  }, []);
+  }, [logout]);
 
-  useEffect(
-    () => {
-      const { ethereum } = window;
-
-      if (ethereum) {
-        const chainId$ = getChainId$();
+  useEffect(() => {
+    if (window.ethereum) {
+      const subscription = merge(
+        getChainId$(),
         /* eslint @typescript-eslint/no-explicit-any: 'off' -- window.ethereum must be coerced as any so that fromEvent will accept the value as a EventEmitter. */
-        const target = ethereum as any;
+        fromEvent(window.ethereum as any, 'accountsChanged')
+      ).subscribe(logout);
 
-        const accounts$ = fromEvent(target, 'accountsChanged');
-
-        // TODO: not sure why I need to explictly invoke logout...need to look into this
-        const accountsSubscription = accounts$.subscribe(() => logout());
-        const chainIdSubscription = chainId$.subscribe(() => logout());
-
-        return () =>
-          [accountsSubscription, chainIdSubscription].forEach((subscription) =>
-            subscription.unsubscribe()
-          );
-      }
-    },
-    /* eslint react-hooks/exhaustive-deps: 'off' -- logout will never change. */
-    []
-  );
+      return () => subscription.unsubscribe();
+    }
+  }, [getChainId$, logout]);
 
   return <></>;
 }
