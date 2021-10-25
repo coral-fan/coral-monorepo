@@ -82,9 +82,7 @@ App.getInitialProps = async (appContext: AppContext) => {
         .catch((error: FirebaseError) => {
           console.log(error);
           // remove id token cookie if the id token has expired
-          if (error.code === 'auth/id-token-expired') {
-            destroyCookie({ res }, 'token');
-          }
+          destroyCookie({ res }, 'token');
           // if the current route isn't the login route, redirect to the login route
           if (ctx.pathname !== LOGIN_ROUTE) {
             res.writeHead(302, {
