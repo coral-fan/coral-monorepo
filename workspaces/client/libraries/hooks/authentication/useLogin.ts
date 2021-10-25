@@ -39,7 +39,9 @@ export const useLogin = () => {
     }
   }, []);
 
-  const [loginError, setLoginError] = useState(null);
+  // should probably look into how to type errors better
+  /* eslint @typescript-eslint/no-explicit-any: 'off' -- errors will always be typed as any */
+  const [loginError, setLoginError] = useState<any>(null);
 
   const login = async () => {
     setIsLoggingIn(true);
