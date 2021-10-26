@@ -14,29 +14,33 @@ export default function Web3Manager() {
     const { token } = parseCookies();
     const connector = getConnector();
 
-    // open login auto login logic. is_open_login_pending is set to true during open login redirect
-    if (
-      (token || sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) &&
-      connector instanceof OpenLoginConnector
-    ) {
-      // active must be checked, or the useEffect will rerun indefinitely
-      if (!active) {
+    if (!active) {
+      // open login auto login logic. is_open_login_pending is set to true during open login redirect
+      if (
+        (token || sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) &&
+        connector instanceof OpenLoginConnector
+      ) {
+        // active must be checked, or the useEffect will rerun indefinitely
         login().then(() => {
-          sessionStorage.removeItem(IS_OPEN_LOGIN_PENDING);
+          if (sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) {
+            sessionStorage.removeItem(IS_OPEN_LOGIN_PENDING);
+          }
+        });
+      }
+
+      // metamask auto login logic
+      if (token && connector instanceof InjectedConnector) {
+        connector.isAuthorized().then((isAuthorized) => {
+          // active must be checked, or the useEffect will rerun indefinitely
+          if (isAuthorized) {
+            activate(connector);
+          }
         });
       }
     }
-
-    // metamask auto login logic
-    if (token && connector instanceof InjectedConnector) {
-      connector.isAuthorized().then((isAuthorized) => {
-        // active must be checked, or the useEffect will rerun indefinitely
-        if (isAuthorized && !active) {
-          activate(connector);
-        }
-      });
-    }
-  }, [activate, active, getConnector, login]);
+    // TODO: look into why it reruns indefinitely at some point with an exhaustive dependency array for open login. likely has to do with issue in open login connector implementation...
+    /* eslint react-hooks/exhaustive-deps: 'off' -- dependency array must be empty or it will run in an infinite loop. */
+  }, []);
 
   return <></>;
 }
