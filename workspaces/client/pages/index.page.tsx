@@ -1,5 +1,5 @@
-import { useLogout } from 'libraries/hooks/authentication';
 import axios from 'axios';
+import { useAuthentication } from 'libraries/providers/authentication';
 import { useEffect } from 'react';
 
 const wyreAxios = axios.create({
@@ -57,14 +57,14 @@ const wyreTest = async () => {
   console.log(createOrderResponse);
 };
 export default function Home() {
+  const { isAuthenticated } = useAuthentication();
   useEffect(() => {
     wyreTest();
   }, []);
 
   return (
     <>
-      <div>You authenticated.</div>
-      <button onClick={useLogout()}>Logout</button>
+      <div>You are {`${isAuthenticated ? 'authenticated' : 'not authenticated'}.`}</div>
     </>
   );
 }

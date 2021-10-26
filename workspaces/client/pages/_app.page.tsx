@@ -1,4 +1,5 @@
 import type { AppContext, AppProps } from 'next/app';
+import App from 'next/app';
 import Head from 'next/head';
 import { FirebaseError } from 'firebase-admin';
 
@@ -12,12 +13,14 @@ import { map, startWith } from 'rxjs';
 
 import { initializeFirebaseApp, getFirebaseAdmin } from 'libraries/utils/firebase';
 
-import { LOGIN_ROUTE, SUPPORTED_CHAIN_IDS } from 'consts';
+import { SUPPORTED_CHAIN_IDS } from 'consts';
 
 import { globalTokens } from 'styles/tokens';
 import 'styles/global.css';
 import { Web3Manager, AuthenticationManager } from 'components/managers';
 import { useGetChainId$ } from 'libraries/hooks/metamask';
+import NavigationBar from 'components/NavigationBar';
+import { AuthenticationProvider } from 'libraries/providers/authentication';
 
 initializeFirebaseApp();
 
@@ -30,7 +33,11 @@ const getLibrary = (provider: ExternalProvider | JsonRpcProvider | undefined) =>
 
 const getIsNetworkSupported = (chainId: string) => SUPPORTED_CHAIN_IDS.includes(parseInt(chainId));
 
-const App = ({ Component, pageProps }: AppProps) => {
+const CustomApp = ({
+  Component,
+  pageProps,
+  authenticated,
+}: AppProps & { authenticated: boolean }) => {
   const getChainId$ = useGetChainId$();
 
   useEffect(() => {
@@ -60,15 +67,19 @@ const App = ({ Component, pageProps }: AppProps) => {
         <Web3ReactProvider getLibrary={getLibrary}>
           <Web3Manager />
           <AuthenticationManager />
-          <Component {...pageProps} />
+          <AuthenticationProvider authenticated={authenticated}>
+            <NavigationBar />
+            <Component {...pageProps} />
+          </AuthenticationProvider>
         </Web3ReactProvider>
       </main>
     </>
   );
 };
 
-// TODO: move this logic to a reusable createGetServerSideProps functions that can be shared for pages that require authentication?
-App.getInitialProps = async (appContext: AppContext) => {
+CustomApp.getInitialProps = async (appContext: AppContext) => {
+  // below is necessary as per next.js docs (https://nextjs.org/docs/advanced-features/custom-app)
+  const initialProps = await App.getInitialProps(appContext);
   const { ctx } = appContext;
   // check if running server side since res object only exists on server side
   if (ctx.res) {
@@ -83,37 +94,11 @@ App.getInitialProps = async (appContext: AppContext) => {
           console.log(error);
           // remove id token cookie if the id token has expired
           destroyCookie({ res }, 'token');
-          // if the current route isn't the login route, redirect to the login route
-          if (ctx.pathname !== LOGIN_ROUTE) {
-            res.writeHead(302, {
-              Location:
-                ctx.pathname === '/'
-                  ? LOGIN_ROUTE
-                  : `${LOGIN_ROUTE}?redirect=${ctx.pathname.replace('/', '')}`,
-            });
-            res.end();
-          }
+          return { ...initialProps, authenticated: false };
         });
-      if (ctx.pathname === LOGIN_ROUTE) {
-        res.writeHead(302, { Location: '/' });
-        res.end();
-      }
-      // if cookie doesn't exist, redirect to login page
-    } else {
-      if (ctx.pathname !== LOGIN_ROUTE) {
-        res.writeHead(302, {
-          Location:
-            ctx.pathname === '/'
-              ? LOGIN_ROUTE
-              : `${LOGIN_ROUTE}?redirect=${ctx.pathname.replace('/', '')}`,
-        });
-        res.end();
-      }
     }
-  } else {
-    // client side logic goes here
   }
-  return {};
+  return { ...initialProps, authenticated: true };
 };
 
-export default App;
+export default CustomApp;

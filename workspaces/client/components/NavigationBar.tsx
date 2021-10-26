@@ -1,10 +1,13 @@
 import { Flex, Button } from './ui';
 
-import { useLogin } from 'libraries/hooks/authentication';
+import { useLogin, useLogout } from 'libraries/hooks/authentication';
 import { useEffect } from 'react';
+import { useAuthentication } from 'libraries/providers/authentication';
 
 export default function NavigationBar() {
+  const { isAuthenticated } = useAuthentication();
   const { login, isLoggingIn, loginError } = useLogin();
+  const logout = useLogout();
 
   useEffect(() => {
     loginError && console.log(loginError);
@@ -12,7 +15,11 @@ export default function NavigationBar() {
 
   return (
     <Flex justifyContent={'flex-end'} width={'100%'}>
-      <Button onClick={login}>{isLoggingIn ? 'Logging In...' : 'Login'}</Button>
+      {isAuthenticated ? (
+        <Button onClick={logout}>Logout</Button>
+      ) : (
+        <Button onClick={login}>{isLoggingIn ? 'Logging In...' : 'Login'}</Button>
+      )}
     </Flex>
   );
 }
