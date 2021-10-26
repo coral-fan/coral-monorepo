@@ -19,6 +19,7 @@ export default function Web3Manager() {
       (token || sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) &&
       connector instanceof OpenLoginConnector
     ) {
+      // active must be checked, or the useEffect will rerun indefinitely
       if (!active) {
         login().then(() => {
           sessionStorage.removeItem(IS_OPEN_LOGIN_PENDING);
@@ -29,6 +30,7 @@ export default function Web3Manager() {
     // metamask auto login logic
     if (token && connector instanceof InjectedConnector) {
       connector.isAuthorized().then((isAuthorized) => {
+        // active must be checked, or the useEffect will rerun indefinitely
         if (isAuthorized && !active) {
           activate(connector);
         }
