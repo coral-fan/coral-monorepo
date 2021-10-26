@@ -20,7 +20,7 @@ import 'styles/global.css';
 import { Web3Manager, AuthenticationManager } from 'components/managers';
 import { useGetChainId$ } from 'libraries/hooks/metamask';
 import NavigationBar from 'components/NavigationBar';
-import { AuthenticationProvider } from 'libraries/providers/authentication';
+import { AuthenticationProvider } from 'libraries/authentication/provider';
 
 initializeFirebaseApp();
 
@@ -65,9 +65,9 @@ const CustomApp = ({
       </Head>
       <main>
         <Web3ReactProvider getLibrary={getLibrary}>
-          <Web3Manager />
-          <AuthenticationManager />
           <AuthenticationProvider authenticated={authenticated}>
+            <Web3Manager />
+            <AuthenticationManager />
             <NavigationBar />
             <Component {...pageProps} />
           </AuthenticationProvider>

@@ -2,7 +2,7 @@ import { InjectedConnector } from '@web3-react/injected-connector';
 import { useEffect } from 'react';
 import { OpenLoginConnector } from 'libraries/Connectors/OpenLoginConnector';
 import useWeb3 from 'libraries/hooks/web3';
-import { useLogin } from 'libraries/hooks/authentication';
+import { useLogin } from 'libraries/authentication/hooks';
 import { IS_OPEN_LOGIN_PENDING } from 'consts';
 import { parseCookies } from 'nookies';
 
@@ -20,18 +20,12 @@ export default function Web3Manager() {
         (token || sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) &&
         connector instanceof OpenLoginConnector
       ) {
-        // active must be checked, or the useEffect will rerun indefinitely
-        login().then(() => {
-          if (sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) {
-            sessionStorage.removeItem(IS_OPEN_LOGIN_PENDING);
-          }
-        });
+        login();
       }
 
       // metamask auto login logic
       if (token && connector instanceof InjectedConnector) {
         connector.isAuthorized().then((isAuthorized) => {
-          // active must be checked, or the useEffect will rerun indefinitely
           if (isAuthorized) {
             activate(connector);
           }

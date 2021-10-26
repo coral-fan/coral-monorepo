@@ -1,12 +1,11 @@
 import { Flex, Button } from './ui';
-
-import { useLogin, useLogout } from 'libraries/hooks/authentication';
 import { useEffect } from 'react';
-import { useAuthentication } from 'libraries/providers/authentication';
+import { useAuthentication, useLogin, useLogout } from 'libraries/authentication/hooks';
 
 export default function NavigationBar() {
-  const { isAuthenticated } = useAuthentication();
+  const [isAuthenticated] = useAuthentication();
   const { login, isLoggingIn, loginError } = useLogin();
+
   const logout = useLogout();
 
   useEffect(() => {
