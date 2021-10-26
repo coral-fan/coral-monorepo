@@ -81,10 +81,11 @@ CustomApp.getInitialProps = async (appContext: AppContext) => {
   // below is necessary as per next.js docs (https://nextjs.org/docs/advanced-features/custom-app)
   const initialProps = await App.getInitialProps(appContext);
   const { ctx } = appContext;
-  // check if running server side since res object only exists on server side
-  if (ctx.res) {
+  const isServerSide = ctx.hasOwnProperty('res');
+  // conditional logic to retrieve cookies as retrieval is handled differently on the server & client
+  const cookies = isServerSide ? parseCookies(ctx) : parseCookies();
+  if (isServerSide) {
     const { res } = ctx;
-    const cookies = parseCookies(ctx);
     if (cookies.token) {
       const admin = await getFirebaseAdmin();
       await admin
@@ -94,11 +95,11 @@ CustomApp.getInitialProps = async (appContext: AppContext) => {
           console.log(error);
           // remove id token cookie if the id token has expired
           destroyCookie({ res }, 'token');
-          return { ...initialProps, authenticated: false };
         });
     }
   }
-  return { ...initialProps, authenticated: true };
+
+  return { ...initialProps, authenticated: cookies.hasOwnProperty('token') };
 };
 
 export default CustomApp;
