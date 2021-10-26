@@ -12,8 +12,8 @@ export const useLogout = () => {
       deactivate();
     }
     if (token) {
-      destroyCookie(undefined, 'token');
       await getAuth().signOut();
+      destroyCookie(undefined, 'token');
     }
 
     setIsAuthenticated(false);
