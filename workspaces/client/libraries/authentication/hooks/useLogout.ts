@@ -7,7 +7,7 @@ export const useLogout = () => {
   const { active, deactivate } = useWeb3();
   const { token } = parseCookies();
   const { setIsAuthenticated } = useAuthenticationContext();
-  return async () => {
+  return async function logout() {
     if (active) {
       deactivate();
     }
