@@ -17,7 +17,7 @@ const LoginButton = () => {
   );
 };
 
-export default function NavigationBar() {
+export const NavigationBar = () => {
   const { loginError } = useLogin();
   const [isAuthenticated] = useAuthentication();
 
@@ -30,4 +30,4 @@ export default function NavigationBar() {
       {isAuthenticated ? <LogoutButton /> : <LoginButton />}
     </Flex>
   );
-}
+};
