@@ -4,12 +4,10 @@ import Head from 'next/head';
 import { FirebaseError } from 'firebase-admin';
 
 import { Global } from '@emotion/react';
-import { useEffect, useState } from 'react';
 import { Web3ReactProvider } from '@web3-react/core';
 
 import { ExternalProvider, JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
 import { destroyCookie, parseCookies } from 'nookies';
-import { map, startWith } from 'rxjs';
 
 import { initializeFirebaseApp, getFirebaseAdmin } from 'libraries/utils/firebase';
 
@@ -20,9 +18,6 @@ import { AuthenticationProvider } from 'libraries/authentication/provider';
 import { Web3Manager, AuthenticationManager } from 'components/managers';
 import { NavigationBar, WrongNetworkModal } from 'components';
 
-import { useGetChainId$ } from 'libraries/hooks/metamask';
-import { SUPPORTED_CHAIN_IDS } from 'consts';
-
 initializeFirebaseApp();
 
 const getLibrary = (provider: ExternalProvider | JsonRpcProvider | undefined) => {
@@ -32,31 +27,11 @@ const getLibrary = (provider: ExternalProvider | JsonRpcProvider | undefined) =>
   return undefined;
 };
 
-const getIsNetworkSupported = (chainId: string) => SUPPORTED_CHAIN_IDS.includes(parseInt(chainId));
-
 const CustomApp = ({
   Component,
   pageProps,
   authenticated,
 }: AppProps & { authenticated: boolean }) => {
-  const getChainId$ = useGetChainId$();
-
-  const [isNetworkSupported, setIsNetworkSupported] = useState(true);
-
-  useEffect(() => {
-    if (window.ethereum) {
-      setIsNetworkSupported(getIsNetworkSupported(window.ethereum.chainId));
-      const isNetworkSupported$ = getChainId$().pipe(
-        map(getIsNetworkSupported),
-        startWith(isNetworkSupported)
-      );
-
-      const subscription = isNetworkSupported$.subscribe(setIsNetworkSupported);
-
-      return () => subscription.unsubscribe();
-    }
-  }, [getChainId$, setIsNetworkSupported, isNetworkSupported]);
-
   return (
     <>
       <Global styles={globalTokens} />
@@ -68,10 +43,10 @@ const CustomApp = ({
       </Head>
       <main>
         <Web3ReactProvider getLibrary={getLibrary}>
-          {!isNetworkSupported && <WrongNetworkModal />}
           <AuthenticationProvider authenticated={authenticated}>
             <Web3Manager />
             <AuthenticationManager />
+            <WrongNetworkModal />
             <NavigationBar />
             <Component {...pageProps} />
           </AuthenticationProvider>
