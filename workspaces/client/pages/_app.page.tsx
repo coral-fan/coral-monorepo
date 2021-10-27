@@ -41,7 +41,7 @@ const CustomApp = ({
 }: AppProps & { authenticated: boolean }) => {
   const getChainId$ = useGetChainId$();
 
-  const [isNetworkSupported, setIsNetworkSupported] = useState(false);
+  const [isNetworkSupported, setIsNetworkSupported] = useState(true);
 
   useEffect(() => {
     if (window.ethereum) {
