@@ -3,8 +3,8 @@ import App from 'next/app';
 import Head from 'next/head';
 import { FirebaseError } from 'firebase-admin';
 
-import { useEffect } from 'react';
 import { Global } from '@emotion/react';
+import { useEffect, useState } from 'react';
 import { Web3ReactProvider } from '@web3-react/core';
 
 import { ExternalProvider, JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
@@ -13,14 +13,15 @@ import { map, startWith } from 'rxjs';
 
 import { initializeFirebaseApp, getFirebaseAdmin } from 'libraries/utils/firebase';
 
-import { SUPPORTED_CHAIN_IDS } from 'consts';
-
 import { globalTokens } from 'styles/tokens';
 import 'styles/global.css';
-import { Web3Manager, AuthenticationManager } from 'components/managers';
-import { useGetChainId$ } from 'libraries/hooks/metamask';
-import NavigationBar from 'components/NavigationBar';
+
 import { AuthenticationProvider } from 'libraries/authentication/provider';
+import { Web3Manager, AuthenticationManager } from 'components/managers';
+import { NavigationBar, WrongNetworkModal } from 'components';
+
+import { useGetChainId$ } from 'libraries/hooks/metamask';
+import { SUPPORTED_CHAIN_IDS } from 'consts';
 
 initializeFirebaseApp();
 
@@ -40,20 +41,21 @@ const CustomApp = ({
 }: AppProps & { authenticated: boolean }) => {
   const getChainId$ = useGetChainId$();
 
+  const [isNetworkSupported, setIsNetworkSupported] = useState(false);
+
   useEffect(() => {
     if (window.ethereum) {
-      const isNetworkSupported = getIsNetworkSupported(window.ethereum.chainId);
+      setIsNetworkSupported(getIsNetworkSupported(window.ethereum.chainId));
       const isNetworkSupported$ = getChainId$().pipe(
         map(getIsNetworkSupported),
         startWith(isNetworkSupported)
       );
 
-      const subscription = isNetworkSupported$.subscribe(console.log);
+      const subscription = isNetworkSupported$.subscribe(setIsNetworkSupported);
 
       return () => subscription.unsubscribe();
     }
-  }, [getChainId$]);
-
+  }, [getChainId$, setIsNetworkSupported, isNetworkSupported]);
   return (
     <>
       <Global styles={globalTokens} />
@@ -65,6 +67,7 @@ const CustomApp = ({
       </Head>
       <main>
         <Web3ReactProvider getLibrary={getLibrary}>
+          {!isNetworkSupported && <WrongNetworkModal />}
           <AuthenticationProvider authenticated={authenticated}>
             <Web3Manager />
             <AuthenticationManager />
