@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { fromEvent, map, share, startWith } from 'rxjs';
 import { EventKeys } from 'types/ethereumish';
 import { useGetRefValue } from 'libraries/utils/hooks';
+import { AVALANCHE } from 'consts';
 
 export const useGetChainIdChanged$ = () =>
   useGetRefValue(
@@ -12,7 +13,7 @@ export const useGetChainIdChanged$ = () =>
   );
 
 const getIsNetworkSupported = (chainId: string) =>
-  chainId === process.env.NEXT_PUBLIC_AVALANCHE_CHAIN_ID;
+  chainId.toLocaleLowerCase() === AVALANCHE.CHAIN_ID;
 
 export const useIsNetworkSupported = () => {
   const getChainIdChanged$ = useGetChainIdChanged$();
