@@ -1,5 +1,8 @@
-import { Flex, Button } from './ui';
 import { useEffect } from 'react';
+
+import { Button } from './ui';
+import { Flex } from './layout';
+
 import { useIsAuthenticated, useLogin, useLogout } from 'libraries/authentication/hooks';
 
 const LogoutButton = () => {

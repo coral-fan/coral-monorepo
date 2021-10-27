@@ -1,7 +1,9 @@
 import { FC } from 'react';
 import ReactDOM from 'react-dom';
 import styled from '@emotion/styled';
-import { Button, Flex, Center } from '..';
+
+import { Button } from '..';
+import { Center, Flex } from 'components/layout';
 
 const Overlay = styled(Center)`
   position: fixed;
