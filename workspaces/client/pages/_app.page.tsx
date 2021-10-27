@@ -56,6 +56,7 @@ const CustomApp = ({
       return () => subscription.unsubscribe();
     }
   }, [getChainId$, setIsNetworkSupported, isNetworkSupported]);
+
   return (
     <>
       <Global styles={globalTokens} />
