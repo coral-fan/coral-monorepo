@@ -1,6 +1,6 @@
 import useAuthenticationContext from './context';
 
-export const useAuthentication = () => {
+export const useIsAuthenticated = () => {
   const { isAuthenticated, setIsAuthenticated } = useAuthenticationContext();
 
   return [isAuthenticated, setIsAuthenticated];

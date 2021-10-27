@@ -1,6 +1,6 @@
 import { Flex, Button } from './ui';
 import { useEffect } from 'react';
-import { useAuthentication, useLogin, useLogout } from 'libraries/authentication/hooks';
+import { useIsAuthenticated, useLogin, useLogout } from 'libraries/authentication/hooks';
 
 const LogoutButton = () => {
   const logout = useLogout();
@@ -19,7 +19,7 @@ const LoginButton = () => {
 
 export const NavigationBar = () => {
   const { loginError } = useLogin();
-  const [isAuthenticated] = useAuthentication();
+  const [isAuthenticated] = useIsAuthenticated();
 
   useEffect(() => {
     loginError && console.log(loginError);
