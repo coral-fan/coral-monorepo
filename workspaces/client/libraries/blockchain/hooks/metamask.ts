@@ -1,8 +1,7 @@
-import { SUPPORTED_CHAIN_IDS } from 'consts';
 import { useEffect, useState } from 'react';
 import { fromEvent, map, share, startWith } from 'rxjs';
 import { EventKeys } from 'types/ethereumish';
-import { useGetRefValue } from '../../utils/hooks';
+import { useGetRefValue } from 'libraries/utils/hooks';
 
 export const useGetChainIdChanged$ = () =>
   useGetRefValue(
@@ -12,7 +11,8 @@ export const useGetChainIdChanged$ = () =>
     false
   );
 
-const getIsNetworkSupported = (chainId: string) => SUPPORTED_CHAIN_IDS.includes(parseInt(chainId));
+const getIsNetworkSupported = (chainId: string) =>
+  chainId === process.env.NEXT_PUBLIC_AVALANCHE_CHAIN_ID;
 
 export const useIsNetworkSupported = () => {
   const getChainIdChanged$ = useGetChainIdChanged$();
