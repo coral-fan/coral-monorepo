@@ -1,6 +1,6 @@
 import { getAuth } from '@firebase/auth';
 import { useEffect } from 'react';
-import { useLogout } from 'libraries/hooks/authentication';
+import { useLogout } from 'libraries/authentication/hooks';
 import { fromEvent, merge } from 'rxjs';
 import { useGetChainId$ } from 'libraries/hooks/metamask';
 

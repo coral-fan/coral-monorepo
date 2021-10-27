@@ -1,15 +1,16 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import useWeb3 from '../web3';
+import { useState } from 'react';
 import axios from 'axios';
 import { signInWithCustomToken, getAuth } from 'firebase/auth';
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
 import { setCookie } from 'nookies';
 
-import { OpenLoginConnector } from 'libraries/Connectors/OpenLoginConnector';
-import { IS_OPEN_LOGIN_PENDING } from 'consts';
 import { getAuthenticationMessage } from '@common/utils';
+
+import { IS_OPEN_LOGIN_PENDING } from 'consts';
+import { OpenLoginConnector } from 'libraries/Connectors/OpenLoginConnector';
+import useWeb3 from 'libraries/hooks/web3';
+import useAuthenticationContext from './context';
 
 const fetchNonce = (address: string) =>
   axios.post<{ nonce: number }>('http://localhost:5001/torus-tutorial/us-central1/nonce', {
@@ -29,17 +30,10 @@ const fetchFirebaseAuthToken = (address: string) => (signedMessage: string) =>
   );
 
 export const useLogin = () => {
+  const { isLoggingIn, setIsLoggingIn, setIsAuthenticated } = useAuthenticationContext();
+
   const { activate, getConnector } = useWeb3();
-  const router = useRouter();
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
-
-  useEffect(() => {
-    if (sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) {
-      setIsLoggingIn(true);
-    }
-  }, []);
-
-  // should probably look into how to type errors better
+  //TODO: should probably look into how to type errors better
   /* eslint @typescript-eslint/no-explicit-any: 'off' -- errors will always be typed as any */
   const [loginError, setLoginError] = useState<any>(null);
 
@@ -65,8 +59,13 @@ export const useLogin = () => {
         .then(({ data: { ['Bearer Token']: token } }) => signInWithCustomToken(getAuth(), token))
         .then((userCredentials) => userCredentials.user.getIdToken())
         .then((idToken) => {
+          if (sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) {
+            sessionStorage.removeItem(IS_OPEN_LOGIN_PENDING);
+          }
+
           setCookie(undefined, 'token', idToken, { path: '/' });
-          router.push((router.query.redirect as string) ?? '/');
+          setIsAuthenticated(true);
+          setIsLoggingIn(false);
         })
         .catch((error) => {
           setLoginError(error);

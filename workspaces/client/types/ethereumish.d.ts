@@ -1,5 +1,6 @@
 import { ProviderMessage, ProviderRpcError, ProviderConnectInfo } from 'hardhat/types';
 
+// implementation from https://stackoverflow.com/questions/65504958/web3-js-extending-the-window-interface-type-definitions
 export interface EthereumEvent {
   connect: ProviderConnectInfo;
   disconnect: ProviderRpcError;
@@ -8,7 +9,7 @@ export interface EthereumEvent {
   message: ProviderMessage;
 }
 
-type EventKeys = keyof EthereumEvent;
+export type EventKeys = keyof EthereumEvent;
 type EventHandler<K extends EventKeys> = (event: EthereumEvent[K]) => void;
 
 export interface Ethereumish {
