@@ -21,7 +21,7 @@ export const useIsNetworkSupported = () => {
   const [isNetworkSupported, setIsNetworkSupported] = useState(true);
 
   useEffect(() => {
-    // only runs this if
+    // only runs this ethereum provider is injected by metamask
     if (window.ethereum) {
       const isNetworkSupported$ = getChainIdChanged$().pipe(
         map(getIsNetworkSupported),
