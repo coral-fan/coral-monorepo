@@ -9,7 +9,7 @@ import { Web3ReactProvider } from '@web3-react/core';
 import { ExternalProvider, JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
 import { destroyCookie, parseCookies } from 'nookies';
 
-import { initializeFirebaseApp, getFirebaseAdmin } from 'libraries/utils/firebase';
+import { initializeFirebaseApp, getFirebaseAdmin } from 'libraries/firebase';
 
 import { globalTokens } from 'styles/tokens';
 import 'styles/global.css';

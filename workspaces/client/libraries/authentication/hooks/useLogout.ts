@@ -1,4 +1,4 @@
-import useWeb3 from '../../hooks/web3';
+import { useWeb3 } from '../../blockchain/hooks';
 import { getAuth } from 'firebase/auth';
 import { destroyCookie, parseCookies } from 'nookies';
 import useAuthenticationContext from './context';

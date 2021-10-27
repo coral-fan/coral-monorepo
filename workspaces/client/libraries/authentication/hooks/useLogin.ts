@@ -8,8 +8,8 @@ import { setCookie } from 'nookies';
 import { getAuthenticationMessage } from '@common/utils';
 
 import { IS_OPEN_LOGIN_PENDING } from 'consts';
-import { OpenLoginConnector } from 'libraries/Connectors/OpenLoginConnector';
-import useWeb3 from 'libraries/hooks/web3';
+import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
+import { useWeb3 } from 'libraries/blockchain/hooks';
 import useAuthenticationContext from './context';
 
 const fetchNonce = (address: string) =>

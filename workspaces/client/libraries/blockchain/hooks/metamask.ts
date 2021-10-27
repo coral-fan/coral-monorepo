@@ -2,7 +2,7 @@ import { SUPPORTED_CHAIN_IDS } from 'consts';
 import { useEffect, useState } from 'react';
 import { fromEvent, map, share, startWith } from 'rxjs';
 import { EventKeys } from 'types/ethereumish';
-import { useGetRefValue } from './utils';
+import { useGetRefValue } from '../../utils/hooks';
 
 export const useGetChainIdChanged$ = () =>
   useGetRefValue(

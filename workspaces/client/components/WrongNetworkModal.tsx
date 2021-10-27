@@ -2,8 +2,7 @@ import { MAIN_NET_ID, TEST_NET_ID } from 'consts';
 import { Modal } from './ui/Modal/Modal';
 import { Button } from './ui';
 
-import useWeb3 from 'libraries/hooks/web3';
-import { useIsNetworkSupported } from 'libraries/hooks/metamask';
+import { useWeb3, useIsNetworkSupported } from 'libraries/blockchain/hooks';
 import { useIsAuthenticated } from 'libraries/authentication/hooks';
 
 const getAvalancheNetworkParams = (isDevelopment: boolean) => ({
