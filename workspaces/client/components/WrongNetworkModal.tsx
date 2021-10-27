@@ -1,19 +1,19 @@
-import { MAIN_NET_ID } from 'consts';
+import { MAIN_NET_ID, TEST_NET_ID } from 'consts';
 import { Modal } from './ui/Modal/Modal';
 import { Button } from './ui';
 import useWeb3 from 'libraries/hooks/web3';
 
-export const AVALANCHE_CHAIN_PARAMS = {
-  chainId: MAIN_NET_ID, // A 0x-prefixed hexadecimal chainId
-  chainName: 'Avalanche Mainnet C-Chain',
+const getAvalancheNetworkParams = (isDevelopment: boolean) => ({
+  chainId: isDevelopment ? TEST_NET_ID : MAIN_NET_ID, // A 0x-prefixed hexadecimal chainId
+  chainName: `Avalanche ${isDevelopment ? 'FUJI' : 'Mainnet'} C-Chain`,
   nativeCurrency: {
     name: 'Avalanche',
     symbol: 'AVAX',
     decimals: 18,
   },
-  rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
-  blockExplorerUrls: ['https://cchain.explorer.avax.network/'],
-};
+  rpcUrls: [`https://api.avax${isDevelopment ? '-test' : ''}.network/ext/bc/C/rpc`],
+  blockExplorerUrls: [`https://cchain.explorer.avax${isDevelopment ? '-test' : ''}.network/`],
+});
 
 export const WrongNetworkModal = () => {
   const { getConnector } = useWeb3();
@@ -25,7 +25,7 @@ export const WrongNetworkModal = () => {
         provider
           .request({
             method: 'wallet_addEthereumChain',
-            params: [AVALANCHE_CHAIN_PARAMS],
+            params: [getAvalancheNetworkParams(true)],
           })
           /* eslint @typescript-eslint/no-explicit-any: 'off' -- error is typed as any*/
           .catch((error: any) => {
