@@ -16,10 +16,6 @@ module.exports = {
         ['fast-crc32c']: false,
       };
     }
-
-    // let babel compile outside of src. necessary for code sharing within monorepo
-    delete config.module.rules.find((rule) => rule.test.toString().includes('tsx|ts')).include;
-
     return config;
   },
 };
