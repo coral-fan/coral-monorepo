@@ -3,16 +3,16 @@ import { JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
 import { useWeb3React } from '@web3-react/core';
 import { InjectedConnector } from '@web3-react/injected-connector';
 
-import { OpenLoginConnector } from 'libraries/Connectors/OpenLoginConnector';
+import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 
-import { SUPPORTED_CHAIN_IDS } from 'consts';
+import { AVALANCHE } from 'consts';
 
-export default function useWeb3() {
+export const useWeb3 = () => {
   const { library, chainId, account, active, error, activate, deactivate, setError, connector } =
     useWeb3React<JsonRpcProvider | Web3Provider>();
 
   const injectedConnector = useMemo(
-    () => new InjectedConnector({ supportedChainIds: SUPPORTED_CHAIN_IDS }),
+    () => new InjectedConnector({ supportedChainIds: [parseInt(AVALANCHE.CHAIN_ID)] }),
     []
   );
   const openLoginConnector = useMemo(() => new OpenLoginConnector(), []);
@@ -39,4 +39,4 @@ export default function useWeb3() {
     setError,
     signer,
   };
-}
+};

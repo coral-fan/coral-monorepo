@@ -2,7 +2,7 @@ import { ConnectorUpdate } from '@web3-react/types';
 import { AbstractConnector } from '@web3-react/abstract-connector';
 import { Wallet } from '@ethersproject/wallet';
 import { JsonRpcProvider, Provider } from '@ethersproject/providers';
-import { IS_OPEN_LOGIN_PENDING, SUPPORTED_CHAIN_IDS } from 'consts';
+import { IS_OPEN_LOGIN_PENDING, AVALANCHE } from 'consts';
 
 if (!process.env.NEXT_PUBLIC_OPEN_LOGIN_CLIENT_ID) {
   throw new Error('Please defined NEXT_PUBLIC_OPEN_LOGIN_CLIENT_ID in a .env.local file!');
@@ -18,7 +18,7 @@ export class OpenLoginConnector extends AbstractConnector {
   wallet?: Wallet;
 
   constructor() {
-    super({ supportedChainIds: SUPPORTED_CHAIN_IDS });
+    super({ supportedChainIds: [parseInt(AVALANCHE.CHAIN_ID)] });
   }
 
   private async getOpenLoginInstance() {

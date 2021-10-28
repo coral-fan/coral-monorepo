@@ -1,6 +1,9 @@
-import { Flex, Button } from './ui';
 import { useEffect } from 'react';
-import { useAuthentication, useLogin, useLogout } from 'libraries/authentication/hooks';
+
+import { Button } from './ui';
+import { Flex } from './layout';
+
+import { useIsAuthenticated, useLogin, useLogout } from 'libraries/authentication/hooks';
 
 const LogoutButton = () => {
   const logout = useLogout();
@@ -10,12 +13,16 @@ const LogoutButton = () => {
 
 const LoginButton = () => {
   const { login, isLoggingIn } = useLogin();
-  return <Button onClick={login}>{isLoggingIn ? 'Logging In...' : 'Login'}</Button>;
+  return (
+    <Button onClick={login} disabled={isLoggingIn}>
+      {isLoggingIn ? 'Logging In...' : 'Login'}
+    </Button>
+  );
 };
 
-export default function NavigationBar() {
+export const NavigationBar = () => {
   const { loginError } = useLogin();
-  const [isAuthenticated] = useAuthentication();
+  const [isAuthenticated] = useIsAuthenticated();
 
   useEffect(() => {
     loginError && console.log(loginError);
@@ -26,4 +33,4 @@ export default function NavigationBar() {
       {isAuthenticated ? <LogoutButton /> : <LoginButton />}
     </Flex>
   );
-}
+};

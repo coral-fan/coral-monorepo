@@ -3,24 +3,20 @@ import App from 'next/app';
 import Head from 'next/head';
 import { FirebaseError } from 'firebase-admin';
 
-import { useEffect } from 'react';
 import { Global } from '@emotion/react';
 import { Web3ReactProvider } from '@web3-react/core';
 
 import { ExternalProvider, JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
 import { destroyCookie, parseCookies } from 'nookies';
-import { map, startWith } from 'rxjs';
 
-import { initializeFirebaseApp, getFirebaseAdmin } from 'libraries/utils/firebase';
-
-import { SUPPORTED_CHAIN_IDS } from 'consts';
+import { initializeFirebaseApp, getFirebaseAdmin } from 'libraries/firebase';
 
 import { globalTokens } from 'styles/tokens';
 import 'styles/global.css';
-import { Web3Manager, AuthenticationManager } from 'components/managers';
-import { useGetChainId$ } from 'libraries/hooks/metamask';
-import NavigationBar from 'components/NavigationBar';
+
 import { AuthenticationProvider } from 'libraries/authentication/provider';
+import { Web3Manager, AuthenticationManager } from 'components/managers';
+import { NavigationBar, WrongNetworkModal } from 'components';
 
 initializeFirebaseApp();
 
@@ -31,29 +27,11 @@ const getLibrary = (provider: ExternalProvider | JsonRpcProvider | undefined) =>
   return undefined;
 };
 
-const getIsNetworkSupported = (chainId: string) => SUPPORTED_CHAIN_IDS.includes(parseInt(chainId));
-
 const CustomApp = ({
   Component,
   pageProps,
   authenticated,
 }: AppProps & { authenticated: boolean }) => {
-  const getChainId$ = useGetChainId$();
-
-  useEffect(() => {
-    if (window.ethereum) {
-      const isNetworkSupported = getIsNetworkSupported(window.ethereum.chainId);
-      const isNetworkSupported$ = getChainId$().pipe(
-        map(getIsNetworkSupported),
-        startWith(isNetworkSupported)
-      );
-
-      const subscription = isNetworkSupported$.subscribe(console.log);
-
-      return () => subscription.unsubscribe();
-    }
-  }, [getChainId$]);
-
   return (
     <>
       <Global styles={globalTokens} />
@@ -68,6 +46,7 @@ const CustomApp = ({
           <AuthenticationProvider authenticated={authenticated}>
             <Web3Manager />
             <AuthenticationManager />
+            <WrongNetworkModal />
             <NavigationBar />
             <Component {...pageProps} />
           </AuthenticationProvider>

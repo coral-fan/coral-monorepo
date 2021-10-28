@@ -11,8 +11,8 @@ type InferUseGetRefReturnType<T, B> = B extends true
 export function useGetRefValue<T, B extends boolean>(
   getValue: () => T,
   tag: string,
-  // this is necessary to ensure type inference for B
-  shouldReturnSetRefValue = false as B,
+  // this is necessary to ensure type inference for B. Value of B must be passed as parameter or TypeScript won't be able to infer the type
+  shouldReturnSetRefValue: B,
   shouldOnlyCallClientSide = true
 ): InferUseGetRefReturnType<T, typeof shouldReturnSetRefValue> {
   const ref = useRef<undefined | T>(undefined);

@@ -1,4 +1,4 @@
-import useWeb3 from '../../hooks/web3';
+import { useWeb3 } from '../../blockchain/hooks';
 import { getAuth } from 'firebase/auth';
 import { destroyCookie, parseCookies } from 'nookies';
 import useAuthenticationContext from './context';
@@ -7,7 +7,7 @@ export const useLogout = () => {
   const { active, deactivate } = useWeb3();
   const { token } = parseCookies();
   const { setIsAuthenticated } = useAuthenticationContext();
-  return async () => {
+  return async function logout() {
     if (active) {
       deactivate();
     }

@@ -1,14 +1,52 @@
-import { FC, useRef } from 'react';
+import { FC } from 'react';
 import ReactDOM from 'react-dom';
-
 import styled from '@emotion/styled';
 
-/* Using FC because it always implies children.
+import { Button } from '..';
+import { Center, Flex } from 'components/layout';
+
+const Overlay = styled(Center)`
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+`;
+
+interface HeaderProps {
+  title?: string;
+  close?: () => void;
+}
+
+const Header: FC<HeaderProps> = ({ title, close }) => {
+  return (
+    <Flex justifyContent={'space-between'}>
+      {title && <h1>{title}</h1>}
+      {close && <Button>Close</Button>}
+    </Flex>
+  );
+};
+
+const Main: FC = ({ children }) => <Flex flexDirection={'column'}>{children}</Flex>;
+
+interface ModalProps {
+  width?: string;
+}
+
+export /* Using FC because it always implies children.
    Prefer to define a props interface if children isn't a prop.
 */
-export const Modal: FC = ({ children }) => {
-  const overlayRef = useRef(null);
-  const containerRef = useRef(null);
-
-  return ReactDOM.createPortal(<div></div>, document.body);
+const Modal: FC<HeaderProps & ModalProps> = ({ children, width = '50%', close, title }) => {
+  return typeof window === 'undefined'
+    ? null
+    : ReactDOM.createPortal(
+        <Overlay>
+          <Flex width={width} flexDirection={'column'}>
+            {(title || close) && <Header {...{ title, close }} />}
+            <Main>{children}</Main>
+          </Flex>
+        </Overlay>,
+        document.body
+      );
 };

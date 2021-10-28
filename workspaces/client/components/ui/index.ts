@@ -1,2 +1,2 @@
 export { Button } from './Button';
-export { Flex } from './Flex';
+export { Modal } from './Modal';
