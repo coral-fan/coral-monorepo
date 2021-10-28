@@ -5,7 +5,6 @@ see https://nextjs.org/docs/messages/swc-disabled.
 */
 {
   "presets": [
-    "@babel/preset-typescript",
     [
       "next/babel",
       {
