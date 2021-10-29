@@ -30,8 +30,8 @@ const getLibrary = (provider: ExternalProvider | JsonRpcProvider | undefined) =>
 const CustomApp = ({
   Component,
   pageProps,
-  authenticated,
-}: AppProps & { authenticated: boolean }) => {
+  isTokenAuthenticated,
+}: AppProps & { isTokenAuthenticated: boolean }) => {
   return (
     <>
       <Global styles={globalTokens} />
@@ -43,7 +43,7 @@ const CustomApp = ({
       </Head>
       <main>
         <Web3ReactProvider getLibrary={getLibrary}>
-          <AuthenticationProvider authenticated={authenticated}>
+          <AuthenticationProvider tokenAuthenticated={isTokenAuthenticated}>
             <Web3Manager />
             <AuthenticationManager />
             <WrongNetworkModal />
@@ -78,7 +78,7 @@ CustomApp.getInitialProps = async (appContext: AppContext) => {
     }
   }
 
-  return { ...initialProps, authenticated: cookies.hasOwnProperty('token') };
+  return { ...initialProps, isTokenAuthenticated: cookies.hasOwnProperty('token') };
 };
 
 export default CustomApp;
