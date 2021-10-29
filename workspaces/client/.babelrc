@@ -1,3 +1,8 @@
+/*
+this configuration is still needed because swc doesn't currently handle emotion package.
+see https://nextjs.org/docs/messages/swc-disabled.
+
+*/
 {
   "presets": [
     [
