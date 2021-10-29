@@ -28,7 +28,7 @@ const Header: FC<HeaderProps> = ({ title, close }) => {
   );
 };
 
-const Main: FC = ({ children }) => <Flex flexDirection={'column'}>{children}</Flex>;
+const Main: FC = ({ children }) => <Flex direction={'column'}>{children}</Flex>;
 
 interface ModalProps {
   width?: string;
@@ -42,7 +42,7 @@ const Modal: FC<HeaderProps & ModalProps> = ({ children, width = '50%', close, t
     ? null
     : ReactDOM.createPortal(
         <Overlay>
-          <Flex width={width} flexDirection={'column'}>
+          <Flex width={width} direction={'column'}>
             {(title || close) && <Header {...{ title, close }} />}
             <Main>{children}</Main>
           </Flex>
