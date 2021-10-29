@@ -1,20 +1,36 @@
 import { createContext, FC, useEffect, useState } from 'react';
 import { IS_OPEN_LOGIN_PENDING } from 'consts';
+import { useWeb3 } from 'libraries/blockchain/hooks';
 
+export interface AuthenticationProviderProps {
+  tokenAuthenticated: boolean;
+}
 interface AuthenticationContext {
+  isTokenAuthenticated: boolean;
+  setIsTokenAuthenticated: (tokenAuthenticated: boolean) => void;
   isAuthenticated: boolean;
-  setIsAuthenticated: (isAuthenticated: boolean) => void;
   isLoggingIn: boolean;
   setIsLoggingIn: (isLoggingIn: boolean) => void;
 }
 
-export const AuthenticationContext = createContext<undefined | AuthenticationContext>(undefined);
+const getIsAuthenticated = (isTokenAuthenticated: boolean, isConnectorActive: boolean) =>
+  isTokenAuthenticated && isConnectorActive;
 
-export const AuthenticationProvider: FC<{ authenticated: boolean }> = ({
-  authenticated,
+export const AuthenticationContext = createContext<undefined | AuthenticationContext>(undefined);
+export const AuthenticationProvider: FC<AuthenticationProviderProps> = ({
+  tokenAuthenticated,
   children,
 }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(authenticated);
+  const [isTokenAuthenticated, setIsTokenAuthenticated] = useState(tokenAuthenticated);
+  const { active } = useWeb3();
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    getIsAuthenticated(isTokenAuthenticated, active)
+  );
+
+  useEffect(() => {
+    setIsAuthenticated(getIsAuthenticated(isTokenAuthenticated, active));
+  }, [isTokenAuthenticated, active]);
+
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   useEffect(() => {
@@ -25,7 +41,13 @@ export const AuthenticationProvider: FC<{ authenticated: boolean }> = ({
 
   return (
     <AuthenticationContext.Provider
-      value={{ isAuthenticated, setIsAuthenticated, isLoggingIn, setIsLoggingIn }}
+      value={{
+        isTokenAuthenticated,
+        setIsTokenAuthenticated,
+        isAuthenticated,
+        isLoggingIn,
+        setIsLoggingIn,
+      }}
     >
       {children}
     </AuthenticationContext.Provider>
