@@ -1,8 +1,20 @@
 import styled from '@emotion/styled';
 
-interface FlexProps {
+interface ShorthandFlexProps {
   /* Flex Props */
-  flexDirection?: 'row' | 'column';
+  direction?: 'row' | 'column';
+  wrap?: 'wrap' | 'nowrap' | 'wrap-reverse';
+  /* Child Prop */
+  grow?: number;
+  shrink?: number;
+  basis?: number;
+}
+
+// TODO: should figure out a way to have a single source of truth for property values...
+const shorthandFlexKeys = ['direction', 'wrap', 'grow', 'shrink', 'basis'];
+
+const isPropertyShorthandFlexKey = (property: string) => shorthandFlexKeys.includes(property);
+interface FlexProps extends ShorthandFlexProps {
   justifyContent?:
     | 'flex-start'
     | 'flex-end'
@@ -11,7 +23,7 @@ interface FlexProps {
     | 'space-around'
     | 'initial'
     | 'inherit';
-  flexWrap?: 'wrap' | 'nowrap' | 'wrap-reverse';
+  flex?: string;
   alignItems?:
     | 'stretch'
     | 'center'
@@ -20,11 +32,6 @@ interface FlexProps {
     | 'baseline'
     | 'initial'
     | 'inherit';
-  /* Child Prop */
-  flexGrow?: number;
-  flexShrink?: number;
-  flexBasis?: number;
-  flex?: string;
   /****** Layout Props ********/
   padding?: string;
   margin?: string;
@@ -40,13 +47,16 @@ const kebabCase = (str: string) =>
     ?.join('-')
     .toLowerCase();
 
+const getCSSProperty = (property: string) =>
+  isPropertyShorthandFlexKey(property) ? `flex-${property}` : `${kebabCase(property)}`;
+
 const stylePropsToString = (props: FlexProps): string =>
   Object.entries(props)
     .filter(([prop]) => prop !== 'children' && prop !== 'theme')
     .reduce(
       (styleString: string, [property, value]: [string, string | number]) =>
         `${styleString}
-      ${kebabCase(property)}:${value};`,
+      ${getCSSProperty(property)}:${value};`,
       ''
     );
 
