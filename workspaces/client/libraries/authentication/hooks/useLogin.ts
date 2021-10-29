@@ -30,7 +30,7 @@ const fetchFirebaseAuthToken = (address: string) => (signedMessage: string) =>
   );
 
 export const useLogin = () => {
-  const { isLoggingIn, setIsLoggingIn, setIsAuthenticated } = useAuthenticationContext();
+  const { isLoggingIn, setIsLoggingIn, setIsTokenAuthenticated } = useAuthenticationContext();
 
   const { activate, getConnector } = useWeb3();
   //TODO: should probably look into how to type errors better
@@ -64,7 +64,7 @@ export const useLogin = () => {
           }
 
           setCookie(undefined, 'token', idToken, { path: '/' });
-          setIsAuthenticated(true);
+          setIsTokenAuthenticated(true);
           setIsLoggingIn(false);
         })
         .catch((error) => {
