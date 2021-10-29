@@ -10,6 +10,7 @@ interface ShorthandFlexProps {
   basis?: number;
 }
 
+// TODO: should figure out a way to have a single source of truth for property values...
 const shorthandFlexKeys = ['direction', 'wrap', 'grow', 'shrink', 'basis'];
 
 const isPropertyShorthandFlexKey = (property: string) => shorthandFlexKeys.includes(property);
