@@ -4,7 +4,7 @@ import { useIsTokenAuthenticated, useLogout } from 'libraries/authentication/hoo
 import { fromEvent, merge } from 'rxjs';
 import { useGetChainIdChanged$ } from 'libraries/blockchain/hooks/metamask';
 
-export default function AuthenticationManager() {
+export const AuthenticationManager = () => {
   const [isAuthenticated] = useIsTokenAuthenticated();
   const getChainIdChanged$ = useGetChainIdChanged$();
   const logout = useLogout();
@@ -30,4 +30,4 @@ export default function AuthenticationManager() {
   }, [getChainIdChanged$, logout]);
 
   return <></>;
-}
+};

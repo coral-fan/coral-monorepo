@@ -15,8 +15,8 @@ import { globalTokens } from 'styles/tokens';
 import 'styles/global.css';
 
 import { AuthenticationProvider } from 'libraries/authentication/provider';
-import { Web3Manager, AuthenticationManager } from 'components/managers';
-import { NavigationBar, WrongNetworkModal } from 'components';
+import { Web3Manager, AuthenticationManager } from './components/managers';
+import { NavigationBar, WrongNetworkModal } from 'pages/components';
 
 initializeFirebaseApp();
 
