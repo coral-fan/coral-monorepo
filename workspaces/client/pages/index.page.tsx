@@ -59,7 +59,7 @@ const wyreTest = async () => {
 export default function Home() {
   const isAuthenticated = useIsAuthenticated();
   useEffect(() => {
-    wyreTest();
+    wyreTest().catch(console.log);
   }, []);
 
   return (
