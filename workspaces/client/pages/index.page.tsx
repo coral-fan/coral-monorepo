@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useIsAuthenticated } from 'libraries/authentication/hooks/isAuthenticated';
+import { useIsAuthenticated } from 'libraries/authentication/hooks';
 import { useEffect } from 'react';
 
 const wyreAxios = axios.create({
@@ -57,7 +57,7 @@ const wyreTest = async () => {
   console.log(createOrderResponse);
 };
 export default function Home() {
-  const [isAuthenticated] = useIsAuthenticated();
+  const isAuthenticated = useIsAuthenticated();
   useEffect(() => {
     wyreTest();
   }, []);

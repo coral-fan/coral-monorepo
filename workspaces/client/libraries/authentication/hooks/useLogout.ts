@@ -6,7 +6,7 @@ import useAuthenticationContext from './context';
 export const useLogout = () => {
   const { active, deactivate } = useWeb3();
   const { token } = parseCookies();
-  const { setIsAuthenticated } = useAuthenticationContext();
+  const { setIsTokenAuthenticated } = useAuthenticationContext();
   return async function logout() {
     if (active) {
       deactivate();
@@ -14,8 +14,7 @@ export const useLogout = () => {
     if (token) {
       await getAuth().signOut();
       destroyCookie(undefined, 'token');
+      setIsTokenAuthenticated(false);
     }
-
-    setIsAuthenticated(false);
   };
 };

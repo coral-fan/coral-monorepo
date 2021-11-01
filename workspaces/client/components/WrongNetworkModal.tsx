@@ -2,7 +2,7 @@ import { Modal } from './ui/Modal/Modal';
 import { Button } from './ui';
 
 import { useWeb3, useIsNetworkSupported } from 'libraries/blockchain/hooks';
-import { useIsAuthenticated } from 'libraries/authentication/hooks';
+import { useIsTokenAuthenticated } from 'libraries/authentication/hooks';
 import { AVALANCHE } from 'consts';
 
 const AVALANCHE_NETWORK_PARAMS = {
@@ -37,9 +37,9 @@ export const WrongNetworkModal = () => {
   };
 
   const isNetworkSupported = useIsNetworkSupported();
-  const [isAuthenticated] = useIsAuthenticated();
+  const [isTokenAuthenticated] = useIsTokenAuthenticated();
 
-  if (!isAuthenticated || isNetworkSupported) {
+  if (!isTokenAuthenticated || isNetworkSupported) {
     return null;
   }
 

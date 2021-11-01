@@ -1,11 +1,11 @@
 import { getAuth } from '@firebase/auth';
 import { useEffect } from 'react';
-import { useIsAuthenticated, useLogout } from 'libraries/authentication/hooks';
+import { useIsTokenAuthenticated, useLogout } from 'libraries/authentication/hooks';
 import { fromEvent, merge } from 'rxjs';
 import { useGetChainIdChanged$ } from 'libraries/blockchain/hooks/metamask';
 
 export default function AuthenticationManager() {
-  const [isAuthenticated] = useIsAuthenticated();
+  const [isAuthenticated] = useIsTokenAuthenticated();
   const getChainIdChanged$ = useGetChainIdChanged$();
   const logout = useLogout();
   // logic to log user out when the authentication token changes

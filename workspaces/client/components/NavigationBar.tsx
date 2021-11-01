@@ -22,7 +22,7 @@ const LoginButton = () => {
 
 export const NavigationBar = () => {
   const { loginError } = useLogin();
-  const [isAuthenticated] = useIsAuthenticated();
+  const isAuthenticated = useIsAuthenticated();
 
   useEffect(() => {
     loginError && console.log(loginError);
