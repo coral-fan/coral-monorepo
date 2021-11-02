@@ -7,7 +7,7 @@ import { setCookie } from 'nookies';
 
 import { getAuthenticationMessage } from '@common/utils';
 
-import { IS_OPEN_LOGIN_PENDING } from 'consts';
+import { COOKIE_OPTIONS, IS_OPEN_LOGIN_PENDING } from 'consts';
 import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain/hooks';
 import useAuthenticationContext from './context';
@@ -63,7 +63,7 @@ export const useLogin = () => {
             sessionStorage.removeItem(IS_OPEN_LOGIN_PENDING);
           }
 
-          setCookie(undefined, 'token', idToken, { path: '/' });
+          setCookie(undefined, 'token', idToken, COOKIE_OPTIONS);
           setIsTokenAuthenticated(true);
           setIsLoggingIn(false);
         })
