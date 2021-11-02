@@ -23,7 +23,7 @@ const Header: FC<HeaderProps> = ({ title, close }) => {
   return (
     <Flex justifyContent={'space-between'}>
       {title && <h1>{title}</h1>}
-      {close && <Button>Close</Button>}
+      {close && <Button onClick={close}>Close</Button>}
     </Flex>
   );
 };
