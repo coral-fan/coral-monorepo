@@ -19,6 +19,7 @@ import { Web3Manager, AuthenticationManager } from './components/managers';
 import { NavigationBar, WrongNetworkModal } from 'pages/components';
 import { COOKIE_OPTIONS } from 'consts';
 import { SignUpModal } from './components/SignUpModal';
+import { PurchaseModal } from './components/PurchaseModal';
 
 initializeFirebaseApp();
 
@@ -50,6 +51,7 @@ const CustomApp = ({
             <AuthenticationManager />
             <WrongNetworkModal />
             <SignUpModal />
+            <PurchaseModal />
             <NavigationBar />
             <Component {...pageProps} />
           </AuthenticationProvider>
