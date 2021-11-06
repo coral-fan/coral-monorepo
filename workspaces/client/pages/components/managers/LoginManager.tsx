@@ -7,7 +7,7 @@ import { useWeb3 } from 'libraries/blockchain/hooks';
 import { useLogin } from 'libraries/authentication/hooks';
 import { IS_OPEN_LOGIN_PENDING } from 'consts';
 
-export const Web3Manager = () => {
+export const LoginManager = () => {
   const { getConnector, activate, active } = useWeb3();
   const { login } = useLogin();
 
