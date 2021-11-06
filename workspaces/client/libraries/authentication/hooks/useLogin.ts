@@ -11,11 +11,15 @@ import { COOKIE_OPTIONS, IS_OPEN_LOGIN_PENDING } from 'consts';
 import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain/hooks';
 import { useIsLoggingIn, useIsTokenAuthenticated } from '.';
+import { useIsSigningUp } from './isSigningUp';
 
 const fetchNonce = (address: string) =>
-  axios.post<{ nonce: number }>('http://localhost:5001/torus-tutorial/us-central1/nonce', {
-    address: address,
-  });
+  axios.post<{ nonce: number; isSignUp: boolean }>(
+    'http://localhost:5001/torus-tutorial/us-central1/nonce',
+    {
+      address: address,
+    }
+  );
 
 const signAuthenticatedMessage = (signer: Wallet | JsonRpcSigner, nonce: number) =>
   signer.signMessage(getAuthenticationMessage(nonce));
@@ -32,6 +36,7 @@ const fetchFirebaseAuthToken = (address: string) => (signedMessage: string) =>
 export const useLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
   const [, setIsTokenAuthenticated] = useIsTokenAuthenticated();
+  const [, setIsSigningUp] = useIsSigningUp();
 
   const { activate, getConnector } = useWeb3();
   //TODO: should probably look into how to type errors better
@@ -55,7 +60,20 @@ export const useLogin = () => {
       const address = await signer.getAddress();
 
       fetchNonce(address)
-        .then(({ data: { nonce } }) => signAuthenticatedMessage(signer, nonce))
+        .then(async ({ data: { nonce, isSignUp } }) => {
+          const authenticatedMessage = await signAuthenticatedMessage(signer, nonce);
+          console.log(isSignUp);
+          if (isSignUp) {
+            setIsSigningUp(true);
+            return new Promise<string>((resolve) => {
+              setTimeout(() => {
+                setIsSigningUp(false);
+                resolve(authenticatedMessage);
+              }, 3000);
+            });
+          }
+          return authenticatedMessage;
+        })
         .then(fetchFirebaseAuthToken(address))
         .then(({ data: { ['Bearer Token']: token } }) => signInWithCustomToken(getAuth(), token))
         .then((userCredentials) => userCredentials.user.getIdToken())
