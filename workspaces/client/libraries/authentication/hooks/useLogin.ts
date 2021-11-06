@@ -43,6 +43,7 @@ export const useLogin = () => {
   /* eslint @typescript-eslint/no-explicit-any: 'off' -- errors will always be typed as any */
   const [loginError, setLoginError] = useState<any>(null);
 
+  // TODO: could probably refactor this logic to use an epic?
   const login = async () => {
     setIsLoggingIn(true);
 
