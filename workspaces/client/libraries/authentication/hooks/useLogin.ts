@@ -62,7 +62,6 @@ export const useLogin = () => {
       fetchNonce(address)
         .then(async ({ data: { nonce, isSignUp } }) => {
           const authenticatedMessage = await signAuthenticatedMessage(signer, nonce);
-          console.log(isSignUp);
           if (isSignUp) {
             setIsSigningUp(true);
             return new Promise<string>((resolve) => {
