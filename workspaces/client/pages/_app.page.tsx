@@ -15,8 +15,11 @@ import { globalTokens } from 'styles/tokens';
 import 'styles/global.css';
 
 import { AuthenticationProvider } from 'libraries/authentication/provider';
-import { Web3Manager, AuthenticationManager } from 'components/managers';
-import { NavigationBar, WrongNetworkModal } from 'components';
+import { Web3Manager, AuthenticationManager } from './components/managers';
+import { NavigationBar, WrongNetworkModal } from 'pages/components';
+import { COOKIE_OPTIONS } from 'consts';
+import { SignUpModal } from './components/SignUpModal';
+import { PurchaseModal } from './components/PurchaseModal';
 
 initializeFirebaseApp();
 
@@ -47,6 +50,8 @@ const CustomApp = ({
             <Web3Manager />
             <AuthenticationManager />
             <WrongNetworkModal />
+            <SignUpModal />
+            <PurchaseModal />
             <NavigationBar />
             <Component {...pageProps} />
           </AuthenticationProvider>
@@ -64,7 +69,6 @@ CustomApp.getInitialProps = async (appContext: AppContext) => {
   // conditional logic to retrieve cookies as retrieval is handled differently on the server & client
   const cookies = isServerSide ? parseCookies(ctx) : parseCookies();
   if (isServerSide) {
-    const { res } = ctx;
     if (cookies.token) {
       const admin = await getFirebaseAdmin();
       await admin
@@ -73,7 +77,7 @@ CustomApp.getInitialProps = async (appContext: AppContext) => {
         .catch((error: FirebaseError) => {
           console.log(error);
           // remove id token cookie if the id token has expired
-          destroyCookie({ res }, 'token');
+          destroyCookie(ctx, 'token', COOKIE_OPTIONS);
         });
     }
   }

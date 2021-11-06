@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-import { Button } from './ui';
-import { Flex } from './layout';
+import { Button } from 'components/ui';
+import { Flex } from 'components/layout';
 
 import { useIsAuthenticated, useLogin, useLogout } from 'libraries/authentication/hooks';
 

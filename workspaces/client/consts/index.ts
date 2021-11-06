@@ -8,3 +8,7 @@ export const AVALANCHE = {
     process.env.NEXT_PUBLIC_AVALANCHE_BLOCK_EXPLORER_URL ??
     'https://cchain.explorer.avax-test.network/',
 };
+
+export const COOKIE_OPTIONS = {
+  path: '/',
+};

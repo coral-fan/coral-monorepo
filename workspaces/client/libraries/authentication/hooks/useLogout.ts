@@ -2,6 +2,7 @@ import { useWeb3 } from '../../blockchain/hooks';
 import { getAuth } from 'firebase/auth';
 import { destroyCookie, parseCookies } from 'nookies';
 import useAuthenticationContext from './context';
+import { COOKIE_OPTIONS } from 'consts';
 
 export const useLogout = () => {
   const { active, deactivate } = useWeb3();
@@ -13,7 +14,7 @@ export const useLogout = () => {
     }
     if (token) {
       await getAuth().signOut();
-      destroyCookie(undefined, 'token');
+      destroyCookie(undefined, 'token', COOKIE_OPTIONS);
       setIsTokenAuthenticated(false);
     }
   };

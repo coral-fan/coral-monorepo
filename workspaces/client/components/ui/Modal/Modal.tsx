@@ -23,7 +23,7 @@ const Header: FC<HeaderProps> = ({ title, close }) => {
   return (
     <Flex justifyContent={'space-between'}>
       {title && <h1>{title}</h1>}
-      {close && <Button>Close</Button>}
+      {close && <Button onClick={close}>Close</Button>}
     </Flex>
   );
 };
@@ -38,12 +38,14 @@ export /* Using FC because it always implies children.
    Prefer to define a props interface if children isn't a prop.
 */
 const Modal: FC<HeaderProps & ModalProps> = ({ children, width = '50%', close, title }) => {
+  const shouldRenderHeader = title || close;
+
   return typeof window === 'undefined'
     ? null
     : ReactDOM.createPortal(
         <Overlay>
           <Flex width={width} direction={'column'}>
-            {(title || close) && <Header {...{ title, close }} />}
+            {shouldRenderHeader && <Header {...{ title, close }} />}
             <Main>{children}</Main>
           </Flex>
         </Overlay>,

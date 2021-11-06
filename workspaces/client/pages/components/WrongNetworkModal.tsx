@@ -1,5 +1,4 @@
-import { Modal } from './ui/Modal/Modal';
-import { Button } from './ui';
+import { Modal, Button } from 'components/ui';
 
 import { useWeb3, useIsNetworkSupported } from 'libraries/blockchain/hooks';
 import { useIsTokenAuthenticated } from 'libraries/authentication/hooks';
