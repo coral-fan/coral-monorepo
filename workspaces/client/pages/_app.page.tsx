@@ -1,40 +1,36 @@
+//nextjs imports
 import type { AppContext, AppProps } from 'next/app';
 import App from 'next/app';
 import Head from 'next/head';
-import { FirebaseError } from 'firebase-admin';
 
-import { Global } from '@emotion/react';
-import { Web3ReactProvider } from '@web3-react/core';
-
-import { ExternalProvider, JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
+// application logic imports
 import { destroyCookie, parseCookies } from 'nookies';
-
+import { COOKIE_OPTIONS } from 'consts';
 import { initializeFirebaseApp, getFirebaseAdmin } from 'libraries/firebase';
 
+// react imports
+// styling
+import { Global } from '@emotion/react';
 import { globalTokens } from 'styles/tokens';
 import 'styles/global.css';
-
-import { AuthenticationProvider } from 'libraries/authentication/provider';
-import { Web3Manager, AuthenticationManager } from './components/managers';
-import { NavigationBar, WrongNetworkModal } from 'pages/components';
-import { COOKIE_OPTIONS } from 'consts';
-import { SignUpModal } from './components/SignUpModal';
-import { PurchaseModal } from './components/PurchaseModal';
+// components
+import { NavigationBar } from 'pages/components';
+import { LoginManager, LogoutManager, AuthenticationManager } from './components/managers';
+import { PurchaseModal, SignUpModal, WrongNetworkModal } from './components/modals';
+// state/logic
+import { Web3ReactProvider } from '@web3-react/core';
+import { Provider as ReduxProvider } from 'react-redux';
+import { initializeStore } from 'libraries/state';
+import { getLibrary } from '../libraries/utils/provider';
 
 initializeFirebaseApp();
-
-const getLibrary = (provider: ExternalProvider | JsonRpcProvider | undefined) => {
-  if (provider) {
-    return provider instanceof JsonRpcProvider ? provider : new Web3Provider(provider);
-  }
-  return undefined;
-};
 
 const CustomApp = ({
   Component,
   pageProps,
   isTokenAuthenticated,
 }: AppProps & { isTokenAuthenticated: boolean }) => {
+  const store = initializeStore(isTokenAuthenticated);
   return (
     <>
       <Global styles={globalTokens} />
@@ -46,15 +42,16 @@ const CustomApp = ({
       </Head>
       <main>
         <Web3ReactProvider getLibrary={getLibrary}>
-          <AuthenticationProvider tokenAuthenticated={isTokenAuthenticated}>
-            <Web3Manager />
+          <ReduxProvider store={store}>
+            <LoginManager />
+            <LogoutManager />
             <AuthenticationManager />
             <WrongNetworkModal />
             <SignUpModal />
             <PurchaseModal />
             <NavigationBar />
             <Component {...pageProps} />
-          </AuthenticationProvider>
+          </ReduxProvider>
         </Web3ReactProvider>
       </main>
     </>
@@ -74,7 +71,7 @@ CustomApp.getInitialProps = async (appContext: AppContext) => {
       await admin
         .auth()
         .verifyIdToken(cookies.token)
-        .catch((error: FirebaseError) => {
+        .catch((error) => {
           console.log(error);
           // remove id token cookie if the id token has expired
           destroyCookie(ctx, 'token', COOKIE_OPTIONS);
