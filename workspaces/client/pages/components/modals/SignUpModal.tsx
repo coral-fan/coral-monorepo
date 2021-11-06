@@ -1,7 +1,8 @@
 import { Modal, Button } from 'components/ui';
+import { useIsSigningUp } from 'libraries/authentication/hooks';
 
 export const SignUpModal = () => {
-  const isSigningUp = false;
+  const [isSigningUp] = useIsSigningUp();
 
   if (!isSigningUp) {
     return null;
