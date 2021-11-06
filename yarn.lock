@@ -5611,6 +5611,14 @@ rechoir@^0.7.0:
   dependencies:
     resolve "^1.9.0"
 
+redux-observable@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/redux-observable/-/redux-observable-2.0.0.tgz#4358bef2e924723a8b1ad0e835ccebb1612a6b9a"
+  integrity sha512-FJz4rLXX+VmDDwZS/LpvQsKnSanDOe8UVjiLryx1g3seZiS69iLpMrcvXD5oFO7rtkPyRdo/FmTqldnT3X3m+w==
+  dependencies:
+    rxjs "^7.0.0"
+    tslib "~2.1.0"
+
 redux-thunk@^2.3.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.4.0.tgz#ac89e1d6b9bdb9ee49ce69a69071be41bbd82d67"
@@ -5755,7 +5763,7 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rxjs@^7.3.0:
+rxjs@^7.0.0, rxjs@^7.3.0:
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.4.0.tgz#a12a44d7eebf016f5ff2441b87f28c9a51cebc68"
   integrity sha512-7SQDi7xeTMCJpqViXh8gL/lebcwlp3d831F05+9B44A4B0WfsEwUQHR64gsH1kvJ+Ep/J9K2+n1hVl1CsGN23w==
