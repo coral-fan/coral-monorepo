@@ -12,9 +12,10 @@ import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain/hooks';
 import { useIsLoggingIn, useIsTokenAuthenticated } from '.';
 import { useIsSigningUp } from './isSigningUp';
+import { useSignUpCompletedSubject } from './signUpCompleteSubject';
 
 const fetchNonce = (address: string) =>
-  axios.post<{ nonce: number; isSignUp: boolean }>(
+  axios.post<{ nonce: number; isSigningUp: boolean }>(
     'http://localhost:5001/torus-tutorial/us-central1/nonce',
     {
       address: address,
@@ -37,6 +38,8 @@ export const useLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
   const [, setIsTokenAuthenticated] = useIsTokenAuthenticated();
   const [, setIsSigningUp] = useIsSigningUp();
+  const signUpCompleteSubject = useSignUpCompletedSubject();
+  console.log('login');
 
   const { activate, getConnector } = useWeb3();
   //TODO: should probably look into how to type errors better
