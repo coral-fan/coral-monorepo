@@ -13,11 +13,15 @@ app.post('/', async (request, response) => {
   try {
     if (nonceRef.exists) {
       const nonce = nonceRef.data();
-      return response.send({ ...nonce, isSignUp: false });
+      return response.send(nonce);
     } else {
       const nonce = getNonce();
-      await admin.firestore().collection('Nonce').doc(address).set({ nonce });
-      return response.send({ nonce, isSignUp: true });
+      const userData = {
+        nonce,
+        isSigningUp: true,
+      };
+      await admin.firestore().collection('Nonce').doc(address).set(userData);
+      return response.send(userData);
     }
   } catch (error) {
     return response.status(401).send('');
