@@ -64,15 +64,15 @@ export const useLogin = () => {
       const address = await signer.getAddress();
 
       fetchNonce(address)
-        .then(async ({ data: { nonce, isSignUp } }) => {
+        .then(async ({ data: { nonce, isSigningUp } }) => {
           const authenticatedMessage = await signAuthenticatedMessage(signer, nonce);
-          if (isSignUp) {
+          if (isSigningUp) {
             setIsSigningUp(true);
             return new Promise<string>((resolve) => {
-              setTimeout(() => {
+              signUpCompleteSubject.subscribe(() => {
                 setIsSigningUp(false);
                 resolve(authenticatedMessage);
-              }, 3000);
+              });
             });
           }
           return authenticatedMessage;
