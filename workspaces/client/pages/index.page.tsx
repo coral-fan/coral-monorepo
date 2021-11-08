@@ -57,9 +57,9 @@ const wyreTest = async () => {
   console.log(createOrderResponse);
 };
 export default function Home() {
-  const isAuthenticated = useIsAuthenticated();
+  const [isAuthenticated] = useIsAuthenticated();
   useEffect(() => {
-    wyreTest().catch(console.log);
+    // wyreTest().catch(console.log);
   }, []);
 
   return (

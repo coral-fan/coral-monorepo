@@ -10,7 +10,7 @@ import { getAuthenticationMessage } from '@common/utils';
 import { COOKIE_OPTIONS, IS_OPEN_LOGIN_PENDING } from 'consts';
 import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain/hooks';
-import useAuthenticationContext from './context';
+import { useIsLoggingIn, useIsTokenAuthenticated } from '.';
 
 const fetchNonce = (address: string) =>
   axios.post<{ nonce: number }>('http://localhost:5001/torus-tutorial/us-central1/nonce', {
@@ -30,7 +30,8 @@ const fetchFirebaseAuthToken = (address: string) => (signedMessage: string) =>
   );
 
 export const useLogin = () => {
-  const { isLoggingIn, setIsLoggingIn, setIsTokenAuthenticated } = useAuthenticationContext();
+  const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
+  const [, setIsTokenAuthenticated] = useIsTokenAuthenticated();
 
   const { activate, getConnector } = useWeb3();
   //TODO: should probably look into how to type errors better

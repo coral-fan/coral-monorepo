@@ -1,33 +1,32 @@
-import { getAuth } from '@firebase/auth';
 import { useEffect } from 'react';
-import { useIsTokenAuthenticated, useLogout } from 'libraries/authentication/hooks';
-import { fromEvent, merge } from 'rxjs';
-import { useGetChainIdChanged$ } from 'libraries/blockchain/hooks/metamask';
+import { IS_OPEN_LOGIN_PENDING } from 'consts';
+import { useWeb3 } from 'libraries/blockchain/hooks';
+import {
+  useIsTokenAuthenticated,
+  useIsAuthenticated,
+  useIsLoggingIn,
+} from 'libraries/authentication/hooks';
+
+const getIsAuthenticated = (isTokenAuthenticated: boolean, isConnectorActive: boolean) =>
+  isTokenAuthenticated && isConnectorActive;
 
 export const AuthenticationManager = () => {
-  const [isAuthenticated] = useIsTokenAuthenticated();
-  const getChainIdChanged$ = useGetChainIdChanged$();
-  const logout = useLogout();
-  // logic to log user out when the authentication token changes
-  useEffect(() => {
-    return getAuth().onIdTokenChanged(async (user) => {
-      if (!user && isAuthenticated) {
-        await logout();
-      }
-    });
-  }, [isAuthenticated, logout]);
+  const [isTokenAuthenticated] = useIsTokenAuthenticated();
+  const { active } = useWeb3();
 
-  // logic to ensure the user is logged out when the account changes on metamask
-  useEffect(() => {
-    if (window.ethereum) {
-      const subscription = merge(
-        /* eslint @typescript-eslint/no-explicit-any: 'off' -- window.ethereum must be coerced as any so that fromEvent will accept the value as a EventEmitter. */
-        fromEvent(window.ethereum as any, 'accountsChanged')
-      ).subscribe(logout);
+  const [, setIsAuthenticated] = useIsAuthenticated();
 
-      return () => subscription.unsubscribe();
+  useEffect(() => {
+    setIsAuthenticated(getIsAuthenticated(isTokenAuthenticated, active));
+  }, [setIsAuthenticated, isTokenAuthenticated, active]);
+
+  const [, setIsLoggingIn] = useIsLoggingIn();
+
+  useEffect(() => {
+    if (sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) {
+      setIsLoggingIn(true);
     }
-  }, [getChainIdChanged$, logout]);
+  }, [setIsLoggingIn]);
 
   return <></>;
 };
