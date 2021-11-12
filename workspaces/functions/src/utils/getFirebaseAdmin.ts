@@ -5,7 +5,8 @@ export const getFirebaseAdmin = () => {
   if (admin.apps.length < 1) {
     const credentialPath = (
       process.env.GCLOUD_PROJECT
-        ? require('dotenv').config() && process.env.LOCAL_FIREBASE_CREDENTIALS
+        ? /* eslint-disable @typescript-eslint/no-var-requires -- this prevents the require statement from causing linting error */
+          require('dotenv').config() && process.env.LOCAL_FIREBASE_CREDENTIALS
         : process.env.GOOGLE_APPLICATION_CREDENTIALS
     ) as string;
 
