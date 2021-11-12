@@ -8,7 +8,7 @@ import { setCookie } from 'nookies';
 import { getAuthenticationMessage } from '@common/utils';
 import { SignUp } from '@common/models';
 
-import { COOKIE_OPTIONS, IS_OPEN_LOGIN_PENDING } from 'consts';
+import { API_ENDPOINT, COOKIE_OPTIONS, IS_OPEN_LOGIN_PENDING } from 'consts';
 import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain/hooks';
 import { useIsLoggingIn, useIsTokenAuthenticated } from '.';
@@ -18,8 +18,12 @@ import { concatMap, from, iif, map, of, tap } from 'rxjs';
 import { getDocRef } from 'libraries/firebase';
 import { setDoc } from '@firebase/firestore';
 
+const apiAxios = axios.create({
+  baseURL: API_ENDPOINT,
+});
+
 const fetchNonce = (address: string) =>
-  axios.post<{ nonce: number }>('http://localhost:5001/torus-tutorial/us-central1/nonce', {
+  apiAxios.post<{ nonce: number }>('nonce', {
     address: address,
   });
 
@@ -27,16 +31,13 @@ const signAuthenticatedMessage = (signer: Wallet | JsonRpcSigner, nonce: number)
   signer.signMessage(getAuthenticationMessage(nonce));
 
 const fetchFirebaseAuthToken = (address: string) => (signedMessage: string) =>
-  axios.post<{ ['Bearer Token']: string }>(
-    'http://localhost:5001/torus-tutorial/us-central1/auth',
-    {
-      address,
-      signedMessage,
-    }
-  );
+  apiAxios.post<{ ['Bearer Token']: string }>('auth', {
+    address,
+    signedMessage,
+  });
 
 const fetchIsSigningUp = (idToken: string) =>
-  axios.post<SignUp>('http://localhost:5001/torus-tutorial/us-central1/isSigningUp', {
+  apiAxios.post<SignUp>('isSigningUp', {
     idToken,
   });
 
