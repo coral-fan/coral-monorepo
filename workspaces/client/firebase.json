@@ -1,0 +1,21 @@
+{
+  "hosting": {
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "nextServer"
+      }
+    ]
+  },
+  "functions": {
+    "source": ".",
+    "runtime": "nodejs16",
+    "predeploy": ["yarn lint", "yarn build"]
+  },
+  "emulators": {
+    "functions": {
+      "host": "localhost",
+      "port": "8080"
+    }
+  }
+}
