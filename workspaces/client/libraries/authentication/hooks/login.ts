@@ -13,14 +13,12 @@ import { useWeb3 } from 'libraries/blockchain/hooks';
 import { useIsLoggingIn, useIsTokenAuthenticated } from '.';
 import { useIsSigningUp } from './isSigningUp';
 import { useSignUpCompletedSubject } from './signUpCompleteSubject';
+import { concatMap, from, iif, map, of, tap } from 'rxjs';
 
 const fetchNonce = (address: string) =>
-  axios.post<{ nonce: number; isSigningUp: boolean }>(
-    'http://localhost:5001/torus-tutorial/us-central1/nonce',
-    {
-      address: address,
-    }
-  );
+  axios.post<{ nonce: number }>('http://localhost:5001/torus-tutorial/us-central1/nonce', {
+    address: address,
+  });
 
 const signAuthenticatedMessage = (signer: Wallet | JsonRpcSigner, nonce: number) =>
   signer.signMessage(getAuthenticationMessage(nonce));
@@ -34,12 +32,17 @@ const fetchFirebaseAuthToken = (address: string) => (signedMessage: string) =>
     }
   );
 
+const fetchIsSigningUp = (idToken: string) =>
+  axios.post<{ isSigningUp: boolean }>(
+    'http://localhost:5001/torus-tutorial/us-central1/isSigningUp',
+    { idToken }
+  );
+
 export const useLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
   const [, setIsTokenAuthenticated] = useIsTokenAuthenticated();
   const [, setIsSigningUp] = useIsSigningUp();
   const signUpCompleteSubject = useSignUpCompletedSubject();
-  console.log('login');
 
   const { activate, getConnector } = useWeb3();
   //TODO: should probably look into how to type errors better
@@ -63,35 +66,49 @@ export const useLogin = () => {
     if (signer) {
       const address = await signer.getAddress();
 
-      fetchNonce(address)
-        .then(async ({ data: { nonce, isSigningUp } }) => {
-          const authenticatedMessage = await signAuthenticatedMessage(signer, nonce);
-          if (isSigningUp) {
-            setIsSigningUp(true);
-            return new Promise<string>((resolve) => {
-              signUpCompleteSubject.subscribe(() => {
-                setIsSigningUp(false);
-                resolve(authenticatedMessage);
-              });
-            });
-          }
-          return authenticatedMessage;
-        })
-        .then(fetchFirebaseAuthToken(address))
-        .then(({ data: { ['Bearer Token']: token } }) => signInWithCustomToken(getAuth(), token))
-        .then((userCredentials) => userCredentials.user.getIdToken())
-        .then((idToken) => {
-          if (sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) {
-            sessionStorage.removeItem(IS_OPEN_LOGIN_PENDING);
-          }
-
-          setCookie(undefined, 'token', idToken, COOKIE_OPTIONS);
-          setIsTokenAuthenticated(true);
-          setIsLoggingIn(false);
-        })
-        .catch((error) => {
-          setLoginError(error);
-          setIsLoggingIn(false);
+      // RxJS based implementation
+      from(fetchNonce(address))
+        .pipe(
+          concatMap(({ data: { nonce } }) => signAuthenticatedMessage(signer, nonce)),
+          concatMap(fetchFirebaseAuthToken(address)),
+          concatMap(({ data: { ['Bearer Token']: token } }) =>
+            signInWithCustomToken(getAuth(), token)
+          ),
+          concatMap((userCredentials) => userCredentials.user.getIdToken()),
+          concatMap((idToken) =>
+            from(fetchIsSigningUp(idToken)).pipe(
+              concatMap(({ data: { isSigningUp } }) => {
+                const idToken$ = of(idToken);
+                return iif(
+                  () => isSigningUp,
+                  idToken$.pipe(
+                    tap(() => setIsSigningUp(true)),
+                    concatMap((idToken) =>
+                      signUpCompleteSubject.pipe(
+                        tap(() => setIsSigningUp(false)),
+                        map(() => idToken)
+                      )
+                    )
+                  ),
+                  of(idToken)
+                );
+              })
+            )
+          )
+        )
+        .subscribe({
+          next: (idToken) => {
+            if (sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) {
+              sessionStorage.removeItem(IS_OPEN_LOGIN_PENDING);
+            }
+            setCookie(undefined, 'token', idToken, COOKIE_OPTIONS);
+            setIsTokenAuthenticated(true);
+            setIsLoggingIn(false);
+          },
+          error: (error) => {
+            setLoginError(error);
+            setIsLoggingIn(false);
+          },
         });
     } else {
       setIsLoggingIn(false);
