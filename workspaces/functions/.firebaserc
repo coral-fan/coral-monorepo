@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "torus-tutorial",
+    "staging": "torus-tutorial"
+  },
+  "targets": {}
+}
