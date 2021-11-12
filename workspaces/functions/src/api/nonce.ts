@@ -5,7 +5,7 @@ const app = getExpress();
 const admin = getFirebaseAdmin();
 
 app.post('/', async (request, response) => {
-  const address = request.body.address;
+  const { address } = request.body;
   if (!isAddress(address)) {
     return response.status(401).send('');
   }
@@ -16,12 +16,9 @@ app.post('/', async (request, response) => {
       return response.send(nonce);
     } else {
       const nonce = getNonce();
-      const userData = {
-        nonce,
-        isSigningUp: true,
-      };
-      await admin.firestore().collection('Nonce').doc(address).set(userData);
-      return response.send(userData);
+      await admin.firestore().collection('Nonce').doc(address).set({ nonce });
+      await admin.firestore().collection('is-signing-up').doc(address).set({ isSigningUp: true });
+      return response.send(nonce);
     }
   } catch (error) {
     return response.status(401).send('');
