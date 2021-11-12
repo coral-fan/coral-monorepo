@@ -1,9 +1,11 @@
 {
   "name": "client",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "private": true,
+  "main": "next-server.js",
   "scripts": {
     "start": "nodemon --watch next.config.js --exec 'next dev'",
+    "start:functions": "firebase emulators:start --only functions",
     "start:debug": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "serve": "next start",
@@ -44,6 +46,7 @@
     "@types/react": "^17.0.25",
     "@types/react-dom": "^17.0.9",
     "eslint-config-next": "^11.1.2",
+    "firebase-functions": "^3.16.0",
     "nodemon": "^2.0.12"
   }
 }
