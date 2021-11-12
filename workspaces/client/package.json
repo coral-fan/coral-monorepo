@@ -23,8 +23,6 @@
     "@react-rxjs/utils": "^0.9.2",
     "@reduxjs/toolkit": "^1.6.2",
     "@toruslabs/openlogin": "^0.10.1",
-    "@typescript-eslint/eslint-plugin": "^4.31.2",
-    "@typescript-eslint/parser": "^4.31.2",
     "@web3-react/abstract-connector": "^6.0.7",
     "@web3-react/core": "^6.1.9",
     "@web3-react/injected-connector": "^6.0.7",
@@ -45,6 +43,8 @@
     "@emotion/babel-plugin": "^11.3.0",
     "@types/react": "^17.0.25",
     "@types/react-dom": "^17.0.9",
+    "@typescript-eslint/eslint-plugin": "^5.3.1",
+    "@typescript-eslint/parser": "^5.3.1",
     "eslint-config-next": "^11.1.2",
     "firebase-functions": "^3.16.0",
     "nodemon": "^2.0.12"
