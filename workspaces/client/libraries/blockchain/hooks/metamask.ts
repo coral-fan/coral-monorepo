@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { fromEvent, map, share, startWith } from 'rxjs';
 import { EventKeys } from 'types/ethereumish';
-import { useGetRefValue } from 'libraries/utils/hooks';
+import { getRefValue } from 'libraries/utils/hooks';
 import { AVALANCHE } from 'consts';
 
 export const useGetChainIdChanged$ = () =>
-  useGetRefValue(
+  getRefValue(
     /* eslint @typescript-eslint/no-explicit-any: 'off' -- window.ethereum must be coerced as any so that fromEvent will accept the value as a EventEmitter*/
     () => fromEvent<EventKeys>(window.ethereum as any, 'chainChanged').pipe(share()),
     'getChainIdChanged$',

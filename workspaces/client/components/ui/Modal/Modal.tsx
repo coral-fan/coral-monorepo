@@ -34,10 +34,11 @@ interface ModalProps {
   width?: string;
 }
 
-export /* Using FC because it always implies children.
-   Prefer to define a props interface if children isn't a prop.
+/* 
+  Using FC because it always implies children.
+  Prefer to define a props interface if children isn't a prop.
 */
-const Modal: FC<HeaderProps & ModalProps> = ({ children, width = '50%', close, title }) => {
+export const Modal: FC<HeaderProps & ModalProps> = ({ children, width = '50%', close, title }) => {
   const shouldRenderHeader = title || close;
 
   return typeof window === 'undefined'

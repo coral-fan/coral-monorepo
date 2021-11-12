@@ -5,7 +5,7 @@ const app = getExpress();
 const admin = getFirebaseAdmin();
 
 app.post('/', async (request, response) => {
-  const address = request.body.address;
+  const { address } = request.body;
   if (!isAddress(address)) {
     return response.status(401).send('');
   }
@@ -14,10 +14,12 @@ app.post('/', async (request, response) => {
     if (nonceRef.exists) {
       const nonce = nonceRef.data();
       return response.send(nonce);
+    } else {
+      const nonce = getNonce();
+      await admin.firestore().collection('Nonce').doc(address).set({ nonce });
+      await admin.firestore().collection('is-signing-up').doc(address).set({ isSigningUp: true });
+      return response.send(nonce);
     }
-    const newNonce = { nonce: getNonce() };
-    await admin.firestore().collection('Nonce').doc(address).set(newNonce);
-    return response.send(newNonce);
   } catch (error) {
     return response.status(401).send('');
   }
