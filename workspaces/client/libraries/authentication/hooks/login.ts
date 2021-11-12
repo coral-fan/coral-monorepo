@@ -6,6 +6,7 @@ import { Wallet } from '@ethersproject/wallet';
 import { setCookie } from 'nookies';
 
 import { getAuthenticationMessage } from '@common/utils';
+import { SignUp } from '@common/models';
 
 import { COOKIE_OPTIONS, IS_OPEN_LOGIN_PENDING } from 'consts';
 import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
@@ -14,6 +15,8 @@ import { useIsLoggingIn, useIsTokenAuthenticated } from '.';
 import { useIsSigningUp } from './isSigningUp';
 import { useSignUpCompletedSubject } from './signUpCompleteSubject';
 import { concatMap, from, iif, map, of, tap } from 'rxjs';
+import { getDocRef } from 'libraries/firebase';
+import { setDoc } from '@firebase/firestore';
 
 const fetchNonce = (address: string) =>
   axios.post<{ nonce: number }>('http://localhost:5001/torus-tutorial/us-central1/nonce', {
@@ -33,10 +36,9 @@ const fetchFirebaseAuthToken = (address: string) => (signedMessage: string) =>
   );
 
 const fetchIsSigningUp = (idToken: string) =>
-  axios.post<{ isSigningUp: boolean }>(
-    'http://localhost:5001/torus-tutorial/us-central1/isSigningUp',
-    { idToken }
-  );
+  axios.post<SignUp>('http://localhost:5001/torus-tutorial/us-central1/isSigningUp', {
+    idToken,
+  });
 
 export const useLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
@@ -85,7 +87,12 @@ export const useLogin = () => {
                     tap(() => setIsSigningUp(true)),
                     concatMap((idToken) =>
                       signUpCompleteSubject.pipe(
-                        tap(() => setIsSigningUp(false)),
+                        tap(async () => {
+                          const signUpRef = getDocRef('is-signing-up', address);
+                          const signUp: SignUp = { isSigningUp: false };
+                          await setDoc(signUpRef, signUp);
+                          setIsSigningUp(false);
+                        }),
                         map(() => idToken)
                       )
                     )
