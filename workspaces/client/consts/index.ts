@@ -1,5 +1,8 @@
 export const IS_OPEN_LOGIN_PENDING = 'is_open_login_pending';
 
+export const API_ENDPOINT =
+  process.env.NEXT_PUBLIC_API_ENDPOINT ?? 'http://localhost:7070/torus-tutorial/us-central1';
+
 export const AVALANCHE = {
   CHAIN_ID: process.env.NEXT_PUBLIC_AVALANCHE_CHAIN_ID ?? '0xa869',
   CHAIN_NAME: process.env.NEXT_PUBLIC_AVALANCHE_CHAIN_NAME ?? 'Avalanche FUJI C-Chain',
