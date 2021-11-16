@@ -48,7 +48,7 @@ function getChainConfig(network: keyof typeof chainIds): NetworkUserConfig {
 }
 
 const config: HardhatUserConfig = {
-  defaultNetwork: "hardhat",
+  defaultNetwork: "fuji",
   gasReporter: {
     currency: "USD",
     enabled: process.env.REPORT_GAS ? true : false,
@@ -56,6 +56,12 @@ const config: HardhatUserConfig = {
     src: "./contracts",
   },
   networks: {
+    fuji: {
+      url: "https://api.avax-test.network/ext/bc/C/rpc",
+      gasPrice: 225000000000,
+      chainId: 43113,
+      accounts: [mnemonic],
+    },
     hardhat: {
       accounts: {
         mnemonic,
