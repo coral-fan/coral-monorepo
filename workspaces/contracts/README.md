@@ -23,7 +23,7 @@ variable. Follow the example in `.env.example`. If you don't already have a mnem
 Then, proceed with installing dependencies:
 
 ```sh
-yarn install
+yarn smart-contracts install
 ```
 
 ### Compile
@@ -31,7 +31,7 @@ yarn install
 Compile the smart contracts with Hardhat:
 
 ```sh
-$ yarn compile
+$ yarn smart-contracts compile
 ```
 
 ### TypeChain
@@ -39,7 +39,7 @@ $ yarn compile
 Compile the smart contracts and generate TypeChain artifacts:
 
 ```sh
-$ yarn typechain
+$ yarn smart-contracts typechain
 ```
 
 ### Lint Solidity
@@ -47,7 +47,7 @@ $ yarn typechain
 Lint the Solidity code:
 
 ```sh
-$ yarn lint:sol
+$ yarn smart-contracts lint:sol
 ```
 
 ### Lint TypeScript
@@ -55,7 +55,7 @@ $ yarn lint:sol
 Lint the TypeScript code:
 
 ```sh
-$ yarn lint:ts
+$ yarn smart-contracts lint:ts
 ```
 
 ### Test
