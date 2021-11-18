@@ -98,7 +98,7 @@ export const useLogin = () => {
                       )
                     )
                   ),
-                  of(idToken)
+                  idToken$
                 );
               })
             )
