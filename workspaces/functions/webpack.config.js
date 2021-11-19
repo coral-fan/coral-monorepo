@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-var-requires -- this prevents the require statement from causing linting error */
 const path = require('path');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const { EnvironmentPlugin } = require('webpack');
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
@@ -23,6 +25,11 @@ module.exports = (env, argv) => {
       needed to suppress WARNING in ../../node_modules/express/lib/view.js 81:13-25 Critical dependency: the request of a dependency is an expression
       https://stackoverflow.com/questions/41692643/webpack-and-express-critical-dependencies-warning
     */
+    plugins: [
+      new EnvironmentPlugin({
+        NODE_ENV: argv.mode,
+      }),
+    ],
     externals: [{ express: { commonjs: 'express' } }],
     // this is neccessary to allow compiling file outside of directory. https://github.com/dividab/tsconfig-paths-webpack-plugin
     resolve: {
