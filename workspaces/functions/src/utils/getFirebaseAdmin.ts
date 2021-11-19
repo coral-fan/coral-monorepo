@@ -4,7 +4,7 @@ export const getFirebaseAdmin = () => {
   // checks if admin has been initialized already
   if (admin.apps.length < 1) {
     const credentialPath = (
-      process.env.GCLOUD_PROJECT
+      process.env.NODE_ENV === 'development'
         ? /* eslint-disable @typescript-eslint/no-var-requires -- this prevents the require statement from causing linting error */
           require('dotenv').config() && process.env.LOCAL_FIREBASE_CREDENTIALS
         : process.env.GOOGLE_APPLICATION_CREDENTIALS
