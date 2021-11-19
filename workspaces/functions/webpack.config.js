@@ -55,6 +55,6 @@ module.exports = (env, argv) => {
         },
       ],
     },
-    devtool: isProduction ? 'none' : 'eval-source-map',
+    devtool: isProduction ? 'source-map' : 'inline-source-map',
   };
 };
