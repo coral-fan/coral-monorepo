@@ -1,5 +1,8 @@
+//implementation inspired by: https://dev.to/rowaxl/what-i-struggled-with-next-js-using-firebase-hosting-and-enable-ssr-4e67
 {
   "hosting": {
+    "public": "public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",
@@ -10,7 +13,16 @@
   "functions": {
     "source": ".",
     "runtime": "nodejs16",
-    "predeploy": ["yarn lint", "yarn build"]
+    "predeploy": ["yarn lint", "yarn build"],
+    "ignore": [
+      "**/src/**",
+      ".firebase/**",
+      ".firebaserc",
+      "firebase.json",
+      "node_modules/**",
+      "**/public/**",
+      "**/.next/cache/**"
+    ]
   },
   "emulators": {
     "functions": {
