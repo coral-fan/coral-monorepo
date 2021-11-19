@@ -6,5 +6,8 @@ node_modules
 #compiled files
 dist
 
+#firebase
+.firebase
+
 # miscellanious
 .DS_Store
