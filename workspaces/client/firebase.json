@@ -25,7 +25,7 @@
     ]
   },
   "emulators": {
-    "functions": {
+    "hosting": {
       "host": "localhost",
       "port": "8080"
     }
