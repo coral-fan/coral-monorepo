@@ -3,14 +3,14 @@ export const getFirebaseAdmin = async () => {
   const admin = await import('firebase-admin');
   // checks if admin has been initialized already
   if (admin.apps.length < 1) {
-    const credentialPath = (
-      process.env.NODE_ENV === 'development'
-        ? process.env.FIREBASE_ADMIN_CREDENTIALS
-        : process.env.GOOGLE_APPLICATION_CREDENTIALS
-    ) as string;
-    admin.initializeApp({
-      credential: admin.credential.cert(credentialPath),
-    });
+    if (process.env.NODE_ENV === 'development') {
+      const credentialPath = process.env.FIREBASE_ADMIN_CREDENTIALS as string;
+      admin.initializeApp({
+        credential: admin.credential.cert(credentialPath),
+      });
+    } else {
+      admin.initializeApp();
+    }
   }
   return admin;
 };
