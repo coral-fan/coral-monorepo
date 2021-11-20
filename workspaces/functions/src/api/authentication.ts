@@ -28,6 +28,7 @@ app.post('/api/auth', async (request, response) => {
     }
     return response.status(401).send('');
   } catch (error) {
+    console.log(error);
     return response.status(401).send('');
   }
 });
