@@ -6,7 +6,6 @@
     "functions": "yarn workspace functions",
     "contracts": "yarn workspace contracts",
     "common/utils": "yarn workspace @common/utils",
-    "lint": "yarn workspaces run lint",
     "clean": "yarn workspaces run clean && rm -rf node_modules && rm yarn.lock"
   },
   "workspaces": [
