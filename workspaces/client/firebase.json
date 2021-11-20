@@ -1,9 +1,21 @@
 //implementation inspired by: https://dev.to/rowaxl/what-i-struggled-with-next-js-using-firebase-hosting-and-enable-ssr-4e67
 {
   "hosting": {
-    "public": "public",
+    "public": ".next/static",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
+      {
+        "source": "/api/nonce",
+        "function": "nonce"
+      },
+      {
+        "source": "/api/auth",
+        "function": "auth"
+      },
+      {
+        "source": "/api/is-signing-up",
+        "function": "isSigningUp"
+      },
       {
         "source": "**",
         "function": "nextServer"
@@ -23,11 +35,5 @@
       "**/public/**",
       "**/.next/cache/**"
     ]
-  },
-  "emulators": {
-    "hosting": {
-      "host": "localhost",
-      "port": "8080"
-    }
   }
 }
