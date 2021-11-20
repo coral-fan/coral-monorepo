@@ -37,7 +37,7 @@ const fetchFirebaseAuthToken = (address: string) => (signedMessage: string) =>
   });
 
 const fetchIsSigningUp = (idToken: string) =>
-  apiAxios.post<SignUp>('isSigningUp', {
+  apiAxios.post<SignUp>('is-signing-up', {
     idToken,
   });
 
