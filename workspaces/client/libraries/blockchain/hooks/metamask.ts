@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fromEvent, map, share, startWith } from 'rxjs';
+import { delay, filter, fromEvent, iif, map, retry, retryWhen, share, startWith } from 'rxjs';
 import { EventKeys } from 'types/ethereumish';
 import { getRefValue } from 'libraries/utils/hooks';
 import { AVALANCHE } from 'consts';
@@ -12,8 +12,7 @@ export const useGetChainIdChanged$ = () =>
     false
   );
 
-const getIsNetworkSupported = (chainId: string) =>
-  chainId.toLocaleLowerCase() === AVALANCHE.CHAIN_ID;
+const getIsNetworkSupported = (chainId: string) => chainId.toLowerCase() === AVALANCHE.CHAIN_ID;
 
 export const useIsNetworkSupported = () => {
   const getChainIdChanged$ = useGetChainIdChanged$();
@@ -24,15 +23,20 @@ export const useIsNetworkSupported = () => {
     // only runs this ethereum provider is injected by metamask
     if (window.ethereum) {
       const isNetworkSupported$ = getChainIdChanged$().pipe(
+        startWith(window.ethereum.chainId),
         map(getIsNetworkSupported),
-        startWith(getIsNetworkSupported(window.ethereum.chainId))
+        /*
+        retry is neccessary because in production, chainId can be null.
+        likely a race condition where metamask doesn't initialize before react
+         */
+        retryWhen((error) => error.pipe(delay(1000)))
       );
 
       const subscription = isNetworkSupported$.subscribe(setIsNetworkSupported);
 
       return () => subscription.unsubscribe();
     }
-  }, [getChainIdChanged$, setIsNetworkSupported, isNetworkSupported]);
+  });
 
   return isNetworkSupported;
 };
