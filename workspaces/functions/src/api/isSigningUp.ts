@@ -3,7 +3,8 @@ import { getExpress, getFirebaseAdmin } from '../utils';
 const app = getExpress();
 const admin = getFirebaseAdmin();
 
-app.post('/', async (request, response) => {
+// this route format is necessary becasue rewrite done remove source: https://stackoverflow.com/questions/64916582/firebase-functions-return-404
+app.post('/api/is-signing-up', async (request, response) => {
   const { idToken } = request.body;
   if (idToken) {
     const address = (await admin.auth().verifyIdToken(idToken)).uid;

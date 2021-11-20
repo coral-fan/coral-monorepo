@@ -7,7 +7,8 @@ import { getExpress, getFirebaseAdmin, getNonce } from 'utils';
 const app = getExpress();
 const admin = getFirebaseAdmin();
 
-app.post('/', async (request, response) => {
+// this route format is necessary becasue rewrite done remove source: https://stackoverflow.com/questions/64916582/firebase-functions-return-404
+app.post('/api/auth', async (request, response) => {
   const { address, signedMessage } = request.body;
   if (!isAddress(address)) {
     return response.status(401).send('');
