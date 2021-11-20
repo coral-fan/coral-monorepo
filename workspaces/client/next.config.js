@@ -2,6 +2,7 @@
 module.exports = {
   reactStrictMode: true,
   pageExtensions: ['page.tsx'],
+  productionBrowserSourceMaps: true,
   /*
     neccessary to ensure Next can compile file outside of project directory.
     https://github.com/vercel/next.js/blob/canary/packages/next/build/webpack-config.ts (line 927, search config.experimental.externalDir)
