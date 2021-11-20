@@ -6,10 +6,11 @@
     "webpack": "webpack --progress --color --stats-error-details",
     "build": "yarn webpack --mode=production",
     "build:dev": "yarn webpack --mode=development",
-    "start": "yarn build:dev && firebase emulators:start --only functions",
+    "start": "yarn build:dev && yarn start:functions",
+    "start:functions": "firebase emulators:start",
     "shell": "yarn build && firebase functions:shell",
     "serve": "yarn shell",
-    "deploy": "firebase deploy --only functions",
+    "deploy": "firebase deploy --only functions:nonce,functions:auth,functions:isSigningUp",
     "logs": "firebase functions:log",
     "clean": "rm -rf node_modules"
   },
