@@ -1,7 +1,5 @@
 {
   "projects": {
-    "default": "torus-tutorial",
-    "staging": "torus-tutorial"
-  },
-  "targets": {}
+    "default": "torus-tutorial"
+  }
 }
