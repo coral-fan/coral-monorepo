@@ -1,4 +1,22 @@
 {
+  "hosting": {
+    "public": "dist",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "/api/nonce",
+        "function": "nonce"
+      },
+      {
+        "source": "/api/auth",
+        "function": "auth"
+      },
+      {
+        "source": "/api/is-signing-up",
+        "function": "isSigningUp"
+      }
+    ]
+  },
   "functions": {
     "source": ".",
     "runtime": "nodejs16",
