@@ -11,3 +11,5 @@ dist
 
 # miscellanious
 .DS_Store
+
+ngrok.yaml
