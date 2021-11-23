@@ -29,4 +29,15 @@ module.exports = {
     }
     return config;
   },
+  async redirects() {
+    return process.env.NODE_ENV === 'development'
+      ? [
+          {
+            source: '/api/:path*',
+            destination: 'http://localhost:7070/api/:path*',
+            permanent: false,
+          },
+        ]
+      : [];
+  },
 };
