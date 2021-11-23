@@ -17,6 +17,7 @@ app.post('/api/is-signing-up', async (request, response) => {
         return response.send({ isSigningUp: false });
       }
     } catch (error) {
+      console.log(error);
       return response.status(401).send('');
     }
   }
