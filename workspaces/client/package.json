@@ -5,7 +5,7 @@
   "main": "next-server.js",
   "scripts": {
     "start": "nodemon --watch next.config.js --exec 'next dev'",
-    "start:functions": "firebase emulators:start",
+    "start:functions": "firebase -c firebase.development.json emulators:start",
     "start:debug": "NODE_OPTIONS='--inspect' next dev",
     "deploy": "firebase deploy --only functions:nextServer,hosting",
     "build": "next build",
