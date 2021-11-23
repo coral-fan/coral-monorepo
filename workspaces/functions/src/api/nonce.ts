@@ -22,6 +22,7 @@ app.post('/api/nonce', async (request, response) => {
       return response.send(nonce);
     }
   } catch (error) {
+    console.log(error);
     return response.status(401).send('');
   }
 });
