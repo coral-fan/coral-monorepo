@@ -42,17 +42,19 @@ export class OpenLoginConnector extends AbstractConnector {
 
     if (!openLogin.privKey) {
       await openLogin.login({
-        loginProvider: '',
+        // loginProvider: OPEN_LOGIN.loginProvider,
       });
       window.sessionStorage.setItem(IS_OPEN_LOGIN_PENDING, 'true');
     }
 
-    this.wallet = new Wallet(openLogin.privKey).connect(
-      new JsonRpcProvider('https://api.avax-test.network/ext/bc/C/rpc')
-    );
+    this.wallet = new Wallet(openLogin.privKey).connect(new JsonRpcProvider(AVALANCHE.RPC_URL));
+
+    const account = await this.wallet.getAddress();
+    const chainId = await this.wallet.getChainId();
 
     return {
-      account: this.wallet.address,
+      account,
+      chainId,
       provider: this.wallet.provider,
     };
   }
@@ -74,6 +76,9 @@ export class OpenLoginConnector extends AbstractConnector {
   }
 
   async getAccount(): Promise<string | null> {
+    if (!this.wallet) {
+      throw OPEN_LOGIN_PROVIDER_ERROR;
+    }
     return this.wallet ? this.wallet.address : null;
   }
 
