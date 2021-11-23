@@ -1,0 +1,35 @@
+{
+  "hosting": {
+    "public": "dist",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "/api/nonce",
+        "function": "nonce"
+      },
+      {
+        "source": "/api/auth",
+        "function": "auth"
+      },
+      {
+        "source": "/api/is-signing-up",
+        "function": "isSigningUp"
+      }
+    ]
+  },
+  "functions": {
+    "source": ".",
+    "runtime": "nodejs16",
+    "predeploy": ["yarn lint", "yarn build"]
+  },
+  "emulators": {
+    "functions": {
+      "host": "0.0.0.0",
+      "port": "5000"
+    },
+    "hosting": {
+      "host": "0.0.0.0",
+      "port": "7070"
+    }
+  }
+}
