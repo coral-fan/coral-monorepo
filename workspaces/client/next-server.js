@@ -4,10 +4,7 @@
 const { https } = require('firebase-functions');
 const next = require('next');
 
-const isDevelopment = process.env.NODE_ENV === 'development';
-
 const server = next({
-  dev: isDevelopment,
   conf: { distDir: '.next' },
 });
 
