@@ -7,7 +7,7 @@
     "build": "yarn webpack --mode=production",
     "build:dev": "yarn webpack --mode=development",
     "start": "yarn build:dev && yarn start:functions",
-    "start:functions": "firebase emulators:start",
+    "start:functions": "firebase -c firebase.development.json emulators:start",
     "shell": "yarn build && firebase functions:shell",
     "serve": "yarn shell",
     "deploy": "firebase deploy --only functions:nonce,functions:auth,functions:isSigningUp",
