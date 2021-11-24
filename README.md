@@ -53,8 +53,8 @@ Using this script, you can run arbitrary scripts for each respective workspace:
 
 #### Available Workspaces
 
-- [client](https://github.com/Coral-Music/coral-monorepo/tree/master/workspaces/client)
-- [functions](https://github.com/Coral-Music/coral-monorepo/tree/master/workspaces/functions)
+- [client](/workspaces/client)
+- [functions](/workspaces/functions)
 
 ### `yarn start:tunnel`
 
