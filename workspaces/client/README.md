@@ -16,7 +16,7 @@ Please note that any values surrounded by `<` `>` and are placeholder values, an
 
 **NOTE:** The web client depends on Firebase cloud functions running locally.
 
-See the [Functions workspace](https://github.com/Coral-Music/coral-monorepo/tree/master/workspaces/functions) for information on how to run the back end serverless cloud functions locally.
+See the [Functions workspace](../functions) for information on how to run the back end serverless cloud functions locally.
 
 ## Available Scripts
 
