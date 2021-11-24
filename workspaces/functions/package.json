@@ -5,7 +5,7 @@
     "lint": "eslint ./src",
     "webpack": "webpack --progress --color --stats-error-details",
     "build": "yarn webpack --mode=production",
-    "build:dev": "yarn webpack --mode=development",
+    "build:development": "yarn webpack --mode=development",
     "start": "yarn build:dev && yarn start:functions",
     "start:functions": "firebase -c firebase.development.json emulators:start",
     "shell": "yarn build && firebase functions:shell",
