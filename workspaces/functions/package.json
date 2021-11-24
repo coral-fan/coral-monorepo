@@ -6,7 +6,7 @@
     "webpack": "webpack --progress --color --stats-error-details",
     "build": "yarn webpack --mode=production",
     "build:development": "yarn webpack --mode=development",
-    "start": "yarn build:dev && yarn start:functions",
+    "start": "yarn build:development && yarn start:functions",
     "start:functions": "firebase -c firebase.development.json emulators:start",
     "shell": "yarn build && firebase functions:shell",
     "serve": "yarn shell",
