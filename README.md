@@ -1,4 +1,4 @@
-# Monorepo For Crypto Music (Tentative)
+# Coral Monorepo
 
 Monorepo managed with [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces/).
 Front end written in [TypeScript](https://www.typescriptlang.org/) and built with [React](https://reactjs.org/), [Emotion](https://emotion.sh/docs/introduction), and [Next.js](https://nextjs.org/).
