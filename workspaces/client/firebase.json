@@ -1,7 +1,7 @@
 //implementation inspired by: https://dev.to/rowaxl/what-i-struggled-with-next-js-using-firebase-hosting-and-enable-ssr-4e67
 {
   "hosting": {
-    "public": ".next/static",
+    "public": "public",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
