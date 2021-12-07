@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { delay, filter, fromEvent, iif, map, retry, retryWhen, share, startWith } from 'rxjs';
+import { delay, fromEvent, map, retryWhen, share, startWith } from 'rxjs';
 import { EventKeys } from 'types/ethereumish';
 import { getRefValue } from 'libraries/utils/hooks';
 import { AVALANCHE } from 'consts';
@@ -20,8 +20,8 @@ export const useIsNetworkSupported = () => {
   const [isNetworkSupported, setIsNetworkSupported] = useState(true);
 
   useEffect(() => {
-    // only runs this ethereum provider is injected by metamask
-    if (window.ethereum) {
+    // only runs this ethereum provider is injected by metamask & not brave
+    if (window.ethereum && !window.ethereum.on) {
       const isNetworkSupported$ = getChainIdChanged$().pipe(
         startWith(window.ethereum.chainId),
         map(getIsNetworkSupported),

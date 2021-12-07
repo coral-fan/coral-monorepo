@@ -19,7 +19,7 @@ export const LogoutManager = () => {
 
   // logic to ensure the user is logged out when the account changes on metamask
   useEffect(() => {
-    if (window.ethereum) {
+    if (window.ethereum && !window.ethereum.on) {
       const subscription = merge(
         /* eslint @typescript-eslint/no-explicit-any: 'off' -- window.ethereum must be coerced as any so that fromEvent will accept the value as a EventEmitter. */
         fromEvent(window.ethereum as any, 'accountsChanged')
