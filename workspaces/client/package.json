@@ -14,7 +14,9 @@
     "build:mobile-testing": "env-cmd -f .env.mobile-testing next build",
     "serve": "next start",
     "lint": "next lint",
-    "clean": "rm -rf node_modules"
+    "clean": "rm -rf node_modules",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@emotion/react": "^11.4.1",
@@ -45,13 +47,22 @@
     "theme-in-css": "^0.2.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.0",
     "@emotion/babel-plugin": "^11.3.0",
+    "@storybook/addon-actions": "^6.4.8",
+    "@storybook/addon-essentials": "^6.4.8",
+    "@storybook/addon-links": "^6.4.8",
+    "@storybook/builder-webpack5": "^6.4.8",
+    "@storybook/manager-webpack5": "^6.4.8",
+    "@storybook/react": "^6.4.8",
     "@types/react": "^17.0.25",
     "@types/react-dom": "^17.0.9",
     "@typescript-eslint/eslint-plugin": "^5.3.1",
     "@typescript-eslint/parser": "^5.3.1",
+    "babel-loader": "^8.2.3",
     "env-cmd": "^10.1.0",
     "eslint-config-next": "^11.1.2",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "storybook-dark-mode": "^1.0.8"
   }
 }
