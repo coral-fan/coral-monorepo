@@ -16,17 +16,8 @@ module.exports = {
   */
   // TODO: check back to see if this issue above becomes resolved
   typescript: { reactDocgen: false },
-  // custom config for emotion
-  babel: (options) => {
-    /*
-     below configuration ensures emotions css prop is transpiled properly
-     keeping as comment in case needed
-     */
-    // options.presets.push(.resolve('../../node_modules', '@emotion/babel-preset-css-prop'));
-
-    // silence loose mode warning
-    options.plugins.push(['@babel/plugin-proposal-private-property-in-object', { loose: true }]);
-    return options;
+  features: {
+    babelModeV7: true,
   },
   webpackFinal: (config) => {
     config.resolve.modules.unshift(path.resolve('src'));
