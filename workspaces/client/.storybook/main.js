@@ -16,12 +16,24 @@ module.exports = {
   */
   // TODO: check back to see if this issue above becomes resolved
   typescript: { reactDocgen: false },
-  /*
-    https://stackoverflow.com/questions/65894711/module-not-found-error-cant-resolve-emotion-styled-base-when-running-story
-  */
+  // custom config for emotion
+  babel: (options) => {
+    /*
+     below configuration ensures emotions css prop is transpiled properly
+     keeping as comment in case needed
+     */
+    // options.presets.push(.resolve('../../node_modules', '@emotion/babel-preset-css-prop'));
+
+    // silence loose mode warning
+    options.plugins.push(['@babel/plugin-proposal-private-property-in-object', { loose: true }]);
+    return options;
+  },
   webpackFinal: (config) => {
     config.resolve.modules.unshift(path.resolve('src'));
-    // Sets up aliases to enable usage of Emotion 11
+    /* 
+    set up aliases to resolve issues with emotion 11
+    https://stackoverflow.com/questions/65894711/module-not-found-error-cant-resolve-emotion-styled-base-when-running-story
+    */
     config.resolve.alias = {
       ...config.resolve.alias,
       '@emotion/styled': path.resolve('../../node_modules', '@emotion/styled'),
