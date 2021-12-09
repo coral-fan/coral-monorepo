@@ -36,7 +36,7 @@ export const useIsNetworkSupported = () => {
 
       return () => subscription.unsubscribe();
     }
-  });
+  }, [setIsNetworkSupported, getChainIdChanged$]);
 
   return isNetworkSupported;
 };
