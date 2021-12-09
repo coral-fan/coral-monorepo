@@ -19,7 +19,7 @@ export const useWeb3 = () => {
 
   const signer = useMemo(
     () => (connector instanceof OpenLoginConnector ? connector.wallet : library?.getSigner()),
-    [connector, library]
+    [connector]
   );
 
   const getConnector = useCallback(
