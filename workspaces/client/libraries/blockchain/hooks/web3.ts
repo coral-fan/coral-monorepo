@@ -23,7 +23,9 @@ export const useWeb3 = () => {
   );
 
   const getConnector = useCallback(
-    () => connector ?? (window.ethereum ? injectedConnector : openLoginConnector),
+    () =>
+      connector ??
+      (window.ethereum && window.ethereum.addListener ? injectedConnector : openLoginConnector),
     [connector, injectedConnector, openLoginConnector]
   );
 
