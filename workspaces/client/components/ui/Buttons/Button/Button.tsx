@@ -1,6 +1,7 @@
+import { css } from '@emotion/react';
 import { FC } from 'react';
 import { ButtonVariant } from '../types';
-import { getButtonStyle } from '../utils';
+import { getGlobalButtonStyle } from '../utils';
 interface ButtonProps {
   variant?: ButtonVariant;
   icon?: boolean;
@@ -25,8 +26,17 @@ const PlusIcon = () => (
   </svg>
 );
 
+const buttonStyle = css`
+  gap: 13.13px;
+  padding: 16px;
+  font-size: 14px;
+  line-height: 0;
+  text-transform: uppercase;
+  font-weight: 700;
+`;
+
 export const Button: FC<ButtonProps> = ({ children, icon, variant }) => (
-  <button css={getButtonStyle(variant)}>
+  <button css={[getGlobalButtonStyle(variant), buttonStyle]}>
     {icon && <PlusIcon />}
     {children}
   </button>
