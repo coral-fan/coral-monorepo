@@ -6,14 +6,19 @@ export default {
   component: Button,
 } as Meta;
 
-const Template: Story = (args) => <Button {...args}>Button</Button>;
+const ButtonTemplate: Story = (args) => <Button {...args}>Button</Button>;
 
-export const Primary = Template.bind({});
+export const Primary = ButtonTemplate.bind({});
 Primary.args = {
   variant: 'primary',
 };
 
-export const Secondary = Template.bind({});
+export const Secondary = ButtonTemplate.bind({});
 Secondary.args = {
   variant: 'secondary',
+};
+
+export const WithIcon = ButtonTemplate.bind({});
+WithIcon.args = {
+  icon: 'plus',
 };
