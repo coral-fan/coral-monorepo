@@ -1,12 +1,4 @@
-@font-face {
-  font-family: 'DM Sans';
-  src: url('/fonts/DM_Sans/DMSans-Bold.tff') format('truetype')
-    url('/fonts/DM_Sans/DMSans-BoldItalic.tff') format('truetype')
-    url('/fonts/DM_Sans/DMSans-Italic.tff') format('truetype')
-    url('/fonts/DM_Sans/DMSans-Medium.tff') format('truetype')
-    url('/fonts/DM_Sans/DMSans-MediumItalic.tff') format('truetype')
-    url('/fonts/DM_Sans/DMSans-Regular.tff') format('truetype');
-}
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
 * {
   box-sizing: border-box;
   padding: 0;
