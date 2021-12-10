@@ -1,2 +1,2 @@
-export { Flex } from './Flex';
-export { Center } from './Center';
+export * from './Flex';
+export * from './Center';
