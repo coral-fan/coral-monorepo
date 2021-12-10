@@ -1,9 +1,8 @@
 import { css } from '@emotion/react';
 import { FC } from 'react';
-import { ButtonVariant } from '../types';
+import { BaseButtonProps } from '../types';
 import { getGlobalButtonStyle } from '../utils';
-interface ButtonProps {
-  variant?: ButtonVariant;
+interface ButtonProps extends BaseButtonProps {
   icon?: boolean;
 }
 
