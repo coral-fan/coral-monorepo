@@ -27,8 +27,8 @@ const plusButtonStyle = css`
   justify-content: center;
 `;
 
-export const PlusButton: FC<PlusButtonProps> = ({ variant }) => (
-  <button css={[getGlobalButtonStyle(variant), plusButtonStyle]}>
+export const PlusButton = ({ variant, ...props }: PlusButtonProps) => (
+  <button css={[getGlobalButtonStyle(variant), plusButtonStyle]} {...props}>
     <PlusIcon />
   </button>
 );
