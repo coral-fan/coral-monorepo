@@ -8,9 +8,12 @@ export default {
 
 const Template: Story = (args) => <Button {...args}>Button</Button>;
 
-// export const Primary = Template.bind({});
-// Primary.args = {
-//   variant: 'primary',
-// };
+export const Primary = Template.bind({});
+Primary.args = {
+  variant: 'primary',
+};
 
-export const Default = Template.bind({});
+export const Secondary = Template.bind({});
+Secondary.args = {
+  variant: 'secondary',
+};
