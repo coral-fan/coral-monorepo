@@ -16,8 +16,18 @@ module.exports = {
   */
   // TODO: check back to see if this issue above becomes resolved
   typescript: { reactDocgen: false },
-  features: {
-    babelModeV7: true,
+  babel: (options) => {
+    /*
+    configuraton to enable css propin storybook
+    https://github.com/storybookjs/storybook/issues/7540
+   */
+    options.presets.push('@emotion/babel-preset-css-prop');
+    /*
+    defines react for all files
+    https://storybook.js.org/docs/react/workflows/faq
+    */
+    options.plugins.push('react-require');
+    return options;
   },
   webpackFinal: (config) => {
     // sets up relative imports to client directory
