@@ -20,7 +20,8 @@ module.exports = {
     babelModeV7: true,
   },
   webpackFinal: (config) => {
-    config.resolve.modules.unshift(path.resolve('src'));
+    // sets up relative imports to client directory
+    config.resolve.modules.push(path.resolve('.'));
     /* 
     set up aliases to resolve issues with emotion 11
     https://stackoverflow.com/questions/65894711/module-not-found-error-cant-resolve-emotion-styled-base-when-running-story
