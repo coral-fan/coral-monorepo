@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { ButtonVariant } from './types';
-import { getButtonStyle } from './utils';
+import { ButtonVariant } from '../types';
+import { getButtonStyle } from '../utils';
 interface ButtonProps {
   variant?: ButtonVariant;
   icon?: boolean;
