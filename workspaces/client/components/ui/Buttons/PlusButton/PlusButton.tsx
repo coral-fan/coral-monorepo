@@ -1,11 +1,7 @@
 import { css } from '@emotion/react';
 import { FC } from 'react';
-import { ButtonVariant } from '../types';
+import { BaseButtonProps as PlusButtonProps } from '../types';
 import { getGlobalButtonStyle } from '../utils';
-
-interface ButtonProps {
-  variant?: ButtonVariant;
-}
 
 const PlusIcon = () => (
   <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,7 +27,7 @@ const plusButtonStyle = css`
   justify-content: center;
 `;
 
-export const PlusButton: FC<ButtonProps> = ({ variant }) => (
+export const PlusButton: FC<PlusButtonProps> = ({ variant }) => (
   <button css={[getGlobalButtonStyle(variant), plusButtonStyle]}>
     <PlusIcon />
   </button>
