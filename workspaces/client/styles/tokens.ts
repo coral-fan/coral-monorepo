@@ -34,10 +34,8 @@ const tokens = createTheme({
     gradient: {
       primary: '',
     },
-    pallete: {
-      gray: '#9D9D9D',
-      white: '#FFFFFF',
-    },
+    gray: '#9D9D9D',
+    white: '#FFFFFF',
   },
 });
 
