@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { BUTTON_SIZE } from '../consts';
 import { BaseButtonProps as PlusButtonProps } from '../types';
 import { getGlobalButtonStyle } from '../utils';
 
@@ -22,7 +23,7 @@ const PlusIcon = () => (
 );
 
 const plusButtonStyle = css`
-  width: 45px;
+  width: ${BUTTON_SIZE};
 `;
 
 export const PlusButton = ({ variant, ...props }: PlusButtonProps) => (

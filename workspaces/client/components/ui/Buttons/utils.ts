@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import tokens from 'styles/tokens';
+import { BUTTON_SIZE } from './consts';
 import { ButtonVariant } from './types';
 
 export const getGlobalButtonStyle = (variant: ButtonVariant = 'primary') => css`
@@ -8,7 +9,7 @@ export const getGlobalButtonStyle = (variant: ButtonVariant = 'primary') => css`
   justify-content: center;
   border-radius: 31px;
   border: none;
-  height: 45px;
+  height: ${BUTTON_SIZE};
   color: ${tokens.color.white};
   background-color: ${tokens.color.action[variant]};
 `;
