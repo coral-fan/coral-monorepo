@@ -14,7 +14,7 @@ const controlButtonStyle = css`
   justify-content: center;
   width: ${SIZE};
   height: ${SIZE};
-  color: ${tokens.color.pallete.white};
+  color: ${tokens.color.white};
   background-color: ${tokens.color.background.secondary};
   border: 0.5px solid #534b58;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
