@@ -24,7 +24,6 @@ const PlusIcon = () => (
 
 const plusButtonStyle = css`
   width: 45px;
-  justify-content: center;
 `;
 
 export const PlusButton = ({ variant, ...props }: PlusButtonProps) => (
