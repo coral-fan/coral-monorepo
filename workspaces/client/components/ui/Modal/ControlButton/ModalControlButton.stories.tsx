@@ -2,7 +2,7 @@ import { Story, Meta } from '@storybook/react';
 import { ModalControlButton } from './ModalControlButton';
 
 export default {
-  title: 'Coral/Modal Control Button',
+  title: 'Coral/Modal/Control Button',
   component: ModalControlButton,
 } as Meta;
 
