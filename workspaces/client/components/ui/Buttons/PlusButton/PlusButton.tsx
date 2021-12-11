@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import { FC } from 'react';
 import { BaseButtonProps as PlusButtonProps } from '../types';
 import { getGlobalButtonStyle } from '../utils';
 
