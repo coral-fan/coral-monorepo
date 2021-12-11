@@ -9,6 +9,6 @@ export const getGlobalButtonStyle = (variant: ButtonVariant = 'primary') => css`
   border-radius: 31px;
   border: none;
   height: 45px;
-  color: ${tokens.color.pallete.white};
+  color: ${tokens.color.white};
   background-color: ${tokens.color.action[variant]};
 `;
