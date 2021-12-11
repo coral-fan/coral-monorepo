@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import { FC } from 'react';
 import tokens from 'styles/tokens';
 import { CloseIcon, LeftArrowIcon } from './Icons';
 
