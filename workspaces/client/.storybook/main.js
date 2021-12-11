@@ -26,7 +26,10 @@ module.exports = {
     defines react for all files
     https://storybook.js.org/docs/react/workflows/faq
     */
-    options.plugins.push('react-require');
+    options.plugins.push('react-require', [
+      '@babel/plugin-proposal-private-property-in-object',
+      { loose: true },
+    ]);
     return options;
   },
   webpackFinal: (config) => {
