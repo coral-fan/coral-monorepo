@@ -26,6 +26,7 @@ const PlusIcon = () => (
 );
 
 const buttonStyle = css`
+  width: 100%;
   gap: 13.13px;
   padding: 16px;
   font-size: 14px;
