@@ -2,13 +2,13 @@ import { css } from '@emotion/react';
 import tokens from 'styles/tokens';
 import { CloseIcon, LeftArrowIcon } from './Icons';
 
-interface ModalControlButtonProps {
+interface ControlButtonProps {
   variant: 'close' | 'previous';
 }
 
 const SIZE = '30px';
 
-const modalControlButtonStyle = css`
+const controlButtonStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,8 +21,8 @@ const modalControlButtonStyle = css`
   border-radius: 30px;
 `;
 
-export const ModalControlButton = ({ variant }: ModalControlButtonProps) => (
-  <button css={[modalControlButtonStyle]}>
+export const ControlButton = ({ variant }: ControlButtonProps) => (
+  <button css={[controlButtonStyle]}>
     {variant === 'close' ? <CloseIcon /> : <LeftArrowIcon />}
   </button>
 );

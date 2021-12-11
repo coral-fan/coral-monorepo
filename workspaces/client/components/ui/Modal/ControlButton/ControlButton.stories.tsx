@@ -1,14 +1,12 @@
 import { Story, Meta } from '@storybook/react';
-import { ModalControlButton } from './ModalControlButton';
+import { ControlButton } from './ControlButton';
 
 export default {
   title: 'Coral/Modal/Control Button',
-  component: ModalControlButton,
+  component: ControlButton,
 } as Meta;
 
-const Template: Story = ({ variant, ...args }) => (
-  <ModalControlButton variant={variant} {...args} />
-);
+const Template: Story = ({ variant, ...args }) => <ControlButton variant={variant} {...args} />;
 
 export const Close = Template.bind({});
 Close.args = {
