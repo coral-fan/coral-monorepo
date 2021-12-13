@@ -9,14 +9,17 @@ import { COOKIE_OPTIONS } from 'consts';
 import { initializeFirebaseApp, getFirebaseAdmin } from 'libraries/firebase';
 
 // react imports
+
 // styling
 import { Global } from '@emotion/react';
 import { globalTokens } from 'styles/tokens';
 import 'styles/global.css';
+
 // components
 import { NavigationBar } from 'pages/components';
 import { LoginManager, LogoutManager, AuthenticationManager } from './components/managers';
 import { PurchaseModal, SignUpModal, WrongNetworkModal } from './components/modals';
+
 // state/logic
 import { Web3ReactProvider } from '@web3-react/core';
 import { Provider as ReduxProvider } from 'react-redux';
