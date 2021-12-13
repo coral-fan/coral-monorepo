@@ -17,12 +17,14 @@ const ButtonTemplate: Story = (args) => <Button {...args}>Button</Button>;
 export const Primary = ButtonTemplate.bind({});
 Primary.args = {
   variant: 'primary',
+  icon: false,
   loading: false,
 };
 
 export const Secondary = ButtonTemplate.bind({});
 Secondary.args = {
   variant: 'secondary',
+  icon: false,
   loading: false,
 };
 
