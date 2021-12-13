@@ -1,4 +1,4 @@
-import { Story, ComponentMeta } from '@storybook/react';
+import { Story, Meta } from '@storybook/react';
 import { Button } from './Button';
 
 export default {
@@ -10,7 +10,7 @@ export default {
       control: { type: 'select' },
     },
   },
-} as ComponentMeta<typeof Button>;
+} as Meta;
 
 const ButtonTemplate: Story = (args) => <Button {...args}>Button</Button>;
 
