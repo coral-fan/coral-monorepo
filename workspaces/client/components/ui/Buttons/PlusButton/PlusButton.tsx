@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { BUTTON_SIZE } from '../consts';
+import { ConditionalSpinner } from '../Spinner';
 import { BaseButtonProps as PlusButtonProps } from '../types';
 import { getGlobalButtonStyle } from '../utils';
 
@@ -26,8 +27,10 @@ const plusButtonStyle = css`
   width: ${BUTTON_SIZE};
 `;
 
-export const PlusButton = ({ variant, ...props }: PlusButtonProps) => (
+export const PlusButton = ({ variant, loading = false, ...props }: PlusButtonProps) => (
   <button css={[getGlobalButtonStyle(variant), plusButtonStyle]} {...props}>
-    <PlusIcon />
+    <ConditionalSpinner loading={loading}>
+      <PlusIcon />
+    </ConditionalSpinner>
   </button>
 );
