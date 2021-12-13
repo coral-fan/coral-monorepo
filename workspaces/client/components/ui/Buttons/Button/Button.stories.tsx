@@ -12,23 +12,23 @@ export default {
   },
 } as Meta;
 
-const ButtonTemplate: Story = (args) => <Button {...args}>Button</Button>;
+const Template: Story = (args) => <Button {...args}>Button</Button>;
 
-export const Primary = ButtonTemplate.bind({});
+export const Primary = Template.bind({});
 Primary.args = {
   variant: 'primary',
   icon: false,
   loading: false,
 };
 
-export const Secondary = ButtonTemplate.bind({});
+export const Secondary = Template.bind({});
 Secondary.args = {
   variant: 'secondary',
   icon: false,
   loading: false,
 };
 
-export const WithIcon = ButtonTemplate.bind({});
+export const WithIcon = Template.bind({});
 WithIcon.args = {
   icon: true,
   loading: false,

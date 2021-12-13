@@ -12,15 +12,15 @@ export default {
   },
 } as Meta;
 
-const PlusButtonTemplate: Story = (args) => <PlusButton {...args} />;
+const Template: Story = (args) => <PlusButton {...args} />;
 
-export const Primary = PlusButtonTemplate.bind({});
+export const Primary = Template.bind({});
 Primary.args = {
   variant: 'primary',
   loading: false,
 };
 
-export const Secondary = PlusButtonTemplate.bind({});
+export const Secondary = Template.bind({});
 Secondary.args = {
   variant: 'secondary',
   loading: false,
