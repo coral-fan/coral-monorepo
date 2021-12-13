@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { BUTTON_SIZE } from '../consts';
-import { ConditionalSpinner } from '../Spinner';
+import { ConditionalSpinner } from '../../Spinner';
 import { BaseButtonProps as PlusButtonProps } from '../types';
 import { getGlobalButtonStyle } from '../utils';
 
