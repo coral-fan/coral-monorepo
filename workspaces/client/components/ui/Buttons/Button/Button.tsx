@@ -37,8 +37,8 @@ const buttonStyle = css`
   font-weight: 700;
 `;
 
-export const Button: FC<ButtonProps> = ({ children, icon, variant, loading = false }) => (
-  <button css={[getGlobalButtonStyle(variant), buttonStyle]}>
+export const Button: FC<ButtonProps> = ({ children, icon, variant, loading = false, ...props }) => (
+  <button css={[getGlobalButtonStyle(variant), buttonStyle]} {...props}>
     <ConditionalSpinner loading={loading}>
       {icon && <PlusIcon />}
       {children}
