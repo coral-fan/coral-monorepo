@@ -1,7 +1,9 @@
 import { css } from '@emotion/react';
 import { FC } from 'react';
+import { ConditionalSpinner } from '../Spinner';
 import { BaseButtonProps } from '../types';
 import { getGlobalButtonStyle } from '../utils';
+
 interface ButtonProps extends BaseButtonProps {
   icon?: boolean;
 }
@@ -35,9 +37,11 @@ const buttonStyle = css`
   font-weight: 700;
 `;
 
-export const Button: FC<ButtonProps> = ({ children, icon, variant }) => (
+export const Button: FC<ButtonProps> = ({ children, icon, variant, loading = false }) => (
   <button css={[getGlobalButtonStyle(variant), buttonStyle]}>
-    {icon && <PlusIcon />}
-    {children}
+    <ConditionalSpinner loading={loading}>
+      {icon && <PlusIcon />}
+      {children}
+    </ConditionalSpinner>
   </button>
 );
