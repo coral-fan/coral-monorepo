@@ -27,7 +27,7 @@ const plusButtonStyle = css`
   width: ${BUTTON_SIZE};
 `;
 
-export const PlusButton = ({ variant, loading = false, ...props }: PlusButtonProps) => (
+export const PlusButton = ({ variant, loading, ...props }: PlusButtonProps) => (
   <button css={[getGlobalButtonStyle(variant), plusButtonStyle]} {...props}>
     <ConditionalSpinner loading={loading}>
       <PlusIcon />
