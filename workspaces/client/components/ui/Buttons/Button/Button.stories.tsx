@@ -17,19 +17,20 @@ const Template: Story = (args) => <Button {...args}>Button</Button>;
 export const Primary = Template.bind({});
 Primary.args = {
   variant: 'primary',
-  icon: false,
   loading: false,
+  icon: false,
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
   variant: 'secondary',
-  icon: false,
   loading: false,
+  icon: false,
 };
 
 export const WithIcon = Template.bind({});
 WithIcon.args = {
-  icon: true,
+  variant: 'primary',
   loading: false,
+  icon: false,
 };
