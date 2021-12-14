@@ -4,7 +4,7 @@ import { ConditionalSpinner } from '../../Spinner';
 import { BaseButtonProps } from '../types';
 import { getGlobalButtonStyle } from '../utils';
 
-interface ButtonProps extends BaseButtonProps {
+export interface ButtonProps extends BaseButtonProps {
   icon?: boolean;
 }
 
