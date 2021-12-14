@@ -13,7 +13,20 @@ To set up the project, run the following commands below:
 git clone https://github.com/Coral-Music/coral-monorepo.git
 cd coral-monorepo
 yarn install
+
+npm i -g firebase-cli
+# please make sure you've been added to the firebase project before proceeding with this step
+firebase login
 ```
+
+Next, go to the Firebase Console and go to Project Settings as below:
+![image](./documentation/images/firebase_console.png)
+
+Inside of Project Settings, navigate to the Service Accounts tab, and click the Generate new private key.
+![image](./documentation/images/firebase_project_settings.png)
+
+Save this file somewhere safe.
+**NOTE**: Please **DO NOT** save this file anywhere inside the `coral-monorepo` directory.
 
 ### Local Mobile Device Testing
 
