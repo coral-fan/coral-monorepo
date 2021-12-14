@@ -1,6 +1,6 @@
 import { Story, Meta } from '@storybook/react';
-import { Button, ButtonProps } from './Button';
-
+import { Button } from './Button';
+import { BaseButtonProps as ButtonProps } from '../types';
 export default {
   title: 'Coral/Buttons/Button',
   component: Button,
