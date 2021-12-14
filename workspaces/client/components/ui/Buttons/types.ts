@@ -1,4 +1,4 @@
-import { ComponentProps, ReactElement, ReactNode } from 'react';
+import { ComponentProps, ReactElement } from 'react';
 
 export type ButtonVariant = 'primary' | 'secondary';
 
