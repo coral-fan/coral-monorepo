@@ -27,10 +27,3 @@ Secondary.args = {
   loading: false,
   icon: false,
 };
-
-export const WithIcon = Template.bind({});
-WithIcon.args = {
-  variant: 'primary',
-  loading: false,
-  icon: false,
-};

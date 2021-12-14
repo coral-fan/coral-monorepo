@@ -4,29 +4,6 @@ import { ConditionalSpinner } from '../../Spinner';
 import { BaseButtonProps } from '../types';
 import { getGlobalButtonStyle } from '../utils';
 
-export interface ButtonProps extends BaseButtonProps {
-  icon?: boolean;
-}
-
-const PlusIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M3.125 10H16.875"
-      stroke="white"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M10 3.125V16.875"
-      stroke="white"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
 const buttonStyle = css`
   width: 100%;
   gap: 13.13px;
@@ -37,10 +14,10 @@ const buttonStyle = css`
   font-weight: 700;
 `;
 
-export const Button: FC<ButtonProps> = ({ children, icon, variant, loading, ...props }) => (
+export const Button: FC<BaseButtonProps> = ({ children, icon, variant, loading, ...props }) => (
   <button css={[getGlobalButtonStyle(variant), buttonStyle]} {...props}>
     <ConditionalSpinner loading={loading}>
-      {icon && <PlusIcon />}
+      {icon}
       {children}
     </ConditionalSpinner>
   </button>
