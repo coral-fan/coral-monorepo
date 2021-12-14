@@ -1,7 +1,7 @@
 import { Button } from 'components/ui/Buttons/Button';
 import { ComponentProps } from 'react';
 
-const ShareIcon = () => (
+const ShareIcon = (
   <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M7.21875 5.03039L10.5 1.75L13.7812 5.03039"
@@ -28,7 +28,7 @@ const ShareIcon = () => (
 );
 
 export const ShareButton = (props: ComponentProps<'button'>) => (
-  <Button icon={<ShareIcon />} variant={'secondary'} {...props}>
+  <Button icon={ShareIcon} variant={'secondary'} {...props}>
     Share
   </Button>
 );
