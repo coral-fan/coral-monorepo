@@ -5,8 +5,6 @@ import { SpinnerBaseProp as SpinnerProp } from './types';
 
 const SIZE = `20px`;
 
-const extractSize = ({ size }: SpinnerProp) => size;
-
 const spin = keyframes`
   0% {
     transform: rotate(0deg);
@@ -17,20 +15,26 @@ const spin = keyframes`
 `;
 
 const Wrapper = styled.div<SpinnerProp>`
+  /* spinner css variables */
+  --size: ${({ size = SIZE }) => size};
+  --ring-size: calc(var(--size) * 0.8);
+  --ring-spacing: calc(var(--size) / 10);
+  /* */
+
   display: inline-block;
   position: relative;
-  width: ${extractSize};
-  height: ${extractSize}; ;
+  width: var(--size);
+  height: var(--size);
 `;
 
-const Ring = styled.div<SpinnerProp>`
+const Ring = styled.div`
   box-sizing: border-box;
   display: block;
   position: absolute;
-  width: calc(${extractSize} * 0.8);
-  height: calc(${extractSize} * 0.8);
-  margin: calc(${extractSize}} / 10);
-  border: calc(${extractSize} / 10) solid ${tokens.color.white};
+  width: var(--ring-size);
+  height: var(--ring-size);
+  margin: var(--ring-spacing);
+  border: var(--ring-spacing) solid ${tokens.color.white};
   border-radius: 50%;
   animation: ${spin} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   border-color: ${tokens.color.white} transparent transparent transparent;
@@ -48,11 +52,11 @@ const Ring = styled.div<SpinnerProp>`
   }
 `;
 
-export const Spinner = ({ size = SIZE }: SpinnerProp) => (
+export const Spinner = ({ size }: SpinnerProp) => (
   <Wrapper size={size}>
-    <Ring size={size} />
-    <Ring size={size} />
-    <Ring size={size} />
-    <Ring size={size} />
+    <Ring />
+    <Ring />
+    <Ring />
+    <Ring />
   </Wrapper>
 );
