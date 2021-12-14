@@ -4,6 +4,7 @@ import { ConditionalSpinner } from '../../Spinner';
 import { BaseButtonProps as IconButtonProps } from '../types';
 import { getGlobalButtonStyle } from '../utils';
 
+// default icon
 const PlusIcon = (
   <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
