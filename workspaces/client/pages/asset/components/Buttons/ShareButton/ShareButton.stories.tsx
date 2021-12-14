@@ -8,7 +8,7 @@ export default {
 
 const Template: Story = (args) => <ShareButton {...args}>Share</ShareButton>;
 
-export const Primary = Template.bind({});
-Primary.args = {
+export const Share = Template.bind({});
+Share.args = {
   loading: false,
 };
