@@ -1,9 +1,13 @@
 import { css } from '@emotion/react';
+import { ReactElement } from 'react';
 import { BUTTON_SIZE } from '../consts';
 import { ConditionalSpinner } from '../../Spinner';
-import { BaseButtonProps as IconButtonProps } from '../types';
+import { BaseButtonProps } from '../types';
 import { getGlobalButtonStyle } from '../utils';
 
+export interface IconButtonProps extends BaseButtonProps {
+  icon: ReactElement;
+}
 const iconButtonStyle = css`
   width: ${BUTTON_SIZE};
 `;
