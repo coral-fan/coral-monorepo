@@ -2,7 +2,7 @@ import { Story, Meta } from '@storybook/react';
 import { Button, ButtonProps } from './Button';
 
 // icon for storybook
-const PlusIcon = (
+const PLUS_ICON = (
   <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M5.1875 15.5H25.8125"
@@ -55,5 +55,5 @@ export const WithIcon = Template.bind({});
 WithIcon.args = {
   variant: 'primary',
   loading: false,
-  icon: PlusIcon,
+  icon: PLUS_ICON,
 };
