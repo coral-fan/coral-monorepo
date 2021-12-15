@@ -1,5 +1,5 @@
 import { Story, Meta } from '@storybook/react';
-import { IconButton } from './IconButton';
+import { IconButton, IconButtonProps } from './IconButton';
 
 // storybook icon
 const PlusIcon = (
@@ -37,7 +37,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story = (args) => <IconButton {...args} />;
+const Template: Story<IconButtonProps> = (args) => <IconButton {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {

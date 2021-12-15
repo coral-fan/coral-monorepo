@@ -1,6 +1,5 @@
 import { Story, Meta } from '@storybook/react';
-import { Button } from './Button';
-import { BaseButtonProps as ButtonProps } from '../types';
+import { Button, ButtonProps } from './Button';
 
 // icon for storybook
 const PlusIcon = (
