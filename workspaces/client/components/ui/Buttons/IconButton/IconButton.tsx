@@ -6,7 +6,7 @@ import { BaseButtonProps } from '../types';
 import { getGlobalButtonStyle } from '../utils';
 
 export interface IconButtonProps extends BaseButtonProps {
-  icon: ReactElement;
+  icon: ReactElement<'svg'>;
 }
 const iconButtonStyle = css`
   width: ${BUTTON_SIZE};
