@@ -1,8 +1,8 @@
 import { Story, Meta } from '@storybook/react';
 import { IconButton, IconButtonProps } from './IconButton';
 
-// storybook icon
-const PlusIcon = (
+// storybook example icon
+const PLUS_ICON = (
   <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M5.1875 15.5H25.8125"
@@ -21,6 +21,11 @@ const PlusIcon = (
   </svg>
 );
 
+// storybook empty icon
+const NONE = <svg></svg>;
+
+const icons = { PLUS_ICON, NONE };
+
 export default {
   title: 'Coral/Buttons/Icon Button',
   component: IconButton,
@@ -30,8 +35,14 @@ export default {
       control: { type: 'select' },
     },
     icon: {
-      table: {
-        disable: true,
+      options: Object.keys(icons),
+      mapping: icons,
+      control: {
+        type: 'select',
+        labels: {
+          PLUS_ICON: 'Add',
+          NONE: 'None',
+        },
       },
     },
   },
@@ -43,12 +54,12 @@ export const Primary = Template.bind({});
 Primary.args = {
   variant: 'primary',
   loading: false,
-  icon: PlusIcon,
+  icon: PLUS_ICON,
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
   variant: 'secondary',
   loading: false,
-  icon: PlusIcon,
+  icon: PLUS_ICON,
 };
