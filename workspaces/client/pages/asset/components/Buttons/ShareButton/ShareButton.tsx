@@ -1,4 +1,4 @@
-import { Button } from 'components/ui/Buttons/Button';
+import { Button } from 'components/ui/buttons';
 import { ComponentProps } from 'react';
 
 /*
