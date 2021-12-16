@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import tokens from 'styles/tokens';
-import { BUTTON_SIZE } from './consts/consts';
+import { BUTTON_SIZE } from './consts';
 import { ButtonVariant } from './types';
 
 export const getGlobalButtonStyle = (variant: ButtonVariant = 'primary') => css`
