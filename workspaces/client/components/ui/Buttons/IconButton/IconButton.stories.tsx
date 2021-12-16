@@ -1,30 +1,8 @@
 import { Story, Meta } from '@storybook/react';
 import { IconButton, IconButtonProps } from './IconButton';
+import { PLUS_ICON, SHARE_ICON } from '../consts/storybook';
 
-// storybook example icon
-const PLUS_ICON = (
-  <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M5.1875 15.5H25.8125"
-      stroke="white"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M15.5 5.18753V25.8125"
-      stroke="white"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-// storybook empty icon
-const NONE = <svg></svg>;
-
-const icons = { PLUS_ICON, NONE };
+const ICONS = { PLUS_ICON, SHARE_ICON };
 
 export default {
   title: 'Coral/Buttons/Icon Button',
@@ -35,13 +13,13 @@ export default {
       control: { type: 'select' },
     },
     icon: {
-      options: Object.keys(icons),
-      mapping: icons,
+      options: Object.keys(ICONS),
+      mapping: ICONS,
       control: {
         type: 'select',
         labels: {
           PLUS_ICON: 'Add',
-          NONE: 'None',
+          SHARE_ICON: 'Share',
         },
       },
     },
