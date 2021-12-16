@@ -1,25 +1,6 @@
 import { Story, Meta } from '@storybook/react';
 import { Button, ButtonProps } from './Button';
-
-// icon for storybook
-const PLUS_ICON = (
-  <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M5.1875 15.5H25.8125"
-      stroke="white"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M15.5 5.18753V25.8125"
-      stroke="white"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
+import { PLUS_ICON } from '../consts/storybook';
 
 export default {
   title: 'Coral/Buttons/Button',
