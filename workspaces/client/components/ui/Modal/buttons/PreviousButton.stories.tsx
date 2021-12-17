@@ -9,3 +9,7 @@ export default {
 const Template: Story = () => <PreviousButton />;
 
 export const Default = Template.bind({});
+
+Default.parameters = {
+  controls: { hideNoControlsWarning: true },
+};
