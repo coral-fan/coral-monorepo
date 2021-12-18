@@ -10,14 +10,14 @@ app.post('/api/nonce', async (request, response) => {
   if (!isAddress(address)) {
     return response.status(401).send('');
   }
-  const nonceRef = await admin.firestore().doc(`Nonce/${address}`).get();
+  const nonceRef = await admin.firestore().doc(`nonce/${address}`).get();
   try {
     if (nonceRef.exists) {
       const nonce = nonceRef.data();
       return response.send(nonce);
     } else {
       const nonce = getNonce();
-      await admin.firestore().collection('Nonce').doc(address).set({ nonce });
+      await admin.firestore().collection('nonce').doc(address).set({ nonce });
       await admin.firestore().collection('is-signing-up').doc(address).set({ isSigningUp: true });
       return response.send(nonce);
     }
