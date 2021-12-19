@@ -16,10 +16,7 @@ import { globalTokens } from 'styles/tokens';
 import 'styles/global.css';
 
 // components
-import { NavigationBar } from 'pages/components';
-import { LoginManager, LogoutManager, AuthenticationManager } from './components/managers';
-import { PurchaseModal, SignUpModal, WrongNetworkModal } from './components/modals';
-
+import { NavigationBar, Modals } from 'pages/components';
 // state/logic
 import { Web3ReactProvider } from '@web3-react/core';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -46,12 +43,7 @@ const CustomApp = ({
       <main>
         <Web3ReactProvider getLibrary={getLibrary}>
           <ReduxProvider store={store}>
-            <LoginManager />
-            <LogoutManager />
-            <AuthenticationManager />
-            <WrongNetworkModal />
-            <SignUpModal />
-            <PurchaseModal />
+            <Modals />
             <NavigationBar />
             <Component {...pageProps} />
           </ReduxProvider>
