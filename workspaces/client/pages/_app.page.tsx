@@ -16,7 +16,8 @@ import { globalTokens } from 'styles/tokens';
 import 'styles/global.css';
 
 // components
-import { NavigationBar, Modals } from 'pages/components';
+import { NavigationBar, Modals } from './components';
+
 // state/logic
 import { Web3ReactProvider } from '@web3-react/core';
 import { Provider as ReduxProvider } from 'react-redux';
