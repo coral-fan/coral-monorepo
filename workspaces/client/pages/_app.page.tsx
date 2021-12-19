@@ -16,7 +16,7 @@ import { globalTokens } from 'styles/tokens';
 import 'styles/global.css';
 
 // components
-import { NavigationBar, Modals } from './components';
+import { NavigationBar, Managers, Modals } from './components';
 
 // state/logic
 import { Web3ReactProvider } from '@web3-react/core';
@@ -44,6 +44,7 @@ const CustomApp = ({
       <main>
         <Web3ReactProvider getLibrary={getLibrary}>
           <ReduxProvider store={store}>
+            <Managers />
             <Modals />
             <NavigationBar />
             <Component {...pageProps} />
