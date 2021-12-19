@@ -1,1 +1,2 @@
-export { NavigationBar } from './NavigationBar';
+export * from './modals';
+export * from './NavigationBar';
