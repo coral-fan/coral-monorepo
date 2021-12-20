@@ -1,3 +1,6 @@
+import { Collection } from './collection';
+import { Notification } from './notification';
+
 interface CreditCardInformation {
   firstName: string;
   lastName: string;
@@ -11,12 +14,7 @@ interface CreditCardInformation {
   };
 }
 
-interface Notification {
-  message: string;
-  timestamp: Date;
-  read: boolean;
-}
-
+//  id = wallet address
 export interface User {
   id: string;
   username: string;
@@ -26,4 +24,5 @@ export interface User {
   profilePhoto?: string;
   creditCardInformation?: CreditCardInformation;
   notifications: Notification[];
+  collections: Collection[];
 }
