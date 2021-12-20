@@ -1,6 +1,9 @@
+// TODO: need to think about whether we need meta data stored off chain
 export interface Asset {
-  id: string;
+  id: number;
   collectionId: string;
 }
-
-// transaction history
+/* not tracking the following because write an happen frequently and outside of our platform
+   - user id
+   - transaction history
+*/
