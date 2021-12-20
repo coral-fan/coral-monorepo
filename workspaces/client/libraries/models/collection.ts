@@ -1,5 +1,10 @@
 export interface Collection {
+  // id = nft smart contract address
   id: string;
+  /* blockchain data index cache */
+  artistId: string;
+  maxMintable: number;
+  /* */
   type: 'access' | 'event';
   price: number;
   priceUnit: 'avax' | 'usd';
@@ -7,6 +12,3 @@ export interface Collection {
   description: string;
   details: string[];
 }
-
-// number of items inside collection
-// artist address
