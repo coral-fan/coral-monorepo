@@ -1,7 +1,7 @@
 import { Story, Meta } from '@storybook/react';
 import { Button } from './Button';
 import { BaseButtonProps } from '../types';
-import { AddIconDefault } from 'components/ui/icons/AddIcon/AddIcon.stories';
+import { PlusSignIconDefault } from 'components/ui/icons/PlusSignIcon/PlusSignIcon.stories';
 
 export default {
   title: 'Coral/Buttons/Button',
@@ -41,7 +41,7 @@ WithIcon.args = {
   loading: false,
   children: (
     <>
-      <AddIconDefault {...AddIconDefault.args} />
+      <PlusSignIconDefault {...PlusSignIconDefault.args} />
       Button
     </>
   ),

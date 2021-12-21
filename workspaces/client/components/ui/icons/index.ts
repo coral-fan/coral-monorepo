@@ -1,3 +1,4 @@
 export * from './Icon';
-export * from './AddIcon';
+export * from './PlusSignIcon';
 export * from './CloseIcon';
+export * from './LeftArrowIcon';
