@@ -1,0 +1,17 @@
+import { Story, Meta } from '@storybook/react';
+import { LeftArrowIcon } from 'components/ui/icons';
+import { SingleIconProps } from '../types';
+
+export default {
+  title: 'Coral/Icons/Left Arrow Icon',
+  component: LeftArrowIcon,
+  argTypes: {
+    size: {
+      control: { type: 'range' },
+    },
+  },
+} as Meta;
+
+const Template: Story<SingleIconProps> = (args) => <LeftArrowIcon {...args} />;
+
+export const LeftArrowIconDefault = Template.bind({});
