@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
+import withImages from 'next-images';
+
+module.exports = withImages({
   reactStrictMode: true,
   pageExtensions: ['page.tsx'],
   productionBrowserSourceMaps: true,
@@ -40,4 +42,4 @@ module.exports = {
         ]
       : [];
   },
-};
+});
