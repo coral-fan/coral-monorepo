@@ -1,8 +1,7 @@
 import { Story, Meta } from '@storybook/react';
-import { IconButton, IconButtonProps } from './IconButton';
-import { PLUS_ICON, SHARE_ICON } from '../consts/storybook';
-
-const ICONS = { PLUS_ICON, SHARE_ICON };
+import { IconButton } from './IconButton';
+import { BaseButtonProps } from '../types';
+import { AddIconDefault } from 'components/ui/icons/AddIcon/AddIcon.stories';
 
 export default {
   title: 'Coral/Buttons/Icon Button',
@@ -12,32 +11,29 @@ export default {
       options: ['primary', 'secondary'],
       control: { type: 'select' },
     },
-    icon: {
-      options: Object.keys(ICONS),
-      mapping: ICONS,
-      control: {
-        type: 'select',
-        labels: {
-          PLUS_ICON: 'Add',
-          SHARE_ICON: 'Share',
-        },
+    children: {
+      table: {
+        disable: true,
       },
     },
   },
 } as Meta;
 
-const Template: Story<IconButtonProps> = (args) => <IconButton {...args} />;
+const Template: Story<BaseButtonProps> = (args) => <IconButton {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {
   variant: 'primary',
   loading: false,
-  icon: PLUS_ICON,
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
   variant: 'secondary',
   loading: false,
-  icon: PLUS_ICON,
+};
+
+export const WithIcon = Template.bind({});
+WithIcon.args = {
+  children: <AddIconDefault {...AddIconDefault.args} />,
 };
