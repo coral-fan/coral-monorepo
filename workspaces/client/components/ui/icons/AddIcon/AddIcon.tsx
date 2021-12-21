@@ -1,5 +1,5 @@
 import { Icon } from 'components/ui';
-import { IconProps } from '../Icon/types';
+import { IconProps } from '../types';
 import addIconSVG from './addIconSVG.svg';
 
 export type AddIconProps = Omit<IconProps, 'svg'>;
