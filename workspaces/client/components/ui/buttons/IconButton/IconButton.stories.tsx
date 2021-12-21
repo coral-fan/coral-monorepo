@@ -25,15 +25,12 @@ export const Primary = Template.bind({});
 Primary.args = {
   variant: 'primary',
   loading: false,
+  children: <AddIconDefault {...AddIconDefault.args} />,
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
   variant: 'secondary',
   loading: false,
-};
-
-export const WithIcon = Template.bind({});
-WithIcon.args = {
   children: <AddIconDefault {...AddIconDefault.args} />,
 };
