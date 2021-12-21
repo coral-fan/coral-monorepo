@@ -3,3 +3,5 @@ export interface IconProps {
   size?: number;
   alt?: string;
 }
+
+export type SingleIconProps = Omit<IconProps, 'svg'>;

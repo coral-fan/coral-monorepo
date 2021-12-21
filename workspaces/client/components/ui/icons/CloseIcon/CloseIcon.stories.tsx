@@ -1,5 +1,6 @@
 import { Story, Meta } from '@storybook/react';
-import { CloseIcon, CloseIconProps } from 'components/ui/icons';
+import { CloseIcon } from 'components/ui/icons';
+import { SingleIconProps } from '../types';
 
 export default {
   title: 'Coral/Icons/Close Icon',
@@ -11,6 +12,6 @@ export default {
   },
 } as Meta;
 
-const Template: Story<CloseIconProps> = (args) => <CloseIcon {...args} />;
+const Template: Story<SingleIconProps> = (args) => <CloseIcon {...args} />;
 
-export const AddIconDefault = Template.bind({});
+export const CloseIconDefault = Template.bind({});
