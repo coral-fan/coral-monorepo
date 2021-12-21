@@ -1,6 +1,6 @@
 import { Story, Meta } from '@storybook/react';
-import { Button, ButtonProps } from './Button';
-import { PLUS_ICON } from '../consts/storybook';
+import { Button } from './Button';
+import { BaseButtonProps } from '../types';
 
 export default {
   title: 'Coral/Buttons/Button',
@@ -18,7 +18,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story<ButtonProps> = (args) => <Button {...args}>Button</Button>;
+const Template: Story<BaseButtonProps> = (args) => <Button {...args}>Button</Button>;
 
 export const Primary = Template.bind({});
 Primary.args = {
@@ -36,5 +36,4 @@ export const WithIcon = Template.bind({});
 WithIcon.args = {
   variant: 'primary',
   loading: false,
-  icon: PLUS_ICON,
 };
