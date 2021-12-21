@@ -4,6 +4,11 @@ import { AddIcon, AddIconProps } from 'components/ui/icons';
 export default {
   title: 'Coral/Icons/Add Icon',
   component: AddIcon,
+  argTypes: {
+    size: {
+      control: { type: 'range' },
+    },
+  },
 } as Meta;
 
 const Template: Story<AddIconProps> = (args) => <AddIcon {...args} />;
