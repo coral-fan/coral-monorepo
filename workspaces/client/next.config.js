@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
-import withImages from 'next-images';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const withImages = require('next-images');
 
 module.exports = withImages({
   reactStrictMode: true,
