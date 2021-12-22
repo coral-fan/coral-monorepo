@@ -1,7 +1,7 @@
 import { Icon } from 'components/ui';
 import { SingleIconProps } from '../types';
-import LeftArrowIconSVG from './LeftArrowIconSVG.svg';
+import leftArrowIcon from './leftArrowIcon.svg';
 
 export const LeftArrowIcon = ({ size, alt }: SingleIconProps) => {
-  return <Icon svg={LeftArrowIconSVG} alt={alt} size={size} />;
+  return <Icon svg={leftArrowIcon} alt={alt} size={size} />;
 };

@@ -1,12 +1,12 @@
 import { Button } from 'components/ui/buttons';
 import { ComponentProps } from 'react';
 import { Icon } from 'components/ui';
-import shareIconSVG from './shareIconSVG.svg';
+import shareIcon from './shareIcon.svg';
 
-const shareIcon = <Icon svg={shareIconSVG} />;
+const ShareIcon = <Icon svg={shareIcon} />;
 
 export const ShareButton = (props: ComponentProps<'button'>) => (
-  <Button icon={shareIcon} variant={'secondary'} {...props}>
+  <Button icon={ShareIcon} variant={'secondary'} {...props}>
     Share
   </Button>
 );
