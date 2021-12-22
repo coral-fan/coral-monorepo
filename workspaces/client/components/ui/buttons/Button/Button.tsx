@@ -1,8 +1,12 @@
 import { css } from '@emotion/react';
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { ConditionalSpinner } from '../../Spinner';
 import { BaseButtonProps } from '../types';
 import { getGlobalButtonStyle } from '../utils';
+
+export interface ButtonProps extends BaseButtonProps {
+  icon?: ReactNode;
+}
 
 const buttonStyle = css`
   width: 100%;
@@ -14,8 +18,11 @@ const buttonStyle = css`
   font-weight: 700;
 `;
 
-export const Button: FC<BaseButtonProps> = ({ children, variant, loading, ...props }) => (
+export const Button: FC<ButtonProps> = ({ children, icon, variant, loading, ...props }) => (
   <button css={[getGlobalButtonStyle(variant), buttonStyle]} {...props}>
-    <ConditionalSpinner loading={loading}>{children}</ConditionalSpinner>
+    <ConditionalSpinner loading={loading}>
+      {icon}
+      {children}
+    </ConditionalSpinner>
   </button>
 );
