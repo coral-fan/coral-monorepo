@@ -16,13 +16,13 @@ import { globalTokens } from 'styles/tokens';
 import 'styles/global.css';
 
 // components
-import { NavigationBar, Managers, Modals } from './components';
+import { NavigationBar, Managers, Modals } from 'components/global';
 
 // state/logic
 import { Web3ReactProvider } from '@web3-react/core';
 import { Provider as ReduxProvider } from 'react-redux';
 import { initializeStore } from 'libraries/state';
-import { getLibrary } from '../libraries/utils/provider';
+import { getLibrary } from 'libraries/utils/provider';
 
 initializeFirebaseApp();
 
