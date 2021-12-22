@@ -1,7 +1,7 @@
 import { Story, Meta } from '@storybook/react';
 import { Button } from './Button';
-import { BaseButtonProps } from '../types';
-import { PlusSignIconDefault } from 'components/ui/icons/PlusSignIcon/PlusSignIcon.stories';
+import { ButtonProps } from 'components/ui';
+import { PlusIcon } from 'components/ui';
 
 export default {
   title: 'Coral/Buttons/Button',
@@ -11,7 +11,7 @@ export default {
       options: ['primary', 'secondary'],
       control: { type: 'select' },
     },
-    children: {
+    icon: {
       table: {
         disable: true,
       },
@@ -19,30 +19,23 @@ export default {
   },
 } as Meta;
 
-const Template: Story<BaseButtonProps> = (args) => <Button {...args}></Button>;
+const Template: Story<ButtonProps> = (args) => <Button {...args}>Button</Button>;
 
 export const Primary = Template.bind({});
 Primary.args = {
   variant: 'primary',
   loading: false,
-  children: <>Button</>,
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
   variant: 'secondary',
   loading: false,
-  children: <>Button</>,
 };
 
 export const WithIcon = Template.bind({});
 WithIcon.args = {
   variant: 'primary',
   loading: false,
-  children: (
-    <>
-      <PlusSignIconDefault {...PlusSignIconDefault.args} />
-      Button
-    </>
-  ),
+  icon: <PlusIcon />,
 };

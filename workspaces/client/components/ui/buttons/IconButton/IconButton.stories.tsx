@@ -1,7 +1,7 @@
 import { Story, Meta } from '@storybook/react';
 import { IconButton } from './IconButton';
 import { BaseButtonProps } from '../types';
-import { PlusSign } from 'components/ui/icons/PlusSignIcon/PlusSignIcon.stories';
+import { PlusIcon } from 'components/ui';
 
 export default {
   title: 'Coral/Buttons/Icon Button',
@@ -19,18 +19,20 @@ export default {
   },
 } as Meta;
 
-const Template: Story<BaseButtonProps> = (args) => <IconButton {...args} />;
+const Template: Story<BaseButtonProps> = ({ children, ...args }) => (
+  <IconButton {...args}>{children}</IconButton>
+);
 
 export const Primary = Template.bind({});
 Primary.args = {
   variant: 'primary',
   loading: false,
-  children: <PlusSign {...PlusSign.args} />,
+  children: <PlusIcon />,
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
   variant: 'secondary',
   loading: false,
-  children: <PlusSign {...PlusSign.args} />,
+  children: <PlusIcon />,
 };
