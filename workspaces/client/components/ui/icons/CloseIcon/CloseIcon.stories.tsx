@@ -3,7 +3,7 @@ import { CloseIcon } from 'components/ui/icons';
 import { SingleIconProps } from '../types';
 
 export default {
-  title: 'Coral/Icons/Close Icon',
+  title: 'Coral/Icons',
   component: CloseIcon,
   argTypes: {
     size: {
@@ -14,4 +14,4 @@ export default {
 
 const Template: Story<SingleIconProps> = (args) => <CloseIcon {...args} />;
 
-export const CloseIconDefault = Template.bind({});
+export const Close = Template.bind({});

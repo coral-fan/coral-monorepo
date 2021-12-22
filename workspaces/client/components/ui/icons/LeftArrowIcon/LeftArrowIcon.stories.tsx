@@ -3,7 +3,7 @@ import { LeftArrowIcon } from 'components/ui/icons';
 import { SingleIconProps } from '../types';
 
 export default {
-  title: 'Coral/Icons/Left Arrow Icon',
+  title: 'Coral/Icons',
   component: LeftArrowIcon,
   argTypes: {
     size: {
@@ -14,4 +14,4 @@ export default {
 
 const Template: Story<SingleIconProps> = (args) => <LeftArrowIcon {...args} />;
 
-export const LeftArrowIconDefault = Template.bind({});
+export const LeftArrow = Template.bind({});
