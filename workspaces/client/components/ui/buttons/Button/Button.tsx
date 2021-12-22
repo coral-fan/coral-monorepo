@@ -1,11 +1,11 @@
 import { css } from '@emotion/react';
-import { FC, ReactNode } from 'react';
+import { FC, ReactElement } from 'react';
 import { ConditionalSpinner } from '../../Spinner';
 import { BaseButtonProps } from '../types';
 import { getGlobalButtonStyle } from '../utils';
 
 export interface ButtonProps extends BaseButtonProps {
-  icon?: ReactNode;
+  icon?: ReactElement<'svg'>;
 }
 
 const buttonStyle = css`
