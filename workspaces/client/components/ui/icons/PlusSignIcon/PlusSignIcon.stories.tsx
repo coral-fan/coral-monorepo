@@ -3,7 +3,7 @@ import { PlusSignIcon } from 'components/ui/icons';
 import { SingleIconProps } from '../types';
 
 export default {
-  title: 'Coral/Icons/PlusSign Icon',
+  title: 'Coral/Icons',
   component: PlusSignIcon,
   argTypes: {
     size: {
@@ -14,4 +14,4 @@ export default {
 
 const Template: Story<SingleIconProps> = (args) => <PlusSignIcon {...args} />;
 
-export const PlusSignIconDefault = Template.bind({});
+export const PlusSign = Template.bind({});
