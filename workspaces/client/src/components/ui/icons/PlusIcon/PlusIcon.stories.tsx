@@ -1,6 +1,6 @@
 import { Story, Meta } from '@storybook/react';
 import { PlusIcon } from 'components/ui/icons';
-import { SingleIconProps } from '../../Icon/types';
+import { SingleIconProps } from 'components/ui/Icon';
 
 export default {
   title: 'Coral/Icons/Plus Icon',

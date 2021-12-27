@@ -1,6 +1,6 @@
 import { Story, Meta } from '@storybook/react';
 import { CloseIcon } from 'components/ui/icons';
-import { SingleIconProps } from '../../Icon/types';
+import { SingleIconProps } from 'components/ui/Icon';
 
 export default {
   title: 'Coral/Icons/Close Icon',

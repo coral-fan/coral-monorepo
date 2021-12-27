@@ -1,5 +1,5 @@
 import { Icon } from 'components/ui';
-import { SingleIconProps } from '../../Icon/types';
+import { SingleIconProps } from 'components/ui/Icon';
 import closeIconSVG from './closeIcon.svg';
 
 export const CloseIcon = ({ size, alt }: SingleIconProps) => {
