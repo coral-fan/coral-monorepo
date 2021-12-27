@@ -1,6 +1,6 @@
 import { Story, Meta } from '@storybook/react';
 import { LeftArrowIcon } from 'components/ui/icons';
-import { SingleIconProps } from 'components/ui/Icon';
+import { IconProps } from 'components/ui/Icon';
 
 export default {
   title: 'Coral/Icons/Left Arrow',
@@ -12,6 +12,6 @@ export default {
   },
 } as Meta;
 
-const Template: Story<SingleIconProps> = (args) => <LeftArrowIcon {...args} />;
+const Template: Story<IconProps> = (args) => <LeftArrowIcon {...args} />;
 
 export const Default = Template.bind({});

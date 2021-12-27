@@ -1,6 +1,6 @@
 import { Story, Meta } from '@storybook/react';
 import { PlusIcon } from 'components/ui/icons';
-import { SingleIconProps } from 'components/ui/Icon';
+import { IconProps } from 'components/ui/Icon';
 
 export default {
   title: 'Coral/Icons/Plus Icon',
@@ -12,6 +12,6 @@ export default {
   },
 } as Meta;
 
-const Template: Story<SingleIconProps> = (args) => <PlusIcon {...args} />;
+const Template: Story<IconProps> = (args) => <PlusIcon {...args} />;
 
 export const Default = Template.bind({});
