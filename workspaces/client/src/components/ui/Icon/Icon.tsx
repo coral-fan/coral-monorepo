@@ -1,13 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 
-export interface IconProps {
+export interface BaseIconProps {
   svg: string;
   size?: number;
   alt?: string;
 }
 
-export type SingleIconProps = Omit<IconProps, 'svg'>;
+export type IconProps = Omit<BaseIconProps, 'svg'>;
 
-export const Icon = ({ svg, size, alt }: IconProps) => {
+export const Icon = ({ svg, size, alt }: BaseIconProps) => {
   return <img src={svg} alt={alt} width={size} height={size} />;
 };
