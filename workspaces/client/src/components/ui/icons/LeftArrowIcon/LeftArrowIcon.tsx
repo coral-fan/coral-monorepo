@@ -1,5 +1,5 @@
 import { Icon } from 'components/ui';
-import { SingleIconProps } from '../../Icon/types';
+import { SingleIconProps } from 'components/ui/Icon';
 import leftArrowSVG from './leftArrow.svg';
 
 export const LeftArrowIcon = ({ size, alt }: SingleIconProps) => {

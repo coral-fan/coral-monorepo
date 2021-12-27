@@ -1,5 +1,5 @@
 import { Icon } from 'components/ui';
-import { SingleIconProps } from '../../Icon/types';
+import { SingleIconProps } from 'components/ui/Icon';
 import plusIconSVG from './plusIcon.svg';
 
 export const PlusIcon = ({ size, alt }: SingleIconProps) => {
