@@ -7,7 +7,7 @@ export default {
   component: MusicBadge,
   argTypes: {
     size: {
-      options: ['xtraSmall', 'small', 'medium', 'large', 'xtraLarge'],
+      options: ['extraSmall', 'small', 'medium', 'large', 'extraLarge'],
       control: { type: 'select' },
     },
     variant: {
