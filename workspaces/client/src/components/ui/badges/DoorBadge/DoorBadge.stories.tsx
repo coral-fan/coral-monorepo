@@ -7,7 +7,7 @@ export default {
   component: DoorBadge,
   argTypes: {
     size: {
-      options: ['small', 'medium', 'large', 'xtraLarge'],
+      options: ['xtraSmall', 'small', 'medium', 'large', 'xtraLarge'],
       control: { type: 'select' },
     },
     variant: {
