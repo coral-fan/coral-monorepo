@@ -1,17 +1,8 @@
-import { Story, Meta } from '@storybook/react';
+import { getIconStoryConfigurations } from '../utils';
 import { PlusIcon } from 'components/ui/icons';
-import { IconProps } from 'components/ui/Icon';
 
-export default {
-  title: 'Coral/Icons/Plus Icon',
-  component: PlusIcon,
-  argTypes: {
-    size: {
-      control: { type: 'range' },
-    },
-  },
-} as Meta;
+const { meta, Default } = getIconStoryConfigurations(PlusIcon);
 
-const Template: Story<IconProps> = (args) => <PlusIcon {...args} />;
+export default meta;
 
-export const Default = Template.bind({});
+export { Default };
