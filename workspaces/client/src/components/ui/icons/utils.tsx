@@ -1,4 +1,3 @@
-import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { Story, Meta } from '@storybook/react';
 import { IconProps, Icon } from 'components/ui/Icon';
 
