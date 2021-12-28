@@ -1,5 +1,5 @@
 import { getIconStoryConfigurations } from '../utils';
-import { PlusIcon } from 'components/ui/icons';
+import { PlusIcon } from './PlusIcon';
 
 const { meta, Default } = getIconStoryConfigurations(PlusIcon);
 

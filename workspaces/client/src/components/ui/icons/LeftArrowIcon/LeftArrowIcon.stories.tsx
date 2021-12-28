@@ -1,5 +1,5 @@
 import { getIconStoryConfigurations } from '../utils';
-import { LeftArrowIcon } from 'components/ui/icons';
+import { LeftArrowIcon } from './LeftArrowIcon';
 
 const { meta, Default } = getIconStoryConfigurations(LeftArrowIcon);
 

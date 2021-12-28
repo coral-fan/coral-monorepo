@@ -1,5 +1,5 @@
 import { getIconStoryConfigurations } from '../utils';
-import { CloseIcon } from 'components/ui/icons';
+import { CloseIcon } from './CloseIcon';
 
 const { meta, Default } = getIconStoryConfigurations(CloseIcon);
 
