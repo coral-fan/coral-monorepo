@@ -21,14 +21,14 @@ const HamburgerIcon = ({ hasNotifications }: HamburgerIconProp) =>
     null
   );
 
-export type HamburgerIconButtonProps = ComponentProps<'button'> & HamburgerIconProp;
+export type HamburgerMenuButtonProps = ComponentProps<'button'> & HamburgerIconProp;
 
 const ButtonWrapper = styled.button`
   ${BUTTON_BASE_STYLE};
   background-color: transparent;
 `;
 
-export const HamburgerIconButton = ({ hasNotifications, ...props }: HamburgerIconButtonProps) => (
+export const HamburgerMenuButton = ({ hasNotifications, ...props }: HamburgerMenuButtonProps) => (
   <ButtonWrapper {...props}>
     <HamburgerIcon hasNotifications={hasNotifications} />
   </ButtonWrapper>
