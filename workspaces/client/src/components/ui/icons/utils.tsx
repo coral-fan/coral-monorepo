@@ -1,6 +1,6 @@
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { Story, Meta } from '@storybook/react';
 import { IconProps, Icon } from 'components/ui/Icon';
-import React from 'react';
 
 const getSpaceSeparatedName = (s: string) => s.split(/(?=[A-Z])/).join(' ');
 
@@ -22,8 +22,9 @@ export const getIconStoryConfigurations = (IconComponent: React.FunctionComponen
   return { meta, Default };
 };
 
-export const getIconComponent =
-  (iconSVG: string) =>
-  // eslint-disable-next-line react/display-name -- function name will be defined when utility function is used
-  ({ size, alt }: IconProps) =>
-    <Icon svg={iconSVG} alt={alt} size={size} />;
+export const getIconComponent = (componentName: string, iconSVG: string) => {
+  const IconComponent = ({ alt, size }: IconProps) => <Icon svg={iconSVG} alt={alt} size={size} />;
+  IconComponent.name = componentName;
+  IconComponent.displayName = componentName;
+  return IconComponent;
+};
