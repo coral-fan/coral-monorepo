@@ -3,26 +3,19 @@ import tokens from 'styles/tokens';
 import { BadgeSize, BadgeVariant } from './types';
 import { badgeSizeDictionary } from './consts';
 
-const badgeVariantDictionary = {
-  primary: {
-    backgroundColor: tokens.color.action['primary'],
-    border: 'none',
-  },
-  secondary: {
-    backgroundColor: 'transparent',
-    border: `solid 1px ${tokens.color.white}`,
-  },
-};
+export const getBadgeStyle = (size: BadgeSize, variant: BadgeVariant) => {
+  const isPrimaryVariant = variant === 'primary';
 
-export const getBadgeStyle = (size: BadgeSize, variant: BadgeVariant) => css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  border: ${badgeVariantDictionary[variant].border};
-  width: ${badgeSizeDictionary[size].badge};
-  height: ${badgeSizeDictionary[size].badge};
-  color: ${tokens.color.white};
-  background-color: ${badgeVariantDictionary[variant].backgroundColor};
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
-`;
+  return css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: ${badgeSizeDictionary[size].badge}px;
+    height: ${badgeSizeDictionary[size].badge}px;
+    color: ${tokens.color.white};
+    border: ${isPrimaryVariant ? 'none' : `solid 1px ${tokens.color.white}`};
+    background-color: ${isPrimaryVariant ? tokens.color.action['primary'] : 'none'};
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
+  `;
+};
