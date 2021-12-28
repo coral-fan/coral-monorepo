@@ -1,7 +1,7 @@
-import { Badge } from 'components/ui';
+import { Badge } from '../Badge';
 import musicSVG from './music.svg';
-import { BadgeProps } from 'components/ui/Badge/types';
+import { BadgeProps } from 'components/ui/badges/types';
 
 export const MusicBadge = ({ size, variant }: BadgeProps) => {
-  return <Badge svg={musicSVG} size={size} variant={variant} />;
+  return <Badge iconComponent="MusicIcon" svg={musicSVG} size={size} variant={variant} />;
 };
