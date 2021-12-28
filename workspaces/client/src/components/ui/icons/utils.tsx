@@ -3,9 +3,11 @@ import { IconProps, Icon } from 'components/ui/Icon';
 
 const getSpaceSeparatedName = (s: string) => s.split(/(?=[A-Z])/).join(' ');
 
-export const getIconStoryConfigurations = (IconComponent: React.FunctionComponent<IconProps>) => {
+export const getIconStoryConfigurations = (
+  IconComponent: React.FunctionComponent<IconProps> & { displayName: string }
+) => {
   const meta = {
-    title: `Coral/Icons/${getSpaceSeparatedName(IconComponent.name)}`,
+    title: `Coral/Icons/${getSpaceSeparatedName(IconComponent.displayName)}`,
     component: IconComponent,
     argTypes: {
       size: {
@@ -22,8 +24,7 @@ export const getIconStoryConfigurations = (IconComponent: React.FunctionComponen
 };
 
 export const getIconComponent = (componentName: string, iconSVG: string) => {
-  const IconComponent = ({ alt, size }: IconProps) => <Icon svg={iconSVG} alt={alt} size={size} />;
-  IconComponent.name = componentName;
+  const IconComponent = (props: IconProps) => <Icon svg={iconSVG} {...props} />;
   IconComponent.displayName = componentName;
   return IconComponent;
 };
