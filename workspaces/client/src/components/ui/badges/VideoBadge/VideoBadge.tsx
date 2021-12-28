@@ -1,7 +1,7 @@
-import { Badge } from 'components/ui';
+import { Badge } from '../Badge';
 import videoSVG from './video.svg';
-import { BadgeProps } from 'components/ui/Badge/types';
+import { BadgeProps } from 'components/ui/badges/types';
 
 export const VideoBadge = ({ size, variant }: BadgeProps) => {
-  return <Badge svg={videoSVG} size={size} variant={variant} />;
+  return <Badge iconComponent="VideoIcon" svg={videoSVG} size={size} variant={variant} />;
 };
