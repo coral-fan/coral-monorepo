@@ -1,5 +1,5 @@
 import { Story, Meta } from '@storybook/react';
-import { IconProps } from 'components/ui/Icon';
+import { IconProps, Icon } from 'components/ui/Icon';
 import React from 'react';
 
 const getSpaceSeparatedName = (s: string) => s.split(/(?=[A-Z])/).join(' ');
@@ -21,3 +21,9 @@ export const getIconStoryConfigurations = (IconComponent: React.FunctionComponen
 
   return { meta, Default };
 };
+
+export const getIconComponent =
+  (iconSVG: string) =>
+  // eslint-disable-next-line react/display-name -- function name will be defined when utility function is used
+  ({ size, alt }: IconProps) =>
+    <Icon svg={iconSVG} alt={alt} size={size} />;
