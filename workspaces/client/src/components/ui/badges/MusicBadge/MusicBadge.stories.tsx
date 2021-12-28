@@ -1,13 +1,13 @@
 import { Story, Meta } from '@storybook/react';
 import { MusicBadge } from './MusicBadge';
-import { BadgeProps } from 'components/ui/Badge/types';
+import { BadgeProps } from 'components/ui/badges/types';
 
 export default {
   title: 'Coral/Badges/Music Badge',
   component: MusicBadge,
   argTypes: {
     size: {
-      options: ['S', 'M', 'L', 'XL'],
+      options: ['sm', 'md', 'lg', 'xl'],
       control: { type: 'select' },
     },
     variant: {
@@ -21,6 +21,6 @@ const Template: Story<BadgeProps> = (args) => <MusicBadge {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  size: 'L',
+  size: 'lg',
   variant: 'primary',
 };
