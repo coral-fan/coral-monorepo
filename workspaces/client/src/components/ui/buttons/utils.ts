@@ -3,7 +3,7 @@ import tokens from 'styles/tokens';
 import { BUTTON_SIZE } from './consts';
 import { ButtonVariant } from './types';
 
-export const getGlobalButtonStyle = (variant: ButtonVariant = 'primary') => css`
+export const getButtonVariantStyle = (variant: ButtonVariant = 'primary') => css`
   display: flex;
   align-items: center;
   justify-content: center;
