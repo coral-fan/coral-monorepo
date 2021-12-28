@@ -23,6 +23,7 @@ export const getIconStoryConfigurations = (
   return { meta, Default };
 };
 
+// * possible that due to the function name attribute being the same for all icon components that the stack trace becomes difficult to debug
 export const getIconComponent = (componentName: string, iconSVG: string) => {
   const IconComponent = (props: IconProps) => <Icon svg={iconSVG} {...props} />;
   IconComponent.displayName = componentName;
