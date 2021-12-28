@@ -7,7 +7,7 @@ export default {
   component: DoorBadge,
   argTypes: {
     size: {
-      options: ['extraSmall', 'small', 'medium', 'large', 'extraLarge'],
+      options: ['S', 'M', 'L', 'XL'],
       control: { type: 'select' },
     },
     variant: {
@@ -21,6 +21,6 @@ const Template: Story<BadgeProps> = (args) => <DoorBadge {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  size: 'large',
+  size: 'L',
   variant: 'primary',
 };
