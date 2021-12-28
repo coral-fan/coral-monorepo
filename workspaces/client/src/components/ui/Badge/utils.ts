@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import tokens from 'styles/tokens';
 import { BadgeSize, BadgeVariant } from './types';
-import { sizeDictionary } from './consts';
+import { badgeSizeDictionary } from './consts';
 
 const badgeVariantDictionary = {
   primary: {
@@ -20,8 +20,8 @@ export const getBadgeStyle = (size: BadgeSize, variant: BadgeVariant) => css`
   justify-content: center;
   border-radius: 50%;
   border: ${badgeVariantDictionary[variant].border};
-  width: ${sizeDictionary[size].badge};
-  height: ${sizeDictionary[size].badge};
+  width: ${badgeSizeDictionary[size].badge};
+  height: ${badgeSizeDictionary[size].badge};
   color: ${tokens.color.white};
   background-color: ${badgeVariantDictionary[variant].backgroundColor};
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
