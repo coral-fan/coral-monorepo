@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { getIconComponent } from 'components/ui/icons/utils';
 import hamburgerWithRedDotIconSVG from './hamburger-with-red-dot.svg';
 import hamburgerIconSVG from './hamburger.svg';
+import { BUTTON_BASE_STYLE } from 'components/ui/buttons/consts';
 
 const HamburgerWithRedDotIcon = getIconComponent(
   'HamburgerIconWithRedDot',
@@ -23,7 +24,8 @@ const HamburgerIcon = ({ hasNotifications }: HamburgerIconProp) =>
 export type HamburgerIconButtonProps = ComponentProps<'button'> & HamburgerIconProp;
 
 const ButtonWrapper = styled.button`
-  background-color: none;
+  ${BUTTON_BASE_STYLE};
+  background-color: transparent;
 `;
 
 export const HamburgerIconButton = ({ hasNotifications, ...props }: HamburgerIconButtonProps) => (
