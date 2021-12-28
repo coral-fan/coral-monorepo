@@ -1,4 +1,4 @@
 import { getIconComponent } from '../utils';
-import closeIconSVG from './closeIcon.svg';
+import closeIconSVG from './close.svg';
 
 export const CloseIcon = getIconComponent('CloseIcon', closeIconSVG);
