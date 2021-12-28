@@ -1,7 +1,4 @@
-import { Icon } from 'components/ui';
-import { IconProps } from 'components/ui/Icon';
+import { getIconComponent } from '../utils';
 import logoIconSVG from './logo.svg';
 
-export const LogoIcon = ({ size, alt }: IconProps) => {
-  return <Icon svg={logoIconSVG} alt={alt} size={size} />;
-};
+export const LogoIcon = getIconComponent(logoIconSVG);
