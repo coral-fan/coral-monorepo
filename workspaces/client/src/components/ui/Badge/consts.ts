@@ -1,15 +1,6 @@
-export const badgeSizeDictionary = {
-  extraSmall: '24px',
-  small: '27px',
-  medium: '30px',
-  large: '40px',
-  extraLarge: '44.14px',
-};
-
-export const iconSizeDictionary = {
-  extraSmall: 14,
-  small: 17,
-  medium: 18,
-  large: 22,
-  extraLarge: 25,
+export const sizeDictionary = {
+  S: { badge: '24px', icon: 14 },
+  M: { badge: '30px', icon: 20 },
+  L: { badge: '40px', icon: 24 },
+  XL: { badge: '50px', icon: 30 },
 };

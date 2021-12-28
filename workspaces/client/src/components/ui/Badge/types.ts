@@ -1,6 +1,6 @@
-import { badgeSizeDictionary } from './consts';
+import { sizeDictionary } from './consts';
 
-export type BadgeSize = keyof typeof badgeSizeDictionary;
+export type BadgeSize = keyof typeof sizeDictionary;
 
 export type BadgeVariant = 'primary' | 'secondary';
 
