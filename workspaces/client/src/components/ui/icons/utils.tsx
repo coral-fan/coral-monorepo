@@ -1,5 +1,5 @@
 import { Story, Meta } from '@storybook/react';
-import { IconProps, Icon } from 'components/ui/Icon';
+import { IconProps, BaseIconProps } from './types';
 
 const getSpaceSeparatedName = (s: string) => s.split(/(?=[A-Z])/).join(' ');
 
@@ -22,6 +22,11 @@ export const getIconStoryConfigurations = (
 
   return { meta, Default };
 };
+
+const Icon = ({ svg, size, alt }: BaseIconProps) => (
+  // eslint-disable-next-line @next/next/no-img-element
+  <img src={svg} alt={alt} width={size} height={size} />
+);
 
 // * possible that due to the function name attribute being the same for all icon components that the stack trace becomes difficult to debug
 export const getIconComponent = (componentName: string, iconSVG: string) => {
