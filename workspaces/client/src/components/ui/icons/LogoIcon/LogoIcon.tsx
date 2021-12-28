@@ -1,4 +1,4 @@
 import { getIconComponent } from '../utils';
 import logoIconSVG from './logo.svg';
 
-export const LogoIcon = getIconComponent(logoIconSVG);
+export const LogoIcon = getIconComponent('LogoIcon', logoIconSVG);
