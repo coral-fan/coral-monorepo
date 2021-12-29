@@ -11,9 +11,7 @@ import { initializeFirebaseApp, getFirebaseAdmin } from 'libraries/firebase';
 // react imports
 
 // styling
-import { Global } from '@emotion/react';
-import { globalTokens } from 'styles/tokens';
-import 'styles/global.css';
+import { GlobalStyles } from 'styles';
 
 // components
 import { NavigationBar, Managers, Modals } from 'components/global';
@@ -34,7 +32,7 @@ const CustomApp = ({
   const store = initializeStore(isTokenAuthenticated);
   return (
     <>
-      <Global styles={globalTokens} />
+      <GlobalStyles />
       <Head>
         <title></title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
