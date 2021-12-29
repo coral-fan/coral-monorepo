@@ -1,5 +1,6 @@
 import { Story, Meta } from '@storybook/react';
-import { Modal, ModalProps } from './Modal';
+import { Modal } from './Modal';
+import { ModalProps } from './types';
 
 export default {
   title: 'Coral/Modals/Modal With Button',
