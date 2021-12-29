@@ -1,55 +1,71 @@
-import { FC } from 'react';
+import { createElement, FC } from 'react';
 import ReactDOM from 'react-dom';
 import styled from '@emotion/styled';
 
-import { Button } from '..';
-import { Center, Flex } from 'components/layout';
+import { Flex } from 'components/layout';
+import tokens from 'styles/tokens';
+import { CloseButton, PreviousButton } from './buttons';
 
-const Overlay = styled(Center)`
+const Overlay = styled(Flex)`
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
   position: fixed;
   top: 0;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 1;
+  padding: 0 12px;
 `;
 
-interface HeaderProps {
-  title?: string;
-  close?: () => void;
-}
+const ModalContainer = styled(Flex)`
+  flex-direction: column;
+  background-color: ${tokens.color.background.tertiary};
+  color: ${tokens.color.white};
+  padding: 8px 18px;
+  box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  width: 100%;
+`;
 
-const Header: FC<HeaderProps> = ({ title, close }) => {
-  return (
-    <Flex justifyContent={'space-between'}>
-      {title && <h1>{title}</h1>}
-      {close && <Button onClick={close}>Close</Button>}
-    </Flex>
-  );
-};
+const Heading = styled.h1`
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 23px;
+  border-bottom: 0.2px solid #9d9d9d;
+  padding: 8px 0;
+`;
 
 const Main: FC = ({ children }) => <Flex direction={'column'}>{children}</Flex>;
 
-interface ModalProps {
-  width?: string;
+interface ModalWithoutButtonProps {
+  title?: string;
+  onClick?: never;
+  variant?: never;
 }
+interface ModalWithButtonProps {
+  title?: string;
+  onClick: () => void;
+  variant: 'close' | 'previous';
+}
+
+export type ModalProps = ModalWithoutButtonProps | ModalWithButtonProps;
 
 /* 
   Using FC because it always implies children.
   Prefer to define a props interface if children isn't a prop.
 */
-export const Modal: FC<HeaderProps & ModalProps> = ({ children, width = '50%', close, title }) => {
-  const shouldRenderHeader = title || close;
-
-  return typeof window === 'undefined'
+export const Modal: FC<ModalProps> = ({ children, title, onClick, variant }) =>
+  typeof window === 'undefined'
     ? null
     : ReactDOM.createPortal(
         <Overlay>
-          <Flex width={width} direction={'column'}>
-            {shouldRenderHeader && <Header {...{ title, close }} />}
+          {onClick && createElement(variant === 'close' ? CloseButton : PreviousButton)}
+          <ModalContainer>
+            {title && <Heading>{title}</Heading>}
             <Main>{children}</Main>
-          </Flex>
+          </ModalContainer>
         </Overlay>,
         document.body
       );
-};
