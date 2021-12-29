@@ -1,14 +1,11 @@
 import { themes } from '@storybook/theming';
 
-import { Global } from '@emotion/react';
-import { globalTokens } from 'styles/tokens';
-
-import 'styles/global.css';
+import { GlobalStyles } from 'styles';
 
 export const decorators = [
   (Story) => (
     <>
-      <Global styles={globalTokens} />
+      <GlobalStyles />
       <Story />
     </>
   ),
