@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import { Flex } from 'components/layout';
 import tokens from 'styles/tokens';
 import { CloseButton, PreviousButton } from './buttons';
+import { ModalProps } from './types';
 
 const Overlay = styled(Flex)`
   flex-direction: column;
@@ -38,19 +39,6 @@ const Heading = styled.h1`
 `;
 
 const Main: FC = ({ children }) => <Flex direction={'column'}>{children}</Flex>;
-
-interface ModalWithoutButtonProps {
-  title?: string;
-  onClick?: never;
-  variant?: never;
-}
-interface ModalWithButtonProps {
-  title?: string;
-  onClick: () => void;
-  variant: 'close' | 'previous';
-}
-
-export type ModalProps = ModalWithoutButtonProps | ModalWithButtonProps;
 
 /* 
   Using FC because it always implies children.
