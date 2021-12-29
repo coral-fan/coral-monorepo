@@ -5,13 +5,17 @@ import tokens from 'styles/tokens';
 
 const FOOTER_CONTENT = 'cryptomusic minting since 2021';
 
-const StyledFooter = styled(Center)`
+const FooterContainer = styled(Center)`
   background: linear-gradient(121.65deg, #3f2d4d 8.25%, #292030 98.53%);
   position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
   height: 90px;
+`;
+
+const ContentContainer = styled(Flex)`
+  gap: 8px;
 `;
 
 const Content = styled.div`
@@ -24,17 +28,13 @@ const Content = styled.div`
   text-transform: uppercase;
 `;
 
-const Container = styled(Flex)`
-  gap: 8px;
-`;
-
 export const Footer = () => {
   return (
-    <StyledFooter>
-      <Container direction={'column'} alignItems={'center'}>
+    <FooterContainer>
+      <ContentContainer direction={'column'} alignItems={'center'}>
         <LogoIcon size={20} />
         <Content>{FOOTER_CONTENT}</Content>
-      </Container>
-    </StyledFooter>
+      </ContentContainer>
+    </FooterContainer>
   );
 };
