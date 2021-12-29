@@ -11,13 +11,14 @@ const HamburgerWithRedDotIcon = getIconComponent(
 );
 const HamburgerWithoutRedDotIcon = getIconComponent('HamburgerIcon', hamburgerIconSVG);
 
+const ICON_BUTTON_SIZE = 24;
 interface HamburgerIconProp {
   hasNotifications: boolean;
 }
 const HamburgerIcon = ({ hasNotifications }: HamburgerIconProp) =>
   createElement(
     hasNotifications ? HamburgerWithRedDotIcon : HamburgerWithoutRedDotIcon,
-    { size: 48 },
+    { size: ICON_BUTTON_SIZE },
     null
   );
 
