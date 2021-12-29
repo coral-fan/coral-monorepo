@@ -3,7 +3,7 @@ import { Flex, Center } from 'components/layout';
 import { LogoIcon } from 'components/ui';
 import tokens from 'styles/tokens';
 
-const FOOTER_CONTENT = 'cryptomusic minting since 2021';
+const FOOTER_CONTENT = 'coral minting since 2021';
 
 const FooterContainer = styled(Center)`
   background: linear-gradient(121.65deg, #3f2d4d 8.25%, #292030 98.53%);
