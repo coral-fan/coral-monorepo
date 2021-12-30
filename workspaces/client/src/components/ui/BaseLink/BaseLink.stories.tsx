@@ -20,7 +20,6 @@ const Template: Story<BaseLinkProps> = ({ children, ...args }) => (
 export const Default = Template.bind({});
 Default.args = {
   href: 'https://google.com',
-  color: 'white',
   children: 'Text Link',
 };
 
