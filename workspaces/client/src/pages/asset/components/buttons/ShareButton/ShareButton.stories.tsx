@@ -2,7 +2,7 @@ import { Story, Meta } from '@storybook/react';
 import { ShareButton } from './ShareButton';
 
 export default {
-  title: 'Coral/Pages/Assets/Share Button',
+  title: 'Coral/Pages/Asset/Share Button',
   component: ShareButton,
 } as Meta;
 
