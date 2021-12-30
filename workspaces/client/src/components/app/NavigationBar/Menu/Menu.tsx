@@ -7,16 +7,20 @@ import { Divider } from './Divider';
 import { NotificationMenuItemProp, NotificationMenuItem } from './NotificationMenuItem';
 import { Fragment } from 'react';
 
-const menuItems = [
+const MENU_ITEM_CONFIGURATION = [
   ['manage credit card', 'CreditCardIcon', creditCardSVG],
   ['profile', 'ProfileIcon', userSVG],
   ['sign out', 'WarningIcon', warningSVG],
-].map(([itemText, componentName, iconSVG], index, array) => (
-  <Fragment key={itemText}>
-    <Divider isLast={index === array.length - 1} />
-    <MenuItem Icon={getIconComponent(componentName, iconSVG)}>{itemText}</MenuItem>
-  </Fragment>
-));
+];
+
+const menuItems = MENU_ITEM_CONFIGURATION.map(
+  ([itemText, componentName, iconSVG], index, array) => (
+    <Fragment key={itemText}>
+      <Divider isLast={index === array.length - 1} />
+      <MenuItem Icon={getIconComponent(componentName, iconSVG)}>{itemText}</MenuItem>
+    </Fragment>
+  )
+);
 
 const MenuContainer = styled.div`
   width: 100%;
