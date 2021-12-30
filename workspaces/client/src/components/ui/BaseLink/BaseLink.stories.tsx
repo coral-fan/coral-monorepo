@@ -2,7 +2,7 @@ import { Story, Meta } from '@storybook/react';
 import { BaseLink, BaseLinkProps } from './BaseLink';
 
 export default {
-  title: 'Coral/Base Link',
+  title: 'Coral/UI/Base Link',
   component: BaseLink,
   argTypes: {
     children: {
