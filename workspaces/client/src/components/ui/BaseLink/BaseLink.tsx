@@ -15,6 +15,10 @@ export interface BaseLinkProps extends ComponentProps<'a'> {
   ref: ForwardedRef<HTMLAnchorElement>;
 }
 
+/*
+  Fix for displayName error when using forwardRef from:
+  https://github.com/yannickcr/eslint-plugin-react/issues/2269
+*/
 export const BaseLink = forwardRef(function BaseLink({ href, ref, ...props }: BaseLinkProps) {
   return (
     <Link href={href} passHref>
