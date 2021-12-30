@@ -3,7 +3,7 @@ import { Modal } from './Modal';
 import { ModalProps } from './types';
 
 export default {
-  title: 'Coral/Modal/Modal Without Button',
+  title: 'Coral/UI/Modal/Modal Without Button',
   component: Modal,
 } as Meta;
 

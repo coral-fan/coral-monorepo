@@ -7,7 +7,7 @@ export const getIconStoryConfigurations = (
   IconComponent: React.FunctionComponent<IconProps> & { displayName: string }
 ) => {
   const meta = {
-    title: `Coral/Icons/${getSpaceSeparatedName(IconComponent.displayName)}`,
+    title: `Coral/UI/Icons/${getSpaceSeparatedName(IconComponent.displayName)}`,
     component: IconComponent,
     argTypes: {
       size: {

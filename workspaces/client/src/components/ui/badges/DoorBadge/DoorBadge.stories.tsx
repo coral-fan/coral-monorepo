@@ -3,7 +3,7 @@ import { DoorBadge } from './DoorBadge';
 import { BadgeProps } from 'components/ui/badges/types';
 
 export default {
-  title: 'Coral/Badges/Door Badge',
+  title: 'Coral/UI/Badges/Door Badge',
   component: DoorBadge,
   argTypes: {
     size: {

@@ -3,7 +3,7 @@ import { Modal } from './Modal';
 import { ModalProps } from './types';
 
 export default {
-  title: 'Coral/Modal/Modal With Button',
+  title: 'Coral/UI/Modal/Modal With Button',
   component: Modal,
   argTypes: {
     variant: {
