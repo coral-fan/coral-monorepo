@@ -5,18 +5,17 @@ import { getIconComponent } from 'components/ui/icons/utils';
 import { creditCardSVG, userSVG, warningSVG } from './assets';
 import { Divider } from './Divider';
 import { NotificationMenuItemProp, NotificationMenuItem } from './NotificationMenuItem';
+import { Fragment } from 'react';
 
 const menuItems = [
   ['manage credit card', 'CreditCardIcon', creditCardSVG],
   ['profile', 'ProfileIcon', userSVG],
   ['sign out', 'WarningIcon', warningSVG],
 ].map(([itemText, componentName, iconSVG], index, array) => (
-  <>
+  <Fragment key={itemText}>
     <Divider isLast={index === array.length - 1} />
-    <MenuItem key={itemText} Icon={getIconComponent(componentName, iconSVG)}>
-      {itemText}
-    </MenuItem>
-  </>
+    <MenuItem Icon={getIconComponent(componentName, iconSVG)}>{itemText}</MenuItem>
+  </Fragment>
 ));
 
 const MenuContainer = styled.div`
