@@ -14,7 +14,7 @@ import { initializeFirebaseApp, getFirebaseAdmin } from 'libraries/firebase';
 import { GlobalStyles } from 'styles';
 
 // components
-import { NavigationBar, Managers, Modals } from 'components/global';
+import { NavigationBar, Managers, Modals } from 'components/app';
 
 // state/logic
 import { Web3ReactProvider } from '@web3-react/core';
