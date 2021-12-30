@@ -12,19 +12,17 @@ export default {
   },
 } as ComponentMeta<typeof Heading>;
 
-const Template: Story<HeadingProp> = ({ level }) => (
-  <Heading level={level}>{`Heading Level ${level}`}</Heading>
-);
+const Template: Story<HeadingProp> = ({ level }) => <Heading level={level}>{`H${level}`}</Heading>;
 
-export const h1 = Template.bind({});
-h1.args = {
+export const level1 = Template.bind({});
+level1.args = {
   level: 1,
 };
-export const h2 = Template.bind({});
-h2.args = {
+export const level2 = Template.bind({});
+level2.args = {
   level: 2,
 };
-export const h3 = Template.bind({});
-h3.args = {
+export const level3 = Template.bind({});
+level3.args = {
   level: 3,
 };
