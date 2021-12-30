@@ -3,7 +3,7 @@ import { VideoBadge } from './VideoBadge';
 import { BadgeProps } from 'components/ui/badges/types';
 
 export default {
-  title: 'Coral/Badges/Video Badge',
+  title: 'Coral/UI/Badges/Video Badge',
   component: VideoBadge,
   argTypes: {
     size: {

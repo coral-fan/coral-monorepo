@@ -3,7 +3,7 @@ import { MusicBadge } from './MusicBadge';
 import { BadgeProps } from 'components/ui/badges/types';
 
 export default {
-  title: 'Coral/Badges/Music Badge',
+  title: 'Coral/UI/Badges/Music Badge',
   component: MusicBadge,
   argTypes: {
     size: {

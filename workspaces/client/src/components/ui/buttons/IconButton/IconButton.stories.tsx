@@ -4,7 +4,7 @@ import { BaseButtonProps } from '../types';
 import { PlusIcon } from 'components/ui';
 
 export default {
-  title: 'Coral/Buttons/Icon Button',
+  title: 'Coral/UI/Buttons/Icon Button',
   component: IconButton,
   argTypes: {
     variant: {

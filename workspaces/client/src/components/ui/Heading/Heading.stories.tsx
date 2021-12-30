@@ -2,7 +2,7 @@ import { Story, ComponentMeta } from '@storybook/react';
 import { Heading, HeadingProp } from './Heading';
 
 export default {
-  title: 'Coral/Heading',
+  title: 'Coral/UI/Heading',
   component: Heading,
   argTypes: {
     level: {
