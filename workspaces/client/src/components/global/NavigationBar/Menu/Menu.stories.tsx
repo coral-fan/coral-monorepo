@@ -3,7 +3,7 @@ import { MenuProp } from '.';
 import { Menu } from './Menu';
 
 export default {
-  title: 'Coral/Navigation Bar/Menu',
+  title: 'Coral/App/Navigation Bar/Menu',
   component: Menu,
   argTypes: {
     notificationsCount: {

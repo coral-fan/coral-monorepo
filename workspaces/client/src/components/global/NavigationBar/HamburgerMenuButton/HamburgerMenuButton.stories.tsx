@@ -2,7 +2,7 @@ import { Story, Meta } from '@storybook/react';
 import { HamburgerMenuButton, HamburgerMenuButtonProps } from './HamburgerMenuButton';
 
 export default {
-  title: 'Coral/Navigation Bar/Hamburger Icon Button',
+  title: 'Coral/App/Navigation Bar/Hamburger Icon Button',
   component: HamburgerMenuButton,
 } as Meta;
 
