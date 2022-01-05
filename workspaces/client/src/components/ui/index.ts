@@ -3,3 +3,4 @@ export * from './Modal';
 export * from './Heading';
 export * from './icons';
 export * from './badges';
+export * from './User';
