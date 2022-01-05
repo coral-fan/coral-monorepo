@@ -1,6 +1,11 @@
 import { themes } from '@storybook/theming';
-
+import * as nextImage from 'next/image';
 import { GlobalStyles } from 'styles';
+
+Object.defineProperty(nextImage, 'default', {
+  configurable: true,
+  value: (props) => <img {...props} />,
+});
 
 export const decorators = [
   (Story) => (
