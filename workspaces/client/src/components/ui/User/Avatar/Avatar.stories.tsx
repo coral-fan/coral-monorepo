@@ -18,6 +18,6 @@ const Template: Story<AvatarProps> = ({ ...args }) => <Avatar {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   src: './defaultAvatar.png',
-  size: 'xxl',
+  size: 'xl',
   showBorder: false,
 };
