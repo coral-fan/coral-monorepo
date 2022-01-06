@@ -1,29 +1,51 @@
-export const getTimeDifference = (date: string) => {
+const DEFAULT_TIME_ELAPSED = 'Just Now';
+
+export const getTimeElapsed = (date: string) => {
   const referenceTime = new Date(date).getTime();
   const currentTime = new Date().getTime();
 
   // Get time difference in Milliseconds
-  let milliSecsDiff;
-  if (referenceTime > currentTime) {
-    milliSecsDiff = referenceTime - currentTime;
-  } else {
-    milliSecsDiff = currentTime - referenceTime;
-  }
+  const milliSecsDiff = Math.abs(currentTime - referenceTime);
 
   // Get time difference as a Date
   const dateDiff = new Date(milliSecsDiff);
 
-  // Get time difference in Days
-  const daysDiff = Math.floor(milliSecsDiff / 1000 / 60 / (60 * 24));
-
-  // Get time difference in Years
+  // Years
   const yearsDiff = Math.floor(milliSecsDiff / 1000 / 60 / (60 * 24) / 365);
+  if (yearsDiff > 0) {
+    return `${yearsDiff} ${yearsDiff > 1 ? 'years' : 'year'} ago`;
+  }
 
-  // Parse dateDiff to get difference in Months, Hours, Minutes, Seconds
-  const monthsDiff = new Date(dateDiff).getUTCMonth();
-  const hoursDiff = new Date(dateDiff).getUTCHours();
-  const minutesDiff = new Date(dateDiff).getUTCMinutes();
-  const secondsDiff = new Date(dateDiff).getUTCSeconds();
+  // Months
+  const monthsDiff = dateDiff.getUTCMonth();
+  if (monthsDiff > 0) {
+    return `${monthsDiff} ${monthsDiff > 1 ? 'months' : 'month'} ago`;
+  }
 
-  return { yearsDiff, monthsDiff, daysDiff, hoursDiff, minutesDiff, secondsDiff };
+  // Days
+  const daysDiff = Math.floor(milliSecsDiff / 1000 / 60 / (60 * 24));
+  if (daysDiff > 0) {
+    return `${daysDiff}D ago`;
+  }
+
+  // Hours
+  const hoursDiff = dateDiff.getUTCHours();
+  if (hoursDiff > 0) {
+    return `${hoursDiff}H ago`;
+  }
+
+  // Minutes
+  const minutesDiff = dateDiff.getUTCMinutes();
+  if (minutesDiff > 0) {
+    return `${minutesDiff}M ago`;
+  }
+
+  // Seconds
+  const secondsDiff = dateDiff.getUTCSeconds();
+  if (secondsDiff > 0) {
+    return `${secondsDiff}S ago`;
+  }
+
+  // If in future, return Default
+  return DEFAULT_TIME_ELAPSED;
 };
