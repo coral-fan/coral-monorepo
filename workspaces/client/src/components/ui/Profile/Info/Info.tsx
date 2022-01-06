@@ -17,7 +17,7 @@ const NameWrapper = styled.div<NameWrapperProps>`
   padding: 2px;
 `;
 
-const UserNameWrapper = styled.div<NameWrapperProps>`
+const UsernameWrapper = styled.div<NameWrapperProps>`
   font-size: 10px;
   font-weight: bold;
   color: ${tokens.color.gray};
@@ -32,7 +32,7 @@ export const Info = ({ src, name, username, size }: InfoProps) => {
       <Avatar size={userInfoSizeDictionary[size].avatar} src={src} hasBorder={false} />
       <Flex direction={'column'}>
         <NameWrapper size={size}>{name}</NameWrapper>
-        <UserNameWrapper size={size}>{username}</UserNameWrapper>
+        <UsernameWrapper size={size}>{username}</UsernameWrapper>
       </Flex>
     </InfoContainer>
   );
