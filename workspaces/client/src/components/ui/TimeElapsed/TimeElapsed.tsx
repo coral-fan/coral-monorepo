@@ -11,11 +11,11 @@ const TimeElapsedWrapper = styled.div`
   letter-spacing: 0.08em;
 `;
 
-export interface TimeElapsedProps {
+export interface TimeElapsedProp {
   date: string;
 }
 
-export const TimeElapsed = ({ date }: TimeElapsedProps) => {
+export const TimeElapsed = ({ date }: TimeElapsedProp) => {
   const timeElapsed = getTimeElapsed(date);
   return <TimeElapsedWrapper>{timeElapsed}</TimeElapsedWrapper>;
 };
