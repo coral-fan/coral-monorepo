@@ -14,7 +14,6 @@ const NameWrapper = styled.div<NameWrapperProps>`
   font-size: ${({ size }) => `${userInfoSizeDictionary[size].nameFontSize}px`};
   color: ${tokens.color.white};
   line-height: ${({ size }) => `${userInfoSizeDictionary[size].nameLineHeight}px`};
-  padding: 2px;
 `;
 
 const UsernameWrapper = styled.div<NameWrapperProps>`
