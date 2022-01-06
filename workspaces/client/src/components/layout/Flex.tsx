@@ -14,7 +14,7 @@ interface ShorthandFlexProps {
 const shorthandFlexKeys = ['direction', 'wrap', 'grow', 'shrink', 'basis'];
 
 const isPropertyShorthandFlexKey = (property: string) => shorthandFlexKeys.includes(property);
-interface FlexProps extends ShorthandFlexProps {
+export interface FlexProps extends ShorthandFlexProps {
   justifyContent?:
     | 'flex-start'
     | 'flex-end'
