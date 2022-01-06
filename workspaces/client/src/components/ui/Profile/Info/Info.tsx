@@ -29,7 +29,7 @@ const UsernameWrapper = styled.div<NameWrapperProps>`
 export const Info = ({ src, name, username, size }: InfoProps) => {
   return (
     <InfoContainer direction={'row'} alignItems={'center'} size={size}>
-      <Avatar size={userInfoSizeDictionary[size].avatar} src={src} hasBorder={false} />
+      <Avatar size={userInfoSizeDictionary[size].avatarSize} src={src} hasBorder={false} />
       <Flex direction={'column'}>
         <NameWrapper size={size}>{name}</NameWrapper>
         <UsernameWrapper size={size}>{username}</UsernameWrapper>
