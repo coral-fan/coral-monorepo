@@ -5,7 +5,12 @@ export const getTimeElapsed = (date: string) => {
   const currentTime = new Date().getTime();
 
   // Get time difference in Milliseconds
-  const milliSecsDiff = Math.abs(currentTime - referenceTime);
+  const milliSecsDiff = currentTime - referenceTime;
+
+  // If in future, return Default
+  if (milliSecsDiff < 0) {
+    return DEFAULT_TIME_ELAPSED;
+  }
 
   // Get time difference as a Date
   const dateDiff = new Date(milliSecsDiff);
@@ -42,10 +47,5 @@ export const getTimeElapsed = (date: string) => {
 
   // Seconds
   const secondsDiff = dateDiff.getUTCSeconds();
-  if (secondsDiff > 0) {
-    return `${secondsDiff}S ago`;
-  }
-
-  // If in future, return Default
-  return DEFAULT_TIME_ELAPSED;
+  return `${secondsDiff}S ago`;
 };
