@@ -2,7 +2,7 @@ import { getTimeElapsed } from './utils';
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
 
-const TimeElapsedComponent = styled.div`
+const TimeElapsedWrapper = styled.div`
   color: ${tokens.color.gray};
   font-weight: bold;
   text-transform: uppercase;
@@ -11,11 +11,11 @@ const TimeElapsedComponent = styled.div`
   letter-spacing: 0.08em;
 `;
 
-export interface DateType {
+export interface TimeElapsedProps {
   date: string;
 }
 
-export const TimeElapsed = ({ date }: DateType) => {
+export const TimeElapsed = ({ date }: TimeElapsedProps) => {
   const timeElapsed = getTimeElapsed(date);
-  return <TimeElapsedComponent>{timeElapsed}</TimeElapsedComponent>;
+  return <TimeElapsedWrapper>{timeElapsed}</TimeElapsedWrapper>;
 };
