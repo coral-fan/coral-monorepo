@@ -1,4 +1,4 @@
-export const userInfoSizeDictionary = {
+export const infoSizeDictionary = {
   sm: {
     avatarSize: 24,
     nameFontSize: 14,
