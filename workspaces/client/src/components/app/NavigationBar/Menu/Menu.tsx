@@ -3,7 +3,7 @@ import { Modal } from 'components/ui';
 import { MenuItem } from './MenuItem';
 import { getIconComponent } from 'components/ui/icons/utils';
 import { creditCardSVG, userSVG, warningSVG } from './assets';
-import { Divider } from './Divider';
+import { Divider } from '../Divider';
 import { NotificationMenuItemProp, NotificationMenuItem } from './NotificationMenuItem';
 
 const MENU_ITEM_CONFIGURATION = [
