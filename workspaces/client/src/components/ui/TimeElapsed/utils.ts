@@ -7,8 +7,8 @@ export const getTimeElapsed = (date: string) => {
   // Get time difference in Milliseconds
   const milliSecsDiff = currentTime - referenceTime;
 
-  // If in future, return Default
-  if (milliSecsDiff < 0) {
+  // If in future or no date, return Default
+  if (!date || milliSecsDiff < 0) {
     return DEFAULT_TIME_ELAPSED;
   }
 
