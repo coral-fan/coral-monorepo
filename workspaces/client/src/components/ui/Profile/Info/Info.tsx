@@ -1,10 +1,8 @@
 import { Flex } from 'components/layout';
 import { Avatar } from 'components/ui/Profile';
-import { infoSizeDictionary } from './consts';
+import { infoSizeDictionary, Size } from './consts';
 import { Name } from './Name';
 import { Username } from './Username';
-
-type Size = keyof typeof infoSizeDictionary;
 
 export interface InfoProps {
   name: string;
