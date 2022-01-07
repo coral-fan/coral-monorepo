@@ -39,6 +39,7 @@ export interface FlexProps extends ShorthandFlexProps {
   height?: string;
   maxWidth?: string;
   maxHeight?: string;
+  gap?: string;
 }
 
 const kebabCase = (str: string) =>
