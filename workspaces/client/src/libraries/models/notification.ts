@@ -1,5 +1,5 @@
 export interface Notification {
   heading: string;
-  content: string;
+  message: string;
   timestamp: string;
 }
