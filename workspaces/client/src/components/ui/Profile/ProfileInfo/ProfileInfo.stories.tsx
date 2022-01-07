@@ -1,10 +1,10 @@
 import { Story, Meta } from '@storybook/react';
-import { Info } from './Info';
-import { InfoProps } from './Info';
+import { ProfileInfo } from './ProfileInfo';
+import { ProfileInfoProps } from './ProfileInfo';
 
 export default {
-  title: 'Coral/UI/Profile/Info',
-  component: Info,
+  title: 'Coral/UI/Profile/Profile Info',
+  component: ProfileInfo,
   argTypes: {
     size: {
       options: ['sm', 'md', 'lg'],
@@ -13,7 +13,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story<InfoProps> = (args) => <Info {...args} />;
+const Template: Story<ProfileInfoProps> = (args) => <ProfileInfo {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {
