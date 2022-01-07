@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { Modal } from 'components/ui';
-import { Notification } from 'libraries/models';
 import { Fragment } from 'react';
+import { Notification } from 'libraries/models';
+import { Modal } from 'components/ui';
 import { Divider } from '../Divider';
 import { Bottom, Heading, NotificationProps } from '../../Notification';
 
