@@ -1,9 +1,9 @@
 import { Story, Meta } from '@storybook/react';
 import { Info } from './Info';
-import { InfoProps } from './types';
+import { InfoProps } from './Info';
 
 export default {
-  title: 'Coral/UI/Profile/User Info',
+  title: 'Coral/UI/Profile/Info',
   component: Info,
   argTypes: {
     size: {

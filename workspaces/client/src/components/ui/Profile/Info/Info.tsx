@@ -1,38 +1,29 @@
-import styled from '@emotion/styled';
 import { Flex } from 'components/layout';
-import tokens from 'styles/tokens';
 import { Avatar } from 'components/ui/Profile';
-import { userInfoSizeDictionary } from './consts';
-import { InfoContainerProps, NameWrapperProps, InfoProps } from './types';
+import { infoSizeDictionary } from './consts';
+import { Name } from './Name';
+import { Username } from './Username';
 
-const InfoContainer = styled(Flex)<InfoContainerProps>`
-  width: 100%;
-  gap: ${({ size }) => `${userInfoSizeDictionary[size].avatarGap}px`};
-`;
+type Size = keyof typeof infoSizeDictionary;
 
-const NameWrapper = styled.div<NameWrapperProps>`
-  font-size: ${({ size }) => `${userInfoSizeDictionary[size].nameFontSize}px`};
-  color: ${tokens.color.white};
-  line-height: ${({ size }) => `${userInfoSizeDictionary[size].nameLineHeight}px`};
-`;
-
-const UsernameWrapper = styled.div<NameWrapperProps>`
-  font-size: 10px;
-  font-weight: bold;
-  color: ${tokens.color.gray};
-  line-height: ${({ size }) => `${userInfoSizeDictionary[size].userNameLineHeight}px`};
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-`;
+export interface InfoProps {
+  name: string;
+  username: string;
+  src: string;
+  size: Size;
+}
 
 export const Info = ({ src, name, username, size }: InfoProps) => {
+  const gapSize = `${infoSizeDictionary[size].avatarGap}px`;
+  const avatarSize = infoSizeDictionary[size].avatarSize;
+
   return (
-    <InfoContainer direction={'row'} alignItems={'center'} size={size}>
-      <Avatar size={userInfoSizeDictionary[size].avatarSize} src={src} hasBorder={false} />
+    <Flex direction={'row'} alignItems={'center'} gap={gapSize} width={'100%'}>
+      <Avatar size={avatarSize} src={src} hasBorder={false} />
       <Flex direction={'column'}>
-        <NameWrapper size={size}>{name}</NameWrapper>
-        <UsernameWrapper size={size}>{username}</UsernameWrapper>
+        <Name size={size}>{name}</Name>
+        <Username size={size}>{username}</Username>
       </Flex>
-    </InfoContainer>
+    </Flex>
   );
 };
