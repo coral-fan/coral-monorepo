@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { infoSizeDictionary } from './consts';
+import { profileInfoSizeDictionary } from './consts';
 import { Size } from './types';
 import tokens from 'styles/tokens';
 
@@ -8,7 +8,7 @@ export interface NameProp {
 }
 
 export const Name = styled.div<NameProp>`
-  font-size: ${({ size }) => `${infoSizeDictionary[size].nameFontSize}px`};
+  font-size: ${({ size }) => `${profileInfoSizeDictionary[size].nameFontSize}px`};
   color: ${tokens.color.white};
-  line-height: ${({ size }) => `${infoSizeDictionary[size].nameLineHeight}px`};
+  line-height: ${({ size }) => `${profileInfoSizeDictionary[size].nameLineHeight}px`};
 `;

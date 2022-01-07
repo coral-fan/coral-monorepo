@@ -1,20 +1,20 @@
 import { Flex } from 'components/layout';
 import { Avatar } from 'components/ui/Profile';
-import { infoSizeDictionary } from './consts';
+import { profileInfoSizeDictionary } from './consts';
 import { Size } from './types';
 import { Name } from './Name';
 import { Username } from './Username';
 
-export interface InfoProps {
+export interface ProfileInfoProps {
   name: string;
   username: string;
   src: string;
   size: Size;
 }
 
-export const Info = ({ src, name, username, size }: InfoProps) => {
-  const gapSize = `${infoSizeDictionary[size].avatarGap}px`;
-  const avatarSize = infoSizeDictionary[size].avatarSize;
+export const ProfileInfo = ({ src, name, username, size }: ProfileInfoProps) => {
+  const gapSize = `${profileInfoSizeDictionary[size].avatarGap}px`;
+  const avatarSize = profileInfoSizeDictionary[size].avatarSize;
 
   return (
     <Flex direction={'row'} alignItems={'center'} gap={gapSize} width={'100%'}>
