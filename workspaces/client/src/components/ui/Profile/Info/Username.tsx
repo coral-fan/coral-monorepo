@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
-import { infoSizeDictionary } from './consts';
+import { infoSizeDictionary, Size } from './consts';
 import tokens from 'styles/tokens';
-
-type Size = keyof typeof infoSizeDictionary;
 
 export interface UsernameProp {
   size: Size;
