@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { infoSizeDictionary, Size } from './consts';
+import { infoSizeDictionary } from './consts';
+import { Size } from './types';
 import tokens from 'styles/tokens';
 
 export interface NameProp {

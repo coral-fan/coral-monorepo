@@ -1,6 +1,7 @@
 import { Flex } from 'components/layout';
 import { Avatar } from 'components/ui/Profile';
-import { infoSizeDictionary, Size } from './consts';
+import { infoSizeDictionary } from './consts';
+import { Size } from './types';
 import { Name } from './Name';
 import { Username } from './Username';
 
