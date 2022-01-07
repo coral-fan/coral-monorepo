@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 
 import { Flex } from 'components/layout';
 import tokens from 'styles/tokens';
+import { Card } from '../Card';
 import { CloseButton, PreviousButton } from './buttons';
 import { ModalProps } from './types';
 
@@ -20,14 +21,11 @@ const Overlay = styled(Flex)`
   padding: 0 12px;
 `;
 
-const ModalContainer = styled(Flex)`
+const ModalContainer = styled(Card)`
   flex-direction: column;
-  background-color: ${tokens.color.background.tertiary};
   color: ${tokens.color.white};
   padding: 8px 18px;
   box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.5);
-  border-radius: 12px;
-  width: 100%;
 `;
 
 const Heading = styled.h1`
