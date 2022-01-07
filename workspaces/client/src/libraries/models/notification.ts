@@ -1,5 +1,5 @@
 export interface Notification {
-  message: string;
-  timestamp: Date;
-  read: boolean;
+  heading: string;
+  content: string;
+  timestamp: string;
 }
