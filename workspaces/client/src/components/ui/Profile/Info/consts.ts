@@ -21,5 +21,3 @@ export const infoSizeDictionary = {
     avatarGap: 11,
   },
 };
-
-export type Size = keyof typeof infoSizeDictionary;
