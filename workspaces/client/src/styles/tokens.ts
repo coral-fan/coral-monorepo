@@ -33,6 +33,7 @@ const tokens = createTheme({
     },
     gray: '#9D9D9D',
     white: '#FFFFFF',
+    red: '#F01F51',
   },
   gradient: {
     primary: 'linear-gradient(121.65deg, #3F2D4D 8.25%, #292030 98.53%)',
