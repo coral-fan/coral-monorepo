@@ -3,6 +3,7 @@ import { MenuItem } from './MenuItem';
 import { getIconComponent } from 'components/ui/icons/utils';
 import { bellSVG } from './assets';
 import { css } from '@emotion/react';
+import tokens from 'styles/tokens';
 
 export interface NotificationMenuItemProp {
   notificationsCount: number;
@@ -13,7 +14,7 @@ const NotificationBadge = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f01f51;
+  background-color: ${tokens.color.red};
   border-radius: 50%;
 `;
 const NotificationContent = styled.div`
