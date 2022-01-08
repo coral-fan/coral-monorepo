@@ -2,13 +2,13 @@ import { createElement, FC } from 'react';
 import ReactDOM from 'react-dom';
 import styled from '@emotion/styled';
 
-import { Flex } from 'components/layout';
 import tokens from 'styles/tokens';
 import { Card } from '../Card';
 import { CloseButton, PreviousButton } from './buttons';
 import { ModalProps } from './types';
 
-const Overlay = styled(Flex)`
+const Overlay = styled.div`
+  display: flex;
   flex-direction: column;
   gap: 12px;
   justify-content: center;
@@ -36,7 +36,10 @@ const Heading = styled.h1`
   padding: 8px 0;
 `;
 
-const Main: FC = ({ children }) => <Flex direction={'column'}>{children}</Flex>;
+const Main = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 /* 
   Using FC because it always implies children.

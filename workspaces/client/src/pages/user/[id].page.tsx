@@ -1,11 +1,16 @@
-import { Flex } from 'components/layout';
+import styled from '@emotion/styled';
 
 interface User {
   id: string;
   username: string;
 }
+
+const Container = styled.div`
+  display: flex;
+`;
+
 export default function User({ username }: User) {
-  return <Flex>{`${username}'s Profile`}</Flex>;
+  return <Container>{`${username}'s Profile`}</Container>;
 }
 
 interface UserRouteParam {

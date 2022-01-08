@@ -1,4 +1,4 @@
-import { Flex } from 'components/layout';
+import styled from '@emotion/styled';
 
 interface NFTCollection {
   id: string;
@@ -6,8 +6,12 @@ interface NFTCollection {
   artist: string;
 }
 
+const Container = styled.div`
+  display: flex;
+`;
+
 export default function User({ id }: NFTCollection) {
-  return <Flex>{`Collection ${id}`}</Flex>;
+  return <Container>{`Collection ${id}`}</Container>;
 }
 
 interface NFTCollectionRouteParam {

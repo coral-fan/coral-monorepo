@@ -1,10 +1,15 @@
-import { Flex } from 'components/layout';
+import styled from '@emotion/styled';
 
 interface Artist {
   id: string;
 }
+
+const Container = styled.div`
+  display: flex;
+`;
+
 export default function Artist({ id }: Artist) {
-  return <Flex>{`Artist ${id}`}</Flex>;
+  return <Container>{`Artist ${id}`}</Container>;
 }
 
 interface ArtistRouteParam {

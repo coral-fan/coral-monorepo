@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
 import { Button } from 'components/ui';
-import { Flex } from 'components/layout';
 
 import { useIsAuthenticated, useLogin, useLogout } from 'libraries/authentication/hooks';
+import styled from '@emotion/styled';
 
 const LogoutButton = () => {
   const logout = useLogout();
@@ -20,6 +20,12 @@ const LoginButton = () => {
   );
 };
 
+const Container = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+`;
+
 export const NavigationBar = () => {
   const { loginError } = useLogin();
   const [isAuthenticated] = useIsAuthenticated();
@@ -28,9 +34,5 @@ export const NavigationBar = () => {
     loginError && console.log(loginError);
   }, [loginError]);
 
-  return (
-    <Flex justifyContent={'flex-end'} width={'100%'}>
-      {isAuthenticated ? <LogoutButton /> : <LoginButton />}
-    </Flex>
-  );
+  return <Container>{isAuthenticated ? <LogoutButton /> : <LoginButton />}</Container>;
 };
