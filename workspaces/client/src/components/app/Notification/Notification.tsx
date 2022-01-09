@@ -53,6 +53,11 @@ export const Bottom = ({ message, timestamp }: Omit<NotificationProps, 'heading'
   </BottomContainer>
 );
 
+/*
+inspiration for mounting & unmounting animation from https://stackoverflow.com/questions/42660907/using-reactcsstransitiongroup-with-styled-component
+documentation at https://reactcommunity.org/react-transition-group/css-transition & https://reactcommunity.org/react-transition-group/transition
+*/
+
 const CLASS_NAME = 'notification';
 const TIMEOUT = 500;
 
