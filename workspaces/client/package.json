@@ -44,6 +44,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-redux": "^7.2.6",
+    "react-transition-group": "^4.4.2",
     "redux-observable": "^2.0.0",
     "rxjs": "^7.3.0",
     "theme-in-css": "^0.2.1"
@@ -60,6 +61,7 @@
     "@storybook/react": "^6.4.9",
     "@types/react": "^17.0.25",
     "@types/react-dom": "^17.0.9",
+    "@types/react-transition-group": "^4.4.4",
     "@typescript-eslint/eslint-plugin": "^5.3.1",
     "@typescript-eslint/parser": "^5.3.1",
     "babel-loader": "^8.2.3",
