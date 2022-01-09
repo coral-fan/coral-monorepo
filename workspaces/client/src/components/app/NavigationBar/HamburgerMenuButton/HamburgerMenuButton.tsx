@@ -1,10 +1,9 @@
 import { ComponentProps, createElement } from 'react';
-import styled from '@emotion/styled';
 import { getIconComponent } from 'components/ui/icons/utils';
 import hamburgerWithRedDotIconSVG from './hamburger-with-red-dot.svg';
 import hamburgerIconSVG from './hamburger.svg';
-import { BUTTON_BASE_STYLE } from 'components/ui/buttons/consts';
-
+import { buttonBaseStyle } from 'components/ui/buttons/styles';
+import { css } from '@emotion/react';
 const HamburgerWithRedDotIcon = getIconComponent(
   'HamburgerIconWithRedDot',
   hamburgerWithRedDotIconSVG
@@ -24,13 +23,13 @@ const HamburgerIcon = ({ hasNotifications }: HamburgerIconProp) =>
 
 export type HamburgerMenuButtonProps = ComponentProps<'button'> & HamburgerIconProp;
 
-const ButtonWrapper = styled.button`
-  ${BUTTON_BASE_STYLE};
+const buttonStyle = css`
+  ${buttonBaseStyle};
   background-color: transparent;
 `;
 
 export const HamburgerMenuButton = ({ hasNotifications, ...props }: HamburgerMenuButtonProps) => (
-  <ButtonWrapper {...props}>
+  <button css={buttonStyle} {...props}>
     <HamburgerIcon hasNotifications={hasNotifications} />
-  </ButtonWrapper>
+  </button>
 );
