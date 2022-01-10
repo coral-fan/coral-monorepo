@@ -7,7 +7,7 @@ const HiddenInput = styled.input`
   height: 0;
 `;
 
-const Slider = styled.span`
+const Slider = styled.div`
   position: absolute;
   cursor: pointer;
   top: 0;

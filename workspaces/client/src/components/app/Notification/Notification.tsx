@@ -29,7 +29,7 @@ const CloseButton = (props: ComponentProps<'button'>) => (
   </button>
 );
 
-export const Heading = styled.span`
+export const Heading = styled.div`
   font-size: 14px;
   line-height: 18px;
   color: ${tokens.color.white};
@@ -40,7 +40,7 @@ const BottomContainer = styled.div`
   justify-content: space-between;
 `;
 
-const Message = styled.span`
+const Message = styled.div`
   font-size: 10px;
   line-height: 13px;
   color: ${tokens.color.gray};
