@@ -36,7 +36,7 @@ const getInputStyle = (error?: string) => css`
   }
 `;
 
-const Error = styled.span`
+const Error = styled.div`
   ${textStyle};
   color: ${tokens.color.red};
 `;
