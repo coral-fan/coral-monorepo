@@ -3,6 +3,7 @@ import { Username } from 'components/ui/Profile/ProfileInfo/Username';
 import { TimeElapsed } from 'components/ui/TimeElapsed';
 import { Description } from './Description';
 import styled from '@emotion/styled';
+import tokens from 'styles/tokens';
 
 export interface TransactionProps {
   src: string;
@@ -18,6 +19,11 @@ const TransactionContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   align-items: flex-end;
+  border-top: solid 0.2px ${tokens.color.gray};
+
+  :last-child {
+    border-bottom: solid 0.2px ${tokens.color.gray};
+  }
 `;
 
 const InfoContainer = styled.div`
