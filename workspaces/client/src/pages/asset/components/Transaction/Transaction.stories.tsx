@@ -1,21 +1,21 @@
 import { Story, Meta } from '@storybook/react';
-import { TransactionItem, TransactionItemProps } from './TransactionItem';
+import { Transaction, TransactionProps } from './Transaction';
 
 export default {
-  title: 'Coral/Pages/Asset/Transaction Item',
-  component: TransactionItem,
+  title: 'Coral/Pages/Asset/Transaction',
+  component: Transaction,
   argTypes: {
-    txTimestamp: {
+    timestamp: {
       control: { type: 'date' },
     },
   },
 } as Meta;
 
-const Template: Story<TransactionItemProps> = (args) => <TransactionItem {...args} />;
+const Template: Story<TransactionProps> = (args) => <Transaction {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
   src: 'https://www.stereofox.com/images/86513/resized.jpg',
-  txDesc: '1 token claimed',
+  description: '1 token claimed',
   username: '@bonobooooos',
 };
