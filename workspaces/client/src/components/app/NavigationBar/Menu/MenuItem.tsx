@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { getIconComponent } from 'components/ui/icons/utils';
 import { FC } from 'react';
 import tokens from 'styles/tokens';
-import { itemBorderButtomStyle } from '../styles';
+import { itemBorderBottomStyle } from '../styles';
 
 type Icon = ReturnType<typeof getIconComponent>;
 
@@ -23,7 +23,7 @@ const MenuItemContainer = styled.div`
   line-height: 15px;
   letter-spacing: 0.053em;
 
-  ${itemBorderButtomStyle}
+  ${itemBorderBottomStyle}
 
   &:last-child {
     border-top: solid ${tokens.color.white} 1px;
