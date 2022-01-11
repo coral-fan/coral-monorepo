@@ -23,10 +23,6 @@ const TransactionContainer = styled.div`
   :last-child {
     border-bottom: solid 1px ${tokens.color.gray};
   }
-
-  :first-of-type {
-    border-top: none;
-  }
 `;
 
 const InfoContainer = styled.div`
