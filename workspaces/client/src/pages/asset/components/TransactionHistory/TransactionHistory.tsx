@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 import { Fragment } from 'react';
 import { Transaction, TransactionProps } from '../Transaction';
-import tokens from 'styles/tokens';
-import { DESKTOP_BREAKPOINT } from 'styles';
+import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
 export interface TransactionsProp {
   transactions?: TransactionProps[];
@@ -20,12 +19,12 @@ const Heading = styled.h2`
 `;
 
 const Transactions = styled.div`
-  height: 342px; // To Do: Adjust based on layout
+  height: 331px; // To Do: Adjust based on layout
   overflow: scroll;
   border-top: solid 0.2px ${tokens.color.gray};
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
-    height: 444px; // To Do: Adjust based on layout
+    height: 441px; // To Do: Adjust based on layout
   }
 `;
 
