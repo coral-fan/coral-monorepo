@@ -8,8 +8,12 @@ export default {
 
 const Template: Story<TransactionsProp> = (args) => <TransactionHistory {...args} />;
 
-export const Default = Template.bind({});
+export const NoTransactions = Template.bind({});
+NoTransactions.args = {
+  transactions: [],
+};
 
+export const Default = Template.bind({});
 Default.args = {
   transactions: [
     {
