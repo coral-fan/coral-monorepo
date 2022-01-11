@@ -1,14 +1,14 @@
 import styled from '@emotion/styled';
-import { MenuItem } from './MenuItem';
+import { Item } from './Item';
 import { getIconComponent } from 'components/ui/icons/utils';
 import { bellSVG } from './assets';
 import { css } from '@emotion/react';
 import tokens from 'styles/tokens';
 
-export interface NotificationMenuItemProp {
+export interface NotificationItemProp {
   notificationsCount: number;
 }
-const NotificationBadge = styled.div`
+const Badge = styled.div`
   height: 20px;
   width: 20px;
   display: flex;
@@ -17,7 +17,7 @@ const NotificationBadge = styled.div`
   background-color: ${tokens.color.red};
   border-radius: 50%;
 `;
-const NotificationContent = styled.div`
+const Content = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -26,15 +26,13 @@ const NotificationContent = styled.div`
 const getFontSizeStyle = (count: number) => css`
   font-size: ${count > 99 ? 8 : count > 9 ? 11 : 14}px;
 `;
-export const NotificationMenuItem = ({ notificationsCount }: NotificationMenuItemProp) => (
-  <MenuItem Icon={getIconComponent('NotificationIcon', bellSVG)}>
-    <NotificationContent>
+export const NotificationItem = ({ notificationsCount }: NotificationItemProp) => (
+  <Item Icon={getIconComponent('NotificationIcon', bellSVG)}>
+    <Content>
       notifications
       {notificationsCount > 0 && (
-        <NotificationBadge css={getFontSizeStyle(notificationsCount)}>
-          {notificationsCount}
-        </NotificationBadge>
+        <Badge css={getFontSizeStyle(notificationsCount)}>{notificationsCount}</Badge>
       )}
-    </NotificationContent>
-  </MenuItem>
+    </Content>
+  </Item>
 );

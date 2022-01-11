@@ -6,12 +6,12 @@ import { itemBorderBottomStyle } from '../styles';
 
 type Icon = ReturnType<typeof getIconComponent>;
 
-type MenuItemProps = {
+type ItemProps = {
   Icon: Icon;
   notificationCount?: number;
 };
 
-const MenuItemContainer = styled.div`
+const Container = styled.div`
   display: flex;
   align-items: center;
   gap: 18.5px;
@@ -30,9 +30,9 @@ const MenuItemContainer = styled.div`
   }
 `;
 
-export const MenuItem: FC<MenuItemProps> = ({ Icon, children }) => (
-  <MenuItemContainer>
+export const Item: FC<ItemProps> = ({ Icon, children }) => (
+  <Container>
     <Icon size={20} />
     {children}
-  </MenuItemContainer>
+  </Container>
 );
