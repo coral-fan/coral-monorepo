@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Transaction, TransactionProps } from '../Transaction';
 import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
+import { Heading } from 'components/ui';
 
 export interface TransactionsProp {
   transactions?: TransactionProps[];
@@ -9,13 +10,6 @@ export interface TransactionsProp {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
-`;
-
-const Heading = styled.h2`
-  font-size: 18px;
-  line-height: 23px;
-  font-weight: 700;
 `;
 
 const Transactions = styled.div`
@@ -44,7 +38,7 @@ export const TransactionHistory = ({ transactions }: TransactionsProp) => {
   console.log(showTransactions);
   return (
     <Container>
-      <Heading>Transaction history</Heading>
+      <Heading level={2}>Transaction history</Heading>
       {showTransactions ? (
         <Transactions>
           {transactions?.map((transaction, i) => (
