@@ -26,6 +26,7 @@ export type HamburgerMenuButtonProps = ComponentProps<'button'> & HamburgerIconP
 const buttonStyle = css`
   ${buttonBaseStyle};
   background-color: transparent;
+  justify-self: start;
 `;
 
 export const HamburgerMenuButton = ({ hasNotifications, ...props }: HamburgerMenuButtonProps) => (
