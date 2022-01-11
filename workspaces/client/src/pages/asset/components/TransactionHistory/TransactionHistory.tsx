@@ -21,17 +21,15 @@ const Heading = styled.h2`
 const Transactions = styled.div`
   height: 331px; // To Do: Adjust based on layout
   overflow: scroll;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
     height: 441px; // To Do: Adjust based on layout
   }
-`;
-
-// Handle Scrollbar using a subContainer
-// To Do: 34px is generic scrollbar width but varies across browsers
-const TransactionsSubContainer = styled.div`
-  border-top: solid 1px ${tokens.color.gray};
-  width: calc(100% - 34px);
 `;
 
 const Placeholder = styled.div`
@@ -49,11 +47,9 @@ export const TransactionHistory = ({ transactions }: TransactionsProp) => {
       <Heading>Transaction history</Heading>
       {showTransactions ? (
         <Transactions>
-          <TransactionsSubContainer>
-            {transactions?.map((transaction, i) => (
-              <Transaction key={i} {...transaction} />
-            ))}
-          </TransactionsSubContainer>
+          {transactions?.map((transaction, i) => (
+            <Transaction key={i} {...transaction} />
+          ))}
         </Transactions>
       ) : (
         <Placeholder>No transactions yet</Placeholder>
