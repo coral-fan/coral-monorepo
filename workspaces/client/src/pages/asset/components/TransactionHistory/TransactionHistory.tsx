@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { Fragment } from 'react';
 import { Transaction, TransactionProps } from '../Transaction';
 import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
@@ -34,9 +33,7 @@ export const TransactionHistory = ({ transactions }: TransactionsProp) => (
     <Heading>Transaction history</Heading>
     <Transactions>
       {transactions?.map((transaction, i) => (
-        <Fragment key={i}>
-          <Transaction {...transaction} />
-        </Fragment>
+        <Transaction key={i} {...transaction} />
       ))}
     </Transactions>
   </Container>
