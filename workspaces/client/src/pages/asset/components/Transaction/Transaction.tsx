@@ -18,11 +18,7 @@ const TransactionContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   align-items: flex-end;
-  border-top: solid 1px ${tokens.color.gray};
-
-  :last-child {
-    border-bottom: solid 1px ${tokens.color.gray};
-  }
+  border-bottom: solid 1px ${tokens.color.gray};
 `;
 
 const InfoContainer = styled.div`
