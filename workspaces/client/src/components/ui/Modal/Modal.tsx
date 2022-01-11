@@ -12,6 +12,7 @@ const Overlay = styled.div`
   flex-direction: column;
   gap: 12px;
   justify-content: center;
+  align-items: center;
   position: fixed;
   top: 0;
   width: 100%;
@@ -21,10 +22,19 @@ const Overlay = styled.div`
   padding: 0 12px;
 `;
 
-const ModalContainer = styled(Card)`
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+  width: 100%;
+  max-width: 366px;
+`;
+
+const Content = styled(Card)<{ title?: string }>`
+  width: 100%;
   flex-direction: column;
   color: ${tokens.color.white};
-  padding: 8px 18px;
+  padding: ${({ title }) => `${title ? '16px' : '8px'} 18px`};
   box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.5);
 `;
 
@@ -33,7 +43,7 @@ const Heading = styled.h1`
   font-size: 18px;
   line-height: 23px;
   border-bottom: 0.2px solid #9d9d9d;
-  padding: 8px 0;
+  padding-bottom: 8px;
 `;
 
 const Main = styled.div`
@@ -50,11 +60,13 @@ export const Modal: FC<ModalProps> = ({ children, title, onClick, variant }) =>
     ? null
     : ReactDOM.createPortal(
         <Overlay>
-          {onClick && createElement(variant === 'close' ? CloseButton : PreviousButton)}
-          <ModalContainer>
-            {title && <Heading>{title}</Heading>}
-            <Main>{children}</Main>
-          </ModalContainer>
+          <Container>
+            {onClick && createElement(variant === 'close' ? CloseButton : PreviousButton)}
+            <Content title={title}>
+              {title && <Heading>{title}</Heading>}
+              <Main>{children}</Main>
+            </Content>
+          </Container>
         </Overlay>,
         document.body
       );
