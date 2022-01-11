@@ -9,7 +9,7 @@ const NotificationContainer = styled.div`
   ${itemBorderBottomStyle}
 `;
 
-const NotificationItem = ({ heading, message, timestamp }: NotificationProps) => (
+const Item = ({ heading, message, timestamp }: NotificationProps) => (
   <NotificationContainer>
     <Heading>{heading}</Heading>
     <Bottom message={message} timestamp={timestamp}></Bottom>
@@ -23,7 +23,7 @@ export interface NotificationsProp {
 export const Notifications = ({ notifications }: NotificationsProp) => (
   <Modal variant="previous" title="Notifications" onClick={() => console.log('clicked')}>
     {notifications?.map((notification, i) => (
-      <NotificationItem key={i} {...notification} />
+      <Item key={i} {...notification} />
     ))}
   </Modal>
 );
