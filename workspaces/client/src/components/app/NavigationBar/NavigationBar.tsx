@@ -1,30 +1,48 @@
 import { useEffect } from 'react';
 
-import { Button } from 'components/ui';
+import { Avatar, Button, LogoIcon } from 'components/ui';
 
-import { useIsAuthenticated, useLogin, useLogout } from 'libraries/authentication/hooks';
+import { useIsAuthenticated, useLogin } from 'libraries/authentication/hooks';
 import styled from '@emotion/styled';
+import { css } from '@emotion/react';
+import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
+import { HamburgerMenuButton } from './HamburgerMenuButton/HamburgerMenuButton';
+import { BaseLink as Link } from 'components/ui/BaseLink';
 
-const LogoutButton = () => {
-  const logout = useLogout();
-
-  return <Button onClick={logout}>Logout</Button>;
-};
+const loginButtonStyle = css`
+  height: 30px;
+  width: 95px;
+  background-image: ${tokens.gradient.primary};
+  justify-self: end;
+`;
 
 const LoginButton = () => {
   const { login, isLoggingIn } = useLogin();
   return (
-    <Button onClick={login} disabled={isLoggingIn}>
-      {isLoggingIn ? 'Logging In...' : 'Login'}
+    <Button css={loginButtonStyle} onClick={login} disabled={isLoggingIn} loading={isLoggingIn}>
+      Login
     </Button>
   );
 };
 
 const Container = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
   width: 100%;
-  justify-content: flex-end;
+  padding: 24px;
+
+  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+    padding: 40px 70px;
+  }
 `;
+
+const LogoHomeLink = () => (
+  <Link href="/">
+    <LogoIcon size={30} />
+  </Link>
+);
 
 export const NavigationBar = () => {
   const { loginError } = useLogin();
@@ -34,5 +52,11 @@ export const NavigationBar = () => {
     loginError && console.log(loginError);
   }, [loginError]);
 
-  return <Container>{isAuthenticated ? <LogoutButton /> : <LoginButton />}</Container>;
+  return (
+    <Container>
+      <HamburgerMenuButton hasNotifications={false} />
+      <LogoHomeLink />
+      {isAuthenticated ? <Avatar hasBorder={true} size={30} /> : <LoginButton />}
+    </Container>
+  );
 };
