@@ -17,8 +17,18 @@ const getHeadingStyle = (level: Level) => css`
   font-weight: bold;
   color: ${tokens.color.white};
   font-size: ${`${fontSizeDictionary[level]}px`};
-  ${level === 3 ? 'text-transform: uppercase;' : null}
+  ${level === 2
+    ? css`
+        border-bottom: solid ${tokens.color.gray} 1px;
+        padding-bottom: 8px;
+      `
+    : undefined}
+  ${level === 3
+    ? css`
+        text-transform: uppercase;
+      `
+    : undefined}
 `;
 
-export const Heading: FC<HeadingProp> = ({ children, level }) =>
-  jsx(`h${level}`, { css: getHeadingStyle(level) }, children);
+export const Heading: FC<HeadingProp> = ({ children, level, ...props }) =>
+  jsx(`h${level}`, { css: getHeadingStyle(level), ...props }, children);
