@@ -14,18 +14,17 @@ export interface TransactionProps {
 
 const TransactionContainer = styled.div`
   display: flex;
-  width: 100%;
   padding: 12px 0;
   align-items: center;
   justify-content: space-between;
   align-items: flex-end;
-  border-top: solid 0.2px ${tokens.color.gray};
+  border-top: solid 1px ${tokens.color.gray};
 
   :last-child {
-    border-bottom: solid 0.2px ${tokens.color.gray};
+    border-bottom: solid 1px ${tokens.color.gray};
   }
 
-  :first-child {
+  :first-of-type {
     border-top: none;
   }
 `;

@@ -21,20 +21,43 @@ const Heading = styled.h2`
 const Transactions = styled.div`
   height: 331px; // To Do: Adjust based on layout
   overflow: scroll;
-  border-top: solid 0.2px ${tokens.color.gray};
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
     height: 441px; // To Do: Adjust based on layout
   }
 `;
 
-export const TransactionHistory = ({ transactions }: TransactionsProp) => (
-  <Container>
-    <Heading>Transaction history</Heading>
-    <Transactions>
-      {transactions?.map((transaction, i) => (
-        <Transaction key={i} {...transaction} />
-      ))}
-    </Transactions>
-  </Container>
-);
+// Handle Scrollbar using a subContainer
+// To Do: 34px is generic scrollbar width but varies across browsers
+const TransactionsSubContainer = styled.div`
+  border-top: solid 1px ${tokens.color.gray};
+  width: calc(100% - 34px);
+`;
+
+const Placeholder = styled.div`
+  border-top: solid 1px ${tokens.color.gray};
+  font-style: italic;
+  color: ${tokens.color.gray};
+  padding: 12px 4px;
+`;
+
+export const TransactionHistory = ({ transactions }: TransactionsProp) => {
+  const showTransactions = transactions && transactions.length > 0;
+  console.log(showTransactions);
+  return (
+    <Container>
+      <Heading>Transaction history</Heading>
+      {showTransactions ? (
+        <Transactions>
+          <TransactionsSubContainer>
+            {transactions?.map((transaction, i) => (
+              <Transaction key={i} {...transaction} />
+            ))}
+          </TransactionsSubContainer>
+        </Transactions>
+      ) : (
+        <Placeholder>No transactions yet</Placeholder>
+      )}
+    </Container>
+  );
+};
