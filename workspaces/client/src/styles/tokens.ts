@@ -1,10 +1,9 @@
 import { css } from '@emotion/react';
 import { createTheme } from 'theme-in-css';
 
+export const DESKTOP_BREAKPOINT = '716px';
+
 const tokens = createTheme({
-  breakpoint: {
-    desktop: '716px',
-  },
   spacing: {
     mobile: {
       xs: '4px',
