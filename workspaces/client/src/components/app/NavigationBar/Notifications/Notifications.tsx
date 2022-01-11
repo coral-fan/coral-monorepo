@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 import { Notification } from 'libraries/models';
 import { Modal } from 'components/ui';
 import { Bottom, Heading, NotificationProps } from '../../Notification';
-import { itemBorderButtomStyle } from '../styles';
+import { itemBorderBottomStyle } from '../styles';
 
 const NotificationContainer = styled.div`
   padding: 14px 0;
-  ${itemBorderButtomStyle}
+  ${itemBorderBottomStyle}
 `;
 
 const NotificationItem = ({ heading, message, timestamp }: NotificationProps) => (
