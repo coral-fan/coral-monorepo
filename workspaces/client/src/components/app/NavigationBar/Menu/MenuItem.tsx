@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { getIconComponent } from 'components/ui/icons/utils';
 import { FC } from 'react';
 import tokens from 'styles/tokens';
+import { itemBorderButtomStyle } from '../styles';
 
 type Icon = ReturnType<typeof getIconComponent>;
 
@@ -22,9 +23,8 @@ const MenuItemContainer = styled.div`
   line-height: 15px;
   letter-spacing: 0.053em;
 
-  &:not(:last-child) {
-    border-bottom: solid #4b4b4b 1px;
-  }
+  ${itemBorderButtomStyle}
+
   &:last-child {
     border-top: solid ${tokens.color.white} 1px;
   }
