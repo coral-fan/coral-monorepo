@@ -24,6 +24,10 @@ const TransactionContainer = styled.div`
   :last-child {
     border-bottom: solid 0.2px ${tokens.color.gray};
   }
+
+  :first-child {
+    border-top: none;
+  }
 `;
 
 const InfoContainer = styled.div`
