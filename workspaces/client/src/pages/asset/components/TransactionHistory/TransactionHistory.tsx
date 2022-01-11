@@ -16,6 +16,7 @@ const Container = styled.div`
 const Heading = styled.h2`
   font-size: 18px;
   line-height: 23px;
+  font-weight: 700;
 `;
 
 const Transactions = styled.div`
