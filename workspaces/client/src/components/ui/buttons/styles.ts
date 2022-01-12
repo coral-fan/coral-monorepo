@@ -5,6 +5,7 @@ export const buttonBaseStyle = css`
   align-items: center;
   justify-content: center;
   border: none;
+  background-color: transparent;
 
   &:hover {
     cursor: pointer;
