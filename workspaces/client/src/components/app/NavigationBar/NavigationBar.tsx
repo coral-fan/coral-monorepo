@@ -9,8 +9,7 @@ import {
   useLogin,
 } from 'libraries/authentication/hooks';
 
-import { LogoIcon, BaseLink as Link } from 'components/ui';
-import { HamburgerMenuButton, ProfileAvatarButton, LoginButton } from './components';
+import { HamburgerMenuButton, ProfileAvatarButton, LoginButton, LogoHomeLink } from './components';
 
 const Container = styled.div`
   display: grid;
@@ -24,12 +23,6 @@ const Container = styled.div`
     padding: 40px 70px;
   }
 `;
-
-const LogoHomeLink = () => (
-  <Link href="/">
-    <LogoIcon size={30} />
-  </Link>
-);
 
 export const NavigationBar = () => {
   const { loginError } = useLogin();
