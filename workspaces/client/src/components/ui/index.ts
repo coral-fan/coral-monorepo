@@ -6,3 +6,6 @@ export * from './badges';
 export * from './Profile';
 export * from './Toggle';
 export * from './Input';
+export * from './BaseLink';
+export * from './Card';
+export * from './TimeElapsed';
