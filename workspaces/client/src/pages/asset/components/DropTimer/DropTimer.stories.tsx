@@ -5,15 +5,20 @@ export default {
   title: 'Coral/Pages/Asset/Drop Timer',
   component: DropTimer,
   argTypes: {
-    date: {
+    timestamp: {
       control: { type: 'date' },
+    },
+    size: {
+      options: ['sm', 'lg'],
+      control: { type: 'select' },
     },
   },
 } as Meta;
 
-const Template: Story<DropTimerProp> = (date) => <DropTimer {...date} />;
+const Template: Story<DropTimerProp> = (args) => <DropTimer {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  date: '2022-01-27T18:45:00Z',
+  size: 'lg',
+  timestamp: '2022-01-18T22:35:00Z',
 };
