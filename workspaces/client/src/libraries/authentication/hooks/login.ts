@@ -11,10 +11,6 @@ import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain/hooks';
 import { useIsLoggingIn, useIsTokenAuthenticated } from '.';
 import { apiAxios } from 'libraries/api';
-const fetchIsSigningUp = (idToken: string) =>
-  apiAxios.post<SignUp>('is-signing-up', {
-    idToken,
-  });
 
 const fetchNonce = (address: string) =>
   apiAxios.post<{ nonce: number }>('nonce', {
