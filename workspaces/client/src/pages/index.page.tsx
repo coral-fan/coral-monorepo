@@ -1,12 +1,11 @@
-import { useIsAuthenticated } from 'libraries/authentication/hooks';
-import { useEffect } from 'react';
+import { useIsTokenAuthenticated } from 'libraries/authentication/hooks';
 
 export default function Home() {
-  const [isAuthenticated] = useIsAuthenticated();
+  const [isTokenAuthenticated] = useIsTokenAuthenticated();
 
   return (
     <>
-      <div>You are {`${isAuthenticated ? 'authenticated' : 'not authenticated'}.`}</div>
+      <div>You are {`${isTokenAuthenticated ? 'authenticated' : 'not authenticated'}.`}</div>
     </>
   );
 }
