@@ -1,18 +1,17 @@
 import { Avatar } from 'components/ui/Profile';
 import { Username } from 'components/ui/Profile/ProfileInfo/Username';
 import { TimeElapsed } from 'components/ui/TimeElapsed';
-import { Description } from './Description';
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
 
-export interface TransactionProps {
+export interface ItemProps {
   src: string;
   username: string;
   description: string;
   timestamp: string;
 }
 
-const TransactionContainer = styled.div`
+const ItemContainer = styled.div`
   display: flex;
   padding: 12px 0;
   align-items: center;
@@ -33,9 +32,17 @@ const InfoDetailsContainer = styled.div`
   flex-direction: column;
 `;
 
-export const Transaction = ({ src, username, description, timestamp }: TransactionProps) => {
+const Description = styled.div`
+  size: 14px;
+  font-weight: 400;
+  color: ${tokens.color.white};
+  line-height: 18px;
+  justify-content: flex-end;
+`;
+
+export const Item = ({ src, username, description, timestamp }: ItemProps) => {
   return (
-    <TransactionContainer>
+    <ItemContainer>
       <InfoContainer>
         <Avatar src={src} size={26} hasBorder={false} />
         <InfoDetailsContainer>
@@ -44,6 +51,6 @@ export const Transaction = ({ src, username, description, timestamp }: Transacti
         </InfoDetailsContainer>
       </InfoContainer>
       <TimeElapsed date={timestamp} />
-    </TransactionContainer>
+    </ItemContainer>
   );
 };
