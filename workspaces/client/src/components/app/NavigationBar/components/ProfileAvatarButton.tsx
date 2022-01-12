@@ -5,7 +5,6 @@ import { buttonBaseStyle } from 'components/ui/buttons/styles';
 
 const profileAvatarButtonStyle = css`
   ${buttonBaseStyle};
-  background-color: transparent;
   margin-left: auto;
 `;
 
