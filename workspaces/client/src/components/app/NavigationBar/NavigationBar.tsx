@@ -1,35 +1,16 @@
 import { useEffect } from 'react';
 
 import styled from '@emotion/styled';
-import { css } from '@emotion/react';
-import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
+import { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
 import {
   useIsAuthenticated,
   useIsTokenAuthenticated,
   useLogin,
-  useLogout,
 } from 'libraries/authentication/hooks';
 
-import { buttonBaseStyle } from 'components/ui/buttons/styles';
-import { Avatar, Button, LogoIcon, BaseLink as Link } from 'components/ui';
-import { HamburgerMenuButton } from './components';
-
-const loginButtonStyle = css`
-  height: 30px;
-  width: 95px;
-  background-image: ${tokens.gradient.primary};
-  justify-self: end;
-`;
-
-const LoginButton = () => {
-  const { login, isLoggingIn } = useLogin();
-  return (
-    <Button css={loginButtonStyle} onClick={login} disabled={isLoggingIn} loading={isLoggingIn}>
-      Login
-    </Button>
-  );
-};
+import { LogoIcon, BaseLink as Link } from 'components/ui';
+import { HamburgerMenuButton, ProfileAvatarButton, LoginButton } from './components';
 
 const Container = styled.div`
   display: grid;
@@ -49,21 +30,6 @@ const LogoHomeLink = () => (
     <LogoIcon size={30} />
   </Link>
 );
-
-const profileAvatarButtonStyle = css`
-  ${buttonBaseStyle};
-  background-color: transparent;
-  margin-left: auto;
-`;
-
-const ProfileAvatarButton = () => {
-  const logout = useLogout();
-  return (
-    <button css={profileAvatarButtonStyle} onClick={logout}>
-      <Avatar hasBorder={true} size={30} />
-    </button>
-  );
-};
 
 export const NavigationBar = () => {
   const { loginError } = useLogin();
