@@ -1,22 +1,16 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { signInWithCustomToken, getAuth } from 'firebase/auth';
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
 import { setCookie } from 'nookies';
 
 import { getAuthenticationMessage } from '@common/utils';
-import { SignUp } from '@common/models';
 
-import { API_ENDPOINT, COOKIE_OPTIONS, IS_OPEN_LOGIN_PENDING } from 'consts';
+import { COOKIE_OPTIONS, IS_OPEN_LOGIN_PENDING } from 'consts';
 import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain/hooks';
 import { useIsLoggingIn, useIsTokenAuthenticated } from '.';
-
-const apiAxios = axios.create({
-  baseURL: API_ENDPOINT,
-});
-
+import { apiAxios } from 'libraries/api';
 const fetchIsSigningUp = (idToken: string) =>
   apiAxios.post<SignUp>('is-signing-up', {
     idToken,
