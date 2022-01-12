@@ -1,10 +1,11 @@
-interface ModalWithoutButtonProps {
+interface ModalBaseProps {
   title?: string;
+}
+interface ModalWithoutButtonProps extends ModalBaseProps {
   onClick?: never;
   variant?: never;
 }
-interface ModalWithButtonProps {
-  title?: string;
+interface ModalWithButtonProps extends ModalBaseProps {
   onClick: () => void;
   variant: 'close' | 'previous';
 }
