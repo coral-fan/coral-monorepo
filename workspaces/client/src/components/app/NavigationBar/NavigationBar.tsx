@@ -11,7 +11,7 @@ import {
   useLogin,
   useLogout,
 } from 'libraries/authentication/hooks';
-import { HamburgerMenuButton } from './HamburgerMenuButton/HamburgerMenuButton';
+import { HamburgerMenuButton } from './components/HamburgerMenuButton/HamburgerMenuButton';
 import { BaseLink as Link } from 'components/ui/BaseLink';
 import { buttonBaseStyle } from 'components/ui/buttons/styles';
 
