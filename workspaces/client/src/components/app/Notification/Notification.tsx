@@ -8,7 +8,7 @@ import { Card } from 'components/ui';
 import { TimeElapsed } from 'components/ui/TimeElapsed';
 import { Notification as NotificationProps } from 'libraries/models/notification';
 import tokens from 'styles/tokens';
-import { BUTTON_BASE_STYLE } from 'components/ui/buttons/consts';
+import { buttonBaseStyle } from 'components/ui/buttons/styles';
 
 const TopContainer = styled.div`
   display: flex;
@@ -18,13 +18,8 @@ const TopContainer = styled.div`
 
 const CloseIcon = getIconComponent('CloseIcon', xSVG);
 
-const closeButtonStyle = css`
-  ${BUTTON_BASE_STYLE};
-  background-color: transparent;
-`;
-
 const CloseButton = (props: ComponentProps<'button'>) => (
-  <button css={closeButtonStyle} {...props}>
+  <button css={buttonBaseStyle} {...props}>
     <CloseIcon />
   </button>
 );
