@@ -4,7 +4,7 @@ import { Avatar } from 'components/ui';
 import { buttonBaseStyle } from 'components/ui/buttons/styles';
 
 const profileAvatarButtonStyle = css`
-  ${buttonBaseStyle};
+  ${buttonBaseStyle}
   margin-left: auto;
 `;
 
