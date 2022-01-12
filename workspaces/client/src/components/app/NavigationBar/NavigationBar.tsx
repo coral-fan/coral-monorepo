@@ -1,13 +1,19 @@
 import { useEffect } from 'react';
 
-import { Avatar, Button, LogoIcon } from 'components/ui';
-
-import { useIsAuthenticated, useLogin } from 'libraries/authentication/hooks';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
+
+import { Avatar, Button, LogoIcon } from 'components/ui';
+import {
+  useIsAuthenticated,
+  useIsTokenAuthenticated,
+  useLogin,
+  useLogout,
+} from 'libraries/authentication/hooks';
 import { HamburgerMenuButton } from './HamburgerMenuButton/HamburgerMenuButton';
 import { BaseLink as Link } from 'components/ui/BaseLink';
+import { buttonBaseStyle } from 'components/ui/buttons/styles';
 
 const loginButtonStyle = css`
   height: 30px;
@@ -44,9 +50,25 @@ const LogoHomeLink = () => (
   </Link>
 );
 
+const profileAvatarButtonStyle = css`
+  ${buttonBaseStyle};
+  background-color: transparent;
+  margin-left: auto;
+`;
+
+const ProfileAvatarButton = () => {
+  const logout = useLogout();
+  return (
+    <button css={profileAvatarButtonStyle} onClick={logout}>
+      <Avatar hasBorder={true} size={30} />
+    </button>
+  );
+};
+
 export const NavigationBar = () => {
   const { loginError } = useLogin();
   const [isAuthenticated] = useIsAuthenticated();
+  const [isTokenAuthenticated] = useIsTokenAuthenticated();
 
   useEffect(() => {
     loginError && console.log(loginError);
@@ -56,7 +78,7 @@ export const NavigationBar = () => {
     <Container>
       <HamburgerMenuButton hasNotifications={false} />
       <LogoHomeLink />
-      {isAuthenticated ? <Avatar hasBorder={true} size={30} /> : <LoginButton />}
+      {isAuthenticated || isTokenAuthenticated ? <ProfileAvatarButton /> : <LoginButton />}
     </Container>
   );
 };
