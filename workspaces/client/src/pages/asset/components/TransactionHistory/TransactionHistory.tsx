@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import { Transaction, TransactionProps } from '../Transaction';
+import { Item, ItemProps } from './Item';
 import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 import { Heading } from 'components/ui';
 
 export interface TransactionsProp {
-  transactions?: TransactionProps[];
+  transactions?: ItemProps[];
 }
 
 const Container = styled.div`
@@ -41,7 +41,7 @@ export const TransactionHistory = ({ transactions }: TransactionsProp) => {
       {showTransactions ? (
         <Transactions>
           {transactions?.map((transaction, i) => (
-            <Transaction key={i} {...transaction} />
+            <Item key={i} {...transaction} />
           ))}
         </Transactions>
       ) : (
