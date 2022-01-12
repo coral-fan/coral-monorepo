@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { getIconComponent } from 'components/ui/icons/utils';
 import xSVG from './X.svg';
-import { Card } from 'components/ui/Card';
+import { Card } from 'components/ui';
 import { TimeElapsed } from 'components/ui/TimeElapsed';
 import { Notification as NotificationProps } from 'libraries/models/notification';
 import tokens from 'styles/tokens';
