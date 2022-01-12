@@ -11,6 +11,6 @@ const getImageStyle = (hasBorder: boolean) => css`
   border: ${`solid 1px ${hasBorder ? `${tokens.color.white}` : 'transparent'}`};
 `;
 
-export const Avatar = ({ src = DEFAULT_AVATAR, size, hasBorder }: AvatarProps) => {
-  return <Image src={src} width={size} height={size} css={getImageStyle(hasBorder)} alt={''} />;
-};
+export const Avatar = ({ src = DEFAULT_AVATAR, size, hasBorder }: AvatarProps) => (
+  <Image src={src} width={size} height={size} css={getImageStyle(hasBorder)} alt={''} />
+);
