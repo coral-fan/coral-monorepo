@@ -27,7 +27,6 @@ const Transactions = styled.div`
 `;
 
 const Placeholder = styled.div`
-  border-top: solid 1px ${tokens.color.gray};
   font-style: italic;
   color: ${tokens.color.gray};
   padding: 12px 4px;
