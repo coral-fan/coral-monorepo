@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
-import { Item, ItemProps } from './Item';
+import { Item, ItemProps as Transaction } from './Item';
 import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 import { Heading } from 'components/ui';
 
 const PLACEHOLDER_TEXT = 'No transactions yet';
 
 export interface TransactionsProp {
-  transactions?: ItemProps[];
+  transactions?: Transaction[];
 }
 
 const Container = styled.div`
