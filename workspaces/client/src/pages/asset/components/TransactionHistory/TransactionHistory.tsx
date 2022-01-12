@@ -34,7 +34,7 @@ const Placeholder = styled.div`
 
 export const TransactionHistory = ({ transactions }: TransactionsProp) => {
   const showTransactions = transactions && transactions.length > 0;
-  console.log(showTransactions);
+
   return (
     <Container>
       <Heading level={2}>Transaction history</Heading>
