@@ -4,16 +4,16 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
-import { Avatar, Button, LogoIcon } from 'components/ui';
 import {
   useIsAuthenticated,
   useIsTokenAuthenticated,
   useLogin,
   useLogout,
 } from 'libraries/authentication/hooks';
-import { HamburgerMenuButton } from './components/HamburgerMenuButton/HamburgerMenuButton';
-import { BaseLink as Link } from 'components/ui/BaseLink';
+
 import { buttonBaseStyle } from 'components/ui/buttons/styles';
+import { Avatar, Button, LogoIcon, BaseLink as Link } from 'components/ui';
+import { HamburgerMenuButton } from './components';
 
 const loginButtonStyle = css`
   height: 30px;
