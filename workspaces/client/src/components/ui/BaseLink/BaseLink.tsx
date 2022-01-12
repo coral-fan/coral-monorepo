@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 
 const linkStyle = css`
   text-decoration: none;
-  &hover: {
+  &:hover {
     cursor: pointer;
   }
 `;
