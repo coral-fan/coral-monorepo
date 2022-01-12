@@ -3,6 +3,8 @@ import { Item, ItemProps } from './Item';
 import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 import { Heading } from 'components/ui';
 
+const PLACEHOLDER_TEXT = 'No transactions yet';
+
 export interface TransactionsProp {
   transactions?: ItemProps[];
 }
@@ -45,7 +47,7 @@ export const TransactionHistory = ({ transactions }: TransactionsProp) => {
           ))}
         </Transactions>
       ) : (
-        <Placeholder>No transactions yet</Placeholder>
+        <Placeholder>{PLACEHOLDER_TEXT}</Placeholder>
       )}
     </Container>
   );
