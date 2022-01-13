@@ -6,10 +6,10 @@ export default {
   component: DropTimer,
   argTypes: {
     timestamp: {
-      control: { type: 'date' },
+      control: { type: 'none' },
     },
-    size: {
-      options: ['sm', 'lg'],
+    variant: {
+      options: [undefined, 'mini'],
       control: { type: 'select' },
     },
   },
@@ -19,6 +19,6 @@ const Template: Story<DropTimerProp> = (args) => <DropTimer {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  size: 'lg',
-  timestamp: '2022-01-18T22:35:00Z',
+  variant: undefined,
+  timestamp: '2022-01-31T22:35:00Z',
 };
