@@ -4,18 +4,19 @@ export const getTimeRemaining = (timestamp: string) => {
 
   const milliSecsDiff = referenceTime - currentTime;
 
-  if (milliSecsDiff > 0) {
-    const dateDiff = new Date(milliSecsDiff);
-
-    const daysDiff = Math.floor(milliSecsDiff / 1000 / 60 / (60 * 24));
-    const hoursDiff = dateDiff.getUTCHours();
-    const minutesDiff = dateDiff.getUTCMinutes();
-    const secondsDiff = dateDiff.getUTCSeconds();
-
-    return { daysDiff, hoursDiff, minutesDiff, secondsDiff };
+  // Return zeroes if in past
+  if (milliSecsDiff < 0) {
+    return { daysDiff: 0, hoursDiff: 0, minutesDiff: 0, secondsDiff: 0 };
   }
 
-  return { daysDiff: 0, hoursDiff: 0, minutesDiff: 0, secondsDiff: 0 };
+  const dateDiff = new Date(milliSecsDiff);
+
+  const daysDiff = Math.floor(milliSecsDiff / 1000 / 60 / (60 * 24));
+  const hoursDiff = dateDiff.getUTCHours();
+  const minutesDiff = dateDiff.getUTCMinutes();
+  const secondsDiff = dateDiff.getUTCSeconds();
+
+  return { daysDiff, hoursDiff, minutesDiff, secondsDiff };
 };
 
 const getOrdinal = (day: number) => {
