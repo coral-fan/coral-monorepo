@@ -4,48 +4,52 @@ import { interval, takeUntil, timer } from 'rxjs';
 import { getTimeRemaining, getDateString, getTimeString, getDateStringShort } from './utils';
 import tokens from 'styles/tokens';
 
-type Size = 'sm' | 'lg';
+type Variant = 'mini';
 
 export interface DropTimerProp {
   timestamp: string;
-  size: Size;
+  variant?: Variant;
+}
+
+interface TimeProp extends ComponentProps<'div'> {
+  variant?: Variant;
 }
 
 const Container = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 4px;
 `;
 
-const Heading = styled.div`
+const Heading = styled.div<TimeProp>`
   font-size: 10px;
   font-weight: 700;
   line-height: 122%;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  padding-left: ${(props) => (!props.variant ? '8px' : '2px')};
 `;
 
-const TimeContainer = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  gap: 9px;
+const TimeContainer = styled.div<TimeProp>`
+  width: ${(props) => (!props.variant ? '256px' : '144px')};
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  column-gap: 9px;
+  justify-items: start;
 `;
 
 const TimePart = styled.div`
-  display: flex;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: end;
   align-items: baseline;
-  justify-content: space-between;
-  gap: 4px;
+  column-gap: 4px;
 `;
 
-interface TimeNumProps extends ComponentProps<'div'> {
-  size: Size;
-}
-const TimeNum = styled.div<TimeNumProps>`
-  font-size: ${(props) => (props.size === 'lg' ? '18px' : '14px')};
+const TimeNum = styled.div<TimeProp>`
+  font-size: ${(props) => (!props.variant ? '18px' : '14px')};
   color: ${tokens.color.white};
-  line-height: ${(props) => (props.size === 'lg' ? '23px' : '18px')};
+  line-height: ${(props) => (!props.variant ? '23px' : '18px')};
 `;
 
 const TimeText = styled.div`
@@ -57,7 +61,7 @@ const TimeText = styled.div`
   text-transform: uppercase;
 `;
 
-export const DropTimer = ({ timestamp, size }: DropTimerProp) => {
+export const DropTimer = ({ timestamp, variant }: DropTimerProp) => {
   const [timeRemaining, setTimeRemaining] = useState({
     daysDiff: 0,
     hoursDiff: 0,
@@ -91,27 +95,28 @@ export const DropTimer = ({ timestamp, size }: DropTimerProp) => {
   const dateString = getDateString(timestamp);
   const dateStringShort = getDateStringShort(timestamp);
   const timeString = getTimeString(timestamp);
+
   return (
     <Container>
-      <Heading>
-        {size === 'lg' ? `Sale starts ${dateString}` : `${dateStringShort}`} at {timeString}
+      <Heading variant={variant}>
+        {!variant ? `Sale starts ${dateString}` : `${dateStringShort}`} at {timeString}
       </Heading>
-      <TimeContainer>
+      <TimeContainer variant={variant}>
         <TimePart>
-          <TimeNum size={size}>{daysDiff}</TimeNum>
-          <TimeText>{size === 'lg' ? 'days' : 'd'}</TimeText>
+          <TimeNum variant={variant}>{daysDiff}</TimeNum>
+          <TimeText>{!variant ? 'days' : 'd'}</TimeText>
         </TimePart>
         <TimePart>
-          <TimeNum size={size}>{hoursDiff}</TimeNum>
-          <TimeText>{size === 'lg' ? 'hrs' : 'h'}</TimeText>
+          <TimeNum variant={variant}>{hoursDiff}</TimeNum>
+          <TimeText>{!variant ? 'hrs' : 'h'}</TimeText>
         </TimePart>
         <TimePart>
-          <TimeNum size={size}>{minutesDiff}</TimeNum>
-          <TimeText>{size === 'lg' ? 'mins' : 'm'}</TimeText>
+          <TimeNum variant={variant}>{minutesDiff}</TimeNum>
+          <TimeText>{!variant ? 'mins' : 'm'}</TimeText>
         </TimePart>
         <TimePart>
-          <TimeNum size={size}>{secondsDiff}</TimeNum>
-          <TimeText>{size === 'lg' ? 'secs' : 's'}</TimeText>
+          <TimeNum variant={variant}>{secondsDiff}</TimeNum>
+          <TimeText>{!variant ? 'secs' : 's'}</TimeText>
         </TimePart>
       </TimeContainer>
     </Container>
