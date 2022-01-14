@@ -1,9 +1,9 @@
-import { Flex } from 'components/layout';
 import { Avatar } from 'components/ui/Profile';
 import { profileInfoSizeDictionary } from './consts';
 import { Size } from './types';
 import { Name } from './Name';
 import { Username } from './Username';
+import styled from '@emotion/styled';
 
 export interface ProfileInfoProps {
   name: string;
@@ -12,17 +12,32 @@ export interface ProfileInfoProps {
   size: Size;
 }
 
+interface ContainerProp {
+  size: Size;
+}
+
+const Container = styled.div<ContainerProp>`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: ${(props) => profileInfoSizeDictionary[props.size].avatarGap}px;
+`;
+
+const NameContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const ProfileInfo = ({ src, name, username, size }: ProfileInfoProps) => {
-  const gapSize = `${profileInfoSizeDictionary[size].avatarGap}px`;
   const avatarSize = profileInfoSizeDictionary[size].avatarSize;
 
   return (
-    <Flex direction={'row'} alignItems={'center'} gap={gapSize} width={'100%'}>
+    <Container size={size}>
       <Avatar size={avatarSize} src={src} hasBorder={false} />
-      <Flex direction={'column'}>
+      <NameContainer>
         <Name size={size}>{name}</Name>
         <Username size={size}>{username}</Username>
-      </Flex>
-    </Flex>
+      </NameContainer>
+    </Container>
   );
 };
