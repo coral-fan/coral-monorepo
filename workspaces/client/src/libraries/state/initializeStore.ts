@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { ServerSideData } from 'pages/_app.page';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 
 import authenticationReducer, {
@@ -7,7 +8,9 @@ import authenticationReducer, {
 
 const rootEpic = combineEpics();
 
-export const initializeStore = (isTokenAuthenticated = false) => {
+type StoreHydrationData = ServerSideData['data'];
+
+export const initializeStore = (data: StoreHydrationData) => {
   const epicMiddleware = createEpicMiddleware();
   const store = configureStore({
     reducer: {
@@ -17,7 +20,7 @@ export const initializeStore = (isTokenAuthenticated = false) => {
     preloadedState: {
       authentication: {
         ...initialAuthenticationState,
-        isTokenAuthenticated,
+        ...data,
       },
     },
   });
