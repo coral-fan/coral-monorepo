@@ -1,11 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'libraries/state/types';
-import { setIsAuthenticated } from '../slice';
+import { useWeb3 } from 'libraries/blockchain/hooks';
+import { useIsSigningUp, useIsTokenAuthenticated } from '.';
 
-export const useIsAuthenticated = (): [boolean, (isAuthenticated: boolean) => void] => {
-  const dispatch = useDispatch();
-  return [
-    useSelector((state: RootState) => state.authentication.isAuthenticated),
-    (isAuthenticated: boolean) => void dispatch(setIsAuthenticated(isAuthenticated)),
-  ];
+export const useIsAuthenticated = () => {
+  const { active } = useWeb3();
+  const [isTokenAuthenticated] = useIsTokenAuthenticated();
+  const [isSigningUp] = useIsSigningUp();
+
+  return active && isTokenAuthenticated && !isSigningUp;
 };
