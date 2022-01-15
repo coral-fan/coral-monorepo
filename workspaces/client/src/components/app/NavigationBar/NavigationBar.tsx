@@ -5,6 +5,7 @@ import { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
 import {
   useIsAuthenticated,
+  useIsSigningUp,
   useIsTokenAuthenticated,
   useLogin,
 } from 'libraries/authentication/hooks';
@@ -26,8 +27,8 @@ const Container = styled.div`
 
 export const NavigationBar = () => {
   const { loginError } = useLogin();
-  const [isAuthenticated] = useIsAuthenticated();
   const [isTokenAuthenticated] = useIsTokenAuthenticated();
+  const [isSigningUp] = useIsSigningUp();
 
   useEffect(() => {
     loginError && console.log(loginError);
@@ -37,7 +38,7 @@ export const NavigationBar = () => {
     <Container>
       <HamburgerMenuButton hasNotifications={false} />
       <LogoHomeLink />
-      {isAuthenticated || isTokenAuthenticated ? <ProfileAvatarButton /> : <LoginButton />}
+      {isTokenAuthenticated && !isSigningUp ? <ProfileAvatarButton /> : <LoginButton />}
     </Container>
   );
 };
