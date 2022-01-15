@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export const initialState = {
   isTokenAuthenticated: false,
-  isAuthenticated: false,
   isLoggingIn: false,
   isSigningUp: false,
 };
@@ -14,9 +13,6 @@ export const authenticationSlice = createSlice({
     setIsTokenAuthenticated: (state, action: PayloadAction<boolean>) => {
       state.isTokenAuthenticated = action.payload;
     },
-    setIsAuthenticated: (state, action: PayloadAction<boolean>) => {
-      state.isAuthenticated = action.payload;
-    },
     setIsLoggingIn: (state, action: PayloadAction<boolean>) => {
       state.isLoggingIn = action.payload;
     },
@@ -26,7 +22,7 @@ export const authenticationSlice = createSlice({
   },
 });
 
-export const { setIsTokenAuthenticated, setIsAuthenticated, setIsLoggingIn, setIsSigningUp } =
+export const { setIsTokenAuthenticated, setIsLoggingIn, setIsSigningUp } =
   authenticationSlice.actions;
 
 export default authenticationSlice.reducer;
