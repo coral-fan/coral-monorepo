@@ -3,7 +3,7 @@ export interface Asset {
   id: number;
   collectionId: string;
 }
-/* not tracking the following because write an happen frequently and outside of our platform
+/* not tracking the following because writes can happen frequently and outside of our platform
    - user id
    - transaction history
 */
