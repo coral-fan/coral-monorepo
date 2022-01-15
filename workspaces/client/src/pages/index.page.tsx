@@ -1,14 +1,10 @@
-import { useIsSigningUp, useIsTokenAuthenticated } from 'libraries/authentication/hooks';
+import { useIsAuthenticated } from 'libraries/authentication/hooks';
 
 export default function Home() {
-  const [isTokenAuthenticated] = useIsTokenAuthenticated();
-  const [isSigningUp] = useIsSigningUp();
-
+  const isAuthenticated = useIsAuthenticated();
   return (
     <>
-      <div>
-        You are {`${isTokenAuthenticated && !isSigningUp ? 'authenticated' : 'not authenticated'}.`}
-      </div>
+      <div>You are {`${isAuthenticated ? 'authenticated' : 'not authenticated'}.`}</div>
     </>
   );
 }
