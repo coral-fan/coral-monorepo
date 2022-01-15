@@ -1,7 +1,7 @@
 import { getAuth } from '@firebase/auth';
 import { useEffect } from 'react';
 import { useIsTokenAuthenticated, useLogout } from 'libraries/authentication/hooks';
-import { fromEvent, merge } from 'rxjs';
+import { fromEvent } from 'rxjs';
 import { useGetChainIdChanged$ } from 'libraries/blockchain/hooks/metamask';
 
 export const LogoutManager = () => {
@@ -20,7 +20,7 @@ export const LogoutManager = () => {
   // logic to ensure the user is logged out when the account changes on metamask
   useEffect(() => {
     if (window.ethereum && window.ethereum.addListener) {
-      const subscription = merge(fromEvent(window.ethereum, 'accountsChanged')).subscribe(logout);
+      const subscription = fromEvent(window.ethereum, 'accountsChanged').subscribe(logout);
 
       return () => subscription.unsubscribe();
     }
