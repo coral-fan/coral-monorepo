@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { Modal, Button, Toggle } from 'components/ui';
 import { Input } from 'components/ui/Input';
+
 import { useIsSigningUp } from 'libraries/authentication/hooks';
-import { useSignUpCompletedSubject } from 'libraries/authentication/hooks/signUpCompleteSubject';
 
 const Content = styled.div`
   display: flex;
@@ -25,13 +25,10 @@ const LegalAgreementCopy = styled.div`
 
 export const SignUpModal = () => {
   const [isSigningUp] = useIsSigningUp();
-  const signUpCompletedSubject = useSignUpCompletedSubject();
 
   if (!isSigningUp) {
     return null;
   }
-
-  const completeSignUp = () => signUpCompletedSubject.next();
 
   return (
     <Modal title="Sign up">
@@ -50,9 +47,7 @@ export const SignUpModal = () => {
             </div>
           </LegalAgreementCopy>
         </LegalAgreementContainer>
-        <Button onClick={completeSignUp} disabled={true}>
-          Create Account
-        </Button>
+        <Button disabled={true}>Create Account</Button>
       </Content>
     </Modal>
   );
