@@ -3,12 +3,7 @@ import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
-import {
-  useIsAuthenticated,
-  useIsSigningUp,
-  useIsTokenAuthenticated,
-  useLogin,
-} from 'libraries/authentication/hooks';
+import { useIsAuthenticated, useLogin } from 'libraries/authentication/hooks';
 
 import { HamburgerMenuButton, ProfileAvatarButton, LoginButton, LogoHomeLink } from './components';
 
@@ -27,8 +22,7 @@ const Container = styled.div`
 
 export const NavigationBar = () => {
   const { loginError } = useLogin();
-  const [isTokenAuthenticated] = useIsTokenAuthenticated();
-  const [isSigningUp] = useIsSigningUp();
+  const isAuthenticated = useIsAuthenticated();
 
   useEffect(() => {
     loginError && console.log(loginError);
@@ -38,7 +32,7 @@ export const NavigationBar = () => {
     <Container>
       <HamburgerMenuButton hasNotifications={false} />
       <LogoHomeLink />
-      {isTokenAuthenticated && !isSigningUp ? <ProfileAvatarButton /> : <LoginButton />}
+      {isAuthenticated ? <ProfileAvatarButton /> : <LoginButton />}
     </Container>
   );
 };
