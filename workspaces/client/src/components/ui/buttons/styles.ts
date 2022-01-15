@@ -10,4 +10,9 @@ export const buttonBaseStyle = css`
   &:hover {
     cursor: pointer;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    filter: opacity(0.5);
+  }
 `;
