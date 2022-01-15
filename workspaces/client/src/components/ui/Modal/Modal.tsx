@@ -1,4 +1,4 @@
-import { createElement, FC } from 'react';
+import { createElement, FC, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from '@emotion/styled';
 
@@ -55,10 +55,18 @@ const Main = styled.div`
   Using FC because it always implies children.
   Prefer to define a props interface if children isn't a prop.
 */
-export const Modal: FC<ModalProps> = ({ children, title, onClick, variant }) =>
-  typeof window === 'undefined'
-    ? null
-    : ReactDOM.createPortal(
+export const Modal: FC<ModalProps> = ({ children, title, onClick, variant }) => {
+  const documentBodyRef = useRef<Document['body']>();
+
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    documentBodyRef.current = document.body;
+    setIsMounted(true);
+  }, []);
+
+  return isMounted
+    ? ReactDOM.createPortal(
         <Overlay>
           <Container>
             {onClick && createElement(variant === 'close' ? CloseButton : PreviousButton)}
@@ -69,4 +77,6 @@ export const Modal: FC<ModalProps> = ({ children, title, onClick, variant }) =>
           </Container>
         </Overlay>,
         document.body
-      );
+      )
+    : null;
+};
