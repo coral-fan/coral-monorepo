@@ -8,7 +8,7 @@ const admin = getFirebaseAdmin();
 app.post('/api/nonce', async (request, response) => {
   const { address } = request.body;
   if (!isAddress(address)) {
-    return response.status(401).send('');
+    return response.status(400).send('Address is not valid.');
   }
   const nonceRef = await admin.firestore().doc(`nonce/${address}`).get();
   try {
@@ -23,7 +23,7 @@ app.post('/api/nonce', async (request, response) => {
     }
   } catch (error) {
     console.log(error);
-    return response.status(401).send('');
+    return response.status(500).send('An error occured.');
   }
 });
 
