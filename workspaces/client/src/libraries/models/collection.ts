@@ -7,8 +7,7 @@ export interface Collection {
   /* */
   type: 'access' | 'event';
   price: number;
-  priceUnit: 'avax' | 'usd';
-  dropDate: Date;
+  dropDate: string;
   description: string;
   details: string[];
 }
