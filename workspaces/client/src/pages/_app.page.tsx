@@ -24,12 +24,12 @@ import { getLibrary } from 'libraries/utils/provider';
 
 initializeFirebaseApp();
 
-const CustomApp = ({
-  Component,
-  pageProps,
-  isTokenAuthenticated,
-}: AppProps & { isTokenAuthenticated: boolean }) => {
-  const store = initializeStore(isTokenAuthenticated);
+export type ServerSideData = Awaited<ReturnType<typeof getInitialProps>>;
+
+type CustomAppProps = AppProps & ServerSideData;
+
+const CustomApp = ({ Component, pageProps, data }: CustomAppProps) => {
+  const store = initializeStore(data);
   return (
     <>
       <GlobalStyles />
@@ -53,28 +53,39 @@ const CustomApp = ({
   );
 };
 
-CustomApp.getInitialProps = async (appContext: AppContext) => {
+const getInitialProps = async (appContext: AppContext) => {
   // below is necessary as per next.js docs (https://nextjs.org/docs/advanced-features/custom-app)
   const initialProps = await App.getInitialProps(appContext);
   const { ctx } = appContext;
-  const isServerSide = ctx.hasOwnProperty('res');
-  // conditional logic to retrieve cookies as retrieval is handled differently on the server & client
-  const cookies = isServerSide ? parseCookies(ctx) : parseCookies();
-  if (isServerSide) {
-    if (cookies.token) {
-      const admin = await getFirebaseAdmin();
-      await admin
-        .auth()
-        .verifyIdToken(cookies.token)
-        .catch((error) => {
-          console.log(error);
-          // remove id token cookie if the id token has expired
+  // keeping as comment in case distinguishing between client side or server side is necesary
+  // const isServerSide = ctx.hasOwnProperty('res');
+  const cookies = parseCookies(ctx);
+  // logic to remove cookie if the cookie is invalid server-side
+  const isSigningUp: boolean = cookies.token
+    ? await getFirebaseAdmin()
+        .then(async (admin) => {
+          const { uid } = await admin.auth().verifyIdToken(cookies.token);
+          const isSigningUpRef = await admin.firestore().doc(`is-signing-up/${uid}`).get();
+          if (isSigningUpRef.exists) {
+            return isSigningUpRef.data()?.isSigningUp ?? false;
+          }
+          return false;
+        })
+        .catch(() => {
           destroyCookie(ctx, 'token', COOKIE_OPTIONS);
-        });
-    }
-  }
+          return false;
+        })
+    : false;
 
-  return { ...initialProps, isTokenAuthenticated: cookies.hasOwnProperty('token') };
+  return {
+    ...initialProps,
+    data: {
+      isTokenAuthenticated: cookies.hasOwnProperty('token') ?? false,
+      isSigningUp,
+    },
+  };
 };
+
+CustomApp.getInitialProps = getInitialProps;
 
 export default CustomApp;
