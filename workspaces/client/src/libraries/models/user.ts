@@ -17,12 +17,14 @@ interface CreditCardInformation {
 //  id = wallet address
 export interface User {
   id: string;
+  nonce: number;
+  isSigningUp: boolean;
   username: string;
   displayName: string;
-  email: string;
+  email?: string;
   phoneNumber?: string;
   profilePhoto?: string;
   creditCardInformation?: CreditCardInformation;
-  notifications: Notification[];
-  collections: Collection[];
+  notifications?: Notification[];
+  collections?: Collection[];
 }
