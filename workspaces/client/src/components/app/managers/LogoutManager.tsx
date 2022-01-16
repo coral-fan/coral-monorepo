@@ -2,11 +2,9 @@ import { getAuth } from '@firebase/auth';
 import { useEffect } from 'react';
 import { useIsTokenAuthenticated, useLogout } from 'libraries/authentication/hooks';
 import { fromEvent } from 'rxjs';
-import { useGetChainIdChanged$ } from 'libraries/blockchain/hooks/metamask';
 
 export const LogoutManager = () => {
   const [isTokenAuthenticated] = useIsTokenAuthenticated();
-  const getChainIdChanged$ = useGetChainIdChanged$();
   const logout = useLogout();
   // logic to log user out when the authentication token changes
   useEffect(() => {
@@ -24,7 +22,7 @@ export const LogoutManager = () => {
 
       return () => subscription.unsubscribe();
     }
-  }, [getChainIdChanged$, logout]);
+  }, [logout]);
 
   return <></>;
 };
