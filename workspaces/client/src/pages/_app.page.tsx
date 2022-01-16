@@ -60,18 +60,17 @@ const getInitialProps = async (appContext: AppContext) => {
   // keeping as comment in case distinguishing between client side or server side is necesary
   // const isServerSide = ctx.hasOwnProperty('res');
   const cookies = parseCookies(ctx);
-  // logic to remove cookie if the cookie is invalid server-side
+  // explicit typing here because firebase returns any
   const isSigningUp: boolean = cookies.token
     ? await getFirebaseAdmin()
         .then(async (admin) => {
+          // checks if token is valid
           const { uid } = await admin.auth().verifyIdToken(cookies.token);
           const isSigningUpRef = await admin.firestore().doc(`is-signing-up/${uid}`).get();
-          if (isSigningUpRef.exists) {
-            return isSigningUpRef.data()?.isSigningUp ?? false;
-          }
-          return false;
+          return isSigningUpRef?.data()?.isSigningUp ?? false;
         })
         .catch(() => {
+          // if token is invalid, remove cookie from token
           destroyCookie(ctx, 'token', COOKIE_OPTIONS);
           return false;
         })
@@ -80,7 +79,7 @@ const getInitialProps = async (appContext: AppContext) => {
   return {
     ...initialProps,
     data: {
-      isTokenAuthenticated: cookies.hasOwnProperty('token') ?? false,
+      isTokenAuthenticated: cookies.hasOwnProperty('token'),
       isSigningUp,
     },
   };
