@@ -1,7 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 import { Action } from 'redux';
-import { filter, map, Observable } from 'rxjs';
-import { setIsLoggingIn } from './slice';
+import { map, Observable } from 'rxjs';
 
 const terminateActionStream = () => createAction('terminate_action_stream');
 
