@@ -22,8 +22,8 @@ app.post('/api/auth', async (request, response) => {
       if (address === derivedAddress) {
         const nextNonce = getNonce();
         await admin.firestore().doc(`nonce/${derivedAddress}`).set({ nonce: nextNonce });
-        const customToken = await admin.auth().createCustomToken(derivedAddress);
-        return response.send({ 'Bearer Token': customToken });
+        const token = await admin.auth().createCustomToken(derivedAddress);
+        return response.send({ token });
       }
     }
     return response.status(401).send('');
