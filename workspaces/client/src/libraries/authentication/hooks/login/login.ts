@@ -1,30 +1,20 @@
 import { useState } from 'react';
 import { signInWithCustomToken, getAuth } from 'firebase/auth';
-import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers';
+import { Web3Provider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
 import { setCookie } from 'nookies';
-
-import { getAuthenticationMessage } from '@common/utils';
 
 import { COOKIE_OPTIONS, IS_OPEN_LOGIN_PENDING } from 'consts';
 import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain/hooks';
 import { useIsLoggingIn, useIsTokenAuthenticated } from '..';
-import { apiAxios } from 'libraries/api';
-
-const fetchNonce = (address: string) =>
-  apiAxios.post<{ nonce: number }>('nonce', {
-    address: address,
-  });
-
-const signAuthenticatedMessage = (signer: Wallet | JsonRpcSigner, nonce: number) =>
-  signer.signMessage(getAuthenticationMessage(nonce));
-
-const fetchFirebaseAuthToken = (address: string) => (signedMessage: string) =>
-  apiAxios.post<{ ['Bearer Token']: string }>('auth', {
-    address,
-    signedMessage,
-  });
+import {
+  fetchNonce,
+  signAuthenticatedMessage,
+  fetchFirebaseAuthToken,
+  fetchIsSigningUp,
+} from './utils';
+import { setIsSigningUp } from 'libraries/authentication/slice';
 
 export const useLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
@@ -45,29 +35,40 @@ export const useLogin = () => {
 
     const signer =
       connector instanceof OpenLoginConnector
-        ? (connector.wallet as Wallet)
+        ? (connector.wallet as Wallet) // casting since metamask will have connected or thrown error in activate function call & signer connector.wallet won't ever be undefined
         : new Web3Provider(await connector.getProvider()).getSigner();
 
     // check if signer exists in case user closes out of open login modal
     if (signer) {
-      const address = await signer.getAddress();
-      fetchNonce(address)
-        .then(({ data: { nonce } }) => signAuthenticatedMessage(signer, nonce))
-        .then(fetchFirebaseAuthToken(address))
-        .then(({ data: { ['Bearer Token']: token } }) => signInWithCustomToken(getAuth(), token))
-        .then((userCredentials) => userCredentials.user.getIdToken())
-        .then((idToken) => {
-          if (sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) {
-            sessionStorage.removeItem(IS_OPEN_LOGIN_PENDING);
-          }
-          setCookie(undefined, 'token', idToken, COOKIE_OPTIONS);
-          setIsTokenAuthenticated(true);
-          setIsLoggingIn(false);
-        })
-        .catch((error) => {
-          setLoginError(error);
-          setIsLoggingIn(false);
-        });
+      try {
+        const address = await signer.getAddress();
+        const {
+          data: { nonce },
+        } = await fetchNonce(address);
+        const signedMessage = await signAuthenticatedMessage(signer, nonce);
+        const {
+          data: { token },
+        } = await fetchFirebaseAuthToken(address, signedMessage);
+        console.log(token);
+        const userCredentials = await signInWithCustomToken(getAuth(), token);
+        const idToken = await userCredentials.user.getIdToken();
+        if (sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) {
+          sessionStorage.removeItem(IS_OPEN_LOGIN_PENDING);
+        }
+
+        setCookie(undefined, 'token', idToken, COOKIE_OPTIONS);
+        setIsTokenAuthenticated(true);
+        setIsLoggingIn(false);
+
+        const {
+          data: { isSigningUp },
+        } = await fetchIsSigningUp(idToken);
+
+        setIsSigningUp(isSigningUp);
+      } catch (error) {
+        setLoginError(error);
+        setIsLoggingIn(false);
+      }
     } else {
       setIsLoggingIn(false);
     }
