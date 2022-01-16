@@ -11,7 +11,7 @@ const admin = getFirebaseAdmin();
 app.post('/api/auth', async (request, response) => {
   const { address, signedMessage } = request.body;
   if (!isAddress(address)) {
-    return response.status(401).send('');
+    return response.status(400).send('Address is not valid.');
   }
   try {
     const nonceRef = await admin.firestore().doc(`nonce/${address}`).get();
@@ -26,10 +26,10 @@ app.post('/api/auth', async (request, response) => {
         return response.send({ token });
       }
     }
-    return response.status(401).send('');
+    return response.status(400).send('Signed message verification failed.');
   } catch (error) {
     console.log(error);
-    return response.status(401).send('');
+    return response.status(500).send(error);
   }
 });
 
