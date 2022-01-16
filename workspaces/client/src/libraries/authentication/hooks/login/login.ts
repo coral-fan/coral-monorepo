@@ -7,18 +7,18 @@ import { setCookie } from 'nookies';
 import { COOKIE_OPTIONS, IS_OPEN_LOGIN_PENDING } from 'consts';
 import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain/hooks';
-import { useIsLoggingIn, useIsTokenAuthenticated } from '..';
+import { useIsLoggingIn, useIsSigningUp, useIsTokenAuthenticated } from '..';
 import {
   fetchNonce,
   signAuthenticatedMessage,
   fetchFirebaseAuthToken,
   fetchIsSigningUp,
 } from './utils';
-import { setIsSigningUp } from 'libraries/authentication/slice';
 
 export const useLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
   const [, setIsTokenAuthenticated] = useIsTokenAuthenticated();
+  const [, setIsSigningUp] = useIsSigningUp();
 
   const { activate, getConnector } = useWeb3();
   //TODO: should probably look into how to type errors better
@@ -49,15 +49,14 @@ export const useLogin = () => {
         const {
           data: { token },
         } = await fetchFirebaseAuthToken(address, signedMessage);
-        console.log(token);
-        const userCredentials = await signInWithCustomToken(getAuth(), token);
-        const idToken = await userCredentials.user.getIdToken();
+        const userCredential = await signInWithCustomToken(getAuth(), token);
+        const idToken = await userCredential.user.getIdToken();
+
         if (sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) {
           sessionStorage.removeItem(IS_OPEN_LOGIN_PENDING);
         }
 
         setCookie(undefined, 'token', idToken, COOKIE_OPTIONS);
-        setIsTokenAuthenticated(true);
         setIsLoggingIn(false);
 
         const {
@@ -65,6 +64,7 @@ export const useLogin = () => {
         } = await fetchIsSigningUp(idToken);
 
         setIsSigningUp(isSigningUp);
+        setIsTokenAuthenticated(true);
       } catch (error) {
         setLoginError(error);
         setIsLoggingIn(false);
