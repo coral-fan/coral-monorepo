@@ -9,7 +9,7 @@ import { getAuthenticationMessage } from '@common/utils';
 import { COOKIE_OPTIONS, IS_OPEN_LOGIN_PENDING } from 'consts';
 import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain/hooks';
-import { useIsLoggingIn, useIsTokenAuthenticated } from '.';
+import { useIsLoggingIn, useIsTokenAuthenticated } from '..';
 import { apiAxios } from 'libraries/api';
 
 const fetchNonce = (address: string) =>
