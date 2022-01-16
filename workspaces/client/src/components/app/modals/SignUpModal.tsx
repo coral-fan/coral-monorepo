@@ -24,7 +24,7 @@ const LegalAgreementCopy = styled.div`
 `;
 
 export const SignUpModal = () => {
-  const [isSigningUp] = useIsSigningUp();
+  const [isSigningUp, setIsSigningUp] = useIsSigningUp();
 
   if (!isSigningUp) {
     return null;
@@ -47,7 +47,7 @@ export const SignUpModal = () => {
             </div>
           </LegalAgreementCopy>
         </LegalAgreementContainer>
-        <Button disabled={true}>Create Account</Button>
+        <Button onClick={() => setIsSigningUp(false)}>Create Account</Button>
       </Content>
     </Modal>
   );
