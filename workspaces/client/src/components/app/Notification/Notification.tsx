@@ -1,7 +1,6 @@
 import { ComponentProps } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import styled from '@emotion/styled';
-import { css } from '@emotion/react';
 import { getIconComponent } from 'components/ui/icons/utils';
 import xSVG from './X.svg';
 import { Card } from 'components/ui';
