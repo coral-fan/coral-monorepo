@@ -3,10 +3,11 @@ import { useEffect } from 'react';
 
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
-import { useWeb3 } from 'libraries/blockchain/hooks';
+import { useIsNetworkSupported, useWeb3 } from 'libraries/blockchain/hooks';
 
 export const ConnectorActivationManager = () => {
   const { getConnector, activate } = useWeb3();
+  const isNetworkSupported = useIsNetworkSupported();
 
   useEffect(() => {
     const { token } = parseCookies();
@@ -18,16 +19,14 @@ export const ConnectorActivationManager = () => {
     }
 
     // metamask auto login logic
-    if (token && connector instanceof InjectedConnector) {
+    else if (token && connector instanceof InjectedConnector && isNetworkSupported) {
       connector.isAuthorized().then((isAuthorized) => {
         if (isAuthorized) {
           activate(connector);
         }
       });
     }
-    // TODO: look into why it reruns indefinitely at some point with an exhaustive dependency array for open login. likely has to do with issue in open login connector implementation...
-    /* eslint react-hooks/exhaustive-deps: 'off' -- dependency array must be empty or it will run in an infinite loop. */
-  }, []);
+  }, [getConnector, isNetworkSupported, activate]);
 
   return <></>;
 };
