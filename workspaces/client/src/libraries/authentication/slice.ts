@@ -10,9 +10,6 @@ export const authenticationSlice = createSlice({
   name: 'authentication',
   initialState,
   reducers: {
-    updateIsTokenAuthenticated: (state, action: PayloadAction<boolean>) => {
-      state.isTokenAuthenticated = action.payload;
-    },
     updateIsLoggingIn: (state, action: PayloadAction<boolean>) => {
       state.isLoggingIn = action.payload;
     },
@@ -22,7 +19,6 @@ export const authenticationSlice = createSlice({
   },
 });
 
-export const { updateIsTokenAuthenticated, updateIsLoggingIn, updateIsSigningUp } =
-  authenticationSlice.actions;
+export const { updateIsLoggingIn, updateIsSigningUp } = authenticationSlice.actions;
 
 export default authenticationSlice.reducer;
