@@ -15,7 +15,7 @@ const getIsNetworkSupported = (chainId: string) => chainId.toLowerCase() === AVA
 export const useIsNetworkSupported = () => {
   const getChainIdChanged$ = useGetChainIdChanged$();
 
-  const [isNetworkSupported, setIsNetworkSupported] = useState(true);
+  const [isNetworkSupported, setIsNetworkSupported] = useState(false);
 
   useEffect(() => {
     // only runs this ethereum provider is injected by metamask & not brave
