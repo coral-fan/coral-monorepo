@@ -21,6 +21,7 @@ import { Web3ReactProvider } from '@web3-react/core';
 import { Provider as ReduxProvider } from 'react-redux';
 import { initializeStore } from 'libraries/state';
 import { getLibrary } from 'libraries/utils/provider';
+import { fetchIsSigningUp } from 'libraries/authentication/hooks/login/utils';
 
 initializeFirebaseApp();
 
@@ -28,8 +29,8 @@ export type ServerSideData = Awaited<ReturnType<typeof getInitialProps>>;
 
 type CustomAppProps = AppProps & ServerSideData;
 
-const CustomApp = ({ Component, pageProps, data }: CustomAppProps) => {
-  const store = initializeStore(data);
+const CustomApp = ({ Component, pageProps, initialState }: CustomAppProps) => {
+  const store = initializeStore(initialState);
   return (
     <>
       <GlobalStyles />
@@ -58,30 +59,40 @@ const getInitialProps = async (appContext: AppContext) => {
   const initialProps = await App.getInitialProps(appContext);
   const { ctx } = appContext;
   // keeping as comment in case distinguishing between client side or server side is necesary
-  // const isServerSide = ctx.hasOwnProperty('res');
+  const isServerSide = ctx.hasOwnProperty('res');
   const cookies = parseCookies(ctx);
-  // explicit typing here because firebase returns any
-  const isSigningUp: boolean = cookies.token
-    ? await getFirebaseAdmin()
-        .then(async (admin) => {
-          // checks if token is valid
-          const { uid } = await admin.auth().verifyIdToken(cookies.token);
-          const isSigningUpRef = await admin.firestore().doc(`is-signing-up/${uid}`).get();
-          return isSigningUpRef?.data()?.isSigningUp ?? false;
-        })
-        .catch(() => {
-          // if token is invalid, remove cookie from token
-          destroyCookie(ctx, 'token', COOKIE_OPTIONS);
-          return false;
-        })
+  if (isServerSide) {
+    // explicit typing here because firebase returns any
+    const isSigningUp: boolean = cookies.token
+      ? await getFirebaseAdmin()
+          .then(async (admin) => {
+            // checks if token is valid
+            const { uid } = await admin.auth().verifyIdToken(cookies.token);
+            const isSigningUpRef = await admin.firestore().doc(`is-signing-up/${uid}`).get();
+            return isSigningUpRef?.data()?.isSigningUp ?? false;
+          })
+          .catch(() => {
+            // if token is invalid, remove cookie from token
+            destroyCookie(ctx, 'token', COOKIE_OPTIONS);
+            return false;
+          })
+      : false;
+
+    return {
+      ...initialProps,
+      initialState: {
+        isSigningUp,
+      },
+    };
+  }
+
+  const isSigningUp = cookies.token
+    ? (await fetchIsSigningUp(cookies.token)).data.isSigningUp
     : false;
 
   return {
     ...initialProps,
-    data: {
-      isTokenAuthenticated: cookies.hasOwnProperty('token'),
-      isSigningUp,
-    },
+    initialState: { isSigningUp },
   };
 };
 
