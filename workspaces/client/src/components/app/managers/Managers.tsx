@@ -1,11 +1,11 @@
-import { AuthenticationManager } from './AuthenticationManager';
-import { LoginManager } from './LoginManager';
+import { OpenLoginManager } from './OpenLoginManager';
+import { ConnectorActivationManager } from './ConnectorActivationManager';
 import { LogoutManager } from './LogoutManager';
 
 export const Managers = () => (
   <>
-    <AuthenticationManager />
-    <LoginManager />
+    <OpenLoginManager />
+    <ConnectorActivationManager />
     <LogoutManager />
   </>
 );
