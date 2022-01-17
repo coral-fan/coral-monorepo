@@ -56,7 +56,6 @@ export const useLogin = () => {
         }
 
         setCookie(undefined, 'token', idToken, COOKIE_OPTIONS);
-        setIsLoggingIn(false);
 
         const {
           data: { isSigningUp },
