@@ -4,12 +4,10 @@ import { useEffect } from 'react';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain/hooks';
-import { useLogin } from 'libraries/authentication/hooks';
 import { IS_OPEN_LOGIN_PENDING } from 'consts';
 
 export const LoginManager = () => {
   const { getConnector, activate, active } = useWeb3();
-  const { login } = useLogin();
 
   useEffect(() => {
     const { token } = parseCookies();
@@ -21,11 +19,11 @@ export const LoginManager = () => {
         (token || sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) &&
         connector instanceof OpenLoginConnector
       ) {
-        login();
+        activate(connector);
       }
 
       // metamask auto login logic
-      if (token && connector instanceof InjectedConnector) {
+      if (connector instanceof InjectedConnector) {
         connector.isAuthorized().then((isAuthorized) => {
           if (isAuthorized) {
             activate(connector);
