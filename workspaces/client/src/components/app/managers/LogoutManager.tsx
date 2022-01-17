@@ -1,19 +1,19 @@
 import { getAuth } from '@firebase/auth';
 import { useEffect } from 'react';
-import { useIsTokenAuthenticated, useLogout } from 'libraries/authentication/hooks';
+import { useLogout } from 'libraries/authentication/hooks';
 import { fromEvent } from 'rxjs';
 
 export const LogoutManager = () => {
-  const [isTokenAuthenticated] = useIsTokenAuthenticated();
   const logout = useLogout();
   // logic to log user out when the authentication token changes
   useEffect(() => {
     return getAuth().onIdTokenChanged(async (user) => {
-      if (!user && isTokenAuthenticated) {
-        await logout();
+      // checks if user is not null
+      if (!user) {
+        logout();
       }
     });
-  }, [isTokenAuthenticated, logout]);
+  }, [logout]);
 
   // logic to ensure the user is logged out when the account changes on metamask
   useEffect(() => {
