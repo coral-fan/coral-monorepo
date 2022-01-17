@@ -36,7 +36,7 @@ export const WrongNetworkModal = () => {
   };
 
   const isNetworkSupported = useIsNetworkSupported();
-  const [isTokenAuthenticated] = useIsTokenAuthenticated();
+  const isTokenAuthenticated = useIsTokenAuthenticated();
 
   if (!isTokenAuthenticated || isNetworkSupported) {
     return null;
