@@ -7,7 +7,7 @@ import { setCookie } from 'nookies';
 import { COOKIE_OPTIONS, IS_OPEN_LOGIN_PENDING } from 'consts';
 import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain/hooks';
-import { useIsLoggingIn, useIsSigningUp, useIsTokenAuthenticated } from '..';
+import { useIsLoggingIn, useIsSigningUp } from '..';
 import {
   fetchNonce,
   signAuthenticatedMessage,
@@ -17,7 +17,6 @@ import {
 
 export const useLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
-  const [, setIsTokenAuthenticated] = useIsTokenAuthenticated();
   const [, setIsSigningUp] = useIsSigningUp();
 
   const { activate, getConnector } = useWeb3();
@@ -30,16 +29,16 @@ export const useLogin = () => {
 
     const connector = getConnector();
 
-    await activate(connector);
+    try {
+      await activate(connector);
 
-    const signer =
-      connector instanceof OpenLoginConnector
-        ? (connector.wallet as Wallet) // casting since metamask will have connected or thrown error in activate function call & signer connector.wallet won't ever be undefined
-        : new Web3Provider(await connector.getProvider()).getSigner();
+      const signer =
+        connector instanceof OpenLoginConnector
+          ? (connector.wallet as Wallet) // casting since metamask will have connected or thrown error in activate function call & signer connector.wallet won't ever be undefined
+          : new Web3Provider(await connector.getProvider()).getSigner();
 
-    // check if signer exists in case user closes out of open login modal
-    if (signer) {
-      try {
+      // check if signer exists in case user closes out of open login modal
+      if (signer) {
         const address = await signer.getAddress();
         const {
           data: { nonce },
@@ -48,6 +47,7 @@ export const useLogin = () => {
         const {
           data: { token },
         } = await fetchFirebaseAuthToken(address, signedMessage);
+
         const userCredential = await signInWithCustomToken(getAuth(), token);
         const idToken = await userCredential.user.getIdToken();
 
@@ -62,12 +62,12 @@ export const useLogin = () => {
         } = await fetchIsSigningUp(idToken);
 
         setIsSigningUp(isSigningUp);
-        setIsTokenAuthenticated(true);
-      } catch (error) {
-        setLoginError(error);
+        setIsLoggingIn(false);
+      } else {
         setIsLoggingIn(false);
       }
-    } else {
+    } catch (error) {
+      setLoginError(error);
       setIsLoggingIn(false);
     }
   };
