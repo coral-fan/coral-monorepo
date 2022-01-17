@@ -8,9 +8,9 @@ import authenticationReducer, {
 
 const rootEpic = combineEpics();
 
-type StoreHydrationData = ServerSideData['data'];
+type InitialState = ServerSideData['initialState'];
 
-export const initializeStore = (data: StoreHydrationData) => {
+export const initializeStore = (initialState: InitialState) => {
   const epicMiddleware = createEpicMiddleware();
   const store = configureStore({
     reducer: {
@@ -20,7 +20,7 @@ export const initializeStore = (data: StoreHydrationData) => {
     preloadedState: {
       authentication: {
         ...initialAuthenticationState,
-        ...data,
+        ...initialState,
       },
     },
   });
