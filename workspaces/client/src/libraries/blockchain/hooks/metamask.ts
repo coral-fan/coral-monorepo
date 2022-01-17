@@ -1,20 +1,11 @@
 import { useEffect, useState } from 'react';
-import { delay, fromEvent, map, retryWhen, share, startWith } from 'rxjs';
-import { getRefValue } from 'libraries/utils/hooks';
+import { delay, map, retryWhen, startWith } from 'rxjs';
 import { AVALANCHE } from 'consts';
-
-export const useGetChainIdChanged$ = () =>
-  getRefValue(
-    () => fromEvent(window.ethereum, 'chainChanged').pipe(share()),
-    'getChainIdChanged$',
-    false
-  );
+import { getChainIdChanged$ } from '../observables';
 
 const getIsNetworkSupported = (chainId: string) => chainId.toLowerCase() === AVALANCHE.CHAIN_ID;
 
 export const useIsNetworkSupported = () => {
-  const getChainIdChanged$ = useGetChainIdChanged$();
-
   const [isNetworkSupported, setIsNetworkSupported] = useState(false);
 
   useEffect(() => {
@@ -34,7 +25,7 @@ export const useIsNetworkSupported = () => {
 
       return () => subscription.unsubscribe();
     }
-  }, [setIsNetworkSupported, getChainIdChanged$]);
+  }, []);
 
   return isNetworkSupported;
 };
