@@ -1,11 +1,3 @@
-import { RootState } from 'libraries/state/types';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateIsTokenAuthenticated } from '../slice';
+import { parseCookies } from 'nookies';
 
-export const useIsTokenAuthenticated = (): [boolean, (isTokenAuthenticated: boolean) => void] => {
-  const dispatch = useDispatch();
-  return [
-    useSelector((state: RootState) => state.authentication.isTokenAuthenticated),
-    (isTokenAuthenticated: boolean) => dispatch(updateIsTokenAuthenticated(isTokenAuthenticated)),
-  ];
-};
+export const useIsTokenAuthenticated = () => parseCookies().hasOwnProperty('token');
