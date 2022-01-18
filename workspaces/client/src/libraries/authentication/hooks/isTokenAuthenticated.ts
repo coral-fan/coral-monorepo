@@ -1,10 +1,8 @@
 import { useObservable } from 'libraries/utils/hooks';
-import { parseCookies } from 'nookies';
 import { filter, interval, map, startWith, tap } from 'rxjs';
+import { getToken } from '../utils';
 
-export const getToken = () => parseCookies().token;
-
-export const getToken$ = (initialToken?: string) => {
+const getToken$ = (initialToken?: string) => {
   const tokenRef = { current: initialToken };
   return interval(500).pipe(
     startWith(getToken()),
