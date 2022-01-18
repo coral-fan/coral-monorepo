@@ -1,7 +1,6 @@
 import { Modal, Button } from 'components/ui';
 
-import { useWeb3, useIsNetworkSupported } from 'libraries/blockchain/hooks';
-import { useIsTokenAuthenticated } from 'libraries/authentication/hooks';
+import { useWeb3, useIsNetworkSupported } from 'libraries/blockchain';
 import { AVALANCHE } from 'consts';
 
 const AVALANCHE_NETWORK_PARAMS = {
