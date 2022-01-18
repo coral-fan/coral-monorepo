@@ -1,15 +1,19 @@
 import { getAuth } from '@firebase/auth';
 import { useEffect } from 'react';
-import { useLogout } from 'libraries/authentication/hooks';
-import { filter, fromEvent } from 'rxjs';
+import { getToken, useLogout } from 'libraries/authentication/hooks';
+import { filter, fromEvent, map } from 'rxjs';
 import { idToken } from 'rxfire/auth';
 
 export const LogoutManager = () => {
   const logout = useLogout();
   // logic to log user out when the authentication token changes
   useEffect(() => {
+    const tokenFromCookies = getToken();
     const subscription = idToken(getAuth())
-      .pipe(filter((idToken) => idToken !== null))
+      .pipe(
+        map((token) => token ?? undefined),
+        filter((token) => token !== tokenFromCookies)
+      )
       .subscribe(logout);
 
     return () => subscription.unsubscribe();
