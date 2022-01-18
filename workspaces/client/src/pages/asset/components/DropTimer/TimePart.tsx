@@ -4,16 +4,15 @@ import { TimePartProps, TimeProp } from './types';
 
 const Container = styled.div`
   display: inline-grid;
-  grid-template-columns: 1fr 1fr;
-  justify-items: end;
+  grid-template-columns: 26px 1fr;
   align-items: baseline;
-  column-gap: 4px;
 `;
 
 const TimeNum = styled.div<TimeProp>`
-  font-size: ${(props) => (!props.variant ? '18px' : '14px')};
+  font-size: ${(props) => (props.variant !== 'mini' ? '18px' : '14px')};
   color: ${tokens.color.white};
-  line-height: ${(props) => (!props.variant ? '23px' : '18px')};
+  line-height: ${(props) => (props.variant !== 'mini' ? '23px' : '18px')};
+  text-align: center;
 `;
 
 const TimeUnit = styled.div`
@@ -25,9 +24,22 @@ const TimeUnit = styled.div`
   text-transform: uppercase;
 `;
 
-export const TimePart = ({ timeNum, timeUnit, variant }: TimePartProps) => (
-  <Container>
-    <TimeNum variant={variant}>{timeNum}</TimeNum>
-    <TimeUnit>{!variant ? timeUnit : `${timeUnit[0]}`}</TimeUnit>
-  </Container>
-);
+const getTimeUnit = ({ timeNum, timeUnit, variant }: TimePartProps) => {
+  // mini variant returns single letter
+  if (variant === 'mini') return `${timeUnit[0]}`;
+
+  // handle singular time units
+  if (timeNum === 1) return `${timeUnit.slice(0, -1)}`;
+  return timeUnit;
+};
+
+export const TimePart = ({ timeNum, timeUnit, variant }: TimePartProps) => {
+  const unit = getTimeUnit({ timeNum, timeUnit, variant });
+
+  return (
+    <Container>
+      <TimeNum variant={variant}>{timeNum}</TimeNum>
+      <TimeUnit>{unit}</TimeUnit>
+    </Container>
+  );
+};
