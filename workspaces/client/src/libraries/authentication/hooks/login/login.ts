@@ -6,7 +6,7 @@ import { setCookie } from 'nookies';
 
 import { COOKIE_OPTIONS, IS_OPEN_LOGIN_PENDING } from 'consts';
 import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
-import { useWeb3 } from 'libraries/blockchain/hooks';
+import { useWeb3 } from 'libraries/blockchain';
 import { useIsLoggingIn, useIsSigningUp } from '..';
 import {
   fetchNonce,

@@ -3,7 +3,7 @@ import { Modal, Button, Toggle } from 'components/ui';
 import { Input } from 'components/ui/Input';
 
 import { useIsSigningUp } from 'libraries/authentication/hooks';
-import { useIsNetworkSupported } from 'libraries/blockchain/hooks';
+import { useIsNetworkSupported } from 'libraries/blockchain';
 
 const Content = styled.div`
   display: flex;

@@ -1,4 +1,4 @@
-import { useWeb3 } from 'libraries/blockchain/hooks';
+import { useWeb3 } from 'libraries/blockchain';
 import { useIsLoggingIn, useIsSigningUp, useIsTokenAuthenticated } from '.';
 
 export const useIsAuthenticated = () => {
