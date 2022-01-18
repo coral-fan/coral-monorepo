@@ -18,8 +18,34 @@ export default {
 
 const Template: Story<DropTimerProp> = (args) => <DropTimer {...args} />;
 
-export const Default = Template.bind({});
-Default.args = {
+const today = new Date();
+
+// Countdown starts
+const laterToday = new Date(today.getTime() + 1000 * 60 * 60 * 6);
+const tomorrow = new Date(today.getTime() + 1000 * 60 * 60 * 36);
+const nextWeek = new Date(today.getTime() + 1000 * 60 * 60 * 24 * 6);
+const nextMonth = new Date(today.getTime() + 1000 * 60 * 60 * 24 * 30);
+
+export const Today = Template.bind({});
+Today.args = {
   variant: undefined,
-  timestamp: '2022-01-31T22:35:00Z',
+  timestamp: laterToday.toISOString(),
+};
+
+export const Tomorrow = Template.bind({});
+Tomorrow.args = {
+  variant: undefined,
+  timestamp: tomorrow.toISOString(),
+};
+
+export const NextWeek = Template.bind({});
+NextWeek.args = {
+  variant: undefined,
+  timestamp: nextWeek.toISOString(),
+};
+
+export const NextMonth = Template.bind({});
+NextMonth.args = {
+  variant: undefined,
+  timestamp: nextMonth.toISOString(),
 };
