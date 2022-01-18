@@ -1,6 +1,6 @@
 import { getAuth } from '@firebase/auth';
 import { useEffect } from 'react';
-import { getToken, useLogout } from 'libraries/authentication/hooks';
+import { getToken, useLogout } from 'libraries/authentication';
 import { filter, fromEvent, map } from 'rxjs';
 import { idToken } from 'rxfire/auth';
 
