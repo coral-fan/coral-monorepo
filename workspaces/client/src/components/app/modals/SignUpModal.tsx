@@ -26,8 +26,9 @@ const LegalAgreementCopy = styled.div`
 
 export const SignUpModal = () => {
   const [isSigningUp, setIsSigningUp] = useIsSigningUp();
+  const isNetworkSupported = useIsNetworkSupported();
 
-  if (!isSigningUp) {
+  if (!isSigningUp || !isNetworkSupported) {
     return null;
   }
 
