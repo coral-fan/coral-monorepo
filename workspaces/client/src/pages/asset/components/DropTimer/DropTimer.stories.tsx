@@ -1,5 +1,6 @@
 import { Story, Meta } from '@storybook/react';
-import { DropTimer, DropTimerProp } from './DropTimer';
+import { DropTimer } from './DropTimer';
+import { DropTimerProp } from './types';
 
 export default {
   title: 'Coral/Pages/Asset/Drop Timer',
