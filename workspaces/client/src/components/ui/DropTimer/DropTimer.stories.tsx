@@ -3,7 +3,7 @@ import { DropTimer } from './DropTimer';
 import { DropTimerProps } from './types';
 
 export default {
-  title: 'Coral/Pages/Asset/Drop Timer',
+  title: 'Coral/ui/Drop Timer',
   component: DropTimer,
   argTypes: {
     timestamp: {
