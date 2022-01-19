@@ -1,8 +1,24 @@
-export const getMilliSecsDiff = (timestamp: string) => {
+import { concat, take, takeLast, timer } from 'rxjs';
+
+const getMilliSecsDiff = (timestamp: string) => {
   const referenceTime = new Date(timestamp).getTime();
   const currentTime = new Date().getTime();
 
   return referenceTime - currentTime;
+};
+
+const getOrdinal = (day: number) => {
+  if (day > 3 && day < 21) return 'th';
+  switch (day % 10) {
+    case 1:
+      return 'st';
+    case 2:
+      return 'nd';
+    case 3:
+      return 'rd';
+    default:
+      return 'th';
+  }
 };
 
 export const getTimeRemaining = (timestamp: string) => {
@@ -21,20 +37,6 @@ export const getTimeRemaining = (timestamp: string) => {
   const secondsDiff = dateDiff.getUTCSeconds();
 
   return { daysDiff, hoursDiff, minutesDiff, secondsDiff };
-};
-
-const getOrdinal = (day: number) => {
-  if (day > 3 && day < 21) return 'th';
-  switch (day % 10) {
-    case 1:
-      return 'st';
-    case 2:
-      return 'nd';
-    case 3:
-      return 'rd';
-    default:
-      return 'th';
-  }
 };
 
 export const getDateString = (timestamp: string) => {
@@ -65,4 +67,15 @@ export const getTimeString = (timestamp: string) => {
   });
 };
 
-// export const bigTimer = (timestamp: string) => {};
+export const bigTimer = (timestamp: string) => {
+  const milliSecsDiff = getMilliSecsDiff(timestamp);
+
+  if (milliSecsDiff > 0) {
+    const MAX = 2147483647;
+    const numIntervals = Math.floor(milliSecsDiff / MAX);
+    const remainder = milliSecsDiff % MAX;
+    return concat(timer(MAX, MAX).pipe(take(numIntervals)), timer(remainder)).pipe(takeLast(1));
+  } else {
+    return timer(milliSecsDiff);
+  }
+};
