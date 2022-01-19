@@ -4,7 +4,7 @@ const withImages = require('next-images');
 
 module.exports = withImages({
   reactStrictMode: true,
-  pageExtensions: ['page.tsx'],
+  pageExtensions: ['page.tsx', 'api.ts'],
   productionBrowserSourceMaps: true,
   images: {
     domains: ['upload.wikimedia.org'], // Placeholder Avatar Image
@@ -35,15 +35,15 @@ module.exports = withImages({
     }
     return config;
   },
-  async redirects() {
-    return process.env.NODE_ENV === 'development'
-      ? [
-          {
-            source: '/api/:path*',
-            destination: 'http://localhost:7070/api/:path*',
-            permanent: false,
-          },
-        ]
-      : [];
-  },
+  // async redirects() {
+  //   return process.env.NODE_ENV === 'development'
+  //     ? [
+  //         {
+  //           source: '/api/:path*',
+  //           destination: 'http://localhost:7070/api/:path*',
+  //           permanent: false,
+  //         },
+  //       ]
+  //     : [];
+  // },
 });
