@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { interval, takeUntil, timer } from 'rxjs';
-import { getTimeRemaining } from './utils';
+import { getTimeRemaining, getMilliSecsDiff } from './utils';
 import { TimePart } from './TimePart';
 import { TimeProp, DropTimerProps } from './types';
 import { Heading } from './Heading';
@@ -21,11 +21,10 @@ const TimeContainer = styled.div<TimeProp>`
 export const DropTimer = ({ timestamp, variant }: DropTimerProps) => {
   const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining(timestamp));
 
-  const startTime = new Date().getTime();
-  const endTime = new Date(timestamp).getTime();
+  const milliSecsDiff = getMilliSecsDiff(timestamp);
 
   useEffect(() => {
-    const countdown$ = timer(endTime - startTime);
+    const countdown$ = timer(milliSecsDiff);
 
     // Subscribe to countdown until endTime reached
     const countdown = interval(1000).pipe(takeUntil(countdown$));
