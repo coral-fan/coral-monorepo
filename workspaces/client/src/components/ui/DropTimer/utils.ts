@@ -1,8 +1,12 @@
-export const getTimeRemaining = (timestamp: string) => {
+export const getMilliSecsDiff = (timestamp: string) => {
   const referenceTime = new Date(timestamp).getTime();
   const currentTime = new Date().getTime();
 
-  const milliSecsDiff = referenceTime - currentTime;
+  return referenceTime - currentTime;
+};
+
+export const getTimeRemaining = (timestamp: string) => {
+  const milliSecsDiff = getMilliSecsDiff(timestamp);
 
   // Return zeroes if in past
   if (milliSecsDiff < 0) {
@@ -60,3 +64,5 @@ export const getTimeString = (timestamp: string) => {
     timeZoneName: 'short',
   });
 };
+
+// export const bigTimer = (timestamp: string) => {};
