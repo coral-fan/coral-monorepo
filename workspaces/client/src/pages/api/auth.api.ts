@@ -1,6 +1,6 @@
-import { getAuthenticationMessage } from '@common/utils';
 import { isAddress } from '@ethersproject/address';
 import { verifyMessage } from '@ethersproject/wallet';
+import { getAuthenticationMessage } from 'libraries/authentication';
 import { getFirebaseAdmin } from 'libraries/firebase';
 import { Handler } from './types';
 import { getHandler } from './utils';

@@ -1,8 +1,7 @@
 import { JsonRpcSigner } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
-import { getAuthenticationMessage } from '@common/utils';
-import { SignUp } from '@common/models';
 import { apiAxios } from 'libraries/api';
+import { getAuthenticationMessage } from 'libraries/authentication';
 
 export const fetchNonce = (address: string) =>
   apiAxios.post<{ nonce: number }>('nonce', {
@@ -18,6 +17,6 @@ export const fetchFirebaseAuthToken = (address: string, signedMessage: string) =
   });
 
 export const fetchIsSigningUp = (idToken: string) =>
-  apiAxios.post<SignUp>('is-signing-up', {
+  apiAxios.post<{ isSigningUp: boolean }>('is-signing-up', {
     idToken,
   });
