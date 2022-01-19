@@ -75,7 +75,7 @@ export const bigTimer = (timestamp: string) => {
     const numIntervals = Math.floor(milliSecsDiff / MAX);
     const remainder = milliSecsDiff % MAX;
     return concat(timer(MAX, MAX).pipe(take(numIntervals)), timer(remainder)).pipe(takeLast(1));
-  } else {
-    return timer(milliSecsDiff);
   }
+
+  return timer(milliSecsDiff);
 };
