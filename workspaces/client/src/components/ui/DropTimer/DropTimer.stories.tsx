@@ -29,30 +29,25 @@ const nextMonth = new Date(today.getTime() + 1000 * 60 * 60 * 24 * 30);
 
 export const OneHour = Template.bind({});
 OneHour.args = {
-  variant: undefined,
   timestamp: oneHour.toISOString(),
 };
 
 export const Today = Template.bind({});
 Today.args = {
-  variant: undefined,
   timestamp: laterToday.toISOString(),
 };
 
 export const Tomorrow = Template.bind({});
 Tomorrow.args = {
-  variant: undefined,
   timestamp: tomorrow.toISOString(),
 };
 
 export const NextWeek = Template.bind({});
 NextWeek.args = {
-  variant: undefined,
   timestamp: nextWeek.toISOString(),
 };
 
 export const NextMonth = Template.bind({});
 NextMonth.args = {
-  variant: undefined,
   timestamp: nextMonth.toISOString(),
 };
