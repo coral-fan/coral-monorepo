@@ -17,6 +17,10 @@ export default {
   },
 } as Meta;
 
+/*
+  createElement solution that allows updating the timestamp found here:
+  https://github.com/storybookjs/storybook/issues/5721
+*/
 const Template: Story<DropTimerProps> = (args) =>
   createElement(() => {
     return <DropTimer {...args} />;
