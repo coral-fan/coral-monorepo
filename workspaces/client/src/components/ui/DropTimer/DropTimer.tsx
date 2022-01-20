@@ -22,10 +22,10 @@ export const DropTimer = ({ timestamp, variant }: DropTimerProps) => {
   const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining(timestamp));
 
   useEffect(() => {
-    const countdown$ = bigTimer(timestamp);
+    const timer$ = bigTimer(timestamp);
 
-    // Subscribe to countdown until endTime reached
-    const countdown = interval(1000).pipe(takeUntil(countdown$));
+    // Subscribe to timer until endTime reached
+    const countdown = interval(1000).pipe(takeUntil(timer$));
 
     const subscription = countdown.subscribe({
       next: () => {
