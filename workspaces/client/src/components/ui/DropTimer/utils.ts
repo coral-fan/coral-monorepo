@@ -70,8 +70,9 @@ export const getTimeString = (timestamp: string) => {
 export const bigTimer = (timestamp: string) => {
   const milliSecsDiff = getMilliSecsDiff(timestamp);
 
-  if (milliSecsDiff > 0) {
-    const MAX = 2147483647;
+  const MAX = 2147483647;
+
+  if (milliSecsDiff > MAX) {
     const numIntervals = Math.floor(milliSecsDiff / MAX);
     const remainder = milliSecsDiff % MAX;
     return concat(timer(MAX, MAX).pipe(take(numIntervals)), timer(remainder)).pipe(takeLast(1));
