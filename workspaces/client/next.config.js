@@ -26,8 +26,6 @@ module.exports = withImages({
       };
     }
 
-    config.optimization.providedExports = true;
-
     return config;
   },
 });
