@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { interval, takeUntil } from 'rxjs';
 import { getTimeRemaining, bigTimer } from './utils';
-import { TimePart } from './TimePart';
+import { TimePart } from './TimeLeft';
 import { TimeProp, DropTimerProps } from './types';
 import { Heading } from './Heading';
 
@@ -44,10 +44,10 @@ export const DropTimer = ({ timestamp, variant }: DropTimerProps) => {
     <Container>
       <Heading variant={variant} timestamp={timestamp} />
       <TimeContainer variant={variant}>
-        <TimePart timeNum={daysDiff} timeUnit={'days'} variant={variant} />
-        <TimePart timeNum={hoursDiff} timeUnit={'hrs'} variant={variant} />
-        <TimePart timeNum={minutesDiff} timeUnit={'mins'} variant={variant} />
-        <TimePart timeNum={secondsDiff} timeUnit={'secs'} variant={variant} />
+        <TimePart timeDiff={daysDiff} timeUnit={'days'} variant={variant} />
+        <TimePart timeDiff={hoursDiff} timeUnit={'hrs'} variant={variant} />
+        <TimePart timeDiff={minutesDiff} timeUnit={'mins'} variant={variant} />
+        <TimePart timeDiff={secondsDiff} timeUnit={'secs'} variant={variant} />
       </TimeContainer>
     </Container>
   );
