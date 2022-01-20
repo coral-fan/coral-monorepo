@@ -1,4 +1,5 @@
 import { Story, Meta } from '@storybook/react';
+import { createElement } from 'react';
 import { DropTimer } from './DropTimer';
 import { DropTimerProps } from './types';
 
@@ -7,7 +8,7 @@ export default {
   component: DropTimer,
   argTypes: {
     timestamp: {
-      control: { type: 'none' },
+      control: { type: 'date' },
     },
     variant: {
       options: [undefined, 'mini', 'reveal'],
@@ -16,7 +17,10 @@ export default {
   },
 } as Meta;
 
-const Template: Story<DropTimerProps> = (args) => <DropTimer {...args} />;
+const Template: Story<DropTimerProps> = (args) =>
+  createElement(() => {
+    return <DropTimer {...args} />;
+  });
 
 const today = new Date();
 
