@@ -1,4 +1,4 @@
-import { delay, map, retryWhen, startWith, tap, throwError } from 'rxjs';
+import { delay, map, retryWhen, startWith, throwError } from 'rxjs';
 import { AVALANCHE } from 'consts';
 import { getChainIdChanged$ } from '../observables';
 import { useObservable } from 'libraries/utils/hooks';
