@@ -67,6 +67,10 @@ export const getTimeString = (timestamp: string) => {
   });
 };
 
+/*
+  Solve for timer over 24 days found here:
+  https://github.com/ReactiveX/rxjs/issues/3015
+*/
 export const bigTimer = (timestamp: string) => {
   const milliSecsDiff = getMilliSecsDiff(timestamp);
 
