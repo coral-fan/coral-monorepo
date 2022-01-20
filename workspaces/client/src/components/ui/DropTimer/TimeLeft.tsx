@@ -33,7 +33,7 @@ const getTimeUnit = ({ timeDiff, timeUnit, variant }: TimePartProps) => {
   return timeUnit;
 };
 
-export const TimePart = ({ timeDiff, timeUnit, variant }: TimePartProps) => {
+export const TimeLeft = ({ timeDiff, timeUnit, variant }: TimePartProps) => {
   const unit = getTimeUnit({ timeDiff, timeUnit, variant });
 
   return (
