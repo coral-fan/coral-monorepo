@@ -2,10 +2,11 @@ import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
 import { TimePartProps, TimeProp } from './types';
 
-const Container = styled.div`
+const Container = styled.div<TimeProp>`
   display: inline-grid;
-  grid-template-columns: 26px 1fr;
+  grid-template-columns: 24px 1fr;
   align-items: baseline;
+  column-gap: ${(props) => (props.variant !== 'mini' ? '2px' : '0px')};
 `;
 
 const TimeDiff = styled.div<TimeProp>`
@@ -37,7 +38,7 @@ export const TimeLeft = ({ timeDiff, timeUnit, variant }: TimePartProps) => {
   const unit = getTimeUnit({ timeDiff, timeUnit, variant });
 
   return (
-    <Container>
+    <Container variant={variant}>
       <TimeDiff variant={variant}>{timeDiff}</TimeDiff>
       <TimeUnit>{unit}</TimeUnit>
     </Container>
