@@ -1,4 +1,4 @@
-import { useIsAuthenticated } from 'libraries/authentication/hooks';
+import { useIsAuthenticated } from 'libraries/authentication';
 
 export default function Home() {
   const isAuthenticated = useIsAuthenticated();
