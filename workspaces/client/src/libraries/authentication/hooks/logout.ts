@@ -1,4 +1,4 @@
-import { useWeb3 } from '../../blockchain/hooks';
+import { useWeb3 } from 'libraries/blockchain/hooks';
 import { getAuth } from 'firebase/auth';
 import { destroyCookie, parseCookies } from 'nookies';
 import { COOKIE_OPTIONS } from 'consts';
