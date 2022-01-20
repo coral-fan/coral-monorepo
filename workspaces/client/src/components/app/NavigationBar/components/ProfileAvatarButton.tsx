@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { useLogout } from 'libraries/authentication/hooks';
+import { useLogout } from 'libraries/authentication';
 import { Avatar } from 'components/ui';
 import { buttonBaseStyle } from 'components/ui/buttons/styles';
 

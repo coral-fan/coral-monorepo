@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
-import { useIsAuthenticated, useLogin } from 'libraries/authentication/hooks';
+import { useIsAuthenticated, useLogin } from 'libraries/authentication';
 
 import { HamburgerMenuButton, ProfileAvatarButton, LoginButton, LogoHomeLink } from './components';
 

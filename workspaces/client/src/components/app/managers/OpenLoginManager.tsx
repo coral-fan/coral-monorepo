@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { IS_OPEN_LOGIN_PENDING } from 'consts';
-import { useIsLoggingIn, useLogin } from 'libraries/authentication/hooks';
+import { useIsLoggingIn, useLogin } from 'libraries/authentication';
 
 // checks if token is authenticated, user is not signing up and that their wallet is active and updates the redux store state accordingly
 export const OpenLoginManager = () => {
