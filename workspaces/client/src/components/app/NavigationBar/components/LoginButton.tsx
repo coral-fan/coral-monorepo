@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import tokens from 'styles/tokens';
-import { useIsSigningUp, useLogin } from 'libraries/authentication/hooks';
+import { useIsSigningUp, useLogin } from 'libraries/authentication';
 import { Button } from 'components/ui';
 
 const loginButtonStyle = css`

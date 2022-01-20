@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Modal, Button, Toggle } from 'components/ui';
 import { Input } from 'components/ui/Input';
 
-import { useIsSigningUp } from 'libraries/authentication/hooks';
+import { useIsSigningUp } from 'libraries/authentication';
 import { useIsNetworkSupported } from 'libraries/blockchain';
 
 const Content = styled.div`
