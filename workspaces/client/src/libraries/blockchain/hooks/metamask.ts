@@ -6,7 +6,6 @@ import { useObservable } from 'libraries/utils/hooks';
 const getIsNetworkSupported$ = () =>
   getChainIdChanged$().pipe(
     startWith(window.ethereum.chainId),
-    tap(console.log),
     map((chainId: null | string) => {
       if (chainId === null) {
         return throwError(() => new Error());
