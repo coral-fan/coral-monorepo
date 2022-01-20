@@ -1,7 +1,7 @@
 import { initializeStore } from '.';
 
 // need to create a store for type inferencing below
-const store = initializeStore();
+const store = initializeStore({ isSigningUp: false });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
