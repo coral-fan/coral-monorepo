@@ -7,7 +7,14 @@ export const getFirebaseAdmin = async () => {
   // checks if admin has been initialized already
   if (admin.apps.length < 1) {
     if (SERVER_ENVIRONMENT === 'production') {
-      admin.initializeApp();
+      if (!process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
+        throw Error(getEnvironmentVariableErrorMessage('FIREBASE_SERVICE_ACCOUNT_JSON'));
+      }
+      const serviceAccountJSON = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
+
+      admin.initializeApp({
+        credential: admin.credential.cert(serviceAccountJSON),
+      });
     } else {
       if (!process.env.FIREBASE_ADMIN_CREDENTIALS) {
         throw Error(getEnvironmentVariableErrorMessage('FIREBASE_ADMIN_CREDENTIALS'));
