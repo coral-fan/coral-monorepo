@@ -23,4 +23,4 @@ const getIsNetworkSupported$ = () =>
 const isNetworkSupportedInvariant = () => window.ethereum && window.ethereum.addListener;
 
 export const useIsNetworkSupported = () =>
-  useObservable(getIsNetworkSupported$, false, isNetworkSupportedInvariant);
+  useObservable(getIsNetworkSupported$, true, isNetworkSupportedInvariant);
