@@ -1,4 +1,4 @@
-import { delay, map, retryWhen, startWith } from 'rxjs';
+import { delay, map, retryWhen, startWith, tap } from 'rxjs';
 import { AVALANCHE } from 'consts';
 import { getChainIdChanged$ } from '../observables';
 import { useObservable } from 'libraries/utils/hooks';
@@ -6,6 +6,7 @@ import { useObservable } from 'libraries/utils/hooks';
 const getIsNetworkSupported$ = () =>
   getChainIdChanged$().pipe(
     startWith(window.ethereum.chainId),
+    tap(console.log),
     map((chainId: string) => chainId?.toLowerCase() === AVALANCHE.CHAIN_ID),
     /*
       retry is necessary because in production, chainId can be null.
