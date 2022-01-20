@@ -15,7 +15,7 @@ const Container = styled.div`
 const TimeContainer = styled.div<TimeProp>`
   width: fit-content;
   display: flex;
-  gap: 6px;
+  gap: ${(props) => (props.variant !== 'mini' ? '6px' : '4px')};
 `;
 
 export const DropTimer = ({ timestamp, variant }: DropTimerProps) => {
