@@ -4,7 +4,7 @@ export type Variant = undefined | 'mini' | 'reveal';
 
 type TimeUnit = 'days' | 'hrs' | 'mins' | 'secs';
 
-export interface TimePartProps {
+export interface TimeLeftProps {
   timeDiff: number;
   timeUnit: TimeUnit;
   variant: Variant;
