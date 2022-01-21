@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
-import { TimePartProps, TimeProp } from './types';
+import { TimeLeftProps, TimeProp } from './types';
 
 const Container = styled.div<TimeProp>`
   display: inline-grid;
@@ -25,7 +25,7 @@ const TimeUnit = styled.div`
   text-transform: uppercase;
 `;
 
-const getTimeUnit = ({ timeDiff, timeUnit, variant }: TimePartProps) => {
+const getTimeUnit = ({ timeDiff, timeUnit, variant }: TimeLeftProps) => {
   // mini variant returns single letter
   if (variant === 'mini') return `${timeUnit[0]}`;
 
@@ -34,7 +34,7 @@ const getTimeUnit = ({ timeDiff, timeUnit, variant }: TimePartProps) => {
   return timeUnit;
 };
 
-export const TimeLeft = ({ timeDiff, timeUnit, variant }: TimePartProps) => {
+export const TimeLeft = ({ timeDiff, timeUnit, variant }: TimeLeftProps) => {
   const unit = getTimeUnit({ timeDiff, timeUnit, variant });
 
   return (
