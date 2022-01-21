@@ -1,11 +1,13 @@
 import styled from '@emotion/styled';
-import { Flex, Center } from 'components/layout';
 import { LogoIcon } from 'components/ui';
 import tokens from 'styles/tokens';
 
 const FOOTER_CONTENT = 'coral minting since 2021';
 
-const FooterContainer = styled(Center)`
+const FooterContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(121.65deg, #3f2d4d 8.25%, #292030 98.53%);
   position: absolute;
   left: 0;
@@ -14,7 +16,10 @@ const FooterContainer = styled(Center)`
   height: 90px;
 `;
 
-const ContentContainer = styled(Flex)`
+const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 8px;
 `;
 
@@ -31,7 +36,7 @@ const Content = styled.div`
 export const Footer = () => {
   return (
     <FooterContainer>
-      <ContentContainer direction={'column'} alignItems={'center'}>
+      <ContentContainer>
         <LogoIcon size={20} />
         <Content>{FOOTER_CONTENT}</Content>
       </ContentContainer>
