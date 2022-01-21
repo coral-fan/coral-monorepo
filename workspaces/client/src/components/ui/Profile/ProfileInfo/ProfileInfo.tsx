@@ -16,7 +16,7 @@ interface ContainerProp {
   size: Size;
 }
 
-const Container = styled.div<ContainerProp>`
+const ProfileInfoContainer = styled.div<ContainerProp>`
   display: flex;
   width: 100%;
   align-items: center;
@@ -32,12 +32,12 @@ export const ProfileInfo = ({ src, name, username, size }: ProfileInfoProps) => 
   const avatarSize = profileInfoSizeDictionary[size].avatarSize;
 
   return (
-    <Container size={size}>
+    <ProfileInfoContainer size={size}>
       <Avatar size={avatarSize} src={src} hasBorder={false} />
       <NameContainer>
         <Name size={size}>{name}</Name>
         <Username size={size}>{username}</Username>
       </NameContainer>
-    </Container>
+    </ProfileInfoContainer>
   );
 };
