@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { ComponentProps, ForwardedRef, forwardRef } from 'react';
 import tokens from 'styles/tokens';
 
 const HiddenInput = styled.input`
@@ -48,9 +49,14 @@ const Wrapper = styled.label`
   height: 20px;
 `;
 
-export const Toggle = () => (
-  <Wrapper>
-    <HiddenInput type="checkbox" />
-    <Slider />
-  </Wrapper>
-);
+export const Toggle = forwardRef(function Toggle(
+  props: ComponentProps<'input'>,
+  ref: ForwardedRef<HTMLInputElement>
+) {
+  return (
+    <Wrapper>
+      <HiddenInput type="checkbox" ref={ref} {...props} />
+      <Slider />
+    </Wrapper>
+  );
+});

@@ -1,4 +1,4 @@
-import { ComponentProps } from 'react';
+import { ComponentProps, ForwardedRef, forwardRef } from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
@@ -39,6 +39,7 @@ const getInputStyle = (error?: string) => css`
 
 const Error = styled.div`
   ${textStyle};
+  min-height: 12px;
   color: ${tokens.color.red};
 `;
 
@@ -47,13 +48,16 @@ interface InputProps extends ComponentProps<'input'> {
   error?: string;
 }
 
-export const Input = ({ label, error, ...props }: InputProps) => {
+export const Input = forwardRef(function Input(
+  { label, error, ...props }: InputProps,
+  ref: ForwardedRef<HTMLInputElement>
+) {
   const inputId = label.toLowerCase().split(' ').join('-');
   return (
     <Container>
       <Label htmlFor={inputId}>{label}</Label>
-      <input id={inputId} css={getInputStyle(error)} {...props}></input>
-      {error && <Error>{error}</Error>}
+      <input id={inputId} css={getInputStyle(error)} ref={ref} {...props}></input>
+      <Error>{error ?? ''}</Error>
     </Container>
   );
-};
+});
