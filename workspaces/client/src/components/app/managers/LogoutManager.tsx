@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { getToken, useLogout } from 'libraries/authentication';
 import { filter, fromEvent, map } from 'rxjs';
 import { idToken } from 'rxfire/auth';
+import { getIsMetaMaskInjected } from 'libraries/blockchain';
 
 export const LogoutManager = () => {
   const logout = useLogout();
@@ -21,7 +22,7 @@ export const LogoutManager = () => {
 
   // logic to ensure the user is logged out when the account changes on metamask
   useEffect(() => {
-    if (window.ethereum && window.ethereum.addListener) {
+    if (getIsMetaMaskInjected()) {
       const subscription = fromEvent(window.ethereum, 'accountsChanged').subscribe(logout);
 
       return () => subscription.unsubscribe();
