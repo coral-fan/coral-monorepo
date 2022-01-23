@@ -1,5 +1,5 @@
-import { Avatar } from 'components/ui/Profile';
-import { Username } from 'components/ui/Profile/ProfileInfo/Username';
+import { Avatar } from 'components/ui/profile';
+import { Username } from 'components/ui/profile/ProfileInfo/Username';
 import { TimeElapsed } from 'components/ui/TimeElapsed';
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
