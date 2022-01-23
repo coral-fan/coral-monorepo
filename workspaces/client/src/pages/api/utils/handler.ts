@@ -10,10 +10,10 @@ const defaultHandler = (req: NextApiRequest, res: NextApiResponse, handlers: Met
 
 export const getHandler =
   (handlers: MethodHandlers): Handler =>
-  (req, res) => {
+  async (req, res) => {
     const method = (req.method ?? 'undefined').toLowerCase() as Method;
 
     const handler = handlers[method];
 
-    handler ? handler(req, res) : defaultHandler(req, res, handlers);
+    handler ? await handler(req, res) : defaultHandler(req, res, handlers);
   };
