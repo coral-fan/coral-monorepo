@@ -17,22 +17,15 @@ export default {
   },
 } as Meta;
 
-/*
-  createElement solution that allows updating the timestamp found here:
-  https://github.com/storybookjs/storybook/issues/5721
-*/
-const Template: Story<DropTimerProps> = (args) =>
-  createElement(() => {
-    return <DropTimer {...args} />;
-  });
+const Template: Story<DropTimerProps> = (args) => <DropTimer {...args} />;
 
 const today = new Date();
 
 // Countdown starts
-const oneHour = new Date(today.getTime() + 1000 * 60 * 60 * 1.1);
+const oneHour = new Date(today.getTime() + 1000 * 60 * 60);
 const laterToday = new Date(today.getTime() + 1000 * 60 * 60 * 6);
-const tomorrow = new Date(today.getTime() + 1000 * 60 * 60 * 36);
-const nextWeek = new Date(today.getTime() + 1000 * 60 * 60 * 24 * 6);
+const tomorrow = new Date(today.getTime() + 1000 * 60 * 60 * 24);
+const nextWeek = new Date(today.getTime() + 1000 * 60 * 60 * 24 * 7);
 const nextMonth = new Date(today.getTime() + 1000 * 60 * 60 * 24 * 30);
 
 export const OneHour = Template.bind({});
