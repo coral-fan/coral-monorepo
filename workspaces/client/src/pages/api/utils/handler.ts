@@ -11,7 +11,11 @@ const defaultHandler = (req: NextApiRequest, res: NextApiResponse, handlers: Met
 export const getHandler =
   (handlers: MethodHandlers): Handler =>
   async (req, res) => {
-    const method = (req.method ?? 'undefined').toLowerCase() as Method;
+    /* 
+    cast as Method to suppress warning about undefined being used as index type
+    even if method is undefined, reference undefined as a key on an object will simply return undefined
+    */
+    const method = req.method?.toLowerCase() as Method;
 
     const handler = handlers[method];
 
