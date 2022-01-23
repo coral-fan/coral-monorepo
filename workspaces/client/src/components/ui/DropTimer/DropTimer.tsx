@@ -2,11 +2,10 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { interval, takeUntil } from 'rxjs';
 import { getTimeRemaining, bigTimer } from './utils';
-import { TimeLeft } from './TimeLeft';
-import { TimeProp, DropTimerProps } from './types';
-import { Heading } from './Heading';
+import { TimeLeft, Heading } from './components';
+import { TimeProp, Variant } from './types';
 
-const Container = styled.div`
+const DropTimerContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -18,7 +17,12 @@ const TimeContainer = styled.div<TimeProp>`
   gap: ${(props) => (props.variant !== 'mini' ? '6px' : '4px')};
 `;
 
-export const DropTimer = ({ timestamp, variant }: DropTimerProps) => {
+export interface DropTimerProps {
+  timestamp: string;
+  variant?: Variant;
+}
+
+export const DropTimer = ({ timestamp, variant = 'default' }: DropTimerProps) => {
   const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining(timestamp));
 
   useEffect(() => {
@@ -41,7 +45,7 @@ export const DropTimer = ({ timestamp, variant }: DropTimerProps) => {
   const { daysDiff, hoursDiff, minutesDiff, secondsDiff } = timeRemaining;
 
   return (
-    <Container>
+    <DropTimerContainer>
       <Heading variant={variant} timestamp={timestamp} />
       <TimeContainer variant={variant}>
         <TimeLeft timeDiff={daysDiff} timeUnit={'days'} variant={variant} />
@@ -49,6 +53,6 @@ export const DropTimer = ({ timestamp, variant }: DropTimerProps) => {
         <TimeLeft timeDiff={minutesDiff} timeUnit={'mins'} variant={variant} />
         <TimeLeft timeDiff={secondsDiff} timeUnit={'secs'} variant={variant} />
       </TimeContainer>
-    </Container>
+    </DropTimerContainer>
   );
 };
