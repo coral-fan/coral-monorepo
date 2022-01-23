@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { useLogout } from 'libraries/authentication';
-import { Avatar } from 'components/ui';
+import { Avatar } from 'components/ui/profile';
 import { buttonBaseStyle } from 'components/ui/buttons/styles';
 
 const profileAvatarButtonStyle = css`
