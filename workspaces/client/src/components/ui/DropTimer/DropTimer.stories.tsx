@@ -10,7 +10,7 @@ export default {
       control: { type: 'date' },
     },
     variant: {
-      options: [undefined, 'mini', 'reveal'],
+      options: ['default', 'mini', 'reveal'],
       control: { type: 'select' },
     },
   },
@@ -30,24 +30,41 @@ const nextMonth = new Date(today.getTime() + 1000 * 60 * 60 * 24 * 30);
 export const OneHour = Template.bind({});
 OneHour.args = {
   timestamp: oneHour.toISOString(),
+  variant: 'default',
 };
 
 export const Today = Template.bind({});
 Today.args = {
   timestamp: laterToday.toISOString(),
+  variant: 'default',
 };
 
 export const Tomorrow = Template.bind({});
 Tomorrow.args = {
   timestamp: tomorrow.toISOString(),
+  variant: 'default',
 };
 
 export const NextWeek = Template.bind({});
 NextWeek.args = {
   timestamp: nextWeek.toISOString(),
+  variant: 'default',
 };
 
 export const NextMonth = Template.bind({});
 NextMonth.args = {
   timestamp: nextMonth.toISOString(),
+  variant: 'default',
+};
+
+export const Mini = Template.bind({});
+Mini.args = {
+  timestamp: oneHour.toISOString(),
+  variant: 'mini',
+};
+
+export const RevealedIn = Template.bind({});
+RevealedIn.args = {
+  timestamp: oneHour.toISOString(),
+  variant: 'reveal',
 };
