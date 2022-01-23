@@ -1,4 +1,4 @@
-import { Avatar } from 'components/ui/Profile';
+import { Avatar } from '../Avatar';
 import { profileInfoSizeDictionary } from './consts';
 import { Size } from './types';
 import { Name } from './Name';
