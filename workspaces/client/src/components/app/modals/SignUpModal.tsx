@@ -11,7 +11,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 const SignUpForm = styled.form`
   display: flex;
   flex-direction: column;
-  padding-top: 18px;
+  padding-top: 24px;
   align-items: center;
 `;
 
@@ -19,6 +19,7 @@ const InputsContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  gap: 4px;
 `;
 
 const LegalAgreementContainer = styled.div`
@@ -26,7 +27,7 @@ const LegalAgreementContainer = styled.div`
   gap: 10px;
   align-items: center;
   width: fit-content;
-  padding-bottom: 20px;
+  padding-bottom: 24px;
 `;
 
 const LegalAgreementCopy = styled.div`
