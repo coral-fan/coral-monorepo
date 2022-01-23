@@ -1,4 +1,4 @@
-import { Flex } from 'components/layout';
+import styled from '@emotion/styled';
 
 interface NFTAsset {
   id: string;
@@ -6,8 +6,12 @@ interface NFTAsset {
   artist: string;
 }
 
+const Container = styled.div`
+  display: flex;
+`;
+
 export default function User({ id }: NFTAsset) {
-  return <Flex>{`Asset ${id}`}</Flex>;
+  return <Container>{`Asset ${id}`}</Container>;
 }
 
 interface NFTAssetRouteParam {
