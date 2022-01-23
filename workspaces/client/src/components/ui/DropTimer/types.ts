@@ -1,20 +1,5 @@
-import { ComponentProps } from 'react';
+export type Variant = 'default' | 'mini' | 'reveal';
 
-export type Variant = undefined | 'mini' | 'reveal';
-
-type TimeUnit = 'days' | 'hrs' | 'mins' | 'secs';
-
-export interface TimeLeftProps {
-  timeDiff: number;
-  timeUnit: TimeUnit;
+export interface TimeProp {
   variant: Variant;
-}
-
-export interface DropTimerProps {
-  timestamp: string;
-  variant?: Variant;
-}
-
-export interface TimeProp extends ComponentProps<'div'> {
-  variant?: Variant;
 }
