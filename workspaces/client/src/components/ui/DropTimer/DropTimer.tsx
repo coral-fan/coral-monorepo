@@ -36,7 +36,7 @@ export const DropTimer = ({ timestamp, variant }: DropTimerProps) => {
     return () => {
       subscription.unsubscribe();
     };
-  }, []);
+  }, [timestamp]);
 
   const { daysDiff, hoursDiff, minutesDiff, secondsDiff } = timeRemaining;
 
