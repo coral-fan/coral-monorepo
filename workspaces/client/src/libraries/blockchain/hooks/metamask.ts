@@ -2,6 +2,7 @@ import { delay, map, retryWhen, startWith, throwError } from 'rxjs';
 import { AVALANCHE } from 'consts';
 import { getChainIdChanged$ } from '../observables';
 import { useObservable } from 'libraries/utils/hooks';
+import { getIsMetaMaskInjected } from '../utils';
 
 const getIsNetworkSupported$ = () =>
   getChainIdChanged$().pipe(
@@ -19,7 +20,5 @@ const getIsNetworkSupported$ = () =>
     retryWhen((error) => error.pipe(delay(1000)))
   );
 
-const isNetworkSupportedInvariant = () => window.ethereum && window.ethereum.addListener;
-
 export const useIsNetworkSupported = () =>
-  useObservable(getIsNetworkSupported$, true, isNetworkSupportedInvariant);
+  useObservable(getIsNetworkSupported$, true, getIsMetaMaskInjected);
