@@ -1,4 +1,4 @@
-import { boolean, object, string } from 'yup';
+import { boolean, object, string, SchemaOf, InferType } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 
@@ -24,6 +24,8 @@ const signUpSchema = object({
   doesAgree: boolean().required().default(false).isTrue(),
 });
 
+type SignUpSchema = InferType<typeof signUpSchema>;
+
 export const SignUpModal = () => {
   const [isSigningUp, setIsSigningUp] = useIsSigningUp();
   const isNetworkSupported = useIsNetworkSupported();
@@ -32,13 +34,12 @@ export const SignUpModal = () => {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm({
+  } = useForm<SignUpSchema>({
     resolver: yupResolver(signUpSchema),
     mode: 'all',
   });
 
-  const handleSignUpCompletion = handleSubmit((data) => {
-    console.log(data);
+  const handleSignUpCompletion = handleSubmit(({ username, email }) => {
     setIsSigningUp(false);
   });
 
