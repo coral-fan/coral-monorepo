@@ -80,8 +80,8 @@ const getInitialProps = async (appContext: AppContext) => {
       })
     : getAuth(getApp()).currentUser?.uid;
 
-  const isSigningUp = uid
-    ? (await getDocumentSnapshot('is-signing-up', uid)).data() ?? false
+  const isSigningUp: boolean = uid
+    ? (await getDocumentSnapshot('is-signing-up', uid))?.data()?.isSigningUp
     : false;
 
   return {
