@@ -5,9 +5,8 @@ import {
   getDoc,
   DocumentReference,
 } from 'firebase/firestore';
-import { initializeFirebaseAdmin, initializeFirebaseApp } from '.';
-
-const isServerSide = () => typeof window === 'undefined';
+import { initializeFirebaseAdmin } from '.';
+import { isServerSide } from './utils';
 
 const getFirestoreServerSide = async () => {
   initializeFirebaseAdmin();
@@ -22,8 +21,7 @@ export const getDocumentReferenceServerSide = async (collection: string, id: str
   return firestore.doc(`${collection}/${id}`);
 };
 
-const getDocumentReferenceClientSide = async (collection: string, id: string) => {
-  initializeFirebaseApp();
+export const getDocumentReferenceClientSide = async (collection: string, id: string) => {
   const app = getApp();
   const firestore = getFirestoreClientSide(app);
   return doc(firestore, collection, id);
