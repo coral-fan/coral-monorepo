@@ -37,7 +37,7 @@ export const SignUpModal = () => {
     mode: 'all',
   });
 
-  const completeSignUp = handleSubmit((data) => {
+  const handleSignUpCompletion = handleSubmit((data) => {
     console.log(data);
     setIsSigningUp(false);
   });
@@ -48,7 +48,7 @@ export const SignUpModal = () => {
 
   return (
     <Modal title="Sign up">
-      <SignUpForm onSubmit={completeSignUp}>
+      <SignUpForm onSubmit={handleSignUpCompletion}>
         <InputsContainer>
           <Input
             label="Pick a username"
