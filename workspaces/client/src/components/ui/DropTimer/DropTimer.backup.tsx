@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
-import { interval, map, takeUntil } from 'rxjs';
+import { interval, takeUntil, map } from 'rxjs';
 import { getTimeRemaining, bigTimer } from './utils';
 import { TimeLeft, Heading } from './components';
 import { TimeProp, Variant } from './types';
+import { useObservable } from 'libraries/utils/hooks';
+import { useMemo } from 'react';
 
 const DropTimerContainer = styled.div`
   display: flex;
@@ -22,22 +23,18 @@ export interface DropTimerProps {
   variant?: Variant;
 }
 
+const getGetCountdown$ = (timestamp: string) => () => {
+  const timer$ = bigTimer(timestamp);
+  return interval(1000).pipe(
+    takeUntil(timer$),
+    map(() => getTimeRemaining(timestamp))
+  );
+};
+
 export const DropTimer = ({ timestamp, variant = 'default' }: DropTimerProps) => {
-  const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining(timestamp));
+  const getCountdown$ = useMemo(() => getGetCountdown$(timestamp), [timestamp]);
 
-  useEffect(() => {
-    const timer$ = bigTimer(timestamp);
-
-    const timeRemaining$ = interval(1000).pipe(
-      takeUntil(timer$),
-      map(() => getTimeRemaining(timestamp))
-    );
-    const subscription = timeRemaining$.subscribe(setTimeRemaining);
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [timestamp]);
+  const timeRemaining = useObservable(getCountdown$, getTimeRemaining(timestamp));
 
   const { daysDiff, hoursDiff, minutesDiff, secondsDiff } = timeRemaining;
 
