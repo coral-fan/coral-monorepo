@@ -1,3 +1,3 @@
-export * from './initializeFirebaseApp';
-export * from './initializeFirebaseAdmin';
+export * from './firebase';
+export * from './admin';
 export * from './firestore';
