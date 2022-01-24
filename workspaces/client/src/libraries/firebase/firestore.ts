@@ -17,7 +17,7 @@ const getFirestoreServerSide = async () => {
   return getFirestore(app);
 };
 
-const getDocumentReferenceServerSide = async (collection: string, id: string) => {
+export const getDocumentReferenceServerSide = async (collection: string, id: string) => {
   const firestore = await getFirestoreServerSide();
   return firestore.doc(`${collection}/${id}`);
 };
