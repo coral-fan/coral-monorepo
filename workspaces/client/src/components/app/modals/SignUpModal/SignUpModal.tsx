@@ -1,38 +1,19 @@
-import styled from '@emotion/styled';
-import { Modal, Button, Toggle } from 'components/ui';
-import { Input } from 'components/ui/Input';
+import { boolean, object, string } from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 
 import { useIsSigningUp } from 'libraries/authentication';
 import { useIsNetworkSupported } from 'libraries/blockchain';
-import { useForm } from 'react-hook-form';
-import { boolean, object, string } from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 
-const SignUpForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  padding-top: 24px;
-  align-items: center;
-`;
+import { Modal, Button, Toggle } from 'components/ui';
+import { Input } from 'components/ui/Input';
 
-const InputsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 4px;
-`;
-
-const LegalAgreementContainer = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  width: fit-content;
-  padding-bottom: 24px;
-`;
-
-const LegalAgreementCopy = styled.div`
-  font-size: 14px;
-`;
+import {
+  SignUpForm,
+  InputsContainer,
+  LegalAgreementContainer,
+  LegalAgreementCopy,
+} from './components';
 
 const signUpSchema = object({
   username: string().required().min(3),
