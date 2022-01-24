@@ -1,4 +1,4 @@
-import { boolean, object, string, SchemaOf, InferType } from 'yup';
+import { boolean, object, string, InferType } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 
