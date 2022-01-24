@@ -5,16 +5,11 @@
   "main": "next-server.js",
   "scripts": {
     "start": "nodemon --watch next.config.js --exec 'next dev'",
-    "start:functions": "next build:development && firebase -c firebase.development.json emulators:start",
-    "start:mobile-testing": "next build:mobile-testing && firebase -c firebase.development.json emulators:start",
     "start:debug": "NODE_OPTIONS='--inspect' next dev",
-    "deploy": "firebase deploy --only functions:nextServer,hosting",
     "build": "next build",
-    "build:development": "env-cmd -f .env. next build",
-    "build:mobile-testing": "env-cmd -f .env.mobile-testing next build",
-    "serve": "next start",
     "lint": "next lint",
-    "clean": "rm -rf node_modules",
+    "clean": "rm -rf node_modules && yarn clean:build",
+    "clean:build": "rm -rf .next",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
