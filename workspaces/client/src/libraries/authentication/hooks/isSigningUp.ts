@@ -1,11 +1,5 @@
 import { RootState } from 'libraries/state/types';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateIsSigningUp } from '../slice';
+import { useSelector } from 'react-redux';
 
-export const useIsSigningUp = (): [boolean, (isSigningUp: boolean) => void] => {
-  const dispatch = useDispatch();
-  return [
-    useSelector((state: RootState) => state.authentication.isSigningUp),
-    (isSigningUp: boolean) => dispatch(updateIsSigningUp(isSigningUp)),
-  ];
-};
+export const useIsSigningUp = () =>
+  useSelector((state: RootState) => state.authentication.isSigningUp);
