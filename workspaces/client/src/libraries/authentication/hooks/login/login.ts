@@ -7,17 +7,11 @@ import { setCookie } from 'nookies';
 import { COOKIE_OPTIONS, IS_OPEN_LOGIN_PENDING } from 'consts';
 import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain';
-import { useIsLoggingIn, useIsSigningUp } from '..';
-import {
-  fetchNonce,
-  signAuthenticatedMessage,
-  fetchFirebaseAuthToken,
-  fetchIsSigningUp,
-} from './utils';
+import { useIsLoggingIn } from '..';
+import { fetchNonce, signAuthenticatedMessage, fetchFirebaseAuthToken } from './utils';
 
 export const useLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
-  const [, setIsSigningUp] = useIsSigningUp();
 
   const { activate, getConnector } = useWeb3();
   //TODO: should probably look into how to type errors better
@@ -56,12 +50,6 @@ export const useLogin = () => {
         }
 
         setCookie(undefined, 'token', idToken, COOKIE_OPTIONS);
-
-        const {
-          data: { isSigningUp },
-        } = await fetchIsSigningUp(idToken);
-
-        setIsSigningUp(isSigningUp);
         setIsLoggingIn(false);
       } else {
         setIsLoggingIn(false);
