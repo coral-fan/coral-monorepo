@@ -30,9 +30,9 @@ const signUpSchema = object({
 type SignUpSchema = InferType<typeof signUpSchema>;
 
 export const SignUpModal = () => {
-  const [isSigningUpPending, setIsSigningUpPending] = useIsSigningUp();
+  const isSigningUp = useIsSigningUp();
   const isNetworkSupported = useIsNetworkSupported();
-  const [isSigningUp, setIsSigningUp] = useState(false);
+  const [isCompletingSignUp, setIsCompleteingSignUp] = useState(false);
 
   const uid = useUserUid();
 
@@ -48,15 +48,14 @@ export const SignUpModal = () => {
   const handleSignUpCompletion = useMemo(
     () =>
       handleSubmit(async ({ username, email }) => {
-        setIsSigningUp(true);
-        const didSignUpComplete = await completeSignUp(username, email, uid);
-        setIsSigningUpPending(!didSignUpComplete);
-        setIsSigningUp(false);
+        setIsCompleteingSignUp(true);
+        await completeSignUp(username, email, uid);
+        setIsCompleteingSignUp(false);
       }),
-    [handleSubmit, uid, setIsSigningUpPending]
+    [handleSubmit, uid]
   );
 
-  if (!isSigningUpPending || !isNetworkSupported) {
+  if (!isSigningUp || !isNetworkSupported) {
     return null;
   }
 
@@ -88,7 +87,11 @@ export const SignUpModal = () => {
             </div>
           </LegalAgreementCopy>
         </LegalAgreementContainer>
-        <Button type="submit" disabled={!isValid || isSigningUp} loading={isSigningUp}>
+        <Button
+          type="submit"
+          disabled={!isValid || isCompletingSignUp}
+          loading={isCompletingSignUp}
+        >
           Create Account
         </Button>
       </SignUpForm>

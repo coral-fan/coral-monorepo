@@ -11,7 +11,7 @@ const loginButtonStyle = css`
 `;
 export const LoginButton = () => {
   const { login, isLoggingIn } = useLogin();
-  const [isSigningUp] = useIsSigningUp();
+  const isSigningUp = useIsSigningUp();
 
   const isPending = isLoggingIn || isSigningUp;
 
