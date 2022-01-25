@@ -6,7 +6,7 @@ import {
   DocumentReference,
 } from 'firebase/firestore';
 import { initializeFirebaseAdmin } from '.';
-import { isServerSide } from './utils';
+import { isServerSide } from 'libraries/utils/environment';
 
 const getFirestoreServerSide = async () => {
   initializeFirebaseAdmin();
