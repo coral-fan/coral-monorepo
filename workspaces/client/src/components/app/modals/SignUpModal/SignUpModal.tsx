@@ -14,6 +14,9 @@ import {
   LegalAgreementContainer,
   LegalAgreementCopy,
 } from './components';
+import { useUserUid } from './hooks';
+import { useMemo, useState } from 'react';
+import { completeSignUp } from './utils';
 
 const signUpSchema = object({
   username: string().required().min(3),
@@ -27,8 +30,11 @@ const signUpSchema = object({
 type SignUpSchema = InferType<typeof signUpSchema>;
 
 export const SignUpModal = () => {
-  const [isSigningUp, setIsSigningUp] = useIsSigningUp();
+  const [isSigningUpPending, setIsSigningUpPending] = useIsSigningUp();
   const isNetworkSupported = useIsNetworkSupported();
+  const [isSigningUp, setIsSigningUp] = useState(false);
+
+  const uid = useUserUid();
 
   const {
     register,
@@ -39,11 +45,18 @@ export const SignUpModal = () => {
     mode: 'all',
   });
 
-  const handleSignUpCompletion = handleSubmit(({ username, email }) => {
-    setIsSigningUp(false);
-  });
+  const handleSignUpCompletion = useMemo(
+    () =>
+      handleSubmit(async ({ username, email }) => {
+        setIsSigningUp(true);
+        const didSignUpComplete = await completeSignUp(username, email, uid);
+        setIsSigningUpPending(!didSignUpComplete);
+        setIsSigningUp(false);
+      }),
+    [handleSubmit, uid, setIsSigningUpPending]
+  );
 
-  if (!isSigningUp || !isNetworkSupported) {
+  if (!isSigningUpPending || !isNetworkSupported) {
     return null;
   }
 
@@ -75,7 +88,7 @@ export const SignUpModal = () => {
             </div>
           </LegalAgreementCopy>
         </LegalAgreementContainer>
-        <Button type="submit" disabled={!isValid}>
+        <Button type="submit" disabled={!isValid || isSigningUp} loading={isSigningUp}>
           Create Account
         </Button>
       </SignUpForm>
