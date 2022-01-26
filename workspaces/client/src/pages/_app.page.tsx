@@ -27,6 +27,7 @@ import { initializeStore } from 'libraries/state';
 import { getLibrary } from 'libraries/utils/provider';
 import { getAuth } from 'firebase/auth';
 import { getApp } from 'firebase/app';
+import { useEffect, useState } from 'react';
 
 initializeFirebaseApp();
 
@@ -36,6 +37,15 @@ type CustomAppProps = AppProps & ServerSideData;
 
 const CustomApp = ({ Component, pageProps, initialState }: CustomAppProps) => {
   const store = initializeStore(initialState);
+
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    // `useEffect` never runs on the server, so we must be on the client if
+    // we hit this block
+    setIsMounted(true);
+  }, []);
+
   return (
     <>
       <GlobalStyles />
@@ -50,8 +60,12 @@ const CustomApp = ({ Component, pageProps, initialState }: CustomAppProps) => {
           <ReduxProvider store={store}>
             <Managers />
             <Modals />
-            <NavigationBar />
-            <Component {...pageProps} />
+            {isMounted ? (
+              <>
+                <NavigationBar />
+                <Component {...pageProps} />
+              </>
+            ) : null}
           </ReduxProvider>
         </Web3ReactProvider>
       </main>
