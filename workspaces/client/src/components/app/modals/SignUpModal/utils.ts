@@ -13,6 +13,10 @@ export const completeSignUp = async (username: string, email?: string, uid?: str
 
     await setDoc(userDocumentReference, userData);
 
+    const isSigningUpDocRef = await getDocumentReferenceClientSide('is-signing-up', uid);
+
+    await setDoc(isSigningUpDocRef, { isSigningUp: false });
+
     return true;
   } catch (error) {
     console.log(error);
