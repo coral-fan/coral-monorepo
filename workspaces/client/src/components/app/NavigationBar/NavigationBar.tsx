@@ -1,9 +1,7 @@
-import { useEffect } from 'react';
-
 import styled from '@emotion/styled';
 import { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
-import { useIsAuthenticated, useLogin } from 'libraries/authentication';
+import { useIsAuthenticated } from 'libraries/authentication';
 
 import { HamburgerMenuButton, ProfileAvatarButton, LoginButton, LogoHomeLink } from './components';
 
@@ -21,12 +19,7 @@ const Container = styled.div`
 `;
 
 export const NavigationBar = () => {
-  const { loginError } = useLogin();
   const isAuthenticated = useIsAuthenticated();
-
-  useEffect(() => {
-    loginError && console.log(loginError);
-  }, [loginError]);
 
   return (
     <Container>
