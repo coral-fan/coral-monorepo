@@ -8,7 +8,7 @@ const getFirebaseUser$ = () => {
   return user(auth);
 };
 
-const getUserUid$ = () => getFirebaseUser$().pipe(map((user) => user?.uid));
+export const getUserUid$ = () => getFirebaseUser$().pipe(map((user) => user?.uid));
 
 const getUserUid = () => getAuth().currentUser?.uid;
 
