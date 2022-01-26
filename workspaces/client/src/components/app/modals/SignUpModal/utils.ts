@@ -16,10 +16,7 @@ export const completeSignUp = async (username: string, email?: string, uid?: str
     const isSigningUpDocRef = await getDocumentReferenceClientSide('is-signing-up', uid);
 
     await setDoc(isSigningUpDocRef, { isSigningUp: false });
-
-    return true;
   } catch (error) {
     console.log(error);
-    return false;
   }
 };
