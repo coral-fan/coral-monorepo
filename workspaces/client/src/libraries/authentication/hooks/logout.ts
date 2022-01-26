@@ -1,11 +1,12 @@
 import { useWeb3 } from 'libraries/blockchain/hooks';
 import { getAuth } from 'firebase/auth';
-import { destroyCookie, parseCookies } from 'nookies';
+import { destroyCookie } from 'nookies';
 import { COOKIE_OPTIONS } from 'consts';
+import { useToken } from '.';
 
 export const useLogout = () => {
   const { active, deactivate } = useWeb3();
-  const { token } = parseCookies();
+  const token = useToken();
 
   return async function logout() {
     if (active) {
