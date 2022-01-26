@@ -1,9 +1,11 @@
+import { useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { boolean, object, string, InferType } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
 
 import { useIsSigningUp } from 'libraries/authentication';
 import { useIsNetworkSupported } from 'libraries/blockchain';
+import { useUserUid } from 'libraries/firebase';
 
 import { Modal, Button, Toggle } from 'components/ui';
 import { Input } from 'components/ui/Input';
@@ -14,8 +16,7 @@ import {
   LegalAgreementContainer,
   LegalAgreementCopy,
 } from './components';
-import { useUserUid } from './hooks';
-import { useMemo, useState } from 'react';
+
 import { completeSignUp } from './utils';
 
 const signUpSchema = object({
