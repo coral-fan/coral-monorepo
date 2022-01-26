@@ -1,10 +1,11 @@
-import { getDocumentReferenceClientSide } from 'libraries/firebase';
 import { useEffect } from 'react';
 import { filter, map, mergeMap } from 'rxjs';
-import { getUserUid$ } from '../modals/SignUpModal/hooks';
 import { doc } from 'rxfire/firestore';
-import { useIsSigningUp } from 'libraries/authentication';
 import { useDispatch } from 'react-redux';
+
+import { useIsSigningUp } from 'libraries/authentication';
+import { getDocumentReferenceClientSide, getUserUid$ } from 'libraries/firebase';
+
 import { updateIsSigningUp } from 'libraries/authentication/slice';
 
 export const IsSigningUpStateManager = () => {
