@@ -13,7 +13,8 @@ const post: Handler = async (req, res) => {
   try {
     const nonceRef = (await getDocumentReferenceServerSide('nonce', `${address}`)).get();
     if (nonceRef) {
-      const nonce = (await nonceRef).data();
+      // await (await nonceRef)?.data()?.nonce results in "undefined" being returned?
+      const nonce = (await nonceRef)?.data();
       return res.send(nonce);
     } else {
       const nonce = getNonce();
