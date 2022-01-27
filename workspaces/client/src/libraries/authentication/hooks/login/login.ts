@@ -9,7 +9,7 @@ import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain';
 import { useIsLoggingIn, useIsSigningUp } from '..';
 import { fetchNonce, signAuthenticatedMessage, fetchFirebaseAuthToken } from './utils';
-import { getIsSigningUp } from 'libraries/firebase/firestore/user/data';
+import { getIsSigningUp } from 'libraries/firebase';
 
 export const useLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
