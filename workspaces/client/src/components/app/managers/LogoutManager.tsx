@@ -15,7 +15,7 @@ export const LogoutManager = () => {
       .pipe(
         // need to map to undefined as the token from cookies will either be a string or undefined
         map((token) => token ?? undefined),
-        filter((token) => tokenFromCookies === undefined || token !== tokenFromCookies)
+        filter((token) => token !== tokenFromCookies)
       )
       .subscribe(logout);
 
