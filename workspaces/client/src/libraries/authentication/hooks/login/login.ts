@@ -7,11 +7,13 @@ import { setCookie } from 'nookies';
 import { COOKIE_OPTIONS, IS_OPEN_LOGIN_PENDING } from 'consts';
 import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain';
-import { useIsLoggingIn } from '..';
+import { useIsLoggingIn, useIsSigningUp } from '..';
 import { fetchNonce, signAuthenticatedMessage, fetchFirebaseAuthToken } from './utils';
+import { getIsSigningUp } from 'libraries/firebase/firestore/user/data';
 
 export const useLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
+  const [, setIsSigningUp] = useIsSigningUp();
 
   const { activate, getConnector } = useWeb3();
   //TODO: should probably look into how to type errors better
@@ -34,14 +36,9 @@ export const useLogin = () => {
       // check if signer exists in case user closes out of open login modal
       if (signer) {
         const address = await signer.getAddress();
-        const {
-          data: { nonce },
-        } = await fetchNonce(address);
+        const nonce = await fetchNonce(address);
         const signedMessage = await signAuthenticatedMessage(signer, nonce);
-        const {
-          data: { token },
-        } = await fetchFirebaseAuthToken(address, signedMessage);
-
+        const token = await fetchFirebaseAuthToken(address, signedMessage);
         const userCredential = await signInWithCustomToken(getAuth(), token);
         const idToken = await userCredential.user.getIdToken();
 
@@ -50,6 +47,10 @@ export const useLogin = () => {
         }
 
         setCookie(undefined, 'token', idToken, COOKIE_OPTIONS);
+
+        const isSigningUp = await getIsSigningUp(userCredential.user.uid);
+        setIsSigningUp(isSigningUp);
+
         setIsLoggingIn(false);
       } else {
         setIsLoggingIn(false);
