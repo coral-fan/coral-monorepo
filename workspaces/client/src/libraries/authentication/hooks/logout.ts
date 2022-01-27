@@ -3,12 +3,13 @@ import { getAuth } from 'firebase/auth';
 import { destroyCookie } from 'nookies';
 import { COOKIE_OPTIONS } from 'consts';
 import { useToken } from '.';
+import { useCallback } from 'react';
 
 export const useLogout = () => {
   const { active, deactivate } = useWeb3();
   const token = useToken();
 
-  return async function logout() {
+  const logout = useCallback(async () => {
     if (active) {
       deactivate();
     }
@@ -16,5 +17,7 @@ export const useLogout = () => {
       destroyCookie(undefined, 'token', COOKIE_OPTIONS);
       await getAuth().signOut();
     }
-  };
+  }, [active, deactivate, token]);
+
+  return logout;
 };
