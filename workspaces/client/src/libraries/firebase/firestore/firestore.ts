@@ -4,6 +4,7 @@ import {
   doc,
   getDoc,
   DocumentReference,
+  collection as getCollection,
 } from 'firebase/firestore';
 import { initializeFirebaseAdmin } from '..';
 import { isServerSide } from 'libraries/utils/environment';
@@ -49,4 +50,10 @@ export const getDocumentData = async (collection: string, id: string) => {
       ? getDoc(documentReference)
       : documentReference.get())
   ).data();
+};
+
+export const getCollectionReferenceClientSide = (collection: string) => {
+  const app = getApp();
+  const firestore = getFirestoreClientSide(app);
+  return getCollection(firestore, collection);
 };
