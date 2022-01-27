@@ -31,7 +31,7 @@ const signUpSchema = object({
 type SignUpSchema = InferType<typeof signUpSchema>;
 
 export const SignUpModal = () => {
-  const isSigningUp = useIsSigningUp();
+  const [isSigningUp] = useIsSigningUp();
   const isNetworkSupported = useIsNetworkSupported();
   const [isCompletingSignUp, setIsCompleteingSignUp] = useState(false);
 
