@@ -1,12 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { collectionData } from 'rxfire/firestore';
-import { map } from 'rxjs';
-
 import { useIsSigningUp } from 'libraries/authentication';
 import { useIsNetworkSupported } from 'libraries/blockchain';
-import { getCollectionReferenceClientSide, useUserUid } from 'libraries/firebase';
 
 import { Modal, Button, Toggle } from 'components/ui';
 import { Input } from 'components/ui/Input';
@@ -18,46 +11,13 @@ import {
   LegalAgreementCopy,
 } from './components';
 
-import { completeSignUp } from './utils';
-import { getSignUpSchema, SignUpSchema } from './schema';
+import { useSignUpForm } from './hook';
 
 export const SignUpModal = () => {
   const [isSigningUp] = useIsSigningUp();
   const isNetworkSupported = useIsNetworkSupported();
-  const [isCompletingSignUp, setIsCompleteingSignUp] = useState(false);
 
-  const uid = useUserUid();
-
-  const [usernames, setUsernames] = useState(new Set<string>());
-
-  useEffect(() => {
-    const usersCollectionReference = getCollectionReferenceClientSide('users');
-    const subscription = collectionData(usersCollectionReference)
-      .pipe(map((users) => new Set(users.map((user) => user.username.toLowerCase()))))
-      .subscribe(setUsernames);
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const signUpSchema = getSignUpSchema(usernames);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm<SignUpSchema>({
-    resolver: yupResolver(signUpSchema),
-    mode: 'all',
-  });
-
-  const handleSignUpCompletion = useMemo(
-    () =>
-      handleSubmit(async ({ username, email }) => {
-        setIsCompleteingSignUp(true);
-        await completeSignUp(username, email, uid);
-        setIsCompleteingSignUp(false);
-      }),
-    [handleSubmit, uid]
-  );
+  const { register, errors, isValid, isSignUpSubmitting, handleSubmitSignUp } = useSignUpForm();
 
   if (!isSigningUp || !isNetworkSupported) {
     return null;
@@ -65,7 +25,7 @@ export const SignUpModal = () => {
 
   return (
     <Modal title="Sign up">
-      <SignUpForm onSubmit={handleSignUpCompletion}>
+      <SignUpForm onSubmit={handleSubmitSignUp}>
         <InputsContainer>
           <Input
             label="Pick a username"
@@ -93,8 +53,8 @@ export const SignUpModal = () => {
         </LegalAgreementContainer>
         <Button
           type="submit"
-          disabled={!isValid || isCompletingSignUp}
-          loading={isCompletingSignUp}
+          disabled={!isValid || isSignUpSubmitting}
+          loading={isSignUpSubmitting}
         >
           Create Account
         </Button>
