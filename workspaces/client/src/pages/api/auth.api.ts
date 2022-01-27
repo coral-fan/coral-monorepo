@@ -1,13 +1,8 @@
 import { isAddress } from '@ethersproject/address';
 import { verifyMessage } from '@ethersproject/wallet';
 import { getAuth } from 'firebase-admin/auth';
-import { getFirestore } from 'firebase-admin/firestore';
 import { getAuthenticationMessage } from 'libraries/authentication';
-import {
-  getDocumentReferenceServerSide,
-  getFirestoreServerSide,
-  initializeFirebaseAdmin,
-} from 'libraries/firebase';
+import { getDocumentReferenceServerSide, getFirestoreServerSide } from 'libraries/firebase';
 import { Handler } from './types';
 import { getHandler } from './utils';
 import { getNonce } from './utils/nonce';
