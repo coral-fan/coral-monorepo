@@ -4,17 +4,17 @@ import { Observable } from 'rxjs';
 export const useObservable = <T>(
   getObservable: (initialState?: T) => Observable<T>,
   initialState: T,
-  invariant: () => boolean = () => true
+  invariant?: () => boolean
 ) => {
   const [state, setState] = useState(initialState);
 
   useEffect(() => {
-    if (invariant()) {
+    if (invariant ? invariant() : true) {
       const observable$ = getObservable(initialState);
       const subscription = observable$.subscribe(setState);
       return () => subscription.unsubscribe();
     }
-  }, [invariant, getObservable, setState, initialState]);
+  }, [getObservable, initialState, invariant]);
 
   return state;
 };
