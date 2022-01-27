@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { boolean, object, string, InferType } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { collectionData } from 'rxfire/firestore';
+import { map } from 'rxjs';
 
 import { useIsSigningUp } from 'libraries/authentication';
 import { useIsNetworkSupported } from 'libraries/blockchain';
@@ -18,28 +19,7 @@ import {
 } from './components';
 
 import { completeSignUp } from './utils';
-import { collectionData } from 'rxfire/firestore';
-import { map } from 'rxjs';
-
-const getSignUpSchema = (usernames: Set<string>) =>
-  object({
-    username: string()
-      .required()
-      .min(3)
-      .matches(/^([a-zA-Z\d_])+$/g, 'Only alphanumeric characters and _ are allowed')
-      .test({
-        name: 'is-username-unique',
-        test: (username) => username !== undefined && !usernames.has(username.toLowerCase()),
-        message: 'Username is taken',
-      }),
-    email: string()
-      .email()
-      .optional()
-      .transform((value: string) => (value === '' ? undefined : value)),
-    doesAgree: boolean().required().default(false).isTrue(),
-  });
-
-type SignUpSchema = InferType<ReturnType<typeof getSignUpSchema>>;
+import { getSignUpSchema, SignUpSchema } from './schema';
 
 export const SignUpModal = () => {
   const [isSigningUp] = useIsSigningUp();
