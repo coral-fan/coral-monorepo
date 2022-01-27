@@ -1,16 +1,13 @@
 import { useEffect } from 'react';
 import { filter, map, mergeMap } from 'rxjs';
-import { doc, docData } from 'rxfire/firestore';
-import { useDispatch } from 'react-redux';
+import { docData } from 'rxfire/firestore';
 
-import { useIsSigningUp } from 'libraries/authentication';
 import { getDocumentReferenceClientSide, getUserUid$ } from 'libraries/firebase';
-
-import { updateIsSigningUp } from 'libraries/authentication/slice';
+import { useIsSigningUp, useToken } from 'libraries/authentication';
 
 export const IsSigningUpStateManager = () => {
-  const isSigningUpFromRedux = useIsSigningUp();
-  const dispatch = useDispatch();
+  const [, setIsSigningUp] = useIsSigningUp();
+  const token = useToken();
 
   useEffect(() => {
     const subscription = getUserUid$()
@@ -19,13 +16,12 @@ export const IsSigningUpStateManager = () => {
         filter((uid): uid is string => uid !== undefined),
         mergeMap((uid) => getDocumentReferenceClientSide('is-signing-up', uid)),
         mergeMap((docRef) => docData(docRef)),
-        map((data) => data.isSigningUp),
-        filter((isSigningUp: boolean) => isSigningUp !== isSigningUpFromRedux)
+        map((data) => data.isSigningUp)
       )
-      .subscribe((isSigningUp) => dispatch(updateIsSigningUp(isSigningUp)));
+      .subscribe((isSigningUp) => setIsSigningUp(isSigningUp && token !== undefined));
 
     return () => subscription.unsubscribe();
-  }, [dispatch, isSigningUpFromRedux]);
+  }, [setIsSigningUp, token]);
 
   return <></>;
 };
