@@ -3,20 +3,26 @@ import { Wallet } from '@ethersproject/wallet';
 import { apiAxios } from 'libraries/api';
 import { getAuthenticationMessage } from 'libraries/authentication';
 
-export const fetchNonce = (address: string) =>
-  apiAxios.post<{ nonce: number }>('nonce', {
+export const fetchNonce = async (address: string) => {
+  const {
+    data: { nonce },
+  } = await apiAxios.post<{ nonce: number }>('nonce', {
     address: address,
   });
-export const signAuthenticatedMessage = (signer: Wallet | JsonRpcSigner, nonce: number) =>
-  signer.signMessage(getAuthenticationMessage(nonce));
 
-export const fetchFirebaseAuthToken = (address: string, signedMessage: string) =>
-  apiAxios.post<{ token: string }>('auth', {
+  return nonce;
+};
+
+export const fetchFirebaseAuthToken = async (address: string, signedMessage: string) => {
+  const {
+    data: { token },
+  } = await apiAxios.post<{ token: string }>('auth', {
     address,
     signedMessage,
   });
 
-export const fetchIsSigningUp = (idToken: string) =>
-  apiAxios.post<{ isSigningUp: boolean }>('is-signing-up', {
-    idToken,
-  });
+  return token;
+};
+
+export const signAuthenticatedMessage = (signer: Wallet | JsonRpcSigner, nonce: number) =>
+  signer.signMessage(getAuthenticationMessage(nonce));
