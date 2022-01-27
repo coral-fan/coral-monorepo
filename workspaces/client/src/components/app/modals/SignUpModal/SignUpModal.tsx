@@ -1,11 +1,11 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { boolean, object, string, InferType } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { useIsSigningUp } from 'libraries/authentication';
 import { useIsNetworkSupported } from 'libraries/blockchain';
-import { useUserUid } from 'libraries/firebase';
+import { getCollectionReferenceClientSide, useUserUid } from 'libraries/firebase';
 
 import { Modal, Button, Toggle } from 'components/ui';
 import { Input } from 'components/ui/Input';
@@ -18,17 +18,28 @@ import {
 } from './components';
 
 import { completeSignUp } from './utils';
+import { collectionData } from 'rxfire/firestore';
+import { map } from 'rxjs';
 
-const signUpSchema = object({
-  username: string().required().min(3),
-  email: string()
-    .email()
-    .optional()
-    .transform((value) => (value === '' ? undefined : value)),
-  doesAgree: boolean().required().default(false).isTrue(),
-});
+const getSignUpSchema = (usernames: Set<string>) =>
+  object({
+    username: string()
+      .required()
+      .min(3)
+      .matches(/^([a-zA-Z\d_])+$/g, 'Only alphanumeric characters and _ are allowed')
+      .test({
+        name: 'is-username-unique',
+        test: (username) => username !== undefined && !usernames.has(username.toLowerCase()),
+        message: 'Username is taken',
+      }),
+    email: string()
+      .email()
+      .optional()
+      .transform((value: string) => (value === '' ? undefined : value)),
+    doesAgree: boolean().required().default(false).isTrue(),
+  });
 
-type SignUpSchema = InferType<typeof signUpSchema>;
+type SignUpSchema = InferType<ReturnType<typeof getSignUpSchema>>;
 
 export const SignUpModal = () => {
   const [isSigningUp] = useIsSigningUp();
@@ -36,6 +47,18 @@ export const SignUpModal = () => {
   const [isCompletingSignUp, setIsCompleteingSignUp] = useState(false);
 
   const uid = useUserUid();
+
+  const [usernames, setUsernames] = useState(new Set<string>());
+
+  useEffect(() => {
+    const usersCollectionReference = getCollectionReferenceClientSide('users');
+    const subscription = collectionData(usersCollectionReference)
+      .pipe(map((users) => new Set(users.map((user) => user.username.toLowerCase()))))
+      .subscribe(setUsernames);
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const signUpSchema = getSignUpSchema(usernames);
 
   const {
     register,
