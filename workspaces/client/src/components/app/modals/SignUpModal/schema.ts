@@ -17,4 +17,5 @@ export const getSignUpSchema = (usernames: Set<string>) =>
       .transform((value: string) => (value === '' ? undefined : value)),
     doesAgree: boolean().required().default(false).isTrue(),
   });
+
 export type SignUpSchema = InferType<ReturnType<typeof getSignUpSchema>>;
