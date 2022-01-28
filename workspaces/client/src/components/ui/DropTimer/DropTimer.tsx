@@ -4,6 +4,7 @@ import { interval, map, takeUntil } from 'rxjs';
 import { getTimeRemaining, bigTimer } from './utils';
 import { TimeLeft, Heading } from './components';
 import { TimeProp, Variant } from './types';
+import { useObservable } from 'libraries/utils/hooks';
 
 const DropTimerContainer = styled.div`
   display: flex;
@@ -22,22 +23,17 @@ export interface DropTimerProps {
   variant?: Variant;
 }
 
+const getTimeRemaining$ = (timestamp: string) =>
+  interval(1000).pipe(
+    takeUntil(bigTimer(timestamp)),
+    map(() => getTimeRemaining(timestamp))
+  );
+
 export const DropTimer = ({ timestamp, variant = 'default' }: DropTimerProps) => {
-  const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining(timestamp));
-
-  useEffect(() => {
-    const timer$ = bigTimer(timestamp);
-
-    const timeRemaining$ = interval(1000).pipe(
-      takeUntil(timer$),
-      map(() => getTimeRemaining(timestamp))
-    );
-    const subscription = timeRemaining$.subscribe(setTimeRemaining);
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [timestamp]);
+  const timeRemaining = useObservable(
+    getTimeRemaining$.bind(undefined, timestamp),
+    getTimeRemaining(timestamp)
+  );
 
   const { daysDiff, hoursDiff, minutesDiff, secondsDiff } = timeRemaining;
 
