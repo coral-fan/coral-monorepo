@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { interval, map, takeUntil } from 'rxjs';
 import { getTimeRemaining, bigTimer } from './utils';
 import { TimeLeft, Heading } from './components';
@@ -23,17 +23,19 @@ export interface DropTimerProps {
   variant?: Variant;
 }
 
-const getTimeRemaining$ = (timestamp: string) =>
-  interval(1000).pipe(
-    takeUntil(bigTimer(timestamp)),
-    map(() => getTimeRemaining(timestamp))
+export const DropTimer = ({ timestamp, variant = 'default' }: DropTimerProps) => {
+  const getTimeRemaining$ = useCallback(
+    () =>
+      interval(1000).pipe(
+        takeUntil(bigTimer(timestamp)),
+        map(() => getTimeRemaining(timestamp))
+      ),
+    [timestamp]
   );
 
-export const DropTimer = ({ timestamp, variant = 'default' }: DropTimerProps) => {
-  const timeRemaining = useObservable(
-    getTimeRemaining$.bind(undefined, timestamp),
-    getTimeRemaining(timestamp)
-  );
+  const initialTimeRemaining = useMemo(() => getTimeRemaining(timestamp), [timestamp]);
+
+  const timeRemaining = useObservable(getTimeRemaining$, initialTimeRemaining);
 
   const { daysDiff, hoursDiff, minutesDiff, secondsDiff } = timeRemaining;
 
