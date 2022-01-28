@@ -10,26 +10,29 @@ import { getNonce } from './utils/nonce';
 const post: Handler = async (req, res) => {
   const { address, signedMessage } = req.body;
   if (!isAddress(address)) {
-    return res.status(400).send('Address is not valid.');
+    return res.status(400).json({ error: 'Address is not valid.' });
   }
   try {
-    const nonceRef = (await getDocumentReferenceServerSide('nonce', `${address}`)).get();
-    if (nonceRef) {
-      const nonce = await (await nonceRef)?.data()?.nonce;
+    const nonceRefDoc = await getDocumentReferenceServerSide('nonce', `${address}`);
+    const nonceSnapshotDoc = await nonceRefDoc.get();
+    const nonceData = nonceSnapshotDoc.data();
+    if (nonceData) {
+      const { nonce } = nonceData;
       const derivedAddress = verifyMessage(getAuthenticationMessage(nonce), signedMessage);
-
       if (address === derivedAddress) {
         const nextNonce = getNonce();
-        const firestore = await getFirestoreServerSide();
-        await firestore.doc(`nonce/${derivedAddress}`).set({ nonce: nextNonce });
+        await nonceRefDoc.set({ nonce: nextNonce });
         const token = await getAuth().createCustomToken(derivedAddress);
         return res.status(200).send({ token });
+      } else {
+        return res.status(400).json({ error: 'Signed message verification failed.' });
       }
+    } else {
+      return res.status(400).json({ error: 'Address is not valid.' });
     }
-    return res.status(400).send('Signed message verification failed.');
   } catch (error) {
     console.log(error);
-    return res.status(500).send(error);
+    return res.status(500).json({ error });
   }
 };
 
