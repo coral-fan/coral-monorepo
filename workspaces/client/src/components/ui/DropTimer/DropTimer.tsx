@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import { interval, map, takeUntil } from 'rxjs';
 import { getTimeRemaining, bigTimer } from './utils';
 import { TimeLeft, Heading } from './components';
