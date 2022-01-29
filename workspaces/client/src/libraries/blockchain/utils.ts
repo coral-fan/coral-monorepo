@@ -1,1 +1,1 @@
-export const getIsMetaMaskInjected = () => window?.ethereum?.addListener !== undefined;
+export const isMetaMaskInjected = () => window?.ethereum?.addListener !== undefined;
