@@ -1,9 +1,8 @@
 # Coral Monorepo
 
 Monorepo managed with [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces/).
-Front end written in [TypeScript](https://www.typescriptlang.org/) and built with [React](https://reactjs.org/), [Emotion](https://emotion.sh/docs/introduction), and [Next.js](https://nextjs.org/).
-Back end also written in [TypeScript](https://www.typescriptlang.org/) and deployed to [Google Cloud Functions](https://cloud.google.com/functions).
-Authentication and database handled by [Firebase](https://firebase.google.com/).
+Web application written in [TypeScript](https://www.typescriptlang.org/) and built with [React](https://reactjs.org/), [Emotion](https://emotion.sh/docs/introduction), and [Next.js](https://nextjs.org/). UI components developed in and documented using [Storybook](https://storybook.js.org/).
+Authentication and database handled by [Firebase](https://firebase.google.com/) and application deployed to [Vercel](https://vercel.com).
 
 ## Setup
 
@@ -67,10 +66,9 @@ Using this script, you can run arbitrary scripts for each respective workspace:
 #### Available Workspaces
 
 - [client](/workspaces/client)
-- [functions](/workspaces/functions)
 
 ### `yarn start:tunnel`
 
-Starts a tunnel from your local development environment to [coral.ngrok.io](https://coral.ngrok.io) for the client and [server.coral.ngrok.io](https://server.coral.ngrok.io).
+Starts a tunnel from your local development environment to [coral.ngrok.io](https://coral.ngrok.io).
 
-**NOTE**: Please run `yarn client start:functions` & `yarn functions start` before running this script.
+**NOTE**: Please run `yarn client start` before running this script.
