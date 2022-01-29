@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Notification } from 'libraries/models';
+import { Notification } from 'libraries/firebase';
 import { Modal } from 'components/ui';
 import { Bottom, Heading, NotificationProps } from 'components/app/Notification';
 import { itemBorderBottomStyle } from '../styles';
