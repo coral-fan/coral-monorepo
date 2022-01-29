@@ -6,11 +6,7 @@ import Head from 'next/head';
 // application logic imports
 import { destroyCookie, parseCookies } from 'nookies';
 import { COOKIE_OPTIONS } from 'consts';
-import {
-  initializeFirebaseApp,
-  initializeFirebaseAdmin,
-  getDocumentSnapshot,
-} from 'libraries/firebase';
+import { initializeFirebaseApp, initializeFirebaseAdmin, getIsSigningUp } from 'libraries/firebase';
 
 // react imports
 
@@ -28,12 +24,10 @@ import { getLibrary } from 'libraries/utils/provider';
 import { getAuth } from 'firebase/auth';
 import { getApp } from 'firebase/app';
 import { useEffect, useState } from 'react';
+import { NextPageContext } from 'next';
+import { isServerSide } from 'libraries/utils/environment';
 
 initializeFirebaseApp();
-
-export type ServerSideData = Awaited<ReturnType<typeof getInitialProps>>;
-
-type CustomAppProps = AppProps & ServerSideData;
 
 const CustomApp = ({ Component, pageProps, initialState }: CustomAppProps) => {
   const store = initializeStore(initialState);
@@ -73,31 +67,28 @@ const CustomApp = ({ Component, pageProps, initialState }: CustomAppProps) => {
   );
 };
 
+const getUIDServerSide = async (ctx: NextPageContext) => {
+  await initializeFirebaseAdmin();
+  try {
+    const { getApp } = await import('firebase-admin/app');
+    const app = getApp();
+    const { getAuth } = await import('firebase-admin/auth');
+    const cookies = parseCookies(ctx);
+    const { uid } = await getAuth(app).verifyIdToken(cookies.token);
+    return uid;
+  } catch (_) {
+    destroyCookie(ctx, 'token', COOKIE_OPTIONS);
+  }
+};
+
+const getUIDClientSide = () => getAuth(getApp()).currentUser?.uid;
+
 const getInitialProps = async (appContext: AppContext) => {
   // below is necessary as per next.js docs (https://nextjs.org/docs/advanced-features/custom-app)
   const initialProps = await App.getInitialProps(appContext);
   const { ctx } = appContext;
-  // keeping as comment in case distinguishing between client side or server side is necesary
-  const isServerSide = ctx.hasOwnProperty('res');
-  const cookies = parseCookies(ctx);
-  const uid = isServerSide
-    ? await initializeFirebaseAdmin().then(async () => {
-        try {
-          const { getApp } = await import('firebase-admin/app');
-          const app = getApp();
-          const { getAuth } = await import('firebase-admin/auth');
-          const { uid } = await getAuth(app).verifyIdToken(cookies.token);
-          return uid;
-        } catch (_) {
-          destroyCookie(ctx, 'token', COOKIE_OPTIONS);
-        }
-      })
-    : getAuth(getApp()).currentUser?.uid;
-
-  const isSigningUp: boolean = uid
-    ? (await getDocumentSnapshot('is-signing-up', uid))?.data()?.isSigningUp
-    : false;
-
+  const uid = isServerSide() ? await getUIDServerSide(ctx) : getUIDClientSide();
+  const isSigningUp: boolean = uid ? await getIsSigningUp(uid) : false;
   return {
     ...initialProps,
     initialState: { isSigningUp },
@@ -105,5 +96,9 @@ const getInitialProps = async (appContext: AppContext) => {
 };
 
 CustomApp.getInitialProps = getInitialProps;
+
+export type ServerSideData = Awaited<ReturnType<typeof getInitialProps>>;
+
+type CustomAppProps = AppProps & ServerSideData;
 
 export default CustomApp;
