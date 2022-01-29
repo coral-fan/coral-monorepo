@@ -1,18 +1,19 @@
 import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { setDoc } from 'firebase/firestore';
 import { collectionData } from 'rxfire/firestore';
 import { map } from 'rxjs';
+
 import {
   getCollectionReferenceClientSide,
   getDocumentReferenceClientSide,
   useUserUid,
 } from 'libraries/firebase';
-import { getSignUpSchema, SignUpSchema } from './schema';
 import { useObservable } from 'libraries/utils/hooks';
-import { setDoc } from 'firebase/firestore';
 import { User } from 'libraries/models';
 import { NullableString } from 'libraries/models/types';
+import { getSignUpSchema, SignUpSchema } from './schema';
 
 const getUsernames$ = () => {
   const usersCollectionReference = getCollectionReferenceClientSide('users');
