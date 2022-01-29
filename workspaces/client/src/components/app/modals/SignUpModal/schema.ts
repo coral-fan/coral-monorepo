@@ -13,8 +13,8 @@ export const getSignUpSchema = (usernames: Set<string>) =>
       }),
     email: string()
       .email()
-      .optional()
-      .transform((value: string) => (value === '' ? undefined : value)),
+      .transform((value: string) => (value === '' ? null : value))
+      .nullable(),
     doesAgree: boolean().required().default(false).isTrue(),
   });
 
