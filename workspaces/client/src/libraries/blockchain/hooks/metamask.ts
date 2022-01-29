@@ -2,7 +2,7 @@ import { delay, map, retryWhen, startWith, throwError } from 'rxjs';
 import { AVALANCHE } from 'consts';
 import { getChainIdChanged$ } from '../observables';
 import { useObservable } from 'libraries/utils/hooks';
-import { getIsMetaMaskInjected } from '../utils';
+import { isMetaMaskInjected } from '../utils';
 
 const getIsNetworkSupported$ = () =>
   getChainIdChanged$().pipe(
@@ -21,4 +21,4 @@ const getIsNetworkSupported$ = () =>
   );
 
 export const useIsNetworkSupported = () =>
-  useObservable(getIsNetworkSupported$, true, getIsMetaMaskInjected);
+  useObservable(getIsNetworkSupported$, true, isMetaMaskInjected);

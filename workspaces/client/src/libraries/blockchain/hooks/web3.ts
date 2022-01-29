@@ -7,7 +7,7 @@ import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 
 import { AVALANCHE } from 'consts';
 import { AbstractConnector } from '@web3-react/abstract-connector';
-import { getIsMetaMaskInjected } from '../utils';
+import { isMetaMaskInjected } from '../utils';
 
 export const useWeb3 = () => {
   const {
@@ -34,7 +34,7 @@ export const useWeb3 = () => {
   );
 
   const getConnector = useCallback(
-    () => connector ?? (getIsMetaMaskInjected() ? injectedConnector : openLoginConnector),
+    () => connector ?? (isMetaMaskInjected() ? injectedConnector : openLoginConnector),
     [connector, injectedConnector, openLoginConnector]
   );
 
