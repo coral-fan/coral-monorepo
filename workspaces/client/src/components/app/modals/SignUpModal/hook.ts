@@ -11,6 +11,8 @@ import {
 import { getSignUpSchema, SignUpSchema } from './schema';
 import { useObservable } from 'libraries/utils/hooks';
 import { setDoc } from 'firebase/firestore';
+import { User } from 'libraries/models';
+import { NullableString } from 'libraries/models/types';
 
 const getUsernames$ = () => {
   const usersCollectionReference = getCollectionReferenceClientSide('users');
@@ -23,7 +25,7 @@ const useUsername = () => {
   return useObservable(getUsernames$, initialUsernames);
 };
 
-const completeSignUp = async (username: string, email?: string, uid?: string) => {
+const completeSignUp = async (username: string, email: NullableString, uid?: string) => {
   if (uid === undefined) {
     return;
   }
@@ -31,7 +33,14 @@ const completeSignUp = async (username: string, email?: string, uid?: string) =>
   try {
     const userDocumentReference = await getDocumentReferenceClientSide('users', uid);
 
-    const userData = email ? { username, email } : { username };
+    const userData: User = {
+      email,
+      username,
+      profilePhoto: null,
+      creditCardInformation: null,
+      notifications: [],
+      assets: [],
+    };
 
     await setDoc(userDocumentReference, userData);
 
@@ -63,7 +72,7 @@ export const useSignUpForm = () => {
     () =>
       handleSubmit(async ({ username, email }) => {
         setIsSignUpSubmitting(true);
-        await completeSignUp(username, email, uid);
+        email !== undefined && (await completeSignUp(username, email, uid));
         setIsSignUpSubmitting(false);
       }),
     [handleSubmit, uid]
