@@ -1,5 +1,6 @@
-import { Collection } from './collection';
+import { Asset } from '.';
 import { Notification } from './notification';
+import { NullableString } from './types';
 
 interface CreditCardInformation {
   firstName: string;
@@ -16,15 +17,10 @@ interface CreditCardInformation {
 
 //  id = wallet address
 export interface User {
-  id: string;
-  nonce: number;
-  isSigningUp: boolean;
   username: string;
-  displayName: string;
-  email?: string;
-  phoneNumber?: string;
-  profilePhoto?: string;
-  creditCardInformation?: CreditCardInformation;
-  notifications?: Notification[];
-  collections?: Collection[];
+  email: NullableString;
+  profilePhoto: NullableString;
+  creditCardInformation: CreditCardInformation | null;
+  notifications: Notification[];
+  assets: Asset[];
 }
