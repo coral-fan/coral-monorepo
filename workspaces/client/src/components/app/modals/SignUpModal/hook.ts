@@ -11,8 +11,7 @@ import {
   useUserUid,
 } from 'libraries/firebase';
 import { useObservable } from 'libraries/utils/hooks';
-import { User } from 'libraries/firebase';
-import { NullableString } from 'libraries/firebase/firestore/types';
+import { User, NullableString } from 'libraries/firebase';
 import { getSignUpSchema, SignUpSchema } from './schema';
 
 const getUsernames$ = () => {
