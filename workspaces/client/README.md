@@ -17,7 +17,7 @@ Please note that any values surrounded by `<` `>` and are placeholder values, an
 
 Starts the Next.js server in development mode with hot reloading for changes to source code, as well as the Next.js configuration file.
 
-Visit [localhost:3030](http://localhost:3030) to view the application.
+Visit [localhost:3000](http://localhost:3000) to view the application.
 
 ### `yarn start:debug`
 
