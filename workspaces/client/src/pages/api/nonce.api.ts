@@ -1,5 +1,6 @@
 import { isAddress } from '@ethersproject/address';
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
+import { ERROR_RESPONSE } from './consts';
 import { Handler } from './types';
 import { getHandler } from './utils';
 import { getNonce } from './utils/nonce';
@@ -25,8 +26,8 @@ const post: Handler = async (req, res) => {
       return res.json({ nonce });
     }
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error: 'An error occured.' });
+    console.error(error);
+    return res.status(500).json(ERROR_RESPONSE);
   }
 };
 
