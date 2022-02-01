@@ -36,14 +36,10 @@ Then add a `ngrok.yaml` file with the configuration below:
 ```yaml
 authtoken: <YOUR_NGROK_AUTH_TOKEN>
 tunnels:
-  client:
-    addr: 8080
+  web:
+    addr: 3000
     proto: http
     hostname: coral.ngrok.io
-  server:
-    addr: 7070
-    proto: http
-    hostname: server.coral.ngrok.io
 ```
 
 Please note that any values surrounded by `<` `>` and are placeholder values, and must be filled in with the actual value.
