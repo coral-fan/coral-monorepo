@@ -3,6 +3,7 @@ import { verifyMessage } from '@ethersproject/wallet';
 import { getAuth } from 'firebase-admin/auth';
 import { getAuthenticationMessage } from 'libraries/authentication';
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
+import { ERROR_RESPONSE } from './consts';
 import { Handler } from './types';
 import { getHandler } from './utils';
 import { getNonce } from './utils/nonce';
@@ -31,8 +32,8 @@ const post: Handler = async (req, res) => {
       return res.status(400).json({ error: 'Address is not valid.' });
     }
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error });
+    console.error(error);
+    return res.status(500).json(ERROR_RESPONSE);
   }
 };
 
