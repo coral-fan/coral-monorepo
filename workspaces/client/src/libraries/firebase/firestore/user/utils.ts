@@ -2,21 +2,13 @@ import { getDoc, setDoc } from '@firebase/firestore';
 import { getDocumentReferenceClientSide } from 'libraries/firebase';
 import { User } from './types';
 
-interface UserWithUid extends User {
-  uid: string;
-}
-
 /*
 At Least One Type implementation from:
 https://stackoverflow.com/questions/48230773/how-to-create-a-partial-like-that-requires-a-single-property-to-be-set/48244432
 */
-
 type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> & U[keyof U];
-type PartialUserData = AtLeastOne<UserWithUid>;
 
-export const upsertUser = async (incomingUserData: PartialUserData) => {
-  const { uid } = incomingUserData;
-
+export const upsertUser = async (incomingUserData: AtLeastOne<User>, uid: string) => {
   if (uid === undefined) {
     return;
   }
