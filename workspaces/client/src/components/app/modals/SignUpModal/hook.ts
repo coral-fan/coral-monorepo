@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { createUpdateUser, useUsername, useUserUid } from 'libraries/firebase';
+import { upsertUser, useUsername, useUserUid } from 'libraries/firebase';
 import { getSignUpSchema, SignUpSchema } from './schema';
 
 export const useSignUpForm = () => {
@@ -25,7 +25,7 @@ export const useSignUpForm = () => {
     () =>
       handleSubmit(async ({ username, email }) => {
         setIsSignUpSubmitting(true);
-        email !== undefined && (await createUpdateUser({ username, email, uid }));
+        email !== undefined && (await upsertUser({ username, email, uid }));
         setIsSignUpSubmitting(false);
       }),
     [handleSubmit, uid]
