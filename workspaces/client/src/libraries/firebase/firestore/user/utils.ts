@@ -1,6 +1,19 @@
 import { getDoc, setDoc } from '@firebase/firestore';
 import { getDocumentReferenceClientSide } from 'libraries/firebase';
 import { User } from './types';
+import { getDocumentData } from '..';
+
+export const getIsSigningUp = async (uid: string) => {
+  const isSigningUpData = await getDocumentData('is-signing-up', uid);
+
+  if (isSigningUpData === undefined) {
+    throw Error(
+      'Data object for is signing up should not be undefined. Please that the uid you passed is valid.'
+    );
+  }
+
+  return isSigningUpData.isSigningUp as Promise<boolean>;
+};
 
 /*
 At Least One Type implementation from:
@@ -26,13 +39,11 @@ export const upsertUser = async (incomingUserData: AtLeastOne<User>, uid: string
             Additional object destructure handles Typescript overwriting error, solution from:
             https://stackoverflow.com/questions/62596892/how-do-you-use-spread-operator-to-overwrite-properties-in-typescript
           */
-            ...{
-              email: null,
-              profilePhoto: null,
-              creditCardInformation: null,
-              notifications: [],
-              assets: [],
-            },
+            email: null,
+            profilePhoto: null,
+            creditCardInformation: null,
+            notifications: [],
+            assets: [],
             ...incomingUserData,
           },
       { merge: true }
