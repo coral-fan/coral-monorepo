@@ -17,7 +17,7 @@ interface CreditCardInformation {
 
 //  id = wallet address
 export interface User {
-  username: string;
+  username: NullableString;
   email: NullableString;
   profilePhoto: NullableString;
   creditCardInformation: CreditCardInformation | null;
