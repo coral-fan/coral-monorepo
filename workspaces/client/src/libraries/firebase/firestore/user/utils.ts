@@ -35,10 +35,6 @@ export const upsertUser = async (incomingUserData: AtLeastOne<User>, uid: string
       userDocumentSnapshot.exists()
         ? incomingUserData
         : {
-            /*
-            Additional object destructure handles Typescript overwriting error, solution from:
-            https://stackoverflow.com/questions/62596892/how-do-you-use-spread-operator-to-overwrite-properties-in-typescript
-          */
             email: null,
             profilePhoto: null,
             creditCardInformation: null,
