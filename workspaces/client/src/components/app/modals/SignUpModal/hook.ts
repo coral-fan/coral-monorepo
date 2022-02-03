@@ -2,11 +2,11 @@ import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { upsertUser, useUsername, useUserUid } from 'libraries/firebase';
+import { upsertUser, useUsernames, useUserUid } from 'libraries/firebase';
 import { getSignUpSchema, SignUpSchema } from './schema';
 
 export const useSignUpForm = () => {
-  const usernames = useUsername();
+  const usernames = useUsernames();
   const signUpSchema = getSignUpSchema(usernames);
 
   const {

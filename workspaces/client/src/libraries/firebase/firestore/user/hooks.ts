@@ -7,7 +7,7 @@ const getUserUid = () => getAuth().currentUser?.uid;
 
 export const useUserUid = () => useObservable(getUserUid$, getUserUid());
 
-export const useUsername = () => {
+export const useUsernames = () => {
   const initialUsernames = useMemo(() => new Set<string>(), []);
   return useObservable(getUsernames$, initialUsernames);
 };
