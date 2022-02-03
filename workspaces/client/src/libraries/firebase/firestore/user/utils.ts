@@ -26,25 +26,21 @@ export const upsertUser = async (incomingUserData: AtLeastOne<User>, uid: string
     return;
   }
 
-  try {
-    const userDocumentReference = await getDocumentReferenceClientSide('users', uid);
-    const userDocumentSnapshot = await getDoc(userDocumentReference);
+  const userDocumentReference = await getDocumentReferenceClientSide('users', uid);
+  const userDocumentSnapshot = await getDoc(userDocumentReference);
 
-    await setDoc(
-      userDocumentReference,
-      userDocumentSnapshot.exists()
-        ? incomingUserData
-        : {
-            email: null,
-            profilePhoto: null,
-            creditCardInformation: null,
-            notifications: [],
-            assets: [],
-            ...incomingUserData,
-          },
-      { merge: true }
-    );
-  } catch (error) {
-    console.log(error);
-  }
+  await setDoc(
+    userDocumentReference,
+    userDocumentSnapshot.exists()
+      ? incomingUserData
+      : {
+          email: null,
+          profilePhoto: null,
+          creditCardInformation: null,
+          notifications: [],
+          assets: [],
+          ...incomingUserData,
+        },
+    { merge: true }
+  );
 };
