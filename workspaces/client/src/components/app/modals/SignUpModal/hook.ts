@@ -25,7 +25,9 @@ export const useSignUpForm = () => {
     () =>
       handleSubmit(async ({ username, email }) => {
         setIsSignUpSubmitting(true);
-        email !== undefined && uid !== undefined && (await upsertUser({ username, email }, uid));
+        if (uid !== undefined) {
+          await upsertUser({ username, email }, uid);
+        }
         setIsSignUpSubmitting(false);
       }),
     [handleSubmit, uid]
