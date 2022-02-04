@@ -1,2 +1,2 @@
-export * from './initializeStore';
+export * from './utils';
 export * from './types';
