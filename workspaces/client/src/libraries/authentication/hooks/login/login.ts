@@ -9,7 +9,7 @@ import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain';
 import { useIsLoggingIn, useIsSigningUp } from '..';
 import { fetchNonce, signAuthenticatedMessage, fetchFirebaseAuthToken } from './utils';
-import { getIsSigningUp } from 'libraries/firebase';
+import { getIsUserSigningUp } from 'libraries/models';
 
 export const useLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
@@ -48,7 +48,7 @@ export const useLogin = () => {
 
         setCookie(undefined, 'token', idToken, COOKIE_OPTIONS);
 
-        const isSigningUp = await getIsSigningUp(userCredential.user.uid);
+        const isSigningUp = await getIsUserSigningUp(userCredential.user.uid);
         setIsSigningUp(isSigningUp);
 
         setIsLoggingIn(false);
