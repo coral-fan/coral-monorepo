@@ -1,9 +1,9 @@
 import { getDoc, setDoc } from '@firebase/firestore';
 import { getDocumentReferenceClientSide } from 'libraries/firebase';
 import { User } from './types';
-import { getDocumentData } from '..';
+import { getDocumentData } from 'libraries/firebase';
 
-export const getIsSigningUp = async (uid: string) => {
+export const getIsUserSigningUp = async (uid: string) => {
   const isSigningUpData = await getDocumentData('is-signing-up', uid);
 
   if (isSigningUpData === undefined) {

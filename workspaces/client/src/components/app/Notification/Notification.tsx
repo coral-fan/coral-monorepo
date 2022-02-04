@@ -5,7 +5,7 @@ import { getIconComponent } from 'components/ui/icons/utils';
 import xSVG from './X.svg';
 import { Card } from 'components/ui';
 import { TimeElapsed } from 'components/ui/TimeElapsed';
-import { Notification as NotificationProps } from 'libraries/firebase/firestore/notification/types';
+import { Notification as NotificationProps } from 'libraries/models';
 import tokens from 'styles/tokens';
 import { buttonBaseStyle } from 'components/ui/buttons/styles';
 
