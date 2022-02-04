@@ -2,8 +2,9 @@ import { useEffect } from 'react';
 import { filter, map, mergeMap } from 'rxjs';
 import { docData } from 'rxfire/firestore';
 
-import { getDocumentReferenceClientSide, getUserUid$ } from 'libraries/firebase';
+import { getDocumentReferenceClientSide } from 'libraries/firebase';
 import { useIsSigningUp, useToken } from 'libraries/authentication';
+import { getUserUid$ } from 'libraries/models';
 
 export const IsSigningUpStateManager = () => {
   const [, setIsSigningUp] = useIsSigningUp();
