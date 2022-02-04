@@ -1,1 +1,2 @@
-export { initializeStore } from './initializeStore';
+export * from './initializeStore';
+export * from './types';
