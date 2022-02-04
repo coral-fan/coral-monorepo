@@ -6,7 +6,8 @@ import Head from 'next/head';
 // application logic imports
 import { destroyCookie, parseCookies } from 'nookies';
 import { COOKIE_OPTIONS } from 'consts';
-import { initializeFirebaseApp, initializeFirebaseAdmin, getIsSigningUp } from 'libraries/firebase';
+import { initializeFirebaseApp, initializeFirebaseAdmin } from 'libraries/firebase';
+import { getIsUserSigningUp } from 'libraries/models';
 
 // react imports
 
@@ -88,7 +89,7 @@ const getInitialProps = async (appContext: AppContext) => {
   const initialProps = await App.getInitialProps(appContext);
   const { ctx } = appContext;
   const uid = isServerSide() ? await getUIDServerSide(ctx) : getUIDClientSide();
-  const isSigningUp: boolean = uid ? await getIsSigningUp(uid) : false;
+  const isSigningUp: boolean = uid ? await getIsUserSigningUp(uid) : false;
   return {
     ...initialProps,
     initialState: { isSigningUp },
