@@ -1,8 +1,0 @@
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents { 
-  	match /{path=**}/{collection}/{document} {
-    	allow read: if collection != 'private';
-    }
-  }
-}
