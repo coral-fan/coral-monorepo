@@ -17,33 +17,46 @@ const getFirestoreServerSide = async () => {
   return getFirestore(app);
 };
 
-export const getDocumentReferenceServerSide = async (collection: string, id: string) => {
+export const getDocumentReferenceServerSide = async (
+  collection: string,
+  id: string,
+  ...subpaths: string[]
+) => {
   const firestore = await getFirestoreServerSide();
-  return firestore.doc(`${collection}/${id}`);
+  return firestore.doc(`${collection}/${id}${subpaths.length > 0 ? `/${subpaths.join('/')}` : ''}`);
 };
 
-export const getDocumentReferenceClientSide = async (collection: string, id: string) => {
+export const getDocumentReferenceClientSide = (
+  collection: string,
+  id: string,
+  ...subpaths: string[]
+) => {
   const app = getApp();
   const firestore = getFirestoreClientSide(app);
-  return doc(firestore, collection, id);
+  return doc(firestore, collection, id, ...subpaths);
 };
 
-export const getDocumentReference = (collection: string, id: string) =>
+export const getDocumentReference = async (collection: string, id: string, ...subpaths: string[]) =>
   (isServerSide() ? getDocumentReferenceServerSide : getDocumentReferenceClientSide)(
     collection,
-    id
+    id,
+    ...subpaths
   );
 
-export const getDocumentSnapshot = async (collection: string, id: string) => {
-  const documentReference = await getDocumentReference(collection, id);
+export const getDocumentSnapshot = async (
+  collection: string,
+  id: string,
+  ...subpaths: string[]
+) => {
+  const documentReference = await getDocumentReference(collection, id, ...subpaths);
   // checks if documentReference is instance of DocumentReference which is from firebase/firestore (client side only)
   return documentReference instanceof DocumentReference
     ? getDoc(documentReference)
     : documentReference.get();
 };
 
-export const getDocumentData = async (collection: string, id: string) => {
-  const documentReference = await getDocumentReference(collection, id);
+export const getDocumentData = async (collection: string, id: string, ...subpaths: string[]) => {
+  const documentReference = await getDocumentReference(collection, id, ...subpaths);
   // checks if documentReference is instance of DocumentReference which is from firebase/firestore (client side only)
   return (
     await (documentReference instanceof DocumentReference
