@@ -15,7 +15,7 @@ export const IsSigningUpStateManager = () => {
       .pipe(
         // need type guard: https://stackoverflow.com/questions/57206909/typescript-with-rxjs-filter-typing-problem
         filter((uid): uid is string => uid !== undefined),
-        mergeMap((uid) => getDocumentReferenceClientSide('is-signing-up', uid)),
+        map((uid) => getDocumentReferenceClientSide('is-signing-up', uid)),
         mergeMap((docRef) => docData(docRef)),
         map((data) => data.isSigningUp)
       )
