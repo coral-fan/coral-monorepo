@@ -23,9 +23,9 @@ export const getIconStoryConfigurations = (
   return { meta, Default };
 };
 
-const Icon = ({ svg, size, alt }: BaseIconProps) => (
+const Icon = ({ svg, size, alt, ...props }: BaseIconProps) => (
   // eslint-disable-next-line @next/next/no-img-element
-  <img src={svg} alt={alt} width={size} height={size} />
+  <img src={svg} alt={alt} width={size} height={size} {...props} />
 );
 
 // * possible that due to the function name attribute being the same for all icon components that the stack trace becomes difficult to debug
