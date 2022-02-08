@@ -1,13 +1,19 @@
 import { RootState } from 'libraries/state/types';
+import { getCoralAPIAxios } from 'libraries/utils/api';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateIsSigningUp } from '../slice';
 
-export const useIsSigningUp = (): [boolean, (isSigningUp: boolean) => void] => {
+const axios = getCoralAPIAxios();
+
+export const useIsSigningUp = (): [boolean, (isSigningUp: boolean) => Promise<void>] => {
   const dispatch = useDispatch();
   const isSigningUp = useSelector((state: RootState) => state.authentication.isSigningUp);
   const setIsSigningUp = useCallback(
-    (isSigningUp: boolean) => dispatch(updateIsSigningUp(isSigningUp)),
+    async (isSigningUp: boolean) => {
+      await axios.post('is-signing-up', { isSigningUp: false });
+      dispatch(updateIsSigningUp(isSigningUp));
+    },
     [dispatch]
   );
   return [isSigningUp, setIsSigningUp];
