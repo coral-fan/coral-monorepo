@@ -1,8 +1,9 @@
 import { object, InferType } from 'yup';
-import { getUsernameSchema } from 'libraries/utils/schemas';
+import { getUsernameSchema, email } from 'libraries/utils/schemas';
 
 export const getEditUserSchema = (usernames: Set<string>) =>
   object({
+    email,
     username: getUsernameSchema(usernames),
   });
 
