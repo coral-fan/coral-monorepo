@@ -5,6 +5,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { upsertUser, useUsernames, useUserUid } from 'libraries/models';
 import { getSignUpSchema, SignUpSchema } from './schema';
 import { useIsSigningUp } from 'libraries/authentication';
+import { getCoralAPIAxios } from 'libraries/utils/api';
+
+const axios = getCoralAPIAxios();
 
 export const useSignUpForm = () => {
   const usernames = useUsernames();
@@ -31,6 +34,7 @@ export const useSignUpForm = () => {
         if (uid !== undefined) {
           try {
             await upsertUser(uid, { username, email });
+            await axios.post('is-signing-up', { isSigningUp: false });
             await setIsSigningUp(false);
           } catch (_) {
             setIsSignUpSubmitting(false);
