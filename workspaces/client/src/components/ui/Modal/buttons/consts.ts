@@ -14,4 +14,8 @@ export const CONTROL_BUTTON_STYLE = css`
   border: 0.5px solid #534b58;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
   border-radius: 30px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

@@ -69,7 +69,7 @@ export const Modal: FC<ModalProps> = ({ children, title, onClick, variant }) => 
     ? ReactDOM.createPortal(
         <Overlay>
           <Container>
-            {onClick && createElement(variant === 'close' ? CloseButton : PreviousButton)}
+            {onClick && createElement(variant === 'close' ? CloseButton : PreviousButton, { onClick })}
             <Content title={title}>
               {title && <Heading>{title}</Heading>}
               <Main>{children}</Main>
