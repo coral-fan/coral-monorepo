@@ -8,12 +8,13 @@ export const initializeFirebaseApp = () => {
     https://firebase.google.com/docs/firestore/quickstart#set_up_your_development_environment
     */
     const firebaseConfig = {
-      apiKey: 'AIzaSyAgiH9P3HVDWmnFZvpgP8nvIpjB93LdBD0',
-      authDomain: 'torus-tutorial.firebaseapp.com',
-      projectId: 'torus-tutorial',
-      storageBucket: 'torus-tutorial.appspot.com',
-      messagingSenderId: '421605888175',
-      appId: '1:421605888175:web:f3571744c16e97bbbb045a',
+      apiKey: 'AIzaSyAjdS0N93SLZUkiYgdwxE_7sNjX0gXZc-E',
+      authDomain: 'coral-c373f.firebaseapp.com',
+      projectId: 'coral-c373f',
+      storageBucket: 'coral-c373f.appspot.com',
+      messagingSenderId: '805666237729',
+      appId: '1:805666237729:web:ddd1fb95078d202d15a260',
+      measurementId: 'G-91HP8670JW',
     };
     initializeApp(firebaseConfig);
   }
