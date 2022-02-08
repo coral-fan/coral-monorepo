@@ -8,7 +8,7 @@ import { COOKIE_OPTIONS, IS_OPEN_LOGIN_PENDING } from 'consts';
 import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain';
 import { useIsLoggingIn, useIsSigningUp } from '..';
-import { fetchNonce, signAuthenticatedMessage, fetchFirebaseAuthToken } from './utils';
+import { getNonce, getSignedAuthenticationMessage, getFirebaseAuthToken } from './utils';
 import { getIsUserSigningUp } from 'libraries/models';
 
 export const useLogin = () => {
@@ -36,9 +36,9 @@ export const useLogin = () => {
       // check if signer exists in case user closes out of open login modal
       if (signer) {
         const address = await signer.getAddress();
-        const nonce = await fetchNonce(address);
-        const signedMessage = await signAuthenticatedMessage(signer, nonce);
-        const token = await fetchFirebaseAuthToken(address, signedMessage);
+        const nonce = await getNonce(address);
+        const signedMessage = await getSignedAuthenticationMessage(signer, nonce);
+        const token = await getFirebaseAuthToken(address, signedMessage);
         const userCredential = await signInWithCustomToken(getAuth(), token);
         const idToken = await userCredential.user.getIdToken();
 
