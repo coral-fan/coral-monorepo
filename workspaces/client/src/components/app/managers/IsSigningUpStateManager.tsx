@@ -1,10 +1,7 @@
 import { useEffect } from 'react';
-import { filter, map, mergeMap } from 'rxjs';
-import { docData } from 'rxfire/firestore';
-
-import { getDocumentReferenceClientSide } from 'libraries/firebase';
+import { filter, mergeMap } from 'rxjs';
 import { useIsSigningUp, useToken } from 'libraries/authentication';
-import { getUserUid$ } from 'libraries/models';
+import { getIsUserSigningUp, getUserUid$ } from 'libraries/models';
 
 export const IsSigningUpStateManager = () => {
   const [, setIsSigningUp] = useIsSigningUp();
@@ -15,9 +12,7 @@ export const IsSigningUpStateManager = () => {
       .pipe(
         // need type guard: https://stackoverflow.com/questions/57206909/typescript-with-rxjs-filter-typing-problem
         filter((uid): uid is string => uid !== undefined),
-        map((uid) => getDocumentReferenceClientSide('is-signing-up', uid)),
-        mergeMap((docRef) => docData(docRef)),
-        map((data) => data.isSigningUp)
+        mergeMap(getIsUserSigningUp)
       )
       .subscribe((isSigningUp) => setIsSigningUp(isSigningUp && token !== undefined));
 
