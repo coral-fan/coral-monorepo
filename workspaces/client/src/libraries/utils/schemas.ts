@@ -1,18 +1,10 @@
 import { boolean, string } from 'yup';
 
-export const getUsernameSchema = (usernames: Set<string>, existingUsername?: string) =>
+export const getUsernameSchema = (usernames: Set<string>) =>
   string()
     .required()
     .min(3)
     .matches(/^([a-zA-Z\d_])+$/g, 'Only alphanumeric characters and _ are allowed')
-    .test({
-      name: 'is-username-same',
-      test: (username) =>
-        existingUsername !== undefined &&
-        username !== undefined &&
-        username.toLowerCase() !== existingUsername.toLowerCase(),
-      message: 'Username is the same',
-    })
     .test({
       name: 'is-username-unique',
       test: (username) => username !== undefined && !usernames.has(username.toLowerCase()),
