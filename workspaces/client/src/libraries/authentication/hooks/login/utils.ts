@@ -5,7 +5,7 @@ import { getAuthenticationMessage } from 'libraries/authentication';
 
 const axios = getCoralAPIAxios();
 
-export const fetchNonce = async (address: string) => {
+export const getNonce = async (address: string) => {
   const {
     data: { nonce },
   } = await axios.post<{ nonce: number }>('nonce', {
@@ -15,7 +15,7 @@ export const fetchNonce = async (address: string) => {
   return nonce;
 };
 
-export const fetchFirebaseAuthToken = async (address: string, signedMessage: string) => {
+export const getFirebaseAuthToken = async (address: string, signedMessage: string) => {
   const {
     data: { token },
   } = await axios.post<{ token: string }>('auth', {
@@ -26,5 +26,5 @@ export const fetchFirebaseAuthToken = async (address: string, signedMessage: str
   return token;
 };
 
-export const signAuthenticatedMessage = (signer: Wallet | JsonRpcSigner, nonce: number) =>
+export const getSignedAuthenticationMessage = (signer: Wallet | JsonRpcSigner, nonce: number) =>
   signer.signMessage(getAuthenticationMessage(nonce));
