@@ -5,8 +5,7 @@ import { getAuthenticationMessage } from 'libraries/authentication';
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
 import { ERROR_RESPONSE } from './consts';
 import { Handler } from './types';
-import { getHandler } from './utils';
-import { getNonce } from './utils/nonce';
+import { getHandler, getNonce } from './utils';
 
 const post: Handler = async (req, res) => {
   const { address, signedMessage } = req.body;
