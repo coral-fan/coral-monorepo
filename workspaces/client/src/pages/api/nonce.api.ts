@@ -2,13 +2,12 @@ import { isAddress } from '@ethersproject/address';
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
 import { ERROR_RESPONSE } from './consts';
 import { Handler } from './types';
-import { getHandler } from './utils';
-import { getNonce } from './utils/nonce';
+import { getHandler, getNonce } from './utils';
 
 const post: Handler = async (req, res) => {
   const { address } = req.body;
   if (!isAddress(address)) {
-    return res.status(400).json({ error: 'Address is not valid.' });
+    return res.status(400).json({ error: 'Invalid address.' });
   }
 
   try {
