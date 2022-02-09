@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { getEditUserSchema, EditUserSchema } from './schemas';
 import { upsertUser, useUsernames, useUserUid } from 'libraries/models';
 
-export const useEditUser = (showModal: Dispatch<SetStateAction<boolean>>) => {
+export const useEditUserForm = (showModal: Dispatch<SetStateAction<boolean>>) => {
   const usernames = useUsernames();
   const editUserSchema = getEditUserSchema(usernames);
 
@@ -26,7 +26,7 @@ export const useEditUser = (showModal: Dispatch<SetStateAction<boolean>>) => {
       handleSubmit(async ({ username, email }) => {
         setIsEditUserSubmitting(true);
         if (uid !== undefined) {
-          await upsertUser({ username, email }, uid);
+          await upsertUser(uid, { username, email });
         }
         setIsEditUserSubmitting(false);
         showModal(false);

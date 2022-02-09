@@ -6,12 +6,12 @@ import { Avatar } from 'components/ui';
 
 import { AvatarContainer, AvatarWrapper, EditUserForm, InputsContainer } from './components';
 
-import { useEditUser } from './hooks';
+import { useEditUserForm } from './hooks';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { EditUserProps } from './types';
 
 interface EditUserModalProps extends EditUserProps {
-  showModal: Dispatch<SetStateAction<boolean>>
+  showModal: Dispatch<SetStateAction<boolean>>;
 }
 
 export const EditUserModal = ({ username, email, profilePhoto, showModal }: EditUserModalProps) => {
@@ -19,7 +19,7 @@ export const EditUserModal = ({ username, email, profilePhoto, showModal }: Edit
   const isNetworkSupported = useIsNetworkSupported();
 
   const { register, setValue, errors, isValid, isEditUserSubmitting, handleSubmitEditUser } =
-    useEditUser(showModal);
+    useEditUserForm(showModal);
 
   useEffect(() => {
     setValue('username', username);
@@ -53,11 +53,7 @@ export const EditUserModal = ({ username, email, profilePhoto, showModal }: Edit
             error={errors?.email?.message}
           />
         </InputsContainer>
-        <Button
-          type="submit"
-          disabled={!isValid}
-          loading={isEditUserSubmitting}
-        >
+        <Button type="submit" disabled={!isValid} loading={isEditUserSubmitting}>
           Update Account
         </Button>
       </EditUserForm>
