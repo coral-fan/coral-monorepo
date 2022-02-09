@@ -23,7 +23,7 @@ export default function UserPage({ user }: { user: User }) {
           email={email}
           username={username}
           profilePhoto={profilePhoto}
-          showModal={setIsEditUserModalOpen}
+          setIsModalOpen={setIsEditUserModalOpen}
         />
       ) : null}
     </Container>
