@@ -11,9 +11,9 @@ export const getUsernameSchema = (usernames: Set<string>) =>
       message: 'Username is taken',
     });
 
-export const email = string()
+export const EMAIL_SCHEMA = string()
   .email()
   .transform((value: string) => (value === '' ? null : value))
   .nullable();
 
-export const doesAgree = boolean().required().default(false).isTrue();
+export const DOES_AGREE_SCHEMA = boolean().required().default(false).isTrue();
