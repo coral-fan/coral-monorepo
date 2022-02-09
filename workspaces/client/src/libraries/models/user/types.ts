@@ -15,18 +15,18 @@ export interface CreditCardInformation {
   };
 }
 
-//  id = wallet address
-export interface User {
-  username: string;
-  profilePhoto: NullableString;
-  notifications: Notification[];
-  assets: Asset[];
-}
-
 export interface PrivateUserData {
   email: NullableString;
   creditCardInformation: CreditCardInformation | null;
 }
+
+//  id = wallet address
+export type User = Partial<PrivateUserData> & {
+  username: string;
+  profilePhoto: NullableString;
+  notifications: Notification[];
+  assets: Asset[];
+};
 
 /*
 At Least One Type implementation from:
@@ -34,4 +34,4 @@ https://stackoverflow.com/questions/48230773/how-to-create-a-partial-like-that-r
 */
 type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> & U[keyof U];
 
-export type IncomingUserData = AtLeastOne<User & PrivateUserData>;
+export type IncomingUserData = AtLeastOne<User>;
