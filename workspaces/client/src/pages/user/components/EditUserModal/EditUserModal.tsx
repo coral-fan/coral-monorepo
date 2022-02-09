@@ -6,37 +6,45 @@ import { AvatarContainer, AvatarWrapper, EditUserForm, InputsContainer } from '.
 
 import { useEditUserForm } from './hooks';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { EditUserProps } from './types';
+import { User } from 'libraries/models';
 
-interface EditUserModalProps extends EditUserProps {
-  showModal: Dispatch<SetStateAction<boolean>>;
-}
+type NonEditableUserFields = 'notifications' | 'assets';
 
-export const EditUserModal = ({ username, email, profilePhoto, showModal }: EditUserModalProps) => {
+type EditUserModalProps = Omit<User, NonEditableUserFields> & {
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+export const EditUserModal = ({
+  username,
+  email,
+  profilePhoto,
+  creditCardInformation,
+  setIsModalOpen,
+}: EditUserModalProps) => {
   const isAuthenticated = useIsAuthenticated();
   const isNetworkSupported = useIsNetworkSupported();
 
   const { register, setValue, errors, isValid, isEditUserSubmitting, handleSubmitEditUser } =
-    useEditUserForm(showModal);
+    useEditUserForm(username, setIsModalOpen);
 
   useEffect(() => {
     setValue('username', username);
     setValue('email', email);
-  }, []);
+  }, [setValue, username, email]);
 
   if (!isAuthenticated || !isNetworkSupported) {
     return null;
   }
 
   return (
-    <Modal onClick={() => showModal(false)} variant={'close'}>
+    <Modal onClick={() => setIsModalOpen(false)} variant={'close'}>
+      <AvatarContainer>
+        <AvatarWrapper>
+          <Avatar size={200} hasBorder={false} />
+        </AvatarWrapper>
+        <Button>Change Photo</Button>
+      </AvatarContainer>
       <EditUserForm onSubmit={handleSubmitEditUser}>
-        <AvatarContainer>
-          <AvatarWrapper>
-            <Avatar size={200} hasBorder={false} />
-          </AvatarWrapper>
-          <Button>Change Photo</Button>
-        </AvatarContainer>
         <InputsContainer>
           <Input
             label="Username"
