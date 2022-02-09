@@ -4,9 +4,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { getEditUserSchema, EditUserSchema } from './schemas';
 import { upsertUser, useUsernames, useUserUid } from 'libraries/models';
 
-export const useEditUserForm = (showModal: Dispatch<SetStateAction<boolean>>) => {
+export const useEditUserForm = (
+  currentUsername: string,
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>
+) => {
   const usernames = useUsernames();
-  const editUserSchema = getEditUserSchema(usernames);
+  const editUserSchema = getEditUserSchema(usernames, currentUsername);
 
   const {
     register,
@@ -29,9 +32,9 @@ export const useEditUserForm = (showModal: Dispatch<SetStateAction<boolean>>) =>
           await upsertUser(uid, { username, email });
         }
         setIsEditUserSubmitting(false);
-        showModal(false);
+        setIsModalOpen(false);
       }),
-    [handleSubmit, showModal, uid]
+    [handleSubmit, setIsModalOpen, uid]
   );
   return { register, setValue, errors, isValid, isEditUserSubmitting, handleSubmitEditUser };
 };
