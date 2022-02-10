@@ -3,6 +3,6 @@ import { NullableString } from 'libraries/models/types';
 
 type NonEditableUserFields = 'notifications' | 'assets';
 
-export type UpdateUserProps = Omit<User, NonEditableUserFields | 'email'> & {
+export type EditableUserFields = Omit<User, NonEditableUserFields | 'email'> & {
   email: NullableString;
 };
