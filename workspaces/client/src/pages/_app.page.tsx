@@ -4,9 +4,7 @@ import App from 'next/app';
 import Head from 'next/head';
 
 // application logic imports
-import { destroyCookie, parseCookies } from 'nookies';
-import { COOKIE_OPTIONS } from 'consts';
-import { initializeFirebaseApp, initializeFirebaseAdmin } from 'libraries/firebase';
+import { initializeFirebaseApp } from 'libraries/firebase';
 import { getIsUserSigningUp } from 'libraries/models';
 
 // react imports
@@ -22,11 +20,9 @@ import { Web3ReactProvider } from '@web3-react/core';
 import { Provider as ReduxProvider } from 'react-redux';
 import { initializeStore } from 'libraries/state';
 import { getLibrary } from 'libraries/utils/provider';
-import { getAuth } from 'firebase/auth';
-import { getApp } from 'firebase/app';
 import { useEffect, useState } from 'react';
-import { NextPageContext } from 'next';
 import { isServerSide } from 'libraries/utils/environment';
+import { getUidServerSide, getUidClientSide } from './utils/uid';
 
 initializeFirebaseApp();
 
@@ -68,28 +64,13 @@ const CustomApp = ({ Component, pageProps, initialState }: CustomAppProps) => {
   );
 };
 
-const getUIDServerSide = async (ctx: NextPageContext) => {
-  await initializeFirebaseAdmin();
-  try {
-    const { getApp } = await import('firebase-admin/app');
-    const app = getApp();
-    const { getAuth } = await import('firebase-admin/auth');
-    const cookies = parseCookies(ctx);
-    const { uid } = await getAuth(app).verifyIdToken(cookies.token);
-    return uid;
-  } catch (_) {
-    destroyCookie(ctx, 'token', COOKIE_OPTIONS);
-  }
-};
-
-const getUIDClientSide = () => getAuth(getApp()).currentUser?.uid;
-
 const getInitialProps = async (appContext: AppContext) => {
   // below is necessary as per next.js docs (https://nextjs.org/docs/advanced-features/custom-app)
   const initialProps = await App.getInitialProps(appContext);
   const { ctx } = appContext;
-  const uid = isServerSide() ? await getUIDServerSide(ctx) : getUIDClientSide();
+  const uid = isServerSide() ? await getUidServerSide(ctx) : getUidClientSide();
   const isSigningUp: boolean = uid ? await getIsUserSigningUp(uid) : false;
+
   return {
     ...initialProps,
     initialState: { isSigningUp },
