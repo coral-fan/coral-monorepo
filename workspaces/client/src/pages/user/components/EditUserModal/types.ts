@@ -1,3 +1,8 @@
 import { User } from 'libraries/models';
+import { NullableString } from 'libraries/models/types';
 
-export type EditUserProps = Omit<User, 'creditCardInformation' | 'notifications' | 'assets'>;
+type NonEditableUserFields = 'notifications' | 'assets';
+
+export type EditUserProps = Omit<User, NonEditableUserFields | 'email'> & {
+  email: NullableString;
+};
