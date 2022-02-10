@@ -2,27 +2,35 @@ import { useIsNetworkSupported } from 'libraries/blockchain';
 import { useIsAuthenticated } from 'libraries/authentication';
 import { Modal, Button, Input, Avatar } from 'components/ui';
 
-import { AvatarContainer, AvatarWrapper, EditUserForm, InputsContainer } from './components';
+import { AvatarContainer, AvatarWrapper, Form, InputsContainer } from './components';
 
-import { useEditUserForm } from './hooks';
+import { useUpdateProfileForm } from './hooks';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { UpdateUserProps } from '../UpdateUser';
+import { UpdateProfileProps } from '../UpdateProfile';
 
-type UpdateUserModalProps = UpdateUserProps & { setIsModalOpen: Dispatch<SetStateAction<boolean>> };
+type UpdateProfileModalProps = UpdateProfileProps & {
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+};
 
-export const UpdateUserModal = ({
+export const UpdateProfileModal = ({
   username,
   email,
   profilePhoto,
   creditCardInformation,
   setIsModalOpen,
   setUser,
-}: UpdateUserModalProps) => {
+}: UpdateProfileModalProps) => {
   const isAuthenticated = useIsAuthenticated();
   const isNetworkSupported = useIsNetworkSupported();
 
-  const { register, setValue, errors, isValid, isEditUserSubmitting, handleSubmitEditUser } =
-    useEditUserForm(username, email, setIsModalOpen, setUser);
+  const {
+    register,
+    setValue,
+    errors,
+    isValid,
+    isUpdateProfileSubmitting,
+    handleSubmitUpdateProfile,
+  } = useUpdateProfileForm(username, email, setIsModalOpen, setUser);
 
   useEffect(() => {
     setValue('username', username);
@@ -41,7 +49,7 @@ export const UpdateUserModal = ({
         </AvatarWrapper>
         <Button>Change Photo</Button>
       </AvatarContainer>
-      <EditUserForm onSubmit={handleSubmitEditUser}>
+      <Form onSubmit={handleSubmitUpdateProfile}>
         <InputsContainer>
           <Input
             label="Username"
@@ -56,10 +64,10 @@ export const UpdateUserModal = ({
             error={errors?.email?.message}
           />
         </InputsContainer>
-        <Button type="submit" disabled={!isValid} loading={isEditUserSubmitting}>
+        <Button type="submit" disabled={!isValid} loading={isUpdateProfileSubmitting}>
           Update Account
         </Button>
-      </EditUserForm>
+      </Form>
     </Modal>
   );
 };

@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next';
 import { getDocumentData } from 'libraries/firebase';
 import { getUidServerSide } from 'pages/utils';
 import { useState } from 'react';
-import { UpdateUser } from './components/UpdateUser';
+import { UpdateProfile } from './components/UpdateProfile';
 
 const Container = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ export default function UserPage({ userData, userProfileId }: UserPageProps) {
     <Container>
       {`${username}'s Profile`}
       {currentUserUid === userProfileId && email !== undefined && (
-        <UpdateUser {...{ username, email, profilePhoto, setUser }} />
+        <UpdateProfile {...{ username, email, profilePhoto, setUser }} />
       )}
     </Container>
   );
