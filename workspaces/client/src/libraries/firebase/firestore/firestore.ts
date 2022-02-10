@@ -55,14 +55,14 @@ export const getDocumentSnapshot = async (
     : documentReference.get();
 };
 
-export const getDocumentData = async (collection: string, id: string, ...subpaths: string[]) => {
+export const getDocumentData = async <T>(collection: string, id: string, ...subpaths: string[]) => {
   const documentReference = await getDocumentReference(collection, id, ...subpaths);
   // checks if documentReference is instance of DocumentReference which is from firebase/firestore (client side only)
   return (
     await (documentReference instanceof DocumentReference
       ? getDoc(documentReference)
       : documentReference.get())
-  ).data();
+  ).data() as T | undefined;
 };
 
 export const getCollectionReferenceClientSide = (collection: string) => {
