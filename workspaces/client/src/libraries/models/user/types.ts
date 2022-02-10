@@ -20,13 +20,15 @@ export interface PrivateUserData {
   creditCardInformation: CreditCardInformation | null;
 }
 
-//  id = wallet address
-export type User = Partial<PrivateUserData> & {
+export interface PublicUserData {
   username: string;
   profilePhoto: NullableString;
   notifications: Notification[];
   assets: Asset[];
-};
+}
+
+//  id = wallet address
+export type User = PublicUserData & Partial<PrivateUserData>;
 
 /*
 At Least One Type implementation from:
