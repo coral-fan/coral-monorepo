@@ -2,13 +2,14 @@ import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { getEditUserSchema, EditUserSchema } from './schemas';
-import { upsertUser, useUsernames, useUserUid } from 'libraries/models';
+import { upsertUser, User, useUsernames, useUserUid } from 'libraries/models';
 import { NullableString } from 'libraries/models/types';
 
 export const useEditUserForm = (
   username: string,
   email: NullableString,
-  setIsModalOpen: Dispatch<SetStateAction<boolean>>
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>,
+  setUser: Dispatch<SetStateAction<User>>
 ) => {
   const usernames = useUsernames();
   const editUserSchema = getEditUserSchema(usernames, username);
@@ -34,13 +35,18 @@ export const useEditUserForm = (
     () =>
       handleSubmit(async ({ username, email }) => {
         setIsEditUserSubmitting(true);
-        if (uid !== undefined) {
+        if (uid !== undefined && email !== undefined) {
           await upsertUser(uid, { username, email });
+          setUser((user) => ({
+            ...user,
+            username,
+            email,
+          }));
+          setIsModalOpen(false);
         }
         setIsEditUserSubmitting(false);
-        setIsModalOpen(false);
       }),
-    [handleSubmit, setIsModalOpen, uid]
+    [handleSubmit, setIsModalOpen, uid, setUser]
   );
   return { register, setValue, errors, isValid, isEditUserSubmitting, handleSubmitEditUser };
 };
