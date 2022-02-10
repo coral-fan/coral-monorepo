@@ -3,13 +3,15 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { getEditUserSchema, EditUserSchema } from './schemas';
 import { upsertUser, useUsernames, useUserUid } from 'libraries/models';
+import { NullableString } from 'libraries/models/types';
 
 export const useEditUserForm = (
-  currentUsername: string,
+  username: string,
+  email: NullableString,
   setIsModalOpen: Dispatch<SetStateAction<boolean>>
 ) => {
   const usernames = useUsernames();
-  const editUserSchema = getEditUserSchema(usernames, currentUsername);
+  const editUserSchema = getEditUserSchema(usernames, username);
 
   const {
     register,
@@ -19,6 +21,10 @@ export const useEditUserForm = (
   } = useForm<EditUserSchema>({
     resolver: yupResolver(editUserSchema),
     mode: 'all',
+    defaultValues: {
+      username,
+      email,
+    },
   });
 
   const [isEditUserSubmitting, setIsEditUserSubmitting] = useState(false);
