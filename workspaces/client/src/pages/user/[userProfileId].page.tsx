@@ -26,28 +26,29 @@ const UpdateUser = (props: UpdateUserProps) => {
 };
 
 interface UserPageProps {
-  uid: string;
-  user: User;
+  userProfileId: string;
+  userData: User;
 }
 
-export default function UserPage({ uid, user }: UserPageProps) {
-  const { email, username, profilePhoto } = user;
+export default function UserPage({ userData, userProfileId }: UserPageProps) {
+  const { username, email, profilePhoto } = userData;
 
-  const userUid = useUserUid();
+  const currentUserUid = useUserUid();
 
   return (
     <Container>
-      {`${user.username}'s Profile`}
-      {uid === userUid && email !== undefined && (
-        <UpdateUser {...{ email, username, profilePhoto }} />
+      {`${username}'s Profile`}
+      {currentUserUid === userProfileId && email !== undefined && (
+        <UpdateUser {...{ username, email, profilePhoto }} />
       )}
     </Container>
   );
 }
 
-export const getServerSideProps: GetServerSideProps<UserPageProps, { id: string }> = async (
-  context
-) => {
+export const getServerSideProps: GetServerSideProps<
+  UserPageProps,
+  { userProfileId: string }
+> = async (context) => {
   const { params } = context;
 
   if (params === undefined) {
@@ -56,8 +57,8 @@ export const getServerSideProps: GetServerSideProps<UserPageProps, { id: string 
     };
   }
 
-  const { id } = params;
-  const publicUserData = await getDocumentData<PublicUserData>('users', id);
+  const { userProfileId } = params;
+  const publicUserData = await getDocumentData<PublicUserData>('users', userProfileId);
 
   if (publicUserData === undefined) {
     return {
@@ -65,14 +66,19 @@ export const getServerSideProps: GetServerSideProps<UserPageProps, { id: string 
     };
   }
 
-  const uid = await getUidServerSide(context);
+  const authenticatedUserUid = await getUidServerSide(context);
+
   const privateUserData =
-    uid === id ? await getDocumentData<PrivateUserData>('users', id, 'private', 'data') : undefined;
-  const user: User = { ...publicUserData, ...privateUserData };
+    authenticatedUserUid === userProfileId
+      ? await getDocumentData<PrivateUserData>('users', userProfileId, 'private', 'data')
+      : undefined;
+
+  const userData: User = { ...publicUserData, ...privateUserData };
+
   return {
     props: {
-      uid: id,
-      user,
+      userProfileId,
+      userData,
     },
   };
 };
