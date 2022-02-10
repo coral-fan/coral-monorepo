@@ -6,16 +6,16 @@ import { AvatarContainer, AvatarWrapper, EditUserForm, InputsContainer } from '.
 
 import { useEditUserForm } from './hooks';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { EditUserProps } from './types';
+import { UpdateUserProps } from './types';
 
-type EditUserModalProps = EditUserProps & { setIsModalOpen: Dispatch<SetStateAction<boolean>> };
-export const EditUserModal = ({
+type UpdateUserModalProps = UpdateUserProps & { setIsModalOpen: Dispatch<SetStateAction<boolean>> };
+export const UpdateUserModal = ({
   username,
   email,
   profilePhoto,
   creditCardInformation,
   setIsModalOpen,
-}: EditUserModalProps) => {
+}: UpdateUserModalProps) => {
   const isAuthenticated = useIsAuthenticated();
   const isNetworkSupported = useIsNetworkSupported();
 
