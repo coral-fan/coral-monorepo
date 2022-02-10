@@ -6,14 +6,9 @@ import { AvatarContainer, AvatarWrapper, EditUserForm, InputsContainer } from '.
 
 import { useEditUserForm } from './hooks';
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { User } from 'libraries/models';
+import { EditUserProps } from './types';
 
-type NonEditableUserFields = 'notifications' | 'assets';
-
-type EditUserModalProps = Omit<User, NonEditableUserFields> & {
-  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
-};
-
+type EditUserModalProps = EditUserProps & { setIsModalOpen: Dispatch<SetStateAction<boolean>> };
 export const EditUserModal = ({
   username,
   email,
@@ -25,7 +20,7 @@ export const EditUserModal = ({
   const isNetworkSupported = useIsNetworkSupported();
 
   const { register, setValue, errors, isValid, isEditUserSubmitting, handleSubmitEditUser } =
-    useEditUserForm(username, setIsModalOpen);
+    useEditUserForm(username, email, setIsModalOpen);
 
   useEffect(() => {
     setValue('username', username);
