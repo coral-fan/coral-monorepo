@@ -1,4 +1,4 @@
-# Client Workspace
+# App Workspace
 
 ## Set Up
 
