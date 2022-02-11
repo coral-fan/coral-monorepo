@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next';
 import { getDocumentData } from 'libraries/firebase';
 import { getUidServerSide } from 'pages/utils';
 import { useState } from 'react';
-import { UpdateProfile } from './components/UpdateProfile';
+import { UpdateProfile } from './components/UpdateProfile/UpdateProfile';
 
 const Container = styled.div`
   display: flex;
