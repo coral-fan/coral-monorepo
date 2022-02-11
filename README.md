@@ -61,10 +61,10 @@ Using this script, you can run arbitrary scripts for each respective workspace:
 
 #### Available Workspaces
 
-- [client](/workspaces/client)
+- [app](/workspaces/app)
 
 ### `yarn start:tunnel`
 
 Starts a tunnel from your local development environment to [coral.ngrok.io](https://coral.ngrok.io).
 
-**NOTE**: Please run `yarn client start` before running this script.
+**NOTE**: Please run `yarn app start` before running this script.
