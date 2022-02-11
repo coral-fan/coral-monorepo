@@ -1,7 +1,8 @@
 import { getDocumentData } from 'libraries/firebase';
+import { IsUserSigningUpData } from '.';
 
 export const getIsUserSigningUp = async (uid: string) => {
-  const isSigningUpData = await getDocumentData<{ isSigningUp: boolean }>('is-signing-up', uid);
+  const isUserSigningUpData = await getDocumentData<IsUserSigningUpData>('is-signing-up', uid);
 
-  return isSigningUpData?.isSigningUp ?? false;
+  return isUserSigningUpData?.isSigningUp ?? false;
 };
