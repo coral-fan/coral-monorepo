@@ -10,12 +10,13 @@ import { useWeb3 } from 'libraries/blockchain';
 import { useIsLoggingIn, useIsSigningUp } from '..';
 import { getNonce, getSignedAuthenticationMessage, getFirebaseAuthToken } from './utils';
 import { getIsUserSigningUp } from 'libraries/models';
+import { useRefetchPageData } from 'libraries/utils/hooks';
 
 export const useLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
   const [, setIsSigningUp] = useIsSigningUp();
-
   const { activate, getConnector } = useWeb3();
+  const refetchPageData = useRefetchPageData();
   //TODO: should probably look into how to type errors better
   /* eslint @typescript-eslint/no-explicit-any: 'off' -- errors will always be typed as any */
   const [loginError, setLoginError] = useState<any>(null);
@@ -47,11 +48,10 @@ export const useLogin = () => {
         }
 
         setCookie(undefined, 'token', idToken, COOKIE_OPTIONS);
-
         const isSigningUp = await getIsUserSigningUp(userCredential.user.uid);
         setIsSigningUp(isSigningUp);
-
         setIsLoggingIn(false);
+        refetchPageData();
       } else {
         setIsLoggingIn(false);
       }

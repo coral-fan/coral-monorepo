@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { getUpdateUserSchema, UpdateUserSchema } from './schemas';
 import { upsertUser, User, useUsernames, useUserUid } from 'libraries/models';
 import { NullableString } from 'libraries/models/types';
+import { useRefetchPageData } from 'libraries/utils/hooks';
 
 export const useUpdateProfileForm = (
   username: string,
@@ -31,6 +32,8 @@ export const useUpdateProfileForm = (
   const [isUpdateProfileSubmitting, setIsUpdateProfileSubmitting] = useState(false);
   const uid = useUserUid();
 
+  const refetchPageData = useRefetchPageData();
+
   const handleSubmitUpdateProfile = useMemo(
     () =>
       handleSubmit(async ({ username, email }) => {
@@ -42,11 +45,12 @@ export const useUpdateProfileForm = (
             username,
             email,
           }));
+          refetchPageData();
           setIsModalOpen(false);
         }
         setIsUpdateProfileSubmitting(false);
       }),
-    [handleSubmit, setIsModalOpen, uid, setUser]
+    [handleSubmit, setIsModalOpen, uid, setUser, refetchPageData]
   );
   return {
     register,
