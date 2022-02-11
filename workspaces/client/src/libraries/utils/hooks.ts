@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useState } from 'react';
 import { Observable } from 'rxjs';
 
 export const useObservable = <T>(
@@ -17,4 +18,13 @@ export const useObservable = <T>(
   }, [getObservable, initialState, invariant]);
 
   return state;
+};
+
+export const useRefetchPageData = () => {
+  const router = useRouter();
+  const refetchPageData = useCallback(() => {
+    router.replace(router.asPath);
+  }, [router]);
+
+  return refetchPageData;
 };
