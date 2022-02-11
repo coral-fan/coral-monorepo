@@ -28,6 +28,7 @@ export const UpdateProfileModal = ({
     setValue,
     errors,
     isValid,
+    isDirty,
     isUpdateProfileSubmitting,
     handleSubmitUpdateProfile,
   } = useUpdateProfileForm(username, email, setIsModalOpen, setUser);
@@ -64,7 +65,7 @@ export const UpdateProfileModal = ({
             error={errors?.email?.message}
           />
         </InputsContainer>
-        <Button type="submit" disabled={!isValid} loading={isUpdateProfileSubmitting}>
+        <Button type="submit" disabled={!isDirty || !isValid} loading={isUpdateProfileSubmitting}>
           Update Account
         </Button>
       </Form>
