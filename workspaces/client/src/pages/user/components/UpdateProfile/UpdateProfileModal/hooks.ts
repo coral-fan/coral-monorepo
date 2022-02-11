@@ -19,7 +19,7 @@ export const useUpdateProfileForm = (
     register,
     handleSubmit,
     setValue,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isDirty },
   } = useForm<UpdateUserSchema>({
     resolver: yupResolver(updateUserSchema),
     mode: 'all',
@@ -57,6 +57,7 @@ export const useUpdateProfileForm = (
     setValue,
     errors,
     isValid,
+    isDirty,
     isUpdateProfileSubmitting,
     handleSubmitUpdateProfile,
   };
