@@ -2,7 +2,7 @@
   "name": "crypto-music",
   "private": true,
   "scripts": {
-    "client": "yarn workspace client",
+    "app": "yarn workspace app",
     "contracts": "yarn workspace contracts",
     "clean": "yarn workspaces run clean && rm -rf node_modules && rm yarn.lock",
     "start:tunnel": "ngrok start --all --config ngrok.yaml"
