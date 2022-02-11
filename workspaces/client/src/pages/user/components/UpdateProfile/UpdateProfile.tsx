@@ -2,7 +2,7 @@ import { User } from 'libraries/models';
 import { Button } from 'components/ui';
 import { UpdateProfileModal } from './UpdateProfileModal/UpdateProfileModal';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { EditableUserFields } from '../types';
+import { EditableUserFields } from '../../types';
 
 export interface UpdateProfileProps extends EditableUserFields {
   setUser: Dispatch<SetStateAction<User>>;
