@@ -14,7 +14,7 @@ export const IsSigningUpStateManager = () => {
         filter((uid): uid is string => uid !== undefined),
         mergeMap(getIsUserSigningUp)
       )
-      .subscribe((isSigningUp) => setIsSigningUp(isSigningUp && idToken !== undefined));
+      .subscribe((isSigningUp) => setIsSigningUp(isSigningUp && idToken !== null));
 
     return () => subscription.unsubscribe();
   }, [setIsSigningUp, idToken]);
