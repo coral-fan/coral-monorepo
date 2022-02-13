@@ -1,6 +1,6 @@
 import { getAuth } from '@firebase/auth';
 import { useEffect } from 'react';
-import { getToken, useLogout } from 'libraries/authentication';
+import { getToken, getToken$, useLogout } from 'libraries/authentication';
 import { filter, fromEvent, map } from 'rxjs';
 import { idToken } from 'rxfire/auth';
 import { isMetaMaskInjected } from 'libraries/blockchain';
@@ -9,12 +9,10 @@ export const LogoutManager = () => {
   const logout = useLogout();
   // logic to log user out when the authentication token changes
   useEffect(() => {
-    const subscription = idToken(getAuth())
+    const subscription = getToken$()
       .pipe(
-        // need to map to undefined as the token from cookies will either be a string or null
-        map((token) => token ?? undefined),
         // check if token from cookies isn't undefined since
-        filter((token) => token !== getToken())
+        filter((token) => token === null)
       )
       .subscribe(logout);
 
