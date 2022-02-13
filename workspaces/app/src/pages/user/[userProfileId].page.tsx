@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { UpdateProfile } from './components/UpdateProfile/UpdateProfile';
 import { getIdToken } from 'libraries/authentication';
 import { destroyCookie } from 'nookies';
+import { ID_TOKEN_KEY } from 'consts';
 
 const Container = styled.div`
   display: flex;
@@ -70,7 +71,7 @@ export const getServerSideProps: GetServerSideProps<
           await getAuth(app)
             .verifyIdToken(token)
             .catch(() => {
-              destroyCookie(context, 'token');
+              destroyCookie(context, ID_TOKEN_KEY);
             })
         )?.uid;
 
