@@ -1,10 +1,11 @@
 import styled from '@emotion/styled';
 import { PrivateUserData, PublicUserData, User, useUserUid } from 'libraries/models';
 import { GetServerSideProps } from 'next';
-import { getDocumentData } from 'libraries/firebase';
-import { getUidServerSide } from 'pages/utils';
+import { getDocumentData, initializeFirebaseAdmin } from 'libraries/firebase';
 import { useState } from 'react';
 import { UpdateProfile } from './components/UpdateProfile/UpdateProfile';
+import { getToken } from 'libraries/authentication';
+import { destroyCookie } from 'nookies';
 
 const Container = styled.div`
   display: flex;
@@ -53,7 +54,25 @@ export const getServerSideProps: GetServerSideProps<
     };
   }
 
-  const authenticatedUserUid = await getUidServerSide(context);
+  await initializeFirebaseAdmin();
+
+  const { getApp } = await import('firebase-admin/app');
+  const app = getApp();
+
+  const { getAuth } = await import('firebase-admin/auth');
+
+  const token = getToken(context);
+
+  const authenticatedUserUid =
+    token === null
+      ? undefined
+      : (
+          await getAuth(app)
+            .verifyIdToken(token)
+            .catch(() => {
+              destroyCookie(context, 'token');
+            })
+        )?.uid;
 
   const privateUserData =
     authenticatedUserUid === userProfileId
