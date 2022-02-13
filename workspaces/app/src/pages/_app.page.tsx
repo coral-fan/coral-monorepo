@@ -1,12 +1,10 @@
 //nextjs imports
-import type { AppContext, AppProps } from 'next/app';
-import App from 'next/app';
+import type { AppProps } from 'next/app';
 import Head from 'next/head';
 
 // application logic imports
 import { initializeFirebaseApp } from 'libraries/firebase';
-import { getIsUserSigningUp } from 'libraries/models';
-import { getLibrary, isServerSide, getUidServerSide, getUidClientSide } from 'libraries/utils';
+import { getLibrary } from 'libraries/utils/provider';
 
 // styling
 import { GlobalStyles } from 'styles';
@@ -22,9 +20,8 @@ import { initializeStore } from 'libraries/state';
 
 initializeFirebaseApp();
 
-const CustomApp = ({ Component, pageProps, initialState }: CustomAppProps) => {
-  const store = initializeStore(initialState);
-
+const CustomApp = ({ Component, pageProps }: AppProps) => {
+  const store = initializeStore();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -59,24 +56,5 @@ const CustomApp = ({ Component, pageProps, initialState }: CustomAppProps) => {
     </>
   );
 };
-
-const getInitialProps = async (appContext: AppContext) => {
-  // below is necessary as per next.js docs (https://nextjs.org/docs/advanced-features/custom-app)
-  const initialProps = await App.getInitialProps(appContext);
-  const { ctx } = appContext;
-  const uid = isServerSide() ? await getUidServerSide(ctx) : getUidClientSide();
-  const isSigningUp: boolean = uid ? await getIsUserSigningUp(uid) : false;
-
-  return {
-    ...initialProps,
-    initialState: { isSigningUp },
-  };
-};
-
-CustomApp.getInitialProps = getInitialProps;
-
-export type ServerSideData = Awaited<ReturnType<typeof getInitialProps>>;
-
-type CustomAppProps = AppProps & ServerSideData;
 
 export default CustomApp;
