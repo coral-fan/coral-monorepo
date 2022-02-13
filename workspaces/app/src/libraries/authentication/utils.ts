@@ -1,7 +1,7 @@
 import { ID_TOKEN_KEY } from 'consts';
 import { parseCookies } from 'nookies';
 
-export const getToken = (context?: Parameters<typeof parseCookies>[0]): string | null =>
+export const getIdToken = (context?: Parameters<typeof parseCookies>[0]): string | null =>
   parseCookies(context)[ID_TOKEN_KEY] ?? null;
 
 export const getAuthenticationMessage = (nonce: number) =>

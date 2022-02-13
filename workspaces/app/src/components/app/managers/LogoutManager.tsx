@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { getToken$, useLogout } from 'libraries/authentication';
+import { getIdToken$, useLogout } from 'libraries/authentication';
 import { filter, fromEvent } from 'rxjs';
 import { isMetaMaskInjected } from 'libraries/blockchain';
 
@@ -7,7 +7,7 @@ export const LogoutManager = () => {
   const logout = useLogout();
   // logic to log user out when the authentication token changes
   useEffect(() => {
-    const subscription = getToken$()
+    const subscription = getIdToken$()
       .pipe(
         // check if token from cookies isn't undefined since
         filter((token) => token === null)
