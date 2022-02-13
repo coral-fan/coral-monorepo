@@ -1,6 +1,7 @@
 import { parseCookies } from 'nookies';
 
-export const getToken = () => parseCookies().token;
+export const getToken = (context?: Parameters<typeof parseCookies>[0]): string | null =>
+  parseCookies(context).token ?? null;
 
 export const getAuthenticationMessage = (nonce: number) =>
   `Hi from Coral!\n
