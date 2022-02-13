@@ -15,15 +15,15 @@ export const getNonce = async (address: string) => {
   return nonce;
 };
 
-export const getFirebaseAuthToken = async (address: string, signedMessage: string) => {
+export const getFirebaseCustomToken = async (address: string, signedMessage: string) => {
   const {
-    data: { token },
-  } = await axios.post<{ token: string }>('auth', {
+    data: { idToken },
+  } = await axios.post<{ idToken: string }>('auth', {
     address,
     signedMessage,
   });
 
-  return token;
+  return idToken;
 };
 
 export const getSignedAuthenticationMessage = (signer: Wallet | JsonRpcSigner, nonce: number) =>
