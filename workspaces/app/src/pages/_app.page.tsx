@@ -6,8 +6,7 @@ import Head from 'next/head';
 // application logic imports
 import { initializeFirebaseApp } from 'libraries/firebase';
 import { getIsUserSigningUp } from 'libraries/models';
-
-// react imports
+import { getLibrary, isServerSide, getUidServerSide, getUidClientSide } from 'libraries/utils';
 
 // styling
 import { GlobalStyles } from 'styles';
@@ -16,13 +15,10 @@ import { GlobalStyles } from 'styles';
 import { NavigationBar, Managers, Modals } from 'components/app';
 
 // state/logic
+import { useEffect, useState } from 'react';
 import { Web3ReactProvider } from '@web3-react/core';
 import { Provider as ReduxProvider } from 'react-redux';
 import { initializeStore } from 'libraries/state';
-import { getLibrary } from 'libraries/utils/provider';
-import { useEffect, useState } from 'react';
-import { isServerSide } from 'libraries/utils/environment';
-import { getUidServerSide, getUidClientSide } from './utils/uid';
 
 initializeFirebaseApp();
 
