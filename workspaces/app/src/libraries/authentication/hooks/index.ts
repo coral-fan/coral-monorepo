@@ -1,4 +1,4 @@
-export * from './token';
+export * from './idToken';
 export * from './isAuthenticated';
 export * from './isLoggingIn';
 export * from './login';

@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { filter, mergeMap } from 'rxjs';
-import { useIsSigningUp, useToken } from 'libraries/authentication';
+import { useIsSigningUp, useIdToken } from 'libraries/authentication';
 import { getIsUserSigningUp, getUserUid$ } from 'libraries/models';
 
 export const IsSigningUpStateManager = () => {
   const [, setIsSigningUp] = useIsSigningUp();
-  const token = useToken();
+  const idToken = useIdToken();
 
   useEffect(() => {
     const subscription = getUserUid$()
@@ -14,10 +14,10 @@ export const IsSigningUpStateManager = () => {
         filter((uid): uid is string => uid !== undefined),
         mergeMap(getIsUserSigningUp)
       )
-      .subscribe((isSigningUp) => setIsSigningUp(isSigningUp && token !== undefined));
+      .subscribe((isSigningUp) => setIsSigningUp(isSigningUp && idToken !== undefined));
 
     return () => subscription.unsubscribe();
-  }, [setIsSigningUp, token]);
+  }, [setIsSigningUp, idToken]);
 
   return <></>;
 };

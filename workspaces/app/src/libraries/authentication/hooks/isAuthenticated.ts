@@ -1,9 +1,9 @@
-import { useIsLoggingIn, useIsSigningUp, useToken } from '.';
+import { useIsLoggingIn, useIsSigningUp, useIdToken } from '.';
 
 export const useIsAuthenticated = () => {
-  const token = useToken();
+  const idToken = useIdToken();
   const [isSigningUp] = useIsSigningUp();
   const [isLoggingIn] = useIsLoggingIn();
 
-  return token !== null && !isSigningUp && !isLoggingIn;
+  return idToken !== null && !isSigningUp && !isLoggingIn;
 };

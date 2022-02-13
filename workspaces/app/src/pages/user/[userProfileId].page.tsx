@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next';
 import { getDocumentData, initializeFirebaseAdmin } from 'libraries/firebase';
 import { useState } from 'react';
 import { UpdateProfile } from './components/UpdateProfile/UpdateProfile';
-import { getToken } from 'libraries/authentication';
+import { getIdToken } from 'libraries/authentication';
 import { destroyCookie } from 'nookies';
 
 const Container = styled.div`
@@ -61,7 +61,7 @@ export const getServerSideProps: GetServerSideProps<
 
   const { getAuth } = await import('firebase-admin/auth');
 
-  const token = getToken(context);
+  const token = getIdToken(context);
 
   const authenticatedUserUid =
     token === null
