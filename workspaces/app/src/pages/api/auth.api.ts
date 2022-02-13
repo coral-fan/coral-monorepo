@@ -1,5 +1,6 @@
 import { isAddress } from '@ethersproject/address';
 import { verifyMessage } from '@ethersproject/wallet';
+import { ID_TOKEN_KEY } from 'consts';
 import { getAuth } from 'firebase-admin/auth';
 import { getAuthenticationMessage } from 'libraries/authentication';
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
@@ -22,8 +23,8 @@ const post: Handler = async (req, res) => {
       if (address === derivedAddress) {
         const nextNonce = getNonce();
         await nonceRefDoc.set({ nonce: nextNonce });
-        const token = await getAuth().createCustomToken(derivedAddress);
-        return res.status(200).json({ token });
+        const customToken = await getAuth().createCustomToken(derivedAddress);
+        return res.status(200).json({ idToken: customToken });
       } else {
         return res.status(400).json({ error: 'Signed message verification failed.' });
       }
