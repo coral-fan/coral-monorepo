@@ -2,9 +2,8 @@ import { useState } from 'react';
 import { signInWithCustomToken, getAuth } from 'firebase/auth';
 import { Web3Provider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
-import { setCookie } from 'nookies';
 
-import { COOKIE_OPTIONS, IS_OPEN_LOGIN_PENDING } from 'consts';
+import { IS_OPEN_LOGIN_PENDING } from 'consts';
 import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain';
 import { useIsLoggingIn, useIsSigningUp } from '..';
@@ -41,13 +40,11 @@ export const useLogin = () => {
         const signedMessage = await getSignedAuthenticationMessage(signer, nonce);
         const token = await getFirebaseAuthToken(address, signedMessage);
         const userCredential = await signInWithCustomToken(getAuth(), token);
-        const idToken = await userCredential.user.getIdToken();
 
         if (sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) {
           sessionStorage.removeItem(IS_OPEN_LOGIN_PENDING);
         }
 
-        setCookie(undefined, 'token', idToken, COOKIE_OPTIONS);
         const isSigningUp = await getIsUserSigningUp(userCredential.user.uid);
         setIsSigningUp(isSigningUp);
         setIsLoggingIn(false);
