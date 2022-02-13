@@ -1,8 +1,6 @@
-import { getAuth } from '@firebase/auth';
 import { useEffect } from 'react';
-import { getToken, getToken$, useLogout } from 'libraries/authentication';
-import { filter, fromEvent, map } from 'rxjs';
-import { idToken } from 'rxfire/auth';
+import { getToken$, useLogout } from 'libraries/authentication';
+import { filter, fromEvent } from 'rxjs';
 import { isMetaMaskInjected } from 'libraries/blockchain';
 
 export const LogoutManager = () => {
