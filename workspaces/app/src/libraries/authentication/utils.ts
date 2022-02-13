@@ -1,7 +1,8 @@
+import { ID_TOKEN_KEY } from 'consts';
 import { parseCookies } from 'nookies';
 
 export const getToken = (context?: Parameters<typeof parseCookies>[0]): string | null =>
-  parseCookies(context).token ?? null;
+  parseCookies(context)[ID_TOKEN_KEY] ?? null;
 
 export const getAuthenticationMessage = (nonce: number) =>
   `Hi from Coral!\n
