@@ -7,7 +7,7 @@ import { IS_OPEN_LOGIN_PENDING } from 'consts';
 import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain';
 import { useIsLoggingIn, useIsSigningUp } from '..';
-import { getNonce, getSignedAuthenticationMessage, getFirebaseAuthToken } from './utils';
+import { getNonce, getSignedAuthenticationMessage, getFirebaseCustomToken } from './utils';
 import { getIsUserSigningUp } from 'libraries/models';
 import { useRefetchPageData } from 'libraries/utils/hooks';
 
@@ -38,8 +38,8 @@ export const useLogin = () => {
         const address = await signer.getAddress();
         const nonce = await getNonce(address);
         const signedMessage = await getSignedAuthenticationMessage(signer, nonce);
-        const token = await getFirebaseAuthToken(address, signedMessage);
-        const userCredential = await signInWithCustomToken(getAuth(), token);
+        const customToken = await getFirebaseCustomToken(address, signedMessage);
+        const userCredential = await signInWithCustomToken(getAuth(), customToken);
 
         if (sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) {
           sessionStorage.removeItem(IS_OPEN_LOGIN_PENDING);
