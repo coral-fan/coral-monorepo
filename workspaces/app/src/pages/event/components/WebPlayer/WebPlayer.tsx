@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import Script from 'next/script';
 
 const Container = styled.div`
+  width: 50%;
+  margin: auto;
   display: flex;
   flex-direction: column;
 `;
