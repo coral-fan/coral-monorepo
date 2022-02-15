@@ -9,29 +9,34 @@ const Container = styled.div`
 `;
 
 interface WebPlayerProps {
-  url: string;
+  mediaId: string;
 }
 
 const JWPLAYER_LIBRARY_URL = 'https://cdn.jwplayer.com/libraries/lja4xTpS.js';
 
-export const WebPlayer = ({ url }: WebPlayerProps) => {
+/*
+Currently configured to manually broadcast an event stream:
+https://developer.jwplayer.com/jwplayer/docs/jw8-manually-broadcast-a-live-event
+*/
+export const WebPlayer = ({ mediaId }: WebPlayerProps) => {
+  const mediaURl = `https://cdn.jwplayer.com/v2/media/${mediaId}`;
   return (
     <>
       <Script
-        id="myElement"
+        id="player"
         src={JWPLAYER_LIBRARY_URL}
         onLoad={() => {
-          jwplayer('myElement').setup({
+          jwplayer('player').setup({
             playlist: [
               {
-                file: `${url}`,
+                file: `${mediaURl}`,
               },
             ],
           });
         }}
       />
       <Container>
-        <div id="myElement"></div>
+        <div id="player"></div>
       </Container>
     </>
   );
