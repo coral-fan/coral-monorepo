@@ -1,19 +1,19 @@
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { getUpdateUserSchema, UpdateUserSchema } from './schemas';
+import { getUpdateProfileInfoSchema, UpdateUserSchema } from './schemas';
 import { upsertUser, User, useUsernames, useUserUid } from 'libraries/models';
 import { NullableString } from 'libraries/models/types';
 import { useRefetchPageData } from 'libraries/utils/hooks';
 
-export const useUpdateProfileForm = (
+export const useUpdateProfileInfoForm = (
   username: string,
   email: NullableString,
   setIsModalOpen: Dispatch<SetStateAction<boolean>>,
   setUser: Dispatch<SetStateAction<User>>
 ) => {
   const usernames = useUsernames();
-  const updateUserSchema = getUpdateUserSchema(usernames, username);
+  const updateUserSchema = getUpdateProfileInfoSchema(usernames, username);
 
   const {
     register,
@@ -29,15 +29,15 @@ export const useUpdateProfileForm = (
     },
   });
 
-  const [isUpdateProfileSubmitting, setIsUpdateProfileSubmitting] = useState(false);
+  const [isUpdateProfileInfoSubmitting, setIsUpdateProfileInfoSubmitting] = useState(false);
   const uid = useUserUid();
 
   const refetchPageData = useRefetchPageData();
 
-  const handleSubmitUpdateProfile = useMemo(
+  const handleSubmitUpdateProfileInfo = useMemo(
     () =>
       handleSubmit(async ({ username, email }) => {
-        setIsUpdateProfileSubmitting(true);
+        setIsUpdateProfileInfoSubmitting(true);
         if (uid !== undefined && email !== undefined) {
           await upsertUser(uid, { username, email });
           setUser((user) => ({
@@ -48,7 +48,7 @@ export const useUpdateProfileForm = (
           refetchPageData();
           setIsModalOpen(false);
         }
-        setIsUpdateProfileSubmitting(false);
+        setIsUpdateProfileInfoSubmitting(false);
       }),
     [handleSubmit, setIsModalOpen, uid, setUser, refetchPageData]
   );
@@ -58,7 +58,7 @@ export const useUpdateProfileForm = (
     errors,
     isValid,
     isDirty,
-    isUpdateProfileSubmitting,
-    handleSubmitUpdateProfile,
+    isUpdateProfileInfoSubmitting,
+    handleSubmitUpdateProfileInfo,
   };
 };
