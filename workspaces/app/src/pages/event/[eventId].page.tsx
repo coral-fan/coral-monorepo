@@ -8,14 +8,13 @@ const Container = styled.div`
 `;
 
 interface EventPageProps {
-  eventId: string;
-  mediaResourceUrl: string;
+  mediaId: string;
 }
 
-export default function EventPage({ eventId, mediaResourceUrl }: EventPageProps) {
+export default function EventPage({ mediaId }: EventPageProps) {
   return (
     <Container>
-      <WebPlayer url={mediaResourceUrl} />
+      <WebPlayer mediaId={mediaId} />
     </Container>
   );
 }
@@ -33,12 +32,12 @@ export const getServerSideProps: GetServerSideProps<EventPageProps, { eventId: s
 
   const { eventId } = params;
 
-  const mediaResourceUrl = 'https://cdn.jwplayer.com/manifests/dSKXzBSv.m3u8';
+  // Make database call with eventId to get mediaId.
+  const mediaId = 'mediaIdFromDatabase';
 
   return {
     props: {
-      eventId,
-      mediaResourceUrl,
+      mediaId,
     },
   };
 };
