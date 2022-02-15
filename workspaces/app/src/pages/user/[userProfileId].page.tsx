@@ -7,6 +7,7 @@ import { UpdateProfile } from './components/UpdateProfile/UpdateProfile';
 import { getIdToken } from 'libraries/authentication';
 import { destroyCookie } from 'nookies';
 import { ID_TOKEN_KEY } from 'consts';
+import { getAuthenticationServerSide } from 'libraries/firebase/authentication';
 
 const Container = styled.div`
   display: flex;
@@ -55,12 +56,7 @@ export const getServerSideProps: GetServerSideProps<
     };
   }
 
-  await initializeFirebaseAdmin();
-
-  const { getApp } = await import('firebase-admin/app');
-  const app = getApp();
-
-  const { getAuth } = await import('firebase-admin/auth');
+  const auth = await getAuthenticationServerSide();
 
   const token = getIdToken(context);
 
@@ -68,11 +64,9 @@ export const getServerSideProps: GetServerSideProps<
     token === null
       ? undefined
       : (
-          await getAuth(app)
-            .verifyIdToken(token)
-            .catch(() => {
-              destroyCookie(context, ID_TOKEN_KEY);
-            })
+          await auth.verifyIdToken(token).catch(() => {
+            destroyCookie(context, ID_TOKEN_KEY);
+          })
         )?.uid;
 
   const privateUserData =
