@@ -4,7 +4,6 @@ import Head from 'next/head';
 
 // application logic imports
 import { initializeFirebaseApp } from 'libraries/firebase';
-import { getLibrary } from 'libraries/utils/provider';
 
 // styling
 import { GlobalStyles } from 'styles';
@@ -19,6 +18,15 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { initializeStore } from 'libraries/state';
 
 initializeFirebaseApp();
+
+import { ExternalProvider, JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
+
+export const getLibrary = (provider: ExternalProvider | JsonRpcProvider | undefined) => {
+  if (provider) {
+    return provider instanceof JsonRpcProvider ? provider : new Web3Provider(provider);
+  }
+  return undefined;
+};
 
 const CustomApp = ({ Component, pageProps }: AppProps) => {
   const store = initializeStore();
