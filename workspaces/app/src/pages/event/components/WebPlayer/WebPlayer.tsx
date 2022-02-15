@@ -19,7 +19,7 @@ Currently configured to manually broadcast an event stream:
 https://developer.jwplayer.com/jwplayer/docs/jw8-manually-broadcast-a-live-event
 */
 export const WebPlayer = ({ mediaId }: WebPlayerProps) => {
-  const mediaURl = `https://cdn.jwplayer.com/v2/media/${mediaId}`;
+  const mediaUrl = `https://cdn.jwplayer.com/v2/media/${mediaId}`;
   return (
     <>
       <Script
@@ -29,7 +29,7 @@ export const WebPlayer = ({ mediaId }: WebPlayerProps) => {
           jwplayer('player').setup({
             playlist: [
               {
-                file: `${mediaURl}`,
+                file: `${mediaUrl}`,
               },
             ],
           });
