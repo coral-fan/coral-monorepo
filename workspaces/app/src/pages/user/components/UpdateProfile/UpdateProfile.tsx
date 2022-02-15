@@ -1,6 +1,6 @@
 import { User } from 'libraries/models';
 import { Button } from 'components/ui';
-import { UpdateProfileModal } from './UpdateProfileModal/UpdateProfileModal';
+import { UpdateProfileInfoModal } from './UpdateProfileInfoModal/UpdateProfileInfoModal';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { EditableUserFields } from '../../types';
 
@@ -13,7 +13,7 @@ export const UpdateProfile = (props: UpdateProfileProps) => {
     <>
       <Button onClick={() => setIsEditUserModalOpen(true)}>Update Profile</Button>
       {isEditUserModalOpen ? (
-        <UpdateProfileModal {...props} setIsModalOpen={setIsEditUserModalOpen} />
+        <UpdateProfileInfoModal {...props} setIsModalOpen={setIsEditUserModalOpen} />
       ) : null}
     </>
   );

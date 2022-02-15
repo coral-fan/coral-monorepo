@@ -4,22 +4,22 @@ import { Modal, Button, Input, Avatar } from 'components/ui';
 
 import { AvatarContainer, AvatarWrapper, Form, InputsContainer } from './components';
 
-import { useUpdateProfileForm } from './hooks';
+import { useUpdateProfileInfoForm } from './hooks';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { UpdateProfileProps } from '../UpdateProfile';
 
-type UpdateProfileModalProps = UpdateProfileProps & {
+type UpdateProfileModalInfoProps = UpdateProfileProps & {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-export const UpdateProfileModal = ({
+export const UpdateProfileInfoModal = ({
   username,
   email,
   profilePhoto,
   creditCardInformation,
   setIsModalOpen,
   setUser,
-}: UpdateProfileModalProps) => {
+}: UpdateProfileModalInfoProps) => {
   const isAuthenticated = useIsAuthenticated();
   const isNetworkSupported = useIsNetworkSupported();
 
@@ -29,9 +29,9 @@ export const UpdateProfileModal = ({
     errors,
     isValid,
     isDirty,
-    isUpdateProfileSubmitting,
-    handleSubmitUpdateProfile,
-  } = useUpdateProfileForm(username, email, setIsModalOpen, setUser);
+    isUpdateProfileInfoSubmitting,
+    handleSubmitUpdateProfileInfo,
+  } = useUpdateProfileInfoForm(username, email, setIsModalOpen, setUser);
 
   useEffect(() => {
     setValue('username', username);
@@ -50,7 +50,7 @@ export const UpdateProfileModal = ({
         </AvatarWrapper>
         <Button>Change Photo</Button>
       </AvatarContainer>
-      <Form onSubmit={handleSubmitUpdateProfile}>
+      <Form onSubmit={handleSubmitUpdateProfileInfo}>
         <InputsContainer>
           <Input
             label="Username"
@@ -65,7 +65,11 @@ export const UpdateProfileModal = ({
             error={errors?.email?.message}
           />
         </InputsContainer>
-        <Button type="submit" disabled={!isDirty || !isValid} loading={isUpdateProfileSubmitting}>
+        <Button
+          type="submit"
+          disabled={!isDirty || !isValid}
+          loading={isUpdateProfileInfoSubmitting}
+        >
           Update Account
         </Button>
       </Form>
