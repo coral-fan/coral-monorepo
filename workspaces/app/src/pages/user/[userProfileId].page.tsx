@@ -1,42 +1,17 @@
-import styled from '@emotion/styled';
-import { PrivateUserData, PublicUserData, User, useUserUid } from 'libraries/models';
+import { PrivateUserData, PublicUserData, User } from 'libraries/models';
 import { GetServerSideProps } from 'next';
 import { getDocumentData } from 'libraries/firebase';
-import { UpdateProfile } from './components/UpdateProfile/UpdateProfile';
 import { getIdToken } from 'libraries/authentication';
 import { destroyCookie } from 'nookies';
 import { ID_TOKEN_KEY } from 'consts';
 import { getAuthenticationServerSide } from 'libraries/firebase/authentication';
 import { UserPageProvider } from './provider';
-import { useRouter } from 'next/router';
-import { useUser } from './hooks';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+import { UserProfile } from './components/UserProfile';
 
 interface UserPageProps {
   userData: User;
 }
 
-const UserProfile = () => {
-  const { userProfileId } = useRouter().query;
-
-  if (typeof userProfileId !== 'string') {
-    throw Error('userProfileId must be of type string');
-  }
-
-  const [{ username, email }] = useUser();
-  const currentUserUid = useUserUid();
-
-  return (
-    <Container>
-      {`${username}'s Profile`}
-      {currentUserUid === userProfileId && email !== undefined && <UpdateProfile />}
-    </Container>
-  );
-};
 export default function UserPage({ userData }: UserPageProps) {
   return (
     <UserPageProvider initialUserData={userData}>
