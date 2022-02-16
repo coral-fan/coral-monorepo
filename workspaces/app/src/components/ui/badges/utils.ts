@@ -13,9 +13,9 @@ export const getBadgeStyle = (size: BadgeSize, variant: BadgeVariant) => {
     border-radius: 50%;
     width: ${badgeSizeDictionary[size].badge}px;
     height: ${badgeSizeDictionary[size].badge}px;
-    color: ${tokens.color.white};
-    border: ${isPrimaryVariant ? 'none' : `solid 1px ${tokens.color.white}`};
-    background-color: ${isPrimaryVariant ? tokens.color.action['primary'] : 'none'};
+    color: ${tokens.color.font.primary};
+    border: ${isPrimaryVariant ? 'none' : `solid 1px ${tokens.color.border.primary}`};
+    background-color: ${isPrimaryVariant ? tokens.color.background.brand : 'none'};
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
   `;
 };

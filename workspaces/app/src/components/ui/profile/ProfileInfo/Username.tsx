@@ -10,7 +10,7 @@ export interface UsernameProp {
 export const Username = styled.div<UsernameProp>`
   font-size: 10px;
   font-weight: 700;
-  color: ${tokens.color.gray};
+  color: ${tokens.color.font.secondary};
   line-height: ${({ size }) => `${profileInfoSizeDictionary[size].usernameLineHeight}px`};
   letter-spacing: 0.08em;
   text-transform: uppercase;

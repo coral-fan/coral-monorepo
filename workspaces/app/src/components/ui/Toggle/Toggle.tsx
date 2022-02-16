@@ -15,8 +15,8 @@ const Slider = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: transparent;
-  border: solid ${tokens.color.white} 1px;
+  background-color: ${tokens.color.background.tertiary};
+  border: solid ${tokens.color.border.primary} 1px;
   border-radius: 26.17px;
   transition: 0.4s;
 
@@ -27,14 +27,14 @@ const Slider = styled.div`
     width: 13px;
     left: 4px;
     top: 3px;
-    background-color: ${tokens.color.white};
+    background-color: ${tokens.color.background.white};
     transition: 0.4s;
     border-radius: 50%;
   }
 
   ${HiddenInput}:checked + & {
-    background-color: ${tokens.color.action.primary};
-    border-color: ${tokens.color.action.primary};
+    background-color: ${tokens.color.background.brand};
+    border-color: ${tokens.color.border.brand};
 
     &:before {
       transform: translateX(12px);
