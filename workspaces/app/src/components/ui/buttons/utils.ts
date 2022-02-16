@@ -8,6 +8,6 @@ export const getButtonVariantStyle = (variant: ButtonVariant = 'primary') => css
   ${buttonBaseStyle};
   border-radius: 31px;
   height: ${BUTTON_SIZE};
-  color: ${tokens.color.white};
-  background-color: ${tokens.color.action[variant]};
+  color: ${tokens.color.font.primary};
+  background-color: ${tokens.color.background.brand};
 `;

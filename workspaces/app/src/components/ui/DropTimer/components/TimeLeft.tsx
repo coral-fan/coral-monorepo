@@ -11,7 +11,7 @@ const Container = styled.div<TimeProp>`
 
 const TimeDiff = styled.div<TimeProp>`
   font-size: ${(props) => (props.variant !== 'mini' ? '18px' : '14px')};
-  color: ${tokens.color.white};
+  color: ${tokens.color.font.primary};
   line-height: ${(props) => (props.variant !== 'mini' ? '23px' : '18px')};
   text-align: center;
 `;
@@ -19,7 +19,7 @@ const TimeDiff = styled.div<TimeProp>`
 const TimeUnit = styled.div`
   font-size: 10px;
   font-weight: 700;
-  color: ${tokens.color.gray};
+  color: ${tokens.color.font.secondary};
   line-height: 122%;
   letter-spacing: 0.08em;
   text-transform: uppercase;
