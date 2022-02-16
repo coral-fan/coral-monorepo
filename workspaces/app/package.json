@@ -2,7 +2,6 @@
   "name": "app",
   "version": "0.0.0",
   "private": true,
-  "main": "next-server.js",
   "scripts": {
     "start": "nodemon --watch next.config.js --exec 'next dev'",
     "start:debug": "NODE_OPTIONS='--inspect' next dev",
