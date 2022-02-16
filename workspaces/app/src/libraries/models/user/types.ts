@@ -20,9 +20,12 @@ export interface PrivateUserData {
   creditCardInformation: CreditCardInformation | null;
 }
 
+interface ProfilePhoto {
+  src: string;
+}
 export interface PublicUserData {
   username: string;
-  profilePhoto: NullableString;
+  profilePhoto: ProfilePhoto | null;
   notifications: Notification[];
   assets: Asset[];
 }
