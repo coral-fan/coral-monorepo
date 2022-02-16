@@ -1,6 +1,6 @@
 import { useIsNetworkSupported } from 'libraries/blockchain';
 import { useIsAuthenticated } from 'libraries/authentication';
-import { Modal, Button, Input, Avatar } from 'components/ui';
+import { Modal, Button, Input } from 'components/ui';
 
 import { Form, InputsContainer } from './components';
 
