@@ -12,16 +12,3 @@ export const InputsContainer = styled.div`
   width: 100%;
   gap: 4px;
 `;
-
-export const AvatarWrapper = styled.div`
-  width: 200px;
-  height: 200px;
-  margin: auto;
-`;
-
-export const AvatarContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 40px 0px;
-`;
