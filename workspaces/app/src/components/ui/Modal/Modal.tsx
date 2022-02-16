@@ -33,7 +33,7 @@ const Container = styled.div`
 const Content = styled(Card)<{ title?: string }>`
   width: 100%;
   flex-direction: column;
-  color: ${tokens.color.white};
+  color: ${tokens.color.font.primary};
   padding: ${({ title }) => `${title ? '16px' : '8px'} 18px`};
   box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.5);
 `;
@@ -69,7 +69,8 @@ export const Modal: FC<ModalProps> = ({ children, title, onClick, variant }) => 
     ? ReactDOM.createPortal(
         <Overlay>
           <Container>
-            {onClick && createElement(variant === 'close' ? CloseButton : PreviousButton, { onClick })}
+            {onClick &&
+              createElement(variant === 'close' ? CloseButton : PreviousButton, { onClick })}
             <Content title={title}>
               {title && <Heading>{title}</Heading>}
               <Main>{children}</Main>
