@@ -24,7 +24,7 @@ const ContentContainer = styled.div`
 `;
 
 const Content = styled.div`
-  color: ${tokens.color.white};
+  color: ${tokens.color.font.primary};
   font-weight: 700;
   font-size: 10px;
   line-height: 122%;
