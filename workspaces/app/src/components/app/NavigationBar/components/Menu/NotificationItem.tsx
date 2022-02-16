@@ -14,7 +14,7 @@ const Badge = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${tokens.color.red};
+  background-color: ${tokens.color.background.red};
   border-radius: 50%;
 `;
 const Content = styled.div`
