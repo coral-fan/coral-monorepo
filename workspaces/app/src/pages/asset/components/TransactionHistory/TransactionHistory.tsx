@@ -30,7 +30,7 @@ const Transactions = styled.div`
 
 const Placeholder = styled.div`
   font-style: italic;
-  color: ${tokens.color.gray};
+  color: ${tokens.color.font.secondary};
   padding: 12px 4px;
 `;
 
