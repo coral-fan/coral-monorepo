@@ -56,7 +56,7 @@ export const globalStyles = css`
     margin: 0;
     font-family: 'Kunst Grotesk', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
       Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    color: ${tokens.color.white};
+    color: ${tokens.color.font.primary};
   }
 
   html {
