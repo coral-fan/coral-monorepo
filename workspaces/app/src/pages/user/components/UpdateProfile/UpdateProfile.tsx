@@ -1,20 +1,16 @@
-import { User } from 'libraries/models';
 import { Button } from 'components/ui';
+import { useIsUpdateProfileInfoModalOpen } from 'pages/user/hooks';
 import { UpdateProfileInfoModal } from './UpdateProfileInfoModal/UpdateProfileInfoModal';
-import { Dispatch, SetStateAction, useState } from 'react';
-import { EditableUserFields } from '../../types';
 
-export interface UpdateProfileProps extends EditableUserFields {
-  setUser: Dispatch<SetStateAction<User>>;
-}
-export const UpdateProfile = (props: UpdateProfileProps) => {
-  const [isEditUserModalOpen, setIsEditUserModalOpen] = useState(false);
+export const UpdateProfile = () => {
+  const [isUpdateProfileInfoModalOpen, setIsProfileInfoModalOpen] =
+    useIsUpdateProfileInfoModalOpen();
   return (
     <>
-      <Button onClick={() => setIsEditUserModalOpen(true)}>Update Profile</Button>
-      {isEditUserModalOpen ? (
-        <UpdateProfileInfoModal {...props} setIsModalOpen={setIsEditUserModalOpen} />
-      ) : null}
+      <div>
+        <Button onClick={() => setIsProfileInfoModalOpen(true)}>Update Profile</Button>
+        {isUpdateProfileInfoModalOpen ? <UpdateProfileInfoModal /> : null}
+      </div>
     </>
   );
 };

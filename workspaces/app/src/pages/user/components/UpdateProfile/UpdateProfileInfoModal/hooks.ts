@@ -1,24 +1,19 @@
-import { Dispatch, SetStateAction, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { getUpdateProfileInfoSchema, UpdateUserSchema } from './schemas';
-import { upsertUser, User, useUsernames, useUserUid } from 'libraries/models';
-import { NullableString } from 'libraries/models/types';
+import { upsertUser, useUsernames, useUserUid } from 'libraries/models';
 import { useRefetchPageData } from 'libraries/utils/hooks';
+import { useIsUpdateProfileInfoModalOpen, useUser } from 'pages/user/hooks';
 
-export const useUpdateProfileInfoForm = (
-  username: string,
-  email: NullableString,
-  setIsModalOpen: Dispatch<SetStateAction<boolean>>,
-  setUser: Dispatch<SetStateAction<User>>
-) => {
+export const useUpdateProfileInfoForm = () => {
+  const [{ username, email }, setUser] = useUser();
   const usernames = useUsernames();
   const updateUserSchema = getUpdateProfileInfoSchema(usernames, username);
 
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors, isValid, isDirty },
   } = useForm<UpdateUserSchema>({
     resolver: yupResolver(updateUserSchema),
@@ -33,6 +28,8 @@ export const useUpdateProfileInfoForm = (
   const uid = useUserUid();
 
   const refetchPageData = useRefetchPageData();
+
+  const [, setIsModalOpen] = useIsUpdateProfileInfoModalOpen();
 
   const handleSubmitUpdateProfileInfo = useMemo(
     () =>
@@ -54,7 +51,6 @@ export const useUpdateProfileInfoForm = (
   );
   return {
     register,
-    setValue,
     errors,
     isValid,
     isDirty,
