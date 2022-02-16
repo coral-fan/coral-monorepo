@@ -1,6 +1,5 @@
 import { isAddress } from '@ethersproject/address';
 import { verifyMessage } from '@ethersproject/wallet';
-import { ID_TOKEN_KEY } from 'consts';
 import { getAuth } from 'firebase-admin/auth';
 import { getAuthenticationMessage } from 'libraries/authentication';
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
