@@ -2,7 +2,7 @@ import { useIsNetworkSupported } from 'libraries/blockchain';
 import { useIsAuthenticated } from 'libraries/authentication';
 import { Modal, Button, Input, Avatar } from 'components/ui';
 
-import { AvatarContainer, AvatarWrapper, Form, InputsContainer } from './components';
+import { Form, InputsContainer } from './components';
 
 import { useUpdateProfileInfoForm } from './hooks';
 import { useIsUpdateProfileInfoModalOpen } from 'pages/user/hooks';
@@ -27,11 +27,6 @@ export const UpdateProfileInfoModal = () => {
 
   return (
     <Modal onClick={() => setIsModalOpen(false)} variant={'close'}>
-      <AvatarContainer>
-        <AvatarWrapper>
-          <Avatar size={200} hasBorder={false} />
-        </AvatarWrapper>
-      </AvatarContainer>
       <Form onSubmit={handleSubmitUpdateProfileInfo}>
         <InputsContainer>
           <Input
