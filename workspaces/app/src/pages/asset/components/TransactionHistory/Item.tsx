@@ -17,7 +17,7 @@ const ItemContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   align-items: flex-end;
-  border-bottom: solid 1px ${tokens.color.gray};
+  border-bottom: solid 1px ${tokens.color.border.secondary};
 `;
 
 const InfoContainer = styled.div`
@@ -35,7 +35,7 @@ const InfoDetailsContainer = styled.div`
 const Description = styled.div`
   size: 14px;
   font-weight: 400;
-  color: ${tokens.color.white};
+  color: ${tokens.color.font.primary};
   line-height: 18px;
   justify-content: flex-end;
 `;
