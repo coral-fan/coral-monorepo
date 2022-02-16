@@ -5,8 +5,7 @@ import { Modal, Button, Input, Avatar } from 'components/ui';
 import { AvatarContainer, AvatarWrapper, Form, InputsContainer } from './components';
 
 import { useUpdateProfileInfoForm } from './hooks';
-import { useEffect } from 'react';
-import { useIsUpdateProfileInfoModalOpen, useUser } from 'pages/user/hooks';
+import { useIsUpdateProfileInfoModalOpen } from 'pages/user/hooks';
 
 export const UpdateProfileInfoModal = () => {
   const isAuthenticated = useIsAuthenticated();
