@@ -75,6 +75,7 @@ const tokens = createTheme({
       tertiary: colors.gray[11],
       brand: colors.coral[10],
       white: colors.cloud[10],
+      red: colors.red[10],
     },
     font: {
       primary: colors.cloud[10],
