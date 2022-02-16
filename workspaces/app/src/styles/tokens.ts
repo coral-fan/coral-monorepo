@@ -72,14 +72,21 @@ const tokens = createTheme({
     background: {
       primary: colors.slate[10],
       secondary: colors.gray[10],
-    },
-    brand: {
-      primary: colors.coral[10],
+      tertiary: colors.gray[11],
+      brand: colors.coral[10],
+      white: colors.cloud[10],
     },
     font: {
       primary: colors.cloud[10],
       secondary: colors.gray[9],
       dark: colors.slate[10],
+      error: colors.red[10],
+      brand: colors.coral[10],
+    },
+    border: {
+      primary: colors.cloud[10],
+      secondary: colors.gray[10],
+      brand: colors.coral[10],
       error: colors.red[10],
     },
   },
