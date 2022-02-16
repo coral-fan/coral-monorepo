@@ -79,7 +79,7 @@ const tokens = createTheme({
     font: {
       primary: colors.cloud[10],
       secondary: colors.gray[9],
-      dark: colors.slate[10],
+      black: colors.slate[10],
       error: colors.red[10],
       brand: colors.coral[10],
     },
