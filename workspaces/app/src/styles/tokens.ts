@@ -3,6 +3,28 @@ import { createTheme } from 'theme-in-css';
 
 export const DESKTOP_BREAKPOINT = '716px';
 
+const colors = {
+  coral: {
+    10: '#FFB890',
+  },
+  cloud: {
+    10: '#F0F0F0', // (240, 240, 240)
+    11: '#E6E6E6', // (230, 230, 230)
+  },
+  slate: {
+    10: '#1E1E1E', // (30, 30, 30)
+  },
+  gray: {
+    9: '#929292', // (146, 146, 146)
+    10: '#595959', // (89, 89, 89)
+    11: '#484848', // (72, 72, 72)
+    12: '#333333', // (51, 51, 51)
+  },
+  red: {
+    10: '#E13214',
+  },
+};
+
 const tokens = createTheme({
   spacing: {
     mobile: {
@@ -20,22 +42,54 @@ const tokens = createTheme({
       xl: '60px',
     },
   },
+  text: {
+    font_size: {
+      xs: '12px',
+      sm: '15px',
+      md: '18px',
+      lg: '24px',
+      xl: '32px',
+      xxl: '64px',
+    },
+    line_height: {
+      xs: '14px',
+      sm: '19px',
+      md: '22px',
+      lg: '24px',
+      xl: '34px',
+      xxl: '62px',
+    },
+    letter_spacing: {
+      xs: '0.05em',
+      sm: '0.02em',
+      md: '0.01em',
+      lg: '0em',
+      xl: '-0.005em',
+      xxl: '-0.02em',
+    },
+  },
   color: {
     background: {
-      primary: '#171818',
-      secondary: '#322D36',
-      tertiary: '#3F3A43',
+      primary: colors.slate[10],
+      secondary: colors.gray[10],
     },
-    action: {
-      primary: '#6C28C7',
-      secondary: '#604F75',
+    brand: {
+      primary: colors.coral[10],
     },
-    gray: '#9D9D9D',
-    white: '#FFFFFF',
-    red: '#F01F51',
+    font: {
+      primary: colors.cloud[10],
+      secondary: colors.gray[9],
+      dark: colors.slate[10],
+      error: colors.red[10],
+    },
   },
-  gradient: {
-    primary: 'linear-gradient(121.65deg, #3F2D4D 8.25%, #292030 98.53%)',
+  border: {
+    radius: {
+      sm: '14px',
+      md: '20px',
+      lg: '25px',
+      xl: '30px',
+    },
   },
 });
 
