@@ -1,13 +1,15 @@
 import styled from '@emotion/styled';
 import { PrivateUserData, PublicUserData, User, useUserUid } from 'libraries/models';
 import { GetServerSideProps } from 'next';
-import { getDocumentData, initializeFirebaseAdmin } from 'libraries/firebase';
-import { useState } from 'react';
+import { getDocumentData } from 'libraries/firebase';
 import { UpdateProfile } from './components/UpdateProfile/UpdateProfile';
 import { getIdToken } from 'libraries/authentication';
 import { destroyCookie } from 'nookies';
 import { ID_TOKEN_KEY } from 'consts';
 import { getAuthenticationServerSide } from 'libraries/firebase/authentication';
+import { UserPageProvider } from './provider';
+import { useRouter } from 'next/router';
+import { useUser } from './hooks';
 
 const Container = styled.div`
   display: flex;
@@ -15,23 +17,31 @@ const Container = styled.div`
 `;
 
 interface UserPageProps {
-  userProfileId: string;
   userData: User;
 }
 
-export default function UserPage({ userData, userProfileId }: UserPageProps) {
-  const [user, setUser] = useState(userData);
-  const { username, email, profilePhoto } = user;
+const UserProfile = () => {
+  const { userProfileId } = useRouter().query;
 
+  if (typeof userProfileId !== 'string') {
+    throw Error('userProfileId must be of type string');
+  }
+
+  const [{ username, email }] = useUser();
   const currentUserUid = useUserUid();
 
   return (
     <Container>
       {`${username}'s Profile`}
-      {currentUserUid === userProfileId && email !== undefined && (
-        <UpdateProfile {...{ username, email, profilePhoto, setUser }} />
-      )}
+      {currentUserUid === userProfileId && email !== undefined && <UpdateProfile />}
     </Container>
+  );
+};
+export default function UserPage({ userData }: UserPageProps) {
+  return (
+    <UserPageProvider initialUserData={userData}>
+      <UserProfile />
+    </UserPageProvider>
   );
 }
 
@@ -78,7 +88,6 @@ export const getServerSideProps: GetServerSideProps<
 
   return {
     props: {
-      userProfileId,
       userData,
     },
   };
