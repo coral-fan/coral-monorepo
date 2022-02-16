@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useUserUid } from 'libraries/models';
-import { UpdateProfile } from './UpdateProfile/UpdateProfile';
+import { UpdateProfile } from './UpdateProfile';
 import { useRouter } from 'next/router';
 import { useUser } from '../hooks';
 import { Avatar } from 'components/ui';
@@ -17,13 +17,13 @@ export const UserProfile = () => {
     throw Error('userProfileId must be of type string');
   }
 
-  const [{ username, email }] = useUser();
+  const [{ username, email, profilePhoto }] = useUser();
   const currentUserUid = useUserUid();
 
   return (
     <Container>
       {`${username}'s Profile`}
-      <Avatar size={200} hasBorder={false} />
+      <Avatar size={200} hasBorder={false} src={profilePhoto?.src} />
       {currentUserUid === userProfileId && email !== undefined && <UpdateProfile />}
     </Container>
   );
