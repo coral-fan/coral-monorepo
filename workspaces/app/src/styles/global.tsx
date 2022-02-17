@@ -56,11 +56,11 @@ export const globalStyles = css`
     margin: 0;
     font-family: 'Kunst Grotesk', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
       Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    color: ${tokens.color.font.primary};
+    color: ${tokens.font.color.primary};
   }
 
   html {
-    background-color: ${tokens.color.background.primary};
+    background-color: ${tokens.background.color.primary};
   }
 `;
 export const GlobalStyles = () => <Global styles={[globalStyles, globalTokens]} />;

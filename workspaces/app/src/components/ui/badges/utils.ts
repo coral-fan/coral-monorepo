@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import tokens from 'styles/tokens';
+import { color } from 'styles';
 import { BadgeSize, BadgeVariant } from './types';
 import { badgeSizeDictionary } from './consts';
 
@@ -13,7 +14,7 @@ export const getBadgeStyle = (size: BadgeSize, variant: BadgeVariant) => {
     border-radius: 50%;
     width: ${badgeSizeDictionary[size].badge}px;
     height: ${badgeSizeDictionary[size].badge}px;
-    color: ${tokens.color.font.primary};
+    color: ${color.cloud};
     border: ${isPrimaryVariant ? 'none' : `solid 1px ${tokens.color.border.primary}`};
     background-color: ${isPrimaryVariant ? tokens.color.background.brand : 'none'};
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);

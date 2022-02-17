@@ -3,9 +3,18 @@ import { createTheme } from 'theme-in-css';
 
 export const DESKTOP_BREAKPOINT = '716px';
 
+/*
+Color values are set here. 10 is the "base" value, 
+9 through 0 are lighter (8 is lighter than 9) and
+11 through 20 are darker (12 is darker than 11).
+
+Setting 10 as the base value provides flexibility for
+various shades, lighter and darker, without requiring
+a negative index.
+*/
 const colors = {
   coral: {
-    10: '#FFB890',
+    10: '#FFB890', // (255, 184, 144)
   },
   cloud: {
     10: '#F0F0F0', // (240, 240, 240)
@@ -25,6 +34,21 @@ const colors = {
   },
 };
 
+const color = {
+  coral: colors.coral[10],
+  cloud: colors.cloud[10],
+  cloud_11: colors.cloud[11],
+  slate: colors.slate[10],
+  gray: colors.gray[10],
+  gray_9: colors.gray[9],
+  gray_10: colors.gray[10],
+  gray_11: colors.gray[11],
+  gray_12: colors.gray[12],
+  red: colors.red[10],
+};
+
+export const COLOR = createTheme(color);
+
 const tokens = createTheme({
   spacing: {
     mobile: {
@@ -42,8 +66,8 @@ const tokens = createTheme({
       xl: '60px',
     },
   },
-  text: {
-    font_size: {
+  font: {
+    size: {
       xs: '12px',
       sm: '15px',
       md: '18px',
@@ -67,28 +91,20 @@ const tokens = createTheme({
       xl: '-0.005em',
       xxl: '-0.02em',
     },
+    color: {
+      primary: color.cloud,
+      secondary: color.gray_9,
+      button: color.slate,
+      error: color.red,
+      brand: color.coral,
+    },
   },
-  color: {
-    background: {
-      primary: colors.slate[10],
-      secondary: colors.gray[10],
-      tertiary: colors.gray[11],
-      brand: colors.coral[10],
-      white: colors.cloud[10],
-      red: colors.red[10],
-    },
-    font: {
-      primary: colors.cloud[10],
-      secondary: colors.gray[9],
-      black: colors.slate[10],
-      error: colors.red[10],
-      brand: colors.coral[10],
-    },
-    border: {
-      primary: colors.cloud[10],
-      secondary: colors.gray[10],
-      brand: colors.coral[10],
-      error: colors.red[10],
+  background: {
+    color: {
+      primary: color.slate,
+      secondary: color.gray,
+      tertiary: color.gray_11,
+      brand: color.coral,
     },
   },
   border: {
@@ -98,6 +114,12 @@ const tokens = createTheme({
       lg: '25px',
       xl: '30px',
     },
+    color: {
+      primary: color.cloud,
+      secondary: color.gray,
+      brand: color.coral,
+      error: color.red,
+    },
   },
 });
 
@@ -105,6 +127,7 @@ export default tokens;
 
 export const globalTokens = css`
   :root {
+    ${COLOR.css.string};
     ${tokens.css.string}
   }
 `;
