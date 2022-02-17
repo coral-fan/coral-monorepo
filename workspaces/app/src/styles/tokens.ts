@@ -12,7 +12,7 @@ Setting 10 as the base value provides flexibility for
 various shades, lighter and darker, without requiring
 a negative index.
 */
-const colors = {
+export const colors = createTheme({
   coral: {
     10: '#FFB890', // (255, 184, 144)
   },
@@ -32,22 +32,7 @@ const colors = {
   red: {
     10: '#E13214',
   },
-};
-
-const color = {
-  coral: colors.coral[10],
-  cloud: colors.cloud[10],
-  cloud_11: colors.cloud[11],
-  slate: colors.slate[10],
-  gray: colors.gray[10],
-  gray_9: colors.gray[9],
-  gray_10: colors.gray[10],
-  gray_11: colors.gray[11],
-  gray_12: colors.gray[12],
-  red: colors.red[10],
-};
-
-export const COLOR = createTheme(color);
+});
 
 const tokens = createTheme({
   spacing: {
@@ -92,19 +77,19 @@ const tokens = createTheme({
       xxl: '-0.02em',
     },
     color: {
-      primary: color.cloud,
-      secondary: color.gray_9,
-      button: color.slate,
-      error: color.red,
-      brand: color.coral,
+      primary: colors.cloud[10],
+      secondary: colors.gray[9],
+      button: colors.slate[10],
+      error: colors.red[10],
+      brand: colors.coral[10],
     },
   },
   background: {
     color: {
-      primary: color.slate,
-      secondary: color.gray,
-      tertiary: color.gray_11,
-      brand: color.coral,
+      primary: colors.slate[10],
+      secondary: colors.gray[9],
+      tertiary: colors.gray[11],
+      brand: colors.coral[10],
     },
   },
   border: {
@@ -115,10 +100,10 @@ const tokens = createTheme({
       xl: '30px',
     },
     color: {
-      primary: color.cloud,
-      secondary: color.gray,
-      brand: color.coral,
-      error: color.red,
+      primary: colors.cloud[10],
+      secondary: colors.gray[10],
+      brand: colors.coral[10],
+      error: colors.red[10],
     },
   },
 });
@@ -127,7 +112,7 @@ export default tokens;
 
 export const globalTokens = css`
   :root {
-    ${COLOR.css.string};
+    ${colors.css.string};
     ${tokens.css.string}
   }
 `;
