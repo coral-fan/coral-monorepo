@@ -15,11 +15,11 @@ export interface HeadingProp {
 
 const getHeadingStyle = (level: Level) => css`
   font-weight: bold;
-  color: ${tokens.color.font.primary};
+  color: ${tokens.font.color.primary};
   font-size: ${`${fontSizeDictionary[level]}px`};
   ${level === 2
     ? css`
-        border-bottom: solid ${tokens.color.border.secondary} 1px;
+        border-bottom: solid ${tokens.border.color.secondary} 1px;
         padding-bottom: 8px;
       `
     : undefined}

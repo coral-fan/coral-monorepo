@@ -33,7 +33,7 @@ const Container = styled.div`
 const Content = styled(Card)<{ title?: string }>`
   width: 100%;
   flex-direction: column;
-  color: ${tokens.color.font.primary};
+  color: ${tokens.font.color.primary};
   padding: ${({ title }) => `${title ? '16px' : '8px'} 18px`};
   box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.5);
 `;

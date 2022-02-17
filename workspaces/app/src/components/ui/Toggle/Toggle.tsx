@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { ComponentProps, ForwardedRef, forwardRef } from 'react';
 import tokens from 'styles/tokens';
-import { COLOR } from 'styles';
+import { colors } from 'styles';
 
 const HiddenInput = styled.input`
   opacity: 0;
@@ -16,7 +16,7 @@ const Slider = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${tokens.background.color.secondary};
+  background-color: ${colors.coral};
   border: solid ${tokens.border.color.primary} 1px;
   border-radius: 26.17px;
   transition: 0.4s;
@@ -28,7 +28,7 @@ const Slider = styled.div`
     width: 13px;
     left: 4px;
     top: 3px;
-    background-color: ${tokens.background.color.tertiary};
+    background-color: ${colors.coral[10]};
     transition: 0.4s;
     border-radius: 50%;
   }

@@ -26,7 +26,7 @@ const CloseButton = (props: ComponentProps<'button'>) => (
 export const Heading = styled.div`
   font-size: 14px;
   line-height: 18px;
-  color: ${tokens.color.font.primary};
+  color: ${tokens.font.color.primary};
 `;
 
 const BottomContainer = styled.div`
@@ -37,7 +37,7 @@ const BottomContainer = styled.div`
 const Message = styled.div`
   font-size: 10px;
   line-height: 13px;
-  color: ${tokens.color.font.secondary};
+  color: ${tokens.font.color.secondary};
 `;
 
 export const Bottom = ({ message, timestamp }: Omit<NotificationProps, 'heading'>) => (

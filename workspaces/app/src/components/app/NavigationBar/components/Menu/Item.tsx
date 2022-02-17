@@ -26,7 +26,7 @@ const Container = styled.div`
   ${itemBorderBottomStyle}
 
   &:last-child {
-    border-top: solid ${tokens.color.border.primary} 1px;
+    border-top: solid ${tokens.border.color.primary} 1px;
   }
 `;
 
