@@ -9,6 +9,6 @@ export interface NameProp {
 
 export const Name = styled.div<NameProp>`
   font-size: ${({ size }) => `${profileInfoSizeDictionary[size].nameFontSize}px`};
-  color: ${tokens.color.font.primary};
+  color: ${tokens.font.color.primary};
   line-height: ${({ size }) => `${profileInfoSizeDictionary[size].nameLineHeight}px`};
 `;

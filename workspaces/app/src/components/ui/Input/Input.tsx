@@ -13,7 +13,7 @@ const textStyle = css`
 
 const Label = styled.label`
   ${textStyle};
-  color: ${tokens.color.font.secondary};
+  color: ${tokens.font.color.secondary};
 `;
 
 const Container = styled.div`
@@ -24,15 +24,15 @@ const Container = styled.div`
 `;
 
 const getInputStyle = (error?: string) => css`
-  background-color: ${tokens.color.background.primary};
+  background-color: ${tokens.background.color.primary};
   border-radius: 30px;
   height: 37px;
   font-size: 14px;
   padding: 13px 10px;
-  border: ${`solid ${error ? tokens.color.border.error : 'transparent'} 1px`};
+  border: ${`solid ${error ? tokens.border.color.error : 'transparent'} 1px`};
 
   &:focus {
-    ${error ? undefined : `border-color: ${tokens.color.border.brand};`}
+    ${error ? undefined : `border-color: ${tokens.border.color.brand};`}
     outline: none;
   }
 `;
@@ -40,7 +40,7 @@ const getInputStyle = (error?: string) => css`
 const Error = styled.div`
   ${textStyle};
   min-height: 12px;
-  color: ${tokens.color.font.error};
+  color: ${tokens.font.color.error};
 `;
 
 interface InputProps extends ComponentProps<'input'> {

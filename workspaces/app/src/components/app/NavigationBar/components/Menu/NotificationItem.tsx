@@ -3,7 +3,7 @@ import { Item } from './Item';
 import { getIconComponent } from 'components/ui/icons/utils';
 import { bellSVG } from './assets';
 import { css } from '@emotion/react';
-import tokens from 'styles/tokens';
+import { colors } from 'styles';
 
 export interface NotificationItemProp {
   notificationsCount: number;
@@ -14,7 +14,7 @@ const Badge = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${tokens.color.background.red};
+  background-color: ${colors.red[10]};
   border-radius: 50%;
 `;
 const Content = styled.div`

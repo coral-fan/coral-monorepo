@@ -6,8 +6,8 @@ import { Button } from 'components/ui';
 const loginButtonStyle = css`
   height: 30px;
   width: 95px;
-  color: ${tokens.color.font.black};
-  background-color: ${tokens.color.background.brand};
+  color: ${tokens.font.color.button};
+  background-color: ${tokens.background.color.brand};
   justify-self: end;
 `;
 export const LoginButton = () => {

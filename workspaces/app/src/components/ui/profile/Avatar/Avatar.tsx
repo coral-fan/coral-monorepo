@@ -8,7 +8,7 @@ const DEFAULT_AVATAR =
 
 const getImageStyle = (hasBorder: boolean) => css`
   border-radius: 50%;
-  border: ${`solid 1px ${hasBorder ? `${tokens.color.border.primary}` : 'transparent'}`};
+  border: ${`solid 1px ${hasBorder ? `${tokens.border.color.primary}` : 'transparent'}`};
 `;
 
 export const Avatar = ({ src = DEFAULT_AVATAR, size, hasBorder }: AvatarProps) => (
