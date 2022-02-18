@@ -26,7 +26,7 @@ export const WebPlayer = ({ mediaId }: WebPlayerProps) => {
         id="player"
         src={JWPLAYER_LIBRARY_URL}
         onLoad={() => {
-          jwplayer('player').setup({
+          window.jwplayer('player').setup({
             playlist: [
               {
                 file: `${mediaUrl}`,
