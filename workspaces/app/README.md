@@ -5,11 +5,14 @@
 Before running the web client locally, please make sure you have a `.env.local` environment variable file with the following values:
 
 ```
-FIREBASE_ADMIN_CREDENTIAL="<LOCAL PATH TO FIREBASE ADMIN CREDENTIALS>"
+FIREBASE_ADMIN_CREDENTIAL_PATH="<LOCAL PATH TO FIREBASE ADMIN CREDENTIALS>"
+FIREBASE_ADMIN_CREDENTIAL_JSON="<RAW JSON DATA FIREBASE ADMIN CREDENTIALS>"
 NEXT_PUBLIC_OPEN_LOGIN_CLIENT_ID="<OPEN LOGIN CLIENT ID>"
 ```
 
 Please note that any values surrounded by `<` `>` and are placeholder values, and must be filled in with the actual value.
+
+Lastly, for `FIREBASE_ADMIN_CREDENTIAL_JSON`, you will need to take the content of your local Firebase credentials file, remove line breaks (you can use [this](https://www.textfixer.com/tools/remove-line-breaks.php)) and paste it.
 
 ## Scripts
 
@@ -27,6 +30,10 @@ Starts the Next.js server in debug mode.
 
 Starts the Storybook development server.
 Visit [localhost:6006](http://localhost:6006) to view Stories.
+
+### `yarn build`
+
+Creates a production build of the application. Please always run this command to ensure that your branch build before opening/merging a PR.
 
 ### `yarn lint`
 
