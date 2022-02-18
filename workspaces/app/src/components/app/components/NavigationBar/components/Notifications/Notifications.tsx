@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Notification } from 'libraries/models';
 import { Modal } from 'components/ui';
-import { Bottom, Heading, NotificationProps } from 'components/App/components/Notification';
+import { Bottom, Heading, NotificationProps } from 'components/app/components/Notification';
 import { itemBorderBottomStyle } from '../styles';
 
 const NotificationContainer = styled.div`
