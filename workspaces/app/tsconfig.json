@@ -16,9 +16,6 @@
     "incremental": true,
     /* custom compilerOptions starts here */
     "baseUrl": "./src", // this options enables aliases for directories in src (example: import library/hooks/...)
-    "paths": {
-      "*": ["*"]
-    },
     "typeRoots": ["types"],
     "jsxImportSource": "@emotion/react" // enable React component to accept css prop */
     /* custom compilerOptions ends here */
