@@ -112,7 +112,7 @@ export default tokens;
 
 export const globalTokens = css`
   :root {
-    ${colors.css.string};
+    ${colors.css.string}
     ${tokens.css.string}
   }
 `;
