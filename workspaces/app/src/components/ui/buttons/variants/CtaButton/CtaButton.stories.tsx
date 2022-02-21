@@ -1,5 +1,6 @@
 import { Story, Meta } from '@storybook/react';
-import { CtaButton, BaseButtonProps as ButtonProps } from 'components/ui';
+import { BaseButtonProps as ButtonProps } from '../../BaseButton';
+import { CtaButton } from 'components/ui';
 
 export default {
   title: 'Coral/UI/Buttons/CTA Button',
