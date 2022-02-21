@@ -5,7 +5,7 @@ import rightArrowSvg from './rightArrow.svg';
 import tokens from 'styles/tokens';
 import { getIconComponent } from 'components/ui/icons/utils';
 
-const ButtonWrapper = styled(BaseButton)`
+const Wrapper = styled(BaseButton)`
   padding: 28px 20px;
   border-radius: ${tokens.border.radius.sm};
   background-color: ${tokens.background.color.brand};
@@ -27,11 +27,11 @@ const RightArrowIcon = getIconComponent('rightArrow', rightArrowSvg);
 
 export const CtaButton: FC<ButtonProps> = ({ children, loading, ...props }) => {
   return (
-    <ButtonWrapper loading={loading} {...props}>
+    <Wrapper loading={loading} {...props}>
       <Container>
         {children}
         <RightArrowIcon size={24} />
       </Container>
-    </ButtonWrapper>
+    </Wrapper>
   );
 };
