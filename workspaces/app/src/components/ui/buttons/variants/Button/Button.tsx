@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { BaseButton, BaseButtonProps as ButtonProps } from '../../BaseButton';
 import tokens from 'styles/tokens';
 
-const ButtonWrapper = styled(BaseButton)`
+const Wrapper = styled(BaseButton)`
   padding: 15px;
   text-transform: uppercase;
   font-size: ${tokens.font.size.sm};
@@ -17,7 +17,7 @@ const ButtonWrapper = styled(BaseButton)`
 `;
 
 export const Button: FC<ButtonProps> = ({ children, loading, ...props }) => (
-  <ButtonWrapper loading={loading} {...props}>
+  <Wrapper loading={loading} {...props}>
     {children}
-  </ButtonWrapper>
+  </Wrapper>
 );
