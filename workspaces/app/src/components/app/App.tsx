@@ -30,11 +30,13 @@ export const getLibrary = (provider: ExternalProvider | JsonRpcProvider | undefi
 
 export const App = ({ Component, pageProps }: AppProps) => {
   const store = initializeStore();
+  /*
+    is mounted check logic is necessary to prevent SSRed html from diverging to CSRed html.
+    see: https://www.joshwcomeau.com/react/the-perils-of-rehydration/
+  */
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    // `useEffect` never runs on the server, so we must be on the client if
-    // we hit this block
     setIsMounted(true);
   }, []);
 
