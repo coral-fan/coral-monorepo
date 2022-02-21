@@ -102,6 +102,7 @@ const tokens = createTheme({
     color: {
       primary: colors.cloud[10],
       secondary: colors.gray[10],
+      spinner: colors.slate[10],
       brand: colors.coral[10],
       error: colors.red[10],
     },
