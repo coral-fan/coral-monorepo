@@ -76,10 +76,14 @@ const tokens = createTheme({
       xl: '-0.005em',
       xxl: '-0.02em',
     },
+    weight: {
+      normal: '400',
+      bold: '500',
+    },
     color: {
       primary: colors.cloud[10],
       secondary: colors.gray[9],
-      button: colors.slate[10],
+      contrast: colors.slate[10],
       error: colors.red[10],
       brand: colors.coral[10],
     },
@@ -102,7 +106,6 @@ const tokens = createTheme({
     color: {
       primary: colors.cloud[10],
       secondary: colors.gray[10],
-      spinner: colors.slate[10],
       brand: colors.coral[10],
       error: colors.red[10],
     },
