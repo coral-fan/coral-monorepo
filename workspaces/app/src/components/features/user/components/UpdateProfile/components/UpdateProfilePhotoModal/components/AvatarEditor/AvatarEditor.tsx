@@ -1,12 +1,27 @@
 import { Avatar } from 'components/ui';
 import { useEffect, useRef, useState } from 'react';
-import { filter, fromEvent, map, mergeMapTo, pairwise, pipe, scan, takeUntil } from 'rxjs';
+import {
+  filter,
+  fromEvent,
+  map,
+  merge,
+  mergeMapTo,
+  pairwise,
+  pipe,
+  scan,
+  takeUntil,
+  tap,
+} from 'rxjs';
 import { Draggable } from 'components/ui/profile/Avatar/types';
 import styled from '@emotion/styled';
+
+const AVATAR_SIZE = 200;
 
 type DraggableAvatarProps = Draggable;
 
 const Wrapper = styled.div`
+  width: fit-content;
+
   &:hover {
     cursor: move;
   }
@@ -25,15 +40,31 @@ const coordinatesFromMouseEvent = (element: HTMLElement) => (mouseEventName: str
 
 type Coordinates = [number, number];
 
+const getBoundedCoordinate = (initial: number, delta: number, length: number) => {
+  const coordinate = initial + delta;
+  if (coordinate > 0) {
+    return 0;
+  }
+  const maxOffset = (length - AVATAR_SIZE) * -1;
+
+  if (coordinate < maxOffset) {
+    return maxOffset;
+  }
+
+  return coordinate;
+};
+
 const getOffsetCoordinates = (
   element: HTMLElement,
   [initialX, initialY]: Coordinates,
-  imageElement: HTMLElement
+  imageElement: HTMLImageElement
 ) => {
   const [mouseDownCoordinates$, mouseMoveCoordinates$] = ['mousedown', 'mousemove'].map(
     coordinatesFromMouseEvent(element)
   );
-  const mouseUp$ = fromEvent(element, 'mouseup');
+  const [mouseUp$, mouseOut$] = ['mouseup', 'mouseout'].map((mouseEventName) =>
+    fromEvent(element, mouseEventName)
+  );
 
   return mouseDownCoordinates$.pipe(
     mergeMapTo(
@@ -45,17 +76,20 @@ const getOffsetCoordinates = (
             currentCoordinates.y - previousCoordinates.y,
           ]
         ),
-        takeUntil(mouseUp$)
+        takeUntil(merge(mouseUp$, mouseOut$))
       )
     ),
     scan<Coordinates, Coordinates>(
-      ([xOffset, yOffset], [xDiff, yDiff]) => [xOffset + xDiff, yOffset + yDiff],
+      ([x, y], [deltaX, deltaY]) => [
+        getBoundedCoordinate(x, deltaX, imageElement.naturalWidth),
+        getBoundedCoordinate(y, deltaY, imageElement.naturalHeight),
+      ],
       [initialX, initialY]
     )
   );
 };
 
-export const DraggableAvatar = ({ xOffset = 0, yOffset = 0 }: Draggable = {}) => {
+export const AvatarEditor = ({ xOffset = 0, yOffset = 0 }: Draggable = {}) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [[x, y], setCoordinates] = useState<Coordinates>([xOffset, yOffset]);
 
@@ -64,7 +98,7 @@ export const DraggableAvatar = ({ xOffset = 0, yOffset = 0 }: Draggable = {}) =>
       const imageElement = wrapperRef.current.querySelector('img');
 
       if (imageElement === null) {
-        throw Error('An imageElement should not be null.');
+        throw Error('imageElement should not be null.');
       }
 
       getOffsetCoordinates(wrapperRef.current, [xOffset, yOffset], imageElement).subscribe(
@@ -75,7 +109,7 @@ export const DraggableAvatar = ({ xOffset = 0, yOffset = 0 }: Draggable = {}) =>
 
   return (
     <Wrapper ref={wrapperRef}>
-      <Avatar size={200} hasBorder={true} xOffset={x} yOffset={y} />
+      <Avatar size={AVATAR_SIZE} hasBorder={false} xOffset={x} yOffset={y} />
     </Wrapper>
   );
 };
