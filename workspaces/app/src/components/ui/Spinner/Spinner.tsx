@@ -34,10 +34,10 @@ const Ring = styled.div`
   width: var(--ring-size);
   height: var(--ring-size);
   margin: var(--ring-spacing);
-  border: var(--ring-spacing) solid ${tokens.border.color.spinner};
+  border: var(--ring-spacing) solid ${tokens.background.color.primary};
   border-radius: 50%;
   animation: ${spin} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: ${tokens.border.color.spinner} transparent transparent transparent;
+  border-color: ${tokens.background.color.primary} transparent transparent transparent;
 
   &:nth-of-type(1) {
     animation-delay: -0.45s;
