@@ -5,30 +5,31 @@ import tokens from 'styles/tokens';
 
 const textStyle = css`
   text-transform: uppercase;
-  font-size: 10px;
-  font-weight: bold;
-  line-height: 12px;
-  letter-spacing: 0.08em;
+  font-size: ${tokens.font.size.xs};
+  font-weight: ${tokens.font.weight.normal};
+  line-height: ${tokens.font.line_height.xs};
+  letter-spacing: ${tokens.font.letter_spacing.xs};
 `;
 
 const Label = styled.label`
   ${textStyle};
-  color: ${tokens.font.color.secondary};
+  color: ${tokens.font.color.primary};
 `;
 
 const Container = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 `;
 
 const getInputStyle = (error?: string) => css`
   background-color: ${tokens.background.color.primary};
-  border-radius: 30px;
-  height: 37px;
-  font-size: 14px;
-  padding: 13px 10px;
+  border-radius: ${tokens.border.radius.sm};
+  height: 45px;
+  font-size: ${tokens.font.size.sm};
+  color: ${tokens.font.color.primary};
+  padding: 13px 10px 13px 16px;
   border: ${`solid ${error ? tokens.border.color.error : 'transparent'} 1px`};
 
   &:focus {
