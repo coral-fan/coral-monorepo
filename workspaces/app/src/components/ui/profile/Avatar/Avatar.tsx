@@ -5,7 +5,9 @@ import styled from '@emotion/styled';
 
 import { DEFAULT_AVATAR } from './consts';
 import { Draggable } from './types';
-import { getOffsetPosition, getImageStyle } from './utils';
+import { getOffsetPosition } from './utils';
+
+import tokens from 'styles/tokens';
 
 type WrapperProps = Omit<AvatarProps, 'src'>;
 
@@ -14,6 +16,10 @@ const Wrapper = styled.div<WrapperProps>`
   height: var(--size);
   width: var(--size);
   position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  border: ${({ hasBorder }) =>
+    `solid 1px ${hasBorder ? `${tokens.border.color.primary}` : 'transparent'}`};
 `;
 
 interface AvatarProps extends Omit<ImageProps, 'src'>, Draggable {
@@ -38,8 +44,8 @@ export const Avatar = ({
         layout={'fill'}
         priority={true}
         objectPosition={objectPosition}
+        objectFit={'none'}
         src={src}
-        css={getImageStyle(hasBorder)}
       />
     </Wrapper>
   );

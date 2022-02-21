@@ -7,7 +7,3 @@ export const getOffsetPosition = (x?: number, y?: number) => {
 
   return `${xOffset}${yOffset}`;
 };
-export const getImageStyle = (hasBorder: boolean) => css`
-  border-radius: 50%;
-  border: ${`solid 1px ${hasBorder ? `${tokens.border.color.primary}` : 'transparent'}`};
-`;
