@@ -20,7 +20,6 @@ interface AvatarProps extends Omit<ImageProps, 'src'>, Draggable {
   src?: ImageProps['src'];
   size: number;
   hasBorder: boolean;
-  onLoad?: ReactEventHandler<HTMLImageElement>;
 }
 
 export const Avatar = ({
@@ -29,7 +28,6 @@ export const Avatar = ({
   hasBorder = false,
   xOffset,
   yOffset,
-  onLoad,
 }: AvatarProps) => {
   const objectPosition = getOffsetPosition(xOffset, yOffset);
   return (
@@ -42,7 +40,6 @@ export const Avatar = ({
         objectPosition={objectPosition}
         src={src}
         css={getImageStyle(hasBorder)}
-        onLoad={onLoad}
       />
     </Wrapper>
   );
