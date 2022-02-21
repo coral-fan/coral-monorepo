@@ -2,6 +2,8 @@ import { useIsNetworkSupported } from 'libraries/blockchain';
 import { useIsAuthenticated } from 'libraries/authentication';
 import { Modal } from 'components/ui';
 import { useIsUpdateProfilePhotoModalOpen } from 'components/features/user/hooks';
+import { Fragment } from 'react';
+import { DraggableAvatar } from './components';
 
 export const UpdateProfilePhotoModal = () => {
   const isAuthenticated = useIsAuthenticated();
@@ -12,5 +14,9 @@ export const UpdateProfilePhotoModal = () => {
     return null;
   }
 
-  return <Modal onClick={() => setIsModalOpen(false)} variant={'close'}></Modal>;
+  return (
+    <Modal onClick={() => setIsModalOpen(false)} variant={'close'}>
+      <DraggableAvatar />
+    </Modal>
+  );
 };
