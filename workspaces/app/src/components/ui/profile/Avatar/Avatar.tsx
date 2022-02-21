@@ -1,11 +1,11 @@
-import Image from 'next/image';
-import styled from '@emotion/styled';
-import { css } from '@emotion/react';
-import { AvatarProps } from './types';
-import tokens from 'styles/tokens';
+import { ReactEventHandler } from 'react';
 
-const DEFAULT_AVATAR =
-  'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
+import Image, { ImageProps } from 'next/image';
+import styled from '@emotion/styled';
+
+import { DEFAULT_AVATAR } from './consts';
+import { Draggable } from './types';
+import { getOffsetPosition, getImageStyle } from './utils';
 
 type WrapperProps = Omit<AvatarProps, 'src'>;
 
@@ -16,20 +16,12 @@ const Wrapper = styled.div<WrapperProps>`
   position: relative;
 `;
 
-const getOffsetPosition = (x?: number, y?: number) => {
-  if (x === undefined && y === undefined) {
-    return undefined;
-  }
-
-  const xOffset = x === undefined ? '' : `${x}px `;
-  const yOffset = y === undefined ? '' : `${y}px`;
-
-  return `${xOffset}${yOffset}`;
-};
-const getImageStyle = (hasBorder: boolean) => css`
-  border-radius: 50%;
-  border: ${`solid 1px ${hasBorder ? `${tokens.border.color.primary}` : 'transparent'}`};
-`;
+interface AvatarProps extends Omit<ImageProps, 'src'>, Draggable {
+  src?: ImageProps['src'];
+  size: number;
+  hasBorder: boolean;
+  onLoad?: ReactEventHandler<HTMLImageElement>;
+}
 
 export const Avatar = ({
   src = DEFAULT_AVATAR,
@@ -37,6 +29,7 @@ export const Avatar = ({
   hasBorder = false,
   xOffset,
   yOffset,
+  onLoad,
 }: AvatarProps) => {
   const objectPosition = getOffsetPosition(xOffset, yOffset);
   return (
@@ -49,6 +42,7 @@ export const Avatar = ({
         objectPosition={objectPosition}
         src={src}
         css={getImageStyle(hasBorder)}
+        onLoad={onLoad}
       />
     </Wrapper>
   );
