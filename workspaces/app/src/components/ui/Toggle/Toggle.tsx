@@ -12,23 +12,24 @@ const HiddenInput = styled.input`
 const Slider = styled.div`
   position: absolute;
   cursor: pointer;
+  width: 35px;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${colors.coral};
+  background-color: 'transparent';
   border: solid ${tokens.border.color.primary} 1px;
-  border-radius: 26.17px;
+  border-radius: 17px;
   transition: 0.4s;
 
   &:before {
     position: absolute;
     content: '';
-    height: 13px;
-    width: 13px;
+    height: 12px;
+    width: 12px;
     left: 4px;
     top: 3px;
-    background-color: ${colors.coral[10]};
+    background-color: ${colors.cloud[10]};
     transition: 0.4s;
     border-radius: 50%;
   }
@@ -39,6 +40,7 @@ const Slider = styled.div`
 
     &:before {
       transform: translateX(12px);
+      background-color: ${tokens.background.color.primary};
     }
   }
 `;
