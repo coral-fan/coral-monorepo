@@ -1,21 +1,10 @@
 import { Avatar } from 'components/ui';
 import { useEffect, useRef, useState } from 'react';
-import {
-  filter,
-  fromEvent,
-  map,
-  merge,
-  mergeMapTo,
-  pairwise,
-  pipe,
-  scan,
-  takeUntil,
-  tap,
-} from 'rxjs';
+import { filter, fromEvent, map, merge, mergeMapTo, pairwise, scan, takeUntil, tap } from 'rxjs';
 import { Draggable } from 'components/ui/profile/Avatar/types';
 import styled from '@emotion/styled';
 
-const AVATAR_SIZE = 200;
+export const AVATAR_SIZE = 200;
 
 type DraggableAvatarProps = Draggable;
 
@@ -30,12 +19,10 @@ const Wrapper = styled.div`
 const coordinatesFromMouseEvent = (element: HTMLElement) => (mouseEventName: string) =>
   fromEvent(element, mouseEventName).pipe(
     filter((event: Event): event is MouseEvent => event instanceof MouseEvent),
-    pipe(
-      map((event: MouseEvent) => ({
-        x: event.clientX,
-        y: event.clientY,
-      }))
-    )
+    map((event: MouseEvent) => ({
+      x: event.clientX,
+      y: event.clientY,
+    }))
   );
 
 type Coordinates = [number, number];
@@ -54,7 +41,7 @@ const getBoundedCoordinate = (initial: number, delta: number, length: number) =>
   return coordinate;
 };
 
-const getOffsetCoordinates = (
+const getObjectPosition = (
   element: HTMLElement,
   [initialX, initialY]: Coordinates,
   imageElement: HTMLImageElement
@@ -89,27 +76,34 @@ const getOffsetCoordinates = (
   );
 };
 
+const Slider = styled.input`
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 export const AvatarEditor = ({ xOffset = 0, yOffset = 0 }: Draggable = {}) => {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const [[x, y], setCoordinates] = useState<Coordinates>([xOffset, yOffset]);
+  const avatarRef = useRef<HTMLDivElement>(null);
+  const [[x, y], objectPosition] = useState<Coordinates>([xOffset, yOffset]);
 
   useEffect(() => {
-    if (wrapperRef.current) {
-      const imageElement = wrapperRef.current.querySelector('img');
+    if (avatarRef.current) {
+      const imageElement = avatarRef.current.querySelector('img');
 
       if (imageElement === null) {
         throw Error('imageElement should not be null.');
       }
 
-      getOffsetCoordinates(wrapperRef.current, [xOffset, yOffset], imageElement).subscribe(
-        setCoordinates
+      getObjectPosition(avatarRef.current, [xOffset, yOffset], imageElement).subscribe(
+        objectPosition
       );
     }
   }, []);
 
   return (
-    <Wrapper ref={wrapperRef}>
-      <Avatar size={AVATAR_SIZE} hasBorder={false} xOffset={x} yOffset={y} />
-    </Wrapper>
+    <div>
+      <Avatar size={AVATAR_SIZE} hasBorder={false} xOffset={x} yOffset={y} ref={avatarRef} />
+      <Slider type="range" />
+    </div>
   );
 };
