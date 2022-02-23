@@ -15,7 +15,7 @@ export const UpdateProfilePhotoModal = () => {
 
   return (
     <Modal onClick={() => setIsModalOpen(false)} variant={'close'}>
-      <AvatarEditor />
+      <AvatarEditor percentageOffsets={[0, 0]} />
     </Modal>
   );
 };
