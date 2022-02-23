@@ -8,7 +8,7 @@ import { formatObjectPosition } from './utils';
 
 import { css } from '@emotion/react';
 
-type WrapperProps = Omit<Parameters<typeof Avatar>[0], 'src' | 'percentageOffsets'>;
+type WrapperProps = Pick<Parameters<typeof Avatar>[0], 'size' | 'ref'>;
 
 const draggableHoverStyle = css`
   &:hover {
@@ -31,22 +31,22 @@ export interface AvatarProps extends Omit<ImageProps, 'src'> {
   src?: ImageProps['src'];
   size: number;
   percentageOffsets: PercentageOffsets;
+  scale: number;
 }
 
 export const Avatar = forwardRef(
   (
-    { src = DEFAULT_AVATAR, size, percentageOffsets: [x, y] = [0, 0] }: AvatarProps,
+    { src = DEFAULT_AVATAR, size, percentageOffsets: [x, y] = [0, 0], scale }: AvatarProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const objectPosition = formatObjectPosition(x, y);
     return (
       <Wrapper size={size} ref={ref}>
         <Image
-          draggable={false}
+          draggable={ref === null}
           alt={''}
           layout={'fill'}
           priority={true}
-          objectPosition={objectPosition}
           objectFit={'cover'}
           src={src}
         />
