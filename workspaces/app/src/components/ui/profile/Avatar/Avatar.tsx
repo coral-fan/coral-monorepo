@@ -4,14 +4,11 @@ import Image, { ImageProps } from 'next/image';
 import styled from '@emotion/styled';
 
 import { DEFAULT_AVATAR } from './consts';
-import { Draggable } from './types';
 import { formatObjectPosition } from './utils';
 
-import tokens from 'styles/tokens';
 import { css } from '@emotion/react';
-import { AVATAR_SIZE } from 'components/features/user/components/UpdateProfile/components/UpdateProfilePhotoModal/components';
 
-type WrapperProps = Omit<AvatarProps, 'src'> & { isDraggable: boolean };
+type WrapperProps = Omit<Parameters<typeof Avatar>[0], 'src' | 'percentageOffsets'>;
 
 const draggableHoverStyle = css`
   &:hover {
@@ -20,40 +17,37 @@ const draggableHoverStyle = css`
 `;
 
 const Wrapper = styled.div<WrapperProps>`
-  --size: ${AVATAR_SIZE}px;
+  --size: ${({ size }) => size}px;
   height: var(--size);
   width: var(--size);
-  transform: scale(${({ size }) => size / AVATAR_SIZE});
-  margin: -${({ size }) => (AVATAR_SIZE - size) / 2}px;
   position: relative;
   border-radius: 50%;
   overflow: hidden;
-  border: ${({ hasBorder }) =>
-    `solid 1px ${hasBorder ? `${tokens.border.color.primary}` : 'transparent'}`};
-  ${({ isDraggable }) => (isDraggable ? draggableHoverStyle : null)}
+  ${({ ref }) => (ref === null ? null : draggableHoverStyle)}
 `;
 
-interface AvatarProps extends Omit<ImageProps, 'src'>, Draggable {
+export type PercentageOffsets = [number, number];
+export interface AvatarProps extends Omit<ImageProps, 'src'> {
   src?: ImageProps['src'];
   size: number;
-  hasBorder: boolean;
+  percentageOffsets: PercentageOffsets;
 }
 
 export const Avatar = forwardRef(
   (
-    { src = DEFAULT_AVATAR, size, hasBorder = false, xOffset, yOffset }: AvatarProps,
+    { src = DEFAULT_AVATAR, size, percentageOffsets: [x, y] = [0, 0] }: AvatarProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
-    const objectPosition = formatObjectPosition(xOffset, yOffset);
+    const objectPosition = formatObjectPosition(x, y);
     return (
-      <Wrapper hasBorder={hasBorder} size={size} isDraggable={ref !== null} ref={ref}>
+      <Wrapper size={size} ref={ref}>
         <Image
           draggable={false}
           alt={''}
           layout={'fill'}
           priority={true}
           objectPosition={objectPosition}
-          objectFit={'none'}
+          objectFit={'cover'}
           src={src}
         />
       </Wrapper>

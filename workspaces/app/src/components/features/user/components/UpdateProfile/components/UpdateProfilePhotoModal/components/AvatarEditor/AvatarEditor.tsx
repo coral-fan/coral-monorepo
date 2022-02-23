@@ -1,20 +1,20 @@
-import { Avatar } from 'components/ui';
+import { Avatar, AvatarProps, PercentageOffsets } from 'components/ui';
 import { useEffect, useRef, useState } from 'react';
-import { filter, fromEvent, map, merge, mergeMapTo, pairwise, scan, takeUntil, tap } from 'rxjs';
-import { Draggable } from 'components/ui/profile/Avatar/types';
+import {
+  filter,
+  fromEvent,
+  map,
+  merge,
+  mergeMapTo,
+  Observable,
+  pairwise,
+  scan,
+  takeUntil,
+  tap,
+} from 'rxjs';
 import styled from '@emotion/styled';
 
 export const AVATAR_SIZE = 200;
-
-type DraggableAvatarProps = Draggable;
-
-const Wrapper = styled.div`
-  width: fit-content;
-
-  &:hover {
-    cursor: move;
-  }
-`;
 
 const coordinatesFromMouseEvent = (element: HTMLElement) => (mouseEventName: string) =>
   fromEvent(element, mouseEventName).pipe(
@@ -25,51 +25,67 @@ const coordinatesFromMouseEvent = (element: HTMLElement) => (mouseEventName: str
     }))
   );
 
-type Coordinates = [number, number];
-
-const getBoundedCoordinate = (initial: number, delta: number, length: number) => {
-  const coordinate = initial + delta;
-  if (coordinate > 0) {
+const getPercentageOffset = (initial: number, delta: number) => {
+  console.log(initial, delta);
+  const offsetPercentage = initial + delta;
+  if (offsetPercentage <= 0) {
     return 0;
   }
-  const maxOffset = (length - AVATAR_SIZE) * -1;
 
-  if (coordinate < maxOffset) {
-    return maxOffset;
+  if (offsetPercentage >= 100) {
+    return 100;
   }
 
-  return coordinate;
+  return offsetPercentage;
 };
 
+type DeltaCoordinates = PercentageOffsets;
+
 const getObjectPosition = (
-  element: HTMLElement,
-  [initialX, initialY]: Coordinates,
-  imageElement: HTMLImageElement
+  avatarElement: HTMLDivElement,
+  [initialX, initialY]: PercentageOffsets
 ) => {
   const [mouseDownCoordinates$, mouseMoveCoordinates$] = ['mousedown', 'mousemove'].map(
-    coordinatesFromMouseEvent(element)
+    coordinatesFromMouseEvent(avatarElement)
   );
   const [mouseUp$, mouseOut$] = ['mouseup', 'mouseout'].map((mouseEventName) =>
-    fromEvent(element, mouseEventName)
+    fromEvent(avatarElement, mouseEventName)
   );
+
+  const imageElement = avatarElement.querySelector('img');
+
+  if (imageElement === null) {
+    throw Error('avatarElement must contain an img element.');
+  }
+
+  const { naturalWidth: imageWidth, naturalHeight: imageHeight } = imageElement;
+  const isImageLandscape = imageWidth > imageHeight;
+  const scaledWidth = isImageLandscape ? (imageWidth / imageHeight) * AVATAR_SIZE : AVATAR_SIZE;
+  const scaledHeight = isImageLandscape ? AVATAR_SIZE : (imageHeight / imageWidth) * AVATAR_SIZE;
 
   return mouseDownCoordinates$.pipe(
     mergeMapTo(
       mouseMoveCoordinates$.pipe(
         pairwise(),
         map(
-          ([previousCoordinates, currentCoordinates]): Coordinates => [
+          ([previousCoordinates, currentCoordinates]): DeltaCoordinates => [
             currentCoordinates.x - previousCoordinates.x,
             currentCoordinates.y - previousCoordinates.y,
+          ]
+        ),
+        map(
+          ([deltaX, deltaY]): PercentageOffsets => [
+            isImageLandscape ? (deltaX / scaledWidth) * -100 : 0,
+            isImageLandscape ? 0 : (deltaY / scaledHeight) * -100,
           ]
         ),
         takeUntil(merge(mouseUp$, mouseOut$))
       )
     ),
-    scan<Coordinates, Coordinates>(
+    scan<PercentageOffsets, DeltaCoordinates>(
       ([x, y], [deltaX, deltaY]) => [
-        getBoundedCoordinate(x, deltaX, imageElement.naturalWidth),
-        getBoundedCoordinate(y, deltaY, imageElement.naturalHeight),
+        getPercentageOffset(x, deltaX),
+        getPercentageOffset(y, deltaY),
       ],
       [initialX, initialY]
     )
@@ -82,27 +98,21 @@ const Slider = styled.input`
   }
 `;
 
-export const AvatarEditor = ({ xOffset = 0, yOffset = 0 }: Draggable = {}) => {
+type AvatarEditorProps = Pick<AvatarProps, 'percentageOffsets'>;
+
+export const AvatarEditor = ({ percentageOffsets: [offsetX, offsetY] }: AvatarEditorProps) => {
   const avatarRef = useRef<HTMLDivElement>(null);
-  const [[x, y], objectPosition] = useState<Coordinates>([xOffset, yOffset]);
+  const [[x, y], objectPosition] = useState<PercentageOffsets>([offsetX, offsetY]);
 
   useEffect(() => {
     if (avatarRef.current) {
-      const imageElement = avatarRef.current.querySelector('img');
-
-      if (imageElement === null) {
-        throw Error('imageElement should not be null.');
-      }
-
-      getObjectPosition(avatarRef.current, [xOffset, yOffset], imageElement).subscribe(
-        objectPosition
-      );
+      getObjectPosition(avatarRef.current, [x, y]).subscribe(objectPosition);
     }
   }, []);
 
   return (
     <div>
-      <Avatar size={AVATAR_SIZE} hasBorder={false} xOffset={x} yOffset={y} ref={avatarRef} />
+      <Avatar size={AVATAR_SIZE} percentageOffsets={[x, y]} ref={avatarRef} />
       <Slider type="range" />
     </div>
   );
