@@ -35,7 +35,7 @@ export const useSignUpForm = () => {
           try {
             await upsertUser(uid, { username, email });
             await axios.post('is-signing-up', { isSigningUp: false });
-            await setIsSigningUp(false);
+            setIsSigningUp(false);
           } catch (_) {
             setIsSignUpSubmitting(false);
           }
