@@ -1,38 +1,36 @@
 import styled from '@emotion/styled';
-import { TimeProp, Variant } from '../types';
-import { getDateString, getDateStringShort, getTimeString } from '../utils';
+import tokens from 'styles/tokens';
+import { getDateString, getTimeString } from '../utils';
 
-const Container = styled.div<TimeProp>`
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 122%;
-  letter-spacing: 0.08em;
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-size: ${tokens.font.size.xs};
+  font-weight: ${tokens.font.weight.normal};
+  line-height: ${tokens.font.line_height.xs};
+  letter-spacing: ${tokens.font.letter_spacing.xs};
   text-transform: uppercase;
-  padding-left: ${(props) => (props.variant !== 'mini' ? '8px' : '6px')};
+  padding-left: 8px;
 `;
 
-const getHeadingContent = (variant: Variant, timestamp: string) => {
-  const dateString = getDateString(timestamp);
-  const dateStringShort = getDateStringShort(timestamp);
-  const timeString = getTimeString(timestamp);
-
-  switch (variant) {
-    case 'reveal':
-      return 'revealed in';
-    case 'mini':
-      return `${dateStringShort} at ${timeString}`;
-    default:
-      return `Sale starts ${dateString}`;
-  }
-};
-
 interface HeadingProps {
+  tokenSupply: number;
   timestamp: string;
-  variant: Variant;
 }
 
-export const Heading = ({ timestamp, variant }: HeadingProps) => {
-  const content = getHeadingContent(variant, timestamp);
+export const Heading = ({ tokenSupply, timestamp }: HeadingProps) => {
+  const date = getDateString(timestamp);
+  const time = getTimeString(timestamp);
 
-  return <Container variant={variant}>{content}</Container>;
+  // Design doc excludes comma, but likely necessary at 10k+
+  const tokenSupplyFormatted = tokenSupply.toLocaleString();
+
+  return (
+    <Container>
+      <span>{tokenSupplyFormatted} drops</span>
+      <span>
+        → {date}, {time}
+      </span>
+    </Container>
+  );
 };
