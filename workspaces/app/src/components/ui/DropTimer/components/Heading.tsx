@@ -10,7 +10,7 @@ const Container = styled.div`
   line-height: ${tokens.font.line_height.xs};
   letter-spacing: ${tokens.font.letter_spacing.xs};
   text-transform: uppercase;
-  padding-left: 8px;
+  padding-left: 4px;
 `;
 
 interface HeadingProps {
