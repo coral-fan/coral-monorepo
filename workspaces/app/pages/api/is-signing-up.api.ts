@@ -6,7 +6,7 @@ import { Handler } from './types';
 import { getHandler } from './utils';
 
 const post: Handler = async (req, res) => {
-  const { token } = req.cookies;
+  const token = req.cookies['id_token'];
 
   if (token === undefined) {
     return res.status(400).json({ error: 'Invalid ID token.' });
