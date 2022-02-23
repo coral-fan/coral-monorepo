@@ -34,6 +34,11 @@ export interface AvatarProps extends Omit<ImageProps, 'src'> {
   scale: number;
 }
 
+const getScaleStyling = (scale: number) =>
+  css`
+    transform: scale(${scale});
+  `;
+
 export const Avatar = forwardRef(
   (
     { src = DEFAULT_AVATAR, size, percentageOffsets: [x, y] = [0, 0], scale }: AvatarProps,
@@ -49,6 +54,8 @@ export const Avatar = forwardRef(
           priority={true}
           objectFit={'cover'}
           src={src}
+          objectPosition={objectPosition}
+          css={getScaleStyling(scale)}
         />
       </Wrapper>
     );
