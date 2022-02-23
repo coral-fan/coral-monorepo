@@ -7,20 +7,6 @@ const getMilliSecsDiff = (timestamp: string) => {
   return referenceTime - currentTime;
 };
 
-const getOrdinal = (day: number) => {
-  if (day > 3 && day < 21) return 'th';
-  switch (day % 10) {
-    case 1:
-      return 'st';
-    case 2:
-      return 'nd';
-    case 3:
-      return 'rd';
-    default:
-      return 'th';
-  }
-};
-
 export const getTimeRemaining = (timestamp: string) => {
   const milliSecsDiff = getMilliSecsDiff(timestamp);
 
@@ -42,29 +28,21 @@ export const getTimeRemaining = (timestamp: string) => {
 export const getDateString = (timestamp: string) => {
   const date = new Date(timestamp);
 
-  const month = date.toLocaleString('en-US', { month: 'long' });
+  const month = date.toLocaleString('en-US', { month: 'short' });
   const day = date.getDate();
 
-  return `${month} ${day}${getOrdinal(day)}`;
-};
-
-export const getDateStringShort = (timestamp: string) => {
-  const date = new Date(timestamp);
-
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-
-  return `${month}/${day}`;
+  return `${month} ${day}`;
 };
 
 export const getTimeString = (timestamp: string) => {
   const date = new Date(timestamp);
 
-  return date.toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: '2-digit',
-    timeZoneName: 'short',
-  });
+  return date
+    .toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      timeZoneName: 'short',
+    })
+    .replace(' ', '');
 };
 
 /*
