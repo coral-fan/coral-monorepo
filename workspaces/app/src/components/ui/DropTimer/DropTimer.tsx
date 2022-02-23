@@ -3,27 +3,35 @@ import { useCallback, useMemo } from 'react';
 import { interval, map, takeUntil } from 'rxjs';
 import { getTimeRemaining, bigTimer } from './utils';
 import { TimeLeft, Heading } from './components';
-import { TimeProp, Variant } from './types';
 import { useObservable } from 'libraries/utils/hooks';
+import tokens from 'styles/tokens';
+
+const DropTimerWrapper = styled.div`
+  background-color: ${tokens.background.color.tertiary};
+  border-radius: ${tokens.border.radius.sm};
+  padding: 10px 16px;
+`;
 
 const DropTimerContainer = styled.div`
+  width: fit-content;
   display: flex;
   flex-direction: column;
   gap: 4px;
 `;
 
-const TimeContainer = styled.div<TimeProp>`
+const TimeContainer = styled.div`
   width: fit-content;
-  display: flex;
-  gap: ${(props) => (props.variant !== 'mini' ? '6px' : '4px')};
+  display: inline-grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: start;
 `;
 
 export interface DropTimerProps {
+  tokenSupply: number;
   timestamp: string;
-  variant?: Variant;
 }
 
-export const DropTimer = ({ timestamp, variant = 'default' }: DropTimerProps) => {
+export const DropTimer = ({ tokenSupply, timestamp }: DropTimerProps) => {
   const getTimeRemaining$ = useCallback(
     () =>
       interval(1000).pipe(
@@ -40,14 +48,16 @@ export const DropTimer = ({ timestamp, variant = 'default' }: DropTimerProps) =>
   const { daysDiff, hoursDiff, minutesDiff, secondsDiff } = timeRemaining;
 
   return (
-    <DropTimerContainer>
-      <Heading variant={variant} timestamp={timestamp} />
-      <TimeContainer variant={variant}>
-        <TimeLeft timeDiff={daysDiff} timeUnit={'days'} variant={variant} />
-        <TimeLeft timeDiff={hoursDiff} timeUnit={'hrs'} variant={variant} />
-        <TimeLeft timeDiff={minutesDiff} timeUnit={'mins'} variant={variant} />
-        <TimeLeft timeDiff={secondsDiff} timeUnit={'secs'} variant={variant} />
-      </TimeContainer>
-    </DropTimerContainer>
+    <DropTimerWrapper>
+      <DropTimerContainer>
+        <Heading tokenSupply={tokenSupply} timestamp={timestamp} />
+        <TimeContainer>
+          <TimeLeft timeDiff={daysDiff} timeUnit={'d'} />
+          <TimeLeft timeDiff={hoursDiff} timeUnit={'h'} />
+          <TimeLeft timeDiff={minutesDiff} timeUnit={'m'} />
+          <TimeLeft timeDiff={secondsDiff} timeUnit={'s'} />
+        </TimeContainer>
+      </DropTimerContainer>
+    </DropTimerWrapper>
   );
 };
