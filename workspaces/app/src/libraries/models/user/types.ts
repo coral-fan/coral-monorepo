@@ -22,10 +22,12 @@ export interface PrivateUserData {
 
 interface ProfilePhoto {
   src: string;
+  offsetPercentages: [number, number];
+  scale: number;
 }
 export interface PublicUserData {
   username: string;
-  profilePhoto: ProfilePhoto | null;
+  profilePhoto: ProfilePhoto;
   notifications: Notification[];
   assets: Asset[];
 }
