@@ -1,20 +1,6 @@
-import { Avatar, AvatarProps, PercentageOffsets } from 'components/ui';
-import { useEffect, useRef, useState } from 'react';
-import {
-  filter,
-  fromEvent,
-  map,
-  merge,
-  mergeMapTo,
-  Observable,
-  pairwise,
-  scan,
-  takeUntil,
-  tap,
-} from 'rxjs';
-import styled from '@emotion/styled';
-
-export const AVATAR_SIZE = 200;
+import { PercentageOffsets } from 'components/ui';
+import { filter, fromEvent, map, merge, mergeMapTo, pairwise, scan, takeUntil, tap } from 'rxjs';
+import { PREVIEW_SIZE } from './consts';
 
 const coordinatesFromMouseEvent = (element: HTMLElement) => (mouseEventName: string) =>
   fromEvent(element, mouseEventName).pipe(
@@ -24,9 +10,7 @@ const coordinatesFromMouseEvent = (element: HTMLElement) => (mouseEventName: str
       y: event.clientY,
     }))
   );
-
 const getPercentageOffset = (initial: number, delta: number) => {
-  console.log(initial, delta);
   const offsetPercentage = initial + delta;
   if (offsetPercentage <= 0) {
     return 0;
@@ -41,7 +25,7 @@ const getPercentageOffset = (initial: number, delta: number) => {
 
 type DeltaCoordinates = PercentageOffsets;
 
-const getObjectPosition = (
+export const getObjectPosition = (
   avatarElement: HTMLDivElement,
   [initialX, initialY]: PercentageOffsets
 ) => {
@@ -60,8 +44,8 @@ const getObjectPosition = (
 
   const { naturalWidth: imageWidth, naturalHeight: imageHeight } = imageElement;
   const isImageLandscape = imageWidth > imageHeight;
-  const scaledWidth = isImageLandscape ? (imageWidth / imageHeight) * AVATAR_SIZE : AVATAR_SIZE;
-  const scaledHeight = isImageLandscape ? AVATAR_SIZE : (imageHeight / imageWidth) * AVATAR_SIZE;
+  const scaledWidth = isImageLandscape ? (imageWidth / imageHeight) * PREVIEW_SIZE : PREVIEW_SIZE;
+  const scaledHeight = isImageLandscape ? PREVIEW_SIZE : (imageHeight / imageWidth) * PREVIEW_SIZE;
 
   return mouseDownCoordinates$.pipe(
     mergeMapTo(
@@ -75,8 +59,8 @@ const getObjectPosition = (
         ),
         map(
           ([deltaX, deltaY]): PercentageOffsets => [
-            isImageLandscape ? (deltaX / scaledWidth) * -100 : 0,
-            isImageLandscape ? 0 : (deltaY / scaledHeight) * -100,
+            (deltaX / scaledWidth) * -100,
+            (deltaY / scaledHeight) * -100,
           ]
         ),
         takeUntil(merge(mouseUp$, mouseOut$))
@@ -89,31 +73,5 @@ const getObjectPosition = (
       ],
       [initialX, initialY]
     )
-  );
-};
-
-const Slider = styled.input`
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-type AvatarEditorProps = Pick<AvatarProps, 'percentageOffsets'>;
-
-export const AvatarEditor = ({ percentageOffsets: [offsetX, offsetY] }: AvatarEditorProps) => {
-  const avatarRef = useRef<HTMLDivElement>(null);
-  const [[x, y], objectPosition] = useState<PercentageOffsets>([offsetX, offsetY]);
-
-  useEffect(() => {
-    if (avatarRef.current) {
-      getObjectPosition(avatarRef.current, [x, y]).subscribe(objectPosition);
-    }
-  }, []);
-
-  return (
-    <div>
-      <Avatar size={AVATAR_SIZE} percentageOffsets={[x, y]} ref={avatarRef} />
-      <Slider type="range" />
-    </div>
   );
 };
