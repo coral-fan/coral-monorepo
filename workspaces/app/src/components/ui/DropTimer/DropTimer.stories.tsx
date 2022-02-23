@@ -9,10 +9,6 @@ export default {
     timestamp: {
       control: { type: 'date' },
     },
-    variant: {
-      options: ['default', 'mini', 'reveal'],
-      control: { type: 'select' },
-    },
   },
 } as Meta;
 
@@ -29,42 +25,30 @@ const nextMonth = new Date(today.getTime() + 1000 * 60 * 60 * 24 * 30);
 
 export const OneHour = Template.bind({});
 OneHour.args = {
+  tokenSupply: 5000,
   timestamp: oneHour.toISOString(),
-  variant: 'default',
 };
 
 export const Today = Template.bind({});
 Today.args = {
+  tokenSupply: 5000,
   timestamp: laterToday.toISOString(),
-  variant: 'default',
 };
 
 export const Tomorrow = Template.bind({});
 Tomorrow.args = {
+  tokenSupply: 5000,
   timestamp: tomorrow.toISOString(),
-  variant: 'default',
 };
 
 export const NextWeek = Template.bind({});
 NextWeek.args = {
+  tokenSupply: 5000,
   timestamp: nextWeek.toISOString(),
-  variant: 'default',
 };
 
 export const NextMonth = Template.bind({});
 NextMonth.args = {
+  tokenSupply: 5000,
   timestamp: nextMonth.toISOString(),
-  variant: 'default',
-};
-
-export const Mini = Template.bind({});
-Mini.args = {
-  timestamp: oneHour.toISOString(),
-  variant: 'mini',
-};
-
-export const RevealedIn = Template.bind({});
-RevealedIn.args = {
-  timestamp: oneHour.toISOString(),
-  variant: 'reveal',
 };
