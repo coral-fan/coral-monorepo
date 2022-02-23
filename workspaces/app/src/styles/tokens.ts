@@ -91,8 +91,8 @@ const tokens = createTheme({
   background: {
     color: {
       primary: colors.slate[10],
-      secondary: colors.gray[9],
-      tertiary: colors.gray[11],
+      secondary: colors.gray[12],
+      tertiary: colors.gray[10],
       brand: colors.coral[10],
     },
   },
