@@ -1,57 +1,29 @@
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
-import { TimeProp, Variant } from '../types';
 
-const Container = styled.div<TimeProp>`
-  display: inline-grid;
-  grid-template-columns: 24px 1fr;
-  align-items: baseline;
-  column-gap: ${(props) => (props.variant !== 'mini' ? '2px' : '0px')};
-`;
-
-const TimeDiff = styled.div<TimeProp>`
-  font-size: ${(props) => (props.variant !== 'mini' ? '18px' : '14px')};
+const Container = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  width: fit-content;
+  font-size: ${tokens.font.size.xl};
   color: ${tokens.font.color.primary};
-  line-height: ${(props) => (props.variant !== 'mini' ? '23px' : '18px')};
-  text-align: center;
+  line-height: ${tokens.font.line_height.xl};
+
+  &:last-child {
+    justify-self: end;
+  }
 `;
 
-const TimeUnit = styled.div`
-  font-size: 10px;
-  font-weight: 700;
-  color: ${tokens.font.color.secondary};
-  line-height: 122%;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-`;
-
-interface TimeLeftProps {
+export interface TimeLeftProps {
   timeDiff: number;
-  timeUnit: 'days' | 'hrs' | 'mins' | 'secs';
-  variant: Variant;
+  timeUnit: 'd' | 'h' | 'm' | 's';
 }
 
-const getTimeUnit = ({ timeDiff, timeUnit, variant }: TimeLeftProps) => {
-  // mini variant returns single letter
-  if (variant === 'mini') {
-    return `${timeUnit[0]}`;
-  }
-
-  // handle singular time units
-  if (timeDiff === 1) {
-    return `${timeUnit.slice(0, -1)}`;
-  }
-
-  return timeUnit;
-};
-
-export const TimeLeft = ({ timeDiff, timeUnit, variant }: TimeLeftProps) => {
-  const unit = getTimeUnit({ timeDiff, timeUnit, variant });
-
+export const TimeLeft = ({ timeDiff, timeUnit }: TimeLeftProps) => {
   return (
-    <Container variant={variant}>
-      <TimeDiff variant={variant}>{timeDiff}</TimeDiff>
-      <TimeUnit>{unit}</TimeUnit>
+    <Container>
+      {timeDiff}
+      {timeUnit}
     </Container>
   );
 };
