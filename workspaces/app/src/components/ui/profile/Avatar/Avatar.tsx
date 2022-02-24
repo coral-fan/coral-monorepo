@@ -30,25 +30,23 @@ const getScaleStyling = (scale: number) =>
     transform: scale(${scale});
   `;
 
-export const Avatar = forwardRef(
-  (
-    { src, size, offsetPercentages, scale, ...props }: AvatarProps,
-    ref: ForwardedRef<HTMLDivElement>
-  ) => {
-    const objectPosition = formatObjectPosition(...offsetPercentages);
-    return (
-      <Wrapper size={size} ref={ref} {...props}>
-        <Image
-          draggable={ref === null}
-          alt={''}
-          layout={'fill'}
-          priority={true}
-          objectFit={'cover'}
-          src={src}
-          objectPosition={objectPosition}
-          css={getScaleStyling(scale)}
-        />
-      </Wrapper>
-    );
-  }
-);
+export const Avatar = forwardRef(function Avatar(
+  { src, size, offsetPercentages, scale, ...props }: AvatarProps,
+  ref: ForwardedRef<HTMLDivElement>
+) {
+  const objectPosition = formatObjectPosition(...offsetPercentages);
+  return (
+    <Wrapper size={size} ref={ref} {...props}>
+      <Image
+        draggable={ref === null}
+        alt={''}
+        layout={'fill'}
+        priority={true}
+        objectFit={'cover'}
+        src={src}
+        objectPosition={objectPosition}
+        css={getScaleStyling(scale)}
+      />
+    </Wrapper>
+  );
+});
