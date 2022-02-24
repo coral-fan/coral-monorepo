@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
-import { useIsAuthenticated } from 'libraries/authentication';
+import { useIsAuthenticated, useLogout } from 'libraries/authentication';
 
-import { HamburgerMenuButton, ProfileAvatarButton, LoginButton, LogoHomeLink } from './components';
+import { HamburgerMenuButton, LoginButton, LogoHomeLink } from './components';
 
 const Container = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  justify-content: space-between;
   justify-items: center;
   align-items: center;
   width: 100%;
@@ -20,12 +20,16 @@ const Container = styled.div`
 
 export const NavigationBar = () => {
   const isAuthenticated = useIsAuthenticated();
+  const logout = useLogout();
 
   return (
     <Container>
-      <HamburgerMenuButton hasNotifications={false} />
       <LogoHomeLink />
-      {isAuthenticated ? <ProfileAvatarButton /> : <LoginButton />}
+      {isAuthenticated ? (
+        <HamburgerMenuButton hasNotifications={false} onClick={logout} />
+      ) : (
+        <LoginButton />
+      )}
     </Container>
   );
 };
