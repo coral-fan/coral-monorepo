@@ -7,7 +7,7 @@ module.exports = withImages({
   pageExtensions: ['page.tsx', 'api.ts'],
   productionBrowserSourceMaps: true,
   images: {
-    domains: ['upload.wikimedia.org'], // Placeholder Avatar Image
+    domains: ['upload.wikimedia.org', 'firebasestorage.googleapis.com'], // Placeholder Avatar Image
   },
   webpack: (config, { isServer }) => {
     // resolves issues with Firebase Admin
