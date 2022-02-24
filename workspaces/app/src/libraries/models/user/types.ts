@@ -20,11 +20,12 @@ export interface PrivateUserData {
   creditCardInformation: CreditCardInformation | null;
 }
 
-interface ProfilePhoto {
+export interface ProfilePhoto {
   src: string;
   offsetPercentages: [number, number];
   scale: number;
 }
+
 export interface PublicUserData {
   username: string;
   profilePhoto: ProfilePhoto;
