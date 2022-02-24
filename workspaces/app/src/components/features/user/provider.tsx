@@ -25,7 +25,5 @@ export const UserPageProvider: FC<UserPageProviderProps> = ({ userData, children
     setIsUpdateProfilePhotoModalOpen,
   };
 
-  console.log('render');
-
   return <UserPageContext.Provider value={value}>{children}</UserPageContext.Provider>;
 };
