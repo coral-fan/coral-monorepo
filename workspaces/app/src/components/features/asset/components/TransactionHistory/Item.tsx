@@ -3,10 +3,11 @@ import { Username } from 'components/ui/profile/ProfileInfo/Username';
 import { TimeElapsed } from 'components/ui/TimeElapsed';
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
+import { ProfilePhoto } from 'libraries/models';
 
 export interface ItemProps {
-  src: string;
   username: string;
+  profilePhoto: ProfilePhoto;
   description: string;
   timestamp: string;
 }
@@ -40,11 +41,11 @@ const Description = styled.div`
   justify-content: flex-end;
 `;
 
-export const Item = ({ src, username, description, timestamp }: ItemProps) => {
+export const Item = ({ username, profilePhoto, description, timestamp }: ItemProps) => {
   return (
     <ItemContainer>
       <InfoContainer>
-        <Avatar src={src} size={26} hasBorder={false} />
+        <Avatar size={26} {...profilePhoto} />
         <InfoDetailsContainer>
           <Description>{description}</Description>
           <Username size={'sm'}>{username}</Username>
