@@ -18,12 +18,13 @@ export const UserProfile = () => {
   }
 
   const [{ username, email, profilePhoto }] = useUser();
+
   const currentUserUid = useUserUid();
 
   return (
     <Container>
       {`${username}'s Profile`}
-      <Avatar size={200} hasBorder={false} src={profilePhoto?.src} />
+      <Avatar size={200} {...profilePhoto} />
       {currentUserUid === userProfileId && email !== undefined && <UpdateProfile />}
     </Container>
   );
