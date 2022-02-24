@@ -1,15 +1,20 @@
 import { User } from 'libraries/models';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { UserPageContext } from './context';
 
 interface UserPageProviderProps {
-  initialUserData: User;
+  userData: User;
 }
 
-export const UserPageProvider: FC<UserPageProviderProps> = ({ initialUserData, children }) => {
-  const [user, setUser] = useState(initialUserData);
+export const UserPageProvider: FC<UserPageProviderProps> = ({ userData, children }) => {
+  const [user, setUser] = useState(userData);
+
+  useEffect(() => {
+    setUser(userData);
+  }, [userData]);
+
   const [isUpdateProfileInfoModalOpen, setIsUpdateProfileInfoModalOpen] = useState(false);
-  const [isUpdateProfilePhotoModalOpen, setIsUpdateProfilePhotoModalOpen] = useState(false);
+  const [isUpdateProfilePhotoModalOpen, setIsUpdateProfilePhotoModalOpen] = useState(true);
 
   const value = {
     user,
@@ -19,6 +24,8 @@ export const UserPageProvider: FC<UserPageProviderProps> = ({ initialUserData, c
     isUpdateProfilePhotoModalOpen,
     setIsUpdateProfilePhotoModalOpen,
   };
+
+  console.log('render');
 
   return <UserPageContext.Provider value={value}>{children}</UserPageContext.Provider>;
 };
