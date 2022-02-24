@@ -3,7 +3,6 @@ import { ForwardedRef, forwardRef, ReactEventHandler } from 'react';
 import Image, { ImageProps } from 'next/image';
 import styled from '@emotion/styled';
 
-import { DEFAULT_AVATAR } from './consts';
 import { formatObjectPosition } from './utils';
 
 import { css } from '@emotion/react';
@@ -26,11 +25,10 @@ const Wrapper = styled.div<WrapperProps>`
   ${({ ref }) => (ref === null ? null : draggableHoverStyle)}
 `;
 
-export type PercentageOffsets = [number, number];
-export interface AvatarProps extends Omit<ImageProps, 'src'> {
-  src?: ImageProps['src'];
+export type OffsetPercentages = [number, number];
+export interface AvatarProps extends ImageProps {
   size: number;
-  percentageOffsets: PercentageOffsets;
+  offsetPercentages: OffsetPercentages;
   scale: number;
 }
 
@@ -41,10 +39,10 @@ const getScaleStyling = (scale: number) =>
 
 export const Avatar = forwardRef(
   (
-    { src = DEFAULT_AVATAR, size, percentageOffsets: [x, y] = [0, 0], scale }: AvatarProps,
+    { src, size, offsetPercentages = [0, 0], scale }: AvatarProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
-    const objectPosition = formatObjectPosition(x, y);
+    const objectPosition = formatObjectPosition(...offsetPercentages);
     return (
       <Wrapper size={size} ref={ref}>
         <Image
