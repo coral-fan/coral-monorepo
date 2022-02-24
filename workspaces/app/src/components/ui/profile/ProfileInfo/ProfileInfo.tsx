@@ -1,14 +1,14 @@
-import { Avatar } from '../Avatar';
+import { Avatar, OffsetPercentages } from '../Avatar';
 import { profileInfoSizeDictionary } from './consts';
 import { Size } from './types';
 import { Name } from './Name';
 import { Username } from './Username';
 import styled from '@emotion/styled';
+import { ProfilePhoto } from 'libraries/models';
 
-export interface ProfileInfoProps {
+export interface ProfileInfoProps extends ProfilePhoto {
   name: string;
   username: string;
-  src: string;
   size: Size;
 }
 
@@ -28,12 +28,21 @@ const NameContainer = styled.div`
   flex-direction: column;
 `;
 
-export const ProfileInfo = ({ src, name, username, size }: ProfileInfoProps) => {
+export const ProfileInfo = ({
+  name,
+  username,
+  size,
+  offsetPercentages,
+  scale,
+  src,
+}: ProfileInfoProps) => {
   const avatarSize = profileInfoSizeDictionary[size].avatarSize;
+
+  const profilePhoto = { offsetPercentages, scale, src };
 
   return (
     <ProfileInfoContainer size={size}>
-      <Avatar size={avatarSize} src={src} hasBorder={false} />
+      <Avatar size={avatarSize} {...profilePhoto} />
       <NameContainer>
         <Name size={size}>{name}</Name>
         <Username size={size}>{username}</Username>
