@@ -21,7 +21,11 @@ export const upsertUser = async (uid: string, incomingUserData: IncomingUserData
       userDocSnapshot.exists
         ? userData
         : {
-            profilePhoto: null,
+            profilePhoto: {
+              src: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+              offsetPercentages: [0, 0],
+              scale: 1,
+            },
             notifications: [],
             assets: [],
             ...userData,
