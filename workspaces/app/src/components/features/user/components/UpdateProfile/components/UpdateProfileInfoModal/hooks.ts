@@ -42,7 +42,7 @@ export const useUpdateProfileInfoForm = () => {
             username,
             email,
           }));
-          refetchPageData();
+          await refetchPageData();
           setIsModalOpen(false);
         }
         setIsUpdateProfileInfoSubmitting(false);
