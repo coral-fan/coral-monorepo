@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, ReactEventHandler } from 'react';
+import { ForwardedRef, forwardRef } from 'react';
 
 import Image, { ImageProps } from 'next/image';
 import styled from '@emotion/styled';
