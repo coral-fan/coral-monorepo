@@ -1,4 +1,4 @@
-import { PercentageOffsets } from 'components/ui';
+import { OffsetPercentages } from 'components/ui';
 import { filter, fromEvent, map, merge, mergeMapTo, pairwise, scan, takeUntil, tap } from 'rxjs';
 import { PREVIEW_SIZE } from './consts';
 
@@ -23,11 +23,11 @@ const getPercentageOffset = (initial: number, delta: number) => {
   return offsetPercentage;
 };
 
-type DeltaCoordinates = PercentageOffsets;
+type DeltaCoordinates = OffsetPercentages;
 
 export const getObjectPosition = (
   avatarElement: HTMLDivElement,
-  [initialX, initialY]: PercentageOffsets
+  [initialX, initialY]: OffsetPercentages
 ) => {
   const [mouseDownCoordinates$, mouseMoveCoordinates$] = ['mousedown', 'mousemove'].map(
     coordinatesFromMouseEvent(avatarElement)
@@ -58,7 +58,7 @@ export const getObjectPosition = (
           ]
         ),
         map(
-          ([deltaX, deltaY]): PercentageOffsets => [
+          ([deltaX, deltaY]): OffsetPercentages => [
             (deltaX / scaledWidth) * -100,
             (deltaY / scaledHeight) * -100,
           ]
@@ -66,7 +66,7 @@ export const getObjectPosition = (
         takeUntil(merge(mouseUp$, mouseOut$))
       )
     ),
-    scan<PercentageOffsets, DeltaCoordinates>(
+    scan<OffsetPercentages, DeltaCoordinates>(
       ([x, y], [deltaX, deltaY]) => [
         getPercentageOffset(x, deltaX),
         getPercentageOffset(y, deltaY),
