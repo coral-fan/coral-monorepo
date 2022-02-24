@@ -28,6 +28,7 @@ const FooterContainer = styled.div`
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
     height: 330px;
+    padding: 22px 21px;
   }
 `;
 
