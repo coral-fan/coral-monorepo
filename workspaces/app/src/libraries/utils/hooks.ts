@@ -22,8 +22,9 @@ export const useObservable = <T>(
 
 export const useRefetchPageData = () => {
   const router = useRouter();
-  const refetchPageData = useCallback(() => {
-    router.replace(router.asPath);
+
+  const refetchPageData = useCallback(async () => {
+    await router.replace(router.asPath);
   }, [router]);
 
   return refetchPageData;
