@@ -7,7 +7,7 @@ import { Avatar, Button, Modal, OffsetPercentages } from 'components/ui';
 import { useIsUpdateProfilePhotoModalOpen, useUser } from 'components/features/user/hooks';
 import { getObjectPosition } from './observables';
 import { PREVIEW_SIZE } from './consts';
-import { useUpdateProfilePhoto } from './hooks';
+import { useOffsetPercentages, useScale, useUpdateProfilePhoto } from './hooks';
 
 const Slider = styled.input`
   &:hover {
@@ -28,13 +28,11 @@ export const UpdateProfilePhotoModal = () => {
 
   const [{ profilePhoto }] = useUser();
 
-  const [scale, setScale] = useState(profilePhoto.scale);
+  const { scale, setScale, isScaleSame } = useScale(profilePhoto.scale);
 
-  const isScaleSame = scale === profilePhoto.scale;
-
-  const handleRangeValueChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+  const handleRangeValueChange: ChangeEventHandler<HTMLInputElement> = useCallback((event) => {
     setScale(parseFloat(event.target.value));
-  };
+  }, []);
 
   const {
     src,
@@ -44,12 +42,8 @@ export const UpdateProfilePhotoModal = () => {
     isProfilePhotoSame,
   } = useUpdateProfilePhoto(profilePhoto.src);
 
-  const [offsetPercentages, setOffsetPercentages] = useState<OffsetPercentages>(
+  const { offsetPercentages, setOffsetPercentages, isOffsetPercentagesSame } = useOffsetPercentages(
     profilePhoto.offsetPercentages
-  );
-
-  const isOffsetPercentagesSame = offsetPercentages.every(
-    (offsetPercentage, i) => offsetPercentage === profilePhoto.offsetPercentages[i]
   );
 
   const avatarRef = useCallback((avatarWrapperElement) => {
@@ -61,10 +55,6 @@ export const UpdateProfilePhotoModal = () => {
   if (!isAuthenticated || !isNetworkSupported) {
     return null;
   }
-
-  const handleUpdateProfilePhoto = () => {
-    updateProfilePhoto(offsetPercentages, scale);
-  };
 
   return (
     <Modal onClick={() => setIsModalOpen(false)} variant={'close'}>
@@ -85,7 +75,7 @@ export const UpdateProfilePhotoModal = () => {
         step={0.01}
       />
       <Button
-        onClick={handleUpdateProfilePhoto}
+        onClick={() => updateProfilePhoto(offsetPercentages, scale)}
         loading={isProfilePhotoUpdating}
         disabled={isScaleSame && isOffsetPercentagesSame && isProfilePhotoSame}
       >

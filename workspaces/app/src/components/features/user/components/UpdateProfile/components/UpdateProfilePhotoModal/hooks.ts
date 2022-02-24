@@ -69,3 +69,21 @@ export const useUpdateProfilePhoto = (initialSrc: string) => {
     isProfilePhotoUpdating,
   };
 };
+
+export const useScale = (initialScale: number) => {
+  const [scale, setScale] = useState(initialScale);
+
+  const isScaleSame = scale === initialScale;
+
+  return { scale, setScale, isScaleSame };
+};
+
+export const useOffsetPercentages = (initialOffsetPercentages: OffsetPercentages) => {
+  const [offsetPercentages, setOffsetPercentages] = useState(initialOffsetPercentages);
+
+  const isOffsetPercentagesSame = offsetPercentages.every(
+    (offsetPercentage, i) => offsetPercentage === initialOffsetPercentages[i]
+  );
+
+  return { offsetPercentages, setOffsetPercentages, isOffsetPercentagesSame };
+};
