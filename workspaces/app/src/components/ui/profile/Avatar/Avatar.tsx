@@ -9,12 +9,6 @@ import { css } from '@emotion/react';
 
 type WrapperProps = Pick<Parameters<typeof Avatar>[0], 'size' | 'ref'>;
 
-const draggableHoverStyle = css`
-  &:hover {
-    cursor: move;
-  }
-`;
-
 const Wrapper = styled.div<WrapperProps>`
   --size: ${({ size }) => size}px;
   height: var(--size);
@@ -22,7 +16,6 @@ const Wrapper = styled.div<WrapperProps>`
   position: relative;
   border-radius: 50%;
   overflow: hidden;
-  ${({ ref }) => (ref === null ? null : draggableHoverStyle)}
 `;
 
 export type OffsetPercentages = [number, number];
@@ -39,12 +32,12 @@ const getScaleStyling = (scale: number) =>
 
 export const Avatar = forwardRef(
   (
-    { src, size, offsetPercentages = [0, 0], scale }: AvatarProps,
+    { src, size, offsetPercentages, scale, ...props }: AvatarProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const objectPosition = formatObjectPosition(...offsetPercentages);
     return (
-      <Wrapper size={size} ref={ref}>
+      <Wrapper size={size} ref={ref} {...props}>
         <Image
           draggable={ref === null}
           alt={''}
