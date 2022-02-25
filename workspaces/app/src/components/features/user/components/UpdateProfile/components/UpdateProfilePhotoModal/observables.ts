@@ -1,5 +1,5 @@
 import { OffsetPercentages } from 'components/ui';
-import { filter, fromEvent, map, merge, mergeMapTo, pairwise, scan, takeUntil, tap } from 'rxjs';
+import { filter, fromEvent, map, merge, mergeMapTo, pairwise, scan, takeUntil } from 'rxjs';
 import { PREVIEW_SIZE } from './consts';
 
 const coordinatesFromMouseEvent = (element: HTMLElement) => (mouseEventName: string) =>
