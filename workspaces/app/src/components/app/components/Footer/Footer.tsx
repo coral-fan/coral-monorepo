@@ -63,7 +63,7 @@ const LinksContainer = styled.div`
   ${textStyle};
 `;
 
-const linkArray = [
+const SITE_MAP_LINKS = [
   ['Home', 'https://google.com'],
   ['Terms of Service', 'https://google.com'],
   ['Drops', 'https://google.com'],
@@ -80,8 +80,8 @@ export const Footer = () => {
       <ContentContainer>
         <SecondaryLogoIcon />
         <LinksContainer>
-          {linkArray.map(([label, url], index) => (
-            <Link href={url} key={index}>
+          {SITE_MAP_LINKS.map(([label, url]) => (
+            <Link href={url} key={label}>
               {label}
             </Link>
           ))}
