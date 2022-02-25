@@ -1,8 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { SecondaryLogoIcon } from 'components/ui';
 import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
-import { BaseLink } from 'components/ui';
+import { Link, SecondaryLogoIcon } from 'components/ui';
 
 const FOOTER_CONTENT = '© 2022 coral inc. all rights reserved.';
 
@@ -64,20 +63,28 @@ const LinksContainer = styled.div`
   ${textStyle};
 `;
 
+const linkArray = [
+  ['home', 'https://google.com'],
+  ['terms of service', 'https://google.com'],
+  ['drops', 'https://google.com'],
+  ['privacy', 'https://google.com'],
+  ['about us', 'https://google.com'],
+  ['instagram', 'https://google.com'],
+  ['faq', 'https://google.com'],
+  ['twitter', 'https://google.com'],
+];
+
 export const Footer = () => {
   return (
     <FooterContainer>
       <ContentContainer>
         <SecondaryLogoIcon />
         <LinksContainer>
-          <BaseLink href={'https://google.com'}>home</BaseLink>
-          <BaseLink href={'https://google.com'}>terms of service</BaseLink>
-          <BaseLink href={'https://google.com'}>drops</BaseLink>
-          <BaseLink href={'https://google.com'}>privacy</BaseLink>
-          <BaseLink href={'https://google.com'}>about us</BaseLink>
-          <BaseLink href={'https://google.com'}>instagram</BaseLink>
-          <BaseLink href={'https://google.com'}>faq</BaseLink>
-          <BaseLink href={'https://google.com'}>twitter</BaseLink>
+          {linkArray.map(([label, url], index) => (
+            <Link href={url} key={index}>
+              {label}
+            </Link>
+          ))}
         </LinksContainer>
       </ContentContainer>
       <CopyrightWrapper>{FOOTER_CONTENT}</CopyrightWrapper>
