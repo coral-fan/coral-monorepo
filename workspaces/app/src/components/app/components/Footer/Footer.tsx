@@ -64,14 +64,14 @@ const LinksContainer = styled.div`
 `;
 
 const linkArray = [
-  ['home', 'https://google.com'],
-  ['terms of service', 'https://google.com'],
-  ['drops', 'https://google.com'],
-  ['privacy', 'https://google.com'],
-  ['about us', 'https://google.com'],
-  ['instagram', 'https://google.com'],
-  ['faq', 'https://google.com'],
-  ['twitter', 'https://google.com'],
+  ['Home', 'https://google.com'],
+  ['Terms of Service', 'https://google.com'],
+  ['Drops', 'https://google.com'],
+  ['Privacy', 'https://google.com'],
+  ['About Us', 'https://google.com'],
+  ['Instagram', 'https://google.com'],
+  ['FAQ', 'https://google.com'],
+  ['Twitter', 'https://google.com'],
 ];
 
 export const Footer = () => {
