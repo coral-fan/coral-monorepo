@@ -1,9 +1,9 @@
 import { Story, Meta } from '@storybook/react';
-import { BaseLink, BaseLinkProps } from './BaseLink';
+import { Link as NextLink, BaseLinkProps } from './Link';
 
 export default {
-  title: 'Coral/UI/Base Link',
-  component: BaseLink,
+  title: 'Coral/UI/Link',
+  component: NextLink,
   argTypes: {
     children: {
       table: {
@@ -14,7 +14,7 @@ export default {
 } as Meta;
 
 const Template: Story<BaseLinkProps> = ({ children, ...args }) => (
-  <BaseLink {...args}>{children}</BaseLink>
+  <NextLink {...args}>{children}</NextLink>
 );
 
 export const Default = Template.bind({});

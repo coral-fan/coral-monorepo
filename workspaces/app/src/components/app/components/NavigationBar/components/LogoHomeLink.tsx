@@ -1,4 +1,4 @@
-import { LogoIcon, BaseLink as Link } from 'components/ui';
+import { LogoIcon, Link } from 'components/ui';
 
 export const LogoHomeLink = () => (
   <Link href="/">

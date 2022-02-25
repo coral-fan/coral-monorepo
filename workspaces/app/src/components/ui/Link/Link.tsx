@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { ForwardedRef, ComponentPropsWithRef, forwardRef } from 'react';
 import { css } from '@emotion/react';
 
@@ -18,13 +18,13 @@ export interface BaseLinkProps extends ComponentPropsWithRef<'a'> {
   Fix for displayName error when using forwardRef from:
   https://github.com/yannickcr/eslint-plugin-react/issues/2269
 */
-export const BaseLink = forwardRef(function BaseLink(
+export const Link = forwardRef(function BaseLink(
   { href, ...props }: BaseLinkProps,
   ref: ForwardedRef<HTMLAnchorElement>
 ) {
   return (
-    <Link href={href} passHref>
+    <NextLink href={href} passHref>
       <a css={linkStyle} ref={ref} {...props} />
-    </Link>
+    </NextLink>
   );
 });
