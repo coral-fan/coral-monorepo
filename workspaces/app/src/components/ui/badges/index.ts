@@ -1,3 +1,1 @@
-export * from './VideoBadge';
-export * from './MusicBadge';
-export * from './DoorBadge';
+export * from './variants';
