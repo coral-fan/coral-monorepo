@@ -1,8 +1,8 @@
-import { ChangeEventHandler, useCallback, useState } from 'react';
+import { ChangeEventHandler, useCallback } from 'react';
 import styled from '@emotion/styled';
 import { useIsNetworkSupported } from 'libraries/blockchain';
 import { useIsAuthenticated } from 'libraries/authentication';
-import { Avatar, Button, Modal, OffsetPercentages } from 'components/ui';
+import { Avatar, Button, Modal } from 'components/ui';
 
 import { useIsUpdateProfilePhotoModalOpen, useUser } from 'components/features/user/hooks';
 import { getObjectPosition } from './observables';
@@ -30,9 +30,12 @@ export const UpdateProfilePhotoModal = () => {
 
   const { scale, setScale, isScaleSame } = useScale(profilePhoto.scale);
 
-  const handleRangeValueChange: ChangeEventHandler<HTMLInputElement> = useCallback((event) => {
-    setScale(parseFloat(event.target.value));
-  }, []);
+  const handleRangeValueChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+    (event) => {
+      setScale(parseFloat(event.target.value));
+    },
+    [setScale]
+  );
 
   const {
     src,
@@ -46,11 +49,14 @@ export const UpdateProfilePhotoModal = () => {
     profilePhoto.offsetPercentages
   );
 
-  const avatarRef = useCallback((avatarWrapperElement) => {
-    if (avatarWrapperElement !== null) {
-      getObjectPosition(avatarWrapperElement, offsetPercentages).subscribe(setOffsetPercentages);
-    }
-  }, []);
+  const avatarRef = useCallback(
+    (avatarWrapperElement) => {
+      if (avatarWrapperElement !== null) {
+        getObjectPosition(avatarWrapperElement, offsetPercentages).subscribe(setOffsetPercentages);
+      }
+    },
+    [offsetPercentages, setOffsetPercentages]
+  );
 
   if (!isAuthenticated || !isNetworkSupported) {
     return null;
