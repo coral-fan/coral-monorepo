@@ -1,37 +1,34 @@
-import { createElement, FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from '@emotion/styled';
 
-import tokens from 'styles/tokens';
+import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 import { Card } from '../Card';
-import { CloseButton, PreviousButton } from './buttons';
+import { CloseButton, Overlay } from './components';
 import { ModalProps } from './types';
 
-const Overlay = styled.div`
+const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  justify-content: center;
   align-items: center;
-  position: fixed;
-  top: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-  padding: 0 12px;
+  padding: 24px;
+  gap: 24px;
+
+  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+    padding: 40px 70px;
+  }
 `;
 
-const Container = styled.div`
+const ModalControlContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 23px;
+  justify-content: flex-end;
   width: 100%;
-  max-width: 366px;
 `;
 
 const Content = styled(Card)<{ title?: string }>`
-  width: 100%;
+  max-width: 575px;
   flex-direction: column;
   color: ${tokens.font.color.primary};
   padding: ${({ title }) => `${title ? '16px' : '8px'} 18px`};
@@ -39,11 +36,11 @@ const Content = styled(Card)<{ title?: string }>`
 `;
 
 const Heading = styled.h1`
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 23px;
-  border-bottom: 0.2px solid #9d9d9d;
-  padding-bottom: 8px;
+  font-weight: ${tokens.font.weight.bold};
+  letter-spacing: 1px;
+  font-size: ${tokens.font.size.xl};
+  line-height: ${tokens.font.line_height.xl};
+  padding-bottom: 24px;
 `;
 
 const Main = styled.div`
@@ -55,7 +52,7 @@ const Main = styled.div`
   Using FC because it always implies children.
   Prefer to define a props interface if children isn't a prop.
 */
-export const Modal: FC<ModalProps> = ({ children, title, onClick, variant }) => {
+export const Modal: FC<ModalProps> = ({ children, title, onClick }) => {
   const documentBodyRef = useRef<Document['body']>();
 
   const [isMounted, setIsMounted] = useState(false);
@@ -68,14 +65,17 @@ export const Modal: FC<ModalProps> = ({ children, title, onClick, variant }) => 
   return isMounted
     ? ReactDOM.createPortal(
         <Overlay>
-          <Container>
-            {onClick &&
-              createElement(variant === 'close' ? CloseButton : PreviousButton, { onClick })}
+          <ModalContainer>
+            {onClick && (
+              <ModalControlContainer>
+                <CloseButton onClick={onClick} />
+              </ModalControlContainer>
+            )}
             <Content title={title}>
               {title && <Heading>{title}</Heading>}
               <Main>{children}</Main>
             </Content>
-          </Container>
+          </ModalContainer>
         </Overlay>,
         document.body
       )
