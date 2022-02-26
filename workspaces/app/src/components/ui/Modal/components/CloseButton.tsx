@@ -1,9 +1,11 @@
-import { css } from '@emotion/react';
+import { ComponentProps } from 'react';
+import { CloseIcon } from 'components/ui';
+import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
 
 const SIZE = '45px';
 
-export const CONTROL_BUTTON_STYLE = css`
+const Wrapper = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,3 +21,9 @@ export const CONTROL_BUTTON_STYLE = css`
     cursor: pointer;
   }
 `;
+
+export const CloseButton = (props: ComponentProps<'button'>) => (
+  <Wrapper {...props}>
+    <CloseIcon size={22.5} />
+  </Wrapper>
+);
