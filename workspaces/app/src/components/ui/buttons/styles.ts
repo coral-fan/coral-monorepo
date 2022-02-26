@@ -6,6 +6,8 @@ export const buttonBaseStyle = css`
   justify-content: center;
   border: none;
   background-color: transparent;
+  min-height: 45px;
+  min-width: 45px;
 
   &:hover {
     cursor: pointer;
