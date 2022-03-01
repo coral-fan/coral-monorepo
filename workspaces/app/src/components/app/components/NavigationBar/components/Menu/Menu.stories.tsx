@@ -17,7 +17,7 @@ const Template: Story<MenuProp> = (args) => <Menu {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   isAuthenticated: true,
-  notificationsCount: 1,
+  // notificationsCount: 1,
   walletBalance: 0,
   username: 'User123',
   profilePhoto: {
