@@ -10,7 +10,7 @@ export interface MenuProp extends NotificationItemProp, MenuProfileProps {
 }
 
 export const Menu = ({
-  notificationsCount,
+  // notificationsCount,
   username,
   profilePhoto,
   walletBalance,
@@ -27,7 +27,7 @@ export const Menu = ({
             profilePhoto={profilePhoto}
             walletBalance={walletBalance}
           />
-          <NotificationItem notificationsCount={notificationsCount} />
+          {/* <NotificationItem notificationsCount={notificationsCount} /> */}
         </>
       ) : (
         ''
