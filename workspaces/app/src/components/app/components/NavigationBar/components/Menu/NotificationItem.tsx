@@ -1,33 +1,41 @@
 import styled from '@emotion/styled';
 import { Item } from './Item';
-import { getIconComponent } from 'components/ui/icons/utils';
-import { bellSVG } from './assets';
 import { css } from '@emotion/react';
-import { colors } from 'styles';
+import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
 export interface NotificationItemProp {
   notificationsCount: number;
 }
 const Badge = styled.div`
-  height: 20px;
-  width: 20px;
+  height: 22px;
+  width: 22px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${colors.red[10]};
+  font-size: ${tokens.font.size.md};
+  line-height: ${tokens.font.line_height.md};
+  letter-spacing: ${tokens.font.letter_spacing.md};
+  font-weight: ${tokens.font.weight.normal};
+  color: ${tokens.font.color.contrast};
+  background-color: ${tokens.background.color.brand};
   border-radius: 50%;
+
+  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+    height: 24px;
+    width: 24px;
+  }
 `;
 const Content = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 9px;
   width: 100%;
 `;
 const getFontSizeStyle = (count: number) => css`
   font-size: ${count > 99 ? 8 : count > 9 ? 11 : 14}px;
 `;
 export const NotificationItem = ({ notificationsCount }: NotificationItemProp) => (
-  <Item Icon={getIconComponent('NotificationIcon', bellSVG)}>
+  <Item>
     <Content>
       notifications
       {notificationsCount > 0 && (
