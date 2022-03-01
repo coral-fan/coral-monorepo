@@ -1,24 +1,40 @@
-import { Modal } from 'components/ui';
-import { getIconComponent } from 'components/ui/icons/utils';
+import { Modal, MenuProfileInfo, MenuProfileProps } from 'components/ui';
 import { Item } from './Item';
-import { creditCardSVG, userSVG, warningSVG } from './assets';
 import { NotificationItemProp, NotificationItem } from './NotificationItem';
 
-const MENU_ITEM_CONFIGURATION = [
-  ['manage credit card', 'CreditCardIcon', creditCardSVG],
-  ['profile', 'ProfileIcon', userSVG],
-  ['sign out', 'WarningIcon', warningSVG],
-];
+const AUTHENTICATED_MENU_ITEMS = ['Manage Credit Card', 'Home', 'Sign Out'];
+const UNAUTHENTICATED_MENU_ITEMS = ['Home', 'Sign In'];
 
-export type MenuProp = NotificationItemProp;
+export interface MenuProp extends NotificationItemProp, MenuProfileProps {
+  isAuthenticated: boolean;
+}
 
-export const Menu = ({ notificationsCount }: MenuProp) => (
-  <Modal>
-    <NotificationItem notificationsCount={notificationsCount} />
-    {MENU_ITEM_CONFIGURATION.map(([itemText, componentName, iconSVG]) => (
-      <Item key={itemText} Icon={getIconComponent(componentName, iconSVG)}>
-        {itemText}
-      </Item>
-    ))}
-  </Modal>
-);
+export const Menu = ({
+  notificationsCount,
+  username,
+  profilePhoto,
+  walletBalance,
+  isAuthenticated,
+}: MenuProp) => {
+  const items = isAuthenticated ? AUTHENTICATED_MENU_ITEMS : UNAUTHENTICATED_MENU_ITEMS;
+
+  return (
+    <Modal>
+      {isAuthenticated ? (
+        <>
+          <MenuProfileInfo
+            username={username}
+            profilePhoto={profilePhoto}
+            walletBalance={walletBalance}
+          />
+          <NotificationItem notificationsCount={notificationsCount} />
+        </>
+      ) : (
+        ''
+      )}
+      {items.map((item) => (
+        <Item key={item}>{item}</Item>
+      ))}
+    </Modal>
+  );
+};
