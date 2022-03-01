@@ -1,6 +1,5 @@
 import { Story, Meta } from '@storybook/react';
-import { Avatar } from './Avatar';
-import { AvatarProps } from './types';
+import { Avatar, AvatarProps } from './Avatar';
 
 export default {
   title: 'Coral/UI/Profile/Avatar',
