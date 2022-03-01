@@ -16,12 +16,6 @@ const Wrapper = styled.div`
   letter-spacing: ${tokens.font.letter_spacing.lg};
   border-top: solid ${tokens.border.color.secondary} 1px;
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
-    font-size: ${tokens.font.size.xl};
-    line-height: ${tokens.font.line_height.xl};
-    letter-spacing: ${tokens.font.letter_spacing.xl};
-  }
-
   &:first-of-type {
     border-top: none;
   }
