@@ -13,7 +13,7 @@ const Container = styled.div`
   gap: 8px;
 `;
 
-const Wrapper = styled.div`
+const Info = styled.div`
   font-size: ${tokens.font.size.sm};
   line-height: ${tokens.font.line_height.sm};
   letter-spacing: ${tokens.font.letter_spacing.sm};
@@ -29,6 +29,6 @@ export interface ImageInfoProps {
 export const ImageInfo: FC<ImageInfoProps> = ({ profilePhoto, children }) => (
   <Container>
     <Avatar size={35} {...profilePhoto} />
-    <Wrapper>{children}</Wrapper>
+    <Info>{children}</Info>
   </Container>
 );

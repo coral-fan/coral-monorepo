@@ -4,12 +4,12 @@ import { Image } from '../Image';
 import { ImageInfo } from '../ImageInfo';
 import { ProfilePhoto } from 'libraries/models';
 
-const Container = styled.div`
+const AssetImageContainer = styled.div`
   width: 100%;
   position: relative;
 `;
 
-const Wrapper = styled.div`
+const ImageInfoContainer = styled.div`
   position: absolute;
   left: 14px;
   bottom: 17px;
@@ -23,10 +23,10 @@ export interface AssetImageProps {
 }
 
 export const AssetImage = ({ src, altText, username, profilePhoto }: AssetImageProps) => (
-  <Container>
+  <AssetImageContainer>
     <Image src={src} altText={altText} />
-    <Wrapper>
+    <ImageInfoContainer>
       <ImageInfo profilePhoto={profilePhoto}>{username}</ImageInfo>
-    </Wrapper>
-  </Container>
+    </ImageInfoContainer>
+  </AssetImageContainer>
 );

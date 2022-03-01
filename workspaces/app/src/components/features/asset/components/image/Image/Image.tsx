@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-const StyledImage = styled(NextImage)`
+const BaseImage = styled(NextImage)`
   object-fit: contain;
   width: 100% !important;
   height: unset !important;
@@ -24,6 +24,6 @@ const StyledImage = styled(NextImage)`
 
 export const Image = ({ src, altText }: ImageProps) => (
   <Wrapper>
-    <StyledImage src={src} alt={altText} layout="fill" />
+    <BaseImage src={src} alt={altText} layout="fill" />
   </Wrapper>
 );
