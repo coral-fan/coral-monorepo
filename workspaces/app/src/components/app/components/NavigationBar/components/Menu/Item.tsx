@@ -1,38 +1,30 @@
 import styled from '@emotion/styled';
-import { getIconComponent } from 'components/ui/icons/utils';
 import { FC } from 'react';
-import tokens from 'styles/tokens';
-import { itemBorderBottomStyle } from '../styles';
-
-type Icon = ReturnType<typeof getIconComponent>;
+import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
 type ItemProps = {
-  Icon: Icon;
   notificationCount?: number;
 };
 
-const Container = styled.div`
+const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 18.5px;
-  text-transform: uppercase;
-  padding: 15px 10px;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 15px;
-  letter-spacing: 0.053em;
+  text-transform: capitalize;
+  padding: 16px 0px;
+  font-size: ${tokens.font.size.lg};
+  line-height: ${tokens.font.line_height.lg};
+  letter-spacing: ${tokens.font.letter_spacing.lg};
+  border-top: solid ${tokens.border.color.secondary} 1px;
 
-  ${itemBorderBottomStyle}
+  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+    font-size: ${tokens.font.size.xl};
+    line-height: ${tokens.font.line_height.xl};
+    letter-spacing: ${tokens.font.letter_spacing.xl};
+  }
 
-  &:last-child {
-    border-top: solid ${tokens.border.color.primary} 1px;
+  &:first-of-type {
+    border-top: none;
   }
 `;
 
-export const Item: FC<ItemProps> = ({ Icon, children }) => (
-  <Container>
-    <Icon size={20} />
-    {children}
-  </Container>
-);
+export const Item: FC<ItemProps> = ({ children }) => <Wrapper>{children}</Wrapper>;

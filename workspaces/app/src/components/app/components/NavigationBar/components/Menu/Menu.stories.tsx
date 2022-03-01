@@ -12,12 +12,22 @@ export default {
   },
 } as Meta;
 
-const Template: Story<MenuProp> = ({ notificationsCount }) => (
-  <Menu notificationsCount={notificationsCount} />
-);
+const Template: Story<MenuProp> = (args) => <Menu {...args} />;
 
 export const Default = Template.bind({});
-
 Default.args = {
+  isAuthenticated: true,
   notificationsCount: 1,
+  walletBalance: 0,
+  username: 'User123',
+  profilePhoto: {
+    src: 'https://www.stereofox.com/images/86513/resized.jpg',
+    offsetPercentages: [0, 0],
+    scale: 1,
+  },
+};
+
+export const Unauthenticated = Template.bind({});
+Unauthenticated.args = {
+  isAuthenticated: false,
 };
