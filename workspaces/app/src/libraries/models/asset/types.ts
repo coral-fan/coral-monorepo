@@ -1,12 +1,12 @@
+// AssetData is data returned from db, aka off chain
 export interface AssetData {
   id: number;
-  userId: number;
+  collectionId: string;
 }
 
+// userId is derived from on cnain data
 export type Asset = AssetData & {
-  collectionId: string;
+  userId: number;
 };
-/* not tracking the following because writes can happen frequently and outside of our platform
-   - user id
-   - transaction history
-*/
+
+// TODO: we will eventually need to index transaction history
