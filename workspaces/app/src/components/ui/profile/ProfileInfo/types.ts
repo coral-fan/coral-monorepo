@@ -1,3 +1,6 @@
-import { profileInfoSizeDictionary } from './consts';
+import { ProfilePhoto } from 'libraries/models';
 
-export type Size = keyof typeof profileInfoSizeDictionary;
+export interface BaseProfileInfoProps {
+  username: string;
+  profilePhoto: ProfilePhoto;
+}
