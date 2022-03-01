@@ -20,7 +20,7 @@ export const Menu = ({
 
   return (
     <Modal>
-      {isAuthenticated ? (
+      {isAuthenticated && (
         <>
           <MenuProfileInfo
             username={username}
@@ -29,8 +29,6 @@ export const Menu = ({
           />
           {/* <NotificationItem notificationsCount={notificationsCount} /> */}
         </>
-      ) : (
-        ''
       )}
       {items.map((item) => (
         <Item key={item}>{item}</Item>
