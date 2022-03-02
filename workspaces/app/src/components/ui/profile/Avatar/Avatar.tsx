@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 import { formatObjectPosition } from './utils';
 
 import { css } from '@emotion/react';
+import { Photo } from 'libraries/models';
 
 type WrapperProps = Pick<Parameters<typeof Avatar>[0], 'size' | 'ref'>;
 
@@ -19,10 +20,8 @@ const Wrapper = styled.div<WrapperProps>`
 `;
 
 export type OffsetPercentages = [number, number];
-export interface AvatarProps extends ImageProps {
+export interface AvatarProps extends Omit<ImageProps, 'src'>, Photo {
   size: number;
-  offsetPercentages: OffsetPercentages;
-  scale: number;
 }
 
 const getScaleStyling = (scale: number) =>
