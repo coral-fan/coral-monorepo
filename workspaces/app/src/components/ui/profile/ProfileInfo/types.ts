@@ -1,6 +1,6 @@
-import { ProfilePhoto } from 'libraries/models';
+import { Photo } from 'libraries/models';
 
 export interface BaseProfileInfoProps {
   username: string;
-  profilePhoto: ProfilePhoto;
+  profilePhoto: Photo;
 }
