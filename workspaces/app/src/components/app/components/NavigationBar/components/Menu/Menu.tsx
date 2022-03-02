@@ -1,6 +1,9 @@
 import { Modal, MenuProfileInfo, MenuProfileProps } from 'components/ui';
 import { Item } from './Item';
-import { NotificationItemProp, NotificationItem } from './NotificationItem';
+import {
+  NotificationItemProp,
+  // NotificationItem
+} from './NotificationItem';
 
 const AUTHENTICATED_MENU_ITEMS = ['Manage Credit Card', 'Home', 'Sign Out'];
 const UNAUTHENTICATED_MENU_ITEMS = ['Home', 'Sign In'];
