@@ -18,5 +18,5 @@ Default.args = {
     offsetPercentages: [0, 0],
     scale: 1,
   },
-  username: 'Bonobo',
+  artist: 'Bonobo',
 };
