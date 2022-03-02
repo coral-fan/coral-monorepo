@@ -3,7 +3,6 @@ import NextImage from 'next/image';
 
 export interface ImageProps {
   src: string;
-  altText: string;
 }
 
 /*
@@ -22,8 +21,8 @@ const BaseImage = styled(NextImage)`
   height: unset !important;
 `;
 
-export const Image = ({ src, altText }: ImageProps) => (
+export const Image = ({ src }: ImageProps) => (
   <Wrapper>
-    <BaseImage src={src} alt={altText} layout="fill" />
+    <BaseImage src={src} alt={''} layout="fill" />
   </Wrapper>
 );

@@ -22,9 +22,9 @@ export interface AssetImageProps {
   profilePhoto: Photo;
 }
 
-export const AssetImage = ({ src, altText, artist, profilePhoto }: AssetImageProps) => (
+export const AssetImage = ({ src, artist, profilePhoto }: AssetImageProps) => (
   <AssetImageContainer>
-    <Image src={src} altText={altText} />
+    <Image src={src} />
     <ImageInfoContainer>
       <ImageInfo profilePhoto={profilePhoto}>{artist}</ImageInfo>
     </ImageInfoContainer>
