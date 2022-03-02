@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
-import { ProfilePhoto } from 'libraries/models';
+import { Photo } from 'libraries/models';
 import { BaseProfileInfo } from '../../BaseProfileInfo';
 import { BaseProfileInfoProps } from '../../types';
 
 export interface MenuProfileProps extends BaseProfileInfoProps {
   walletBalance: number;
-  profilePhoto: ProfilePhoto;
+  profilePhoto: Photo;
 }
 
 const Wrapper = styled.div`
