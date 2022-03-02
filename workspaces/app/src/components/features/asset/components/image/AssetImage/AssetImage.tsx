@@ -18,15 +18,15 @@ const ImageInfoContainer = styled.div`
 export interface AssetImageProps {
   src: string;
   altText: string;
-  username: string;
+  artist: string;
   profilePhoto: Photo;
 }
 
-export const AssetImage = ({ src, altText, username, profilePhoto }: AssetImageProps) => (
+export const AssetImage = ({ src, altText, artist, profilePhoto }: AssetImageProps) => (
   <AssetImageContainer>
     <Image src={src} altText={altText} />
     <ImageInfoContainer>
-      <ImageInfo profilePhoto={profilePhoto}>{username}</ImageInfo>
+      <ImageInfo profilePhoto={profilePhoto}>{artist}</ImageInfo>
     </ImageInfoContainer>
   </AssetImageContainer>
 );
