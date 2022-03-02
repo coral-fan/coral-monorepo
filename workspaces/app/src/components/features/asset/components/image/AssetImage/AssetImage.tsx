@@ -2,7 +2,7 @@
 import styled from '@emotion/styled';
 import { Image } from '../Image';
 import { ImageInfo } from '../ImageInfo';
-import { ProfilePhoto } from 'libraries/models';
+import { Photo } from 'libraries/models';
 
 const AssetImageContainer = styled.div`
   width: 100%;
@@ -19,7 +19,7 @@ export interface AssetImageProps {
   src: string;
   altText: string;
   username: string;
-  profilePhoto: ProfilePhoto;
+  profilePhoto: Photo;
 }
 
 export const AssetImage = ({ src, altText, username, profilePhoto }: AssetImageProps) => (
