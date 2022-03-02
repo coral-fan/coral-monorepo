@@ -1,7 +1,6 @@
 import { useIsUpdateProfilePhotoModalOpen } from 'components/features/user/hooks';
-import { OffsetPercentages } from 'components/ui';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
-import { upsertUser, useUserUid } from 'libraries/models';
+import { OffsetPercentages, upsertUser, useUserUid } from 'libraries/models';
 import { useRefetchPageData } from 'libraries/utils';
 import { ChangeEvent, useCallback, useState } from 'react';
 
