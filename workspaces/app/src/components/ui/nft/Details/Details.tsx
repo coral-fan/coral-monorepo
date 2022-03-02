@@ -18,11 +18,11 @@ const Heading = styled.h4`
   padding-bottom: 12px;
 `;
 
-export interface ExperienceDetailsProp {
+export interface DetailsProp {
   details: string[];
 }
 
-export const ExperienceDetails = ({ details }: ExperienceDetailsProp) => {
+export const Details = ({ details }: DetailsProp) => {
   return (
     <Container>
       <Heading>Experience Details</Heading>
