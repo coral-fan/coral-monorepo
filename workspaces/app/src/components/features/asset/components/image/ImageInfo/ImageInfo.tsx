@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Avatar } from 'components/ui';
 import tokens from 'styles/tokens';
-import { ProfilePhoto } from 'libraries/models';
+import { Photo } from 'libraries/models';
 import { FC } from 'react';
 
 const Container = styled.div`
@@ -23,7 +23,7 @@ const Info = styled.div`
 `;
 
 export interface ImageInfoProps {
-  profilePhoto: ProfilePhoto;
+  profilePhoto: Photo;
 }
 
 export const ImageInfo: FC<ImageInfoProps> = ({ profilePhoto, children }) => (
