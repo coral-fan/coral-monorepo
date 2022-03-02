@@ -18,15 +18,15 @@ const Heading = styled.h4`
   padding-bottom: 12px;
 `;
 
-export interface ExperienceDetailProp {
+export interface ExperienceDetailsProp {
   details: string[];
 }
 
-export const ExperienceDetails = ({ details }: ExperienceDetailProp) => {
+export const ExperienceDetails = ({ details }: ExperienceDetailsProp) => {
   return (
     <Container>
       <Heading>Experience Details</Heading>
-      {details.map((detail: string) => (
+      {details.map((detail) => (
         <Detail key={detail}>{detail}</Detail>
       ))}
     </Container>

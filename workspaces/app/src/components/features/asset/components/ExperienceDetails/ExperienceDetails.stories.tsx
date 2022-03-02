@@ -1,5 +1,5 @@
 import { Story, Meta } from '@storybook/react';
-import { ExperienceDetailProp, ExperienceDetails } from './ExperienceDetails';
+import { ExperienceDetailsProp, ExperienceDetails } from './ExperienceDetails';
 
 export default {
   title: 'Coral/Asset/Experience Details',
@@ -7,7 +7,7 @@ export default {
 } as Meta;
 
 // eslint-disable-next-line jsx-a11y/alt-text
-const Template: Story<ExperienceDetailProp> = ({ ...args }) => <ExperienceDetails {...args} />;
+const Template: Story<ExperienceDetailsProp> = ({ ...args }) => <ExperienceDetails {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
