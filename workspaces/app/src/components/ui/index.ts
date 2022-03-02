@@ -9,3 +9,4 @@ export * from './Input';
 export * from './Link';
 export * from './Card';
 export * from './TimeElapsed';
+export * from './nft';
