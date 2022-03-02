@@ -1,4 +1,4 @@
-import { OffsetPercentages } from 'components/ui';
+import { OffsetPercentages } from 'libraries/models';
 import { filter, fromEvent, map, merge, mergeMapTo, pairwise, scan, takeUntil } from 'rxjs';
 import { PREVIEW_SIZE } from './consts';
 
