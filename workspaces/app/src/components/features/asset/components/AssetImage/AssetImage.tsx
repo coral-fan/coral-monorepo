@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import styled from '@emotion/styled';
-import { Image } from '../Image';
-import { ImageInfo } from '../ImageInfo';
+import { Image, ImageInfo } from './components';
 import { Photo } from 'libraries/models';
 
 const AssetImageContainer = styled.div`
