@@ -1,6 +1,6 @@
 //nextjs imports
 import type { AppContext, AppProps } from 'next/app';
-import App from 'next/app';
+import NextApp from 'next/app';
 import Head from 'next/head';
 
 // application logic imports
@@ -68,7 +68,7 @@ export const CustomApp = ({ Component, pageProps, initialState }: CustomAppProps
 
 const getInitialProps = async (appContext: AppContext) => {
   // below is necessary as per next.js docs (https://nextjs.org/docs/advanced-features/custom-app)
-  const initialProps = await App.getInitialProps(appContext);
+  const initialProps = await NextApp.getInitialProps(appContext);
   const { ctx } = appContext;
   const uid = isServerSide() ? await getUidServerSide(ctx) : getUidClientSide();
   const isSigningUp: boolean = uid ? await getIsUserSigningUp(uid) : false;
