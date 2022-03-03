@@ -24,7 +24,7 @@ import { initializeStore } from 'libraries/state';
 
 initializeFirebaseApp();
 
-export const CustomApp = ({ Component, pageProps, initialState }: CustomAppProps) => {
+export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
   const store = initializeStore(initialState);
 
   /*
@@ -79,7 +79,7 @@ const getInitialProps = async (appContext: AppContext) => {
   };
 };
 
-CustomApp.getInitialProps = getInitialProps;
+App.getInitialProps = getInitialProps;
 
 export type ServerSideData = Awaited<ReturnType<typeof getInitialProps>>;
 
