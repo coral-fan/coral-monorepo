@@ -1,3 +1,3 @@
 export * from './Details';
-export * from './NftImage';
+export * from './ImageWithInfo';
 export * from './buttons';
