@@ -1,8 +1,9 @@
 import { Story, Meta } from '@storybook/react';
 import { ImageWithInfo, ImageWithInfoProps } from './ImageWithInfo';
+import { imageWithInfoDefaultArgs } from './consts';
 
 export default {
-  title: 'Coral/UI/NFT/Image with Info',
+  title: 'Coral/UI/NFT/Components/Image with Info',
   component: ImageWithInfo,
 } as Meta;
 
@@ -10,12 +11,5 @@ export default {
 const Template: Story<ImageWithInfoProps> = ({ ...args }) => <ImageWithInfo {...args} />;
 
 export const Default = Template.bind({});
-Default.args = {
-  src: 'https://www.stereofox.com/images/86513/resized.jpg',
-  profilePhoto: {
-    src: 'https://www.stereofox.com/images/86513/resized.jpg',
-    offsetPercentages: [0, 0],
-    scale: 1,
-  },
-  artist: 'Bonobo',
-};
+
+Default.args = imageWithInfoDefaultArgs;
