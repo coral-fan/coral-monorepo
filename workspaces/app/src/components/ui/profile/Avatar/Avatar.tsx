@@ -1,6 +1,6 @@
 import { ForwardedRef, forwardRef } from 'react';
 
-import Image, { ImageProps } from 'next/image';
+import NextImage, { ImageProps } from 'next/image';
 import styled from '@emotion/styled';
 
 import { formatObjectPosition } from './utils';
@@ -36,7 +36,7 @@ export const Avatar = forwardRef(function Avatar(
   const objectPosition = formatObjectPosition(...offsetPercentages);
   return (
     <Wrapper size={size} ref={ref} {...props}>
-      <Image
+      <NextImage
         draggable={ref === null}
         alt={''}
         layout={'fill'}
