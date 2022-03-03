@@ -1,9 +1,12 @@
 //nextjs imports
-import type { AppProps } from 'next/app';
+import type { AppContext, AppProps } from 'next/app';
+import App from 'next/app';
 import Head from 'next/head';
 
 // application logic imports
 import { initializeFirebaseApp } from 'libraries/firebase';
+import { getIsUserSigningUp } from 'libraries/models';
+import { isServerSide, getLibrary, getUidClientSide, getUidServerSide } from 'libraries/utils';
 
 // styling
 import { GlobalStyles } from 'styles';
@@ -19,24 +22,14 @@ import { initializeStore } from 'libraries/state';
 
 initializeFirebaseApp();
 
-import { ExternalProvider, JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
+export const CustomApp = ({ Component, pageProps, initialState }: CustomAppProps) => {
+  const store = initializeStore(initialState);
 
-export const getLibrary = (provider: ExternalProvider | JsonRpcProvider | undefined) => {
-  if (provider) {
-    return provider instanceof JsonRpcProvider ? provider : new Web3Provider(provider);
-  }
-  return undefined;
-};
-
-export const App = ({ Component, pageProps }: AppProps) => {
-  const store = initializeStore();
-  /*
-    is mounted check logic is necessary to prevent SSRed html from diverging to CSRed html.
-    see: https://www.joshwcomeau.com/react/the-perils-of-rehydration/
-  */
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    // `useEffect` never runs on the server, so we must be on the client if
+    // we hit this block
     setIsMounted(true);
   }, []);
 
@@ -66,3 +59,22 @@ export const App = ({ Component, pageProps }: AppProps) => {
     </>
   );
 };
+
+const getInitialProps = async (appContext: AppContext) => {
+  // below is necessary as per next.js docs (https://nextjs.org/docs/advanced-features/custom-app)
+  const initialProps = await App.getInitialProps(appContext);
+  const { ctx } = appContext;
+  const uid = isServerSide() ? await getUidServerSide(ctx) : getUidClientSide();
+  const isSigningUp: boolean = uid ? await getIsUserSigningUp(uid) : false;
+
+  return {
+    ...initialProps,
+    initialState: { isSigningUp },
+  };
+};
+
+CustomApp.getInitialProps = getInitialProps;
+
+export type ServerSideData = Awaited<ReturnType<typeof getInitialProps>>;
+
+type CustomAppProps = AppProps & ServerSideData;
