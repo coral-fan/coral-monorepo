@@ -1,1 +1,1 @@
-export * from './AssetImage';
+export * from './ImageWithInfo';
