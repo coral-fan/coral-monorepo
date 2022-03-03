@@ -1,5 +1,1 @@
-export {
-  CollectionPage as default,
-  getStaticPaths,
-  getStaticProps,
-} from 'components/features/collection';
+export { CollectionPage as default, getServerSideProps } from 'components/features/collection';

@@ -1,34 +1,49 @@
 import styled from '@emotion/styled';
-
-interface NFTCollection {
-  id: string;
-  name: string;
-  artist: string;
-}
+import { Collection } from 'libraries/models';
+import { GetServerSideProps } from 'next';
 
 const Container = styled.div`
   display: flex;
 `;
 
-export const CollectionPage = ({ id }: NFTCollection) => {
-  return <Container>{`Collection ${id}`}</Container>;
-};
-
-interface NFTCollectionRouteParam {
-  params: {
-    id: string;
-  };
+interface CollectionPageProps {
+  collectionData: Collection;
 }
 
-const collectionIds = [1, 2, 3, 4, 5];
-const paths = collectionIds.map((id) => ({ params: { id: `${id}` } }));
-
-export const getStaticPaths = async () => {
-  return { paths, fallback: false };
+export const CollectionPage = ({ collectionData }: CollectionPageProps) => {
+  return <Container>{`Collection ${collectionData.id}`}</Container>;
 };
 
-export const getStaticProps = async ({ params }: NFTCollectionRouteParam) => {
+export const getServerSideProps: GetServerSideProps<
+  CollectionPageProps,
+  { collectionId: string }
+> = async (context) => {
+  const { params } = context;
+
+  if (params === undefined) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const { collectionId } = params;
+
+  // Make database call with collectionId to get collectionData.
+  const collectionData: Collection = {
+    id: '1',
+    artistId: 'Bonobo',
+    imageUrl: 'https://www.stereofox.com/images/86513/resized.jpg',
+    maxMintable: 5000,
+    type: 'music',
+    price: 1000,
+    dropDate: '2022-04-01',
+    description: 'Bonobo Collection',
+    details: null,
+  };
+
   return {
-    props: { id: params.id },
+    props: {
+      collectionData,
+    },
   };
 };
