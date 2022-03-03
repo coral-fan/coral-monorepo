@@ -1,34 +1,42 @@
 import styled from '@emotion/styled';
-
-interface NFTAsset {
-  id: string;
-  name: string;
-  artist: string;
-}
+import { Asset } from 'libraries/models';
+import { GetServerSideProps } from 'next';
 
 const Container = styled.div`
   display: flex;
 `;
 
-export const AssetPage = ({ id }: NFTAsset) => {
-  return <Container>{`Asset ${id}`}</Container>;
-};
-
-interface NFTAssetRouteParam {
-  params: {
-    id: string;
-  };
+interface AssetPageProps {
+  assetData: Asset;
 }
 
-const assetIds = [1, 2, 3, 4, 5];
-const paths = assetIds.map((id) => ({ params: { id: `${id}` } }));
-
-export const getStaticPaths = async () => {
-  return { paths, fallback: false };
+export const AssetPage = ({ assetData }: AssetPageProps) => {
+  return <Container>{`Asset ${assetData.id}`}</Container>;
 };
 
-export const getStaticProps = async ({ params }: NFTAssetRouteParam) => {
+export const getServerSideProps: GetServerSideProps<AssetPageProps, { assetId: string }> = async (
+  context
+) => {
+  const { params } = context;
+
+  if (params === undefined) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const { assetId } = params;
+
+  // Make database call with assetId to get assetData.
+  const assetData: Asset = {
+    id: 1,
+    collectionId: '0x123456789',
+    userId: 2,
+  };
+
   return {
-    props: { id: params.id },
+    props: {
+      assetData,
+    },
   };
 };
