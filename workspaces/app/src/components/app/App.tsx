@@ -6,7 +6,9 @@ import Head from 'next/head';
 // application logic imports
 import { initializeFirebaseApp } from 'libraries/firebase';
 import { getIsUserSigningUp } from 'libraries/models';
-import { isServerSide, getLibrary, getUidClientSide, getUidServerSide } from 'libraries/utils';
+import { isServerSide } from 'libraries/utils';
+import { getLibrary } from './utils';
+import { getUidClientSide, getUidServerSide } from 'libraries/models';
 
 // styling
 import { GlobalStyles } from 'styles';
