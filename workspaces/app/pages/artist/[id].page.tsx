@@ -1,1 +1,1 @@
-export { ArtistPage as default, getStaticPaths, getStaticProps } from 'components/features/artist';
+export { ArtistPage as default, getServerSideProps } from 'components/features/artist';
