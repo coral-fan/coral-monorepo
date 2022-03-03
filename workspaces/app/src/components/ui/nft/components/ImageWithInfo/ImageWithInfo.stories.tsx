@@ -2,7 +2,7 @@ import { Story, Meta } from '@storybook/react';
 import { ImageWithInfo, ImageWithInfoProps } from './ImageWithInfo';
 
 export default {
-  title: 'Coral/Asset/Image with Info',
+  title: 'Coral/UI/NFT/Image with Info',
   component: ImageWithInfo,
 } as Meta;
 

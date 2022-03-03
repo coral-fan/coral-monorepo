@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/alt-text */
 import styled from '@emotion/styled';
-import { Image, ImageInfo } from './components';
+import NextImage from 'next/image';
+import { ImageInfo } from './components';
 import { Photo } from 'libraries/models';
 
 const ImageWithInfoContainer = styled.div`
   width: 100%;
-  position: relative;
+  /* position: relative; */
 `;
 
 const ImageInfoContainer = styled.div`
@@ -23,7 +24,7 @@ export interface ImageWithInfoProps {
 
 export const ImageWithInfo = ({ src, artist, profilePhoto }: ImageWithInfoProps) => (
   <ImageWithInfoContainer>
-    <Image src={src} />
+    <NextImage src={src} alt={''} layout="fill" />
     <ImageInfoContainer>
       <ImageInfo profilePhoto={profilePhoto}>{artist}</ImageInfo>
     </ImageInfoContainer>
