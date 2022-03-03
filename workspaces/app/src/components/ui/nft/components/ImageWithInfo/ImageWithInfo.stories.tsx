@@ -1,5 +1,5 @@
 import { Story, Meta } from '@storybook/react';
-import { ImageWithInfo, ImageWithInfoProps } from './AssetImage';
+import { ImageWithInfo, ImageWithInfoProps } from './ImageWithInfo';
 
 export default {
   title: 'Coral/Asset/Image with Info',
