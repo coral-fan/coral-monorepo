@@ -1,33 +1,59 @@
 import styled from '@emotion/styled';
-
-interface Artist {
-  id: string;
-}
+import { Artist } from 'libraries/models';
+import { GetServerSideProps } from 'next';
 
 const Container = styled.div`
   display: flex;
 `;
 
-export const ArtistPage = ({ id }: Artist) => {
-  return <Container>{`Artist ${id}`}</Container>;
-};
-
-interface ArtistRouteParam {
-  params: {
-    id: string;
-  };
+interface ArtistPageProps {
+  artistData: Artist;
 }
 
-const artistIds = [1, 2, 3, 4, 5];
-const artists: Artist[] = artistIds.map((id) => ({ id: `${id}` }));
-const paths = artists.map(({ id }) => ({ params: { id: `${id}` } }));
-
-export const getStaticPaths = async () => {
-  return { paths, fallback: false };
+export const ArtistPage = ({ artistData }: ArtistPageProps) => {
+  return <Container>{`${artistData.name}`}</Container>;
 };
 
-export const getStaticProps = async ({ params }: ArtistRouteParam) => {
+export const getServerSideProps: GetServerSideProps<ArtistPageProps, { artistId: string }> = async (
+  context
+) => {
+  const { params } = context;
+
+  if (params === undefined) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const { artistId } = params;
+
+  // Make database call with artistId to get artistData.
+  const artistData: Artist = {
+    id: '1',
+    name: 'Bonobo',
+    socialMedia: {
+      twitter: null,
+      facebook: null,
+      instagram: null,
+    },
+    collections: [
+      {
+        id: '1',
+        artistId: 'Bonobo',
+        imageUrl: 'https://www.stereofox.com/images/86513/resized.jpg',
+        maxMintable: 5000,
+        type: 'music',
+        price: 1000,
+        dropDate: '2022-04-01',
+        description: 'Bonobo Collection',
+        details: null,
+      },
+    ],
+  };
+
   return {
-    props: { id: params.id },
+    props: {
+      artistData,
+    },
   };
 };
