@@ -25,6 +25,10 @@ initializeFirebaseApp();
 export const CustomApp = ({ Component, pageProps, initialState }: CustomAppProps) => {
   const store = initializeStore(initialState);
 
+  /*
+    is mounted check logic is necessary to prevent SSRed html from diverging to CSRed html.
+    see: https://www.joshwcomeau.com/react/the-perils-of-rehydration/
+  */
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
