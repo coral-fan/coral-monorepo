@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Image, ImageInfo } from './components';
 import { Photo } from 'libraries/models';
 
-const AssetImageContainer = styled.div`
+const ImageWithInfoContainer = styled.div`
   width: 100%;
   position: relative;
 `;
@@ -14,18 +14,18 @@ const ImageInfoContainer = styled.div`
   bottom: 17px;
 `;
 
-export interface AssetImageProps {
+export interface ImageWithInfoProps {
   src: string;
   altText: string;
   artist: string;
   profilePhoto: Photo;
 }
 
-export const AssetImage = ({ src, artist, profilePhoto }: AssetImageProps) => (
-  <AssetImageContainer>
+export const ImageWithInfo = ({ src, artist, profilePhoto }: ImageWithInfoProps) => (
+  <ImageWithInfoContainer>
     <Image src={src} />
     <ImageInfoContainer>
       <ImageInfo profilePhoto={profilePhoto}>{artist}</ImageInfo>
     </ImageInfoContainer>
-  </AssetImageContainer>
+  </ImageWithInfoContainer>
 );

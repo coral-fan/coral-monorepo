@@ -1,13 +1,13 @@
 import { Story, Meta } from '@storybook/react';
-import { AssetImage, AssetImageProps } from './AssetImage';
+import { ImageWithInfo, ImageWithInfoProps } from './AssetImage';
 
 export default {
   title: 'Coral/Asset/Image with Info',
-  component: AssetImage,
+  component: ImageWithInfo,
 } as Meta;
 
 // eslint-disable-next-line jsx-a11y/alt-text
-const Template: Story<AssetImageProps> = ({ ...args }) => <AssetImage {...args} />;
+const Template: Story<ImageWithInfoProps> = ({ ...args }) => <ImageWithInfo {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
