@@ -6,7 +6,6 @@ import { Photo } from 'libraries/models';
 
 const ImageWithInfoContainer = styled.div`
   width: 100%;
-  /* position: relative; */
 `;
 
 const ImageInfoContainer = styled.div`
@@ -17,7 +16,6 @@ const ImageInfoContainer = styled.div`
 
 export interface ImageWithInfoProps {
   src: string;
-  altText: string;
   artist: string;
   profilePhoto: Photo;
 }
