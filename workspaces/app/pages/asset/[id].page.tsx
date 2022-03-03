@@ -1,1 +1,1 @@
-export { AssetPage as default, getStaticPaths, getStaticProps } from 'components/features/asset';
+export { AssetPage as default, getServerSideProps } from 'components/features/asset';
