@@ -4,14 +4,29 @@ import NextImage from 'next/image';
 import { ImageInfo } from './components';
 import { Photo } from 'libraries/models';
 
+// parent container
 const ImageWithInfoContainer = styled.div`
   width: 100%;
 `;
 
+// image components
+const ImageWrapper = styled.div`
+  width: 100%;
+  > span {
+    position: unset !important;
+    height: 100%;
+  }
+`;
+
+const Image = styled(NextImage)`
+  width: 100% !important;
+  position: relative !important;
+  height: unset !important;
+`;
+
+//  image info components
 const ImageInfoContainer = styled.div`
-  position: absolute;
-  left: 14px;
-  bottom: 17px;
+  transform: translate(1%, -110%);
 `;
 
 export interface ImageWithInfoProps {
@@ -22,7 +37,9 @@ export interface ImageWithInfoProps {
 
 export const ImageWithInfo = ({ src, artist, profilePhoto }: ImageWithInfoProps) => (
   <ImageWithInfoContainer>
-    <NextImage src={src} alt={''} layout="fill" />
+    <ImageWrapper>
+      <Image src={src} alt={''} layout="fill" objectFit="contain" />
+    </ImageWrapper>
     <ImageInfoContainer>
       <ImageInfo profilePhoto={profilePhoto}>{artist}</ImageInfo>
     </ImageInfoContainer>
