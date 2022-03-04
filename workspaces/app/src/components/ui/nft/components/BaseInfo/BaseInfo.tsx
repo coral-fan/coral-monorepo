@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Heading, HeadingLevel } from 'components/ui/Heading';
 import { ImageWithInfo, ImageWithInfoProps } from '..';
 
-export interface BaseProps extends ImageWithInfoProps {
+export interface BaseInfoProps extends ImageWithInfoProps {
   dropName: string;
   nameHeadingLevel: HeadingLevel;
 }
@@ -19,7 +19,7 @@ const Container = styled.div`
 //   line-height: ${tokens.font.line_height.md};
 // `;
 
-export const BaseInfo = ({ dropName, nameHeadingLevel, ...imageWithInfoProps }: BaseProps) => (
+export const BaseInfo = ({ dropName, nameHeadingLevel, ...imageWithInfoProps }: BaseInfoProps) => (
   <Container>
     <ImageWithInfo {...imageWithInfoProps} />
     <Heading level={nameHeadingLevel}>{dropName}</Heading>
