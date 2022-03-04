@@ -14,12 +14,12 @@ const fontSizeDictionary = {
   3: sm,
 };
 
-type Level = keyof typeof fontSizeDictionary;
+export type HeadingLevel = keyof typeof fontSizeDictionary;
 export interface HeadingProp {
-  level: Level;
+  level: HeadingLevel;
 }
 
-const getHeadingStyle = (level: Level) => css`
+const getHeadingStyle = (level: HeadingLevel) => css`
   font-weight: bold;
   color: ${tokens.font.color.primary};
   font-size: ${fontSizeDictionary[level]};
