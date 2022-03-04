@@ -1,1 +1,1 @@
-export * from './ImageInfo';
+export * from './ArtistInfo';
