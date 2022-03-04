@@ -23,11 +23,11 @@ const Info = styled.div`
   text-transform: capitalize;
 `;
 
-export interface ImageInfoProps extends ComponentPropsWithRef<'div'> {
+export interface ArtistInfoProps extends ComponentPropsWithRef<'div'> {
   profilePhoto: Photo;
 }
 
-export const ImageInfo = forwardRef<HTMLDivElement, ImageInfoProps>(function ImageInfo(
+export const ArtistInfo = forwardRef<HTMLDivElement, ArtistInfoProps>(function ImageInfo(
   { profilePhoto, children },
   ref
 ) {
