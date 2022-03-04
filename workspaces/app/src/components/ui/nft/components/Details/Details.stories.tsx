@@ -2,7 +2,7 @@ import { Story, Meta } from '@storybook/react';
 import { Details, DetailsProp } from './Details';
 
 export default {
-  title: 'Coral/Asset/Experience Details',
+  title: 'Coral/UI/NFT/Components/Details',
   component: Details,
 } as Meta;
 
