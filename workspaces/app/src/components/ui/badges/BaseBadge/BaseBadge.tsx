@@ -26,7 +26,7 @@ const Wrapper = styled.div`
 export const BaseBadge: FC<BadgeProps> = ({ svg, children }) => {
   return (
     <Container>
-      <img src={svg} width={19} height={12} alt={''} />
+      <img src={svg} width={'auto'} height={'auto'} alt={''} />
       <Wrapper>{children}</Wrapper>
     </Container>
   );
