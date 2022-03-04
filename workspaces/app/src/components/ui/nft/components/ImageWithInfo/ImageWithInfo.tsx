@@ -6,7 +6,7 @@ import { Photo } from 'libraries/models';
 
 // parent container
 const ImageWithInfoContainer = styled.div`
-  width: 100%;
+  position: relative;
 `;
 
 // image components
@@ -26,7 +26,11 @@ const Image = styled(NextImage)`
 
 //  image info components
 const ImageInfoContainer = styled.div`
-  transform: translate(1%, -110%);
+  position: absolute;
+  left: 14px;
+  bottom: 34px;
+  height: 0;
+  width: 0;
 `;
 
 export interface ImageWithInfoProps {
