@@ -1,16 +1,16 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { VideoBadge } from '../../../badges';
 
-import { InfoBase } from './InfoBase';
+import { BaseInfo } from './BaseInfo';
 import { IMAGE_WITH_INFO_DEFAULT_ARGS } from '../ImageWithInfo/consts';
 
 export default {
   title: 'Coral/UI/NFT/Components/Info Base',
-  component: InfoBase,
+  component: BaseInfo,
   args: {},
-} as ComponentMeta<typeof InfoBase>;
+} as ComponentMeta<typeof BaseInfo>;
 
-const Template: ComponentStory<typeof InfoBase> = (args) => <InfoBase {...args} />;
+const Template: ComponentStory<typeof BaseInfo> = (args) => <BaseInfo {...args} />;
 
 export const Default = Template.bind({});
 
