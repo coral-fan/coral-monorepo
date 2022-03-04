@@ -1,4 +1,4 @@
 export * from './Details';
 export * from './ImageWithInfo';
 export * from './buttons';
-export * from './InfoBase';
+export * from './BaseInfo';
