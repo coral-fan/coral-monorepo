@@ -19,7 +19,7 @@ const Container = styled.div`
 //   line-height: ${tokens.font.line_height.md};
 // `;
 
-export const InfoBase = ({ dropName, nameHeadingLevel, ...imageWithInfoProps }: BaseProps) => (
+export const BaseInfo = ({ dropName, nameHeadingLevel, ...imageWithInfoProps }: BaseProps) => (
   <Container>
     <ImageWithInfo {...imageWithInfoProps} />
     <Heading level={nameHeadingLevel}>{dropName}</Heading>
