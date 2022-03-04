@@ -2,10 +2,16 @@ import { css, jsx } from '@emotion/react';
 import { FC } from 'react';
 import tokens from 'styles/tokens';
 
+const {
+  font: {
+    size: { lg, md, sm },
+  },
+} = tokens;
+
 const fontSizeDictionary = {
-  1: 24,
-  2: 18,
-  3: 14,
+  1: lg,
+  2: md,
+  3: sm,
 };
 
 type Level = keyof typeof fontSizeDictionary;
@@ -16,7 +22,7 @@ export interface HeadingProp {
 const getHeadingStyle = (level: Level) => css`
   font-weight: bold;
   color: ${tokens.font.color.primary};
-  font-size: ${`${fontSizeDictionary[level]}px`};
+  font-size: ${fontSizeDictionary[level]};
   ${level === 2
     ? css`
         border-bottom: solid ${tokens.border.color.secondary} 1px;
