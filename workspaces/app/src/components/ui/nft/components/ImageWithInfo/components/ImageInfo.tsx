@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Avatar } from 'components/ui';
 import tokens from 'styles/tokens';
 import { Photo } from 'libraries/models';
-import { FC } from 'react';
+import { ComponentPropsWithRef, forwardRef } from 'react';
 
 const Container = styled.div`
   display: flex;
@@ -23,13 +23,18 @@ const Info = styled.div`
   text-transform: capitalize;
 `;
 
-export interface ImageInfoProps {
+export interface ImageInfoProps extends ComponentPropsWithRef<'div'> {
   profilePhoto: Photo;
 }
 
-export const ImageInfo: FC<ImageInfoProps> = ({ profilePhoto, children }) => (
-  <Container>
-    <Avatar size={35} {...profilePhoto} />
-    <Info>{children}</Info>
-  </Container>
-);
+export const ImageInfo = forwardRef<HTMLDivElement, ImageInfoProps>(function ImageInfo(
+  { profilePhoto, children },
+  ref
+) {
+  return (
+    <Container ref={ref}>
+      <Avatar size={35} {...profilePhoto} />
+      <Info>{children}</Info>
+    </Container>
+  );
+});

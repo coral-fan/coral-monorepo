@@ -6,4 +6,6 @@ export const IMAGE_WITH_INFO_DEFAULT_ARGS = {
     scale: 1,
   },
   artist: 'Bonobo',
+  dropName: 'Behind the Scenes Studio Tour',
+  nameHeadingLevel: 1,
 };
