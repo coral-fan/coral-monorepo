@@ -1,13 +1,10 @@
-import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import styled from '@emotion/styled';
-import { Heading } from 'components/ui';
-import tokens from 'styles/tokens';
+import { Heading, HeadingLevel } from 'components/ui/Heading';
 import { ImageWithInfo, ImageWithInfoProps } from '..';
 
 export interface BaseProps extends ImageWithInfoProps {
-  name: string;
-  Badge: () => EmotionJSX.Element;
-  description?: string;
+  dropName: string;
+  nameHeadingLevel: HeadingLevel;
 }
 
 const Container = styled.div`
@@ -17,16 +14,14 @@ const Container = styled.div`
   gap: 10px;
 `;
 
-const Description = styled.p`
-  font-size: ${tokens.font.size.md};
-  line-height: ${tokens.font.line_height.md};
-`;
+// const Description = styled.p`
+//   font-size: ${tokens.font.size.md};
+//   line-height: ${tokens.font.line_height.md};
+// `;
 
-export const InfoBase = ({ name, Badge, description, ...imageWithInfoProps }: BaseProps) => (
+export const InfoBase = ({ dropName, nameHeadingLevel, ...imageWithInfoProps }: BaseProps) => (
   <Container>
     <ImageWithInfo {...imageWithInfoProps} />
-    <Heading level={1}>{name}</Heading>
-    <Badge />
-    {description && <Description>{description}</Description>}
+    <Heading level={nameHeadingLevel}>{dropName}</Heading>
   </Container>
 );
