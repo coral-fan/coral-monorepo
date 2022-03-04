@@ -1,8 +1,10 @@
 /* eslint-disable jsx-a11y/alt-text */
 import styled from '@emotion/styled';
 import NextImage from 'next/image';
-import { ImageInfo } from './components';
+import { ArtistInfo } from './components';
 import { Photo } from 'libraries/models';
+
+import { useCallback, useState } from 'react';
 
 // parent container
 const ImageWithInfoContainer = styled.div`
@@ -12,6 +14,8 @@ const ImageWithInfoContainer = styled.div`
 // image components
 const ImageWrapper = styled.div`
   width: 100%;
+  position: relative;
+
   > span {
     position: unset !important;
     height: 100%;
@@ -25,10 +29,14 @@ const Image = styled(NextImage)`
 `;
 
 //  image info components
-const ImageInfoContainer = styled.div`
+interface ImageInfoContainerProps {
+  imageInfoHeight: number;
+}
+
+const ArtistInfoContainer = styled.div<ImageInfoContainerProps>`
   position: absolute;
   left: 14px;
-  bottom: calc(35px + 17px);
+  bottom: calc(${({ imageInfoHeight }) => imageInfoHeight}px + 17px);
   height: 0;
   width: 0;
 `;
@@ -39,13 +47,25 @@ export interface ImageWithInfoProps {
   profilePhoto: Photo;
 }
 
-export const ImageWithInfo = ({ src, artist, profilePhoto }: ImageWithInfoProps) => (
-  <ImageWithInfoContainer>
-    <ImageWrapper>
-      <Image src={src} alt={''} layout="fill" objectFit="contain" />
-    </ImageWrapper>
-    <ImageInfoContainer>
-      <ImageInfo profilePhoto={profilePhoto}>{artist}</ImageInfo>
-    </ImageInfoContainer>
-  </ImageWithInfoContainer>
-);
+export const ImageWithInfo = ({ src, artist, profilePhoto }: ImageWithInfoProps) => {
+  const [imageInfoHeight, setImageInfoHeight] = useState(0);
+
+  const imageInfoRef = useCallback((element: HTMLDivElement) => {
+    if (element !== undefined) {
+      setImageInfoHeight(element.offsetHeight);
+    }
+  }, []);
+
+  return (
+    <ImageWithInfoContainer>
+      <ImageWrapper>
+        <Image src={src} alt={''} layout="fill" objectFit="contain" priority />
+      </ImageWrapper>
+      <ArtistInfoContainer imageInfoHeight={imageInfoHeight}>
+        <ArtistInfo ref={imageInfoRef} profilePhoto={profilePhoto}>
+          {artist}
+        </ArtistInfo>
+      </ArtistInfoContainer>
+    </ImageWithInfoContainer>
+  );
+};
