@@ -29,7 +29,6 @@ const ModalControlContainer = styled.div`
 
 const Content = styled(Card)<{ title?: string }>`
   max-width: 575px;
-  flex-direction: column;
   color: ${tokens.font.color.primary};
   padding: ${({ title }) => `${title ? '16px' : '8px'} 18px`};
   box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.5);

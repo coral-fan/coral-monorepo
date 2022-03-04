@@ -57,7 +57,6 @@ const TIMEOUT = 500;
 
 const NotificationContainer = styled(Card)`
   padding: 16px 18px;
-  flex-direction: column;
   gap: 3px;
   transition: transform ${TIMEOUT}ms;
 
