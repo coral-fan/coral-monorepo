@@ -7,7 +7,6 @@ export default {
   component: ImageWithInfo,
 } as Meta;
 
-// eslint-disable-next-line jsx-a11y/alt-text
 const Template: Story<ImageWithInfoProps> = ({ ...args }) => <ImageWithInfo {...args} />;
 
 export const Default = Template.bind({});
