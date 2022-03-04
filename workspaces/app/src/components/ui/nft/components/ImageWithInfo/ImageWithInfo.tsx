@@ -28,7 +28,7 @@ const Image = styled(NextImage)`
 const ImageInfoContainer = styled.div`
   position: absolute;
   left: 14px;
-  bottom: 34px;
+  bottom: calc(35px + 17px);
   height: 0;
   width: 0;
 `;
