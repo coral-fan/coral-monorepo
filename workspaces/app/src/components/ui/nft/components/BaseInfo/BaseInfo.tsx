@@ -1,11 +1,13 @@
 import styled from '@emotion/styled';
 import { Heading, HeadingLevel } from 'components/ui/Heading';
 import { FC } from 'react';
+import tokens from 'styles/tokens';
 import { ImageWithInfo, ImageWithInfoProps } from '..';
 
 export interface BaseInfoProps extends ImageWithInfoProps {
   dropName: string;
   nameHeadingLevel: HeadingLevel;
+  description?: string;
 }
 
 const BaseInfoContainer = styled.div`
@@ -14,10 +16,10 @@ const BaseInfoContainer = styled.div`
   flex-direction: column;
 `;
 
-// const Description = styled.p`
-//   font-size: ${tokens.font.size.md};
-//   line-height: ${tokens.font.line_height.md};
-// `;
+const Description = styled.p`
+  font-size: ${tokens.font.size.md};
+  line-height: ${tokens.font.line_height.md};
+`;
 
 const ContentContainer = styled.div`
   display: flex;
@@ -29,6 +31,7 @@ const ContentContainer = styled.div`
 export const BaseInfo: FC<BaseInfoProps> = ({
   dropName,
   nameHeadingLevel,
+  description,
   children,
   ...imageWithInfoProps
 }) => (
@@ -36,6 +39,7 @@ export const BaseInfo: FC<BaseInfoProps> = ({
     <ImageWithInfo {...imageWithInfoProps} />
     <ContentContainer>
       <Heading level={nameHeadingLevel}>{dropName}</Heading>
+      {description && <Description>{description}</Description>}
       {children}
     </ContentContainer>
   </BaseInfoContainer>
