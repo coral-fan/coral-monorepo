@@ -11,6 +11,13 @@ export default {
 
 const Template: ComponentStory<typeof BaseInfo> = (args) => <BaseInfo {...args} />;
 
-export const Default = Template.bind({});
+export const withoutDescription = Template.bind({});
 
-Default.args = BASE_INFO_DEFAULT_ARGS;
+withoutDescription.args = BASE_INFO_DEFAULT_ARGS;
+
+export const withDescription = Template.bind({});
+withDescription.args = {
+  ...BASE_INFO_DEFAULT_ARGS,
+  description:
+    'Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.',
+};
