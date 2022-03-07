@@ -1,6 +1,8 @@
+import { Artist } from '../artist';
+
 export type CollectionType = 'music' | 'event' | 'merch';
 
-export interface Collection {
+export interface CollectionData {
   // id = nft smart contract address
   id: string;
   /* blockchain data index cache */
@@ -14,3 +16,6 @@ export interface Collection {
   description: string;
   details: string[] | null;
 }
+
+export type Collection = Omit<CollectionData, 'id' | 'artistId'> &
+  Pick<Artist, 'name' | 'profilePhoto'>;
