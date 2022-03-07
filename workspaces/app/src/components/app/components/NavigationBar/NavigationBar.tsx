@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
 import { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
-import { useIsAuthenticated, useLogout } from 'libraries/authentication';
-
-import { HamburgerMenuButton, LoginButton, LogoHomeLink } from './components';
+import { HamburgerMenuButton, Menu, LogoHomeLink } from './components';
+import { useEffect, useState } from 'react';
+import { User } from 'libraries/models';
+import { getDocumentData } from 'libraries/firebase';
+import { getLoggedIn$ } from 'libraries/authentication';
 
 const Container = styled.div`
   display: flex;
@@ -18,18 +20,44 @@ const Container = styled.div`
   }
 `;
 
+export type NavigationBarUserData = Pick<User, 'username' | 'profilePhoto'>;
+
 export const NavigationBar = () => {
-  const isAuthenticated = useIsAuthenticated();
-  const logout = useLogout();
+  const [showMenu, setShowMenu] = useState(false);
+  const [userUid, setUserUid] = useState<string | null>(null);
+  const [userData, setUserData] = useState<NavigationBarUserData | undefined>();
+
+  useEffect(() => {
+    let isMounted = true;
+    getLoggedIn$().subscribe((user) => {
+      if (user) {
+        if (isMounted) setUserUid(user.uid);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchData = async () => {
+      const userData = userUid
+        ? await getDocumentData<NavigationBarUserData>('users', userUid)
+        : undefined;
+      if (isMounted) setUserData(userData);
+    };
+    fetchData();
+    return () => {
+      isMounted = false;
+    };
+  }, [userUid]);
 
   return (
     <Container>
       <LogoHomeLink />
-      {isAuthenticated ? (
-        <HamburgerMenuButton hasNotifications={false} onClick={logout} />
-      ) : (
-        <LoginButton />
-      )}
+      <HamburgerMenuButton hasNotifications={false} onClick={() => setShowMenu(true)} />
+      <Menu showMenu={showMenu} setShowMenu={setShowMenu} userData={userData} />
     </Container>
   );
 };

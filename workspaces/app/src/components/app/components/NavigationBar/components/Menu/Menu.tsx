@@ -1,41 +1,68 @@
-import { Modal, MenuProfileInfo, MenuProfileProps } from 'components/ui';
+import { Link, MenuProfileInfo, Modal } from 'components/ui';
+import { useIsAuthenticated, useLogin, useLogout } from 'libraries/authentication';
+import { useUserUid } from 'libraries/models';
 import { Item } from './Item';
-import {
-  NotificationItemProp,
-  // NotificationItem
-} from './NotificationItem';
+import styled from '@emotion/styled';
+import tokens from 'styles/tokens';
+import { NavigationBarUserData } from '../../NavigationBar';
 
-const AUTHENTICATED_MENU_ITEMS = ['Manage Credit Card', 'Home', 'Sign Out'];
-const UNAUTHENTICATED_MENU_ITEMS = ['Home', 'Sign In'];
-
-export interface MenuProp extends NotificationItemProp, MenuProfileProps {
-  isAuthenticated: boolean;
+interface MenuProps {
+  showMenu: boolean;
+  setShowMenu: (showMenu: boolean) => void;
+  userData?: NavigationBarUserData;
 }
 
-export const Menu = ({
-  // notificationsCount,
-  username,
-  profilePhoto,
-  walletBalance,
-  isAuthenticated,
-}: MenuProp) => {
+const MenuProfileLink = styled(Link)`
+  border-bottom: solid 1px ${tokens.border.color.secondary};
+`;
+
+export const Menu = ({ showMenu, setShowMenu, userData }: MenuProps) => {
+  const { login } = useLogin();
+  const logout = useLogout();
+  const isAuthenticated = useIsAuthenticated();
+  const uid = useUserUid();
+
+  const AUTHENTICATED_MENU_ITEMS = [
+    { label: 'Home', to: '/' },
+    { label: 'Sign Out', onClick: logout },
+  ];
+
+  const UNAUTHENTICATED_MENU_ITEMS = [
+    { label: 'Home', to: '/' },
+    { label: 'Sign In', onClick: login },
+  ];
+
   const items = isAuthenticated ? AUTHENTICATED_MENU_ITEMS : UNAUTHENTICATED_MENU_ITEMS;
 
+  if (!showMenu) {
+    return null;
+  }
+
   return (
-    <Modal>
-      {isAuthenticated && (
+    <Modal variant="close" onClick={() => setShowMenu(false)}>
+      {isAuthenticated && userData && (
         <>
-          <MenuProfileInfo
-            username={username}
-            profilePhoto={profilePhoto}
-            walletBalance={walletBalance}
-          />
+          <MenuProfileLink href={`/user/${uid}`}>
+            <MenuProfileInfo
+              username={userData.username}
+              profilePhoto={userData.profilePhoto}
+              walletBalance={0}
+            />
+          </MenuProfileLink>
           {/* <NotificationItem notificationsCount={notificationsCount} /> */}
         </>
       )}
-      {items.map((item) => (
-        <Item key={item}>{item}</Item>
-      ))}
+      {items.map(({ to, label, onClick }) =>
+        to ? (
+          <Item to={to} key={label} setShowMenu={setShowMenu}>
+            {label}
+          </Item>
+        ) : (
+          <Item onClick={onClick} key={label} setShowMenu={setShowMenu}>
+            {label}
+          </Item>
+        )
+      )}
     </Modal>
   );
 };
