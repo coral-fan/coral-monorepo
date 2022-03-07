@@ -5,6 +5,7 @@ export type CollectionType = 'music' | 'event' | 'merch';
 export interface CollectionData {
   // id = nft smart contract address
   id: string;
+  name: string;
   /* blockchain data index cache */
   artistId: string;
   imageUrl: string;
