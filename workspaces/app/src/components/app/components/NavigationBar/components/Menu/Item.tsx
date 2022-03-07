@@ -1,10 +1,21 @@
 import styled from '@emotion/styled';
+import { Link, LinkButton } from 'components/ui';
 import { FC } from 'react';
 import tokens from 'styles/tokens';
 
-type ItemProps = {
-  notificationCount?: number;
-};
+interface ButtonProps {
+  onClick?: () => void;
+  to?: never;
+  setShowMenu: (showMenu: boolean) => void;
+}
+
+interface LinkProps {
+  onClick?: never;
+  to?: string;
+  setShowMenu: (showMenu: boolean) => void;
+}
+
+export type ItemProps = ButtonProps | LinkProps;
 
 const Wrapper = styled.div`
   display: flex;
@@ -22,4 +33,14 @@ const Wrapper = styled.div`
   }
 `;
 
-export const Item: FC<ItemProps> = ({ children }) => <Wrapper>{children}</Wrapper>;
+export const Item: FC<ItemProps> = ({ onClick, to, children, setShowMenu }) => {
+  return (
+    <Wrapper onClick={() => setShowMenu(false)}>
+      {to ? (
+        <Link href={to}>{children}</Link>
+      ) : (
+        <LinkButton onClick={onClick}>{children}</LinkButton>
+      )}
+    </Wrapper>
+  );
+};
