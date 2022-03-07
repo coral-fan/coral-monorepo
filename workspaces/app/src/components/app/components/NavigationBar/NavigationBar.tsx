@@ -20,12 +20,10 @@ const Container = styled.div`
   }
 `;
 
-export type NavigationBarUserData = Pick<User, 'username' | 'profilePhoto'>;
-
 export const NavigationBar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [userUid, setUserUid] = useState<string | null>(null);
-  const [userData, setUserData] = useState<NavigationBarUserData | undefined>();
+  const [userData, setUserData] = useState<User | undefined>();
 
   useEffect(() => {
     let isMounted = true;
@@ -42,9 +40,7 @@ export const NavigationBar = () => {
   useEffect(() => {
     let isMounted = true;
     const fetchData = async () => {
-      const userData = userUid
-        ? await getDocumentData<NavigationBarUserData>('users', userUid)
-        : undefined;
+      const userData = userUid ? await getDocumentData<User>('users', userUid) : undefined;
       if (isMounted) setUserData(userData);
     };
     fetchData();

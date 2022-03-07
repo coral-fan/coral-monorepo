@@ -1,15 +1,14 @@
 import { Link, MenuProfileInfo, Modal } from 'components/ui';
 import { useIsAuthenticated, useLogin, useLogout } from 'libraries/authentication';
-import { useUserUid } from 'libraries/models';
+import { User, useUserUid } from 'libraries/models';
 import { Item } from './Item';
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
-import { NavigationBarUserData } from '../../NavigationBar';
 
 interface MenuProps {
   showMenu: boolean;
   setShowMenu: (showMenu: boolean) => void;
-  userData?: NavigationBarUserData;
+  userData?: User;
 }
 
 const MenuProfileLink = styled(Link)`
