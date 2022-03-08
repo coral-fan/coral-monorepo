@@ -18,5 +18,7 @@ export interface CollectionData {
   details: string[] | null;
 }
 
-export type Collection = Omit<CollectionData, 'id' | 'artistId'> &
-  Pick<Artist, 'name' | 'profilePhoto'>;
+export interface Collection extends Omit<CollectionData, 'artistId'> {
+  artistName: Artist['name'];
+  artistProfilePhoto: Artist['profilePhoto'];
+}
