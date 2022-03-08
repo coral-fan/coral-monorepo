@@ -1,11 +1,13 @@
 import styled from '@emotion/styled';
-import { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
 import { HamburgerMenuButton, Menu, LogoHomeLink } from './components';
-import { useEffect, useState } from 'react';
-import { User } from 'libraries/models';
+import { useState } from 'react';
+import { getUserUid$, User } from 'libraries/models';
 import { getDocumentData } from 'libraries/firebase';
-import { getLoggedIn$ } from 'libraries/authentication';
+import { filter, map, mergeMap } from 'rxjs/operators';
+import { useObservable } from 'libraries/utils';
+
+import { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
 const Container = styled.div`
   display: flex;
@@ -20,40 +22,27 @@ const Container = styled.div`
   }
 `;
 
+export type UserProfile = Pick<User, 'username' | 'profilePhoto'>;
+
 export const NavigationBar = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [userUid, setUserUid] = useState<string | null>(null);
-  const [userData, setUserData] = useState<User | undefined>();
 
-  useEffect(() => {
-    let isMounted = true;
-    getLoggedIn$().subscribe((user) => {
-      if (user) {
-        if (isMounted) setUserUid(user.uid);
-      }
-    });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  const getUserProfileData$ = () => {
+    return getUserUid$().pipe(
+      filter((uid): uid is string => uid !== undefined),
+      mergeMap((uid) => getDocumentData<User>('users', uid)),
+      filter((user): user is User => user !== undefined),
+      map(({ username, profilePhoto }) => ({ username, profilePhoto }))
+    );
+  };
 
-  useEffect(() => {
-    let isMounted = true;
-    const fetchData = async () => {
-      const userData = userUid ? await getDocumentData<User>('users', userUid) : undefined;
-      if (isMounted) setUserData(userData);
-    };
-    fetchData();
-    return () => {
-      isMounted = false;
-    };
-  }, [userUid]);
+  const userProfileData = useObservable(getUserProfileData$, undefined);
 
   return (
     <Container>
       <LogoHomeLink />
       <HamburgerMenuButton hasNotifications={false} onClick={() => setShowMenu(true)} />
-      <Menu showMenu={showMenu} setShowMenu={setShowMenu} userData={userData} />
+      <Menu showMenu={showMenu} setShowMenu={setShowMenu} userProfileData={userProfileData} />
     </Container>
   );
 };
