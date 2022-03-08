@@ -25,12 +25,12 @@ const ArtistInfoContainer = styled.div<ImageInfoContainerProps>`
 `;
 
 export interface ImageWithInfoProps {
-  src: string;
-  artist: string;
-  profilePhoto: Photo;
+  imageUrl: string;
+  artistName: string;
+  artistProfilePhoto: Photo;
 }
 
-export const ImageWithInfo = ({ src, artist, profilePhoto }: ImageWithInfoProps) => {
+export const ImageWithInfo = ({ imageUrl, artistName, artistProfilePhoto }: ImageWithInfoProps) => {
   const [imageInfoHeight, setImageInfoHeight] = useState(0);
 
   const imageInfoRef = useCallback((element: HTMLDivElement) => {
@@ -41,10 +41,10 @@ export const ImageWithInfo = ({ src, artist, profilePhoto }: ImageWithInfoProps)
 
   return (
     <ImageWithInfoContainer>
-      <Image src={src} />
+      <Image src={imageUrl} />
       <ArtistInfoContainer imageInfoHeight={imageInfoHeight}>
-        <ArtistInfo ref={imageInfoRef} profilePhoto={profilePhoto}>
-          {artist}
+        <ArtistInfo ref={imageInfoRef} profilePhoto={artistProfilePhoto}>
+          {artistName}
         </ArtistInfo>
       </ArtistInfoContainer>
     </ImageWithInfoContainer>
