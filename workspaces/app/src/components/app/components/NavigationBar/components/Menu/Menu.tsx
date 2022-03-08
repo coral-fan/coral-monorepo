@@ -1,21 +1,22 @@
 import { Link, MenuProfileInfo, Modal } from 'components/ui';
 import { useIsAuthenticated, useLogin, useLogout } from 'libraries/authentication';
-import { User, useUserUid } from 'libraries/models';
+import { useUserUid } from 'libraries/models';
 import { Item } from './Item';
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
+import { UserProfile } from '../../NavigationBar';
 
 interface MenuProps {
   showMenu: boolean;
   setShowMenu: (showMenu: boolean) => void;
-  userData?: User;
+  userProfileData?: UserProfile;
 }
 
 const MenuProfileLink = styled(Link)`
   border-bottom: solid 1px ${tokens.border.color.secondary};
 `;
 
-export const Menu = ({ showMenu, setShowMenu, userData }: MenuProps) => {
+export const Menu = ({ showMenu, setShowMenu, userProfileData }: MenuProps) => {
   const { login } = useLogin();
   const logout = useLogout();
   const isAuthenticated = useIsAuthenticated();
@@ -39,12 +40,12 @@ export const Menu = ({ showMenu, setShowMenu, userData }: MenuProps) => {
 
   return (
     <Modal variant="close" onClick={() => setShowMenu(false)}>
-      {isAuthenticated && userData && (
+      {isAuthenticated && userProfileData && (
         <>
           <MenuProfileLink href={`/user/${uid}`}>
             <MenuProfileInfo
-              username={userData.username}
-              profilePhoto={userData.profilePhoto}
+              username={userProfileData.username}
+              profilePhoto={userProfileData.profilePhoto}
               walletBalance={0}
             />
           </MenuProfileLink>
