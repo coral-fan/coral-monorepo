@@ -1,3 +1,4 @@
+import { Artist } from '../artist';
 import { Collection } from '../collection';
 import { User } from '../user';
 
@@ -7,9 +8,20 @@ export interface AssetData {
   collectionId: string;
 }
 
-// userId is derived from on chain data
-export type Asset = Pick<AssetData, 'id'> &
-  Pick<Collection, 'imageUrl' | 'type' | 'description' | 'details'> &
-  Pick<User, 'profilePhoto' | 'username'>;
+// owner is derived from on chain data
+export interface Asset {
+  id: AssetData['id'];
+  collectionName: Collection['name'];
+  // image url could be a single image or an unique image for a generative NFT
+  imageUrl: string;
+  type: Collection['type'];
+  artistName: Artist['name'];
+  artistProfilePhoto: Artist['profilePhoto'];
+  collectionDescription: Collection['description'];
+  collectionDetails: Collection['details'];
+  owner: User['username'];
+  ownerAddress: User['id'];
+  ownerProfilePhoto: User['profilePhoto'];
+}
 
 // TODO: we will eventually need to index transaction history
