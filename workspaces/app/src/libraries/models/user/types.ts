@@ -29,6 +29,7 @@ export interface Photo {
 }
 
 export interface PublicUserData {
+  id: string;
   username: string;
   profilePhoto: Photo;
   notifications: Notification[];
