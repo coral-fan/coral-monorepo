@@ -5,8 +5,8 @@ import tokens from 'styles/tokens';
 import { ImageWithInfo, ImageWithInfoProps } from '..';
 
 export interface BaseInfoProps extends ImageWithInfoProps {
-  dropName: string;
-  nameHeadingLevel: HeadingLevel;
+  title: string;
+  titleHeadingLevel: HeadingLevel;
   description?: string;
 }
 
@@ -29,8 +29,8 @@ const ContentContainer = styled.div`
 `;
 
 export const BaseInfo: FC<BaseInfoProps> = ({
-  dropName,
-  nameHeadingLevel,
+  title,
+  titleHeadingLevel,
   description,
   children,
   ...imageWithInfoProps
@@ -38,7 +38,7 @@ export const BaseInfo: FC<BaseInfoProps> = ({
   <BaseInfoContainer>
     <ImageWithInfo {...imageWithInfoProps} />
     <ContentContainer>
-      <Heading level={nameHeadingLevel}>{dropName}</Heading>
+      <Heading level={titleHeadingLevel}>{title}</Heading>
       {description && <Description>{description}</Description>}
       {children}
     </ContentContainer>
