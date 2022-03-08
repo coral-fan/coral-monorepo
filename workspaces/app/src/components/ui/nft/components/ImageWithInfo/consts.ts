@@ -1,11 +1,9 @@
 export const IMAGE_WITH_INFO_DEFAULT_ARGS = {
-  src: 'https://www.stereofox.com/images/86513/resized.jpg',
-  profilePhoto: {
+  imageUrl: 'https://www.stereofox.com/images/86513/resized.jpg',
+  artistName: 'Bonobo',
+  artistProfilePhoto: {
     src: 'https://www.stereofox.com/images/86513/resized.jpg',
     offsetPercentages: [0, 0],
     scale: 1,
   },
-  artist: 'Bonobo',
-  dropName: 'Behind the Scenes Studio Tour',
-  nameHeadingLevel: 1,
 };
