@@ -4,13 +4,12 @@ import { Card } from 'components/ui/Card';
 import tokens from 'styles/tokens';
 import { BaseInfo, BaseInfoProps } from '../components';
 
-interface DropCardProps extends Omit<BaseInfoProps, 'nameHeadingLevel'> {
+interface DropCardProps extends Omit<BaseInfoProps, 'titleHeadingLevel'> {
   Badge: () => EmotionJSX.Element;
   dropDateTimestamp: string;
 }
 
 const DropCardContainer = styled(Card)`
-  overflow: hidden;
   width: 300px;
 `;
 
@@ -43,7 +42,7 @@ const formatDropCardDate = (timestamp: string) => {
 
 export const DropCard = ({ Badge, dropDateTimestamp, ...baseInfoProps }: DropCardProps) => (
   <DropCardContainer>
-    <BaseInfo nameHeadingLevel={3} {...baseInfoProps}>
+    <BaseInfo titleHeadingLevel={3} {...baseInfoProps}>
       <BadgeAndDropDateContainer>
         <Badge />
         <DropDateContainer>
