@@ -38,8 +38,10 @@ export const Menu = ({ showMenu, setShowMenu, userProfileData }: MenuProps) => {
     return null;
   }
 
+  const closeMenuModal = () => setShowMenu(false);
+
   return (
-    <Modal variant="close" onClick={() => setShowMenu(false)}>
+    <Modal variant="close" onClick={closeMenuModal}>
       {isAuthenticated && userProfileData && (
         <>
           <MenuProfileLink href={`/user/${uid}`}>
