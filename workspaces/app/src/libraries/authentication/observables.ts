@@ -1,13 +1,7 @@
 import { getAuth } from 'firebase/auth';
-import { authState, idToken } from 'rxfire/auth';
-import { filter } from 'rxjs';
+import { idToken } from 'rxfire/auth';
 
 export const getIdToken$ = () => {
   const auth = getAuth();
   return idToken(auth);
-};
-
-export const getLoggedIn$ = () => {
-  const auth = getAuth();
-  return authState(auth).pipe(filter((user) => !!user));
 };
