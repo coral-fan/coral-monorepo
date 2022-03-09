@@ -2,11 +2,9 @@ import styled from '@emotion/styled';
 
 import { HamburgerMenuButton, Menu, LogoHomeLink } from './components';
 import { useState } from 'react';
-import { getUserUid$, User } from 'libraries/models';
-import { getDocumentData } from 'libraries/firebase';
-import { filter, map, mergeMap } from 'rxjs/operators';
+import { User } from 'libraries/models';
 import { useObservable } from 'libraries/utils';
-
+import { getUserProfileData$ } from './observables';
 import { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
 const Container = styled.div`
@@ -26,15 +24,6 @@ export type UserProfile = Pick<User, 'username' | 'profilePhoto'>;
 
 export const NavigationBar = () => {
   const [showMenu, setShowMenu] = useState(false);
-
-  const getUserProfileData$ = () => {
-    return getUserUid$().pipe(
-      filter((uid): uid is string => uid !== undefined),
-      mergeMap((uid) => getDocumentData<User>('users', uid)),
-      filter((user): user is User => user !== undefined),
-      map(({ username, profilePhoto }) => ({ username, profilePhoto }))
-    );
-  };
 
   const userProfileData = useObservable(getUserProfileData$, undefined);
 
