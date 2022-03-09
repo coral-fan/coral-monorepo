@@ -4,7 +4,7 @@ import { FC } from 'react';
 import tokens from 'styles/tokens';
 
 interface BaseItemProp {
-  setShowMenu: (showMenu: boolean) => void;
+  handleItemClick: () => void;
 }
 
 interface ButtonProps extends BaseItemProp {
@@ -35,9 +35,9 @@ const Wrapper = styled.div`
   }
 `;
 
-export const Item: FC<ItemProps> = ({ onClick, to, children, setShowMenu }) => {
+export const Item: FC<ItemProps> = ({ onClick, to, children, handleItemClick }) => {
   return (
-    <Wrapper onClick={() => setShowMenu(false)}>
+    <Wrapper onClick={handleItemClick}>
       {to ? (
         <Link href={to}>{children}</Link>
       ) : (

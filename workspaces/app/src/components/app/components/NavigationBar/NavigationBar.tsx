@@ -23,15 +23,19 @@ const Container = styled.div`
 export type UserProfile = Pick<User, 'username' | 'profilePhoto'>;
 
 export const NavigationBar = () => {
-  const [showMenu, setShowMenu] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const userProfileData = useObservable(getUserProfileData$, undefined);
 
   return (
     <Container>
       <LogoHomeLink />
-      <HamburgerMenuButton hasNotifications={false} onClick={() => setShowMenu(true)} />
-      <Menu showMenu={showMenu} setShowMenu={setShowMenu} userProfileData={userProfileData} />
+      <HamburgerMenuButton hasNotifications={false} onClick={() => setIsMenuOpen(true)} />
+      <Menu
+        isMenuOpen={isMenuOpen}
+        setIsMenuOpen={setIsMenuOpen}
+        userProfileData={userProfileData}
+      />
     </Container>
   );
 };

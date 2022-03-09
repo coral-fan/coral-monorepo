@@ -5,10 +5,11 @@ import { Item } from './Item';
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
 import { UserProfile } from '../../NavigationBar';
+import { useCallback } from 'react';
 
 interface MenuProps {
-  showMenu: boolean;
-  setShowMenu: (showMenu: boolean) => void;
+  isMenuOpen: boolean;
+  setIsMenuOpen: (isMenuOpen: boolean) => void;
   userProfileData?: UserProfile;
 }
 
@@ -16,7 +17,7 @@ const MenuProfileLink = styled(Link)`
   border-bottom: solid 1px ${tokens.border.color.secondary};
 `;
 
-export const Menu = ({ showMenu, setShowMenu, userProfileData }: MenuProps) => {
+export const Menu = ({ isMenuOpen, setIsMenuOpen, userProfileData }: MenuProps) => {
   const { login } = useLogin();
   const logout = useLogout();
   const isAuthenticated = useIsAuthenticated();
@@ -34,14 +35,14 @@ export const Menu = ({ showMenu, setShowMenu, userProfileData }: MenuProps) => {
 
   const items = isAuthenticated ? AUTHENTICATED_MENU_ITEMS : UNAUTHENTICATED_MENU_ITEMS;
 
-  if (!showMenu) {
+  if (!isMenuOpen) {
     return null;
   }
 
-  const closeMenuModal = () => setShowMenu(false);
+  const useCloseMenuModal = () => useCallback(() => setIsMenuOpen(false), []);
 
   return (
-    <Modal variant="close" onClick={closeMenuModal}>
+    <Modal variant="close" onClick={useCloseMenuModal}>
       {isAuthenticated && userProfileData && (
         <>
           <MenuProfileLink href={`/user/${uid}`}>
@@ -56,11 +57,11 @@ export const Menu = ({ showMenu, setShowMenu, userProfileData }: MenuProps) => {
       )}
       {items.map(({ to, label, onClick }) =>
         to ? (
-          <Item to={to} key={label} setShowMenu={setShowMenu}>
+          <Item to={to} key={label} handleItemClick={useCloseMenuModal}>
             {label}
           </Item>
         ) : (
-          <Item onClick={onClick} key={label} setShowMenu={setShowMenu}>
+          <Item onClick={onClick} key={label} handleItemClick={useCloseMenuModal}>
             {label}
           </Item>
         )
