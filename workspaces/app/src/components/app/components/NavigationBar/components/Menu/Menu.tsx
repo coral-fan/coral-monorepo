@@ -52,7 +52,7 @@ export const Menu = ({ isMenuOpen, setIsMenuOpen, userProfileData }: MenuProps) 
               walletBalance={0}
             />
           </MenuProfileLink>
-          {/* <NotificationItem notificationsCount={notificationsCount} /> */}
+          {/* <NotificationItem handleItemClick={useCloseMenuModal} notificationsCount={notificationsCount} /> */}
         </>
       )}
       {items.map(({ to, label, onClick }) =>
