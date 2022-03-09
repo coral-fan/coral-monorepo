@@ -5,7 +5,7 @@ import { Item } from './Item';
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
 import { UserProfile } from '../../NavigationBar';
-import { useCallback } from 'react';
+import { createElement, useCallback } from 'react';
 
 interface MenuProps {
   isMenuOpen: boolean;
@@ -35,14 +35,14 @@ export const Menu = ({ isMenuOpen, setIsMenuOpen, userProfileData }: MenuProps) 
 
   const items = isAuthenticated ? AUTHENTICATED_MENU_ITEMS : UNAUTHENTICATED_MENU_ITEMS;
 
+  const closeMenuModal = useCallback(() => setIsMenuOpen(false), [setIsMenuOpen]);
+
   if (!isMenuOpen) {
     return null;
   }
 
-  const useCloseMenuModal = () => useCallback(() => setIsMenuOpen(false), []);
-
   return (
-    <Modal variant="close" onClick={useCloseMenuModal}>
+    <Modal variant="close" onClick={closeMenuModal}>
       {isAuthenticated && userProfileData && (
         <>
           <MenuProfileLink href={`/user/${uid}`}>
@@ -55,17 +55,13 @@ export const Menu = ({ isMenuOpen, setIsMenuOpen, userProfileData }: MenuProps) 
           {/* <NotificationItem handleItemClick={useCloseMenuModal} notificationsCount={notificationsCount} /> */}
         </>
       )}
-      {items.map(({ to, label, onClick }) =>
-        to ? (
-          <Item to={to} key={label} handleItemClick={useCloseMenuModal}>
-            {label}
-          </Item>
-        ) : (
-          <Item onClick={onClick} key={label} handleItemClick={useCloseMenuModal}>
-            {label}
-          </Item>
-        )
-      )}
+      {items.map(({ to, label, onClick }) => {
+        const baseItemProps = { key: label, handleItemClick: closeMenuModal };
+        const itemProps = {
+          ...(to ? { ...baseItemProps, ...{ to } } : { ...baseItemProps, ...{ onClick } }),
+        };
+        return createElement(Item, itemProps, label);
+      })}
     </Modal>
   );
 };
