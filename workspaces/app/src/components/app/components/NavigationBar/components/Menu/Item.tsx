@@ -3,16 +3,18 @@ import { Link, LinkButton } from 'components/ui';
 import { FC } from 'react';
 import tokens from 'styles/tokens';
 
-interface ButtonProps {
-  onClick?: () => void;
-  to?: never;
+interface BaseItemProp {
   setShowMenu: (showMenu: boolean) => void;
 }
 
-interface LinkProps {
+interface ButtonProps extends BaseItemProp {
+  onClick?: () => void;
+  to?: never;
+}
+
+interface LinkProps extends BaseItemProp {
   onClick?: never;
   to?: string;
-  setShowMenu: (showMenu: boolean) => void;
 }
 
 export type ItemProps = ButtonProps | LinkProps;
