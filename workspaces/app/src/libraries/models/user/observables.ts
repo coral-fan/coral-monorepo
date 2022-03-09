@@ -23,11 +23,10 @@ export const getUsernames$ = () => {
 };
 
 //client side only
-export const getUser$ = () => {
-  return getUserUid$().pipe(
+export const getUser$ = () =>
+  getUserUid$().pipe(
     filter((uid): uid is string => uid !== undefined),
     mergeMap((uid) => getDocumentData<User>('users', uid)),
     filter((user): user is User => user !== undefined),
     map((user) => user)
   );
-};
