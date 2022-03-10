@@ -13,6 +13,22 @@ interface MenuProps {
   userProfile?: UserProfile;
 }
 
+interface BaseMenuItemProp {
+  name: string;
+}
+
+interface LinkItemProps extends BaseMenuItemProp {
+  to: string;
+  onClick?: never;
+}
+
+interface LinkButtonItemProps extends BaseMenuItemProp {
+  onClick: () => void;
+  to?: never;
+}
+
+type MenuItemProps = LinkItemProps | LinkButtonItemProps;
+
 const MenuProfileLink = styled(Link)`
   border-bottom: solid 1px ${tokens.border.color.secondary};
 `;
@@ -23,12 +39,12 @@ export const Menu = ({ isMenuOpen, setIsMenuOpen, userProfile }: MenuProps) => {
   const isAuthenticated = useIsAuthenticated();
   const uid = useUserUid();
 
-  const AUTHENTICATED_MENU_ITEMS = [
+  const AUTHENTICATED_MENU_ITEMS: MenuItemProps[] = [
     { name: 'Home', to: '/' },
     { name: 'Sign Out', onClick: logout },
   ];
 
-  const UNAUTHENTICATED_MENU_ITEMS = [
+  const UNAUTHENTICATED_MENU_ITEMS: MenuItemProps[] = [
     { name: 'Home', to: '/' },
     { name: 'Sign In', onClick: login },
   ];
