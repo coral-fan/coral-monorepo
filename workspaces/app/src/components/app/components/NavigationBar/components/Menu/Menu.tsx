@@ -71,13 +71,13 @@ export const Menu = ({ isMenuOpen, setIsMenuOpen, userProfile }: MenuProps) => {
           {/* <NotificationItem handleCloseMenu={useCloseMenuModal} notificationsCount={notificationsCount} /> */}
         </>
       )}
-      {items.map(({ to, name, onClick }) => {
-        return createElement(
+      {items.map(({ to, name, onClick }) =>
+        createElement(
           Item,
           { key: name, handleCloseMenu: closeMenuModal, ...(to ? { to } : { onClick }) },
           name
-        );
-      })}
+        )
+      )}
     </Modal>
   );
 };
