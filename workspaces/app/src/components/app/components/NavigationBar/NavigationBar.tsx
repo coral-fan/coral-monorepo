@@ -4,7 +4,7 @@ import { HamburgerMenuButton, Menu, LogoHomeLink } from './components';
 import { useState } from 'react';
 import { User } from 'libraries/models';
 import { useObservable } from 'libraries/utils';
-import { getUserProfileData$ } from './observables';
+import { getUserProfile$ } from './observables';
 import { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
 const Container = styled.div`
@@ -25,13 +25,13 @@ export type UserProfile = Pick<User, 'username' | 'profilePhoto'>;
 export const NavigationBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const userProfileData = useObservable(getUserProfileData$, undefined);
+  const userProfile = useObservable(getUserProfile$, undefined);
 
   return (
     <Container>
       <LogoHomeLink />
       <HamburgerMenuButton hasNotifications={false} onClick={() => setIsMenuOpen(true)} />
-      <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} userProfile={userProfileData} />
+      <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} userProfile={userProfile} />
     </Container>
   );
 };
