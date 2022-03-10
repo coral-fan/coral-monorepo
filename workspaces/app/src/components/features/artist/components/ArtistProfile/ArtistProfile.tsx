@@ -10,15 +10,19 @@ type ArtistProfileProps = Omit<Artist, 'collection'>;
 const { font, background, border, spacing } = tokens;
 
 const ArtistProfileContainer = styled.div`
-  width: 100%;
+  width: 787px;
   display: flex;
   flex-direction: column;
   background: ${background.color.secondary};
   border-radius: ${border.radius.lg};
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
   gap: ${spacing.xs};
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
     gap: ${spacing.sm};
+    border-bottom-left-radius: ${border.radius.lg};
+    border-bottom-right-radius: ${border.radius.lg};
   }
 `;
 
@@ -26,6 +30,10 @@ const ImageWrapper = styled.div`
   border-top-left-radius: ${border.radius.lg};
   border-top-right-radius: ${border.radius.lg};
   overflow: hidden;
+
+  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+    height: 390px;
+  }
 `;
 
 const ContentContainer = styled.div`
