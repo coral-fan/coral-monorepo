@@ -1,31 +1,14 @@
 /* eslint-disable jsx-a11y/alt-text */
 import styled from '@emotion/styled';
-import NextImage from 'next/image';
 import { ArtistInfo } from './components';
 import { Photo } from 'libraries/models';
+import { Image } from 'components/ui';
 
 import { useCallback, useState } from 'react';
 
 // parent container
 const ImageWithInfoContainer = styled.div`
   position: relative;
-`;
-
-// image components
-const ImageWrapper = styled.div`
-  width: 100%;
-  position: relative;
-
-  > span {
-    position: unset !important;
-    height: 100%;
-  }
-`;
-
-const Image = styled(NextImage)`
-  width: 100% !important;
-  position: relative !important;
-  height: unset !important;
 `;
 
 //  image info components
@@ -58,9 +41,7 @@ export const ImageWithInfo = ({ src, artist, profilePhoto }: ImageWithInfoProps)
 
   return (
     <ImageWithInfoContainer>
-      <ImageWrapper>
-        <Image src={src} alt={''} layout="fill" objectFit="contain" priority />
-      </ImageWrapper>
+      <Image src={src} />
       <ArtistInfoContainer imageInfoHeight={imageInfoHeight}>
         <ArtistInfo ref={imageInfoRef} profilePhoto={profilePhoto}>
           {artist}
