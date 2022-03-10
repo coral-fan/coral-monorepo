@@ -68,13 +68,13 @@ export const Menu = ({ isMenuOpen, setIsMenuOpen, userProfile }: MenuProps) => {
               walletBalance={0}
             />
           </MenuProfileLink>
-          {/* <NotificationItem handleItemClick={useCloseMenuModal} notificationsCount={notificationsCount} /> */}
+          {/* <NotificationItem onItemClick={useCloseMenuModal} notificationsCount={notificationsCount} /> */}
         </>
       )}
       {items.map(({ to, name, onClick }) => {
         return createElement(
           Item,
-          { key: name, handleItemClick: closeMenuModal, ...(to ? { to } : { onClick }) },
+          { key: name, onItemClick: closeMenuModal, ...(to ? { to } : { onClick }) },
           name
         );
       })}
