@@ -10,27 +10,27 @@ import { createElement, useCallback } from 'react';
 interface MenuProps {
   isMenuOpen: boolean;
   setIsMenuOpen: (isMenuOpen: boolean) => void;
-  userProfileData?: UserProfile;
+  userProfile?: UserProfile;
 }
 
 const MenuProfileLink = styled(Link)`
   border-bottom: solid 1px ${tokens.border.color.secondary};
 `;
 
-export const Menu = ({ isMenuOpen, setIsMenuOpen, userProfileData }: MenuProps) => {
+export const Menu = ({ isMenuOpen, setIsMenuOpen, userProfile }: MenuProps) => {
   const { login } = useLogin();
   const logout = useLogout();
   const isAuthenticated = useIsAuthenticated();
   const uid = useUserUid();
 
   const AUTHENTICATED_MENU_ITEMS = [
-    { label: 'Home', to: '/' },
-    { label: 'Sign Out', onClick: logout },
+    { name: 'Home', to: '/' },
+    { name: 'Sign Out', onClick: logout },
   ];
 
   const UNAUTHENTICATED_MENU_ITEMS = [
-    { label: 'Home', to: '/' },
-    { label: 'Sign In', onClick: login },
+    { name: 'Home', to: '/' },
+    { name: 'Sign In', onClick: login },
   ];
 
   const items = isAuthenticated ? AUTHENTICATED_MENU_ITEMS : UNAUTHENTICATED_MENU_ITEMS;
@@ -43,24 +43,24 @@ export const Menu = ({ isMenuOpen, setIsMenuOpen, userProfileData }: MenuProps) 
 
   return (
     <Modal variant="close" onClick={closeMenuModal}>
-      {isAuthenticated && userProfileData && (
+      {isAuthenticated && userProfile && (
         <>
           <MenuProfileLink href={`/user/${uid}`}>
             <MenuProfileInfo
-              username={userProfileData.username}
-              profilePhoto={userProfileData.profilePhoto}
+              username={userProfile.username}
+              profilePhoto={userProfile.profilePhoto}
               walletBalance={0}
             />
           </MenuProfileLink>
           {/* <NotificationItem handleItemClick={useCloseMenuModal} notificationsCount={notificationsCount} /> */}
         </>
       )}
-      {items.map(({ to, label, onClick }) => {
-        const baseItemProps = { key: label, handleItemClick: closeMenuModal };
-        const itemProps = {
-          ...(to ? { ...baseItemProps, ...{ to } } : { ...baseItemProps, ...{ onClick } }),
-        };
-        return createElement(Item, itemProps, label);
+      {items.map(({ to, name, onClick }) => {
+        return createElement(
+          Item,
+          { key: name, handleItemClick: closeMenuModal, ...(to ? { to } : { onClick }) },
+          name
+        );
       })}
     </Modal>
   );
