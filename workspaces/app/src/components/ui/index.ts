@@ -10,4 +10,5 @@ export * from './Link';
 export * from './Card';
 export * from './TimeElapsed';
 export * from './Image';
+export * from './socialLinks';
 // export * from './nft';
