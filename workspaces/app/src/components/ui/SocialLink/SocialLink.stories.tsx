@@ -4,12 +4,6 @@ import { SocialLink, SocialLinkProps } from './SocialLink';
 export default {
   title: 'Coral/UI/Social Links',
   component: SocialLink,
-  argTypes: {
-    variant: {
-      options: ['twitter', 'instagram', 'facebook'],
-      control: { type: 'select' },
-    },
-  },
 } as Meta;
 
 const Template: Story<SocialLinkProps> = (args) => <SocialLink {...args} />;
