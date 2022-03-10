@@ -31,11 +31,7 @@ export const NavigationBar = () => {
     <Container>
       <LogoHomeLink />
       <HamburgerMenuButton hasNotifications={false} onClick={() => setIsMenuOpen(true)} />
-      <Menu
-        isMenuOpen={isMenuOpen}
-        setIsMenuOpen={setIsMenuOpen}
-        userProfileData={userProfileData}
-      />
+      <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} userProfile={userProfileData} />
     </Container>
   );
 };
