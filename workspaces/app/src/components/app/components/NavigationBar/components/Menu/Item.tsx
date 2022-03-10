@@ -4,7 +4,7 @@ import { FC } from 'react';
 import tokens from 'styles/tokens';
 
 interface BaseItemProp {
-  onItemClick: () => void;
+  handleCloseMenu: () => void;
 }
 
 interface ButtonProps extends BaseItemProp {
@@ -35,9 +35,9 @@ const Wrapper = styled.div`
   }
 `;
 
-export const Item: FC<ItemProps> = ({ onClick, to, children, onItemClick }) => {
+export const Item: FC<ItemProps> = ({ onClick, to, children, handleCloseMenu }) => {
   return (
-    <Wrapper onClick={onItemClick}>
+    <Wrapper onClick={handleCloseMenu}>
       {to ? (
         <Link href={to}>{children}</Link>
       ) : (
