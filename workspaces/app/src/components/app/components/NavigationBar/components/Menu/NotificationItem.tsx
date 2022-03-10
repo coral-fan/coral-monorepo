@@ -5,7 +5,7 @@ import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
 export interface NotificationItemProp {
   notificationsCount: number;
-  handleItemClick: () => void;
+  onItemClick: () => void;
 }
 const Badge = styled.div`
   height: 22px;
@@ -35,8 +35,8 @@ const Content = styled.div`
 const getFontSizeStyle = (count: number) => css`
   font-size: ${count > 99 ? 8 : count > 9 ? 11 : 14}px;
 `;
-export const NotificationItem = ({ notificationsCount, handleItemClick }: NotificationItemProp) => (
-  <Item handleItemClick={handleItemClick}>
+export const NotificationItem = ({ notificationsCount, onItemClick }: NotificationItemProp) => (
+  <Item onItemClick={onItemClick}>
     <Content>
       notifications
       {notificationsCount > 0 && (
