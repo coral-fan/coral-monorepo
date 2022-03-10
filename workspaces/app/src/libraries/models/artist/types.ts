@@ -5,6 +5,9 @@ export interface Artist {
   // id = coral wallet address, not artist's personal wallet address
   id: string;
   name: string;
+  imageUrl: string;
+  description: string;
+  quote?: string;
 
   socialMedia: {
     twitter: NullableString;
