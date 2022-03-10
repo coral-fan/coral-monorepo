@@ -35,20 +35,11 @@ export const colors = createTheme({
 
 const tokens = createTheme({
   spacing: {
-    mobile: {
-      xs: '4px',
-      sm: '8px',
-      md: '16px',
-      lg: '24px',
-      xl: '40px',
-    },
-    desktop: {
-      xs: '4px',
-      sm: '8px',
-      md: '18px',
-      lg: '36px',
-      xl: '60px',
-    },
+    xs: '10px',
+    sm: '16px',
+    md: '30px',
+    lg: '70px',
+    xl: '120px',
   },
   font: {
     size: {
