@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -10,7 +11,7 @@ type ArtistProfileProps = Omit<Artist, 'collection'>;
 const { font, background, border, spacing } = tokens;
 
 const ArtistProfileContainer = styled.div`
-  width: 787px;
+  max-width: 787px;
   display: flex;
   flex-direction: column;
   background: ${background.color.secondary};
@@ -70,6 +71,12 @@ const SocialLinkContainer = styled.div`
   gap: 25px;
 `;
 
+// const Image = styled.img`
+//   width: 100%;
+//   object-fit: cover;
+//   aspect-ratio: 3/2;
+// `;
+
 export const ArtistProfile = ({
   name,
   imageUrl,
@@ -82,7 +89,7 @@ export const ArtistProfile = ({
   return (
     <ArtistProfileContainer>
       <ImageWrapper>
-        <Image src={imageUrl} />
+        <Image src={imageUrl} objectFit={'cover'} aspectRatio={3 / 2} />
       </ImageWrapper>
       <ContentContainer>
         <Heading level={1}>{name}</Heading>
