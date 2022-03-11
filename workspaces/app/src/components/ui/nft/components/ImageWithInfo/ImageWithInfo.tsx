@@ -34,7 +34,7 @@ export const ImageWithInfo = ({ imageUrl, artistName, artistProfilePhoto }: Imag
   const [imageInfoHeight, setImageInfoHeight] = useState(0);
 
   const imageInfoRef = useCallback((element: HTMLDivElement) => {
-    if (element !== undefined) {
+    if (element) {
       setImageInfoHeight(element.offsetHeight);
     }
   }, []);
