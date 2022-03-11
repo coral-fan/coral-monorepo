@@ -13,20 +13,31 @@ const ImageWrapper = styled.div`
   }
 `;
 
-const ImageContent = styled(NextImage)`
+const ImageContent = styled(NextImage)<ImageProp>`
   width: 100% !important;
   position: relative !important;
   height: unset !important;
+  aspect-ratio: ${(props) => props.aspectRatio};
 `;
 
 export interface ImageProp {
   src: string;
+  alt?: string;
+  objectFit?: 'cover' | 'contain';
+  aspectRatio?: number;
 }
 
-export const Image = ({ src }: ImageProp) => {
+export const Image = ({ src, alt = '', objectFit = 'contain', aspectRatio = 1 }: ImageProp) => {
   return (
     <ImageWrapper>
-      <ImageContent src={src} alt={''} layout="fill" objectFit="contain" priority />
+      <ImageContent
+        src={src}
+        alt={alt}
+        layout="fill"
+        objectFit={objectFit}
+        aspectRatio={aspectRatio}
+        priority
+      />
     </ImageWrapper>
   );
 };
