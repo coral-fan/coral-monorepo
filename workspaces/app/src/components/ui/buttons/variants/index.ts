@@ -1,3 +1,3 @@
 export * from './Button';
-export * from './CtaButton';
+export { CtaButton } from './CtaButton';
 export * from './LinkButton';
