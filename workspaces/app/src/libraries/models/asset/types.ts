@@ -21,6 +21,7 @@ export interface Asset {
   collectionDetails: Collection['details'];
   ownerUsername: User['username'];
   ownerAddress: User['id'];
+  ownerType: User['type'];
   ownerProfilePhoto: User['profilePhoto'];
 }
 
