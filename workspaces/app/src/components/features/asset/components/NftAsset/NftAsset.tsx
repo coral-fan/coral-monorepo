@@ -1,16 +1,28 @@
-import { Card } from 'components/ui';
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
+import { Card, EventBadge, MerchBadge, MusicBadge } from 'components/ui';
 import { BaseInfo } from 'components/ui/nft';
-import { Asset } from 'libraries/models';
+import { Asset, CollectionType } from 'libraries/models';
+import { Owner } from './Owner';
 
 type NFTAssetProps = Asset;
+
+const badgeMap: Record<CollectionType, () => EmotionJSX.Element> = {
+  music: MusicBadge,
+  event: EventBadge,
+  merch: MerchBadge,
+};
 
 export const NftAsset = ({
   id,
   imageUrl,
+  type,
   artistName,
   artistProfilePhoto,
   collectionName,
   collectionDescription,
+  ownerUsername,
+  ownerType,
+  ownerProfilePhoto,
 }: NFTAssetProps) => (
   <>
     <Card>
@@ -20,9 +32,15 @@ export const NftAsset = ({
         imageUrl={imageUrl}
         artistName={artistName}
         artistProfilePhoto={artistProfilePhoto}
+        Badge={badgeMap[type]}
         description={collectionDescription}
       >
-        {id}
+        <Owner
+          assetId={id}
+          profilePhoto={ownerProfilePhoto}
+          username={ownerUsername}
+          type={ownerType}
+        />
       </BaseInfo>
     </Card>
   </>
