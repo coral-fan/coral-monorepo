@@ -1,13 +1,14 @@
-import { Story, Meta } from '@storybook/react';
-import { BaseButtonProps as ButtonProps } from '../../BaseButton';
-import { CtaButton } from 'components/ui';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { CtaButton } from './CtaButton';
 
 export default {
   title: 'Coral/UI/Buttons/CTA Button',
   component: CtaButton,
-} as Meta;
+} as ComponentMeta<typeof CtaButton>;
 
-const Template: Story<ButtonProps> = (args) => <CtaButton {...args}>Button</CtaButton>;
+const Template: ComponentStory<typeof CtaButton> = (args) => (
+  <CtaButton {...args}>Button</CtaButton>
+);
 
 export const Default = Template.bind({});
 Default.args = {
