@@ -28,9 +28,12 @@ export interface Photo {
   scale: number;
 }
 
+export type UserType = 'fan' | 'super_fan' | 'artist';
+
 export interface PublicUserData {
   id: string;
   username: string;
+  type: UserType;
   profilePhoto: Photo;
   notifications: Notification[];
   assets: Asset[];
