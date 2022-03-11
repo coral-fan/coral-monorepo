@@ -27,17 +27,13 @@ const SecondaryInfoWrapper = styled.div`
   color: ${tokens.font.color.secondary};
 `;
 
-export interface BaseProfileInfoProps {
+export interface ProfileInfoProps {
   profilePhoto: Photo;
   username: string;
   secondaryInfo: string;
 }
 
-export const BaseProfileInfo = ({
-  profilePhoto,
-  username,
-  secondaryInfo,
-}: BaseProfileInfoProps) => {
+export const ProfileInfo = ({ profilePhoto, username, secondaryInfo }: ProfileInfoProps) => {
   return (
     <ProfileInfoContainer>
       <Avatar size={50} {...profilePhoto} />
