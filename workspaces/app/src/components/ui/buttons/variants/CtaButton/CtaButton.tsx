@@ -4,15 +4,20 @@ import { BaseButton, BaseButtonProps as CtaButtonProps } from '../../BaseButton'
 import rightArrowSvg from './rightArrow.svg';
 import tokens from 'styles/tokens';
 import { getIconComponent } from 'components/ui/icons/utils';
+import { css } from '@emotion/react';
 
-const Wrapper = styled(BaseButton)`
+export const CtaWrapperStyle = css`
   padding: 28px 20px;
   border-radius: ${tokens.border.radius.sm};
   background-color: ${tokens.background.color.brand};
   border: ${tokens.background.color.brand};
 `;
 
-const Container = styled.div`
+const Wrapper = styled(BaseButton)`
+  ${CtaWrapperStyle}
+`;
+
+export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   text-transform: uppercase;
@@ -25,13 +30,17 @@ const Container = styled.div`
 
 const RightArrowIcon = getIconComponent('rightArrow', rightArrowSvg);
 
+export const CtaContent: FC = ({ children }) => (
+  <Container>
+    {children}
+    <RightArrowIcon size={24} />
+  </Container>
+);
+
 export const CtaButton: FC<CtaButtonProps> = ({ children, loading, ...props }) => {
   return (
     <Wrapper loading={loading} {...props}>
-      <Container>
-        {children}
-        <RightArrowIcon size={24} />
-      </Container>
+      <CtaContent>{children}</CtaContent>
     </Wrapper>
   );
 };
