@@ -1,22 +1,18 @@
-import { Story, Meta } from '@storybook/react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { BaseProfileInfo } from './BaseProfileInfo';
-import { BaseProfileInfoProps } from '../types';
+import { DEFAULT_PROFILE_PHOTO } from '../../Avatar/consts';
 
 export default {
   title: 'Coral/UI/Profile/Profile Info',
   component: BaseProfileInfo,
-} as Meta;
+} as ComponentMeta<typeof BaseProfileInfo>;
 
-const Template: Story<BaseProfileInfoProps> = (args) => (
-  <BaseProfileInfo {...args}>Secondary Info</BaseProfileInfo>
-);
+const Template: ComponentStory<typeof BaseProfileInfo> = (args) => <BaseProfileInfo {...args} />;
 
 export const Default = Template.bind({});
+
 Default.args = {
   username: 'Bonobo',
-  profilePhoto: {
-    src: 'https://www.stereofox.com/images/86513/resized.jpg',
-    offsetPercentages: [0, 0],
-    scale: 1,
-  },
+  secondaryInfo: 'Artist',
+  profilePhoto: DEFAULT_PROFILE_PHOTO,
 };
