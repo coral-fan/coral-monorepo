@@ -2,7 +2,7 @@ import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { Card, EventBadge, MerchBadge, MusicBadge } from 'components/ui';
 import { BaseInfo } from 'components/ui/nft';
 import { Asset, CollectionType } from 'libraries/models';
-import { Owner } from './Owner';
+import { Owner } from './components';
 
 type NFTAssetProps = Asset;
 
@@ -24,7 +24,7 @@ export const NftAsset = ({
   ownerType,
   ownerProfilePhoto,
 }: NFTAssetProps) => (
-  <>
+  <div>
     <Card>
       <BaseInfo
         title={collectionName}
@@ -43,5 +43,5 @@ export const NftAsset = ({
         />
       </BaseInfo>
     </Card>
-  </>
+  </div>
 );
