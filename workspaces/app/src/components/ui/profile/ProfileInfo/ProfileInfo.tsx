@@ -16,15 +16,18 @@ const InfoContainer = styled.div`
   font-size: ${tokens.font.size.sm};
   line-height: ${tokens.font.line_height.sm};
   letter-spacing: ${tokens.font.letter_spacing.sm};
-  font-weight: ${tokens.font.weight.bold};
 `;
 
 const NameWrapper = styled.div`
   color: ${tokens.font.color.primary};
+  font-weight: ${tokens.font.weight.bold};
 `;
 
 const SecondaryInfoWrapper = styled.div`
-  color: ${tokens.font.color.secondary};
+  color: ${tokens.font.color.brand};
+  text-transform: uppercase;
+  font-size: ${tokens.font.size.xs};
+  font-weight: ${tokens.font.weight.normal};
 `;
 
 export interface ProfileInfoProps {
