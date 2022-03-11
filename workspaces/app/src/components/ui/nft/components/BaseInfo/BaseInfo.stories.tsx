@@ -5,7 +5,7 @@ import { BASE_INFO_DEFAULT_ARGS } from './consts';
 import { EventBadge } from '../../../badges';
 
 export default {
-  title: 'Coral/UI/NFT/Components/Info Base',
+  title: 'Coral/UI/NFT/Components/Base Info',
   component: BaseInfo,
   args: {},
 } as ComponentMeta<typeof BaseInfo>;
