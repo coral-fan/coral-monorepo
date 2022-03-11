@@ -71,12 +71,6 @@ const SocialLinkContainer = styled.div`
   gap: 25px;
 `;
 
-// const Image = styled.img`
-//   width: 100%;
-//   object-fit: cover;
-//   aspect-ratio: 3/2;
-// `;
-
 export const ArtistProfile = ({
   name,
   imageUrl,
@@ -89,7 +83,7 @@ export const ArtistProfile = ({
   return (
     <ArtistProfileContainer>
       <ImageWrapper>
-        <Image src={imageUrl} objectFit={'cover'} aspectRatio={3 / 2} />
+        <Image src={imageUrl} alt={`Photo of ${name}`} objectFit={'cover'} aspectRatio={3 / 2} />
       </ImageWrapper>
       <ContentContainer>
         <Heading level={1}>{name}</Heading>
