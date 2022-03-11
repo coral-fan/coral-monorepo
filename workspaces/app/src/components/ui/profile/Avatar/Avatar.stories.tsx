@@ -1,5 +1,6 @@
 import { Story, Meta } from '@storybook/react';
 import { Avatar, AvatarProps } from './Avatar';
+import { DEFAULT_PROFILE_PHOTO } from './consts';
 
 export default {
   title: 'Coral/UI/Profile/Avatar',
@@ -11,7 +12,5 @@ const Template: Story<AvatarProps> = ({ ...args }) => <Avatar {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   size: 50,
-  src: 'https://www.stereofox.com/images/86513/resized.jpg',
-  offsetPercentages: [0, 0],
-  scale: 1,
+  ...DEFAULT_PROFILE_PHOTO,
 };
