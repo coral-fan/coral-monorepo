@@ -19,7 +19,7 @@ export interface Asset {
   artistProfilePhoto: Artist['profilePhoto'];
   collectionDescription: Collection['description'];
   collectionDetails: Collection['details'];
-  owner: User['username'];
+  ownerUsername: User['username'];
   ownerAddress: User['id'];
   ownerProfilePhoto: User['profilePhoto'];
 }
