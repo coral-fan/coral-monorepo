@@ -7,7 +7,6 @@ import { getIconComponent } from 'components/ui/icons/utils';
 import { css } from '@emotion/react';
 
 export const CtaWrapperStyle = css`
-  padding: 28px 20px;
   border-radius: ${tokens.border.radius.sm};
   background-color: ${tokens.background.color.brand};
   border: ${tokens.background.color.brand};
@@ -15,6 +14,7 @@ export const CtaWrapperStyle = css`
 
 const Wrapper = styled(BaseButton)`
   ${CtaWrapperStyle}
+  padding: 28px 20px;
 `;
 
 export const Container = styled.div`
