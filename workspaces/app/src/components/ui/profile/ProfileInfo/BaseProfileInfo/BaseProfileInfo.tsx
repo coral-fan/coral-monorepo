@@ -1,8 +1,7 @@
 import { Avatar } from 'components/ui';
-import { BaseProfileInfoProps } from '../types';
 import styled from '@emotion/styled';
-import { FC } from 'react';
 import tokens from 'styles/tokens';
+import { Photo } from 'libraries/models';
 
 const ProfileInfoContainer = styled.div`
   display: flex;
@@ -28,13 +27,23 @@ const SecondaryInfoWrapper = styled.div`
   color: ${tokens.font.color.secondary};
 `;
 
-export const BaseProfileInfo: FC<BaseProfileInfoProps> = ({ profilePhoto, username, children }) => {
+export interface BaseProfileInfoProps {
+  profilePhoto: Photo;
+  username: string;
+  secondaryInfo: string;
+}
+
+export const BaseProfileInfo = ({
+  profilePhoto,
+  username,
+  secondaryInfo,
+}: BaseProfileInfoProps) => {
   return (
     <ProfileInfoContainer>
       <Avatar size={50} {...profilePhoto} />
       <InfoContainer>
         <NameWrapper>{username}</NameWrapper>
-        <SecondaryInfoWrapper>{children}</SecondaryInfoWrapper>
+        <SecondaryInfoWrapper>{secondaryInfo}</SecondaryInfoWrapper>
       </InfoContainer>
     </ProfileInfoContainer>
   );
