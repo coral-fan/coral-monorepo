@@ -2,6 +2,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import { BaseInfo } from './BaseInfo';
 import { BASE_INFO_DEFAULT_ARGS } from './consts';
+import { EventBadge } from '../../../badges';
 
 export default {
   title: 'Coral/UI/NFT/Components/Info Base',
@@ -11,11 +12,19 @@ export default {
 
 const Template: ComponentStory<typeof BaseInfo> = (args) => <BaseInfo {...args} />;
 
-export const withoutDescription = Template.bind({});
+export const Default = Template.bind({});
 
-withoutDescription.args = BASE_INFO_DEFAULT_ARGS;
+Default.args = BASE_INFO_DEFAULT_ARGS;
+
+export const withBadge = Template.bind({});
+
+withBadge.args = {
+  ...BASE_INFO_DEFAULT_ARGS,
+  Badge: EventBadge,
+};
 
 export const withDescription = Template.bind({});
+
 withDescription.args = {
   ...BASE_INFO_DEFAULT_ARGS,
   description:

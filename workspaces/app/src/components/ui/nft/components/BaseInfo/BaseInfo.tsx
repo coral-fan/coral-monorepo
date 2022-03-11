@@ -1,5 +1,6 @@
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import styled from '@emotion/styled';
-import { Heading, HeadingLevel } from 'components/ui/Heading';
+import { Heading, HeadingLevel } from 'components/ui';
 import { FC } from 'react';
 import tokens from 'styles/tokens';
 import { ImageWithInfo, ImageWithInfoProps } from '..';
@@ -7,6 +8,7 @@ import { ImageWithInfo, ImageWithInfoProps } from '..';
 export interface BaseInfoProps extends ImageWithInfoProps {
   title: string;
   titleHeadingLevel: HeadingLevel;
+  Badge?: () => EmotionJSX.Element;
   description?: string;
 }
 
@@ -31,6 +33,7 @@ const ContentContainer = styled.div`
 export const BaseInfo: FC<BaseInfoProps> = ({
   title,
   titleHeadingLevel,
+  Badge,
   description,
   children,
   ...imageWithInfoProps
@@ -39,6 +42,7 @@ export const BaseInfo: FC<BaseInfoProps> = ({
     <ImageWithInfo {...imageWithInfoProps} />
     <ContentContainer>
       <Heading level={titleHeadingLevel}>{title}</Heading>
+      {Badge && <Badge />}
       {description && <Description>{description}</Description>}
       {children}
     </ContentContainer>
