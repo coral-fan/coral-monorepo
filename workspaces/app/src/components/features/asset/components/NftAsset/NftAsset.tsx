@@ -1,10 +1,26 @@
+import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
+import styled from '@emotion/styled';
 import { Card, EventBadge, MerchBadge, MusicBadge } from 'components/ui';
 import { BaseInfo } from 'components/ui/nft';
-import { Asset, CollectionType } from 'libraries/models';
-import { Owner } from './components';
+import { Asset, CollectionType, GatedContent } from 'libraries/models';
+import { EventLink, ContentLink, Owner } from './components';
 
-type NFTAssetProps = Asset;
+type NFTAssetProps = Omit<Asset, 'collectionDetails'>;
+
+type ContainerProps = Pick<NFTAssetProps, 'gatedContent'>;
+
+const Container = styled.div<ContainerProps>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  ${({ gatedContent }) =>
+    gatedContent?.type === 'url'
+      ? css`
+          gap: 16px;
+        `
+      : null}
+`;
 
 const badgeMap: Record<CollectionType, () => EmotionJSX.Element> = {
   music: MusicBadge,
@@ -12,36 +28,54 @@ const badgeMap: Record<CollectionType, () => EmotionJSX.Element> = {
   merch: MerchBadge,
 };
 
+const getGatedContentComponent = (gatedContent: GatedContent) => {
+  if (gatedContent !== null) {
+    switch (gatedContent.type) {
+      case 'event':
+        return <EventLink eventId={gatedContent.id}></EventLink>;
+      case 'url':
+        return <ContentLink url={gatedContent.url} />;
+    }
+  }
+  return null;
+};
+
 export const NftAsset = ({
   id,
+  collectionName,
   imageUrl,
   type,
+  gatedContent,
   artistName,
   artistProfilePhoto,
-  collectionName,
   collectionDescription,
   ownerUsername,
   ownerType,
+  ownerAddress,
   ownerProfilePhoto,
-}: NFTAssetProps) => (
-  <div>
-    <Card>
-      <BaseInfo
-        title={collectionName}
-        titleHeadingLevel={1}
-        imageUrl={imageUrl}
-        artistName={artistName}
-        artistProfilePhoto={artistProfilePhoto}
-        Badge={badgeMap[type]}
-        description={collectionDescription}
-      >
-        <Owner
-          assetId={id}
-          profilePhoto={ownerProfilePhoto}
-          username={ownerUsername}
-          type={ownerType}
-        />
-      </BaseInfo>
-    </Card>
-  </div>
-);
+}: NFTAssetProps) => {
+  return (
+    <Container gatedContent={gatedContent}>
+      <Card>
+        <BaseInfo
+          title={collectionName}
+          titleHeadingLevel={1}
+          imageUrl={imageUrl}
+          artistName={artistName}
+          artistProfilePhoto={artistProfilePhoto}
+          Badge={badgeMap[type]}
+          description={collectionDescription}
+        >
+          <Owner
+            userId={ownerAddress}
+            assetId={id}
+            profilePhoto={ownerProfilePhoto}
+            username={ownerUsername}
+            type={ownerType}
+          />
+        </BaseInfo>
+      </Card>
+      {getGatedContentComponent(gatedContent)}
+    </Container>
+  );
+};
