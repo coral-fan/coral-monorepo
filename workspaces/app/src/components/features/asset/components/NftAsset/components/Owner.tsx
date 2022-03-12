@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Card as BaseCard, ProfileInfo } from 'components/ui';
+import { Card as BaseCard, Link, ProfileInfo } from 'components/ui';
 import { Asset, User, UserType } from 'libraries/models';
 import tokens from 'styles/tokens';
 
@@ -11,6 +11,7 @@ const Card = styled(BaseCard)`
 `;
 
 interface OwnerProps extends Pick<User, 'username' | 'profilePhoto' | 'type'> {
+  userId: User['id'];
   assetId: Asset['id'];
 }
 
@@ -22,9 +23,11 @@ const AssetId = styled.span`
   font-size: ${tokens.font.size.lg};
 `;
 
-export const Owner = ({ assetId, username, profilePhoto, type }: OwnerProps) => (
-  <Card variant="secondary">
-    <ProfileInfo {...{ username, profilePhoto, secondaryInfo: getUserType(type) }} />
-    <AssetId>#{assetId}</AssetId>
-  </Card>
+export const Owner = ({ userId, assetId, username, profilePhoto, type }: OwnerProps) => (
+  <Link href={`user/${userId}`}>
+    <Card variant="secondary">
+      <ProfileInfo {...{ username, profilePhoto, secondaryInfo: getUserType(type) }} />
+      <AssetId>#{assetId}</AssetId>
+    </Card>
+  </Link>
 );
