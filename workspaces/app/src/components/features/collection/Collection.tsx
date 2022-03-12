@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Collection } from 'libraries/models';
 import { GetServerSideProps } from 'next';
+import { IMAGE_WITH_INFO_DEFAULT_ARGS } from 'components/ui/nft/components/ImageWithInfo/consts';
 
 const Container = styled.div`
   display: flex;
@@ -30,15 +31,20 @@ export const getServerSideProps: GetServerSideProps<
 
   // Make database call with collectionId to get collectionData.
   const collectionData: Collection = {
-    id: '1',
-    artistId: 'Bonobo',
-    imageUrl: 'https://www.stereofox.com/images/86513/resized.jpg',
+    id: collectionId,
+    name: 'Behind the Scenes Studio Tour',
     maxMintable: 5000,
     type: 'music',
+    gatedContent: {
+      type: 'url',
+      url: '/',
+    },
     price: 1000,
     dropDate: '2022-04-01',
-    description: 'Bonobo Collection',
+    description:
+      'Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.',
     details: null,
+    ...IMAGE_WITH_INFO_DEFAULT_ARGS,
   };
 
   return {
