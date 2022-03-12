@@ -11,21 +11,38 @@ export default {
 
 const Template: ComponentStory<typeof NftAsset> = (args) => <NftAsset {...args} />;
 
-export const Default = Template.bind({});
-
-Default.args = {
+const BASE_NFT_ASSET_ARGS = {
   id: 1,
-  type: 'event',
-  collectionName: 'Behind the Scenes Studio Tour',
-  collectionDescription:
-    'Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.',
-  collectionDetails: [
-    'A personal call between just you and Bonobo',
-    'Available any time before March 1st, 2022',
-    "Accessible by Zoom after you've torn the ticket",
-  ],
   ownerUsername: 'User123',
+  ownerAddress: '0x123456789',
   ownerType: 'super_fan',
   ownerProfilePhoto: DEFAULT_PROFILE_PHOTO,
   ...IMAGE_WITH_INFO_DEFAULT_ARGS,
+};
+
+export const Event = Template.bind({});
+
+Event.args = {
+  ...BASE_NFT_ASSET_ARGS,
+  type: 'event',
+  gatedContent: {
+    type: 'event',
+    id: '0x123456789',
+  },
+  collectionName: 'Behind the Scenes Studio Tour',
+  collectionDescription:
+    'Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.',
+};
+
+export const Music = Template.bind({});
+
+Music.args = {
+  ...BASE_NFT_ASSET_ARGS,
+  type: 'music',
+  gatedContent: {
+    type: 'url',
+    url: '/',
+  },
+  collectionName: 'Unreleased Album',
+  collectionDescription: 'Exclusive digital download of Unreleased Album',
 };

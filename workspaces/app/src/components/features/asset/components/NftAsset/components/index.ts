@@ -1,2 +1,3 @@
 export * from './Owner';
-export * from './AccessEventLink';
+export * from './EventLink';
+export * from './ContentLink';
