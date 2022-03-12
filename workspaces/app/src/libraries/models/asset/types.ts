@@ -1,4 +1,3 @@
-import { Artist } from '../artist';
 import { Collection } from '../collection';
 import { User } from '../user';
 
@@ -15,8 +14,9 @@ export interface Asset {
   // image url could be a single image or an unique image for a generative NFT
   imageUrl: string;
   type: Collection['type'];
-  artistName: Artist['name'];
-  artistProfilePhoto: Artist['profilePhoto'];
+  gatedContent: Collection['gatedContent'];
+  artistName: Collection['artistName'];
+  artistProfilePhoto: Collection['artistProfilePhoto'];
   collectionDescription: Collection['description'];
   collectionDetails: Collection['details'];
   ownerUsername: User['username'];
