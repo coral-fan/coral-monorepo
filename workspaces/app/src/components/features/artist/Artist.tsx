@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Artist } from 'libraries/models';
 import { GetServerSideProps } from 'next';
+import { IMAGE_WITH_INFO_DEFAULT_ARGS } from 'components/ui/nft/components/ImageWithInfo/consts';
 
 const Container = styled.div`
   display: flex;
@@ -31,6 +32,11 @@ export const getServerSideProps: GetServerSideProps<ArtistPageProps, { artistId:
   const artistData: Artist = {
     id: '1',
     name: 'Bonobo',
+    profilePhoto: {
+      src: 'https://www.stereofox.com/images/86513/resized.jpg',
+      offsetPercentages: [0, 0],
+      scale: 1,
+    },
     socialMedia: {
       twitter: null,
       facebook: null,
@@ -39,14 +45,18 @@ export const getServerSideProps: GetServerSideProps<ArtistPageProps, { artistId:
     collections: [
       {
         id: '1',
-        artistId: 'Bonobo',
-        imageUrl: 'https://www.stereofox.com/images/86513/resized.jpg',
+        name: 'Behind the Scenes Studio Tour',
+        gatedContent: {
+          type: 'url',
+          url: '/',
+        },
         maxMintable: 5000,
         type: 'music',
         price: 1000,
         dropDate: '2022-04-01',
         description: 'Bonobo Collection',
         details: null,
+        ...IMAGE_WITH_INFO_DEFAULT_ARGS,
       },
     ],
   };
