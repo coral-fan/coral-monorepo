@@ -46,3 +46,13 @@ Music.args = {
   collectionName: 'Unreleased Album',
   collectionDescription: 'Exclusive digital download of Unreleased Album',
 };
+
+export const Merch = Template.bind({});
+
+Merch.args = {
+  ...BASE_NFT_ASSET_ARGS,
+  type: 'merch',
+  gatedContent: null,
+  collectionName: 'Exclusive Merch',
+  collectionDescription: 'Exclusive Bonobo merchandise.',
+};
