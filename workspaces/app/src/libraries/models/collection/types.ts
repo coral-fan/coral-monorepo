@@ -2,6 +2,17 @@ import { Artist } from '../artist';
 
 export type CollectionType = 'music' | 'event' | 'merch';
 
+export interface GatedEvent {
+  type: 'event';
+  id: string;
+}
+export interface GatedUrl {
+  type: 'url';
+  url: string;
+}
+
+export type GatedContent = GatedUrl | GatedEvent | null;
+
 export interface CollectionData {
   // id = nft smart contract address
   id: string;
@@ -16,6 +27,7 @@ export interface CollectionData {
   dropDate: string;
   description: string;
   details: string[] | null;
+  gatedContent: GatedContent;
 }
 
 export interface Collection extends Omit<CollectionData, 'artistId'> {
