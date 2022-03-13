@@ -1,8 +1,6 @@
 import { getEnvironmentVariableErrorMessage } from 'libraries/utils/errors';
 
 // application consts
-export const IS_OPEN_LOGIN_PENDING = 'is_open_login_pending';
-
 export const COOKIE_OPTIONS = {
   path: '/',
 };

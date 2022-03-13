@@ -1,10 +1,6 @@
 import { useState } from 'react';
 import { signInWithCustomToken, getAuth } from 'firebase/auth';
 import { Web3Provider } from '@ethersproject/providers';
-import { Wallet } from '@ethersproject/wallet';
-
-import { IS_OPEN_LOGIN_PENDING } from 'consts';
-import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
 import { useWeb3 } from 'libraries/blockchain';
 import { useIsLoggingIn, useIsSigningUp } from '..';
 import { getNonce, getSignedAuthenticationMessage, getFirebaseCustomToken } from './utils';
@@ -28,10 +24,7 @@ export const useLogin = () => {
     try {
       await activate(connector);
 
-      const signer =
-        connector instanceof OpenLoginConnector
-          ? (connector.wallet as Wallet) // casting since metamask will have connected or thrown error in activate function call & signer connector.wallet won't ever be undefined
-          : new Web3Provider(await connector.getProvider()).getSigner();
+      const signer = new Web3Provider(await connector.getProvider()).getSigner();
 
       // check if signer exists in case user closes out of open login modal
       if (signer) {
@@ -40,10 +33,6 @@ export const useLogin = () => {
         const signedMessage = await getSignedAuthenticationMessage(signer, nonce);
         const customToken = await getFirebaseCustomToken(address, signedMessage);
         const userCredential = await signInWithCustomToken(getAuth(), customToken);
-
-        if (sessionStorage.getItem(IS_OPEN_LOGIN_PENDING)) {
-          sessionStorage.removeItem(IS_OPEN_LOGIN_PENDING);
-        }
 
         const isSigningUp = await getIsUserSigningUp(userCredential.user.uid);
         setIsSigningUp(isSigningUp);
