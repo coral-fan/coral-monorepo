@@ -1,8 +1,8 @@
-import { ExternalProvider, JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
+import { ExternalProvider, Web3Provider } from '@ethersproject/providers';
 
-export const getLibrary = (provider: ExternalProvider | JsonRpcProvider | undefined) => {
+export const getLibrary = (provider: ExternalProvider | undefined) => {
   if (provider) {
-    return provider instanceof JsonRpcProvider ? provider : new Web3Provider(provider);
+    return new Web3Provider(provider);
   }
   return undefined;
 };

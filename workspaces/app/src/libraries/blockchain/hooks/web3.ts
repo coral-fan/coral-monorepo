@@ -1,13 +1,9 @@
 import { useCallback, useMemo } from 'react';
-import { JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
+import { Web3Provider } from '@ethersproject/providers';
 import { useWeb3React } from '@web3-react/core';
 import { InjectedConnector } from '@web3-react/injected-connector';
-
-import { OpenLoginConnector } from 'libraries/connectors/OpenLoginConnector';
-
 import { AVALANCHE } from 'consts';
 import { AbstractConnector } from '@web3-react/abstract-connector';
-import { isMetaMaskInjected } from '../utils';
 
 export const useWeb3 = () => {
   const {
@@ -20,22 +16,18 @@ export const useWeb3 = () => {
     deactivate,
     setError,
     connector,
-  } = useWeb3React<JsonRpcProvider | Web3Provider>();
+  } = useWeb3React<Web3Provider>();
 
   const injectedConnector = useMemo(
     () => new InjectedConnector({ supportedChainIds: [parseInt(AVALANCHE.CHAIN_ID)] }),
     []
   );
-  const openLoginConnector = useMemo(() => new OpenLoginConnector(), []);
 
-  const signer = useMemo(
-    () => (connector instanceof OpenLoginConnector ? connector.wallet : library?.getSigner()),
-    [connector, library]
-  );
+  const signer = useMemo(() => library?.getSigner(), [library]);
 
   const getConnector = useCallback(
-    () => connector ?? (isMetaMaskInjected() ? injectedConnector : openLoginConnector),
-    [connector, injectedConnector, openLoginConnector]
+    () => connector ?? injectedConnector,
+    [connector, injectedConnector]
   );
 
   const activate = useCallback(
