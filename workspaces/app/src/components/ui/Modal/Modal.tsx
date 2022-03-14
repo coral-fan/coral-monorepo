@@ -6,6 +6,7 @@ import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 import { Card } from '../Card';
 import { CloseButton, Overlay } from './components';
 import { ModalProps } from './types';
+import { Heading } from 'components/ui';
 
 const ModalContainer = styled.div`
   display: flex;
@@ -32,14 +33,7 @@ const Content = styled(Card)<{ title?: string }>`
   color: ${tokens.font.color.primary};
   padding: ${({ title }) => `${title ? '16px' : '8px'} 18px`};
   box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.5);
-`;
-
-const Heading = styled.h1`
-  font-weight: ${tokens.font.weight.bold};
-  letter-spacing: 1px;
-  font-size: ${tokens.font.size.xl};
-  line-height: ${tokens.font.line_height.xl};
-  padding-bottom: 24px;
+  gap: 24px;
 `;
 
 const Main = styled.div`
@@ -71,7 +65,11 @@ export const Modal: FC<ModalProps> = ({ children, title, onClick }) => {
               </ModalControlContainer>
             )}
             <Content title={title}>
-              {title && <Heading>{title}</Heading>}
+              {title && (
+                <Heading level={1} styleVariant={'h2'}>
+                  {title}
+                </Heading>
+              )}
               <Main>{children}</Main>
             </Content>
           </ModalContainer>
