@@ -10,7 +10,7 @@ import { useRefetchPageData } from 'libraries/utils/hooks';
 export const useLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
   const [, setIsSigningUp] = useIsSigningUp();
-  const { activate, getConnector } = useWeb3();
+  const { connector, active } = useWeb3();
   const refetchPageData = useRefetchPageData();
   //TODO: should probably look into how to type errors better
   /* eslint @typescript-eslint/no-explicit-any: 'off' -- errors will always be typed as any */
@@ -18,16 +18,16 @@ export const useLogin = () => {
 
   const login = async () => {
     setIsLoggingIn(true);
-
-    const connector = getConnector();
-
     try {
-      await activate(connector);
-
-      const signer = new Web3Provider(await connector.getProvider()).getSigner();
-
-      // check if signer exists in case user closes out of open login modal
-      if (signer) {
+      if (!active) {
+        await connector.activate();
+      }
+      if (connector.provider !== undefined) {
+        // need to destructure so provider is not undefined in callback function
+        const { provider } = connector;
+        const signer = new Web3Provider((method, params) =>
+          provider.request({ method, params })
+        ).getSigner();
         const address = await signer.getAddress();
         const nonce = await getNonce(address);
         const signedMessage = await getSignedAuthenticationMessage(signer, nonce);
@@ -36,11 +36,9 @@ export const useLogin = () => {
 
         const isSigningUp = await getIsUserSigningUp(userCredential.user.uid);
         setIsSigningUp(isSigningUp);
-        setIsLoggingIn(false);
         refetchPageData();
-      } else {
-        setIsLoggingIn(false);
       }
+      setIsLoggingIn(false);
     } catch (error) {
       setLoginError(error);
       setIsLoggingIn(false);

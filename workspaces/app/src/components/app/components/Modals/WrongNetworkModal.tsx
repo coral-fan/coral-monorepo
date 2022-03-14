@@ -16,22 +16,13 @@ const AVALANCHE_NETWORK_PARAMS = {
 };
 
 export const WrongNetworkModal = () => {
-  const { getConnector } = useWeb3();
+  const { connector } = useWeb3();
 
   const addAvalancheNetwork = () => {
-    getConnector()
-      .getProvider()
-      .then((provider) => {
-        provider
-          .request({
-            method: 'wallet_addEthereumChain',
-            params: [AVALANCHE_NETWORK_PARAMS],
-          })
-          /* eslint @typescript-eslint/no-explicit-any: 'off' -- error is typed as any*/
-          .catch((error: any) => {
-            console.log(error);
-          });
-      });
+    connector.provider?.request({
+      method: 'wallet_addEthereumChain',
+      params: [AVALANCHE_NETWORK_PARAMS],
+    });
   };
 
   const isNetworkSupported = useIsNetworkSupported();
