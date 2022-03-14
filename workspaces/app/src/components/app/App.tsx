@@ -7,7 +7,6 @@ import Head from 'next/head';
 import { initializeFirebaseApp } from 'libraries/firebase';
 import { getIsUserSigningUp } from 'libraries/models';
 import { isServerSide } from 'libraries/utils';
-import { getLibrary } from './utils';
 import { getUidClientSide, getUidServerSide } from 'libraries/models';
 
 // styling
@@ -18,7 +17,6 @@ import { NavigationBar, Managers, Modals } from './components';
 
 // state/logic
 import { useEffect, useState } from 'react';
-import { Web3ReactProvider } from '@web3-react/core';
 import { Provider as ReduxProvider } from 'react-redux';
 import { initializeStore } from 'libraries/state';
 
@@ -49,18 +47,16 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
         {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
       <main>
-        <Web3ReactProvider getLibrary={getLibrary}>
-          <ReduxProvider store={store}>
-            <Managers />
-            <Modals />
-            {isMounted ? (
-              <>
-                <NavigationBar />
-                <Component {...pageProps} />
-              </>
-            ) : null}
-          </ReduxProvider>
-        </Web3ReactProvider>
+        <ReduxProvider store={store}>
+          <Managers />
+          <Modals />
+          {isMounted ? (
+            <>
+              <NavigationBar />
+              <Component {...pageProps} />
+            </>
+          ) : null}
+        </ReduxProvider>
       </main>
     </>
   );

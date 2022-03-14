@@ -1,50 +1,24 @@
-import { useCallback, useMemo } from 'react';
-import { Web3Provider } from '@ethersproject/providers';
-import { useWeb3React } from '@web3-react/core';
-import { InjectedConnector } from '@web3-react/injected-connector';
+import { initializeConnector } from '@web3-react/core';
 import { AVALANCHE } from 'consts';
-import { AbstractConnector } from '@web3-react/abstract-connector';
+import { MetaMask } from '@web3-react/metamask';
+import { Actions } from '@web3-react/types';
+import { Web3Provider } from '@ethersproject/providers';
+
+const getMetaMaskConnector = (actions: Actions) => new MetaMask(actions);
+
+const [connector, { useProvider, useWeb3React }] = initializeConnector<MetaMask>(
+  getMetaMaskConnector,
+  [parseInt(AVALANCHE.CHAIN_ID)]
+);
 
 export const useWeb3 = () => {
-  const {
-    library,
-    chainId,
-    account,
-    active,
-    error,
-    activate: web3ReactActivate,
-    deactivate,
-    setError,
-    connector,
-  } = useWeb3React<Web3Provider>();
-
-  const injectedConnector = useMemo(
-    () => new InjectedConnector({ supportedChainIds: [parseInt(AVALANCHE.CHAIN_ID)] }),
-    []
-  );
-
-  const signer = useMemo(() => library?.getSigner(), [library]);
-
-  const getConnector = useCallback(
-    () => connector ?? injectedConnector,
-    [connector, injectedConnector]
-  );
-
-  const activate = useCallback(
-    (connector: AbstractConnector) => web3ReactActivate(connector, undefined, true),
-    [web3ReactActivate]
-  );
+  const { account, active, chainId, error } = useWeb3React(useProvider());
 
   return {
-    getConnector,
-    library,
+    connector,
     chainId,
     account,
     active,
     error,
-    activate,
-    deactivate,
-    setError,
-    signer,
   };
 };
