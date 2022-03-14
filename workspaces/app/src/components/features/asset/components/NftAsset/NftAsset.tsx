@@ -60,6 +60,7 @@ export const NftAsset = ({
         <BaseInfo
           title={collectionName}
           titleHeadingLevel={1}
+          titleStyleVariant={'h2'}
           imageUrl={imageUrl}
           artistName={artistName}
           artistProfilePhoto={artistProfilePhoto}
