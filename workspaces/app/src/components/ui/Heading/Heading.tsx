@@ -4,42 +4,54 @@ import tokens from 'styles/tokens';
 
 const { color, weight, size, line_height, letter_spacing } = tokens.font;
 
-const fontSizeDictionary = {
-  h1: size.xxl,
-  h2: size.xl,
-  h3: size.lg,
-  h4: size.md,
-};
+const headingStyle = css`
+  font-weight: ${weight.bold};
+  color: ${color.primary};
+`;
 
-const lineHeightDictionary = {
-  h1: line_height.xxl,
-  h2: line_height.xl,
-  h3: line_height.lg,
-  h4: line_height.md,
-};
+const h1Style = css`
+  ${headingStyle};
+  font-size: ${size.xxl};
+  line-height: ${line_height.xxl};
+  letter-spacing: ${letter_spacing.xxl};
+`;
 
-const letterSpacingDictionary = {
-  h1: letter_spacing.xxl,
-  h2: letter_spacing.xl,
-  h3: letter_spacing.lg,
-  h4: letter_spacing.md,
+const h2Style = css`
+  ${headingStyle};
+  font-size: ${size.xl};
+  line-height: ${line_height.xl};
+  letter-spacing: ${letter_spacing.xl};
+`;
+
+const h3Style = css`
+  ${headingStyle};
+  font-size: ${size.lg};
+  line-height: ${line_height.lg};
+  letter-spacing: ${letter_spacing.lg};
+`;
+
+const h4Style = css`
+  ${headingStyle};
+  font-size: ${size.md};
+  line-height: ${line_height.md};
+  letter-spacing: ${letter_spacing.md};
+  text-transform: uppercase;
+`;
+
+const styleDictionary = {
+  h1: h1Style,
+  h2: h2Style,
+  h3: h3Style,
+  h4: h4Style,
 };
 
 export type HeadingLevel = 1 | 2 | 3 | 4;
-export type HeadingStyleVariant = keyof typeof fontSizeDictionary;
+export type HeadingStyleVariant = keyof typeof styleDictionary;
 
 export interface HeadingProps {
   level: HeadingLevel;
   styleVariant: HeadingStyleVariant;
 }
 
-const getHeadingStyle = (styleVariant: HeadingStyleVariant) => css`
-  font-weight: ${weight.bold};
-  color: ${color.primary};
-  font-size: ${fontSizeDictionary[styleVariant]};
-  line-height: ${lineHeightDictionary[styleVariant]};
-  letter-spacing: ${letterSpacingDictionary[styleVariant]};
-`;
-
 export const Heading: FC<HeadingProps> = ({ children, level, styleVariant, ...props }) =>
-  jsx(`h${level}`, { css: getHeadingStyle(styleVariant), ...props }, children);
+  jsx(`h${level}`, { css: styleDictionary[styleVariant], ...props }, children);
