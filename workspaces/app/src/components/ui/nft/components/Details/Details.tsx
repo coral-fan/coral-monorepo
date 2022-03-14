@@ -1,16 +1,12 @@
 import styled from '@emotion/styled';
 import { Detail } from './components';
-import { Heading as HeadingComponent } from 'components/ui';
+import { Heading } from 'components/ui';
 
 const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-`;
-
-const Heading = styled(HeadingComponent)`
-  text-transform: uppercase;
-  padding-bottom: 12px;
+  gap: 12px;
 `;
 
 export interface DetailsProp {
@@ -20,12 +16,16 @@ export interface DetailsProp {
 export const Details = ({ details }: DetailsProp) => {
   return (
     <Container>
-      <Heading level={2} styleVariant={'h4'}>
-        Experience Details
-      </Heading>
-      {details.map((detail) => (
-        <Detail key={detail}>{detail}</Detail>
-      ))}
+      <div>
+        <Heading level={2} styleVariant={'h4'}>
+          Experience Details
+        </Heading>
+      </div>
+      <div>
+        {details.map((detail) => (
+          <Detail key={detail}>{detail}</Detail>
+        ))}
+      </div>
     </Container>
   );
 };
