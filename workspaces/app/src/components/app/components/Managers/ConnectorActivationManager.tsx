@@ -6,7 +6,7 @@ export const ConnectorActivationManager = () => {
 
   useEffect(() => {
     connector.connectEagerly();
-  }, []);
+  }, [connector]);
 
   return <></>;
 };
