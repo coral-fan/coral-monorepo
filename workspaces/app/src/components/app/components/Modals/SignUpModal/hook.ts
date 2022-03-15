@@ -16,6 +16,7 @@ export const useSignUpForm = () => {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors, isValid },
   } = useForm<SignUpSchema>({
     resolver: yupResolver(signUpSchema),
@@ -29,11 +30,11 @@ export const useSignUpForm = () => {
 
   const handleSubmitSignUp = useMemo(
     () =>
-      handleSubmit(async ({ username, email }) => {
+      handleSubmit(async ({ username, email, doesAgreeToMarketing }) => {
         setIsSignUpSubmitting(true);
         if (uid !== undefined) {
           try {
-            await upsertUser(uid, { username, email });
+            await upsertUser(uid, { username, email, doesAgreeToMarketing });
             await axios.post('is-signing-up', { isSigningUp: false });
             setIsSigningUp(false);
           } catch (_) {
@@ -45,5 +46,16 @@ export const useSignUpForm = () => {
     [handleSubmit, uid, setIsSigningUp]
   );
 
-  return { register, errors, isValid, isSignUpSubmitting, handleSubmitSignUp };
+  const { email } = getValues();
+
+  const shouldShowDoesAgreeToMarketing = useMemo(() => typeof email === 'string', [email]);
+
+  return {
+    register,
+    errors,
+    isValid,
+    isSignUpSubmitting,
+    handleSubmitSignUp,
+    shouldShowDoesAgreeToMarketing,
+  };
 };
