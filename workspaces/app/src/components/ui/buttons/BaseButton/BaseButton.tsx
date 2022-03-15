@@ -5,7 +5,7 @@ import { buttonBaseStyle } from '../styles';
 
 export interface BaseButtonProps extends ComponentProps<'button'> {
   loading?: boolean;
-  disabled?: false;
+  disabled?: boolean;
 }
 
 export const BaseButton: FC<BaseButtonProps> = ({ children, loading, disabled, ...props }) => (
