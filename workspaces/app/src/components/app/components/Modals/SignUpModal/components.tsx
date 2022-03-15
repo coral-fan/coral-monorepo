@@ -4,7 +4,6 @@ export const SignUpForm = styled.form`
   display: flex;
   flex-direction: column;
   padding-top: 24px;
-  align-items: center;
 `;
 export const InputsContainer = styled.div`
   display: flex;
