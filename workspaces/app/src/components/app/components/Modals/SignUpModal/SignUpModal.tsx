@@ -43,10 +43,7 @@ export const SignUpModal = () => {
           <Toggle {...register('doesAgree')} />
           <LegalAgreementCopy>
             <div>
-              I agree to Coral&apos;s <u>privacy policy</u>
-            </div>
-            <div>
-              and <u>terms &amp; conditions</u>
+              I agree to Coral&apos;s <u>privacy policy</u> and <u> terms &amp; conditions</u>
             </div>
           </LegalAgreementCopy>
         </LegalAgreementContainer>
