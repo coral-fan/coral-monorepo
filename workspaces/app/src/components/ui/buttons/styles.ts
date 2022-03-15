@@ -12,7 +12,7 @@ export const buttonBaseStyle = css`
   }
 
   &:disabled {
-    filter: opacity(0.7);
+    filter: opacity(0.5);
     cursor: not-allowed;
   }
 `;
