@@ -1,21 +1,15 @@
-import { css } from '@emotion/react';
 import { FC } from 'react';
 import { ConditionalSpinner } from '../../Spinner';
 import { ComponentProps } from 'react';
+import { buttonBaseStyle } from '../styles';
 
 export interface BaseButtonProps extends ComponentProps<'button'> {
   loading?: boolean;
+  disabled?: false;
 }
 
-const BaseButtonStyle = css`
-  width: 100%;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-export const BaseButton: FC<BaseButtonProps> = ({ children, loading, ...props }) => (
-  <button css={BaseButtonStyle} {...props}>
+export const BaseButton: FC<BaseButtonProps> = ({ children, loading, disabled, ...props }) => (
+  <button css={buttonBaseStyle} disabled={disabled} {...props}>
     <ConditionalSpinner loading={loading}>{children}</ConditionalSpinner>
   </button>
 );
