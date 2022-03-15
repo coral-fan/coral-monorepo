@@ -11,13 +11,13 @@ export const InputsContainer = styled.div`
   width: 100%;
   gap: 4px;
 `;
-export const LegalAgreementContainer = styled.div`
+export const AgreeToggleContainer = styled.div`
   display: flex;
   gap: 10px;
   align-items: center;
   width: fit-content;
   padding-bottom: 24px;
 `;
-export const LegalAgreementCopy = styled.div`
+export const AgreeToggleCopy = styled.div`
   font-size: 14px;
 `;
