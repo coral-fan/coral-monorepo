@@ -24,5 +24,3 @@ export const EMAIL_SCHEMA = string()
   .email()
   .transform((value: string) => (value === '' ? null : value))
   .nullable();
-
-export const DOES_AGREE_SCHEMA = boolean().required().default(false).isTrue();
