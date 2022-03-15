@@ -2,7 +2,6 @@ import { initializeConnector } from '@web3-react/core';
 import { AVALANCHE } from 'consts';
 import { MetaMask } from '@web3-react/metamask';
 import { Actions } from '@web3-react/types';
-import { Web3Provider } from '@ethersproject/providers';
 
 const getMetaMaskConnector = (actions: Actions) => new MetaMask(actions);
 
