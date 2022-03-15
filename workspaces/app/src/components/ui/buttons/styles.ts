@@ -1,9 +1,7 @@
 import { css } from '@emotion/react';
 
 export const buttonBaseStyle = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
   border: none;
   background-color: transparent;
   min-height: 45px;
@@ -14,7 +12,7 @@ export const buttonBaseStyle = css`
   }
 
   &:disabled {
+    filter: opacity(0.7);
     cursor: not-allowed;
-    filter: opacity(0.5);
   }
 `;
