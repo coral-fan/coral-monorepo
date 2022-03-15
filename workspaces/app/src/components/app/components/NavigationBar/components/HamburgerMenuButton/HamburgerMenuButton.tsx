@@ -1,36 +1,23 @@
-import { ComponentProps, createElement } from 'react';
 import { getIconComponent } from 'components/ui/icons/utils';
-import hamburgerWithRedDotIconSVG from './hamburger-with-red-dot.svg';
 import hamburgerIconSVG from './hamburger.svg';
-import { buttonBaseStyle } from 'components/ui/buttons/styles';
-import { css } from '@emotion/react';
-const HamburgerWithRedDotIcon = getIconComponent(
-  'HamburgerIconWithRedDot',
-  hamburgerWithRedDotIconSVG
-);
-const HamburgerWithoutRedDotIcon = getIconComponent('HamburgerIcon', hamburgerIconSVG);
+import { BaseButton } from 'components/ui/buttons/BaseButton';
+import styled from '@emotion/styled';
+import { DESKTOP_BREAKPOINT } from 'styles';
 
-const ICON_BUTTON_SIZE = 24;
-interface HamburgerIconProp {
-  hasNotifications: boolean;
-}
-const HamburgerIcon = ({ hasNotifications }: HamburgerIconProp) =>
-  createElement(
-    hasNotifications ? HamburgerWithRedDotIcon : HamburgerWithoutRedDotIcon,
-    { size: ICON_BUTTON_SIZE },
-    null
-  );
+const HamburgerIcon = getIconComponent('HamburgerIcon', hamburgerIconSVG);
 
-export type HamburgerMenuButtonProps = ComponentProps<'button'> & HamburgerIconProp;
+const MenuButton = styled(BaseButton)`
+  width: 45px;
+  height: 45px;
 
-const buttonStyle = css`
-  ${buttonBaseStyle};
-  background-color: transparent;
-  justify-self: start;
+  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+    width: 60px;
+    height: 60px;
+  }
 `;
 
-export const HamburgerMenuButton = ({ hasNotifications, ...props }: HamburgerMenuButtonProps) => (
-  <button css={buttonStyle} {...props}>
-    <HamburgerIcon hasNotifications={hasNotifications} />
-  </button>
+export const HamburgerMenuButton = ({ ...props }) => (
+  <MenuButton {...props}>
+    <HamburgerIcon />
+  </MenuButton>
 );
