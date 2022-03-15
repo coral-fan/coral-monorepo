@@ -13,7 +13,17 @@ const Template: ComponentStory<typeof CtaButton> = (args) => (
 export const Default = Template.bind({});
 Default.args = {
   loading: false,
+  disabled: false,
 };
 Default.parameters = {
+  controls: { hideNoControlsWarning: true },
+};
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  loading: false,
+  disabled: true,
+};
+Disabled.parameters = {
   controls: { hideNoControlsWarning: true },
 };
