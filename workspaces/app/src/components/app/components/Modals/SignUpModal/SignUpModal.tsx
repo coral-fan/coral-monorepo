@@ -3,12 +3,7 @@ import { useIsNetworkSupported } from 'libraries/blockchain';
 import { Modal, Button, Toggle } from 'components/ui';
 import { Input } from 'components/ui/Input';
 
-import {
-  SignUpForm,
-  InputsContainer,
-  LegalAgreementContainer,
-  LegalAgreementCopy,
-} from './components';
+import { SignUpForm, InputsContainer, AgreeToggleContainer, AgreeToggleCopy } from './components';
 
 import { useSignUpForm } from './hook';
 
@@ -16,7 +11,14 @@ export const SignUpModal = () => {
   const [isSigningUp] = useIsSigningUp();
   const isNetworkSupported = useIsNetworkSupported();
 
-  const { register, errors, isValid, isSignUpSubmitting, handleSubmitSignUp } = useSignUpForm();
+  const {
+    register,
+    errors,
+    isValid,
+    isSignUpSubmitting,
+    handleSubmitSignUp,
+    shouldShowDoesAgreeToMarketing,
+  } = useSignUpForm();
 
   if (!isSigningUp || !isNetworkSupported) {
     return null;
@@ -33,20 +35,22 @@ export const SignUpModal = () => {
             error={errors?.username?.message}
           />
           <Input
-            label="Email address"
+            label="Email Address (Optional)"
             placeholder="example@email.com"
             {...register('email')}
             error={errors?.email?.message}
           />
         </InputsContainer>
-        <LegalAgreementContainer>
+        <AgreeToggleContainer>
           <Toggle {...register('doesAgree')} />
-          <LegalAgreementCopy>
-            <div>
-              I agree to Coral&apos;s <u>privacy policy</u> and <u> terms &amp; conditions</u>
-            </div>
-          </LegalAgreementCopy>
-        </LegalAgreementContainer>
+          <AgreeToggleCopy>
+            I agree to Coral&apos;s <u>privacy policy</u> and <u> terms &amp; conditions</u>
+          </AgreeToggleCopy>
+        </AgreeToggleContainer>
+        <AgreeToggleContainer>
+          <Toggle {...register('doesAgree')} />
+          <AgreeToggleCopy>Opt into marketing</AgreeToggleCopy>
+        </AgreeToggleContainer>
         <Button
           type="submit"
           disabled={!isValid || isSignUpSubmitting}
