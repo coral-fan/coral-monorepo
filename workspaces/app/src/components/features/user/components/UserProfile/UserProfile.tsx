@@ -48,7 +48,7 @@ const TextContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 2px;
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
     align-items: flex-start;
@@ -61,6 +61,7 @@ const EditProfileLinkButton = styled(LinkButton)`
   line-height: ${line_height.xs};
   text-transform: uppercase;
   text-decoration: underline;
+  padding: 4px 0px;
 `;
 
 const Username = styled.span`
