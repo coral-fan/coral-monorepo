@@ -62,7 +62,7 @@ export const Menu = ({ isMenuOpen, setIsMenuOpen, userProfile }: MenuProps) => {
     <Modal variant="close" onClick={closeMenuModal}>
       {isAuthenticated && userProfile && (
         <>
-          <MenuProfileLink href={`/user/${uid}`}>
+          <MenuProfileLink href={`/user/${uid}`} onClick={closeMenuModal}>
             <MenuProfileInfo
               username={userProfile.username}
               profilePhoto={userProfile.profilePhoto}
