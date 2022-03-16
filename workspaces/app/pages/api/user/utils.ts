@@ -22,6 +22,7 @@ const DEFAULT_PUBLIC_USER_DATA: DefaultPublicUserData = {
   },
   bio: null,
   socialHandles: {
+    facebook: null,
     twitter: null,
     instagram: null,
     spotify: null,
