@@ -23,6 +23,15 @@ export interface Photo {
   scale: number;
 }
 
+export interface SocialHandles {
+  twitter: NullableString;
+  instagram: NullableString;
+  spotify: NullableString;
+  tiktok: NullableString;
+  soundcloud: NullableString;
+  discogs: NullableString;
+}
+
 export type UserType = 'fan' | 'super_fan' | 'artist';
 
 export interface PublicUserData {
@@ -30,6 +39,8 @@ export interface PublicUserData {
   username: string;
   type: UserType;
   profilePhoto: Photo;
+  bio: NullableString;
+  socialHandles: SocialHandles;
   notifications: Notification[];
   assets: Asset[];
 }
