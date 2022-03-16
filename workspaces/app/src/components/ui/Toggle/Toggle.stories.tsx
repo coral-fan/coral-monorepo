@@ -1,12 +1,12 @@
-import { Story, Meta } from '@storybook/react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { Toggle } from './Toggle';
 
 export default {
   title: 'Coral/UI/Toggle',
   component: Toggle,
-} as Meta;
+} as ComponentMeta<typeof Toggle>;
 
-const Template: Story = (args) => <Toggle {...args} />;
+const Template: ComponentStory<typeof Toggle> = (args) => <Toggle {...args} />;
 
 export const Default = Template.bind({});
 
