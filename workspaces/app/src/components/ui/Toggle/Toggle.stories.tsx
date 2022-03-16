@@ -6,10 +6,10 @@ export default {
   component: Toggle,
 } as ComponentMeta<typeof Toggle>;
 
-const Template: ComponentStory<typeof Toggle> = (args) => <Toggle {...args} />;
+const Template: ComponentStory<typeof Toggle> = ({ children }) => <Toggle>{children}</Toggle>;
 
 export const Default = Template.bind({});
 
 Default.args = {
-  label: 'Label',
+  children: 'Label',
 };
