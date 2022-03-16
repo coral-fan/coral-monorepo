@@ -1,5 +1,5 @@
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
-import { IncomingUserData, PrivateUserData } from 'libraries/models';
+import { IncomingUserData, PrivateUserData, PublicUserData } from 'libraries/models';
 import { USER_PROPERTIES, PRIVATE_USER_DATA_PROPERTIES } from './consts';
 
 const extractData = <T, U>(data: T, keys: Set<keyof U>): Partial<U> =>
@@ -11,6 +11,35 @@ const extractData = <T, U>(data: T, keys: Set<keyof U>): Partial<U> =>
   );
 const isObjectEmpty = (object: Record<string, unknown>) => Object.keys(object).length === 0;
 
+type DefaultPublicUserData = Omit<PublicUserData, 'id' | 'username'>;
+
+const DEFAULT_PUBLIC_USER_DATA: DefaultPublicUserData = {
+  type: 'fan',
+  profilePhoto: {
+    src: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+    offsetPercentages: [0, 0],
+    scale: 1,
+  },
+  bio: null,
+  socialHandles: {
+    twitter: null,
+    instagram: null,
+    spotify: null,
+    tiktok: null,
+    soundcloud: null,
+    discogs: null,
+  },
+  notifications: [],
+  assets: [],
+};
+
+type DefaultPrivateUserData = Omit<PrivateUserData, 'doesOptIntoMarketing'>;
+
+const DEFAULT_PRIVATE_USER_DATA: DefaultPrivateUserData = {
+  creditCardInformation: null,
+  email: null,
+};
+
 export const upsertUser = async (uid: string, incomingUserData: IncomingUserData) => {
   const userData = extractData(incomingUserData, USER_PROPERTIES);
 
@@ -21,14 +50,7 @@ export const upsertUser = async (uid: string, incomingUserData: IncomingUserData
       userDocSnapshot.exists
         ? userData
         : {
-            type: 'fan',
-            profilePhoto: {
-              src: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
-              offsetPercentages: [0, 0],
-              scale: 1,
-            },
-            notifications: [],
-            assets: [],
+            ...DEFAULT_PUBLIC_USER_DATA,
             ...userData,
           },
       { merge: true }
@@ -53,8 +75,7 @@ export const upsertUser = async (uid: string, incomingUserData: IncomingUserData
       privateUserDataDocSnapshot.exists
         ? privateUserData
         : {
-            email: null,
-            creditCardInformation: null,
+            ...DEFAULT_PRIVATE_USER_DATA,
             ...privateUserData,
           },
       { merge: true }
