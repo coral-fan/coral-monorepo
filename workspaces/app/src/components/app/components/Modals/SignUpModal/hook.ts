@@ -29,11 +29,11 @@ export const useSignUpForm = () => {
 
   const handleSubmitSignUp = useMemo(
     () =>
-      handleSubmit(async ({ username, email, doesOptIntoEmailMarketing }) => {
+      handleSubmit(async ({ username, email, doesOptIntoMarketing }) => {
         setIsSignUpSubmitting(true);
         if (uid !== undefined) {
           try {
-            await upsertUser(uid, { username, email, doesOptIntoEmailMarketing });
+            await upsertUser(uid, { username, email, doesOptIntoMarketing });
             await axios.post('is-signing-up', { isSigningUp: false });
             setIsSigningUp(false);
           } catch (_) {
@@ -45,16 +45,12 @@ export const useSignUpForm = () => {
     [handleSubmit, uid, setIsSigningUp]
   );
 
-  const { email } = getValues();
-
-  const shouldShowOptIntoEmailMarketing = useMemo(() => email && email !== '', [email]);
-
   return {
     register,
     errors,
     isValid,
     isSignUpSubmitting,
     handleSubmitSignUp,
-    shouldShowOptIntoEmailMarketing,
+    getValues,
   };
 };
