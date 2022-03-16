@@ -17,7 +17,7 @@ export interface CreditCardInformation {
 
 export interface PrivateUserData {
   email: NullableString;
-  doesAgreeToMarketing: boolean;
+  doesOptIntoEmailMarketing: boolean;
   creditCardInformation: CreditCardInformation | null;
 }
 

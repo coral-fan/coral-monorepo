@@ -10,4 +10,5 @@ export const USER_PROPERTIES = new Set<UserProperties>([
 export const PRIVATE_USER_DATA_PROPERTIES = new Set<PrivateUserDataProperties>([
   'creditCardInformation',
   'email',
+  'doesOptIntoEmailMarketing',
 ]);
