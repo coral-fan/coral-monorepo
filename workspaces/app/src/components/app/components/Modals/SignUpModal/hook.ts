@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
 import { upsertUser, useUsernames, useUserUid } from 'libraries/models';
 import { getSignUpSchema, SignUpSchema } from './schema';
 import { useIsSigningUp } from 'libraries/authentication';
@@ -48,7 +47,7 @@ export const useSignUpForm = () => {
 
   const { email } = getValues();
 
-  const shouldShowDoesAgreeToMarketing = useMemo(() => typeof email === 'string', [email]);
+  const shouldShowDoesAgreeToMarketing = useMemo(() => email && email !== '', [email]);
 
   return {
     register,
