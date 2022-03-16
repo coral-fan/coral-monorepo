@@ -14,7 +14,7 @@ export const UserPageProvider: FC<UserPageProviderProps> = ({ userData, children
   }, [userData]);
 
   const [isUpdateProfileInfoModalOpen, setIsUpdateProfileInfoModalOpen] = useState(false);
-  const [isUpdateProfilePhotoModalOpen, setIsUpdateProfilePhotoModalOpen] = useState(true);
+  const [isUpdateProfilePhotoModalOpen, setIsUpdateProfilePhotoModalOpen] = useState(false);
 
   const value = {
     user,
