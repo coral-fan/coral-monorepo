@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { Link } from 'components/ui';
-import { Artist } from 'libraries/models';
+import { SocialHandles } from 'libraries/models';
 import twitterSVG from './assets/twitter.svg';
 import instagramSVG from './assets/instagram.svg';
 import facebookSVG from './assets/facebook.svg';
 
-type SocialType = keyof Artist['socialMedia'];
+type SocialType = keyof SocialHandles;
 
 export interface SocialLinkProps {
   socialType: SocialType;
@@ -20,6 +20,8 @@ const getUrl = ({ socialType, username }: SocialLinkProps) => {
       return `https://instagram.com/${username}`;
     case 'facebook':
       return `https://facebook.com/${username}`;
+    default:
+      return '#';
   }
 };
 
