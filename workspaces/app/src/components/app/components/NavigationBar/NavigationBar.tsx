@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { HamburgerMenuButton, Menu, LogoHomeLink } from './components';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { User } from 'libraries/models';
 import { useObservable } from 'libraries/utils';
 import { getUserProfile$ } from './observables';
@@ -25,10 +25,12 @@ export const NavigationBar = () => {
 
   const userProfile = useObservable(getUserProfile$, undefined);
 
+  const openMenuModal = useCallback(() => setIsMenuOpen(true), [setIsMenuOpen]);
+
   return (
     <Container>
       <LogoHomeLink />
-      <HamburgerMenuButton hasNotifications={false} onClick={() => setIsMenuOpen(true)} />
+      <HamburgerMenuButton onClick={openMenuModal} />
       <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} userProfile={userProfile} />
     </Container>
   );
