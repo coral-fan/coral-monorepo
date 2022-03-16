@@ -38,6 +38,7 @@ export const getServerSideProps: GetServerSideProps<ArtistPageProps, { artistId:
       scale: 1,
     },
     socialHandles: {
+      facebook: null,
       twitter: null,
       instagram: null,
       tiktok: null,
