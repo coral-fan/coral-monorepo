@@ -1,4 +1,4 @@
-import { PrivateUserData, User } from 'libraries/models';
+import { PrivateUserData, PublicUserData } from 'libraries/models';
 
-export type UserProperties = keyof User;
+export type UserProperties = keyof PublicUserData;
 export type PrivateUserDataProperties = keyof PrivateUserData;
