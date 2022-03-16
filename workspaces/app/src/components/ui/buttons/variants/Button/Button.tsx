@@ -15,6 +15,8 @@ const Wrapper = styled(BaseButton)`
   border-radius: ${tokens.border.radius.sm};
   background-color: ${tokens.background.color.brand};
   border: ${tokens.background.color.brand};
+  min-width: 45px;
+  min-height: 45px;
 `;
 
 export const Button: FC<ButtonProps> = ({ children, loading, ...props }) => (
