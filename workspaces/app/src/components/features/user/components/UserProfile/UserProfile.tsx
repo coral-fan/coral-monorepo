@@ -87,13 +87,6 @@ export const UserProfile = () => {
   const [isUpdateProfileInfoModalOpen, setIsProfileInfoModalOpen] =
     useIsUpdateProfileInfoModalOpen();
 
-  useEffect(() => {
-    /*
-    Without this useEffect, the modal opens on refresh / reload;
-    */
-    setIsUpdateProfilePhotoOpen(false);
-  }, []);
-
   const openUpdateProfilePhotoModal = useCallback(
     () => setIsUpdateProfilePhotoOpen(true),
     [setIsUpdateProfilePhotoOpen]
