@@ -1,6 +1,6 @@
 import { Asset } from '../asset';
 import { Notification } from '../notification';
-import { NullableString } from '../types';
+import { NullableString, SocialHandles } from '../types';
 
 export interface CreditCardInformation {
   firstName: string;
@@ -21,15 +21,6 @@ export interface Photo {
   src: string;
   offsetPercentages: OffsetPercentages;
   scale: number;
-}
-
-export interface SocialHandles {
-  twitter: NullableString;
-  instagram: NullableString;
-  spotify: NullableString;
-  tiktok: NullableString;
-  soundcloud: NullableString;
-  discogs: NullableString;
 }
 
 export type UserType = 'fan' | 'super_fan' | 'artist';
