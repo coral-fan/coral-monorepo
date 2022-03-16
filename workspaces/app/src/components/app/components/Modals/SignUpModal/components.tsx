@@ -3,22 +3,17 @@ import styled from '@emotion/styled';
 export const SignUpForm = styled.form`
   display: flex;
   flex-direction: column;
-  padding-top: 24px;
+  gap: 16px;
 `;
 export const InputsContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 4px;
+  gap: 16px;
 `;
 
-export const AgreeToggleContainer = styled.div`
+export const TogglesContainer = styled.div`
   display: flex;
-  gap: 10px;
-  align-items: center;
-  width: fit-content;
-  padding-bottom: 16px;
-`;
-export const AgreeToggleCopy = styled.div`
-  font-size: 14px;
+  flex-direction: column;
+  gap: 16px;
 `;

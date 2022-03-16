@@ -3,7 +3,7 @@ import { useIsNetworkSupported } from 'libraries/blockchain';
 import { Modal, Button, Toggle } from 'components/ui';
 import { Input } from 'components/ui/Input';
 
-import { AgreeToggleContainer, AgreeToggleCopy, InputsContainer, SignUpForm } from './components';
+import { TogglesContainer, InputsContainer, SignUpForm } from './components';
 
 import { useSignUpForm } from './hook';
 
@@ -41,18 +41,14 @@ export const SignUpModal = () => {
             error={errors?.email?.message}
           />
         </InputsContainer>
-        {shouldShowDoesAgreeToMarketing && (
-          <AgreeToggleContainer>
-            <Toggle {...register('doesAgreeToMarketing')} />
-            <AgreeToggleCopy>Opt into marketing</AgreeToggleCopy>
-          </AgreeToggleContainer>
-        )}
-        <AgreeToggleContainer>
-          <Toggle {...register('doesAgree')} />
-          <AgreeToggleCopy>
+        <TogglesContainer>
+          {shouldShowDoesAgreeToMarketing && (
+            <Toggle {...register('doesAgreeToMarketing')}>Opt into marketing</Toggle>
+          )}
+          <Toggle {...register('doesAgree')}>
             I agree to Coral&apos;s <u>privacy policy</u> and <u> terms &amp; conditions</u>
-          </AgreeToggleCopy>
-        </AgreeToggleContainer>
+          </Toggle>
+        </TogglesContainer>
         <Button
           type="submit"
           disabled={!isValid || isSignUpSubmitting}
