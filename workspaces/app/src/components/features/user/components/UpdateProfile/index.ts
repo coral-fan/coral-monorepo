@@ -1,1 +1,1 @@
-export * from './UpdateProfile';
+export * from './components';
