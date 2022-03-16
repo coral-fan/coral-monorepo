@@ -58,7 +58,7 @@ export const Input = forwardRef(function Input(
     <Container>
       <Label htmlFor={inputId}>{label}</Label>
       <input id={inputId} css={getInputStyle(error)} ref={ref} {...props}></input>
-      <Error>{error ?? ''}</Error>
+      {error && <Error>{error}</Error>}
     </Container>
   );
 });
