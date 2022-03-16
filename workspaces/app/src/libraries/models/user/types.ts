@@ -1,6 +1,7 @@
 import { Asset } from '../asset';
 import { Notification } from '../notification';
 import { NullableString, SocialHandles } from '../types';
+import { Photo } from '../types';
 
 export interface CreditCardInformation {
   firstName: string;
@@ -13,14 +14,6 @@ export interface CreditCardInformation {
     zipCode: number;
     city: string;
   };
-}
-
-export type OffsetPercentages = [number, number];
-
-export interface Photo {
-  src: string;
-  offsetPercentages: OffsetPercentages;
-  scale: number;
 }
 
 export type UserType = 'fan' | 'super_fan' | 'artist';

@@ -1,4 +1,4 @@
-import { Photo } from 'libraries/models/user/types';
+import { Photo } from 'libraries/models';
 
 export const DEFAULT_PROFILE_PHOTO: Photo = {
   src: 'https://www.stereofox.com/images/86513/resized.jpg',
