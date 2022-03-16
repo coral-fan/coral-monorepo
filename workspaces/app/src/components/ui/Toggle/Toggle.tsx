@@ -10,9 +10,9 @@ const HiddenInput = styled.input`
 `;
 
 const Slider = styled.div`
-  position: absolute;
-  cursor: pointer;
+  position: relative;
   width: 35px;
+  height: 20px;
   top: 0;
   left: 0;
   right: 0;
@@ -47,19 +47,31 @@ const Slider = styled.div`
 
 const Wrapper = styled.label`
   position: relative;
-  display: inline-block;
-  width: 35px;
-  height: 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 `;
 
+const Label = styled.span`
+  display: block;
+  padding-left: 10px;
+  font-size: ${tokens.font.size.xs};
+  text-transform: uppercase;
+`;
+
+interface ToggleProps extends ComponentProps<'input'> {
+  label: string;
+}
+
 export const Toggle = forwardRef(function Toggle(
-  props: ComponentProps<'input'>,
+  { label, ...inputProps }: ToggleProps,
   ref: ForwardedRef<HTMLInputElement>
 ) {
   return (
     <Wrapper>
-      <HiddenInput type="checkbox" ref={ref} {...props} />
+      <HiddenInput type="checkbox" ref={ref} {...inputProps} />
       <Slider />
+      {label && <Label>{label}</Label>}
     </Wrapper>
   );
 });
