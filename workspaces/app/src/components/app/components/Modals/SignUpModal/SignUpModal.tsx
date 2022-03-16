@@ -11,18 +11,14 @@ export const SignUpModal = () => {
   const [isSigningUp] = useIsSigningUp();
   const isNetworkSupported = useIsNetworkSupported();
 
-  const {
-    register,
-    errors,
-    isValid,
-    isSignUpSubmitting,
-    handleSubmitSignUp,
-    shouldShowOptIntoEmailMarketing,
-  } = useSignUpForm();
+  const { register, errors, isValid, isSignUpSubmitting, handleSubmitSignUp, getValues } =
+    useSignUpForm();
 
   if (!isSigningUp || !isNetworkSupported) {
     return null;
   }
+
+  const { email } = getValues();
 
   return (
     <Modal title="Sign up">
@@ -42,8 +38,8 @@ export const SignUpModal = () => {
           />
         </InputsContainer>
         <TogglesContainer>
-          {shouldShowOptIntoEmailMarketing && (
-            <Toggle {...register('doesOptIntoEmailMarketing')}>Opt into marketing</Toggle>
+          {email && email !== undefined && (
+            <Toggle {...register('doesOptIntoMarketing')}>Opt into marketing</Toggle>
           )}
           <Toggle {...register('doesAgree')}>
             I agree to Coral&apos;s <u>privacy policy</u> and <u> terms &amp; conditions</u>
