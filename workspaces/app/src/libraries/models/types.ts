@@ -9,6 +9,7 @@ export interface Photo {
 }
 
 export interface SocialHandles {
+  facebook: NullableString;
   twitter: NullableString;
   instagram: NullableString;
   spotify: NullableString;
