@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { ComponentProps, ForwardedRef, forwardRef } from 'react';
+import { ComponentProps, FC, ForwardedRef, forwardRef } from 'react';
 import tokens from 'styles/tokens';
 import { colors } from 'styles';
 
@@ -59,19 +59,15 @@ const Label = styled.span`
   text-transform: uppercase;
 `;
 
-interface ToggleProps extends ComponentProps<'input'> {
-  label: string;
-}
-
 export const Toggle = forwardRef(function Toggle(
-  { label, ...inputProps }: ToggleProps,
+  { children, ...inputProps }: ComponentProps<'input'>,
   ref: ForwardedRef<HTMLInputElement>
 ) {
   return (
     <Wrapper>
       <HiddenInput type="checkbox" ref={ref} {...inputProps} />
       <Slider />
-      {label && <Label>{label}</Label>}
+      {children && <Label>{children}</Label>}
     </Wrapper>
   );
 });
