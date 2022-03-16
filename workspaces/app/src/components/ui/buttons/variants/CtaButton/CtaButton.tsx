@@ -14,6 +14,7 @@ export const CtaWrapperStyle = css`
 
 const Wrapper = styled(BaseButton)`
   ${CtaWrapperStyle}
+  width:100%;
   padding: 28px 20px;
 `;
 

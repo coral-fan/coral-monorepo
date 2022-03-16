@@ -4,6 +4,7 @@ import { BaseButton, BaseButtonProps as ButtonProps } from '../../BaseButton';
 import tokens from 'styles/tokens';
 
 const Wrapper = styled(BaseButton)`
+  width: 100%;
   padding: 15px;
   text-transform: uppercase;
   font-size: ${tokens.font.size.sm};
