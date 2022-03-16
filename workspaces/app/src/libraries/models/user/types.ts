@@ -15,12 +15,6 @@ export interface CreditCardInformation {
   };
 }
 
-export interface PrivateUserData {
-  email: NullableString;
-  doesOptIntoEmailMarketing: boolean;
-  creditCardInformation: CreditCardInformation | null;
-}
-
 export type OffsetPercentages = [number, number];
 
 export interface Photo {
@@ -38,6 +32,12 @@ export interface PublicUserData {
   profilePhoto: Photo;
   notifications: Notification[];
   assets: Asset[];
+}
+
+export interface PrivateUserData {
+  email: NullableString;
+  doesOptIntoMarketing: boolean;
+  creditCardInformation: CreditCardInformation | null;
 }
 
 //  id = wallet address
