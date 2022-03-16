@@ -1,7 +1,6 @@
 import { css } from '@emotion/react';
 
 export const buttonBaseStyle = css`
-  width: 100%;
   border: none;
   background-color: transparent;
   min-height: 45px;
