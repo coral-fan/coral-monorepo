@@ -1,7 +1,8 @@
 import { css } from '@emotion/react';
 import { createTheme } from 'theme-in-css';
 
-export const DESKTOP_BREAKPOINT = '716px';
+export const DESKTOP_BREAKPOINT_INT = 716;
+export const DESKTOP_BREAKPOINT = `${DESKTOP_BREAKPOINT_INT}px`;
 
 /*
 Color values are set here. 10 is the "base" value, 
