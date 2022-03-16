@@ -12,6 +12,7 @@ export interface SocialLinkProps {
   username: string;
 }
 
+// TODO: flesh out return statements
 const getUrl = ({ socialType, username }: SocialLinkProps) => {
   switch (socialType) {
     case 'twitter':
