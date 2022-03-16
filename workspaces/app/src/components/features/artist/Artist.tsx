@@ -37,10 +37,13 @@ export const getServerSideProps: GetServerSideProps<ArtistPageProps, { artistId:
       offsetPercentages: [0, 0],
       scale: 1,
     },
-    socialMedia: {
+    socialHandles: {
       twitter: null,
-      facebook: null,
       instagram: null,
+      tiktok: null,
+      soundcloud: null,
+      discogs: null,
+      spotify: null,
     },
     collections: [
       {
