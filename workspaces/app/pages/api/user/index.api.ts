@@ -19,8 +19,6 @@ const post: Handler = async (req, res) => {
   const { uid, incomingUserData } = req.body;
 
   if (typeof uid !== 'string' || !isIncomingUserDataValid(incomingUserData)) {
-    console.log(uid);
-    console.log(incomingUserData);
     return res.status(400).json({ error: 'Invalid data was provided.' });
   }
 
