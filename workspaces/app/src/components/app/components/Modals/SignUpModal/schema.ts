@@ -6,7 +6,7 @@ export const getSignUpSchema = (usernames: Set<string>) =>
     username: getUsernameSchema(usernames),
     email: EMAIL_SCHEMA,
     doesAgree: boolean().required().default(false).isTrue(),
-    doesAgreeToMarketing: boolean().required().default(false),
+    doesOptIntoEmailMarketing: boolean().required().default(false),
   });
 
 export type SignUpSchema = InferType<ReturnType<typeof getSignUpSchema>>;
