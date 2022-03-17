@@ -25,6 +25,7 @@ export interface PublicUserData {
   profilePhoto: Photo;
   bio: NullableString;
   socialHandles: SocialHandles;
+  userType: UserType;
   notifications: Notification[];
   assets: Asset[];
 }

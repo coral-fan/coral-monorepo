@@ -1,12 +1,11 @@
-import { Photo, SocialHandles } from '../types';
+import { NullableString } from '..';
 import { Collection } from '../collection';
-// id = coral wallet address
-export interface Artist {
-  // id = coral wallet address, not artist's personal wallet address
-  id: string;
-  name: string;
-  profilePhoto: Photo;
-  socialHandles: SocialHandles;
+import { User } from '../user';
 
+export interface Artist extends User {
+  // description: long format description for Artist Page
+  description: string;
+  // quote: pull quote for Artist Page
+  quote: NullableString;
   collections: Collection[];
 }
