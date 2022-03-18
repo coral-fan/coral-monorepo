@@ -1,4 +1,4 @@
-import { Photo, SocialHandles } from '../types';
+import { NullableString, Photo, SocialHandles } from '../types';
 import { Collection } from '../collection';
 import { Asset } from '..';
 // id = coral wallet address
@@ -7,7 +7,7 @@ export interface Artist {
   id: string;
   name: string;
   bio: string;
-  quote?: string;
+  quote: NullableString;
   profilePhoto: Photo;
   socialHandles: SocialHandles;
 
