@@ -1,12 +1,14 @@
-import { Story, Meta } from '@storybook/react';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Input } from './Input';
 
 export default {
-  title: 'Coral/UI/Input',
+  title: 'Coral/UI/inputs/Input',
   component: Input,
-} as Meta;
+} as ComponentMeta<typeof Input>;
 
-const Template: Story = ({ label, ...args }) => <Input label={label} {...args} />;
+const Template: ComponentStory<typeof Input> = ({ label, ...args }) => (
+  <Input label={label} {...args} />
+);
 
 const defaultArgs = {
   label: 'label',
