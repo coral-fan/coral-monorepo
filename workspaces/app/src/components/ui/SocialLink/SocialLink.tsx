@@ -9,6 +9,7 @@ import tiktokSVG from './assets/tiktok.svg';
 import spotifySVG from './assets/spotify.svg';
 import discogsSVG from './assets/discogs.svg';
 import styled from '@emotion/styled';
+
 export type SocialType = keyof SocialHandles;
 
 export interface SocialLinkProps {
