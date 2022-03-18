@@ -33,7 +33,13 @@ const Content = styled(Card)<{ title?: string }>`
   color: ${tokens.font.color.primary};
   padding: ${({ title }) => `${title ? '16px' : '8px'} 18px`};
   box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.5);
-  gap: 24px;
+  gap: 18px;
+  max-height: 400px;
+  overflow: scroll;
+
+  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+    max-height: 750px;
+  }
 `;
 
 const Main = styled.div`
