@@ -3,16 +3,17 @@ import hamburgerIconSVG from './hamburger.svg';
 import { BaseButton } from 'components/ui/buttons/BaseButton';
 import styled from '@emotion/styled';
 import { DESKTOP_BREAKPOINT } from 'styles';
+import tokens from 'styles/tokens';
 
 const HamburgerIcon = getIconComponent('HamburgerIcon', hamburgerIconSVG);
 
 const MenuButton = styled(BaseButton)`
-  width: 45px;
-  height: 45px;
+  width: ${tokens.buttons.size.mobile};
+  height: ${tokens.buttons.size.mobile};
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
-    width: 60px;
-    height: 60px;
+    width: ${tokens.buttons.size.desktop};
+    height: ${tokens.buttons.size.desktop};
   }
 `;
 
