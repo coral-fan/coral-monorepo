@@ -110,6 +110,12 @@ const tokens = createTheme({
       error: colors.red[10],
     },
   },
+  buttons: {
+    size: {
+      mobile: '45px',
+      desktop: '55px',
+    },
+  },
 });
 
 export default tokens;
