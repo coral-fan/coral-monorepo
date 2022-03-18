@@ -7,8 +7,8 @@ export interface CreditCardInformation {
   firstName: string;
   lastName: string;
   cardNumber: number;
-  Expiration: string;
-  CVV: number;
+  expiration: string;
+  cvv: number;
   billingAddress: {
     address: string;
     zipCode: number;
@@ -27,6 +27,7 @@ export interface PublicUserData {
   socialHandles: SocialHandles;
   notifications: Notification[];
   assets: Asset[];
+  following: string[];
 }
 
 export interface PrivateUserData {
