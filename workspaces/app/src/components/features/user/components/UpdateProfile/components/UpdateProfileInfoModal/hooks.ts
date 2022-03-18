@@ -35,30 +35,49 @@ export const useUpdateProfileInfoForm = () => {
 
   const handleSubmitUpdateProfileInfo = useMemo(
     () =>
-      handleSubmit(async ({ username, email, bio, socialHandles }) => {
-        setIsUpdateProfileInfoSubmitting(true);
-        if (
-          uid !== undefined &&
-          username !== undefined &&
-          email !== undefined &&
-          bio !== undefined &&
-          socialHandles !== undefined
-        ) {
-          await upsertUser(uid, { username, email, bio, socialHandles });
-          setUser((user) => ({
-            ...user,
-            username,
-            email,
-            bio,
-            socialHandles,
-          }));
-          await refetchPageData();
-          setIsModalOpen(false);
+      handleSubmit(
+        async ({ username, email, bio, socialHandles: { instagram, soundcloud, twitter } }) => {
+          setIsUpdateProfileInfoSubmitting(true);
+          if (
+            uid !== undefined &&
+            username !== undefined &&
+            email !== undefined &&
+            bio !== undefined &&
+            instagram !== undefined &&
+            soundcloud !== undefined &&
+            twitter !== undefined
+          ) {
+            await upsertUser(uid, {
+              username,
+              email,
+              bio,
+              socialHandles: {
+                ...socialHandles,
+                instagram,
+                soundcloud,
+                twitter,
+              },
+            });
+            setUser((user) => ({
+              ...user,
+              username,
+              email,
+              bio,
+              socialHandles: {
+                ...socialHandles,
+                instagram,
+                soundcloud,
+                twitter,
+              },
+            }));
+            await refetchPageData();
+            setIsModalOpen(false);
+          }
         }
-        setIsUpdateProfileInfoSubmitting(false);
-      }),
-    [handleSubmit, setIsModalOpen, uid, setUser, refetchPageData]
+      ),
+    [handleSubmit, setIsModalOpen, uid, socialHandles, setUser, refetchPageData]
   );
+
   return {
     register,
     errors,
