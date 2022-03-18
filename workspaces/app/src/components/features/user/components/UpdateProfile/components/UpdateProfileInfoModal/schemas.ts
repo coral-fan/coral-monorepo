@@ -15,6 +15,10 @@ export const getUpdateProfileInfoSchema = (usernames: Set<string>, currentUserna
       twitter: SOCIAL_HANDLE_SCHEMA,
       instagram: SOCIAL_HANDLE_SCHEMA,
       soundcloud: SOCIAL_HANDLE_SCHEMA,
+      facebook: SOCIAL_HANDLE_SCHEMA,
+      discogs: SOCIAL_HANDLE_SCHEMA,
+      tiktok: SOCIAL_HANDLE_SCHEMA,
+      spotify: SOCIAL_HANDLE_SCHEMA,
     }),
   });
 
