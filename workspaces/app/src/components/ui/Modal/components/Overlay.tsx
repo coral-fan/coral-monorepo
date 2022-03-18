@@ -12,5 +12,5 @@ export const Overlay = styled.div`
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 1;
-  padding: 0 12px;
+  padding: 0;
 `;
