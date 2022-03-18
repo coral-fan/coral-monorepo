@@ -32,6 +32,7 @@ export const getServerSideProps: GetServerSideProps<ArtistPageProps, { artistId:
   const artistData: Artist = {
     id: '1',
     name: 'Bonobo',
+    bio: 'Simon Green, known by his stage name Bonobo, is a British musician, producer, and DJ based in Los Angeles. He debuted with a trip hop aesthetic, and has since explored more upbeat approaches as well as jazz and world music influences.',
     profilePhoto: {
       src: 'https://www.stereofox.com/images/86513/resized.jpg',
       offsetPercentages: [0, 0],
@@ -46,6 +47,7 @@ export const getServerSideProps: GetServerSideProps<ArtistPageProps, { artistId:
       discogs: null,
       spotify: null,
     },
+    assets: [],
     collections: [
       {
         id: '1',
