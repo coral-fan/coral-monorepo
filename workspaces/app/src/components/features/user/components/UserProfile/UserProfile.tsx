@@ -6,17 +6,27 @@ import {
   useUser,
 } from 'components/features/user/hooks';
 import { EditAvatarButton as EditAvatarButtonComponent } from '../EditAvatarButton';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { UpdateProfileInfoModal } from '../UpdateProfile/components/UpdateProfileInfoModal';
 import { UpdateProfilePhotoModal } from '../UpdateProfile/components/UpdateProfilePhotoModal';
 import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 import { useRouter } from 'next/router';
 import { useIsDesktop } from 'libraries/window';
 import { useUserUid } from 'libraries/models';
+import { SocialLinks } from 'components/features/components/SocialLinks';
 
 const { size, line_height, letter_spacing, weight } = tokens.font;
 
 const ProfileContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 0 16px;
+`;
+
+const MainProfileContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,7 +54,7 @@ const EditAvatarButton = styled(EditAvatarButtonComponent)`
   }
 `;
 
-const TextContent = styled.div`
+const UsernameContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -71,6 +81,19 @@ const Username = styled.span`
   font-weight: ${weight.bold};
 `;
 
+const Bio = styled.div`
+  font-size: ${size.sm};
+  letter-spacing: ${letter_spacing.sm};
+  line-height: ${line_height.sm};
+  font-weight: ${weight.normal};
+`;
+
+const UserContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
 export const UserProfile = () => {
   const { userProfileId } = useRouter().query;
 
@@ -79,7 +102,7 @@ export const UserProfile = () => {
   }
 
   const isDesktop = useIsDesktop();
-  const [{ username, profilePhoto }] = useUser();
+  const [{ username, profilePhoto, socialHandles, bio }] = useUser();
   const currentUserUid = useUserUid();
 
   const [isUpdateProfilePhotoModalOpen, setIsUpdateProfilePhotoOpen] =
@@ -102,26 +125,32 @@ export const UserProfile = () => {
 
   return (
     <ProfileContainer>
-      <AvatarContainer>
-        <Avatar size={avatarSize} {...profilePhoto} />
-        {isCurrentUser && (
-          <>
-            <EditAvatarButton onClick={openUpdateProfilePhotoModal} />
-            {isUpdateProfilePhotoModalOpen ? <UpdateProfilePhotoModal /> : null}
-          </>
-        )}
-      </AvatarContainer>
-      <TextContent>
-        <Username>{username}</Username>
-        {isCurrentUser && (
-          <>
-            <EditProfileLinkButton onClick={openUpdateProfileInfoModal}>
-              Update Profile
-            </EditProfileLinkButton>
-            {isUpdateProfileInfoModalOpen ? <UpdateProfileInfoModal /> : null}
-          </>
-        )}
-      </TextContent>
+      <MainProfileContainer>
+        <AvatarContainer>
+          <Avatar size={avatarSize} {...profilePhoto} />
+          {isCurrentUser && (
+            <>
+              <EditAvatarButton onClick={openUpdateProfilePhotoModal} />
+              {isUpdateProfilePhotoModalOpen ? <UpdateProfilePhotoModal /> : null}
+            </>
+          )}
+        </AvatarContainer>
+        <UsernameContainer>
+          <Username>{username}</Username>
+          {isCurrentUser && (
+            <>
+              <EditProfileLinkButton onClick={openUpdateProfileInfoModal}>
+                Update Profile
+              </EditProfileLinkButton>
+              {isUpdateProfileInfoModalOpen ? <UpdateProfileInfoModal /> : null}
+            </>
+          )}
+        </UsernameContainer>
+      </MainProfileContainer>
+      <UserContentContainer>
+        <Bio>{bio}</Bio>
+        <SocialLinks socialHandles={socialHandles} />
+      </UserContentContainer>
     </ProfileContainer>
   );
 };
