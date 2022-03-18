@@ -7,7 +7,7 @@ import { useRefetchPageData } from 'libraries/utils/hooks';
 import { useIsUpdateProfileInfoModalOpen, useUser } from 'components/features/user/hooks';
 
 export const useUpdateProfileInfoForm = () => {
-  const [{ username, email }, setUser] = useUser();
+  const [{ username, email, bio, socialHandles }, setUser] = useUser();
   const usernames = useUsernames();
   const updateUserSchema = getUpdateProfileInfoSchema(usernames, username);
 
@@ -21,6 +21,8 @@ export const useUpdateProfileInfoForm = () => {
     defaultValues: {
       username,
       email,
+      bio,
+      socialHandles,
     },
   });
 
@@ -33,14 +35,22 @@ export const useUpdateProfileInfoForm = () => {
 
   const handleSubmitUpdateProfileInfo = useMemo(
     () =>
-      handleSubmit(async ({ username, email }) => {
+      handleSubmit(async ({ username, email, bio, socialHandles }) => {
         setIsUpdateProfileInfoSubmitting(true);
-        if (uid !== undefined && email !== undefined) {
-          await upsertUser(uid, { username, email });
+        if (
+          uid !== undefined &&
+          username !== undefined &&
+          email !== undefined &&
+          bio !== undefined &&
+          socialHandles !== undefined
+        ) {
+          await upsertUser(uid, { username, email, bio, socialHandles });
           setUser((user) => ({
             ...user,
             username,
             email,
+            bio,
+            socialHandles,
           }));
           await refetchPageData();
           setIsModalOpen(false);
