@@ -1,7 +1,6 @@
 import { useIsSigningUp } from 'libraries/authentication';
 import { useIsNetworkSupported } from 'libraries/blockchain';
-import { Modal, Button, Toggle } from 'components/ui';
-import { Input } from 'components/ui/Input';
+import { Modal, Button, Toggle, Input } from 'components/ui';
 
 import { TogglesContainer, InputsContainer, SignUpForm } from './components';
 
