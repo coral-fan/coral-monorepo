@@ -2,8 +2,10 @@ import { useWeb3 } from 'libraries/blockchain/hooks';
 import { getAuth } from 'firebase/auth';
 import { useIdToken } from '.';
 import { useCallback } from 'react';
+import { usePush } from './usePush';
 
 export const useLogout = () => {
+  const push = usePush();
   const { active, connector } = useWeb3();
   const idToken = useIdToken();
 
@@ -14,7 +16,8 @@ export const useLogout = () => {
     if (idToken) {
       await getAuth().signOut();
     }
-  }, [active, connector, idToken]);
+    push('/');
+  }, [active, connector, idToken, push]);
 
   return logout;
 };
