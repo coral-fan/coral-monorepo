@@ -26,15 +26,14 @@ const Label = styled.label`
 `;
 
 export const FileInput = forwardRef(function FileInput(
-  { error, ...props }: InputProps,
+  { children, ...props }: InputProps,
   ref: ForwardedRef<HTMLInputElement>
 ) {
   return (
     <>
       <Label htmlFor="file-upload">
         <Input id="file-upload" ref={ref} type="file" accept="image/*" {...props} />
-        {error && <Error>{error}</Error>}
-        Choose Photo
+        {children}
       </Label>
     </>
   );
