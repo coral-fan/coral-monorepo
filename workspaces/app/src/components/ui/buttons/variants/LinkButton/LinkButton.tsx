@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { FC } from 'react';
+import tokens from 'styles/tokens';
 import { BaseButton, BaseButtonProps as ButtonProps } from '../../BaseButton';
 
 const Wrapper = styled(BaseButton)`
@@ -13,6 +14,10 @@ const Wrapper = styled(BaseButton)`
   border: none;
   text-align: left;
   width: fit-content;
+
+  &:hover {
+    color: ${tokens.font.color.brand};
+  }
 `;
 
 export const LinkButton: FC<ButtonProps> = ({ children, loading, ...props }) => (
