@@ -27,3 +27,6 @@
 
 # vercel
 .vercel
+
+# generated types
+**/contracts
