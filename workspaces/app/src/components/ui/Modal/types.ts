@@ -1,5 +1,8 @@
+import { SerializedStyles } from '@emotion/react';
+
 interface ModalBaseProps {
   title?: string;
+  mainContainerStyle?: SerializedStyles;
 }
 interface ModalWithoutButtonProps extends ModalBaseProps {
   onClick?: never;

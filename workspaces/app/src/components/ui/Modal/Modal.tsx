@@ -42,16 +42,17 @@ const Content = styled(Card)<{ title?: string }>`
   }
 `;
 
-const Main = styled.div`
+const Main = styled.div<Pick<ModalProps, 'mainContainerStyle'>>`
   display: flex;
   flex-direction: column;
+  ${({ mainContainerStyle }) => mainContainerStyle}
 `;
 
 /* 
   Using FC because it always implies children.
   Prefer to define a props interface if children isn't a prop.
 */
-export const Modal: FC<ModalProps> = ({ children, title, onClick }) => {
+export const Modal: FC<ModalProps> = ({ children, title, onClick, mainContainerStyle }) => {
   const documentBodyRef = useRef<Document['body']>();
 
   const [isMounted, setIsMounted] = useState(false);
@@ -76,7 +77,7 @@ export const Modal: FC<ModalProps> = ({ children, title, onClick }) => {
                   {title}
                 </Heading>
               )}
-              <Main>{children}</Main>
+              <Main mainContainerStyle={mainContainerStyle}>{children}</Main>
             </Content>
           </ModalContainer>
         </Overlay>,
