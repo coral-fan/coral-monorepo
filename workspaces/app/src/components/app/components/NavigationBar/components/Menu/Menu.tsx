@@ -7,6 +7,8 @@ import { useUserUid } from 'libraries/models';
 import { UserProfile } from '../../NavigationBar';
 import { Item } from './Item';
 import { MenuProfileInfo } from '../MenuProfileInfo';
+import { usePush } from 'libraries/authentication/hooks/usePush';
+import { useRouter } from 'next/router';
 
 interface MenuProps {
   isMenuOpen: boolean;
@@ -39,10 +41,19 @@ export const Menu = ({ isMenuOpen, setIsMenuOpen, userProfile }: MenuProps) => {
   const logout = useLogout();
   const isAuthenticated = useIsAuthenticated();
   const uid = useUserUid();
+  const push = usePush();
+  const currentPath = useRouter().pathname;
+
+  const handleLogout = () => {
+    logout();
+    if (currentPath !== '/') {
+      push('/');
+    }
+  };
 
   const AUTHENTICATED_MENU_ITEMS: MenuItemProps[] = [
     { name: 'Home', to: '/' },
-    { name: 'Sign Out', onClick: logout },
+    { name: 'Sign Out', onClick: handleLogout },
   ];
 
   const UNAUTHENTICATED_MENU_ITEMS: MenuItemProps[] = [
