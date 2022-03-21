@@ -6,7 +6,7 @@ export * from './badges';
 export * from './profile';
 export * from './Toggle';
 export * from './inputs';
-export * from './Link';
+export * from './links';
 export * from './Card';
 export * from './TimeElapsed';
 export * from './Image';
