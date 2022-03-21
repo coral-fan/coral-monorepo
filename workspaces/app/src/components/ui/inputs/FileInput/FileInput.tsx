@@ -30,11 +30,9 @@ export const FileInput = forwardRef(function FileInput(
   ref: ForwardedRef<HTMLInputElement>
 ) {
   return (
-    <>
-      <Label htmlFor="file-upload">
-        <Input id="file-upload" ref={ref} type="file" accept="image/*" {...props} />
-        {children}
-      </Label>
-    </>
+    <Label htmlFor="file-upload">
+      <Input id="file-upload" ref={ref} type="file" accept="image/*" {...props} />
+      {children}
+    </Label>
   );
 });
