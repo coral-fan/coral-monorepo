@@ -44,34 +44,28 @@ export const UserProfile = () => {
 
   const avatarSize = isDesktop ? 200 : 125;
 
-  const EditAvatar = () =>
-    isCurrentUser ? (
-      <>
-        <EditAvatarButton onClick={openUpdateProfilePhotoModal} />
-        {isUpdateProfilePhotoModalOpen && <UpdateProfilePhotoModal />}
-      </>
-    ) : null;
-
-  const EditProfile = () =>
-    isCurrentUser ? (
-      <>
-        <EditProfileLinkButton onClick={openUpdateProfileInfoModal}>
-          Update Profile
-        </EditProfileLinkButton>
-        {isUpdateProfileInfoModalOpen && <UpdateProfileInfoModal />}
-      </>
-    ) : null;
-
   return (
     <ProfileContainer>
       <MainProfileContainer>
         <AvatarContainer>
           <Avatar size={avatarSize} {...profilePhoto} />
-          <EditAvatar />
+          {isCurrentUser && (
+            <>
+              <EditAvatarButton onClick={openUpdateProfilePhotoModal} />
+              {isUpdateProfilePhotoModalOpen && <UpdateProfilePhotoModal />}
+            </>
+          )}
         </AvatarContainer>
         <UsernameContainer>
           <Username>{username}</Username>
-          <EditProfile />
+          {isCurrentUser && (
+            <>
+              <EditProfileLinkButton onClick={openUpdateProfileInfoModal}>
+                Update Profile
+              </EditProfileLinkButton>
+              {isUpdateProfileInfoModalOpen && <UpdateProfileInfoModal />}
+            </>
+          )}
         </UsernameContainer>
       </MainProfileContainer>
       <UserContentContainer>
