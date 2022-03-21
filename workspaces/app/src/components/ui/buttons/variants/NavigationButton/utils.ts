@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import tokens, { colors, DESKTOP_BREAKPOINT } from 'styles/tokens';
-import { buttonBaseStyle } from './styles';
+import { buttonBaseStyle } from '../../styles';
 
 interface NavigationButtonStyle {
   transparent: boolean;
