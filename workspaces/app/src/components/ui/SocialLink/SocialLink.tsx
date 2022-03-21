@@ -14,48 +14,17 @@ export type SocialType = keyof SocialHandles;
 
 export interface SocialLinkProps {
   socialType: SocialType;
-  username: NullableString;
+  username: string;
 }
 
-// TODO: flesh out return statements
-const getUrl = ({ socialType, username }: SocialLinkProps) => {
-  switch (socialType) {
-    case 'twitter':
-      return `https://twitter.com/${username}`;
-    case 'instagram':
-      return `https://instagram.com/${username}`;
-    case 'facebook':
-      return `https://facebook.com/${username}`;
-    case 'soundcloud':
-      return `https://soundcloud.com/${username}`;
-    case 'tiktok':
-      return `https://tiktok.com/@${username}`;
-    case 'spotify':
-      return `https://open.spotify.com/user/${username}`;
-    case 'discogs':
-      return `https://discogs.com/user/${username}`;
-    default:
-      return '#';
-  }
-};
-
-const getSVG = (socialType: SocialType) => {
-  switch (socialType) {
-    case 'twitter':
-      return twitterSVG;
-    case 'instagram':
-      return instagramSVG;
-    case 'facebook':
-      return facebookSVG;
-    case 'soundcloud':
-      return soundcloudSVG;
-    case 'tiktok':
-      return tiktokSVG;
-    case 'spotify':
-      return spotifySVG;
-    case 'discogs':
-      return discogsSVG;
-  }
+const socialInfoMap: Record<SocialType, [string, any]> = {
+  twitter: ['https://twitter.com/', twitterSVG],
+  instagram: ['https://instagram.com/', instagramSVG],
+  facebook: ['https://facebook.com/', facebookSVG],
+  soundcloud: ['https://soundcloud.com/', soundcloudSVG],
+  tiktok: ['https://tiktok.com/@', tiktokSVG],
+  spotify: ['https://open.spotify.com/user/', spotifySVG],
+  discogs: ['https://discogs.com/user/', discogsSVG],
 };
 
 const Link = styled(LinkComponent)`
@@ -64,8 +33,11 @@ const Link = styled(LinkComponent)`
   height: 30px;
 `;
 
-export const SocialLink = ({ socialType, username }: SocialLinkProps) => (
-  <Link href={getUrl({ socialType, username })} target="_blank">
-    <img src={getSVG(socialType)} width={'auto'} height={'auto'} alt={''} />
-  </Link>
-);
+export const SocialLink = ({ socialType, username }: SocialLinkProps) => {
+  const [url, svg] = socialInfoMap[socialType];
+  return (
+    <Link href={`${url}${username}`} target="_blank">
+      <img src={svg} width={'auto'} height={'auto'} alt={''} />
+    </Link>
+  );
+};
