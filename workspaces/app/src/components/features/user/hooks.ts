@@ -1,5 +1,6 @@
-import { User } from 'libraries/models';
+import { User, useUserUid } from 'libraries/models';
 import { useContext } from 'react';
+import { useRouter } from 'next/router';
 import { UserPageContext, SetUser, SetIsModalOpen } from './context';
 
 const useUserPageContext = () => {
@@ -23,4 +24,16 @@ export const useIsUpdateProfileInfoModalOpen = (): [boolean, SetIsModalOpen] => 
 export const useIsUpdateProfilePhotoModalOpen = (): [boolean, SetIsModalOpen] => {
   const { isUpdateProfilePhotoModalOpen, setIsUpdateProfilePhotoModalOpen } = useUserPageContext();
   return [isUpdateProfilePhotoModalOpen, setIsUpdateProfilePhotoModalOpen];
+};
+
+export const useIsCurrentUser = () => {
+  const { userProfileId } = useRouter().query;
+
+  if (typeof userProfileId !== 'string') {
+    throw Error('userProfileId must be of type string');
+  }
+
+  const currentUserUid = useUserUid();
+
+  return currentUserUid === userProfileId;
 };
