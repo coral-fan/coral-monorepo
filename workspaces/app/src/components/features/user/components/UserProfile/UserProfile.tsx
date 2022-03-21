@@ -14,25 +14,18 @@ import {
   useIsUpdateProfilePhotoModalOpen,
   useIsUpdateProfileInfoModalOpen,
   useUser,
+  useIsCurrentUser,
 } from 'components/features/user/hooks';
 import { useCallback } from 'react';
 import { UpdateProfileInfoModal } from '../UpdateProfile/components/UpdateProfileInfoModal';
 import { UpdateProfilePhotoModal } from '../UpdateProfile/components/UpdateProfilePhotoModal';
-import { useRouter } from 'next/router';
 import { useIsDesktop } from 'libraries/window';
-import { useUserUid } from 'libraries/models';
 import { SocialLinks } from 'components/features/components/SocialLinks';
 
 export const UserProfile = () => {
-  const { userProfileId } = useRouter().query;
-
-  if (typeof userProfileId !== 'string') {
-    throw Error('userProfileId must be of type string');
-  }
-
   const isDesktop = useIsDesktop();
   const [{ username, profilePhoto, socialHandles, bio }] = useUser();
-  const currentUserUid = useUserUid();
+  const isCurrentUser = useIsCurrentUser();
 
   const [isUpdateProfilePhotoModalOpen, setIsUpdateProfilePhotoOpen] =
     useIsUpdateProfilePhotoModalOpen();
@@ -50,30 +43,35 @@ export const UserProfile = () => {
   );
 
   const avatarSize = isDesktop ? 200 : 125;
-  const isCurrentUser = currentUserUid === userProfileId;
+
+  const EditAvatar = () =>
+    isCurrentUser ? (
+      <>
+        <EditAvatarButton onClick={openUpdateProfilePhotoModal} />
+        {isUpdateProfilePhotoModalOpen && <UpdateProfilePhotoModal />}
+      </>
+    ) : null;
+
+  const EditProfile = () =>
+    isCurrentUser ? (
+      <>
+        <EditProfileLinkButton onClick={openUpdateProfileInfoModal}>
+          Update Profile
+        </EditProfileLinkButton>
+        {isUpdateProfileInfoModalOpen && <UpdateProfileInfoModal />}
+      </>
+    ) : null;
 
   return (
     <ProfileContainer>
       <MainProfileContainer>
         <AvatarContainer>
           <Avatar size={avatarSize} {...profilePhoto} />
-          {isCurrentUser && (
-            <>
-              <EditAvatarButton onClick={openUpdateProfilePhotoModal} />
-              {isUpdateProfilePhotoModalOpen ? <UpdateProfilePhotoModal /> : null}
-            </>
-          )}
+          <EditAvatar />
         </AvatarContainer>
         <UsernameContainer>
           <Username>{username}</Username>
-          {isCurrentUser && (
-            <>
-              <EditProfileLinkButton onClick={openUpdateProfileInfoModal}>
-                Update Profile
-              </EditProfileLinkButton>
-              {isUpdateProfileInfoModalOpen ? <UpdateProfileInfoModal /> : null}
-            </>
-          )}
+          <EditProfile />
         </UsernameContainer>
       </MainProfileContainer>
       <UserContentContainer>
