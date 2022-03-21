@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 import { FC } from 'react';
 import { BaseButton, BaseButtonProps as ButtonProps } from '../../BaseButton';
 import tokens from 'styles/tokens';
 
-const Wrapper = styled(BaseButton)`
+export const buttonStyle = css`
   width: 100%;
   padding: 15px;
   text-transform: uppercase;
@@ -17,6 +18,10 @@ const Wrapper = styled(BaseButton)`
   border: ${tokens.background.color.brand};
   min-width: 45px;
   min-height: 45px;
+`;
+
+const Wrapper = styled(BaseButton)`
+  ${buttonStyle}
 `;
 
 export const Button: FC<ButtonProps> = ({ children, loading, ...props }) => (
