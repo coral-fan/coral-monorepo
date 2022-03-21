@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import tokens, { colors, DESKTOP_BREAKPOINT } from 'styles/tokens';
 
 export const buttonBaseStyle = css`
   border: none;
