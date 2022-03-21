@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
+
+import { useIsAuthenticated } from 'libraries/authentication';
 import { GetServerSideProps } from 'next';
-import { WebPlayer } from './components';
+import { useState } from 'react';
+import { WebPlayer, PrivateEventModal } from './components';
 
 const Container = styled.div`
   display: flex;
@@ -12,6 +15,13 @@ interface EventPageProps {
 }
 
 export const EventPage = ({ mediaId }: EventPageProps) => {
+  const isAuthenticated = useIsAuthenticated();
+  const [doesUserHaveAccess, setDoesUserHaveAccess] = useState(true);
+
+  if (!isAuthenticated || !doesUserHaveAccess) {
+    return <PrivateEventModal collectionId={'1'} />;
+  }
+
   return (
     <Container>
       <WebPlayer mediaId={mediaId} />
