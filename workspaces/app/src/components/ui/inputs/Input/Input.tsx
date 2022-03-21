@@ -1,5 +1,5 @@
 import { ComponentProps, ForwardedRef, forwardRef } from 'react';
-import { getInputStyle } from '../utils';
+import { getInputId, getInputStyle } from '../utils';
 import { Container, Label, Error } from '../components';
 
 interface InputProps extends ComponentProps<'input'> {
@@ -11,7 +11,7 @@ export const Input = forwardRef(function Input(
   { label, error, ...props }: InputProps,
   ref: ForwardedRef<HTMLInputElement>
 ) {
-  const inputId = label.toLowerCase().split(' ').join('-');
+  const inputId = getInputId(label);
   return (
     <Container>
       <Label htmlFor={inputId}>{label}</Label>

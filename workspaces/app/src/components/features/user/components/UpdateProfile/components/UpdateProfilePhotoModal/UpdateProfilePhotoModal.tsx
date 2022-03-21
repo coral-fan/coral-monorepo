@@ -83,7 +83,9 @@ export const UpdateProfilePhotoModal = () => {
           src={src}
           ref={avatarRef}
         />
-        <FileInput onChange={handleImageFileChange}>Choose Photo</FileInput>
+        <FileInput label="ProfilePhoto" onChange={handleImageFileChange}>
+          Choose Photo
+        </FileInput>
         <InputButtonContainer>
           <Slider min={1} max={1.5} value={scale} onChange={handleRangeValueChange} step={0.01} />
           <Button

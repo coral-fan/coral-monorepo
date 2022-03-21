@@ -1,5 +1,5 @@
 import { ComponentProps, ForwardedRef, forwardRef } from 'react';
-import { getInputStyle } from '../utils';
+import { getInputId, getInputStyle } from '../utils';
 import { Container, Label, Error } from '../components';
 
 interface TextAreaProps extends ComponentProps<'textarea'> {
@@ -11,7 +11,7 @@ export const TextArea = forwardRef(function TextArea(
   { label, error, ...props }: TextAreaProps,
   ref: ForwardedRef<HTMLTextAreaElement>
 ) {
-  const inputId = label.toLowerCase().split(' ').join('-');
+  const inputId = getInputId(label);
   return (
     <Container>
       <Label htmlFor={inputId}>{label}</Label>
