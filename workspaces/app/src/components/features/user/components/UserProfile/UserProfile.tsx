@@ -15,7 +15,7 @@ import {
   useIsUpdateProfileInfoModalOpen,
   useUser,
   useIsCurrentUser,
-} from 'components/features/user/hooks';
+} from '../../hooks';
 import { useCallback } from 'react';
 import { UpdateProfileInfoModal } from '../UpdateProfile/components/UpdateProfileInfoModal';
 import { UpdateProfilePhotoModal } from '../UpdateProfile/components/UpdateProfilePhotoModal';
