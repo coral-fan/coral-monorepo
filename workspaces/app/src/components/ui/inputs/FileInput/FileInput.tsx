@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
 import { ComponentProps, ForwardedRef, forwardRef } from 'react';
 import tokens from 'styles/tokens';
-import { Error } from '../components';
+import { getInputId } from '../utils';
 
 interface InputProps extends ComponentProps<'input'> {
+  label: string;
   error?: string;
 }
 
@@ -26,12 +27,13 @@ const Label = styled.label`
 `;
 
 export const FileInput = forwardRef(function FileInput(
-  { children, ...props }: InputProps,
+  { label, children, ...props }: InputProps,
   ref: ForwardedRef<HTMLInputElement>
 ) {
+  const inputId = getInputId(label);
   return (
-    <Label htmlFor="file-upload">
-      <Input id="file-upload" ref={ref} type="file" accept="image/*" {...props} />
+    <Label htmlFor={inputId}>
+      <Input id={inputId} ref={ref} type="file" accept="image/*" {...props} />
       {children}
     </Label>
   );
