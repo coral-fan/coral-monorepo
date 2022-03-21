@@ -21,3 +21,5 @@ export const getInputStyle = ({ type, error }: InputStyleProps) => css`
     outline: none;
   }
 `;
+
+export const getInputId = (label: string) => label.toLowerCase().split(' ').join('-');
