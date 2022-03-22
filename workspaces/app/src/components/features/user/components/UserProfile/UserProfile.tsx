@@ -30,27 +30,19 @@ export const UserProfile = () => {
     [setIsProfileInfoModalOpen]
   );
 
-  const EditAvatar = (
+  const editAvatar = isCurrentUser && (
     <>
-      {isCurrentUser && (
-        <>
-          <EditAvatarButton onClick={openUpdateProfilePhotoModal} />
-          {isUpdateProfilePhotoModalOpen && <UpdateProfilePhotoModal />}
-        </>
-      )}
+      <EditAvatarButton onClick={openUpdateProfilePhotoModal} />
+      {isUpdateProfilePhotoModalOpen && <UpdateProfilePhotoModal />}
     </>
   );
 
-  const EditProfileInfo = (
+  const editProfileInfo = isCurrentUser && (
     <>
-      {isCurrentUser && (
-        <>
-          <EditProfileLinkButton onClick={openUpdateProfileInfoModal}>
-            Update Profile
-          </EditProfileLinkButton>
-          {isUpdateProfileInfoModalOpen && <UpdateProfileInfoModal />}
-        </>
-      )}
+      <EditProfileLinkButton onClick={openUpdateProfileInfoModal}>
+        Update Profile
+      </EditProfileLinkButton>
+      {isUpdateProfileInfoModalOpen && <UpdateProfileInfoModal />}
     </>
   );
 
@@ -60,8 +52,8 @@ export const UserProfile = () => {
       profilePhoto={profilePhoto}
       bio={bio}
       socialHandles={socialHandles}
-      editAvatar={EditAvatar}
-      editProfileInfo={EditProfileInfo}
+      editAvatar={editAvatar}
+      editProfileInfo={editProfileInfo}
     />
   );
 };
