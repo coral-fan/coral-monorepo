@@ -47,7 +47,7 @@ export const Username = styled.span`
   font-weight: ${weight.bold};
 `;
 
-export const Bio = styled.div`
+export const Bio = styled.p`
   font-size: ${size.sm};
   letter-spacing: ${letter_spacing.sm};
   line-height: ${line_height.sm};
