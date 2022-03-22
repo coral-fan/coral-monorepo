@@ -11,15 +11,14 @@ import {
 import { useIsDesktop } from 'libraries/window';
 import { SocialLinks } from 'components/features/components/SocialLinks';
 import { NullableString, Photo, SocialHandles } from 'libraries/models';
-import { ReactElement } from 'react';
 
 interface ProfileProps {
   username: string;
   profilePhoto: Photo;
   bio: NullableString;
   socialHandles: SocialHandles;
-  editAvatar?: ReactElement;
-  editProfileInfo?: ReactElement;
+  editAvatar?: JSX.Element | false;
+  editProfileInfo?: JSX.Element | false;
 }
 
 export const Profile = ({
