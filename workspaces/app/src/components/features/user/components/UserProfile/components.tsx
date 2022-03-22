@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 import { LinkButton } from 'components/ui';
 import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
-import { EditAvatarButton as EditAvatarButtonComponent } from '../EditAvatarButton';
+import { EditAvatarButton as BaseEditAvatarButton } from '../EditAvatarButton';
 
 const { size, line_height, letter_spacing, weight } = tokens.font;
 
-export const EditAvatarButton = styled(EditAvatarButtonComponent)`
+export const EditAvatarButton = styled(BaseEditAvatarButton)`
   position: absolute;
   z-index: 1;
   bottom: 0;
