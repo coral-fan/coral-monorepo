@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { ComponentProps, FC, ForwardedRef, forwardRef } from 'react';
+import { ComponentProps, ForwardedRef, forwardRef } from 'react';
 import tokens from 'styles/tokens';
 import { colors } from 'styles';
 
