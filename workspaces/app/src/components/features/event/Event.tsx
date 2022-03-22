@@ -32,8 +32,8 @@ export const getServerSideProps: GetServerSideProps<EventPageProps, { eventId: s
 
   const { eventId } = params;
 
-  // Make database call with eventId to get mediaId.
-  const mediaId = 'mediaIdFromDatabase';
+  // For SproutVideo, mediaId is available after creating a new live stream
+  const mediaId = 'd39eddb21f19e4c65a/095e73334ab41c6b';
 
   return {
     props: {
