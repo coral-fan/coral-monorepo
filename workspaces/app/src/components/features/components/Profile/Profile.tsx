@@ -9,7 +9,7 @@ import {
   Bio,
 } from './components';
 import { useIsDesktop } from 'libraries/window';
-import { SocialLinks } from 'components/features/components/SocialLinks';
+import { SocialLinks } from './components/SocialLinks';
 import { NullableString, Photo, SocialHandles } from 'libraries/models';
 
 interface ProfileProps {
