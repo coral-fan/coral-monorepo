@@ -9,7 +9,7 @@ import { useCallback, useMemo } from 'react';
 import { UpdateProfileInfoModal } from '../UpdateProfile/components/UpdateProfileInfoModal';
 import { UpdateProfilePhotoModal } from '../UpdateProfile/components/UpdateProfilePhotoModal';
 
-import { Profile } from '../../../components/Profile';
+import { Profile } from 'components/ui';
 
 export const UserProfile = () => {
   const [{ username, profilePhoto, socialHandles, bio }] = useUser();
