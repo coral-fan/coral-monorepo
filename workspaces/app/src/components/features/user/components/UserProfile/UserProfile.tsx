@@ -1,15 +1,4 @@
-import { Avatar } from 'components/ui';
-import {
-  ProfileContainer,
-  MainProfileContainer,
-  AvatarContainer,
-  EditAvatarButton,
-  UsernameContainer,
-  Username,
-  EditProfileLinkButton,
-  UserContentContainer,
-  Bio,
-} from './components';
+import { EditAvatarButton, EditProfileLinkButton } from './components';
 import {
   useIsUpdateProfilePhotoModalOpen,
   useIsUpdateProfileInfoModalOpen,
@@ -19,11 +8,10 @@ import {
 import { useCallback } from 'react';
 import { UpdateProfileInfoModal } from '../UpdateProfile/components/UpdateProfileInfoModal';
 import { UpdateProfilePhotoModal } from '../UpdateProfile/components/UpdateProfilePhotoModal';
-import { useIsDesktop } from 'libraries/window';
-import { SocialLinks } from 'components/features/components/SocialLinks';
+
+import { Profile } from '../../../components/Profile';
 
 export const UserProfile = () => {
-  const isDesktop = useIsDesktop();
   const [{ username, profilePhoto, socialHandles, bio }] = useUser();
   const isCurrentUser = useIsCurrentUser();
 
@@ -42,36 +30,38 @@ export const UserProfile = () => {
     [setIsProfileInfoModalOpen]
   );
 
-  const avatarSize = isDesktop ? 200 : 125;
+  const EditAvatar = (
+    <>
+      {isCurrentUser && (
+        <>
+          <EditAvatarButton onClick={openUpdateProfilePhotoModal} />
+          {isUpdateProfilePhotoModalOpen && <UpdateProfilePhotoModal />}
+        </>
+      )}
+    </>
+  );
+
+  const EditProfileInfo = (
+    <>
+      {isCurrentUser && (
+        <>
+          <EditProfileLinkButton onClick={openUpdateProfileInfoModal}>
+            Update Profile
+          </EditProfileLinkButton>
+          {isUpdateProfileInfoModalOpen && <UpdateProfileInfoModal />}
+        </>
+      )}
+    </>
+  );
 
   return (
-    <ProfileContainer>
-      <MainProfileContainer>
-        <AvatarContainer>
-          <Avatar size={avatarSize} {...profilePhoto} />
-          {isCurrentUser && (
-            <>
-              <EditAvatarButton onClick={openUpdateProfilePhotoModal} />
-              {isUpdateProfilePhotoModalOpen && <UpdateProfilePhotoModal />}
-            </>
-          )}
-        </AvatarContainer>
-        <UsernameContainer>
-          <Username>{username}</Username>
-          {isCurrentUser && (
-            <>
-              <EditProfileLinkButton onClick={openUpdateProfileInfoModal}>
-                Update Profile
-              </EditProfileLinkButton>
-              {isUpdateProfileInfoModalOpen && <UpdateProfileInfoModal />}
-            </>
-          )}
-        </UsernameContainer>
-      </MainProfileContainer>
-      <UserContentContainer>
-        <Bio>{bio}</Bio>
-        <SocialLinks socialHandles={socialHandles} />
-      </UserContentContainer>
-    </ProfileContainer>
+    <Profile
+      username={username}
+      profilePhoto={profilePhoto}
+      bio={bio}
+      socialHandles={socialHandles}
+      editAvatar={EditAvatar}
+      editProfileInfo={EditProfileInfo}
+    />
   );
 };
