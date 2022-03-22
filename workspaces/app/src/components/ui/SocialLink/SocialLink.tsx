@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { Link as LinkComponent } from 'components/ui';
-import { NullableString, SocialHandles } from 'libraries/models';
+import { SocialHandles } from 'libraries/models';
 import twitterSVG from './assets/twitter.svg';
 import instagramSVG from './assets/instagram.svg';
 import facebookSVG from './assets/facebook.svg';
@@ -17,6 +17,7 @@ export interface SocialLinkProps {
   username: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- svgs must be typed as any
 const socialInfoMap: Record<SocialType, [string, any]> = {
   twitter: ['https://twitter.com/', twitterSVG],
   instagram: ['https://instagram.com/', instagramSVG],
