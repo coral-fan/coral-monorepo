@@ -5,7 +5,7 @@ import {
   useUser,
   useIsCurrentUser,
 } from '../../hooks';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { UpdateProfileInfoModal } from '../UpdateProfile/components/UpdateProfileInfoModal';
 import { UpdateProfilePhotoModal } from '../UpdateProfile/components/UpdateProfilePhotoModal';
 
@@ -30,20 +30,28 @@ export const UserProfile = () => {
     [setIsProfileInfoModalOpen]
   );
 
-  const editAvatar = isCurrentUser && (
-    <>
-      <EditAvatarButton onClick={openUpdateProfilePhotoModal} />
-      {isUpdateProfilePhotoModalOpen && <UpdateProfilePhotoModal />}
-    </>
+  const editAvatar = useMemo(
+    () =>
+      isCurrentUser && (
+        <>
+          <EditAvatarButton onClick={openUpdateProfilePhotoModal} />
+          {isUpdateProfilePhotoModalOpen && <UpdateProfilePhotoModal />}
+        </>
+      ),
+    [isCurrentUser, isUpdateProfilePhotoModalOpen, openUpdateProfilePhotoModal]
   );
 
-  const editProfileInfo = isCurrentUser && (
-    <>
-      <EditProfileLinkButton onClick={openUpdateProfileInfoModal}>
-        Update Profile
-      </EditProfileLinkButton>
-      {isUpdateProfileInfoModalOpen && <UpdateProfileInfoModal />}
-    </>
+  const editProfileInfo = useMemo(
+    () =>
+      isCurrentUser && (
+        <>
+          <EditProfileLinkButton onClick={openUpdateProfileInfoModal}>
+            Update Profile
+          </EditProfileLinkButton>
+          {isUpdateProfileInfoModalOpen && <UpdateProfileInfoModal />}
+        </>
+      ),
+    [isCurrentUser, isUpdateProfileInfoModalOpen, openUpdateProfileInfoModal]
   );
 
   return (
