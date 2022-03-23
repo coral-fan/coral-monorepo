@@ -41,8 +41,13 @@ if (!process.env.NEXT_PUBLIC_AVALANCHE_BLOCK_EXPLORER_URL) {
   throw Error(getEnvironmentVariableErrorMessage('NEXT_PUBLIC_AVALANCHE_BLOCK_EXPLORER_URL'));
 }
 
+const chainIdHex = process.env.NEXT_PUBLIC_AVALANCHE_CHAIN_ID;
+
 export const AVALANCHE = {
-  CHAIN_ID: process.env.NEXT_PUBLIC_AVALANCHE_CHAIN_ID,
+  CHAIN_ID: {
+    HEX: chainIdHex,
+    INT: parseInt(chainIdHex),
+  },
   CHAIN_NAME: process.env.NEXT_PUBLIC_AVALANCHE_CHAIN_NAME,
   RPC_URL: process.env.NEXT_PUBLIC_AVALANCHE_RPC_URL,
   BLOCK_EXPLORER_URL: process.env.NEXT_PUBLIC_AVALANCHE_BLOCK_EXPLORER_URL,
