@@ -4,7 +4,7 @@ import { useWallet, useIsNetworkSupported } from 'libraries/blockchain';
 import { AVALANCHE } from 'consts';
 
 const AVALANCHE_NETWORK_PARAMS = {
-  chainId: AVALANCHE.CHAIN_ID, // A 0x-prefixed hexadecimal chainId
+  chainId: AVALANCHE.CHAIN_ID.HEX, // A 0x-prefixed hexadecimal chainId
   chainName: AVALANCHE.CHAIN_NAME,
   nativeCurrency: {
     name: 'Avalanche',
