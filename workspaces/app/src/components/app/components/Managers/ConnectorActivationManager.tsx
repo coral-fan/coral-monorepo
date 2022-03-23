@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { useWeb3 } from 'libraries/blockchain';
+import { useWallet } from 'libraries/blockchain';
 
 export const ConnectorActivationManager = () => {
-  const { connector } = useWeb3();
+  const { connector } = useWallet();
 
   useEffect(() => {
     connector.connectEagerly();
