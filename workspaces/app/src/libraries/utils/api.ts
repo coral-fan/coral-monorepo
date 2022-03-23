@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { API_ENDPOINT } from 'consts';
+import { CORAL_API_ENDPOINT } from 'consts';
 
 const coralAPIAxios = axios.create({
-  baseURL: API_ENDPOINT,
+  baseURL: CORAL_API_ENDPOINT,
 });
 
 export const getCoralAPIAxios = () => coralAPIAxios;

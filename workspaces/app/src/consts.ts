@@ -21,11 +21,11 @@ if (!process.env.NEXT_PUBLIC_ENV) {
 export const CLIENT_ENVIRONMENT = process.env.NEXT_PUBLIC_ENV;
 
 // api consts
-if (!process.env.NEXT_PUBLIC_API_ENDPOINT) {
+if (!process.env.NEXT_PUBLIC_CORAL_API_ENDPOINT) {
   throw Error(getEnvironmentVariableErrorMessage('NEXT_PUBLIC_API_ENDPOINT'));
 }
 
-export const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
+export const CORAL_API_ENDPOINT = process.env.NEXT_PUBLIC_CORAL_API_ENDPOINT;
 
 // avalanche consts
 if (!process.env.NEXT_PUBLIC_AVALANCHE_CHAIN_ID) {
