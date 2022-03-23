@@ -4,10 +4,11 @@
 
 Before running the web client locally, please make sure you have a `.env.local` environment variable file with the following values:
 
-```
+```shell
 FIREBASE_ADMIN_CREDENTIAL_PATH="<LOCAL PATH TO FIREBASE ADMIN CREDENTIALS>"
 FIREBASE_ADMIN_CREDENTIAL_JSON="<RAW JSON DATA FIREBASE ADMIN CREDENTIALS>"
 NEXT_PUBLIC_OPEN_LOGIN_CLIENT_ID="<OPEN LOGIN CLIENT ID>"
+NEXT_COVALENT_API_KEY="<COVALENT_API_KEY>"
 ```
 
 Please note that any values surrounded by `<` `>` and are placeholder values, and must be filled in with the actual value.
