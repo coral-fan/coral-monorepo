@@ -1,10 +1,10 @@
-import { useWeb3 } from 'libraries/blockchain';
+import { useWallet } from 'libraries/blockchain';
 import { getAuth } from 'firebase/auth';
 import { useIdToken } from '.';
 import { useCallback } from 'react';
 
 export const useLogout = () => {
-  const { active, connector } = useWeb3();
+  const { active, connector } = useWallet();
   const idToken = useIdToken();
 
   const logout = useCallback(async () => {

@@ -10,7 +10,7 @@ const [connector, { useProvider, useWeb3React }] = initializeConnector<MetaMask>
   [parseInt(AVALANCHE.CHAIN_ID)]
 );
 
-export const useWeb3 = () => {
+export const useWallet = () => {
   const { account, active, chainId, error } = useWeb3React(useProvider());
 
   return {

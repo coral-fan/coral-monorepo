@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { signInWithCustomToken, getAuth } from 'firebase/auth';
 import { Web3Provider } from '@ethersproject/providers';
-import { useWeb3 } from 'libraries/blockchain';
+import { useWallet } from 'libraries/blockchain';
 import { useIsLoggingIn, useIsSigningUp } from '..';
 import { getNonce, getSignedAuthenticationMessage, getFirebaseCustomToken } from './utils';
 import { getIsUserSigningUp } from 'libraries/models';
@@ -10,7 +10,7 @@ import { useRefetchPageData } from 'libraries/utils/hooks';
 export const useLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
   const [, setIsSigningUp] = useIsSigningUp();
-  const { connector, active } = useWeb3();
+  const { connector, active } = useWallet();
   const refetchPageData = useRefetchPageData();
   //TODO: should probably look into how to type errors better
   /* eslint @typescript-eslint/no-explicit-any: 'off' -- errors will always be typed as any */
