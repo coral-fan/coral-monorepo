@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useWeb3 } from 'libraries/blockchain/hooks';
+import { useWeb3 } from 'libraries/blockchain';
 
 export const ConnectorActivationManager = () => {
   const { connector } = useWeb3();
