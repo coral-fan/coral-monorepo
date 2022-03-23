@@ -20,7 +20,7 @@ export const getIsNetworkSupported$ = () =>
       if (chainId === null) {
         return throwError(() => new Error());
       }
-      return chainId.toLowerCase() === AVALANCHE.CHAIN_ID;
+      return chainId.toLowerCase() === AVALANCHE.CHAIN_ID.HEX;
     }),
     /*
       retry is necessary because in production, chainId can be null.

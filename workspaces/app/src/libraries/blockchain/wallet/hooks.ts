@@ -7,7 +7,7 @@ const getMetaMaskConnector = (actions: Actions) => new MetaMask(actions);
 
 const [connector, { useProvider, useWeb3React }] = initializeConnector<MetaMask>(
   getMetaMaskConnector,
-  [parseInt(AVALANCHE.CHAIN_ID)]
+  [AVALANCHE.CHAIN_ID.INT]
 );
 
 export const useWallet = () => {
