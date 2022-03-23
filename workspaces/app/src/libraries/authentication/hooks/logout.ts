@@ -1,4 +1,4 @@
-import { useWeb3 } from 'libraries/blockchain/hooks';
+import { useWeb3 } from 'libraries/blockchain';
 import { getAuth } from 'firebase/auth';
 import { useIdToken } from '.';
 import { useCallback } from 'react';
