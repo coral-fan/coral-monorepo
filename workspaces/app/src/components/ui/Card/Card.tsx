@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
 
-type Variant = 'primary' | 'secondary' | 'contrast';
+export type Variant = 'primary' | 'secondary' | 'contrast';
 interface CardProps {
   variant?: Variant;
 }
