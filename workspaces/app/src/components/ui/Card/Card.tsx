@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { toNestError } from '@hookform/resolvers';
 import tokens from 'styles/tokens';
 
 type Variant = 'primary' | 'secondary' | 'contrast';
