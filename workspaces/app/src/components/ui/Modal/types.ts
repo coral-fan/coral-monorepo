@@ -1,16 +1,9 @@
 import { SerializedStyles } from '@emotion/react';
+import { Variant } from '../Card';
 
-interface ModalBaseProps {
+export interface ModalProps {
   title?: string;
   mainContainerStyle?: SerializedStyles;
+  onClick?: () => void;
+  variant?: Variant;
 }
-interface ModalWithoutButtonProps extends ModalBaseProps {
-  onClick?: never;
-  variant?: never;
-}
-interface ModalWithButtonProps extends ModalBaseProps {
-  onClick: () => void;
-  variant: 'close' | 'previous';
-}
-
-export type ModalProps = ModalWithoutButtonProps | ModalWithButtonProps;
