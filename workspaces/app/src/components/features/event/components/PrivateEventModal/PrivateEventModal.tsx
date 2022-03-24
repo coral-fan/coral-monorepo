@@ -6,6 +6,7 @@ import { Button, ButtonLink, Modal } from 'components/ui';
 import { useIsDesktop } from 'libraries/window';
 import privateEventSVG from './lock.svg';
 import { useIsAuthenticated, useLogin } from 'libraries/authentication';
+import { useIconSize } from '../../hooks';
 
 const mainContainerStyle = css`
   align-items: center;
@@ -28,14 +29,13 @@ interface PrivateEventModalProps {
 }
 
 export const PrivateEventModal = ({ collectionId }: PrivateEventModalProps) => {
-  const isDesktop = useIsDesktop();
+  const iconSize = useIconSize();
   const isAuthenticated = useIsAuthenticated();
-
   const { login } = useLogin();
 
   return (
     <Modal title="This Is A Private Event" mainContainerStyle={mainContainerStyle}>
-      <PrivateEventIcon size={isDesktop ? 275 : 175} />
+      <PrivateEventIcon size={iconSize} />
       <Message>
         {isAuthenticated
           ? 'This event is for members and ticket holders only. Buy a ticket now for this special event and exclusive perks.'
