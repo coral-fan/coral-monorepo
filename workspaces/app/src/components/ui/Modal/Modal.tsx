@@ -28,9 +28,10 @@ const ModalControlContainer = styled.div`
   width: 100%;
 `;
 
-const Content = styled(Card)<{ title?: string }>`
+const Content = styled(Card)<Pick<ModalProps, 'title' | 'variant'>>`
   max-width: 575px;
-  color: ${tokens.font.color.primary};
+  color: ${({ variant }) =>
+    variant === 'contrast' ? tokens.font.color.contrast : tokens.font.color.primary};
   padding: ${({ title }) => `${title ? '16px' : '8px'} 18px`};
   box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.5);
   gap: 18px;
@@ -52,7 +53,13 @@ const Main = styled.div<Pick<ModalProps, 'mainContainerStyle'>>`
   Using FC because it always implies children.
   Prefer to define a props interface if children isn't a prop.
 */
-export const Modal: FC<ModalProps> = ({ children, title, onClick, mainContainerStyle }) => {
+export const Modal: FC<ModalProps> = ({
+  children,
+  title,
+  onClick,
+  mainContainerStyle,
+  variant,
+}) => {
   const documentBodyRef = useRef<Document['body']>();
 
   const [isMounted, setIsMounted] = useState(false);
@@ -71,7 +78,7 @@ export const Modal: FC<ModalProps> = ({ children, title, onClick, mainContainerS
                 <CloseButton onClick={onClick} />
               </ModalControlContainer>
             )}
-            <Content title={title}>
+            <Content title={title} variant={variant}>
               {title && (
                 <Heading level={1} styleVariant={'h2'}>
                   {title}
