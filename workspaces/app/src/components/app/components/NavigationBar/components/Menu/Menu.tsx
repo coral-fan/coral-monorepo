@@ -70,7 +70,7 @@ export const Menu = ({ isMenuOpen, setIsMenuOpen, userProfile }: MenuProps) => {
   }
 
   return (
-    <Modal variant="close" onClick={closeMenuModal}>
+    <Modal onClick={closeMenuModal}>
       {isAuthenticated && userProfile && (
         <>
           <MenuProfileLink href={`/user/${uid}`} onClick={closeMenuModal}>
