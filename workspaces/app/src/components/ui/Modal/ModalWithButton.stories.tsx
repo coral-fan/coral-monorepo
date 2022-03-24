@@ -21,5 +21,4 @@ Default.args = {
   title: 'Title',
   // eslint-disable-next-line @typescript-eslint/no-empty-function -- okay for storybook story purposes
   onClick: () => {},
-  variant: 'close',
 };
