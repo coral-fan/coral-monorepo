@@ -8,12 +8,13 @@ const spin = keyframes`
    opacity: 0;
    transform: rotate3d(0, 1, 1, 180deg);
   }
-  20% { 
+
+  30% { 
    opacity: 1;
    transform: rotate3d(0, 0, 0, 0deg);
   }
   
-  84%{
+  80%{
     opacity: 1;
     transform: scale(1);
   }
