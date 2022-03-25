@@ -1,18 +1,19 @@
+import { GetServerSideProps } from 'next';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { interval, mergeMapTo, skipUntil, timer } from 'rxjs';
+import { interval, map, mergeMapTo, skipUntil, timer } from 'rxjs';
 
 import { useIsAuthenticated } from 'libraries/authentication';
 import { getWalletNfts$ } from 'libraries/blockchain/wallet/observables';
-import { GetServerSideProps } from 'next';
+import { useWallet } from 'libraries/blockchain';
 import {
   WebPlayer,
   PrivateEventModal,
   AccessGrantedModal,
   LoginButton,
   BuyTicketButton,
+  CheckingNftModal,
 } from './components';
-import { CheckingNftModal } from './components/CheckingNFtModal';
 
 const Container = styled.div`
   display: flex;
@@ -33,20 +34,28 @@ export const EventPage = ({ mediaId }: EventPageProps) => {
 
   const [showIsAccessGrantedModal, setIsAccessGrantedModal] = useState(true);
 
+  const { address } = useWallet();
+
   useEffect(() => {
-    const walletNftsMap$ = getWalletNfts$('0xd9C03cE871ed2EBd809f7c86Ff22ec62a7b02644');
+    if (isAuthenticated && address) {
+      const walletNftsMap$ = getWalletNfts$(address);
 
-    const checkNftMap$ = interval(2500).pipe(skipUntil(walletNftsMap$), mergeMapTo(walletNftsMap$));
-
-    checkNftMap$.subscribe((nftsMap) => {
-      setDoesUserHaveAccess(
-        allowedNftCollections.some((address) => nftsMap[address] !== undefined)
+      const doesUserHaveAccess$ = interval(2500).pipe(
+        skipUntil(walletNftsMap$),
+        mergeMapTo(walletNftsMap$),
+        map((nftsMap) => allowedNftCollections.some((address) => nftsMap[address] !== undefined))
       );
-      setIsCheckingWallet(false);
-    });
 
-    checkNftMap$.pipe(mergeMapTo(timer(2500))).subscribe(() => setIsAccessGrantedModal(false));
-  }, []);
+      doesUserHaveAccess$.subscribe((doesHaveAccess) => {
+        setDoesUserHaveAccess(doesHaveAccess);
+        setIsCheckingWallet(false);
+      });
+
+      doesUserHaveAccess$
+        .pipe(mergeMapTo(timer(2500)))
+        .subscribe(() => setIsAccessGrantedModal(false));
+    }
+  }, [isAuthenticated, address]);
 
   if (!isAuthenticated) {
     return (
