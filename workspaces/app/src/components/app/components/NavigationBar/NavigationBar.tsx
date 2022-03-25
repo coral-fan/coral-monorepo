@@ -5,16 +5,22 @@ import { useCallback, useState } from 'react';
 import { User } from 'libraries/models';
 import { useObservable } from 'libraries/utils';
 import { getUserProfile$ } from './observables';
-import { DESKTOP_BREAKPOINT } from 'styles/tokens';
+import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
+
+const { mobile, desktop } = tokens.layoutPadding;
 
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 24px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: ${mobile.vertical} ${mobile.horizontal};
+  /* border: solid 1px red; */
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
-    padding: 40px 70px;
+    padding: ${desktop.vertical} ${desktop.horizontal};
   }
 `;
 

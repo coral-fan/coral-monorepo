@@ -8,17 +8,19 @@ import { CloseButton, Overlay } from './components';
 import { ModalProps } from './types';
 import { Heading } from 'components/ui';
 
+const { mobile, desktop } = tokens.layoutPadding;
+
 const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   height: 100%;
-  padding: 24px;
+  padding: ${mobile.vertical} ${mobile.horizontal};
   gap: 24px;
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
-    padding: 40px 70px;
+    padding: ${desktop.vertical} ${desktop.horizontal};
   }
 `;
 
@@ -26,6 +28,7 @@ const ModalControlContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 100%;
+  z-index: 2;
 `;
 
 const Content = styled(Card)<Pick<ModalProps, 'title' | 'variant'>>`
