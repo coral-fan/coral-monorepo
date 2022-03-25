@@ -7,13 +7,9 @@ interface ArtistPageProps {
   artistData: Artist;
 }
 
-export const ArtistPage = ({ artistData }: ArtistPageProps) => {
-  return (
-    <>
-      <ArtistProfile artistData={artistData} />
-    </>
-  );
-};
+export const ArtistPage = ({ artistData }: ArtistPageProps) => (
+  <ArtistProfile artistData={artistData} />
+);
 
 export const getServerSideProps: GetServerSideProps<ArtistPageProps, { artistId: string }> = async (
   context
