@@ -1,16 +1,20 @@
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import styled from '@emotion/styled';
+import { Link } from 'components/ui';
 import { Card } from 'components/ui/Card';
 import tokens from 'styles/tokens';
 import { BaseInfo, BaseInfoProps } from '../components';
 
 interface DropCardProps extends Omit<BaseInfoProps, 'titleHeadingLevel' | 'titleStyleVariant'> {
   Badge: () => EmotionJSX.Element;
+  id: string;
   dropDateTimestamp: string;
 }
 
 const DropCardContainer = styled(Card)`
-  width: 300px;
+  &:hover {
+    opacity: 85%;
+  }
 `;
 
 const BadgeAndDropDateContainer = styled.div`
@@ -40,16 +44,18 @@ const formatDropCardDate = (timestamp: string) => {
   return formattedDate;
 };
 
-export const DropCard = ({ Badge, dropDateTimestamp, ...baseInfoProps }: DropCardProps) => (
-  <DropCardContainer>
-    <BaseInfo titleHeadingLevel={3} titleStyleVariant={'h3'} {...baseInfoProps}>
-      <BadgeAndDropDateContainer>
-        <Badge />
-        <DropDateContainer>
-          <span>Drops On</span>
-          <span>{formatDropCardDate(dropDateTimestamp)}</span>
-        </DropDateContainer>
-      </BadgeAndDropDateContainer>
-    </BaseInfo>
-  </DropCardContainer>
+export const DropCard = ({ Badge, dropDateTimestamp, id, ...baseInfoProps }: DropCardProps) => (
+  <Link href={`/collection/${id}`}>
+    <DropCardContainer>
+      <BaseInfo titleHeadingLevel={3} titleStyleVariant={'h3'} {...baseInfoProps}>
+        <BadgeAndDropDateContainer>
+          <Badge />
+          <DropDateContainer>
+            <span>Drops On</span>
+            <span>{formatDropCardDate(dropDateTimestamp)}</span>
+          </DropDateContainer>
+        </BadgeAndDropDateContainer>
+      </BaseInfo>
+    </DropCardContainer>
+  </Link>
 );
