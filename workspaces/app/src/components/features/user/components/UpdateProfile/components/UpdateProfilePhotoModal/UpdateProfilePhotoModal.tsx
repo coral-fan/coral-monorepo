@@ -74,7 +74,7 @@ export const UpdateProfilePhotoModal = () => {
   }
 
   return (
-    <Modal onClick={closeModal} variant={'close'}>
+    <Modal onClick={closeModal}>
       <ModalContainer>
         <EditableAvatar
           size={PREVIEW_SIZE}
