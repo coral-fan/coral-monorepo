@@ -28,7 +28,7 @@ const CollectionContainer = styled.div`
   }
 `;
 
-export const CardsContainer: FC = ({ children }) => {
+export const ProfileItems: FC = ({ children }) => {
   const isDesktop = useIsDesktop();
   return (
     <ContentContainer>
