@@ -11,13 +11,13 @@ const [connector, { useProvider, useWeb3React }] = initializeConnector<MetaMask>
 );
 
 export const useWallet = () => {
-  const { account, active, chainId, error } = useWeb3React(useProvider());
+  const { account: address, active: isActive, chainId, error } = useWeb3React(useProvider());
 
   return {
     connector,
     chainId,
-    account,
-    active,
+    address,
+    isActive,
     error,
   };
 };
