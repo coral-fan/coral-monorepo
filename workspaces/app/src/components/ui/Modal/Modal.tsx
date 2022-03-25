@@ -80,7 +80,7 @@ export const Modal: FC<ModalProps> = ({
             )}
             <Content title={title} variant={variant}>
               {title && (
-                <Heading level={1} styleVariant={'h2'}>
+                <Heading level={1} styleVariant={'h2'} colorVariant={variant}>
                   {title}
                 </Heading>
               )}
