@@ -10,6 +10,7 @@ export interface AssetData {
 // owner is derived from on chain data
 export interface Asset {
   id: AssetData['id'];
+  collectionId: Collection['id'];
   collectionName: Collection['name'];
   // image url could be a single image or an unique image for a generative NFT
   imageUrl: string;

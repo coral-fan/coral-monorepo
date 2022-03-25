@@ -1,6 +1,6 @@
 import { Artist } from '../artist';
 
-export type CollectionType = 'music' | 'event' | 'merch';
+export type CollectionType = 'video' | 'music' | 'event' | 'merch';
 
 export interface GatedEvent {
   type: 'event';
