@@ -10,7 +10,7 @@ import { useRefetchPageData } from 'libraries/utils/hooks';
 export const useLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
   const [, setIsSigningUp] = useIsSigningUp();
-  const { connector, active } = useWallet();
+  const { connector, isActive } = useWallet();
   const refetchPageData = useRefetchPageData();
   //TODO: should probably look into how to type errors better
   /* eslint @typescript-eslint/no-explicit-any: 'off' -- errors will always be typed as any */
@@ -19,7 +19,7 @@ export const useLogin = () => {
   const login = async () => {
     setIsLoggingIn(true);
     try {
-      if (!active) {
+      if (!isActive) {
         await connector.activate();
       }
       if (connector.provider !== undefined) {

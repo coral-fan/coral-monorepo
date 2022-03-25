@@ -4,17 +4,17 @@ import { useIdToken } from '.';
 import { useCallback } from 'react';
 
 export const useLogout = () => {
-  const { active, connector } = useWallet();
+  const { isActive, connector } = useWallet();
   const idToken = useIdToken();
 
   const logout = useCallback(async () => {
-    if (active) {
+    if (isActive) {
       connector.deactivate();
     }
     if (idToken) {
       await getAuth().signOut();
     }
-  }, [active, connector, idToken]);
+  }, [isActive, connector, idToken]);
 
   return logout;
 };
