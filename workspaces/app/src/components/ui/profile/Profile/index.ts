@@ -1,3 +1,3 @@
 export * from './Profile';
-export * from './CardsContainer';
+export * from './components/CardsContainer';
 export * from './utils';
