@@ -18,16 +18,11 @@ const FooterContainer = styled.div`
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 30px;
   background: ${tokens.background.color.secondary};
-  position: absolute;
-  left: 0;
-  bottom: 0;
   width: 100%;
-  height: 291px;
-  padding: 16px 13px;
+  padding: 18px ${tokens.layoutPadding.mobile.horizontal};
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
-    height: 330px;
-    padding: 22px 21px;
+    padding: 30px ${tokens.layoutPadding.desktop.horizontal};
   }
 `;
 
@@ -43,7 +38,7 @@ const ContentContainer = styled.div`
   grid-row: 1 / 2;
   display: flex;
   flex-direction: column;
-  gap: 70px;
+  gap: 60px;
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
     border: none;
