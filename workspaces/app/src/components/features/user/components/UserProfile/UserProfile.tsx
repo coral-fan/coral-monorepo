@@ -59,7 +59,7 @@ export const UserProfile = ({ assets }: UserProfileProps) => {
     [isCurrentUser, isUpdateProfileInfoModalOpen, openUpdateProfileInfoModal]
   );
 
-  const userAssets = <Assets assets={assets} />;
+  const userAssets = useMemo(() => <Assets assets={assets} />, [assets]);
 
   return (
     <Profile
@@ -69,7 +69,7 @@ export const UserProfile = ({ assets }: UserProfileProps) => {
       socialHandles={socialHandles}
       editAvatar={editAvatar}
       editProfileInfo={editProfileInfo}
-      assets={userAssets}
+      items={userAssets}
     />
   );
 };
