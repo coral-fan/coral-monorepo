@@ -2,13 +2,14 @@ import styled from '@emotion/styled';
 import { Profile } from 'components/ui';
 import { Collections } from '../Collections';
 import { Artist } from 'libraries/models';
-import { Tag } from './components';
+import { Tag as BaseTag } from './components';
+import { useMemo } from 'react';
 
 interface ArtistProfileProps {
   artistData: Artist;
 }
 
-const ArtistTag = styled(Tag)`
+const Tag = styled(BaseTag)`
   position: absolute;
   z-index: 1;
   bottom: 0;
@@ -18,11 +19,12 @@ const ArtistTag = styled(Tag)`
   margin-bottom: -8px;
 `;
 
+const ArtistTag = <Tag>Artist</Tag>;
+
 export const ArtistProfile = ({ artistData }: ArtistProfileProps) => {
   const { name, bio, profilePhoto, socialHandles, collections } = artistData;
 
-  const artistTag = <ArtistTag>Artist</ArtistTag>;
-  const artistCollections = <Collections collections={collections} />;
+  const artistCollections = useMemo(() => <Collections collections={collections} />, [collections]);
 
   return (
     <Profile
@@ -30,8 +32,8 @@ export const ArtistProfile = ({ artistData }: ArtistProfileProps) => {
       profilePhoto={profilePhoto}
       bio={bio}
       socialHandles={socialHandles}
-      artistTag={artistTag}
-      collections={artistCollections}
+      artistTag={ArtistTag}
+      items={artistCollections}
     />
   );
 };
