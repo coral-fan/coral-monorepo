@@ -17,15 +17,17 @@ const Main = styled.div`
   flex-direction: column;
   max-width: 1540px;
   margin: auto;
-  padding: 0 ${mobile.horizontal};
-  padding-bottom: ${mobile.vertical};
+  --padding: 0 ${mobile.horizontal};
+  --padding-bottom: ${mobile.vertical};
   flex: 1;
   /* border: solid 1px green; */
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
-    padding: 0 ${desktop.horizontal};
-    padding-bottom: ${desktop.vertical};
+    --padding: 0 ${desktop.horizontal};
+    --padding-bottom: ${desktop.vertical};
   }
+  padding: var(--padding);
+  padding-bottom: var(--padding-bottom);
 `;
 
 export const Layout: FC = ({ children }) => (
