@@ -42,7 +42,19 @@ const ModalControlContainer = styled.div`
   z-index: 2;
 `;
 
-const Content = styled(Card)<Pick<ModalProps, 'title' | 'variant'>>`
+const ContentContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+    height: 100%;
+    justify-content: center;
+  }
+`;
+
+const Content = styled(Card)<Pick<ModalProps, 'title' | 'variant' | 'onClick'>>`
   max-width: 575px;
   color: ${({ variant }) =>
     variant === 'contrast' ? tokens.font.color.contrast : tokens.font.color.primary};
@@ -51,6 +63,15 @@ const Content = styled(Card)<Pick<ModalProps, 'title' | 'variant'>>`
   gap: 18px;
   max-height: 400px;
   overflow: scroll;
+
+  ${({ onClick }) =>
+    onClick
+      ? null
+      : css`
+          margin-top: calc(
+            ${NAVIGATION_BAR_VERTICAL_PADDING.MOBILE} + ${tokens.buttons.size.mobile}
+          );
+        `}
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
     max-height: 750px;
@@ -92,14 +113,16 @@ export const Modal: FC<ModalProps> = ({
                 <CloseButton onClick={onClick} />
               </ModalControlContainer>
             )}
-            <Content title={title} variant={variant}>
-              {title && (
-                <Heading level={1} styleVariant={'h2'} colorVariant={variant}>
-                  {title}
-                </Heading>
-              )}
-              <Main mainContainerStyle={mainContainerStyle}>{children}</Main>
-            </Content>
+            <ContentContainer>
+              <Content title={title} variant={variant} onClick={onClick}>
+                {title && (
+                  <Heading level={1} styleVariant={'h2'} colorVariant={variant}>
+                    {title}
+                  </Heading>
+                )}
+                <Main mainContainerStyle={mainContainerStyle}>{children}</Main>
+              </Content>
+            </ContentContainer>
           </ModalContainer>
         </Overlay>,
         document.body
