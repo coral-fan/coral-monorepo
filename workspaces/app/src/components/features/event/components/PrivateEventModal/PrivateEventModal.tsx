@@ -1,8 +1,6 @@
 import { css } from '@emotion/react';
-import styled from '@emotion/styled';
 import { getIconComponent } from 'components/ui/icons/utils';
-import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
-import { Button, ButtonLink, Modal } from 'components/ui';
+import { Button, ButtonLink, Message, Modal } from 'components/ui';
 import privateEventSVG from './lock.svg';
 import { useLogin } from 'libraries/authentication';
 import { useIconSize } from '../../hooks';
@@ -14,15 +12,6 @@ const mainContainerStyle = css`
 `;
 
 const PrivateEventIcon = getIconComponent('PrivateEventIcon', privateEventSVG);
-
-const Message = styled.span`
-  --font-size: ${tokens.font.size.md};
-
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
-    --font-size: ${tokens.font.size.lg};
-  }
-  font-size: var(--font-size);
-`;
 
 interface BuyTicketButtonProps {
   collectionId: string;
