@@ -3,10 +3,10 @@ import styled from '@emotion/styled';
 import { getIconComponent } from 'components/ui/icons/utils';
 import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 import { Button, ButtonLink, Modal } from 'components/ui';
-import { useIsDesktop } from 'libraries/window';
 import privateEventSVG from './lock.svg';
-import { useIsAuthenticated, useLogin } from 'libraries/authentication';
+import { useLogin } from 'libraries/authentication';
 import { useIconSize } from '../../hooks';
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 
 const mainContainerStyle = css`
   align-items: center;
@@ -24,28 +24,32 @@ const Message = styled.span`
   font-size: var(--font-size);
 `;
 
-interface PrivateEventModalProps {
+interface BuyTicketButtonProps {
   collectionId: string;
 }
 
-export const PrivateEventModal = ({ collectionId }: PrivateEventModalProps) => {
-  const iconSize = useIconSize();
-  const isAuthenticated = useIsAuthenticated();
+export const BuyTicketButton = ({ collectionId }: BuyTicketButtonProps) => (
+  <ButtonLink href={`/collection/${collectionId}`}>Buy Ticket</ButtonLink>
+);
+
+export const LoginButton = () => {
   const { login } = useLogin();
+  return <Button onClick={login}>Login</Button>;
+};
+
+interface PrivateEventModalProps {
+  message: string;
+  actionElement: EmotionJSX.Element;
+}
+
+export const PrivateEventModal = ({ message, actionElement }: PrivateEventModalProps) => {
+  const iconSize = useIconSize();
 
   return (
     <Modal title="This Is A Private Event" mainContainerStyle={mainContainerStyle}>
       <PrivateEventIcon size={iconSize} />
-      <Message>
-        {isAuthenticated
-          ? 'This event is for members and ticket holders only. Buy a ticket now for this special event and exclusive perks.'
-          : 'Please log in so we can check your wallet.'}
-      </Message>
-      {isAuthenticated ? (
-        <ButtonLink href={`/collection/${collectionId}`}>Buy Ticket</ButtonLink>
-      ) : (
-        <Button onClick={login}>Login</Button>
-      )}
+      <Message>{message}</Message>
+      {actionElement}
     </Modal>
   );
 };

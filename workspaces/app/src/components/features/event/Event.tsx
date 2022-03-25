@@ -1,11 +1,17 @@
 import styled from '@emotion/styled';
+import { useEffect, useState } from 'react';
+import { interval, mergeMapTo, skipUntil, timer } from 'rxjs';
 
 import { useIsAuthenticated } from 'libraries/authentication';
 import { getWalletNfts$ } from 'libraries/blockchain/wallet/observables';
 import { GetServerSideProps } from 'next';
-import { useEffect, useState } from 'react';
-import { interval, mergeMapTo, skipUntil, timer } from 'rxjs';
-import { WebPlayer, PrivateEventModal, AccessGrantedModal } from './components';
+import {
+  WebPlayer,
+  PrivateEventModal,
+  AccessGrantedModal,
+  LoginButton,
+  BuyTicketButton,
+} from './components';
 import { CheckingNftModal } from './components/CheckingNFtModal';
 
 const Container = styled.div`
@@ -42,12 +48,26 @@ export const EventPage = ({ mediaId }: EventPageProps) => {
     checkNftMap$.pipe(mergeMapTo(timer(2500))).subscribe(() => setIsAccessGrantedModal(false));
   }, []);
 
+  if (!isAuthenticated) {
+    return (
+      <PrivateEventModal
+        message="Please log in so we can check your wallet."
+        actionElement={<LoginButton />}
+      />
+    );
+  }
+
   if (isCheckingWallet) {
     return <CheckingNftModal />;
   }
 
-  if (!isAuthenticated || !doesUserHaveAccess) {
-    return <PrivateEventModal collectionId={'1'} />;
+  if (!doesUserHaveAccess) {
+    return (
+      <PrivateEventModal
+        message="This event is for members and ticket holders only. Buy a ticket now for this special  and exclusive perks."
+        actionElement={<BuyTicketButton collectionId="1" />}
+      />
+    );
   }
 
   return (
