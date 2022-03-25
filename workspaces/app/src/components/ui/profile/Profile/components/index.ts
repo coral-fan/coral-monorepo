@@ -1,2 +1,2 @@
 export * from './SocialLinks';
-export * from './CardsContainer';
+export * from './components';
