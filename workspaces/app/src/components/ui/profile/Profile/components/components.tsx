@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
-const { size, line_height, letter_spacing, weight, color } = tokens.font;
+const { size, line_height, letter_spacing, weight } = tokens.font;
 const { mobile, desktop } = tokens.spacing;
 
 const horizontalSpacerDesktop = desktop.lg;
@@ -33,8 +33,7 @@ export const ProfileContainer = styled.div`
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
     position: sticky;
-    top: 100px;
-    --gap: ${horizontalSpacerDesktop};
+    top: 128px;
   }
   gap: var(--gap);
 `;
@@ -83,15 +82,6 @@ export const Bio = styled.p`
   letter-spacing: ${letter_spacing.sm};
   line-height: ${line_height.sm};
   font-weight: ${weight.normal};
-  /* border: solid 1px white; */
-`;
-
-export const Quote = styled.q`
-  color: ${color.secondary};
-  font-size: ${size.lg};
-  letter-spacing: ${letter_spacing.lg};
-  line-height: ${line_height.lg};
-  font-weight: ${weight.bold};
   /* border: solid 1px white; */
 `;
 
