@@ -6,7 +6,7 @@ import tokens from 'styles/tokens';
 
 const { mobile, desktop } = tokens.layoutPadding;
 
-const LayoutContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -29,9 +29,9 @@ const Main = styled.div`
 `;
 
 export const Layout: FC = ({ children }) => (
-  <LayoutContainer>
+  <Container>
     <NavigationBar />
     <Main>{children}</Main>
     <Footer />
-  </LayoutContainer>
+  </Container>
 );
