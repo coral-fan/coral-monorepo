@@ -4,37 +4,39 @@ import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 const { size, line_height, letter_spacing, weight, color } = tokens.font;
 const { mobile, desktop } = tokens.spacing;
 
-const verticalSpacerDesktop = desktop.lg;
-const verticalSpacerMobile = mobile.lg;
+const horizontalSpacerDesktop = desktop.lg;
+const horizontalSpacerMobile = mobile.lg;
 
 export const PageContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: ${verticalSpacerMobile};
   align-items: center;
+  --gap: ${horizontalSpacerMobile};
   /* border: solid 1px red; */
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
     align-items: flex-start;
     flex-direction: row;
-    gap: ${verticalSpacerDesktop};
+    --gap: ${horizontalSpacerDesktop};
   }
+  gap: var(--gap);
 `;
 
 export const ProfileContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: ${verticalSpacerMobile};
   flex: 1 0 42.5%;
+  --gap: ${horizontalSpacerMobile};
   /* border: solid 1px blue; */
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
-    gap: ${verticalSpacerDesktop};
     position: sticky;
     top: 100px;
+    --gap: ${horizontalSpacerDesktop};
   }
+  gap: var(--gap);
 `;
 
 export const MainProfileContainer = styled.div`
@@ -42,13 +44,14 @@ export const MainProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: ${verticalSpacerMobile};
+  --gap: ${horizontalSpacerMobile};
   /* border: solid 1px yellow; */
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
-    gap: ${desktop.md};
     flex-direction: row;
+    --gap: ${desktop.md};
   }
+  gap: var(--gap);
 `;
 
 export const AvatarContainer = styled.div`
@@ -59,12 +62,13 @@ export const AvatarContainer = styled.div`
 export const UsernameContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 2px;
+  --align-items: center;
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
-    align-items: flex-start;
+    --align-items: flex-start;
   }
+  align-items: var(--align-items);
 `;
 
 export const Username = styled.span`
@@ -94,11 +98,12 @@ export const Quote = styled.q`
 export const UserContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${tokens.spacing.mobile.md};
   text-align: left;
+  --gap: ${tokens.spacing.mobile.md};
   /* border: solid 1px purple; */
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
-    gap: ${tokens.spacing.desktop.md};
+    --gap: ${tokens.spacing.desktop.md};
   }
+  gap: var(--gap);
 `;
