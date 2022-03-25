@@ -8,10 +8,15 @@ import {
 import { useCallback, useMemo } from 'react';
 import { UpdateProfileInfoModal } from '../UpdateProfile/components/UpdateProfileInfoModal';
 import { UpdateProfilePhotoModal } from '../UpdateProfile/components/UpdateProfilePhotoModal';
-
 import { Profile } from 'components/ui';
+import { Assets } from '../Assets';
+import { Asset } from 'libraries/models';
 
-export const UserProfile = () => {
+interface UserProfileProps {
+  assets: Asset[];
+}
+
+export const UserProfile = ({ assets }: UserProfileProps) => {
   const [{ username, profilePhoto, socialHandles, bio }] = useUser();
   const isCurrentUser = useIsCurrentUser();
 
@@ -54,6 +59,8 @@ export const UserProfile = () => {
     [isCurrentUser, isUpdateProfileInfoModalOpen, openUpdateProfileInfoModal]
   );
 
+  const userAssets = <Assets assets={assets} />;
+
   return (
     <Profile
       username={username}
@@ -62,6 +69,7 @@ export const UserProfile = () => {
       socialHandles={socialHandles}
       editAvatar={editAvatar}
       editProfileInfo={editProfileInfo}
+      assets={userAssets}
     />
   );
 };
