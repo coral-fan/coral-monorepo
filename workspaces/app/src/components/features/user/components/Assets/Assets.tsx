@@ -1,7 +1,7 @@
 import { getBadge } from 'components/ui/badges/utils';
 import { Asset } from 'libraries/models';
-import { CardsContainer } from 'components/ui';
-import { AssetCardWrapper } from 'components/ui/profile';
+import { ProfileItems } from 'components/ui';
+import { ProfileItemWrapper } from 'components/ui/profile';
 import { AssetCard } from '../AssetCard';
 
 interface AssetProps {
@@ -9,24 +9,24 @@ interface AssetProps {
 }
 
 export const Assets = ({ assets }: AssetProps) => (
-  <CardsContainer>
+  <ProfileItems>
     {assets.map((asset) => {
       const { collectionName, artistName, artistProfilePhoto, imageUrl, type, id, collectionId } =
         asset;
-      const badge = getBadge(type);
+      const Badge = getBadge(type);
       return (
-        <AssetCardWrapper key={id}>
+        <ProfileItemWrapper key={id}>
           <AssetCard
             id={id}
             collectionId={collectionId}
             title={collectionName}
-            Badge={badge}
+            Badge={Badge}
             imageUrl={imageUrl}
             artistName={artistName}
             artistProfilePhoto={artistProfilePhoto}
           />
-        </AssetCardWrapper>
+        </ProfileItemWrapper>
       );
     })}
-  </CardsContainer>
+  </ProfileItems>
 );
