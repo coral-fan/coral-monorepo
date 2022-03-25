@@ -21,7 +21,7 @@ export interface NotificationsProp {
 }
 
 export const Notifications = ({ notifications }: NotificationsProp) => (
-  <Modal variant="previous" title="Notifications" onClick={() => console.log('clicked')}>
+  <Modal title="Notifications" onClick={() => console.log('clicked')}>
     {notifications?.map((notification, i) => (
       <Item key={i} {...notification} />
     ))}
