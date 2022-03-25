@@ -7,16 +7,27 @@ import { Card } from '../Card';
 import { CloseButton, Overlay } from './components';
 import { ModalProps } from './types';
 import { Heading } from 'components/ui';
+import { NAVIGATION_BAR_VERTICAL_PADDING } from 'components/app/components/NavigationBar/consts';
+import { css } from '@emotion/react';
 
 const { mobile, desktop } = tokens.layout.padding;
 
-const ModalContainer = styled.div`
+const ModalContainer = styled.div<Pick<ModalProps, 'onClick'>>`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   height: 100%;
   padding: ${mobile.vertical} ${mobile.horizontal};
+
+  ${({ onClick }) =>
+    onClick
+      ? null
+      : css`
+          padding-top: calc(
+            ${NAVIGATION_BAR_VERTICAL_PADDING.MOBILE} * 2 + ${tokens.buttons.size.mobile}
+          );
+        `}
   gap: 24px;
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
@@ -75,7 +86,7 @@ export const Modal: FC<ModalProps> = ({
   return isMounted
     ? ReactDOM.createPortal(
         <Overlay>
-          <ModalContainer>
+          <ModalContainer onClick={onClick}>
             {onClick && (
               <ModalControlContainer>
                 <CloseButton onClick={onClick} />
