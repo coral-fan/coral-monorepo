@@ -42,6 +42,7 @@ export const getServerSideProps: GetServerSideProps<AssetPageProps, { assetId: s
       type: 'event',
       id: '0x123456789',
     },
+    collectionId: collectionId,
     collectionName: 'Behind the Scenes Studio Tour',
     collectionDescription:
       'Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.',
