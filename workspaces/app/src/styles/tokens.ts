@@ -51,6 +51,16 @@ const tokens = createTheme({
       xl: '60px',
     },
   },
+  layoutPadding: {
+    mobile: {
+      vertical: '22px',
+      horizontal: '24px',
+    },
+    desktop: {
+      vertical: '36px',
+      horizontal: '64px',
+    },
+  },
   font: {
     size: {
       xs: '12px',
@@ -103,6 +113,7 @@ const tokens = createTheme({
       md: '20px',
       lg: '25px',
       xl: '30px',
+      xxl: '37px',
     },
     color: {
       primary: colors.cloud[10],
