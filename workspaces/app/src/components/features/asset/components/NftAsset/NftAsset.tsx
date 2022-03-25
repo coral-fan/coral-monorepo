@@ -1,9 +1,9 @@
 import { css } from '@emotion/react';
-import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import styled from '@emotion/styled';
-import { Card, EventBadge, MerchBadge, MusicBadge } from 'components/ui';
+import { Card } from 'components/ui';
+import { getBadge } from 'components/ui/badges/utils';
 import { BaseInfo } from 'components/ui/nft';
-import { Asset, CollectionType, GatedContent } from 'libraries/models';
+import { Asset, GatedContent } from 'libraries/models';
 import { EventLink, ContentLink, Owner } from './components';
 
 type NFTAssetProps = Omit<Asset, 'collectionDetails'>;
@@ -21,12 +21,6 @@ const Container = styled.div<ContainerProps>`
         `
       : null}
 `;
-
-const badgeMap: Record<CollectionType, () => EmotionJSX.Element> = {
-  music: MusicBadge,
-  event: EventBadge,
-  merch: MerchBadge,
-};
 
 const getGatedContentComponent = (gatedContent: GatedContent) => {
   if (gatedContent !== null) {
@@ -64,7 +58,7 @@ export const NftAsset = ({
           imageUrl={imageUrl}
           artistName={artistName}
           artistProfilePhoto={artistProfilePhoto}
-          Badge={badgeMap[type]}
+          Badge={getBadge(type)}
           description={collectionDescription}
         >
           <Owner
