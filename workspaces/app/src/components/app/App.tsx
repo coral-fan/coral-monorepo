@@ -13,12 +13,13 @@ import { getUidClientSide, getUidServerSide } from 'libraries/models';
 import { GlobalStyles } from 'styles';
 
 // components
-import { NavigationBar, Managers, Modals } from './components';
+import { Managers, Modals } from './components';
 
 // state/logic
 import { useEffect, useState } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { initializeStore } from 'libraries/state';
+import { Layout } from 'components/layout';
 
 initializeFirebaseApp();
 
@@ -51,10 +52,9 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
           <Managers />
           <Modals />
           {isMounted ? (
-            <>
-              <NavigationBar />
+            <Layout>
               <Component {...pageProps} />
-            </>
+            </Layout>
           ) : null}
         </ReduxProvider>
       </main>
