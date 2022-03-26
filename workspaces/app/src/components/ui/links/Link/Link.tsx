@@ -1,11 +1,13 @@
 import NextLink from 'next/link';
 import { ForwardedRef, ComponentPropsWithRef, forwardRef } from 'react';
 import { css, SerializedStyles } from '@emotion/react';
+import tokens from 'styles/tokens';
 
 const getlinkStyle = (style?: SerializedStyles) => css`
   text-decoration: none;
   &:hover {
     cursor: pointer;
+    color: ${tokens.font.color.brand};
   }
   ${style};
 `;
