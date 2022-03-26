@@ -4,7 +4,8 @@ import { Link } from 'components/ui';
 import { Card } from 'components/ui/Card';
 import { BaseInfo, BaseInfoProps } from 'components/ui';
 
-interface AssetCardProps extends Omit<BaseInfoProps, 'titleHeadingLevel' | 'titleStyleVariant'> {
+export interface AssetCardProps
+  extends Omit<BaseInfoProps, 'titleHeadingLevel' | 'titleStyleVariant'> {
   Badge: () => EmotionJSX.Element;
   collectionId: string;
   id: number;
@@ -18,7 +19,7 @@ const AssetCardContainer = styled(Card)`
 
 const BadgeAndTokenIdContainer = styled.div`
   display: flex;
-  align-items: center;
+  align-items: end;
   justify-content: space-between;
 `;
 
