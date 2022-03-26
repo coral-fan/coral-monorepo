@@ -19,7 +19,7 @@ const Tag = styled(BaseTag)`
   margin-bottom: -8px;
 `;
 
-const ArtistTag = <Tag>Artist</Tag>;
+const artistTag = <Tag>Artist</Tag>;
 
 export const ArtistProfile = ({ artistData }: ArtistProfileProps) => {
   const { name, bio, profilePhoto, socialHandles, collections } = artistData;
@@ -32,7 +32,7 @@ export const ArtistProfile = ({ artistData }: ArtistProfileProps) => {
       profilePhoto={profilePhoto}
       bio={bio}
       socialHandles={socialHandles}
-      artistTag={ArtistTag}
+      artistTag={artistTag}
       items={artistCollections}
     />
   );
