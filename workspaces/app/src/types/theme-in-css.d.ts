@@ -8,9 +8,7 @@ declare module 'theme-in-css' {
     };
   }
   declare type ThemeVariableValueMap<Map> = {
-    [key in keyof Map]: Map[key] extends Record<string, string>
-      ? ThemeVariableValueMap<Map[key]>
-      : string;
+    [key in keyof Map]: Map[key] extends string ? string : ThemeVariableValueMap<Map[key]>;
   };
   declare type ThemeVariables<Theme> = {
     [token in keyof Theme]: ThemeVariableValueMap<Theme[token]>;

@@ -7,7 +7,7 @@ import { useObservable } from 'libraries/utils';
 import { getUserProfile$ } from './observables';
 import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
-const { mobile, desktop } = tokens.layoutPadding;
+const { mobile, desktop } = tokens.layout.padding;
 
 const Container = styled.div`
   display: flex;

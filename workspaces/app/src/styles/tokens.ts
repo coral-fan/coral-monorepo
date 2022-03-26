@@ -51,14 +51,16 @@ const tokens = createTheme({
       xl: '60px',
     },
   },
-  layoutPadding: {
-    mobile: {
-      vertical: '22px',
-      horizontal: '24px',
-    },
-    desktop: {
-      vertical: '36px',
-      horizontal: '64px',
+  layout: {
+    padding: {
+      mobile: {
+        vertical: '22px',
+        horizontal: '24px',
+      },
+      desktop: {
+        vertical: '36px',
+        horizontal: '64px',
+      },
     },
   },
   font: {

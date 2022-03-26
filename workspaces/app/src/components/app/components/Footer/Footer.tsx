@@ -5,11 +5,13 @@ import { Link, SecondaryLogoIcon } from 'components/ui';
 
 const FOOTER_CONTENT = '© 2022 coral inc. all rights reserved.';
 
+const { font, layout, background } = tokens;
+
 const textStyle = css`
-  font-weight: ${tokens.font.weight.normal};
-  font-size: ${tokens.font.size.xs};
-  line-height: ${tokens.font.line_height.xs};
-  letter-spacing: ${tokens.font.letter_spacing.xs};
+  font-weight: ${font.weight.normal};
+  font-size: ${font.size.xs};
+  line-height: ${font.line_height.xs};
+  letter-spacing: ${font.letter_spacing.xs};
   text-transform: uppercase;
 `;
 
@@ -17,19 +19,19 @@ const FooterContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 30px;
-  background: ${tokens.background.color.secondary};
+  background: ${background.color.secondary};
   width: 100%;
-  padding: 18px ${tokens.layoutPadding.mobile.horizontal};
+  padding: 18px ${layout.padding.mobile.horizontal};
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
-    padding: 30px ${tokens.layoutPadding.desktop.horizontal};
+    padding: 30px ${layout.padding.desktop.horizontal};
   }
 `;
 
 const CopyrightWrapper = styled.div`
   grid-column: 1 / 3;
   grid-row: 3 / 4;
-  color: ${tokens.font.color.secondary};
+  color: ${font.color.secondary};
   ${textStyle};
 `;
 
@@ -54,7 +56,7 @@ const LinksContainer = styled.div`
   grid-template-rows: repeat(4, 14px);
   row-gap: 10px;
   column-gap: 60px;
-  color: ${tokens.font.color.primary};
+  color: ${font.color.primary};
   ${textStyle};
 `;
 
