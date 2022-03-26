@@ -16,7 +16,13 @@ export const Collections = ({ collections }: CollectionProps) => (
       const badge = getBadge(type);
       return (
         <ProfileItemWrapper key={name}>
-          <DropCard title={name} Badge={badge} dropDateTimestamp={dropDate} {...collection} />
+          <DropCard
+            title={name}
+            Badge={badge}
+            dropDateTimestamp={dropDate}
+            {...collection}
+            description={''}
+          />
         </ProfileItemWrapper>
       );
     })}
