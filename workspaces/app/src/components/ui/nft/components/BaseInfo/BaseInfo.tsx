@@ -38,7 +38,7 @@ const ContentContainer = styled.div`
   // Min-height creates space for long Collection titles
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
     gap: 0;
-    min-height: 98px;
+    min-height: 102px;
     justify-content: space-between;
   }
 `;
