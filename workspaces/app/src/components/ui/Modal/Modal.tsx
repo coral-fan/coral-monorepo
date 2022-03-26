@@ -8,7 +8,7 @@ import { CloseButton, Overlay } from './components';
 import { ModalProps } from './types';
 import { Heading } from 'components/ui';
 
-const { mobile, desktop } = tokens.layoutPadding;
+const { mobile, desktop } = tokens.layout.padding;
 
 const ModalContainer = styled.div`
   display: flex;
