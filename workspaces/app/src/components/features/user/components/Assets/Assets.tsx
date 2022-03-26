@@ -11,20 +11,11 @@ interface AssetProps {
 export const Assets = ({ assets }: AssetProps) => (
   <ProfileItems>
     {assets.map((asset) => {
-      const { collectionName, artistName, artistProfilePhoto, imageUrl, type, id, collectionId } =
-        asset;
+      const { collectionName, type, id } = asset;
       const Badge = getBadge(type);
       return (
         <ProfileItemWrapper key={id}>
-          <AssetCard
-            id={id}
-            collectionId={collectionId}
-            title={collectionName}
-            Badge={Badge}
-            imageUrl={imageUrl}
-            artistName={artistName}
-            artistProfilePhoto={artistProfilePhoto}
-          />
+          <AssetCard title={collectionName} Badge={Badge} {...asset} />
         </ProfileItemWrapper>
       );
     })}
