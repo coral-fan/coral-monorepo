@@ -12,19 +12,11 @@ interface CollectionProps {
 export const Collections = ({ collections }: CollectionProps) => (
   <ProfileItems>
     {sortCollectionByDropDateDesc(collections).map((collection) => {
-      const { name, artistName, artistProfilePhoto, imageUrl, type, id, dropDate } = collection;
+      const { name, type, dropDate } = collection;
       const badge = getBadge(type);
       return (
         <ProfileItemWrapper key={name}>
-          <DropCard
-            id={id}
-            title={name}
-            Badge={badge}
-            imageUrl={imageUrl}
-            artistName={artistName}
-            artistProfilePhoto={artistProfilePhoto}
-            dropDateTimestamp={dropDate}
-          />
+          <DropCard title={name} Badge={badge} dropDateTimestamp={dropDate} {...collection} />
         </ProfileItemWrapper>
       );
     })}
