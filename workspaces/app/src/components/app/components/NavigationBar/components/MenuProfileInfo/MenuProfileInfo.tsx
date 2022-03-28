@@ -8,7 +8,7 @@ export interface MenuProfileProps extends Omit<ProfileInfoProps, 'secondaryInfo'
 }
 
 const Wrapper = styled.div`
-  padding: 16px 0;
+  padding: 16px 20px 16px 0px;
 `;
 
 export const MenuProfileInfo = ({
