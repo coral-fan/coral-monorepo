@@ -11,7 +11,7 @@ export interface LinkProps extends ComponentPropsWithRef<'a'> {
 }
 
 const getlinkStyle = (
-  hoverVariant: LinkProps['hoverVariant'] = 'primary',
+  hoverVariant: LinkProps['hoverVariant'] = 'brand',
   style?: SerializedStyles
 ) => css`
   text-decoration: none;
