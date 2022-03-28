@@ -1,8 +1,13 @@
-import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 import { buttonStyle } from 'components/ui/buttons';
-import { Link } from '../Link';
+import { Link, LinkProps } from '../Link';
 
-export const ButtonLink = styled(Link)`
-  ${buttonStyle}
+const buttonLinkStyle = css`
+  ${buttonStyle};
   text-align: center;
 `;
+export const ButtonLink = ({ children, ...props }: Omit<LinkProps, 'hoverVariant'>) => (
+  <Link hoverVariant="contrast" css={buttonLinkStyle} {...props}>
+    {children}
+  </Link>
+);
