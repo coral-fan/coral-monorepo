@@ -5,7 +5,7 @@ import { Link, Modal } from 'components/ui';
 import { useIsAuthenticated, useLogin, useLogout } from 'libraries/authentication';
 import { useUserUid } from 'libraries/models';
 import { UserProfile } from '../../NavigationBar';
-import { Item } from './Item';
+import { ClickableWrapper, Item } from './Item';
 import { MenuProfileInfo } from '../MenuProfileInfo';
 import { usePush } from 'libraries/authentication/hooks/usePush';
 import { useRouter } from 'next/router';
@@ -72,7 +72,7 @@ export const Menu = ({ isMenuOpen, setIsMenuOpen, userProfile }: MenuProps) => {
   return (
     <Modal onClick={closeMenuModal}>
       {isAuthenticated && userProfile && (
-        <>
+        <ClickableWrapper>
           <MenuProfileLink href={`/user/${uid}`} onClick={closeMenuModal}>
             <MenuProfileInfo
               username={userProfile.username}
@@ -81,7 +81,7 @@ export const Menu = ({ isMenuOpen, setIsMenuOpen, userProfile }: MenuProps) => {
             />
           </MenuProfileLink>
           {/* <NotificationItem handleCloseMenu={useCloseMenuModal} notificationsCount={notificationsCount} /> */}
-        </>
+        </ClickableWrapper>
       )}
       {items.map(({ to, name, onClick }) =>
         createElement(
