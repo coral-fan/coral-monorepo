@@ -52,6 +52,7 @@ const SliderInput = styled.input`
   /* Firefox */
   &::-moz-range-thumb {
     ${sliderThumbStyle};
+    border: none;
   }
   &::-moz-range-track {
     ${sliderTrackStyle};
