@@ -13,13 +13,12 @@ import { getUidClientSide, getUidServerSide } from 'libraries/models';
 import { GlobalStyles } from 'styles';
 
 // components
-import { Managers, Modals } from './components';
+import { Managers, Modals, Layout } from './components';
 
 // state/logic
 import { useEffect, useState } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { initializeStore } from 'libraries/state';
-import { Layout } from 'components/layout';
 
 initializeFirebaseApp();
 
