@@ -17,7 +17,6 @@ const Container = styled.div`
   top: 0;
   z-index: 1;
   padding: ${mobile.vertical} ${mobile.horizontal};
-  /* border: solid 1px red; */
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
     padding: ${desktop.vertical} ${desktop.horizontal};
