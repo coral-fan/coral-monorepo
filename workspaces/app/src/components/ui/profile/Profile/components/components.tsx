@@ -33,7 +33,7 @@ export const ProfileContainer = styled.div`
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
     position: sticky;
-    top: 128px;
+    top: calc((2 * ${tokens.layout.padding.desktop.vertical}) + ${tokens.buttons.size.desktop});
   }
   gap: var(--gap);
 `;
