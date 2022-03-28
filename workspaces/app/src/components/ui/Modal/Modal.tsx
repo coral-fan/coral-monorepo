@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from '@emotion/styled';
 
@@ -12,7 +12,11 @@ import { css } from '@emotion/react';
 
 const { mobile, desktop } = tokens.layout.padding;
 
-const ModalContainer = styled.div<Pick<ModalProps, 'onClick'>>`
+interface ModalHasControlButton {
+  modalHasControlButton: boolean;
+}
+
+const ModalContainer = styled.div<ModalHasControlButton>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,8 +24,8 @@ const ModalContainer = styled.div<Pick<ModalProps, 'onClick'>>`
   height: 100%;
   padding: ${mobile.vertical} ${mobile.horizontal};
 
-  ${({ onClick }) =>
-    onClick
+  ${({ modalHasControlButton }) =>
+    modalHasControlButton
       ? null
       : css`
           padding-top: calc(${mobile.vertical} * 2 + ${tokens.buttons.size.mobile});
@@ -52,7 +56,7 @@ const ContentContainer = styled.div`
   }
 `;
 
-const Content = styled(Card)<Pick<ModalProps, 'title' | 'variant' | 'onClick'>>`
+const Content = styled(Card)<Pick<ModalProps, 'title' | 'variant'> & ModalHasControlButton>`
   max-width: 575px;
   color: ${({ variant }) =>
     variant === 'contrast' ? tokens.font.color.contrast : tokens.font.color.primary};
@@ -62,8 +66,8 @@ const Content = styled(Card)<Pick<ModalProps, 'title' | 'variant' | 'onClick'>>`
   max-height: 400px;
   overflow: scroll;
 
-  ${({ onClick }) =>
-    onClick
+  ${({ modalHasControlButton }) =>
+    modalHasControlButton
       ? null
       : css`
           margin-top: calc(
@@ -97,6 +101,8 @@ export const Modal: FC<ModalProps> = ({
 
   const [isMounted, setIsMounted] = useState(false);
 
+  const modalHasControlButton = useMemo(() => onClick !== undefined, [onClick]);
+
   useEffect(() => {
     documentBodyRef.current = document.body;
     setIsMounted(true);
@@ -105,14 +111,18 @@ export const Modal: FC<ModalProps> = ({
   return isMounted
     ? ReactDOM.createPortal(
         <Overlay>
-          <ModalContainer onClick={onClick}>
+          <ModalContainer modalHasControlButton={modalHasControlButton}>
             {onClick && (
               <ModalControlContainer>
                 <CloseButton onClick={onClick} />
               </ModalControlContainer>
             )}
             <ContentContainer>
-              <Content title={title} variant={variant} onClick={onClick}>
+              <Content
+                title={title}
+                variant={variant}
+                modalHasControlButton={modalHasControlButton}
+              >
                 {title && (
                   <Heading level={1} styleVariant={'h2'} colorVariant={variant}>
                     {title}
