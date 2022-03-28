@@ -6,7 +6,6 @@ import { User } from 'libraries/models';
 import { useObservable } from 'libraries/utils';
 import { getUserProfile$ } from './observables';
 import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
-// import { NAVIGATION_BAR_VERTICAL_PADDING } from './consts';
 
 const { mobile, desktop } = tokens.layout.padding;
 
@@ -22,10 +21,6 @@ const Container = styled.div`
 
   @media (min-width: ${DESKTOP_BREAKPOINT}) {
     padding: ${desktop.vertical} ${desktop.horizontal};
-    /* padding: ${NAVIGATION_BAR_VERTICAL_PADDING.MOBILE}; */
-
-    /* @media (min-width: ${DESKTOP_BREAKPOINT}) { */
-    /* padding: ${NAVIGATION_BAR_VERTICAL_PADDING.DESKTOP} 70px; */
   }
 `;
 
