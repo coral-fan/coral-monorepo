@@ -5,7 +5,7 @@ import { Link, Modal } from 'components/ui';
 import { useIsAuthenticated, useLogin, useLogout } from 'libraries/authentication';
 import { useUserUid } from 'libraries/models';
 import { UserProfile } from '../../NavigationBar';
-import { ClickableWrapper, Item } from './Item';
+import { Item } from './Item';
 import { MenuProfileInfo } from '../MenuProfileInfo';
 import { usePush } from 'libraries/authentication/hooks/usePush';
 import { useRouter } from 'next/router';
@@ -34,6 +34,10 @@ type MenuItemProps = LinkItemProps | LinkButtonItemProps;
 
 const MenuProfileLink = styled(Link)`
   border-bottom: solid 1px ${tokens.border.color.secondary};
+`;
+
+const ClickableWrapper = styled.div`
+  width: fit-content;
 `;
 
 export const Menu = ({ isMenuOpen, setIsMenuOpen, userProfile }: MenuProps) => {
