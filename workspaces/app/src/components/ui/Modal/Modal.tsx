@@ -7,7 +7,6 @@ import { Card } from '../Card';
 import { CloseButton, Overlay } from './components';
 import { ModalProps } from './types';
 import { Heading } from 'components/ui';
-import { NAVIGATION_BAR_VERTICAL_PADDING } from 'components/app/components/NavigationBar/consts';
 import { css } from '@emotion/react';
 
 const { mobile, desktop } = tokens.layout.padding;
@@ -71,7 +70,7 @@ const Content = styled(Card)<Pick<ModalProps, 'title' | 'variant'> & ModalHasCon
       ? null
       : css`
           margin-top: calc(
-            ${NAVIGATION_BAR_VERTICAL_PADDING.MOBILE} + ${tokens.buttons.size.mobile}
+            ${tokens.layout.padding.mobile.vertical} + ${tokens.buttons.size.mobile}
           );
         `}
 
