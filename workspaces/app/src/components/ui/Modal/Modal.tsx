@@ -24,9 +24,7 @@ const ModalContainer = styled.div<Pick<ModalProps, 'onClick'>>`
     onClick
       ? null
       : css`
-          padding-top: calc(
-            ${NAVIGATION_BAR_VERTICAL_PADDING.MOBILE} * 2 + ${tokens.buttons.size.mobile}
-          );
+          padding-top: calc(${mobile.vertical} * 2 + ${tokens.buttons.size.mobile});
         `}
   gap: 24px;
 
