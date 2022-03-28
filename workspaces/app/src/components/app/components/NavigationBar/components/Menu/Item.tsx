@@ -35,20 +35,16 @@ const Wrapper = styled.div`
   }
 `;
 
-export const ClickableWrapper = styled.div`
-  width: fit-content;
-`;
-
 export const Item: FC<ItemProps> = ({ onClick, to, children, handleCloseMenu }) => {
   return (
     <Wrapper>
-      <ClickableWrapper onClick={handleCloseMenu}>
-        {to ? (
-          <Link href={to}>{children}</Link>
-        ) : (
-          <LinkButton onClick={onClick}>{children}</LinkButton>
-        )}
-      </ClickableWrapper>
+      {to ? (
+        <Link href={to} onClick={handleCloseMenu}>
+          {children}
+        </Link>
+      ) : (
+        <LinkButton onClick={onClick}>{children}</LinkButton>
+      )}
     </Wrapper>
   );
 };
