@@ -16,11 +16,16 @@ import { GlobalStyles } from 'styles';
 import { Managers, Layout, GlobalModals } from './components';
 
 // state/logic
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { initializeStore } from 'libraries/state';
 
 initializeFirebaseApp();
+
+const conditionallyRenderComponent = (a: JSX.Element, b: JSX.Element) => {
+  const shouldRenderA = Object.keys(a.props).length > 0;
+  return shouldRenderA ? a : b;
+};
 
 export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
   const store = initializeStore(initialState);
@@ -37,13 +42,6 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
     setIsMounted(true);
   }, []);
 
-  const conditionallyRenderModalOrComponent = useCallback(() => {
-    const modal = <GlobalModals />;
-    const shouldRenderComponent = Object.keys(modal.props).length > 0;
-
-    return shouldRenderComponent ? modal : <Component {...pageProps} />;
-  }, [Component, pageProps]);
-
   return (
     <>
       <GlobalStyles />
@@ -56,7 +54,11 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
       <main>
         <ReduxProvider store={store}>
           <Managers />
-          {isMounted ? <Layout>{conditionallyRenderModalOrComponent()}</Layout> : null}
+          {isMounted ? (
+            <Layout>
+              {conditionallyRenderComponent(<GlobalModals />, <Component {...pageProps} />)}
+            </Layout>
+          ) : null}
         </ReduxProvider>
       </main>
     </>
