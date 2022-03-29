@@ -1,1 +1,1 @@
-export * from './GlobalModals';
+export * from './Modals';
