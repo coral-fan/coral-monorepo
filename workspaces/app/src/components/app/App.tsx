@@ -13,10 +13,10 @@ import { getUidClientSide, getUidServerSide } from 'libraries/models';
 import { GlobalStyles } from 'styles';
 
 // components
-import { Managers, Modals, Layout } from './components';
+import { Managers, Layout, GlobalModals } from './components';
 
 // state/logic
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { initializeStore } from 'libraries/state';
 
@@ -37,6 +37,13 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
     setIsMounted(true);
   }, []);
 
+  const conditionallyRenderModalOrComponent = useCallback(() => {
+    const modal = <GlobalModals />;
+    const shouldRenderComponent = Object.keys(modal.props).length > 0;
+
+    return shouldRenderComponent ? modal : <Component {...pageProps} />;
+  }, [Component, pageProps]);
+
   return (
     <>
       <GlobalStyles />
@@ -49,7 +56,7 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
       <main>
         <ReduxProvider store={store}>
           <Managers />
-          {isMounted ? <Layout>{<Modals /> ?? <Component {...pageProps} />}</Layout> : null}
+          {isMounted ? <Layout>{conditionallyRenderModalOrComponent()}</Layout> : null}
         </ReduxProvider>
       </main>
     </>
