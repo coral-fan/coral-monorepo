@@ -35,7 +35,10 @@ export const NavigationBar = () => {
 
   const [isInstallMetaMaskModalOpen, setIsInstallMetaMaskModalOpen] = useState(false);
 
-  const openInstallMetaMaskModal = useCallback(() => setIsInstallMetaMaskModalOpen(true), []);
+  const openInstallMetaMaskModal = useCallback(() => {
+    closeMenuModal();
+    setIsInstallMetaMaskModalOpen(true);
+  }, [closeMenuModal]);
   const closeInstallMetaMaskModal = useCallback(() => setIsInstallMetaMaskModalOpen(false), []);
 
   return (
