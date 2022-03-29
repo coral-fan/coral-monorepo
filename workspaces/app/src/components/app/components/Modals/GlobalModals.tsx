@@ -1,11 +1,11 @@
-import { WrongNetworkModal } from './WrongNetworkModal';
-import { SignUpModal } from './SignUpModal/SignUpModal';
 import { useIsNetworkSupported } from 'libraries/blockchain';
 import { useIsSigningUp } from 'libraries/authentication';
+import { WrongNetworkModal } from './WrongNetworkModal';
+import { SignUpModal } from './SignUpModal';
 
-export const Modals = () => {
+export const GlobalModals = () => {
   const isNetworkSupported = useIsNetworkSupported();
-  const isSigningUp = useIsSigningUp();
+  const [isSigningUp] = useIsSigningUp();
 
   if (!isNetworkSupported) {
     return <WrongNetworkModal />;
