@@ -13,7 +13,7 @@ import { getUidClientSide, getUidServerSide } from 'libraries/models';
 import { GlobalStyles } from 'styles';
 
 // components
-import { Managers, Layout, GlobalModals } from './components';
+import { Managers, Layout, Modals } from './components';
 
 // state/logic
 import { useEffect, useState } from 'react';
@@ -56,7 +56,7 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
           <Managers />
           {isMounted ? (
             <Layout>
-              {conditionallyRenderComponent(<GlobalModals />, <Component {...pageProps} />)}
+              {conditionallyRenderComponent(<Modals />, <Component {...pageProps} />)}
             </Layout>
           ) : null}
         </ReduxProvider>

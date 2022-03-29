@@ -3,7 +3,7 @@ import { useIsSigningUp } from 'libraries/authentication';
 import { WrongNetworkModal } from './WrongNetworkModal';
 import { SignUpModal } from './SignUpModal';
 
-export const GlobalModals = () => {
+export const Modals = () => {
   const isNetworkSupported = useIsNetworkSupported();
   const [isSigningUp] = useIsSigningUp();
 
