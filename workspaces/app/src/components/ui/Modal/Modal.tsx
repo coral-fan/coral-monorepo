@@ -21,7 +21,6 @@ const ModalContainer = styled.div<ModalHasControlButton>`
   align-items: center;
   width: 100%;
   height: 100%;
-  gap: 16px;
   padding: ${mobile.vertical} ${mobile.horizontal};
 
   ${({ modalHasControlButton }) =>
@@ -83,6 +82,7 @@ const Content = styled(Card)<Pick<ModalProps, 'title' | 'variant'> & ModalHasCon
 const Main = styled.div<Pick<ModalProps, 'mainContainerStyle'>>`
   display: flex;
   flex-direction: column;
+  gap: 16px;
   ${({ mainContainerStyle }) => mainContainerStyle}
 `;
 
