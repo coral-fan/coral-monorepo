@@ -1,9 +1,5 @@
-import { useIsSigningUp } from 'libraries/authentication';
-import { useIsNetworkSupported } from 'libraries/blockchain';
 import { Modal, Button, Toggle, Input } from 'components/ui';
-
 import { TogglesContainer, InputsContainer, SignUpForm } from './components';
-
 import { useSignUpForm } from './hook';
 
 export const SignUpModal = () => {
