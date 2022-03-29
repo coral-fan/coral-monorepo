@@ -21,6 +21,7 @@ const ModalContainer = styled.div<ModalHasControlButton>`
   align-items: center;
   width: 100%;
   height: 100%;
+  gap: 16px;
   padding: ${mobile.vertical} ${mobile.horizontal};
 
   ${({ modalHasControlButton }) =>

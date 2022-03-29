@@ -8,7 +8,6 @@ import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 
 const mainContainerStyle = css`
   align-items: center;
-  gap: 16px;
 `;
 
 const PrivateEventIcon = getIconComponent('PrivateEventIcon', privateEventSVG);
