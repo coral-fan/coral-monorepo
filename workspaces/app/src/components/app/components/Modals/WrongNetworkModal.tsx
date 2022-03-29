@@ -30,12 +30,6 @@ export const WrongNetworkModal = () => {
     });
   };
 
-  const isNetworkSupported = useIsNetworkSupported();
-
-  if (isNetworkSupported) {
-    return null;
-  }
-
   return (
     <Modal title="Wrong Network" mainContainerStyle={mainContainerStyle}>
       <Message>You are on the wrong network. Please connect to the Avalanche network.</Message>
