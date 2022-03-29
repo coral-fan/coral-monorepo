@@ -7,15 +7,8 @@ import { TogglesContainer, InputsContainer, SignUpForm } from './components';
 import { useSignUpForm } from './hook';
 
 export const SignUpModal = () => {
-  const [isSigningUp] = useIsSigningUp();
-  const isNetworkSupported = useIsNetworkSupported();
-
   const { register, errors, isValid, isSignUpSubmitting, handleSubmitSignUp, getValues } =
     useSignUpForm();
-
-  if (!isSigningUp || !isNetworkSupported) {
-    return null;
-  }
 
   const { email } = getValues();
 
