@@ -79,10 +79,15 @@ const Content = styled(Card)<Pick<ModalProps, 'title' | 'variant'> & ModalHasCon
   }
 `;
 
-const Main = styled.div<Pick<ModalProps, 'mainContainerStyle'>>`
+const Main = styled.div<Pick<ModalProps, 'mainContainerHasNoGap' | 'mainContainerStyle'>>`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  ${({ mainContainerHasNoGap }) =>
+    mainContainerHasNoGap
+      ? null
+      : css`
+          gap: 16px;
+        `};
   ${({ mainContainerStyle }) => mainContainerStyle}
 `;
 
@@ -95,6 +100,7 @@ export const Modal: FC<ModalProps> = ({
   title,
   onClick,
   mainContainerStyle,
+  mainContainerHasNoGap,
   variant,
 }) => {
   const documentBodyRef = useRef<Document['body']>();
@@ -128,7 +134,12 @@ export const Modal: FC<ModalProps> = ({
                     {title}
                   </Heading>
                 )}
-                <Main mainContainerStyle={mainContainerStyle}>{children}</Main>
+                <Main
+                  mainContainerStyle={mainContainerStyle}
+                  mainContainerHasNoGap={mainContainerHasNoGap}
+                >
+                  {children}
+                </Main>
               </Content>
             </ContentContainer>
           </ModalContainer>
