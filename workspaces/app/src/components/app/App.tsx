@@ -49,12 +49,7 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
       <main>
         <ReduxProvider store={store}>
           <Managers />
-          <Modals />
-          {isMounted ? (
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          ) : null}
+          {isMounted ? <Layout>{<Modals /> ?? <Component {...pageProps} />}</Layout> : null}
         </ReduxProvider>
       </main>
     </>
