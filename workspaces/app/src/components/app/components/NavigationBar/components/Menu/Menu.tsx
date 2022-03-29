@@ -1,4 +1,4 @@
-import { createElement, useCallback } from 'react';
+import { createElement, useCallback, useMemo } from 'react';
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
 import { Link, Modal } from 'components/ui';
@@ -9,11 +9,12 @@ import { Item } from './Item';
 import { MenuProfileInfo } from '../MenuProfileInfo';
 import { usePush } from 'libraries/authentication/hooks/usePush';
 import { useRouter } from 'next/router';
+import { isMetaMaskInjected } from 'libraries/blockchain';
 
 interface MenuProps {
-  isMenuOpen: boolean;
-  setIsMenuOpen: (isMenuOpen: boolean) => void;
   userProfile?: UserProfile;
+  openInstallMetaMaskModal: () => void;
+  closeMenuModal: () => void;
 }
 
 interface BaseMenuItemProp {
@@ -40,7 +41,7 @@ const ClickableWrapper = styled.div`
   width: fit-content;
 `;
 
-export const Menu = ({ isMenuOpen, setIsMenuOpen, userProfile }: MenuProps) => {
+export const Menu = ({ userProfile, openInstallMetaMaskModal, closeMenuModal }: MenuProps) => {
   const { login } = useLogin();
   const logout = useLogout();
   const isAuthenticated = useIsAuthenticated();
@@ -48,30 +49,30 @@ export const Menu = ({ isMenuOpen, setIsMenuOpen, userProfile }: MenuProps) => {
   const push = usePush();
   const currentPath = useRouter().pathname;
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     logout();
     if (currentPath !== '/') {
       push('/');
     }
-  };
+  }, [logout, currentPath, push]);
 
-  const AUTHENTICATED_MENU_ITEMS: MenuItemProps[] = [
-    { name: 'Home', to: '/' },
-    { name: 'Sign Out', onClick: handleLogout },
-  ];
+  const authenticatedMenuItems: MenuItemProps[] = useMemo(
+    () => [
+      { name: 'Home', to: '/' },
+      { name: 'Sign Out', onClick: handleLogout },
+    ],
+    [handleLogout]
+  );
 
-  const UNAUTHENTICATED_MENU_ITEMS: MenuItemProps[] = [
-    { name: 'Home', to: '/' },
-    { name: 'Sign In', onClick: login },
-  ];
+  const unauthenticatedMenuItems: MenuItemProps[] = useMemo(
+    () => [
+      { name: 'Home', to: '/' },
+      { name: 'Sign In', onClick: isMetaMaskInjected() ? login : openInstallMetaMaskModal },
+    ],
+    [openInstallMetaMaskModal, login]
+  );
 
-  const items = isAuthenticated ? AUTHENTICATED_MENU_ITEMS : UNAUTHENTICATED_MENU_ITEMS;
-
-  const closeMenuModal = useCallback(() => setIsMenuOpen(false), [setIsMenuOpen]);
-
-  if (!isMenuOpen) {
-    return null;
-  }
+  const menuItems = isAuthenticated ? authenticatedMenuItems : unauthenticatedMenuItems;
 
   return (
     <Modal onClick={closeMenuModal}>
@@ -87,7 +88,7 @@ export const Menu = ({ isMenuOpen, setIsMenuOpen, userProfile }: MenuProps) => {
           {/* <NotificationItem handleCloseMenu={useCloseMenuModal} notificationsCount={notificationsCount} /> */}
         </ClickableWrapper>
       )}
-      {items.map(({ to, name, onClick }) =>
+      {menuItems.map(({ to, name, onClick }) =>
         createElement(
           Item,
           { key: name, handleCloseMenu: closeMenuModal, ...(to ? { to } : { onClick }) },
