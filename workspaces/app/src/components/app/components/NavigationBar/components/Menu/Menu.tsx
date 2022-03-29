@@ -75,7 +75,7 @@ export const Menu = ({ userProfile, openInstallMetaMaskModal, closeMenuModal }: 
   const menuItems = isAuthenticated ? authenticatedMenuItems : unauthenticatedMenuItems;
 
   return (
-    <Modal onClick={closeMenuModal}>
+    <Modal onClick={closeMenuModal} mainContainerHasNoGap>
       {isAuthenticated && userProfile && (
         <ClickableWrapper>
           <MenuProfileLink href={`/user/${uid}`} onClick={closeMenuModal}>
