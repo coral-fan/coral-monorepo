@@ -18,7 +18,7 @@ export interface CollectionData {
   id: string;
   name: string;
   /* blockchain data index cache */
-  artistId: string;
+  artistId: Artist['id'];
   imageUrl: string;
   maxMintable: number;
   /* */
