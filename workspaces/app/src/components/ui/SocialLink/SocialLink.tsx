@@ -37,7 +37,7 @@ const Link = styled(LinkComponent)`
 export const SocialLink = ({ socialType, username }: SocialLinkProps) => {
   const [url, svg] = socialInfoMap[socialType];
   return (
-    <Link href={`${url}${username}`} target="_blank">
+    <Link href={`${url}${username}`} openInNewTab>
       <img src={svg} width={'auto'} height={'auto'} alt={''} />
     </Link>
   );
