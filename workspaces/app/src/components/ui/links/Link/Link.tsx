@@ -8,6 +8,7 @@ export interface LinkProps extends ComponentPropsWithRef<'a'> {
   href: string;
   css?: SerializedStyles;
   hoverVariant?: keyof typeof tokens.font.color;
+  openInNewTab?: boolean;
 }
 
 const getlinkStyle = (
@@ -27,12 +28,18 @@ const getlinkStyle = (
   https://github.com/yannickcr/eslint-plugin-react/issues/2269
 */
 export const Link = forwardRef(function Link(
-  { href, hoverVariant, css, ...props }: LinkProps,
+  { href, hoverVariant, css, openInNewTab, ...props }: LinkProps,
   ref: ForwardedRef<HTMLAnchorElement>
 ) {
   return (
     <NextLink href={href} passHref>
-      <a css={getlinkStyle(hoverVariant, css)} ref={ref} {...props} />
+      <a
+        css={getlinkStyle(hoverVariant, css)}
+        ref={ref}
+        target={openInNewTab ? '_blank' : 'self'}
+        rel={openInNewTab ? 'noopener noreferrer' : ''}
+        {...props}
+      />
     </NextLink>
   );
 });
