@@ -7,7 +7,7 @@ interface InstallMetaMaskModalProps {
 export const InstallMetaMaskModal = ({ closeModal }: InstallMetaMaskModalProps) => (
   <Modal title="MetaMask Is Not Installed" onClick={closeModal}>
     <Message>Please install MetaMask Wallet Browser Extension.</Message>
-    <ButtonLink href="https://metamask.io/download/" openInNewTab onClick={closeModal}>
+    <ButtonLink href="https://metamask.io/download/" onClick={closeModal} openInNewTab>
       Install MetaMask
     </ButtonLink>
   </Modal>
