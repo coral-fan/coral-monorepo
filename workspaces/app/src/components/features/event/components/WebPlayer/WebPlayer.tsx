@@ -1,13 +1,12 @@
 import styled from '@emotion/styled';
 
 const Container = styled.div`
-  width: 66%;
+  width: 100%;
   margin: auto;
 `;
 
 const PlayerContainer = styled.div`
   position: relative;
-  height: 0;
   padding-bottom: 56.25%;
 `;
 
@@ -23,19 +22,15 @@ interface WebPlayerProps {
   mediaId: string;
 }
 
-export const WebPlayer = ({ mediaId }: WebPlayerProps) => {
-  return (
-    <>
-      <Container>
-        <PlayerContainer>
-          <Player
-            src={`https://videos.sproutvideo.com/embed/${mediaId}`}
-            frameBorder="0"
-            allowFullScreen
-            referrerPolicy="no-referrer-when-downgrade"
-          ></Player>
-        </PlayerContainer>
-      </Container>
-    </>
-  );
-};
+export const WebPlayer = ({ mediaId }: WebPlayerProps) => (
+  <Container>
+    <PlayerContainer>
+      <Player
+        src={`https://videos.sproutvideo.com/embed/${mediaId}`}
+        frameBorder="0"
+        allowFullScreen
+        referrerPolicy="no-referrer-when-downgrade"
+      ></Player>
+    </PlayerContainer>
+  </Container>
+);
