@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Footer, NavigationBar } from 'components/app/components';
 import { FC } from 'react';
-import { DESKTOP_BREAKPOINT } from 'styles';
+import { QUERIES } from 'styles';
 import tokens from 'styles/tokens';
 
 const { mobile, desktop } = tokens.layout.padding;
@@ -22,7 +22,7 @@ const Main = styled.div`
   --padding-bottom: ${mobile.vertical};
   /* border: solid 1px green; */
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.laptopAndUp} {
     --padding: 0 ${desktop.horizontal};
     --padding-bottom: ${desktop.vertical};
   }

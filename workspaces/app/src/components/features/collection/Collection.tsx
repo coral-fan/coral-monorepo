@@ -7,7 +7,7 @@ import { Details, ImageWithInfo, ShareButton } from 'components/ui/nft/component
 import { DropTimer, NftContent } from 'components/ui';
 import { getBadge } from 'components/ui/badges/utils';
 import { PartialCollection, SimilarCollections } from './components/SimilarCollections';
-import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
+import tokens, { QUERIES } from 'styles/tokens';
 
 const Container = styled.div`
   width: 100%;
@@ -17,13 +17,11 @@ const Container = styled.div`
   margin-top: calc(
     -1 * ((2 * ${tokens.layout.padding.desktop.vertical}) + ${tokens.buttons.size.desktop})
   );
-  border: solid 2px red;
-  position: relative;
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.tabletAndUp} {
     display: flex;
     flex-direction: row;
-    gap: 30px;
+    gap: ${tokens.spacing.mobile.xl};
   }
 `;
 
@@ -31,13 +29,17 @@ const ImageWrapper = styled.div`
   margin-left: calc(-1 * ${tokens.layout.padding.mobile.horizontal});
   margin-right: calc(-1 * ${tokens.layout.padding.mobile.horizontal});
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
-    flex: 1 0 48%;
+  @media ${QUERIES.tabletAndUp} {
+    flex: 1 0 56%;
     align-self: flex-start;
     position: sticky;
-    top: 0;
-    margin-left: calc(-1 * ${tokens.layout.padding.desktop.horizontal});
     margin-right: 0;
+    top: 0;
+  }
+
+  @media ${QUERIES.laptopAndUp} {
+    margin-left: calc(-1 * ${tokens.layout.padding.desktop.horizontal});
+    flex: 1 0 48%;
   }
 `;
 
@@ -46,9 +48,8 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${tokens.spacing.mobile.lg};
-  border: solid 1px blue;
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.tabletAndUp} {
     margin-top: calc((${tokens.layout.padding.desktop.vertical}) + ${tokens.buttons.size.desktop});
   }
 `;

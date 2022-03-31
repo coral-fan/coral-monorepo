@@ -1,15 +1,16 @@
 import styled from '@emotion/styled';
 import { Heading } from 'components/ui';
-import { useIsDesktop } from 'libraries/window';
-import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
+import { useIsMobile } from 'libraries/window';
+import tokens, { QUERIES } from 'styles/tokens';
 import { FC } from 'react';
 
 const ContentContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  gap: ${tokens.spacing.mobile.lg};
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.laptopAndUp} {
     gap: ${tokens.spacing.desktop.md};
   }
 `;
@@ -21,7 +22,7 @@ const CollectionContainer = styled.div`
   align-items: stretch;
   gap: ${tokens.spacing.mobile.lg};
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.tabletAndUp} {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -29,10 +30,10 @@ const CollectionContainer = styled.div`
 `;
 
 export const ProfileItems: FC = ({ children }) => {
-  const isDesktop = useIsDesktop();
+  const isMobile = useIsMobile();
   return (
     <ContentContainer>
-      {isDesktop && (
+      {!isMobile && (
         <Heading level={3} styleVariant={'h3'}>
           Collections
         </Heading>

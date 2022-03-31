@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Item } from './Item';
 import { css } from '@emotion/react';
-import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
+import tokens, { QUERIES } from 'styles/tokens';
 
 export interface NotificationItemProp {
   notificationsCount: number;
@@ -21,7 +21,7 @@ const Badge = styled.div`
   background-color: ${tokens.background.color.brand};
   border-radius: 50%;
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.laptopAndUp} {
     height: 24px;
     width: 24px;
   }
