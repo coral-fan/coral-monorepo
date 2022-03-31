@@ -4,6 +4,7 @@ import { CollectionData } from '../collection';
 export interface EventData {
   id: string;
   streamId: string;
+  chatId: string;
   name: string;
   date: string;
   description: string;
