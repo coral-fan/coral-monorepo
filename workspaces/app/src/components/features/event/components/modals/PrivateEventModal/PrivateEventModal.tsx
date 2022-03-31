@@ -3,7 +3,7 @@ import { getIconComponent } from 'components/ui/icons/utils';
 import { Button, ButtonLink, Message, Modal } from 'components/ui';
 import privateEventSVG from './lock.svg';
 import { useLogin } from 'libraries/authentication';
-import { useIconSize } from '../../hooks';
+import { useIconSize } from '../hooks';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 
 const mainContainerStyle = css`
