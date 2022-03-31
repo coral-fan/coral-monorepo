@@ -16,7 +16,7 @@ export const Assets = ({ assets }: AssetProps) => (
         const Badge = getBadge(type);
         return (
           <ProfileItemWrapper key={`${collectionName}-${id}`}>
-            <AssetCard title={collectionName} Badge={Badge} {...asset} />
+            <AssetCard title={collectionName} Badge={Badge} {...asset} isCard={true} />
           </ProfileItemWrapper>
         );
       })

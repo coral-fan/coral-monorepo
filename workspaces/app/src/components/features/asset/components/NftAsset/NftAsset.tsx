@@ -60,6 +60,7 @@ export const NftAsset = ({
           artistProfilePhoto={artistProfilePhoto}
           Badge={getBadge(type)}
           description={collectionDescription}
+          isCard={false}
         >
           <Owner
             userId={ownerAddress}
