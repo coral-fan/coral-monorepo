@@ -1,17 +1,10 @@
-import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import styled from '@emotion/styled';
-import { Heading, HeadingLevel, HeadingStyleVariant } from 'components/ui';
 import { FC } from 'react';
 import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 import { ImageWithInfo, ImageWithInfoProps } from '..';
+import { NftContent, NftContentProps } from '../NftContent/NftContent';
 
-export interface BaseInfoProps extends ImageWithInfoProps {
-  title: string;
-  titleHeadingLevel: HeadingLevel;
-  titleStyleVariant: HeadingStyleVariant;
-  Badge?: () => EmotionJSX.Element;
-  description?: string | false;
-}
+export type BaseInfoProps = ImageWithInfoProps & NftContentProps;
 
 const BaseInfoContainer = styled.div`
   width: 100%;
@@ -24,43 +17,30 @@ const BaseInfoContainer = styled.div`
   }
 `;
 
-const Description = styled.p`
-  font-size: ${tokens.font.size.md};
-  line-height: ${tokens.font.line_height.md};
-`;
-
-const ContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 10px 16px 14px 16px;
-  gap: ${tokens.spacing.mobile.lg};
-
-  // Min-height creates space for long Collection titles
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
-    gap: 0;
-    min-height: 102px;
-    justify-content: space-between;
-  }
-`;
-
 export const BaseInfo: FC<BaseInfoProps> = ({
+  imageUrl,
+  artistName,
+  artistProfilePhoto,
   title,
   titleHeadingLevel,
   titleStyleVariant,
-  Badge,
-  description,
+  isCard,
   children,
-  ...imageWithInfoProps
 }) => (
   <BaseInfoContainer>
-    <ImageWithInfo {...imageWithInfoProps} />
-    <ContentContainer>
-      <Heading level={titleHeadingLevel} styleVariant={titleStyleVariant}>
-        {title}
-      </Heading>
-      {Badge && <Badge />}
-      {description && <Description>{description}</Description>}
+    <ImageWithInfo
+      imageUrl={imageUrl}
+      artistName={artistName}
+      artistProfilePhoto={artistProfilePhoto}
+      isCard={isCard}
+    />
+    <NftContent
+      title={title}
+      titleHeadingLevel={titleHeadingLevel}
+      titleStyleVariant={titleStyleVariant}
+      isCard={isCard}
+    >
       {children}
-    </ContentContainer>
+    </NftContent>
   </BaseInfoContainer>
 );
