@@ -1,0 +1,55 @@
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
+import styled from '@emotion/styled';
+import { Heading, HeadingLevel, HeadingStyleVariant } from 'components/ui';
+import { FC } from 'react';
+import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
+
+export interface NftContentProps {
+  title: string;
+  titleHeadingLevel: HeadingLevel;
+  titleStyleVariant: HeadingStyleVariant;
+  isCard: boolean;
+  Badge?: () => EmotionJSX.Element;
+  description?: string | false;
+}
+
+interface ContentContainerProps {
+  isCard: boolean;
+}
+
+const ContentContainer = styled.div<ContentContainerProps>`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: ${(props) => (props.isCard ? `10px 16px 14px 16px` : '10px 0px 0px 0px')};
+  gap: ${(props) => (props.isCard ? tokens.spacing.mobile.xs : tokens.spacing.mobile.lg)};
+  min-height: 104px;
+
+  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+    gap: ${(props) => (props.isCard ? '0px' : tokens.spacing.desktop.md)};
+  }
+`;
+
+const Description = styled.p`
+  font-size: ${tokens.font.size.md};
+  line-height: ${tokens.font.line_height.md};
+`;
+
+export const NftContent: FC<NftContentProps> = ({
+  title,
+  titleHeadingLevel,
+  titleStyleVariant,
+  Badge,
+  description,
+  isCard,
+  children,
+}) => (
+  <ContentContainer isCard={isCard}>
+    <Heading level={titleHeadingLevel} styleVariant={titleStyleVariant}>
+      {title}
+    </Heading>
+    {Badge && <Badge />}
+    {description && <Description>{description}</Description>}
+    {children}
+  </ContentContainer>
+);
