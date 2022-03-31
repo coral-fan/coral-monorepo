@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { LinkButton } from 'components/ui';
-import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
+import tokens, { QUERIES } from 'styles/tokens';
 
 import { EditAvatarButton as BaseEditAvatarButton } from '../EditAvatarButton';
 
@@ -12,7 +12,7 @@ export const EditAvatarButton = styled(BaseEditAvatarButton)`
   bottom: 0;
   right: 0;
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.laptopAndUp} {
     right: 15px;
   }
 `;

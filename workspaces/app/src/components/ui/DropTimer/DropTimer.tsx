@@ -4,7 +4,7 @@ import { interval, map, takeUntil } from 'rxjs';
 import { getTimeRemaining, bigTimer } from './utils';
 import { TimeLeft, Heading } from './components';
 import { useObservable } from 'libraries/utils/hooks';
-import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
+import tokens, { QUERIES } from 'styles/tokens';
 
 const DropTimerWrapper = styled.div`
   background-color: ${tokens.background.color.tertiary};
@@ -18,7 +18,7 @@ const DropTimerContainer = styled.div`
   flex-direction: column;
   gap: 4px;
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.laptopAndUp} {
     max-width: 480px;
   }
 `;

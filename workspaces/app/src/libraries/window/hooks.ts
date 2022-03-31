@@ -1,6 +1,6 @@
 import { useObservable } from 'libraries/utils';
 import { fromEvent, map } from 'rxjs';
-import { DESKTOP_BREAKPOINT_WIDTH } from 'styles';
+import { QUERIES_WIDTH } from 'styles';
 
 const getWindowDimensions = () => {
   const { innerWidth: width, innerHeight: height } = window;
@@ -16,5 +16,10 @@ export const useWindowDimensions = () => {
 
 export const useIsDesktop = () => {
   const { width } = useWindowDimensions();
-  return width >= DESKTOP_BREAKPOINT_WIDTH;
+  return width >= QUERIES_WIDTH.laptopAndUp;
+};
+
+export const useIsMobile = () => {
+  const { width } = useWindowDimensions();
+  return width <= QUERIES_WIDTH.tabletAndUp;
 };

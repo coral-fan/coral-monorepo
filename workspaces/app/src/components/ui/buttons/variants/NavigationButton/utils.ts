@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import tokens, { colors, DESKTOP_BREAKPOINT } from 'styles/tokens';
+import tokens, { colors, QUERIES } from 'styles/tokens';
 import { buttonBaseStyle } from '../../styles';
 
 export const getNavigationButtonStyle = (isTransparent: boolean) => css`
@@ -7,7 +7,7 @@ export const getNavigationButtonStyle = (isTransparent: boolean) => css`
 
   --button-size: ${tokens.buttons.size.mobile};
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.laptopAndUp} {
     --button-size: ${tokens.buttons.size.desktop};
   }
 

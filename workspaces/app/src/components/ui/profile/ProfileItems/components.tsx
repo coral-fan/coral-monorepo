@@ -1,9 +1,17 @@
 import styled from '@emotion/styled';
-import tokens from 'styles/tokens';
+import tokens, { QUERIES } from 'styles/tokens';
 
 export const ProfileItemWrapper = styled.div`
-  min-width: 280px;
-  flex: 0 0 48%;
+  min-width: 220px;
+  flex: 0 0 auto;
+
+  @media ${QUERIES.tabletAndUp} {
+    flex: 0 0 80%;
+  }
+
+  @media ${QUERIES.laptopAndUp} {
+    flex: 0 0 48%;
+  }
 `;
 
 export const ItemsPlaceholder = styled.div`

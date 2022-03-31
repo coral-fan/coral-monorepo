@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { FC } from 'react';
-import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
+import tokens, { QUERIES } from 'styles/tokens';
 import { ImageWithInfo, ImageWithInfoProps } from '..';
 import { NftContent, NftContentProps } from '../NftContent/NftContent';
 
@@ -12,7 +12,7 @@ const BaseInfoContainer = styled.div`
   flex-direction: column;
   gap: ${tokens.spacing.mobile.xs};
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.laptopAndUp} {
     gap: ${tokens.spacing.desktop.xs};
   }
 `;

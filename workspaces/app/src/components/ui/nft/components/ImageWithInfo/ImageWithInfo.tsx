@@ -5,7 +5,7 @@ import { Photo } from 'libraries/models';
 import { Image } from 'components/ui';
 
 import { useCallback, useState } from 'react';
-import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
+import tokens, { QUERIES } from 'styles/tokens';
 
 // parent container
 const ImageWithInfoContainer = styled.div`
@@ -25,7 +25,7 @@ const ArtistInfoContainer = styled.div<ImageInfoContainerProps>`
   height: 0;
   width: 0;
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.laptopAndUp} {
     left: calc(${({ isCard }) => (isCard ? '14px' : tokens.layout.padding.desktop.horizontal)});
   }
 `;

@@ -2,7 +2,7 @@ import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from '@emotion/styled';
 
-import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
+import tokens, { QUERIES } from 'styles/tokens';
 import { Card } from '../Card';
 import { CloseButton, Overlay } from './components';
 import { ModalProps } from './types';
@@ -31,7 +31,7 @@ const ModalContainer = styled.div<ModalHasControlButton>`
         `}
   gap: 24px;
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.laptopAndUp} {
     padding: ${desktop.vertical} ${desktop.horizontal};
   }
 `;
@@ -49,7 +49,7 @@ const ContentContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.laptopAndUp} {
     height: 100%;
     justify-content: center;
   }
@@ -74,7 +74,7 @@ const Content = styled(Card)<Pick<ModalProps, 'title' | 'variant'> & ModalHasCon
           );
         `}
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.laptopAndUp} {
     max-height: 750px;
   }
 `;

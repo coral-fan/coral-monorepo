@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
+import tokens, { QUERIES } from 'styles/tokens';
 
 const Container = styled.div`
   display: flex;
@@ -9,7 +9,7 @@ const Container = styled.div`
   font-size: ${tokens.font.size.xl};
   line-height: ${tokens.font.line_height.xl};
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.laptopAndUp} {
     font-size: ${tokens.font.size.xxl};
     line-height: ${tokens.font.line_height.xxl};
   }

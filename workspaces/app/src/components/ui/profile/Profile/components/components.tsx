@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
+import tokens, { QUERIES } from 'styles/tokens';
 
 const { size, line_height, letter_spacing, weight } = tokens.font;
 const { mobile, desktop } = tokens.spacing;
@@ -13,9 +13,13 @@ export const PageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   --gap: ${horizontalSpacerMobile};
-  /* border: solid 1px red; */
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.tabletAndUp} {
+    align-items: flex-start;
+    flex-direction: row;
+  }
+
+  @media ${QUERIES.laptopAndUp} {
     align-items: flex-start;
     flex-direction: row;
     --gap: ${horizontalSpacerDesktop};
@@ -29,9 +33,8 @@ export const ProfileContainer = styled.div`
   flex-direction: column;
   flex: 1 0 42.5%;
   --gap: ${horizontalSpacerMobile};
-  /* border: solid 1px blue; */
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.tabletAndUp} {
     position: sticky;
     top: calc((2 * ${tokens.layout.padding.desktop.vertical}) + ${tokens.buttons.size.desktop});
   }
@@ -44,9 +47,8 @@ export const MainProfileContainer = styled.div`
   flex-direction: column;
   align-items: center;
   --gap: ${horizontalSpacerMobile};
-  /* border: solid 1px yellow; */
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.tabletAndUp} {
     flex-direction: row;
     --gap: ${desktop.md};
   }
@@ -64,7 +66,7 @@ export const UsernameContainer = styled.div`
   gap: 2px;
   --align-items: center;
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.tabletAndUp} {
     --align-items: flex-start;
   }
   align-items: var(--align-items);
@@ -82,7 +84,6 @@ export const Bio = styled.p`
   letter-spacing: ${letter_spacing.sm};
   line-height: ${line_height.sm};
   font-weight: ${weight.normal};
-  /* border: solid 1px white; */
 `;
 
 export const UserContentContainer = styled.div`
@@ -90,9 +91,8 @@ export const UserContentContainer = styled.div`
   flex-direction: column;
   text-align: left;
   --gap: ${tokens.spacing.mobile.md};
-  /* border: solid 1px purple; */
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.tabletAndUp} {
     --gap: ${tokens.spacing.desktop.md};
   }
   gap: var(--gap);

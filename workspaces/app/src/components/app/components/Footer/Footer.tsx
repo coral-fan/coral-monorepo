@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
+import tokens, { QUERIES } from 'styles/tokens';
 import { Link, SecondaryLogoIcon } from 'components/ui';
 
 const FOOTER_CONTENT = '© 2022 coral inc. all rights reserved.';
@@ -23,7 +23,7 @@ const FooterContainer = styled.div`
   width: 100%;
   padding: 18px ${layout.padding.mobile.horizontal};
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.laptopAndUp} {
     padding: 30px ${layout.padding.desktop.horizontal};
   }
 `;
@@ -42,7 +42,7 @@ const ContentContainer = styled.div`
   flex-direction: column;
   gap: 60px;
 
-  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+  @media ${QUERIES.laptopAndUp} {
     border: none;
     flex-direction: row;
     gap: calc(100% - 640px);
