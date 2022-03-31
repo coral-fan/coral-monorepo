@@ -13,6 +13,9 @@ const Container = styled.div`
 `;
 
 const MaxWidthContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   max-width: 1540px;
   margin: auto;
   flex: 1;
