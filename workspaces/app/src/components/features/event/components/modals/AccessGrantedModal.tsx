@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { LogoIcon, Modal } from 'components/ui';
-import { useIconSize } from '../hooks';
+import { useIconSize } from './hooks';
 
 const BlackLogo = styled(LogoIcon)`
   filter: invert(1);

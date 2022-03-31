@@ -1,5 +1,3 @@
 export * from './WebPlayer';
-export * from './PrivateEventModal';
-export * from './CheckingNFtModal';
-export * from './AccessGrantedModal';
+export * from './modals';
 export * from './Chat';
