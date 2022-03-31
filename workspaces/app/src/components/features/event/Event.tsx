@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { interval, map, mergeMapTo, skipUntil, timer } from 'rxjs';
+import { interval, map, mapTo, mergeMapTo, skipUntil, timer } from 'rxjs';
 
 import { useIsAuthenticated } from 'libraries/authentication';
 import { getWalletNfts$ } from 'libraries/blockchain/wallet/observables';
@@ -13,11 +13,12 @@ import {
   LoginButton,
   BuyTicketButton,
   CheckingNftModal,
+  Chat,
 } from './components';
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 4fr 1fr;
 `;
 
 interface EventPageProps {
@@ -29,10 +30,14 @@ const allowedNftCollections = ['0x71a517b09a62e3ddbdfab02d13bf237ad602f21b'];
 export const EventPage = ({ mediaId }: EventPageProps) => {
   const isAuthenticated = useIsAuthenticated();
 
-  const [doesUserHaveAccess, setDoesUserHaveAccess] = useState(false);
-  const [isCheckingWallet, setIsCheckingWallet] = useState(true);
+  // const [doesUserHaveAccess, setDoesUserHaveAccess] = useState(false);
+  const [doesUserHaveAccess, setDoesUserHaveAccess] = useState(true);
 
-  const [showIsAccessGrantedModal, setIsAccessGrantedModal] = useState(true);
+  // const [isCheckingWallet, setIsCheckingWallet] = useState(true);
+  const [isCheckingWallet, setIsCheckingWallet] = useState(false);
+
+  // const [showIsAccessGrantedModal, setIsAccessGrantedModal] = useState(true);
+  const [showIsAccessGrantedModal, setIsAccessGrantedModal] = useState(false);
 
   const { address } = useWallet();
 
@@ -43,7 +48,8 @@ export const EventPage = ({ mediaId }: EventPageProps) => {
       const doesUserHaveAccess$ = interval(2500).pipe(
         skipUntil(walletNftsMap$),
         mergeMapTo(walletNftsMap$),
-        map((nftsMap) => allowedNftCollections.some((address) => nftsMap[address] !== undefined))
+        // map((nftsMap) => allowedNftCollections.some((address) => nftsMap[address] !== undefined))
+        mapTo(true)
       );
 
       doesUserHaveAccess$.subscribe((doesHaveAccess) => {
@@ -73,7 +79,7 @@ export const EventPage = ({ mediaId }: EventPageProps) => {
   if (!doesUserHaveAccess) {
     return (
       <PrivateEventModal
-        message="This event is for members and ticket holders only. Buy a ticket now for this special  and exclusive perks."
+        message="This event is for members and ticket holders only. Buy a ticket now for this special and exclusive perks."
         actionElement={<BuyTicketButton collectionId="1" />}
       />
     );
@@ -84,6 +90,7 @@ export const EventPage = ({ mediaId }: EventPageProps) => {
       {showIsAccessGrantedModal && <AccessGrantedModal />}
       <Container>
         <WebPlayer mediaId={mediaId} />
+        <Chat />
       </Container>
     </>
   );
@@ -103,7 +110,7 @@ export const getServerSideProps: GetServerSideProps<EventPageProps, { eventId: s
   const { eventId } = params;
 
   // For SproutVideo, mediaId is available after creating a new live stream
-  const mediaId = 'd39eddb21f19e4c65a/095e73334ab41c6b';
+  const mediaId = '799edeb6181ce1c4f0/11b5b9e45f6a3dbb';
 
   return {
     props: {
