@@ -23,6 +23,7 @@ export const Collections = ({ collections }: CollectionProps) => (
               dropDateTimestamp={dropDate}
               {...collection}
               description={''}
+              isCard={true}
             />
           </ProfileItemWrapper>
         );

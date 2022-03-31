@@ -5,6 +5,7 @@ import { Photo } from 'libraries/models';
 import { Image } from 'components/ui';
 
 import { useCallback, useState } from 'react';
+import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
 // parent container
 const ImageWithInfoContainer = styled.div`
@@ -14,23 +15,34 @@ const ImageWithInfoContainer = styled.div`
 //  image info components
 interface ImageInfoContainerProps {
   imageInfoHeight: number;
+  isCard: boolean;
 }
 
 const ArtistInfoContainer = styled.div<ImageInfoContainerProps>`
   position: absolute;
-  left: 14px;
+  left: calc(${({ isCard }) => (isCard ? '14px' : tokens.layout.padding.mobile.horizontal)});
   bottom: calc(${({ imageInfoHeight }) => imageInfoHeight}px + 17px);
   height: 0;
   width: 0;
+
+  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+    left: calc(${({ isCard }) => (isCard ? '14px' : tokens.layout.padding.desktop.horizontal)});
+  }
 `;
 
 export interface ImageWithInfoProps {
   imageUrl: string;
   artistName: string;
   artistProfilePhoto: Photo;
+  isCard: boolean;
 }
 
-export const ImageWithInfo = ({ imageUrl, artistName, artistProfilePhoto }: ImageWithInfoProps) => {
+export const ImageWithInfo = ({
+  imageUrl,
+  artistName,
+  artistProfilePhoto,
+  isCard,
+}: ImageWithInfoProps) => {
   const [imageInfoHeight, setImageInfoHeight] = useState(0);
 
   const imageInfoRef = useCallback((element: HTMLDivElement) => {
@@ -42,7 +54,7 @@ export const ImageWithInfo = ({ imageUrl, artistName, artistProfilePhoto }: Imag
   return (
     <ImageWithInfoContainer>
       <Image src={imageUrl} />
-      <ArtistInfoContainer imageInfoHeight={imageInfoHeight}>
+      <ArtistInfoContainer isCard={isCard} imageInfoHeight={imageInfoHeight}>
         <ArtistInfo ref={imageInfoRef} profilePhoto={artistProfilePhoto}>
           {artistName}
         </ArtistInfo>
