@@ -1,13 +1,18 @@
 import styled from '@emotion/styled';
-import tokens from 'styles/tokens';
+import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
 const Container = styled.div`
   display: flex;
   justify-content: flex-start;
   width: fit-content;
-  font-size: ${tokens.font.size.xl};
   color: ${tokens.font.color.primary};
+  font-size: ${tokens.font.size.xl};
   line-height: ${tokens.font.line_height.xl};
+
+  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+    font-size: ${tokens.font.size.xxl};
+    line-height: ${tokens.font.line_height.xxl};
+  }
 
   &:last-child {
     justify-self: end;

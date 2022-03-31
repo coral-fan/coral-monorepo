@@ -10,7 +10,7 @@ const Container = styled.div`
   align-items: center;
   padding: 12px 9px 12px 0px;
   border-top: solid 1px ${tokens.border.color.secondary};
-  gap: 25%;
+  gap: 100px;
 `;
 
 const Content = styled.p`

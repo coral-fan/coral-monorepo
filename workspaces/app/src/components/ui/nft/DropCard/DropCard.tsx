@@ -29,7 +29,10 @@ const DropDateContainer = styled.div`
   flex-direction: column;
   text-transform: uppercase;
   font-size: ${tokens.font.size.xs};
+  letter-spacing: ${tokens.font.letter_spacing};
+  line-height: ${tokens.font.line_height};
   font-weight: ${tokens.font.weight.bold};
+  flex-shrink: 0;
 `;
 
 const formatDropCardDate = (timestamp: string) => {

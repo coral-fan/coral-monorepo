@@ -4,7 +4,7 @@ import { interval, map, takeUntil } from 'rxjs';
 import { getTimeRemaining, bigTimer } from './utils';
 import { TimeLeft, Heading } from './components';
 import { useObservable } from 'libraries/utils/hooks';
-import tokens from 'styles/tokens';
+import tokens, { DESKTOP_BREAKPOINT } from 'styles/tokens';
 
 const DropTimerWrapper = styled.div`
   background-color: ${tokens.background.color.tertiary};
@@ -13,14 +13,18 @@ const DropTimerWrapper = styled.div`
 `;
 
 const DropTimerContainer = styled.div`
-  width: fit-content;
+  max-width: 260px;
   display: flex;
   flex-direction: column;
   gap: 4px;
+
+  @media (min-width: ${DESKTOP_BREAKPOINT}) {
+    max-width: 480px;
+  }
 `;
 
 const TimeContainer = styled.div`
-  width: fit-content;
+  width: 100%;
   display: inline-grid;
   grid-template-columns: repeat(4, 1fr);
   justify-items: start;
