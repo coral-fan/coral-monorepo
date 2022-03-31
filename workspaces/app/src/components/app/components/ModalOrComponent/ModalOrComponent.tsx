@@ -3,7 +3,10 @@ import { useIsSigningUp } from 'libraries/authentication';
 import { WrongNetworkModal } from './WrongNetworkModal';
 import { SignUpModal } from './SignUpModal';
 
-export const Modals = () => {
+interface ModalOrComponentProps {
+  component: JSX.Element;
+}
+export const ModalOrComponent = ({ component }: ModalOrComponentProps) => {
   const isNetworkSupported = useIsNetworkSupported();
   const [isSigningUp] = useIsSigningUp();
 
@@ -15,5 +18,5 @@ export const Modals = () => {
     return <SignUpModal />;
   }
 
-  return null;
+  return component;
 };

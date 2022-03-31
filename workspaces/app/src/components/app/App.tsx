@@ -13,7 +13,7 @@ import { getUidClientSide, getUidServerSide } from 'libraries/models';
 import { GlobalStyles } from 'styles';
 
 // components
-import { Managers, Layout, Modals } from './components';
+import { Managers, Layout, ModalOrComponent } from './components';
 
 // state/logic
 import { useEffect, useState } from 'react';
@@ -21,11 +21,6 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { initializeStore } from 'libraries/state';
 
 initializeFirebaseApp();
-
-const conditionallyRenderComponent = (a: JSX.Element, b: JSX.Element) => {
-  const shouldRenderA = Object.keys(a.props).length > 0;
-  return shouldRenderA ? a : b;
-};
 
 export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
   const store = initializeStore(initialState);
@@ -56,7 +51,7 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
           <Managers />
           {isMounted ? (
             <Layout>
-              {conditionallyRenderComponent(<Modals />, <Component {...pageProps} />)}
+              <ModalOrComponent component={<Component {...pageProps} />} />
             </Layout>
           ) : null}
         </ReduxProvider>

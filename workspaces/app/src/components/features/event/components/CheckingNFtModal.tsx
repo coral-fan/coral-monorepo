@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { LogoSpinner } from 'components/app/components/Modals/SignInModal/LogoSpinner';
+import { LogoSpinner } from 'components/app/components/ModalOrComponent/SignInModal/LogoSpinner';
 import { Modal } from 'components/ui';
 import { useIconSize } from '../hooks';
 
