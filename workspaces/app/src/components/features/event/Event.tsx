@@ -7,18 +7,22 @@ import { useIsAuthenticated } from 'libraries/authentication';
 import { getWalletNfts$ } from 'libraries/blockchain/wallet/observables';
 import { useWallet } from 'libraries/blockchain';
 import {
-  WebPlayer,
   PrivateEventModal,
   AccessGrantedModal,
   LoginButton,
   BuyTicketButton,
   CheckingNftModal,
-  Chat,
+  Stream,
 } from './components';
 
-const Container = styled.div`
-  display: grid;
-  grid-template-columns: 4fr 1fr;
+const EventContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const InfoAndMerchContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 interface EventPageProps {
@@ -88,10 +92,10 @@ export const EventPage = ({ mediaId }: EventPageProps) => {
   return (
     <>
       {showIsAccessGrantedModal && <AccessGrantedModal />}
-      <Container>
-        <WebPlayer mediaId={mediaId} />
-        <Chat />
-      </Container>
+      <EventContainer>
+        <Stream mediaId={mediaId} />
+        <InfoAndMerchContainer></InfoAndMerchContainer>
+      </EventContainer>
     </>
   );
 };
