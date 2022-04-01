@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Heading, SocialLinks } from 'components/ui';
+import { ArtistInfo as ArtistInfoBadge } from 'components/ui/nft/components';
 import tokens from 'styles/tokens';
 
 const Container = styled.div`
@@ -12,8 +13,17 @@ const Description = styled.p`
   font-size: ${tokens.font.size.md};
 `;
 
-export const Info = () => (
-  <Container>
+const ArtistInfo = () => (
+  <div>
+    <ArtistInfoBadge
+      profilePhoto={{
+        src: 'https://www.stereofox.com/images/86513/resized.jpg',
+        offsetPercentages: [0, 0],
+        scale: 1,
+      }}
+    >
+      Bonobo
+    </ArtistInfoBadge>
     <SocialLinks
       socialHandles={{
         facebook: null,
@@ -25,6 +35,12 @@ export const Info = () => (
         discogs: null,
       }}
     />
+  </div>
+);
+
+export const Info = () => (
+  <Container>
+    <ArtistInfo />
     <Heading level={1} styleVariant={'h2'}>
       Behind the Scenes Studio Tour
     </Heading>
