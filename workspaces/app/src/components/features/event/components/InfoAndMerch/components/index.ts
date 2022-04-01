@@ -1,2 +1,2 @@
-export * from './Info';
+export * from './ArtistInfo';
 export * from './Merch';
