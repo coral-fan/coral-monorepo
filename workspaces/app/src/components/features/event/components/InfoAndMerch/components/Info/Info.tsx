@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { Heading, SocialLinks } from 'components/ui';
-import { ArtistInfo as ArtistInfoBadge } from 'components/ui/nft/components';
+import { Heading } from 'components/ui';
 import tokens from 'styles/tokens';
+import { ArtistInfo } from './components';
 
 const Container = styled.div`
   display: flex;
@@ -12,31 +12,6 @@ const Container = styled.div`
 const Description = styled.p`
   font-size: ${tokens.font.size.md};
 `;
-
-const ArtistInfo = () => (
-  <div>
-    <ArtistInfoBadge
-      profilePhoto={{
-        src: 'https://www.stereofox.com/images/86513/resized.jpg',
-        offsetPercentages: [0, 0],
-        scale: 1,
-      }}
-    >
-      Bonobo
-    </ArtistInfoBadge>
-    <SocialLinks
-      socialHandles={{
-        facebook: null,
-        twitter: '',
-        instagram: '',
-        spotify: null,
-        tiktok: null,
-        soundcloud: '',
-        discogs: null,
-      }}
-    />
-  </div>
-);
 
 export const Info = () => (
   <Container>
