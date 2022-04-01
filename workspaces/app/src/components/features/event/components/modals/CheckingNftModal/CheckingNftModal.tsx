@@ -1,8 +1,7 @@
 import { css, keyframes } from '@emotion/react';
-import styled from '@emotion/styled';
 import { LogoSpinner } from 'components/app/components/ModalOrComponent/SignInModal/LogoSpinner';
 import { Modal } from 'components/ui';
-import { useIconSize } from './hooks';
+import { useIconSize } from '../hooks';
 
 const mainContainerStyle = css`
   align-items: center;
