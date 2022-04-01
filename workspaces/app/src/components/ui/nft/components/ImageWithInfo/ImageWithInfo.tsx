@@ -15,7 +15,7 @@ const ImageWithInfoContainer = styled.div`
 //  image info components
 interface ImageInfoContainerProps {
   imageInfoHeight: number;
-  isCard: boolean;
+  isCard?: boolean;
 }
 
 const ArtistInfoContainer = styled.div<ImageInfoContainerProps>`
@@ -34,7 +34,7 @@ export interface ImageWithInfoProps {
   imageUrl: string;
   artistName: string;
   artistProfilePhoto: Photo;
-  isCard: boolean;
+  isCard?: boolean;
 }
 
 export const ImageWithInfo = ({
