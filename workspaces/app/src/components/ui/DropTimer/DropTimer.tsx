@@ -1,11 +1,9 @@
 import styled from '@emotion/styled';
 import { useCallback, useMemo } from 'react';
-import { getTimeParts } from 'libraries/time/utils';
 import { TimeLeft, Heading } from './components';
 import { useObservable } from 'libraries/utils/hooks';
 import tokens, { QUERY } from 'styles/tokens';
-import { getMilliSecsDiff } from 'libraries/time/utils';
-import { getTimeRemaining$ } from 'libraries/time/observables';
+import { getMilliSecsDiff, getTimeParts, getTimeRemaining$ } from 'libraries/time';
 
 const DropTimerWrapper = styled.div`
   background-color: ${tokens.background.color.tertiary};
