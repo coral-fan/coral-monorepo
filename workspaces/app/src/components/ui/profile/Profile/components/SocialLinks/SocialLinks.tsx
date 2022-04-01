@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { SocialLink, SocialType } from 'components/ui';
 import { SocialHandles } from 'libraries/models';
-import { QUERIES } from 'styles';
+import { QUERY } from 'styles';
 
 export const SOCIAL_TYPES: SocialType[] = ['twitter', 'instagram', 'soundcloud'];
 
@@ -10,7 +10,7 @@ const SocialLinkContainer = styled.div`
   gap: 25px;
   justify-content: center;
 
-  @media ${QUERIES.tabletAndUp} {
+  @media ${QUERY.TABLET} {
     justify-content: start;
   }
 `;

@@ -1,22 +1,16 @@
 import { css } from '@emotion/react';
 import { createTheme } from 'theme-in-css';
 
-const BREAKPOINTS = {
-  tabletMin: 550,
-  laptopMin: 1100,
-  desktopMin: 1500,
+export const BREAKPOINT = {
+  TABLET_MIN: 550,
+  LAPTOP_MIN: 1100,
+  DESKTOP_MIN: 1500,
 };
 
-export const QUERIES = {
-  tabletAndUp: `(min-width: ${BREAKPOINTS.tabletMin}px)`,
-  laptopAndUp: `(min-width: ${BREAKPOINTS.laptopMin}px)`,
-  desktopAndUp: `(min-width: ${BREAKPOINTS.desktopMin}px)`,
-};
-
-export const QUERIES_WIDTH = {
-  tabletAndUp: BREAKPOINTS.tabletMin,
-  laptopAndUp: BREAKPOINTS.laptopMin,
-  desktopAndUp: BREAKPOINTS.desktopMin,
+export const QUERY = {
+  TABLET: `(min-width: ${BREAKPOINT.TABLET_MIN}px)`,
+  LAPTOP: `(min-width: ${BREAKPOINT.LAPTOP_MIN}px)`,
+  DESKTOP: `(min-width: ${BREAKPOINT.DESKTOP_MIN}px)`,
 };
 
 /*

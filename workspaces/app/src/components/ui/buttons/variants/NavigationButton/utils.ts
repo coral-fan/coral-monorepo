@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import tokens, { colors, QUERIES } from 'styles/tokens';
+import tokens, { colors, QUERY } from 'styles/tokens';
 import { buttonBaseStyle } from '../../styles';
 
 export const getNavigationButtonStyle = (isTransparent: boolean) => css`
@@ -7,7 +7,7 @@ export const getNavigationButtonStyle = (isTransparent: boolean) => css`
 
   --button-size: ${tokens.buttons.size.mobile};
 
-  @media ${QUERIES.laptopAndUp} {
+  @media ${QUERY.LAPTOP} {
     --button-size: ${tokens.buttons.size.desktop};
   }
 

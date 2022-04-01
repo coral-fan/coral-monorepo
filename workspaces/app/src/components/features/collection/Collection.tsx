@@ -7,7 +7,7 @@ import { Details, ImageWithInfo, ShareButton } from 'components/ui/nft/component
 import { DropTimer, NftContent } from 'components/ui';
 import { getBadge } from 'components/ui/badges/utils';
 import { PartialCollection, SimilarCollections } from './components/SimilarCollections';
-import tokens, { QUERIES } from 'styles/tokens';
+import tokens, { QUERY } from 'styles/tokens';
 
 const Container = styled.div`
   width: 100%;
@@ -18,7 +18,7 @@ const Container = styled.div`
     -1 * ((2 * ${tokens.layout.padding.desktop.vertical}) + ${tokens.buttons.size.desktop})
   );
 
-  @media ${QUERIES.tabletAndUp} {
+  @media ${QUERY.TABLET} {
     display: flex;
     flex-direction: row;
     gap: ${tokens.spacing.mobile.xl};
@@ -29,7 +29,7 @@ const ImageWrapper = styled.div`
   margin-left: calc(-1 * ${tokens.layout.padding.mobile.horizontal});
   margin-right: calc(-1 * ${tokens.layout.padding.mobile.horizontal});
 
-  @media ${QUERIES.tabletAndUp} {
+  @media ${QUERY.TABLET} {
     flex: 1 0 56%;
     align-self: flex-start;
     position: sticky;
@@ -37,7 +37,7 @@ const ImageWrapper = styled.div`
     top: 0;
   }
 
-  @media ${QUERIES.laptopAndUp} {
+  @media ${QUERY.LAPTOP} {
     margin-left: calc(-1 * ${tokens.layout.padding.desktop.horizontal});
     flex: 1 0 48%;
   }
@@ -49,7 +49,7 @@ const ContentContainer = styled.div`
   flex-direction: column;
   gap: ${tokens.spacing.mobile.lg};
 
-  @media ${QUERIES.tabletAndUp} {
+  @media ${QUERY.TABLET} {
     margin-top: calc((${tokens.layout.padding.desktop.vertical}) + ${tokens.buttons.size.desktop});
   }
 `;

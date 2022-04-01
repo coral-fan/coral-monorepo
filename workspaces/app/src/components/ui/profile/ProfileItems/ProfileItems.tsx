@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Heading } from 'components/ui';
 import { useIsMobile } from 'libraries/window';
-import tokens, { QUERIES } from 'styles/tokens';
+import tokens, { QUERY } from 'styles/tokens';
 import { FC } from 'react';
 
 const ContentContainer = styled.div`
@@ -10,7 +10,7 @@ const ContentContainer = styled.div`
   flex-direction: column;
   gap: ${tokens.spacing.mobile.lg};
 
-  @media ${QUERIES.laptopAndUp} {
+  @media ${QUERY.LAPTOP} {
     gap: ${tokens.spacing.desktop.md};
   }
 `;
@@ -22,7 +22,7 @@ const CollectionContainer = styled.div`
   align-items: stretch;
   gap: ${tokens.spacing.mobile.lg};
 
-  @media ${QUERIES.tabletAndUp} {
+  @media ${QUERY.TABLET} {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
