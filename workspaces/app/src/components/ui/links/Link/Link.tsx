@@ -31,15 +31,23 @@ export const Link = forwardRef(function Link(
   { href, hoverVariant, css, openInNewTab, ...props }: LinkProps,
   ref: ForwardedRef<HTMLAnchorElement>
 ) {
+  const baseLinkProps = {
+    css: getlinkStyle(hoverVariant, css),
+    ref,
+    ...props,
+  };
+
+  const linkProps = openInNewTab
+    ? {
+        ...baseLinkProps,
+        target: '_blank',
+        rel: 'noopener noreferrer',
+      }
+    : baseLinkProps;
+
   return (
     <NextLink href={href} passHref>
-      <a
-        css={getlinkStyle(hoverVariant, css)}
-        ref={ref}
-        target={openInNewTab ? '_blank' : 'self'}
-        rel={openInNewTab ? 'noopener noreferrer' : ''}
-        {...props}
-      />
+      <a {...linkProps} />
     </NextLink>
   );
 });
