@@ -13,7 +13,7 @@ const ItemWrapper = styled.div`
   min-width: 220px;
   flex: 0 0 80%;
   
-  @media {QUERY.tableAndUp} {
+  @media {QUERY.TABLET} {
     flex: 0 0 60%;
   }
 
