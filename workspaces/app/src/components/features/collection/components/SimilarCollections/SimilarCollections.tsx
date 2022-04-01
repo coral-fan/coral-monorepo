@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
-import { DropCard, Heading, ScrollableItemWrapper } from 'components/ui';
+import { DropCard, Heading, ScrollableItemWrapper, ScrollableContainer } from 'components/ui';
 import { getBadge } from 'components/ui/badges/utils';
-import { ScrollableContainer } from 'components/ui';
 import { Collection } from 'libraries/models';
 import tokens from 'styles/tokens';
 
