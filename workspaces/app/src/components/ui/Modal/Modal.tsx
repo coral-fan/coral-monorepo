@@ -55,14 +55,16 @@ const ContentContainer = styled.div`
   }
 `;
 
-const Content = styled(Card)<Pick<ModalProps, 'title' | 'variant'> & ModalHasControlButton>`
+type ContentProps = Pick<ModalProps, 'title' | 'variant' | 'contentStyle'> & ModalHasControlButton;
+
+const Content = styled(Card)<ContentProps>`
   max-width: 575px;
+  max-height: 400px;
   color: ${({ variant }) =>
     variant === 'contrast' ? tokens.font.color.contrast : tokens.font.color.primary};
   padding: ${({ title }) => `${title ? '16px' : '8px'} 18px`};
   box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.5);
   gap: 18px;
-  max-height: 400px;
   overflow: scroll;
 
   ${({ modalHasControlButton }) =>
@@ -77,6 +79,8 @@ const Content = styled(Card)<Pick<ModalProps, 'title' | 'variant'> & ModalHasCon
   @media ${QUERY.LAPTOP} {
     max-height: 750px;
   }
+
+  ${({ contentStyle }) => contentStyle}
 `;
 
 const Main = styled.div<Pick<ModalProps, 'mainContainerHasNoGap' | 'mainContainerStyle'>>`
@@ -99,6 +103,7 @@ export const Modal: FC<ModalProps> = ({
   children,
   title,
   onClick,
+  contentStyle,
   mainContainerStyle,
   mainContainerHasNoGap,
   variant,
@@ -128,6 +133,7 @@ export const Modal: FC<ModalProps> = ({
                 title={title}
                 variant={variant}
                 modalHasControlButton={modalHasControlButton}
+                contentStyle={contentStyle}
               >
                 {title && (
                   <Heading level={1} styleVariant={'h2'} colorVariant={variant}>
