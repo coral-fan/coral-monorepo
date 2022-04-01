@@ -9,8 +9,10 @@ will be visible at a given breakpoint, e.g. 30% means ~3 items will be visible,
 set in ScrollableContainer.
 */
 
-const ItemWrapper = styled.div`
+const Wrapper = styled.div`
   min-width: 220px;
+  max-width: 355px;
+
   flex: 0 0 80%;
 
   @media ${QUERY.TABLET} {
@@ -22,4 +24,4 @@ const ItemWrapper = styled.div`
   }
 `;
 
-export const ScrollableItemWrapper: FC = ({ children }) => <ItemWrapper>{children}</ItemWrapper>;
+export const ScrollableItemWrapper: FC = ({ children }) => <Wrapper>{children}</Wrapper>;
