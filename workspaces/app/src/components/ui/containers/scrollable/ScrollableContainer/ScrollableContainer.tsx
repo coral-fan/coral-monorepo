@@ -15,6 +15,10 @@ const Items = styled.div`
 interface ScrollableContainerProps<T> {
   children: Array<T>;
 }
+
+/*
+Without the comma in <T,>, the linter thinks it's an HTML Element without a closing tag.
+*/
 export const ScrollableContainer = <T,>({ children }: ScrollableContainerProps<T>) => (
   <Container>
     <Items>{children}</Items>
