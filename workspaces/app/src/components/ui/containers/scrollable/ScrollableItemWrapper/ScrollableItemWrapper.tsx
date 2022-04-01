@@ -12,8 +12,8 @@ set in ScrollableContainer.
 const ItemWrapper = styled.div`
   min-width: 220px;
   flex: 0 0 80%;
-  
-  @media {QUERY.TABLET} {
+
+  @media ${QUERY.TABLET} {
     flex: 0 0 60%;
   }
 
