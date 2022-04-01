@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { LinkButton } from 'components/ui';
-import tokens, { QUERIES } from 'styles/tokens';
+import tokens, { QUERY } from 'styles/tokens';
 
 import { EditAvatarButton as BaseEditAvatarButton } from '../EditAvatarButton';
 
@@ -12,7 +12,7 @@ export const EditAvatarButton = styled(BaseEditAvatarButton)`
   bottom: 0;
   right: 0;
 
-  @media ${QUERIES.laptopAndUp} {
+  @media ${QUERY.LAPTOP} {
     right: 15px;
   }
 `;

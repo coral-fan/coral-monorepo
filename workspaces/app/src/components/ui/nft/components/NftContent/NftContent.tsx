@@ -2,7 +2,7 @@ import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import styled from '@emotion/styled';
 import { Heading, HeadingLevel, HeadingStyleVariant } from 'components/ui';
 import { FC } from 'react';
-import tokens, { QUERIES } from 'styles/tokens';
+import tokens, { QUERY } from 'styles/tokens';
 
 export interface NftContentProps {
   title: string;
@@ -25,7 +25,7 @@ const ContentContainer = styled.div<ContentContainerProps>`
   gap: ${(props) => (props.isCard ? tokens.spacing.mobile.xs : tokens.spacing.mobile.lg)};
   min-height: 104px;
 
-  @media ${QUERIES.laptopAndUp} {
+  @media ${QUERY.LAPTOP} {
     gap: ${(props) => (props.isCard ? '0px' : tokens.spacing.desktop.md)};
   }
 `;

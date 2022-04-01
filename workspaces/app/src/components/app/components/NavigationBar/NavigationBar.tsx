@@ -5,7 +5,7 @@ import { useCallback, useState } from 'react';
 import { User } from 'libraries/models';
 import { useObservable } from 'libraries/utils';
 import { getUserProfile$ } from './observables';
-import tokens, { QUERIES } from 'styles/tokens';
+import tokens, { QUERY } from 'styles/tokens';
 
 const { mobile, desktop } = tokens.layout.padding;
 
@@ -18,7 +18,7 @@ const Container = styled.div`
   z-index: 1;
   padding: ${mobile.vertical} ${mobile.horizontal};
 
-  @media ${QUERIES.laptopAndUp} {
+  @media ${QUERY.LAPTOP} {
     padding: ${desktop.vertical} ${desktop.horizontal};
   }
 `;

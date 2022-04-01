@@ -1,15 +1,15 @@
 import styled from '@emotion/styled';
-import tokens, { QUERIES } from 'styles/tokens';
+import tokens, { QUERY } from 'styles/tokens';
 
 export const ProfileItemWrapper = styled.div`
   min-width: 220px;
   flex: 0 0 auto;
 
-  @media ${QUERIES.tabletAndUp} {
+  @media ${QUERY.TABLET} {
     flex: 0 0 80%;
   }
 
-  @media ${QUERIES.laptopAndUp} {
+  @media ${QUERY.LAPTOP} {
     flex: 0 0 48%;
   }
 `;

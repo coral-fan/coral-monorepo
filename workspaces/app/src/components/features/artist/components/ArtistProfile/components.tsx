@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import tokens, { QUERIES } from 'styles/tokens';
+import tokens, { QUERY } from 'styles/tokens';
 
 export const Tag = styled.div`
   display: flex;
@@ -15,7 +15,7 @@ export const Tag = styled.div`
   letter-spacing: ${tokens.font.letter_spacing.xs};
   padding: 8px;
 
-  @media ${QUERIES.laptopAndUp} {
+  @media ${QUERY.LAPTOP} {
     font-size: ${tokens.font.size.sm};
     line-height: {$tokens.font.line_height.sm};
     letter-spacing: {$tokens.font.letter_spacing.sm};

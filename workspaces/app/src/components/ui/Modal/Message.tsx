@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
-import tokens, { QUERIES } from 'styles/tokens';
+import tokens, { QUERY } from 'styles/tokens';
 
 export const Message = styled.p`
   --font-size: ${tokens.font.size.md};
-  @media ${QUERIES.laptopAndUp} {
+  @media ${QUERY.LAPTOP} {
     --font-size: ${tokens.font.size.lg};
   }
   font-size: var(--font-size);

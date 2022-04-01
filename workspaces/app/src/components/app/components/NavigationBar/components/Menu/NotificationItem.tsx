@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Item } from './Item';
 import { css } from '@emotion/react';
-import tokens, { QUERIES } from 'styles/tokens';
+import tokens, { QUERY } from 'styles/tokens';
 
 export interface NotificationItemProp {
   notificationsCount: number;
@@ -21,7 +21,7 @@ const Badge = styled.div`
   background-color: ${tokens.background.color.brand};
   border-radius: 50%;
 
-  @media ${QUERIES.laptopAndUp} {
+  @media ${QUERY.LAPTOP} {
     height: 24px;
     width: 24px;
   }

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { FC } from 'react';
-import { QUERIES } from 'styles';
+import { QUERY } from 'styles';
 
 /*
 The inverse of the flex basis roughly corresponds to the number of items that
@@ -13,11 +13,11 @@ const ItemWrapper = styled.div`
   min-width: 220px;
   flex: 0 0 80%;
   
-  @media {QUERIES.tableAndUp} {
+  @media {QUERY.tableAndUp} {
     flex: 0 0 60%;
   }
 
-  @media ${QUERIES.laptopAndUp} {
+  @media ${QUERY.LAPTOP} {
     flex: 0 0 40%;
   }
 `;

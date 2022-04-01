@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import tokens, { QUERIES } from 'styles/tokens';
+import tokens, { QUERY } from 'styles/tokens';
 
 const { size, line_height, letter_spacing, weight } = tokens.font;
 const { mobile, desktop } = tokens.spacing;
@@ -14,12 +14,12 @@ export const PageContainer = styled.div`
   align-items: center;
   --gap: ${horizontalSpacerMobile};
 
-  @media ${QUERIES.tabletAndUp} {
+  @media ${QUERY.TABLET} {
     align-items: flex-start;
     flex-direction: row;
   }
 
-  @media ${QUERIES.laptopAndUp} {
+  @media ${QUERY.LAPTOP} {
     align-items: flex-start;
     flex-direction: row;
     --gap: ${horizontalSpacerDesktop};
@@ -34,7 +34,7 @@ export const ProfileContainer = styled.div`
   flex: 1 0 42.5%;
   --gap: ${horizontalSpacerMobile};
 
-  @media ${QUERIES.tabletAndUp} {
+  @media ${QUERY.TABLET} {
     position: sticky;
     top: calc((2 * ${tokens.layout.padding.desktop.vertical}) + ${tokens.buttons.size.desktop});
   }
@@ -48,7 +48,7 @@ export const MainProfileContainer = styled.div`
   align-items: center;
   --gap: ${horizontalSpacerMobile};
 
-  @media ${QUERIES.tabletAndUp} {
+  @media ${QUERY.TABLET} {
     flex-direction: row;
     --gap: ${desktop.md};
   }
@@ -66,7 +66,7 @@ export const UsernameContainer = styled.div`
   gap: 2px;
   --align-items: center;
 
-  @media ${QUERIES.tabletAndUp} {
+  @media ${QUERY.TABLET} {
     --align-items: flex-start;
   }
   align-items: var(--align-items);
@@ -92,7 +92,7 @@ export const UserContentContainer = styled.div`
   text-align: left;
   --gap: ${tokens.spacing.mobile.md};
 
-  @media ${QUERIES.tabletAndUp} {
+  @media ${QUERY.TABLET} {
     --gap: ${tokens.spacing.desktop.md};
   }
   gap: var(--gap);
