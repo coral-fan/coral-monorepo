@@ -16,10 +16,10 @@ const Container = styled.div`
   position: sticky;
   top: 0;
   z-index: 1;
-  padding: ${mobile.vertical} ${mobile.horizontal};
+  padding: ${mobile.vertical} 0;
 
   @media ${QUERY.LAPTOP} {
-    padding: ${desktop.vertical} ${desktop.horizontal};
+    padding: ${desktop.vertical} 0;
   }
 `;
 

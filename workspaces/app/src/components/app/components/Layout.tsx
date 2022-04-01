@@ -12,15 +12,13 @@ const Container = styled.div`
   min-height: 100vh;
 `;
 
-const Main = styled.div`
-  display: flex;
-  flex-direction: column;
+const MaxWidthContainer = styled.div`
   max-width: 1540px;
   margin: auto;
   flex: 1;
+
   --padding: 0 ${mobile.horizontal};
   --padding-bottom: ${mobile.vertical};
-  /* border: solid 1px green; */
 
   @media ${QUERY.LAPTOP} {
     --padding: 0 ${desktop.horizontal};
@@ -30,10 +28,17 @@ const Main = styled.div`
   padding-bottom: var(--padding-bottom);
 `;
 
+const Main = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const Layout: FC = ({ children }) => (
   <Container>
-    <NavigationBar />
-    <Main>{children}</Main>
+    <MaxWidthContainer>
+      <NavigationBar />
+      <Main>{children}</Main>
+    </MaxWidthContainer>
     <Footer />
   </Container>
 );
