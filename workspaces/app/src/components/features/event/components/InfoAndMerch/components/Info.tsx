@@ -1,7 +1,5 @@
 import styled from '@emotion/styled';
-import { Heading } from 'components/ui';
-import { ArtistInfo } from 'components/ui/nft/components/ImageWithInfo/components';
-import { SocialLinks } from 'components/ui/profile/Profile/components';
+import { Heading, SocialLinks } from 'components/ui';
 import tokens from 'styles/tokens';
 
 const Container = styled.div`
@@ -16,6 +14,17 @@ const Description = styled.p`
 
 export const Info = () => (
   <Container>
+    <SocialLinks
+      socialHandles={{
+        facebook: null,
+        twitter: '',
+        instagram: '',
+        spotify: null,
+        tiktok: null,
+        soundcloud: '',
+        discogs: null,
+      }}
+    />
     <Heading level={1} styleVariant={'h2'}>
       Behind the Scenes Studio Tour
     </Heading>
