@@ -13,18 +13,13 @@ import {
   BuyTicketButton,
   CheckingNftModal,
   Stream,
+  InfoAndMerch,
 } from './components';
 
 const EventContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
-const InfoAndMerchContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
 interface EventPageProps {
   mediaId: string;
 }
@@ -83,7 +78,7 @@ export const EventPage = ({ mediaId }: EventPageProps) => {
   if (!doesUserHaveAccess) {
     return (
       <PrivateEventModal
-        message="This event is for members and ticket holders only. Buy a ticket now for this special and exclusive perks."
+        message="This event is for members and ticket holders only. Buy a ticket now for special and exclusive perks."
         actionElement={<BuyTicketButton collectionId="1" />}
       />
     );
@@ -94,7 +89,7 @@ export const EventPage = ({ mediaId }: EventPageProps) => {
       {showIsAccessGrantedModal && <AccessGrantedModal />}
       <EventContainer>
         <Stream mediaId={mediaId} />
-        <InfoAndMerchContainer></InfoAndMerchContainer>
+        <InfoAndMerch />
       </EventContainer>
     </>
   );
