@@ -37,7 +37,6 @@ export const SimilarCollections = ({ similarCollections }: SimilarCollectionsPro
               Badge={Badge}
               dropDateTimestamp={dropDate}
               {...collection}
-              description={''}
               isCard={true}
             />
           </ScrollableItemWrapper>
