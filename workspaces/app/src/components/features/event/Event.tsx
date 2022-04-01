@@ -30,14 +30,14 @@ const allowedNftCollections = ['0x71a517b09a62e3ddbdfab02d13bf237ad602f21b'];
 export const EventPage = ({ mediaId }: EventPageProps) => {
   const isAuthenticated = useIsAuthenticated();
 
-  // const [doesUserHaveAccess, setDoesUserHaveAccess] = useState(false);
-  const [doesUserHaveAccess, setDoesUserHaveAccess] = useState(true);
+  const [doesUserHaveAccess, setDoesUserHaveAccess] = useState(false);
+  // const [doesUserHaveAccess, setDoesUserHaveAccess] = useState(true);
 
-  // const [isCheckingWallet, setIsCheckingWallet] = useState(true);
-  const [isCheckingWallet, setIsCheckingWallet] = useState(false);
+  const [isCheckingWallet, setIsCheckingWallet] = useState(true);
+  // const [isCheckingWallet, setIsCheckingWallet] = useState(false);
 
-  // const [showIsAccessGrantedModal, setIsAccessGrantedModal] = useState(true);
-  const [showIsAccessGrantedModal, setIsAccessGrantedModal] = useState(false);
+  const [showIsAccessGrantedModal, setIsAccessGrantedModal] = useState(true);
+  // const [showIsAccessGrantedModal, setIsAccessGrantedModal] = useState(false);
 
   const { address } = useWallet();
 
@@ -45,11 +45,11 @@ export const EventPage = ({ mediaId }: EventPageProps) => {
     if (isAuthenticated && address) {
       const walletNftsMap$ = getWalletNfts$(address);
 
-      const doesUserHaveAccess$ = interval(2500).pipe(
+      const doesUserHaveAccess$ = interval(8000).pipe(
         skipUntil(walletNftsMap$),
         mergeMapTo(walletNftsMap$),
-        // map((nftsMap) => allowedNftCollections.some((address) => nftsMap[address] !== undefined))
-        mapTo(true)
+        map((nftsMap) => allowedNftCollections.some((address) => nftsMap[address] !== undefined))
+        // mapTo(true)
       );
 
       doesUserHaveAccess$.subscribe((doesHaveAccess) => {
