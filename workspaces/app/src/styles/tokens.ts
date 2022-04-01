@@ -1,6 +1,12 @@
 import { css } from '@emotion/react';
 import { createTheme } from 'theme-in-css';
 
+/*
+The codebase is Mobile first, meaning the default styling is for small
+devices. Media queries using the below breakpoints should provide 
+styling for devices above the given breakpoint, e.g. the QUERY.TABLET 
+styling will apply to devices size greater than the TABLET_MIN.
+*/
 export const BREAKPOINT = {
   TABLET_MIN: 550,
   LAPTOP_MIN: 1100,
