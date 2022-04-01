@@ -19,6 +19,7 @@ import {
 const EventContainer = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 16px;
 `;
 interface EventPageProps {
   mediaId: string;
