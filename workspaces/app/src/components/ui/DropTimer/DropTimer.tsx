@@ -1,10 +1,11 @@
 import styled from '@emotion/styled';
 import { useCallback, useMemo } from 'react';
-import { interval, map, takeUntil } from 'rxjs';
-import { getTimeRemaining, bigTimer } from './utils';
+import { getTimeParts } from 'libraries/utils/time';
 import { TimeLeft, Heading } from './components';
 import { useObservable } from 'libraries/utils/hooks';
 import tokens, { QUERY } from 'styles/tokens';
+import { getMilliSecsDiff } from 'libraries/utils/time';
+import { getTimeRemaining$ } from 'libraries/observables/timer';
 
 const DropTimerWrapper = styled.div`
   background-color: ${tokens.background.color.tertiary};
@@ -36,18 +37,17 @@ export interface DropTimerProps {
 }
 
 export const DropTimer = ({ tokenSupply, timestamp }: DropTimerProps) => {
-  const getTimeRemaining$ = useCallback(
-    () =>
-      interval(1000).pipe(
-        takeUntil(bigTimer(timestamp)),
-        map(() => getTimeRemaining(timestamp))
-      ),
+  const getTimeRemaining = useCallback(
+    () => getTimeRemaining$(timestamp, getTimeParts),
     [timestamp]
   );
 
-  const initialTimeRemaining = useMemo(() => getTimeRemaining(timestamp), [timestamp]);
+  const initialTimeRemaining = useMemo(
+    () => getTimeParts(getMilliSecsDiff(timestamp)),
+    [timestamp]
+  );
 
-  const timeRemaining = useObservable(getTimeRemaining$, initialTimeRemaining);
+  const timeRemaining = useObservable(getTimeRemaining, initialTimeRemaining);
 
   const { daysDiff, hoursDiff, minutesDiff, secondsDiff } = timeRemaining;
 

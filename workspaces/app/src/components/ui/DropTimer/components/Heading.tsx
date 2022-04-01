@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
-import { getDateString, getTimeString } from '../utils';
+import { getDateString, getTimeString } from 'libraries/utils/time';
 
 const Container = styled.div`
   display: flex;
