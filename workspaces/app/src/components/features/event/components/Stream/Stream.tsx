@@ -3,7 +3,7 @@ import { QUERY } from 'styles';
 import { Chat, WebPlayer } from './components';
 
 const Container = styled.div`
-  @media ${QUERY.LAPTOP} {
+  @media ${QUERY.TABLET} {
     grid-template-columns: 4fr 1fr;
     display: grid;
   }
