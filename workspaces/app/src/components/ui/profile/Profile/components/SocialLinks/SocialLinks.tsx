@@ -19,19 +19,13 @@ export interface SocialLinksProp {
   socialHandles: SocialHandles;
 }
 
-export const SocialLinks = ({ socialHandles }: SocialLinksProp) => {
-  if (!socialHandles) {
-    return null;
-  }
-
-  return (
-    <SocialLinkContainer>
-      {SOCIAL_TYPES.map((socialType) => {
-        const usernameInput = socialHandles[socialType];
-        if (usernameInput !== undefined && usernameInput !== null) {
-          return <SocialLink key={socialType} socialType={socialType} username={usernameInput} />;
-        }
-      })}
-    </SocialLinkContainer>
-  );
-};
+export const SocialLinks = ({ socialHandles }: SocialLinksProp) => (
+  <SocialLinkContainer>
+    {SOCIAL_TYPES.map((socialType) => {
+      const usernameInput = socialHandles[socialType];
+      if (usernameInput !== undefined && usernameInput !== null) {
+        return <SocialLink key={socialType} socialType={socialType} username={usernameInput} />;
+      }
+    })}
+  </SocialLinkContainer>
+);
