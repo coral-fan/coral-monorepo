@@ -7,7 +7,7 @@ import { useIsAuthenticated } from 'libraries/authentication';
 import { getWalletNfts$ } from 'libraries/blockchain/wallet/observables';
 import { useWallet } from 'libraries/blockchain';
 import {
-  PrivateEventModal,
+  AccessDeniedModal,
   AccessGrantedModal,
   LoginButton,
   BuyTicketButton,
@@ -65,7 +65,7 @@ export const EventPage = ({ mediaId }: EventPageProps) => {
 
   if (!isAuthenticated) {
     return (
-      <PrivateEventModal
+      <AccessDeniedModal
         message="Please log in so we can check your wallet."
         actionElement={<LoginButton />}
       />
@@ -78,7 +78,7 @@ export const EventPage = ({ mediaId }: EventPageProps) => {
 
   if (!doesUserHaveAccess) {
     return (
-      <PrivateEventModal
+      <AccessDeniedModal
         message="This event is for members and ticket holders only. Buy a ticket now for special and exclusive perks."
         actionElement={<BuyTicketButton collectionId="1" />}
       />
