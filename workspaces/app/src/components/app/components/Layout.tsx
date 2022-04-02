@@ -16,7 +16,7 @@ const MaxWidthContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 1540px;
+  max-width: ${tokens.layout.width.max};
   margin: auto;
   flex: 1;
 
