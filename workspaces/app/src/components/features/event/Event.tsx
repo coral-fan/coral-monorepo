@@ -1,20 +1,7 @@
 import { GetServerSideProps } from 'next';
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
-import { interval, map, mapTo, mergeMapTo, skipUntil, timer } from 'rxjs';
-
-import { useIsAuthenticated } from 'libraries/authentication';
-import { getWalletNfts$ } from 'libraries/blockchain/wallet/observables';
-import { useWallet } from 'libraries/blockchain';
-import {
-  AccessDeniedModal,
-  AccessGrantedModal,
-  LoginButton,
-  BuyTicketButton,
-  CheckingNftModal,
-  Stream,
-  InfoAndMerch,
-} from './components';
+import { GatedContent } from 'components/ui';
+import { BuyTicketButton, Stream, InfoAndMerch } from './components';
 
 const EventContainer = styled.div`
   display: flex;
@@ -25,76 +12,22 @@ interface EventPageProps {
   mediaId: string;
 }
 
-const allowedNftCollections = ['0x71a517b09a62e3ddbdfab02d13bf237ad602f21b'];
-
-export const EventPage = ({ mediaId }: EventPageProps) => {
-  const isAuthenticated = useIsAuthenticated();
-
-  const [doesUserHaveAccess, setDoesUserHaveAccess] = useState(false);
-  // const [doesUserHaveAccess, setDoesUserHaveAccess] = useState(true);
-
-  const [isCheckingWallet, setIsCheckingWallet] = useState(true);
-  // const [isCheckingWallet, setIsCheckingWallet] = useState(false);
-
-  const [showIsAccessGrantedModal, setIsAccessGrantedModal] = useState(true);
-  // const [showIsAccessGrantedModal, setIsAccessGrantedModal] = useState(false);
-
-  const { address } = useWallet();
-
-  useEffect(() => {
-    if (isAuthenticated && address) {
-      const walletNftsMap$ = getWalletNfts$(address);
-
-      const doesUserHaveAccess$ = interval(8000).pipe(
-        skipUntil(walletNftsMap$),
-        mergeMapTo(walletNftsMap$),
-        map((nftsMap) => allowedNftCollections.some((address) => nftsMap[address] !== undefined))
-        // mapTo(true)
-      );
-
-      doesUserHaveAccess$.subscribe((doesHaveAccess) => {
-        setDoesUserHaveAccess(doesHaveAccess);
-        setIsCheckingWallet(false);
-      });
-
-      doesUserHaveAccess$
-        .pipe(mergeMapTo(timer(2500)))
-        .subscribe(() => setIsAccessGrantedModal(false));
-    }
-  }, [isAuthenticated, address]);
-
-  if (!isAuthenticated) {
-    return (
-      <AccessDeniedModal
-        message="Please log in so we can check your wallet."
-        actionElement={<LoginButton />}
-      />
-    );
-  }
-
-  if (isCheckingWallet) {
-    return <CheckingNftModal />;
-  }
-
-  if (!doesUserHaveAccess) {
-    return (
-      <AccessDeniedModal
-        message="This event is for members and ticket holders only. Buy a ticket now for special and exclusive perks."
-        actionElement={<BuyTicketButton collectionId="1" />}
-      />
-    );
-  }
-
-  return (
-    <>
-      {showIsAccessGrantedModal && <AccessGrantedModal />}
-      <EventContainer>
-        <Stream mediaId={mediaId} />
-        <InfoAndMerch />
-      </EventContainer>
-    </>
-  );
-};
+export const EventPage = ({ mediaId }: EventPageProps) => (
+  <GatedContent
+    accessGrantingNfts={['0x71a517b09a62e3ddbdfab02d13bf237ad602f21b']}
+    accessDeniedModalProps={{
+      title: 'This is a private event',
+      message:
+        'This event is for members and ticket holders only. Buy a ticket now for special and exclusive perks.',
+      actionElement: <BuyTicketButton collectionId="1" />,
+    }}
+  >
+    <EventContainer>
+      <Stream mediaId={mediaId} />
+      <InfoAndMerch />
+    </EventContainer>
+  </GatedContent>
+);
 
 export const getServerSideProps: GetServerSideProps<EventPageProps, { eventId: string }> = async (
   context

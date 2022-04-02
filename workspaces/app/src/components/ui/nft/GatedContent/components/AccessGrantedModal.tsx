@@ -9,6 +9,7 @@ const BlackLogo = styled(LogoIcon)`
 
 const mainContainerStyle = css`
   align-items: center;
+  padding: 32px 0;
 `;
 
 export const AccessGrantedModal = () => {
