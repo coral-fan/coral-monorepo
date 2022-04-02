@@ -20,15 +20,16 @@ const ModalContainer = styled.div<ModalHasControlButton>`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  max-width: ${tokens.layout.width.max};
   height: 100%;
   padding: ${mobile.vertical} ${mobile.horizontal};
 
   ${({ modalHasControlButton }) =>
-    modalHasControlButton
-      ? null
-      : css`
-          padding-top: calc(${mobile.vertical} * 2 + ${tokens.buttons.size.mobile});
-        `}
+    !modalHasControlButton &&
+    css`
+      padding-top: calc(${mobile.vertical} * 2 + ${tokens.buttons.size.mobile});
+    `}
+
   gap: 24px;
 
   @media ${QUERY.LAPTOP} {
@@ -67,17 +68,13 @@ const Content = styled(Card)<ContentProps>`
   gap: 18px;
   overflow: scroll;
 
-  ${({ modalHasControlButton }) =>
-    modalHasControlButton
-      ? null
-      : css`
-          margin-top: calc(
-            ${tokens.layout.padding.mobile.vertical} + ${tokens.buttons.size.mobile}
-          );
-        `}
-
   @media ${QUERY.LAPTOP} {
     max-height: 750px;
+    ${({ modalHasControlButton }) =>
+      modalHasControlButton &&
+      css`
+        transform: translateY(calc(-1 * (${tokens.buttons.size.mobile} + 12px)));
+      `}
   }
 
   ${({ contentStyle }) => contentStyle}
