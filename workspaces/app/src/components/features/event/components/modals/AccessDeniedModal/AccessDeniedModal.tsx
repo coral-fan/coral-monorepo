@@ -64,7 +64,7 @@ interface PrivateEventModalProps {
   actionElement: EmotionJSX.Element;
 }
 
-export const PrivateEventModal = ({ message, actionElement }: PrivateEventModalProps) => {
+export const AccessDeniedModal = ({ message, actionElement }: PrivateEventModalProps) => {
   const iconSize = useIconSize();
 
   return (

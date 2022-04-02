@@ -1,3 +1,3 @@
 export * from './AccessGrantedModal';
 export * from './CheckingNftModal';
-export * from './PrivateEventModal';
+export * from './AccessDeniedModal';
