@@ -9,6 +9,7 @@ import styled from '@emotion/styled';
 
 const mainContainerStyle = css`
   align-items: center;
+  padding: 16px 0;
 `;
 
 const LockIcon = getIconComponent('LockIcon', privateEventSVG);

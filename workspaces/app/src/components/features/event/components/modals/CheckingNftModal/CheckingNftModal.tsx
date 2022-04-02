@@ -7,6 +7,7 @@ import ticketSVG from './ticket.svg';
 
 const mainContainerStyle = css`
   align-items: center;
+  padding: 32px 0;
 `;
 
 const modalRotation = keyframes`
