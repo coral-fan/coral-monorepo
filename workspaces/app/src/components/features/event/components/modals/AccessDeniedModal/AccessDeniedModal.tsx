@@ -59,13 +59,13 @@ export const LoginButton = () => {
   return <Button onClick={login}>Login</Button>;
 };
 
-export interface AccesDeniedModalProps {
+export interface AccessDeniedModalProps {
   title: string;
   message: string;
   actionElement: EmotionJSX.Element;
 }
 
-export const AccessDeniedModal = ({ title, message, actionElement }: AccesDeniedModalProps) => {
+export const AccessDeniedModal = ({ title, message, actionElement }: AccessDeniedModalProps) => {
   const iconSize = useIconSize();
 
   return (
