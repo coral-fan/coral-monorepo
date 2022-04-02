@@ -59,16 +59,17 @@ export const LoginButton = () => {
   return <Button onClick={login}>Login</Button>;
 };
 
-interface PrivateEventModalProps {
+export interface AccesDeniedModalProps {
+  title: string;
   message: string;
   actionElement: EmotionJSX.Element;
 }
 
-export const AccessDeniedModal = ({ message, actionElement }: PrivateEventModalProps) => {
+export const AccessDeniedModal = ({ title, message, actionElement }: AccesDeniedModalProps) => {
   const iconSize = useIconSize();
 
   return (
-    <Modal title="This Is A Private Event" mainContainerStyle={mainContainerStyle}>
+    <Modal title={title} mainContainerStyle={mainContainerStyle}>
       <AnimatedLockIcon size={iconSize} />
       <Message>{message}</Message>
       {actionElement}
