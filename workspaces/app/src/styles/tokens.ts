@@ -77,6 +77,9 @@ const tokens = createTheme({
         horizontal: '64px',
       },
     },
+    width: {
+      max: '1540px',
+    },
   },
   font: {
     size: {
