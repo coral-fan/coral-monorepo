@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import tokens, { QUERY } from 'styles/tokens';
 
-const { layout, spacing, buttons } = tokens;
+const { layout, spacing, buttons, font, border } = tokens;
 const { desktop, mobile } = layout.padding;
 
 export const Container = styled.div`
@@ -45,4 +45,13 @@ export const ContentContainer = styled.div`
   @media ${QUERY.TABLET} {
     margin-top: calc((${desktop.vertical}) + ${buttons.size.desktop});
   }
+`;
+
+export const AvailableContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: ${spacing.mobile.lg};
+  border-bottom: solid 1px ${border.color.secondary};
+  padding-bottom: ${spacing.mobile.xl};
 `;
