@@ -4,3 +4,6 @@ export * from './buttons';
 export * from './BaseInfo';
 export * from './NftContent';
 export * from './ShareCard';
+export * from './ShareButton';
+export * from './ImageWithInfo';
+export * from './Details';
