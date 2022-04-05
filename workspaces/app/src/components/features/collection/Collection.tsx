@@ -23,6 +23,7 @@ interface CollectionPageProps {
 }
 
 // Dummy Data: comes from Smart Contract Call
+// Todo: Update AVAX pricing
 const numMinted = 2500;
 
 export const CollectionPage = ({ collectionData, similarCollections }: CollectionPageProps) => {
