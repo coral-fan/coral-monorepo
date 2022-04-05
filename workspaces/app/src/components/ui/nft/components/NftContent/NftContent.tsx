@@ -33,6 +33,7 @@ const ContentContainer = styled.div<ContentContainerProps>`
 const Description = styled.p`
   font-size: ${tokens.font.size.md};
   line-height: ${tokens.font.line_height.md};
+  letter-spacing: ${tokens.font.letter_spacing.md};
 `;
 
 export const NftContent: FC<NftContentProps> = ({
