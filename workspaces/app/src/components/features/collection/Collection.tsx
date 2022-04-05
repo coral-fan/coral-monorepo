@@ -2,12 +2,14 @@ import { Collection } from 'libraries/models';
 import { GetServerSideProps } from 'next';
 import { IMAGE_WITH_INFO_DEFAULT_ARGS } from 'components/ui/nft/components/ImageWithInfo/consts';
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
-import { Details, ImageWithInfo, ShareButton } from 'components/ui/nft/components';
+import { Details, ImageWithInfo, ShareButton, ShareCard } from 'components/ui/nft/components';
 import { NftContent } from 'components/ui';
 import { getBadge } from 'components/ui/badges/utils';
 import { PartialCollection, SimilarCollections } from './components/SimilarCollections';
 import { Container, ContentContainer, ImageWrapper } from './components';
 import { DropOrAvailable } from './components/DropOrAvailable';
+import { ShareModal } from 'components/app/components/ShareModal';
+import { useCallback, useState } from 'react';
 
 interface CollectionPageProps {
   collectionData: Collection;
@@ -26,12 +28,16 @@ export const CollectionPage = ({ collectionData, similarCollections }: Collectio
     details,
     dropDate,
     price,
+    id,
   } = collectionData;
 
   const Badge = getBadge(type);
 
   // Dummy Data: comes from Smart Contract Call
   const numMinted = 2500;
+
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const closeShareModal = useCallback(() => setIsShareModalOpen(false), []);
 
   return (
     <Container>
@@ -59,7 +65,32 @@ export const CollectionPage = ({ collectionData, similarCollections }: Collectio
           dropDate={dropDate}
         />
         {details && <Details details={details} />}
-        <ShareButton />
+        <ShareButton
+          onClick={() => {
+            console.log('clicked');
+            setIsShareModalOpen(true);
+          }}
+        />
+        {isShareModalOpen && (
+          <ShareModal
+            title={'Share Drop'}
+            url={`https://coral.fan/collection/${id}`}
+            postTitle={name}
+            closeShareModal={closeShareModal}
+          >
+            <ShareCard
+              imageUrl={imageUrl}
+              artistName={artistName}
+              artistProfilePhoto={artistProfilePhoto}
+              isCard={true}
+              title={name}
+              titleHeadingLevel={2}
+              titleStyleVariant={'h3'}
+              description={description}
+              Badge={Badge}
+            />
+          </ShareModal>
+        )}
         {similarCollections && <SimilarCollections similarCollections={similarCollections} />}
       </ContentContainer>
     </Container>
@@ -130,9 +161,9 @@ export const getServerSideProps: GetServerSideProps<CollectionPageProps, Collect
       url: '/',
     },
     price: 300,
-    dropDate: '2022 Apr 04 21:58:00 EDT',
+    dropDate: '2022 Apr 05 10:23:00 EDT',
     description:
-      'Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.',
+      'Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.',
     details: [
       'A personal call between just you and Bonobo',
       'Available any time before March 1st, 2022',
