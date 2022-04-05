@@ -5,17 +5,25 @@ import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
 import { IMAGE_WITH_INFO_DEFAULT_ARGS } from 'components/ui/nft/components/ImageWithInfo/consts';
 
 import { Collection } from 'libraries/models';
-import { Details, ImageWithInfo, ShareButton, ShareCard } from 'components/ui/nft';
+import { Details, ImageWithInfo, ShareButton } from 'components/ui/nft';
 import { NftContent } from 'components/ui';
 import { getBadge } from 'components/ui/badges/utils';
 import { PartialCollection, SimilarCollections } from './components/SimilarCollections';
-import { Container, ContentContainer, ImageWrapper, DropOrAvailable } from './components';
-import { ShareModal } from 'components/app/components';
+import {
+  Container,
+  ContentContainer,
+  ImageWrapper,
+  DropOrAvailable,
+  ShareDropModal,
+} from './components';
 
 interface CollectionPageProps {
   collectionData: Collection;
   similarCollections: PartialCollection[];
 }
+
+// Dummy Data: comes from Smart Contract Call
+const numMinted = 2500;
 
 export const CollectionPage = ({ collectionData, similarCollections }: CollectionPageProps) => {
   const {
@@ -33,9 +41,6 @@ export const CollectionPage = ({ collectionData, similarCollections }: Collectio
   } = collectionData;
 
   const Badge = getBadge(type);
-
-  // Dummy Data: comes from Smart Contract Call
-  const numMinted = 2500;
 
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const closeShareModal = useCallback(() => setIsShareModalOpen(false), []);
@@ -73,24 +78,16 @@ export const CollectionPage = ({ collectionData, similarCollections }: Collectio
           }}
         />
         {isShareModalOpen && (
-          <ShareModal
-            title={'Share Drop'}
-            url={`https://coral.fan/collection/${id}`}
-            postTitle={name}
+          <ShareDropModal
+            name={name}
+            id={id}
             closeShareModal={closeShareModal}
-          >
-            <ShareCard
-              imageUrl={imageUrl}
-              artistName={artistName}
-              artistProfilePhoto={artistProfilePhoto}
-              isCard={true}
-              title={name}
-              titleHeadingLevel={2}
-              titleStyleVariant={'h3'}
-              description={description}
-              Badge={Badge}
-            />
-          </ShareModal>
+            imageUrl={imageUrl}
+            artistName={artistName}
+            artistProfilePhoto={artistProfilePhoto}
+            description={description}
+            Badge={Badge}
+          />
         )}
         {similarCollections && <SimilarCollections similarCollections={similarCollections} />}
       </ContentContainer>
@@ -162,7 +159,7 @@ export const getServerSideProps: GetServerSideProps<CollectionPageProps, Collect
       url: '/',
     },
     price: 300,
-    dropDate: '2022 Apr 05 10:23:00 EDT',
+    dropDate: '2022 Apr 05 17:41:00 EDT',
     description:
       'Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.',
     details: [
