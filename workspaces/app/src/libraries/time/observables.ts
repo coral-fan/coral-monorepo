@@ -1,7 +1,8 @@
 import { getMilliSecsDiff } from 'libraries/time/utils';
 import { concat, interval, map, take, takeLast, takeUntil, timer } from 'rxjs';
 
-type TimeRemainingCallback = (milliSecsDiff: number) => string | number;
+// Type is any because return format depends on callback and can be anything
+type TimeRemainingCallback = (milliSecsDiff: number) => any;
 
 const INTERVAL = 1000;
 
