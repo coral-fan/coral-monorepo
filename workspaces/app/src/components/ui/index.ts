@@ -10,7 +10,7 @@ export * from './links';
 export * from './Card';
 export * from './TimeElapsed';
 export * from './Image';
-export * from './SocialLink';
+export * from './social';
 export * from './DropTimer';
 export * from './nft';
 export * from './containers';
