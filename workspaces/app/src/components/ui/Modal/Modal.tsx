@@ -63,7 +63,7 @@ const Content = styled(Card)<ContentProps>`
   max-height: 400px;
   color: ${({ variant }) =>
     variant === 'contrast' ? tokens.font.color.contrast : tokens.font.color.primary};
-  padding: ${({ title }) => `${title ? '16px' : '8px'} 18px`};
+  padding: ${({ title }) => `${title ? '20px' : '8px'} 18px`};
   box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.5);
   gap: 18px;
   overflow: scroll;
