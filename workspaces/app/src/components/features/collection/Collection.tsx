@@ -1,15 +1,16 @@
-import { Collection } from 'libraries/models';
 import { GetServerSideProps } from 'next';
-import { IMAGE_WITH_INFO_DEFAULT_ARGS } from 'components/ui/nft/components/ImageWithInfo/consts';
+import { useCallback, useState } from 'react';
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
-import { Details, ImageWithInfo, ShareButton, ShareCard } from 'components/ui/nft/components';
+
+import { IMAGE_WITH_INFO_DEFAULT_ARGS } from 'components/ui/nft/components/ImageWithInfo/consts';
+
+import { Collection } from 'libraries/models';
+import { Details, ImageWithInfo, ShareButton, ShareCard } from 'components/ui/nft';
 import { NftContent } from 'components/ui';
 import { getBadge } from 'components/ui/badges/utils';
 import { PartialCollection, SimilarCollections } from './components/SimilarCollections';
-import { Container, ContentContainer, ImageWrapper } from './components';
-import { DropOrAvailable } from './components/DropOrAvailable';
-import { ShareModal } from 'components/app/components/ShareModal';
-import { useCallback, useState } from 'react';
+import { Container, ContentContainer, ImageWrapper, DropOrAvailable } from './components';
+import { ShareModal } from 'components/app/components';
 
 interface CollectionPageProps {
   collectionData: Collection;
