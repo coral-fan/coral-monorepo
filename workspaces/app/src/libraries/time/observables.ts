@@ -3,12 +3,18 @@ import { concat, interval, map, take, takeLast, takeUntil, timer } from 'rxjs';
 
 type TimeRemainingCallback = (milliSecsDiff: number) => any;
 
+const INTERVAL = 1000;
+
 /*
   Solve for timer over 24 days found here:
   https://github.com/ReactiveX/rxjs/issues/3015
 */
-export const getBigTimer$ = (timestamp: string) => {
-  const milliSecsDiff = getMilliSecsDiff(timestamp);
+export const getBigTimer$ = (timestamp: string, startInterval: number) => {
+  /*
+    Add startInterval because getTimeRemaining$ interval operator
+    does not start immediately, starts after interval.
+  */
+  const milliSecsDiff = getMilliSecsDiff(timestamp) + startInterval;
 
   const MAX = 2147483647;
 
@@ -22,8 +28,8 @@ export const getBigTimer$ = (timestamp: string) => {
 };
 
 export const getTimeRemaining$ = (timestamp: string, callback: TimeRemainingCallback) =>
-  interval(1000).pipe(
-    takeUntil(getBigTimer$(timestamp)),
+  interval(INTERVAL).pipe(
+    takeUntil(getBigTimer$(timestamp, INTERVAL)),
     map(() => getMilliSecsDiff(timestamp)),
     map(callback)
   );
