@@ -3,10 +3,11 @@ import { GetServerSideProps } from 'next';
 import { IMAGE_WITH_INFO_DEFAULT_ARGS } from 'components/ui/nft/components/ImageWithInfo/consts';
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
 import { Details, ImageWithInfo, ShareButton } from 'components/ui/nft/components';
-import { DropTimer, NftContent } from 'components/ui';
+import { NftContent } from 'components/ui';
 import { getBadge } from 'components/ui/badges/utils';
 import { PartialCollection, SimilarCollections } from './components/SimilarCollections';
 import { Container, ContentContainer, ImageWrapper } from './components';
+import { DropOrAvailable } from './components/DropOrAvailable';
 
 interface CollectionPageProps {
   collectionData: Collection;
@@ -24,8 +25,13 @@ export const CollectionPage = ({ collectionData, similarCollections }: Collectio
     maxMintable,
     details,
     dropDate,
+    price,
   } = collectionData;
+
   const Badge = getBadge(type);
+
+  // Dummy Data: comes from Smart Contract Call
+  const numMinted = 2500;
 
   return (
     <Container>
@@ -46,7 +52,12 @@ export const CollectionPage = ({ collectionData, similarCollections }: Collectio
           Badge={Badge}
           isCard={false}
         />
-        <DropTimer tokenSupply={maxMintable} timestamp={dropDate} />
+        <DropOrAvailable
+          priceUsd={price}
+          maxMintable={maxMintable}
+          numMinted={numMinted}
+          dropDate={dropDate}
+        />
         {details && <Details details={details} />}
         <ShareButton />
         {similarCollections && <SimilarCollections similarCollections={similarCollections} />}
@@ -118,8 +129,8 @@ export const getServerSideProps: GetServerSideProps<CollectionPageProps, Collect
       type: 'url',
       url: '/',
     },
-    price: 1000,
-    dropDate: '2022-05-01',
+    price: 300,
+    dropDate: '2022 Apr 04 21:58:00 EDT',
     description:
       'Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.',
     details: [
