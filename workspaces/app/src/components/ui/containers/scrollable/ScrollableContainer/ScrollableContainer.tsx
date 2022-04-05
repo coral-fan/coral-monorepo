@@ -5,6 +5,13 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   overflow: auto;
+  margin-right: -0.75%;
+  /* mask: linear-gradient(
+    270deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 10%,
+    rgba(30, 30, 30, 1) 100%
+  ); */
 `;
 
 const Items = styled.div`
