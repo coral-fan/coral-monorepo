@@ -3,12 +3,12 @@ import styled from '@emotion/styled';
 import { Link } from 'components/ui';
 import { Card } from 'components/ui/Card';
 import { BaseInfo, BaseInfoProps } from 'components/ui';
+import { Asset } from 'libraries/models';
 
 export interface AssetCardProps
-  extends Omit<BaseInfoProps, 'titleHeadingLevel' | 'titleStyleVariant'> {
+  extends Omit<BaseInfoProps, 'titleHeadingLevel' | 'titleStyleVariant'>,
+    Pick<Asset, 'id' | 'contractAddress'> {
   Badge: () => EmotionJSX.Element;
-  collectionId: string;
-  id: number;
 }
 
 const AssetCardContainer = styled(Card)`
@@ -23,8 +23,8 @@ const BadgeAndTokenIdContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const AssetCard = ({ Badge, collectionId, id, ...baseInfoProps }: AssetCardProps) => (
-  <Link href={`/collection/${collectionId}/asset/${id}`}>
+export const AssetCard = ({ Badge, contractAddress, id, ...baseInfoProps }: AssetCardProps) => (
+  <Link href={`/collection/${contractAddress}/asset/${id}`}>
     <AssetCardContainer>
       <BaseInfo titleHeadingLevel={3} titleStyleVariant={'h3'} {...baseInfoProps}>
         <BadgeAndTokenIdContainer>
