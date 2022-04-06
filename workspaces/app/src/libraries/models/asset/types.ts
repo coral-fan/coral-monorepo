@@ -1,16 +1,14 @@
 import { Collection } from '../collection';
 import { User } from '../user';
 
-// AssetData is data returned from db, aka off chain
 export interface AssetData {
+  contractAddress: string;
   id: number;
-  collectionId: string;
 }
-
 // owner is derived from on chain data
 export interface Asset {
-  id: AssetData['id'];
-  collectionId: Collection['id'];
+  id: number;
+  contractAddress: Collection['id'];
   collectionName: Collection['name'];
   // image url could be a single image or an unique image for a generative NFT
   imageUrl: string;
