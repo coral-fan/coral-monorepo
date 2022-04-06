@@ -1,4 +1,5 @@
-import { Artist } from '../artist';
+import { DocumentReference } from 'firebase/firestore';
+import { Artist, ArtistData } from '../artist';
 
 export type CollectionType = 'video' | 'music' | 'event' | 'merch';
 
@@ -18,7 +19,7 @@ export interface CollectionData {
   id: string;
   name: string;
   /* blockchain data index cache */
-  artistId: Artist['id'];
+  artist: DocumentReference<ArtistData>;
   imageUrl: string;
   maxMintable: number;
   /* */
@@ -30,7 +31,7 @@ export interface CollectionData {
   gatedContent: GatedContent;
 }
 
-export interface Collection extends Omit<CollectionData, 'artistId'> {
+export interface Collection extends Omit<CollectionData, 'artist'> {
   artistName: Artist['name'];
   artistProfilePhoto: Artist['profilePhoto'];
 }
