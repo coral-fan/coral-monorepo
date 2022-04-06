@@ -1,5 +1,4 @@
 export * from './buttons';
-export * from './Modal';
 export * from './Heading';
 export * from './icons';
 export * from './badges';
@@ -14,4 +13,4 @@ export * from './social';
 export * from './DropTimer';
 export * from './nft';
 export * from './containers';
-export * from './ShareModal';
+export * from './modals';

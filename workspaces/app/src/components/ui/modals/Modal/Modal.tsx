@@ -3,10 +3,9 @@ import ReactDOM from 'react-dom';
 import styled from '@emotion/styled';
 
 import tokens, { QUERY } from 'styles/tokens';
-import { Card } from '../Card';
+import { Heading, Card } from 'components/ui';
 import { CloseButton, Overlay } from './components';
 import { ModalProps } from './types';
-import { Heading } from 'components/ui';
 import { css } from '@emotion/react';
 
 const { mobile, desktop } = tokens.layout.padding;
