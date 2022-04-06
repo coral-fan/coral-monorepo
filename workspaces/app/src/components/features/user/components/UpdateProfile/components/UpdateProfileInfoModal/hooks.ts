@@ -7,7 +7,7 @@ import { useRefetchPageData } from 'libraries/utils/hooks';
 import { useIsUpdateProfileInfoModalOpen, useUser } from 'components/features/user/hooks';
 
 export const useUpdateProfileInfoForm = () => {
-  const [{ username, email, bio, socialHandles }, setUser] = useUser();
+  const [{ username, email, bio, socialHandles: socialHandlesFromDb }, setUser] = useUser();
   const usernames = useUsernames();
   const updateUserSchema = getUpdateProfileInfoSchema(usernames, username);
 
@@ -22,7 +22,7 @@ export const useUpdateProfileInfoForm = () => {
       username,
       email,
       bio,
-      socialHandles,
+      socialHandles: socialHandlesFromDb,
     },
   });
 
@@ -35,47 +35,38 @@ export const useUpdateProfileInfoForm = () => {
 
   const handleSubmitUpdateProfileInfo = useMemo(
     () =>
-      handleSubmit(
-        async ({ username, email, bio, socialHandles: { instagram, soundcloud, twitter } }) => {
-          setIsUpdateProfileInfoSubmitting(true);
-          if (
-            uid !== undefined &&
-            username !== undefined &&
-            email !== undefined &&
-            bio !== undefined &&
-            instagram !== undefined &&
-            soundcloud !== undefined &&
-            twitter !== undefined
-          ) {
-            await upsertUser(uid, {
-              username,
-              email,
-              bio,
-              socialHandles: {
-                ...socialHandles,
-                instagram,
-                soundcloud,
-                twitter,
-              },
-            });
-            setUser((user) => ({
-              ...user,
-              username,
-              email,
-              bio,
-              socialHandles: {
-                ...socialHandles,
-                instagram,
-                soundcloud,
-                twitter,
-              },
-            }));
-            await refetchPageData();
-            setIsModalOpen(false);
-          }
+      handleSubmit(async ({ username, email, bio, socialHandles: socialHandlesFromForm }) => {
+        setIsUpdateProfileInfoSubmitting(true);
+        if (
+          uid !== undefined &&
+          username !== undefined &&
+          email !== undefined &&
+          bio !== undefined
+        ) {
+          await upsertUser(uid, {
+            username,
+            email,
+            bio,
+            socialHandles: {
+              ...socialHandlesFromDb,
+              ...socialHandlesFromForm,
+            },
+          });
+          setUser((user) => ({
+            ...user,
+            username,
+            email,
+            bio,
+            socialHandles: {
+              ...socialHandlesFromDb,
+              ...socialHandlesFromForm,
+            },
+          }));
+          await refetchPageData();
+          setIsModalOpen(false);
         }
-      ),
-    [handleSubmit, setIsModalOpen, uid, socialHandles, setUser, refetchPageData]
+      }),
+    [handleSubmit, uid, socialHandlesFromDb, setUser, refetchPageData, setIsModalOpen]
   );
 
   return {

@@ -1,3 +1,5 @@
+import { DocumentReference } from 'firebase/firestore';
+import { Artist, ArtistData } from '../artist';
 import { Asset } from '../asset';
 import { Notification } from '../notification';
 import { NullableString, SocialHandles } from '../types';
@@ -18,6 +20,7 @@ export interface CreditCardInformation {
 
 export type UserType = 'fan' | 'super_fan' | 'artist';
 
+type ContractAddressToIdMap = Record<string, number>;
 export interface PublicUserData {
   id: string;
   username: string;
@@ -26,8 +29,9 @@ export interface PublicUserData {
   bio: NullableString;
   socialHandles: SocialHandles;
   notifications: Notification[];
-  assets: Asset[];
-  following: string[];
+  // map of contract address to asset id
+  assets: ContractAddressToIdMap;
+  following: DocumentReference<ArtistData>[];
 }
 
 export interface PrivateUserData {
@@ -37,7 +41,12 @@ export interface PrivateUserData {
 }
 
 //  id = wallet address
-export type User = PublicUserData & Partial<PrivateUserData>;
+export interface User
+  extends Omit<PublicUserData, 'assets' | 'following'>,
+    Partial<PrivateUserData> {
+  assets: Asset[];
+  following: Artist[];
+}
 
 /*
 At Least One Type implementation from:
