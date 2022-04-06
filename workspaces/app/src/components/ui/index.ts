@@ -14,3 +14,4 @@ export * from './social';
 export * from './DropTimer';
 export * from './nft';
 export * from './containers';
+export * from './ShareModal';
