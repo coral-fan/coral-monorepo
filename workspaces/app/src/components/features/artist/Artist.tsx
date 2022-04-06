@@ -40,10 +40,7 @@ export const getServerSideProps: GetServerSideProps<ArtistPageProps, { artistId:
       facebook: 'bonoboofficial',
       twitter: 'si_bonobo',
       instagram: 'si_bonobo',
-      tiktok: null,
       soundcloud: 'bonobo',
-      discogs: null,
-      spotify: null,
     },
     assets: [],
     collections: [
