@@ -23,13 +23,9 @@ export const ArtistInfo = () => (
     </Link>
     <SocialLinks
       socialHandles={{
-        facebook: null,
         twitter: '',
         instagram: '',
-        spotify: null,
-        tiktok: null,
         soundcloud: '',
-        discogs: null,
       }}
     />
   </Container>

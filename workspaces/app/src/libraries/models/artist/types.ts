@@ -1,8 +1,8 @@
 import { NullableString, Photo, SocialHandles } from '../types';
 import { Collection } from '../collection';
 import { Asset } from '..';
-// id = coral wallet address
-export interface Artist {
+
+export interface ArtistData {
   // id = coral wallet address, not artist's personal wallet address
   id: string;
   name: string;
@@ -10,7 +10,11 @@ export interface Artist {
   quote: NullableString;
   profilePhoto: Photo;
   socialHandles: SocialHandles;
-
+  collections: Collection['id'][];
+  assets: Asset['id'][];
+}
+// id = coral wallet address
+export interface Artist extends Omit<ArtistData, 'collections' | 'assets'> {
   collections: Collection[];
   assets: Asset[];
 }
