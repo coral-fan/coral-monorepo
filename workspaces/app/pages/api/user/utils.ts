@@ -21,17 +21,9 @@ const DEFAULT_PUBLIC_USER_DATA: DefaultPublicUserData = {
     scale: 1,
   },
   bio: null,
-  socialHandles: {
-    facebook: null,
-    twitter: null,
-    instagram: null,
-    spotify: null,
-    tiktok: null,
-    soundcloud: null,
-    discogs: null,
-  },
+  socialHandles: {},
   notifications: [],
-  assets: [],
+  assets: {},
   following: [],
 };
 
