@@ -33,5 +33,4 @@ export const SOCIAL_HANDLE_SCHEMA = string()
     /^([a-zA-Z\d_])+$/g,
     'Only alphanumeric characters and _ are allowed, no @ symbol necessary'
   )
-  .transform((value: string) => (value === '' ? null : value))
-  .nullable();
+  .transform((value: string) => (value === '' ? undefined : value));
