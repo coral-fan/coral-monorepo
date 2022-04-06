@@ -43,7 +43,7 @@ export const DropOrAvailable = ({
     SwitchTransition implementation from:
     https://stackoverflow.com/questions/64126226/how-do-i-get-switchtranition-to-work-with-csstransition-with-typescript
   */
-  const nodeRef = useRef<any>(null);
+  const nodeRef = useRef<HTMLDivElement>(null);
 
   const getMilliSecondsRemaining = useCallback(
     () => getTimeRemaining$(dropDate, (milliSecsDiff) => milliSecsDiff),
