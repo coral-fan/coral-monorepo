@@ -9,11 +9,11 @@ export interface Photo {
 }
 
 export interface SocialHandles {
-  facebook: NullableString;
-  twitter: NullableString;
-  instagram: NullableString;
-  spotify: NullableString;
-  tiktok: NullableString;
-  soundcloud: NullableString;
-  discogs: NullableString;
+  facebook?: string;
+  twitter?: string;
+  instagram?: string;
+  spotify?: string;
+  tiktok?: string;
+  soundcloud?: string;
+  discogs?: string;
 }
