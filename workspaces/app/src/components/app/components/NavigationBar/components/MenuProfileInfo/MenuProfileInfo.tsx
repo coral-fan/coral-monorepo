@@ -18,11 +18,9 @@ export const MenuProfileInfo = ({ username, profilePhoto }: Omit<MenuProfileProp
   const provider = useProvider();
   const address = useWallet().address;
 
-  getWalletBalance(address, provider).then((balance) => {
-    if (balance) {
-      setWalletBalance(balance);
-    }
-  });
+  getWalletBalance(address, provider).then((balance) =>
+    balance ? setWalletBalance(balance) : null
+  );
 
   return (
     <Wrapper>
