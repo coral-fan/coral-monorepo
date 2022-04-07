@@ -5,7 +5,7 @@ import { Actions } from '@web3-react/types';
 
 const getMetaMaskConnector = (actions: Actions) => new MetaMask(actions);
 
-const [connector, { useProvider, useWeb3React }] = initializeConnector<MetaMask>(
+export const [connector, { useProvider, useWeb3React }] = initializeConnector<MetaMask>(
   getMetaMaskConnector,
   [AVALANCHE.CHAIN_ID.INT]
 );
