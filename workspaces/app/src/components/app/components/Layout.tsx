@@ -34,6 +34,7 @@ const MaxWidthContainer = styled.div`
 const Main = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 1;
 `;
 
 export const Layout: FC = ({ children }) => (
