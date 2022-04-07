@@ -1,9 +1,7 @@
 import styled from '@emotion/styled';
 import { Photo } from 'libraries/models';
 import { ProfileInfo, ProfileInfoProps } from 'components/ui';
-import { useProvider, useWallet } from 'libraries/blockchain';
-import { getWalletBalance } from 'libraries/blockchain/wallet/utils';
-import { useState } from 'react';
+import { useWallet } from 'libraries/blockchain';
 
 export interface MenuProfileProps extends Omit<ProfileInfoProps, 'secondaryInfo'> {
   profilePhoto: Photo;
@@ -14,21 +12,12 @@ const Wrapper = styled.div`
 `;
 
 export const MenuProfileInfo = ({ username, profilePhoto }: Omit<MenuProfileProps, 'size'>) => {
-  const [walletBalance, setWalletBalance] = useState(0);
-  const provider = useProvider();
-  const address = useWallet().address;
-
-  getWalletBalance(address, provider).then((balance) =>
-    balance ? setWalletBalance(balance) : null
-  );
+  const { balance } = useWallet();
+  const walletBalance = balance ? `${balance} AVAX` : `0 AVAX`;
 
   return (
     <Wrapper>
-      <ProfileInfo
-        profilePhoto={profilePhoto}
-        username={username}
-        secondaryInfo={`${walletBalance} AVAX`}
-      />
+      <ProfileInfo profilePhoto={profilePhoto} username={username} secondaryInfo={walletBalance} />
     </Wrapper>
   );
 };
