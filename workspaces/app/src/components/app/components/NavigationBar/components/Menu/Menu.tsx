@@ -82,7 +82,6 @@ export const Menu = ({ userProfile, openInstallMetaMaskModal, closeMenuModal }: 
             <MenuProfileInfo
               username={userProfile.username}
               profilePhoto={userProfile.profilePhoto}
-              walletBalance={0}
             />
           </MenuProfileLink>
           {/* <NotificationItem handleCloseMenu={useCloseMenuModal} notificationsCount={notificationsCount} /> */}
