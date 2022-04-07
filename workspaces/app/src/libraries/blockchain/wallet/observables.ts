@@ -1,5 +1,9 @@
+import { JsonRpcProvider } from '@ethersproject/providers';
+import { AVALANCHE } from 'consts';
+import { ethers } from 'ethers';
 import { NullableString } from 'libraries/models';
-import { map, mergeMap, Observable, of, pluck, retry, throwError } from 'rxjs';
+import { safeRound } from 'libraries/utils/math';
+import { from, map, mergeMap, Observable, of, pluck, retry, throwError } from 'rxjs';
 import { ajax, AjaxResponse } from 'rxjs/ajax';
 
 import { COVALENT_API_KEY } from './consts';
@@ -80,4 +84,13 @@ export const getWalletNfts$ = (walletAddress: string) =>
     pluck('items'),
     map((tokenDataArray) => tokenDataArray.filter(({ type }) => type === 'nft')),
     map(tokenDataArrayToMap)
+  );
+
+const avalancheRpcProvider = new JsonRpcProvider(AVALANCHE.RPC_URL);
+
+export const getWalletBalance$ = (address: string) =>
+  from(avalancheRpcProvider.getBalance(address)).pipe(
+    map((balanceBigInt) => ethers.utils.formatEther(balanceBigInt)),
+    map((balanceString) => parseFloat(balanceString)),
+    map((balance) => safeRound(balance, 2))
   );
