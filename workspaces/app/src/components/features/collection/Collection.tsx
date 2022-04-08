@@ -8,15 +8,12 @@ import { PartialCollection } from './components/SimilarCollections';
 import { DropOrAvailable } from './components';
 import { Layout as CollectionLayout } from 'components/ui/nft';
 import { SimilarCollections } from './components/SimilarCollections';
+import { useMemo } from 'react';
 
 interface CollectionPageProps {
   collectionData: Collection;
   similarCollections: PartialCollection[];
 }
-
-// Dummy Data: comes from Smart Contract Call
-// Todo: Update AVAX pricing
-const numMinted = 2500;
 
 export const CollectionPage = ({ collectionData, similarCollections }: CollectionPageProps) => {
   const {
@@ -33,16 +30,26 @@ export const CollectionPage = ({ collectionData, similarCollections }: Collectio
     id,
   } = collectionData;
 
-  const dropOrAvailable = (
-    <DropOrAvailable
-      dropDate={dropDate}
-      numMinted={numMinted}
-      maxMintable={maxMintable}
-      priceUsd={price}
-    />
+  // Dummy Data: comes from Smart Contract Call
+  // Todo: Update AVAX pricing
+  const numMinted = 2500;
+
+  const dropOrAvailable = useMemo(
+    () => (
+      <DropOrAvailable
+        dropDate={dropDate}
+        numMinted={numMinted}
+        maxMintable={maxMintable}
+        priceUsd={price}
+      />
+    ),
+    [dropDate, numMinted, maxMintable, price]
   );
 
-  const similarCollectionsSection = <SimilarCollections similarCollections={similarCollections} />;
+  const similarCollectionsSection = useMemo(
+    () => <SimilarCollections similarCollections={similarCollections} />,
+    [similarCollections]
+  );
 
   return (
     <CollectionLayout
@@ -125,7 +132,7 @@ export const getServerSideProps: GetServerSideProps<CollectionPageProps, Collect
       url: '/',
     },
     price: 300,
-    dropDate: '2022 Apr 07 19:13:00 EDT',
+    dropDate: '2022 Apr 08 15:07:00 EDT',
     description:
       'Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.',
     details: [
