@@ -1,19 +1,90 @@
-import styled from '@emotion/styled';
 import { IMAGE_WITH_INFO_DEFAULT_ARGS } from 'components/ui/nft/components/ImageWithInfo/consts';
 import { DEFAULT_PROFILE_PHOTO } from 'components/ui/profile/Avatar/consts';
 import { Asset, AssetData } from 'libraries/models';
 import { GetServerSideProps } from 'next';
-
-const Container = styled.div`
-  display: flex;
-`;
+import { Layout as AssetLayout } from 'components/ui/nft';
+import { Owner } from './components/Owner';
+import { getGatedContentComponent } from 'components/ui/nft/GatedContent/utils';
+import { useIsMobile } from 'libraries/window';
+import styled from '@emotion/styled';
+import tokens, { QUERY } from 'styles/tokens';
 
 interface AssetPageProps {
   assetData: Asset;
 }
 
+export const AssetIdWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: ${tokens.buttons.size.mobile};
+  font-size: {$tokens.font.size.md};
+  letter-spacing: {$tokens.font.letter_spacing.md};
+  line-height: {$tokens.font.line_height.md};
+`;
+
+export const AssetContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: calc(-1.5 * ${tokens.buttons.size.mobile});
+  gap: ${tokens.spacing.mobile.md};
+
+  @media ${QUERY.TABLET} {
+    margin-top: 0;
+    gap: 0;
+  }
+`;
+
 export const AssetPage = ({ assetData }: AssetPageProps) => {
-  return <Container>{`Asset ${assetData.id}`}</Container>;
+  const {
+    imageUrl,
+    artistName,
+    artistProfilePhoto,
+    collectionName,
+    type,
+    collectionDescription,
+    collectionDetails,
+    contractAddress,
+    id,
+    ownerAddress,
+    ownerProfilePhoto,
+    ownerUsername,
+    ownerType,
+    gatedContent,
+  } = assetData;
+
+  const owner = (
+    <Owner
+      userId={ownerAddress}
+      assetId={id}
+      profilePhoto={ownerProfilePhoto}
+      username={ownerUsername}
+      type={ownerType}
+    />
+  );
+
+  const gatedContentComponent = getGatedContentComponent(gatedContent);
+  const isMobile = useIsMobile();
+
+  return (
+    <AssetContainer>
+      {isMobile && <AssetIdWrapper>#{id}</AssetIdWrapper>}
+      <AssetLayout
+        isAsset={true}
+        type={type}
+        imageUrl={imageUrl}
+        artistName={artistName}
+        artistProfilePhoto={artistProfilePhoto}
+        name={collectionName}
+        description={collectionDescription}
+        details={collectionDetails}
+        collectionId={contractAddress}
+        gatedContent={gatedContentComponent}
+        owner={owner}
+      />
+    </AssetContainer>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps<AssetPageProps, { assetId: string }> = async (
