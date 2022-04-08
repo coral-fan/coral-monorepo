@@ -8,6 +8,7 @@ import { getGatedContentComponent } from 'components/ui/nft/GatedContent/utils';
 import { useIsMobile } from 'libraries/window';
 import styled from '@emotion/styled';
 import tokens, { QUERY } from 'styles/tokens';
+import { useCallback } from 'react';
 
 interface AssetPageProps {
   assetData: Asset;
@@ -64,7 +65,11 @@ export const AssetPage = ({ assetData }: AssetPageProps) => {
     />
   );
 
-  const gatedContentComponent = getGatedContentComponent(gatedContent);
+  const gatedContentComponent = useCallback(
+    () => getGatedContentComponent(gatedContent),
+    [gatedContent]
+  )();
+
   const isMobile = useIsMobile();
 
   return (
