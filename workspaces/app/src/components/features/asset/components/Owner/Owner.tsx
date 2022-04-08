@@ -4,6 +4,7 @@ import { Asset, User, UserType } from 'libraries/models';
 import tokens from 'styles/tokens';
 
 const Card = styled(BaseCard)`
+  width: 100%;
   padding: 16px;
   flex-direction: row;
   justify-content: space-between;
@@ -24,7 +25,7 @@ const AssetId = styled.span`
 `;
 
 export const Owner = ({ userId, assetId, username, profilePhoto, type }: OwnerProps) => (
-  <Link href={`user/${userId}`}>
+  <Link href={`/user/${userId}`}>
     <Card variant="secondary">
       <ProfileInfo {...{ username, profilePhoto, secondaryInfo: getUserType(type) }} />
       <AssetId>#{assetId}</AssetId>
