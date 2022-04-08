@@ -15,6 +15,7 @@ const getlinkStyle = (
   hoverVariant: LinkProps['hoverVariant'] = 'brand',
   style?: SerializedStyles
 ) => css`
+  width: 100%;
   text-decoration: none;
   &:hover {
     cursor: pointer;
