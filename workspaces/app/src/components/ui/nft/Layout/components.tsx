@@ -27,7 +27,7 @@ export const Container = styled.div<IsAssetProps>`
   @media ${QUERY.TABLET} {
     display: flex;
     flex-direction: row;
-    gap: ${spacing.mobile.xl};
+    gap: ${spacing.mobile.lg};
 
     /*
       Move image behind navigation bar in desktop when
@@ -110,6 +110,13 @@ export const NftAssetContainer = styled.div<IsAssetProps>`
       margin-left: calc(-1 * ${mobile.horizontal});
       margin-right: calc(-1 * ${mobile.horizontal});
     `}
+
+  /*
+    Revert above on desktop
+  */
+  @media ${QUERY.TABLET} {
+    margin: 0;
+  }
 `;
 
 export const GatedContentWrapper = styled.div`
