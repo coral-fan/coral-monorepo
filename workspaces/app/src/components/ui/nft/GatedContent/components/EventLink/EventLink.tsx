@@ -9,7 +9,7 @@ const Wrapper = styled(Link)`
   display: block;
   width: 100%;
   padding: 36px 20px;
-  border-top: dashed ${tokens.background.color.primary} 3px;
+  border-top: dashed ${tokens.background.color.secondary} 3px;
 `;
 
 interface EventLinkProps {
@@ -17,7 +17,7 @@ interface EventLinkProps {
 }
 
 export const EventLink = ({ eventId }: EventLinkProps) => (
-  <Wrapper href={`events/${eventId}`}>
+  <Wrapper href={`/events/${eventId}`}>
     <CtaContent>Access Event</CtaContent>
   </Wrapper>
 );
