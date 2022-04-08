@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { interval, map, mapTo, mergeMapTo, skipUntil, timer } from 'rxjs';
+import { interval, mapTo, mergeMapTo, skipUntil, timer } from 'rxjs';
 import { useIsAuthenticated } from 'libraries/authentication';
 import { getWalletNfts$ } from 'libraries/blockchain/wallet/observables';
 import { useWallet } from 'libraries/blockchain';
