@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 
 export const MenuProfileInfo = ({ username, profilePhoto }: Omit<MenuProfileProps, 'size'>) => {
   const { balance } = useWallet();
-  const walletBalance = balance ? `${balance} AVAX` : `0 AVAX`;
+  const walletBalance = balance ? `${balance.toFixed(2)} AVAX` : `0 AVAX`;
 
   return (
     <Wrapper>
