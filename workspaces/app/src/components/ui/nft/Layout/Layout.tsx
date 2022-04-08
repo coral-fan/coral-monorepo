@@ -32,6 +32,9 @@ interface LayoutProps {
 // Dummy Data: comes from Smart Contract Call
 // Todo: Update AVAX pricing
 
+/*
+  Layout is a generic container for Asset & Collection pages.
+*/
 export const Layout = ({
   isAsset,
   type,
