@@ -1,14 +1,18 @@
 import styled from '@emotion/styled';
 import { Card as BaseCard, Link, ProfileInfo } from 'components/ui';
 import { Asset, User, UserType } from 'libraries/models';
-import tokens from 'styles/tokens';
+import tokens, { QUERY } from 'styles/tokens';
 
 const Card = styled(BaseCard)`
   width: 100%;
-  padding: 16px;
+  padding: 13px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  @media ${QUERY.TABLET} {
+    padding: 20px;
+  }
 `;
 
 interface OwnerProps extends Pick<User, 'username' | 'profilePhoto' | 'type'> {
