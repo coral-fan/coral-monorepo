@@ -4,7 +4,7 @@ import { getMilliSecsDiff, getTimeRemaining$ } from 'libraries/time';
 import { useObservable } from 'libraries/utils';
 import { useCallback, useRef } from 'react';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
-import { AvailableContainer } from '../components';
+import { AvailableContainer } from 'components/ui/nft/Layout/components';
 import { Price, PriceProp } from '../Price';
 import { ProgressBar, ProgressBarProps } from '../ProgressBar';
 
