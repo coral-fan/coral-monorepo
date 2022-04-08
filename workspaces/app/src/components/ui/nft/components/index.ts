@@ -7,3 +7,4 @@ export * from './ShareCard';
 export * from './ShareButton';
 export * from './ImageWithInfo';
 export * from './Details';
+export * from './ShareDrop';
