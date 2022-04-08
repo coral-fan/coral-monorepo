@@ -13,6 +13,7 @@ export interface GatedUrl {
 }
 
 export type GatedContent = GatedUrl | GatedEvent | null;
+export type Details = string[] | null;
 
 export interface CollectionData {
   // id = nft smart contract address
@@ -27,7 +28,7 @@ export interface CollectionData {
   price: number;
   dropDate: string;
   description: string;
-  details: string[] | null;
+  details: Details;
   gatedContent: GatedContent;
 }
 
