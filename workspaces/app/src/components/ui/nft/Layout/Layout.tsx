@@ -1,7 +1,7 @@
 import { getBadge } from 'components/ui/badges/utils';
 import { Artist, CollectionType, Details as DetailsType } from 'libraries/models';
 import { useIsMobile } from 'libraries/window';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Details, ImageWithInfo, NftContent, ShareButton, ShareDropModal } from '../components';
 import {
   AssetContentContainer,
@@ -29,9 +29,6 @@ interface LayoutProps {
   owner?: JSX.Element;
 }
 
-// Dummy Data: comes from Smart Contract Call
-// Todo: Update AVAX pricing
-
 /*
   Layout is a generic container for Asset & Collection pages.
 */
@@ -57,15 +54,18 @@ export const Layout = ({
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const closeShareModal = useCallback(() => setIsShareModalOpen(false), []);
 
-  const image = (
-    <ImageWrapper isAsset={isAsset}>
-      <ImageWithInfo
-        imageUrl={imageUrl}
-        artistName={artistName}
-        artistProfilePhoto={artistProfilePhoto}
-        isCard={false}
-      />
-    </ImageWrapper>
+  const image = useMemo(
+    () => (
+      <ImageWrapper isAsset={isAsset}>
+        <ImageWithInfo
+          imageUrl={imageUrl}
+          artistName={artistName}
+          artistProfilePhoto={artistProfilePhoto}
+          isCard={false}
+        />
+      </ImageWrapper>
+    ),
+    [imageUrl, artistName, artistProfilePhoto, isAsset]
   );
 
   return (
