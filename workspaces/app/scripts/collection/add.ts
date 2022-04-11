@@ -1,7 +1,7 @@
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
 import { ArtistData, CollectionData } from 'libraries/models';
 
-const COLLECTION: Omit<CollectionData, 'artistRef'> & { artistId: string } = {
+const collection: CollectionData = {
   id: '0xf6a817e0af31d1f8accf9e301c2a9bb08962c160',
   name: 'Test NFT',
   artistId: '0xabcdefghijklmnopqrstuvwxyz01234567891011',
@@ -21,7 +21,8 @@ const COLLECTION: Omit<CollectionData, 'artistRef'> & { artistId: string } = {
 
 const addCollection = async () => {
   console.log('adding collection...');
-  const { artistId, ...partialCollection } = COLLECTION;
+
+  const { artistId } = collection;
   const artistRef = await getDocumentReferenceServerSide<ArtistData>('artists', artistId);
   const artistDocSnapshot = await artistRef.get();
 
@@ -29,20 +30,12 @@ const addCollection = async () => {
     throw Error(`artist with id ${artistId} doesn't exist.`);
   }
 
-  const collection: CollectionData = {
-    ...partialCollection,
-    artistRef,
-  };
-
-  const collectionRef = await getDocumentReferenceServerSide<CollectionData>(
-    'collections',
-    collection.id
-  );
-
+  const { id } = collection;
+  const collectionRef = await getDocumentReferenceServerSide<CollectionData>('collections', id);
   const collectionDocSnapshot = await collectionRef.get();
 
   if (collectionDocSnapshot.exists) {
-    throw Error(`collection with id ${collection.id} already exists.`);
+    throw Error(`collection with id ${id} already exists.`);
   }
 
   await collectionRef.set(collection);
