@@ -19,10 +19,9 @@ export interface CollectionData {
   id: string;
   name: string;
   /* blockchain data index cache */
-  artistRef: FirebaseFirestore.DocumentReference<ArtistData>;
+  artistId: ArtistData['id'];
   imageUrl: string;
   maxMintable: number;
-  /* */
   type: CollectionType;
   price: number;
   dropDate: string;
@@ -31,7 +30,7 @@ export interface CollectionData {
   gatedContent: GatedContent;
 }
 
-export interface Collection extends Omit<CollectionData, 'artistRef'> {
+export interface Collection extends Omit<CollectionData, 'artistId'> {
   artistName: Artist['name'];
   artistProfilePhoto: Artist['profilePhoto'];
   artistId: Artist['id'];
