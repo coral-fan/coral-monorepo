@@ -16,7 +16,7 @@ const artist: ArtistData = {
     spotify: 'test',
     soundcloud: 'test',
   },
-  collections: ['0xf6a817e0af31d1f8accf9e301c2a9bb08962c160'],
+  collections: [],
   assets: [],
 };
 
