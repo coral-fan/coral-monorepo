@@ -8,4 +8,5 @@ export const IMAGE_WITH_INFO_DEFAULT_ARGS = {
     offsetPercentages: [0, 0],
     scale: 1,
   } as Photo,
+  artistId: '1',
 };

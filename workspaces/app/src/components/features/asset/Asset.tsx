@@ -43,6 +43,7 @@ export const AssetPage = ({
     imageUrl,
     artistName,
     artistProfilePhoto,
+    artistId,
     collectionName,
     type,
     collectionDescription,
@@ -85,6 +86,7 @@ export const AssetPage = ({
         imageUrl={imageUrl}
         artistName={artistName}
         artistProfilePhoto={artistProfilePhoto}
+        artistId={artistId}
         name={collectionName}
         description={collectionDescription}
         details={collectionDetails}
