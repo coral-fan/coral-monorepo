@@ -11,7 +11,8 @@
     "clean:build": "rm -rf .next",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "generate-types": "typechain --target=ethers-v5 abis/*.json --out-dir src/libraries/blockchain/contracts"
+    "generate-types": "typechain --target=ethers-v5 abis/*.json --out-dir src/libraries/blockchain/contracts",
+    "run-script": "env-cmd -f .env.development env-cmd -f .env.local ts-node"
   },
   "postinstall": "yarn generate-types",
   "dependencies": {
@@ -70,6 +71,8 @@
     "eslint-plugin-prettier": "^4.0.0",
     "nodemon": "^2.0.12",
     "storybook-dark-mode": "^1.0.8",
+    "ts-node": "^10.7.0",
+    "tsconfig-paths": "^3.14.1",
     "typechain": "^7.0.1"
   }
 }
