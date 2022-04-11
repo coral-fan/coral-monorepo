@@ -4,7 +4,7 @@ export const safeRound = (value: number, decimalPlace: number) => {
   }
 
   const decimalFactor = 10 ** decimalPlace;
-  const numRounded = Math.round((value + Number.EPSILON) * decimalFactor) / decimalFactor;
+  const roundedValue = Math.round((value + Number.EPSILON) * decimalFactor) / decimalFactor;
 
-  return numRounded;
+  return roundedValue;
 };
