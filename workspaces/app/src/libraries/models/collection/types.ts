@@ -1,4 +1,3 @@
-import { DocumentReference } from 'firebase/firestore';
 import { Artist, ArtistData } from '../artist';
 
 export type CollectionType = 'video' | 'music' | 'event' | 'merch';
@@ -20,7 +19,7 @@ export interface CollectionData {
   id: string;
   name: string;
   /* blockchain data index cache */
-  artist: DocumentReference<ArtistData>;
+  artistRef: FirebaseFirestore.DocumentReference<ArtistData>;
   imageUrl: string;
   maxMintable: number;
   /* */
