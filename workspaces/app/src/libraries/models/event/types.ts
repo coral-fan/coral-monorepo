@@ -1,4 +1,3 @@
-import { DocumentReference } from 'firebase/firestore';
 import { Artist, ArtistData } from '../artist';
 import { CollectionData } from '../collection';
 
@@ -11,7 +10,7 @@ export interface EventData {
   name: string;
   date: string;
   description: string;
-  artist: DocumentReference<ArtistData>;
+  artistId: ArtistData['id'];
   allowedCollections: CollectionData['id'][];
   exclusiveCollections: CollectionData['id'][] | null;
 }
