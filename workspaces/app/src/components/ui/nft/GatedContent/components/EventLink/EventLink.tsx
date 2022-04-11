@@ -17,7 +17,7 @@ interface EventLinkProps {
 }
 
 export const EventLink = ({ eventId }: EventLinkProps) => (
-  <Wrapper href={`/events/${eventId}`}>
+  <Wrapper href={`/event/${eventId}`}>
     <CtaContent>Access Event</CtaContent>
   </Wrapper>
 );
