@@ -1,11 +1,9 @@
 /* eslint-disable jsx-a11y/alt-text */
+import { useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 import { ArtistInfo } from './components';
-import { Photo } from 'libraries/models';
-import { Image } from 'components/ui';
-
-import { useCallback, useState } from 'react';
-import tokens, { QUERY } from 'styles/tokens';
+import { Artist } from 'libraries/models';
+import { ConditionalWrap, Image, Link } from 'components/ui';
 
 // parent container
 const ImageWithInfoContainer = styled.div`
@@ -20,20 +18,24 @@ interface ImageInfoContainerProps {
 
 const ArtistInfoContainer = styled.div<ImageInfoContainerProps>`
   position: absolute;
-  left: calc(${({ isCard }) => (isCard ? '14px' : tokens.layout.padding.mobile.horizontal)});
+  left: 14px;
   bottom: calc(${({ imageInfoHeight }) => imageInfoHeight}px + 17px);
   height: 0;
   width: 0;
+`;
 
-  @media ${QUERY.LAPTOP} {
-    left: calc(${({ isCard }) => (isCard ? '14px' : tokens.layout.padding.desktop.horizontal)});
+const LinkWrapper = styled.div`
+  width: fit-content;
+  &:hover {
+    opacity: 88%;
   }
 `;
 
 export interface ImageWithInfoProps {
   imageUrl: string;
-  artistName: string;
-  artistProfilePhoto: Photo;
+  artistName: Artist['name'];
+  artistProfilePhoto: Artist['profilePhoto'];
+  id?: Artist['id'];
   isCard?: boolean;
 }
 
@@ -41,6 +43,7 @@ export const ImageWithInfo = ({
   imageUrl,
   artistName,
   artistProfilePhoto,
+  id,
   isCard,
 }: ImageWithInfoProps) => {
   const [imageInfoHeight, setImageInfoHeight] = useState(0);
@@ -55,9 +58,18 @@ export const ImageWithInfo = ({
     <ImageWithInfoContainer>
       <Image src={imageUrl} />
       <ArtistInfoContainer isCard={isCard} imageInfoHeight={imageInfoHeight}>
-        <ArtistInfo ref={imageInfoRef} profilePhoto={artistProfilePhoto}>
-          {artistName}
-        </ArtistInfo>
+        <ConditionalWrap
+          condition={!!id}
+          wrap={(children) => (
+            <LinkWrapper>
+              <Link href={`/artist/${id}`}>{children}</Link>
+            </LinkWrapper>
+          )}
+        >
+          <ArtistInfo ref={imageInfoRef} profilePhoto={artistProfilePhoto}>
+            {artistName}
+          </ArtistInfo>
+        </ConditionalWrap>
       </ArtistInfoContainer>
     </ImageWithInfoContainer>
   );
