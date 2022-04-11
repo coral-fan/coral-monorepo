@@ -50,6 +50,7 @@ export const ImageWrapper = styled.div<IsAssetProps>`
     position: sticky;
     margin-right: 0;
     top: 0;
+    margin-left: calc(-1 * ${mobile.horizontal});
   }
 
   @media ${QUERY.LAPTOP} {
