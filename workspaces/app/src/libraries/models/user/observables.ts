@@ -3,7 +3,7 @@ import { getCollectionReferenceClientSide, getDocumentData } from 'libraries/fir
 import { user } from 'rxfire/auth';
 import { collectionData } from 'rxfire/firestore';
 import { filter, map, mergeMap } from 'rxjs';
-import { User } from './types';
+import { PublicUserData, User } from './types';
 
 // client side only
 const getFirebaseUser$ = () => {
@@ -16,7 +16,7 @@ export const getUserUid$ = () => getFirebaseUser$().pipe(map((user) => user?.uid
 
 // client side only
 export const getUsernames$ = () => {
-  const usersCollectionReference = getCollectionReferenceClientSide('users');
+  const usersCollectionReference = getCollectionReferenceClientSide<PublicUserData>('users');
   return collectionData(usersCollectionReference).pipe(
     map((users) => new Set(users.map((user) => user.username.toLowerCase())))
   );
