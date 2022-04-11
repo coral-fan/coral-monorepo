@@ -31,7 +31,7 @@ export interface CollectionData {
   gatedContent: GatedContent;
 }
 
-export interface Collection extends Omit<CollectionData, 'artist'> {
+export interface Collection extends Omit<CollectionData, 'artistRef'> {
   artistName: Artist['name'];
   artistProfilePhoto: Artist['profilePhoto'];
 }
