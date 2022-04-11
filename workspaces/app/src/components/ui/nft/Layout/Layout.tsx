@@ -1,5 +1,5 @@
 import { getBadge } from 'components/ui/badges/utils';
-import { Artist, CollectionType, Details as DetailsType } from 'libraries/models';
+import { Artist, Collection, CollectionType } from 'libraries/models';
 import { useIsMobile } from 'libraries/window';
 import { useCallback, useMemo, useState } from 'react';
 import { Details, ImageWithInfo, NftContent, ShareButton, ShareDropModal } from '../components';
@@ -12,16 +12,17 @@ import {
   NftAssetContainer,
 } from './components';
 
-interface LayoutProps {
+export interface LayoutProps {
   isAsset: boolean;
   type: CollectionType;
   imageUrl: string;
   artistName: Artist['name'];
   artistProfilePhoto: Artist['profilePhoto'];
-  name: string;
-  description: string;
-  details: DetailsType;
-  collectionId: string;
+  artistId: Artist['id'];
+  name: Collection['name'];
+  description: Collection['description'];
+  details: Collection['details'];
+  collectionId: Collection['id'];
   gatedContent?: JSX.Element | null;
   assetId?: number;
   dropOrAvailable?: JSX.Element;
@@ -38,6 +39,7 @@ export const Layout = ({
   imageUrl,
   artistName,
   artistProfilePhoto,
+  artistId,
   name,
   description,
   details,
@@ -61,11 +63,12 @@ export const Layout = ({
           imageUrl={imageUrl}
           artistName={artistName}
           artistProfilePhoto={artistProfilePhoto}
+          id={artistId}
           isCard={false}
         />
       </ImageWrapper>
     ),
-    [imageUrl, artistName, artistProfilePhoto, isAsset]
+    [imageUrl, artistName, artistProfilePhoto, artistId, isAsset]
   );
 
   return (
@@ -91,7 +94,6 @@ export const Layout = ({
         {details && <Details details={details} />}
         <ShareButton
           onClick={() => {
-            console.log('clicked');
             setIsShareModalOpen(true);
           }}
         />

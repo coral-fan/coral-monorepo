@@ -35,4 +35,5 @@ export interface CollectionData {
 export interface Collection extends Omit<CollectionData, 'artist'> {
   artistName: Artist['name'];
   artistProfilePhoto: Artist['profilePhoto'];
+  artistId: Artist['id'];
 }

@@ -16,6 +16,7 @@ export interface Asset {
   gatedContent: Collection['gatedContent'];
   artistName: Collection['artistName'];
   artistProfilePhoto: Collection['artistProfilePhoto'];
+  artistId: Collection['artistId'];
   collectionDescription: Collection['description'];
   collectionDetails: Collection['details'];
   ownerUsername: User['username'];
