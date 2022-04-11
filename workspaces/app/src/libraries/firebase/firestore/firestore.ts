@@ -5,6 +5,8 @@ import {
   getDoc,
   DocumentReference,
   collection as getCollection,
+  DocumentData,
+  CollectionReference,
 } from 'firebase/firestore';
 import { initializeFirebaseAdmin } from '..';
 import { isServerSide } from 'libraries/utils/environment';
@@ -17,45 +19,45 @@ const getFirestoreServerSide = async () => {
   return getFirestore(app);
 };
 
-export const getDocumentReferenceServerSide = async (
+export const getDocumentReferenceServerSide = async <
+  T extends FirebaseFirestore.DocumentData = FirebaseFirestore.DocumentData
+>(
   collection: string,
   id: string,
   ...subpaths: string[]
 ) => {
   const firestore = await getFirestoreServerSide();
-  return firestore.doc(`${collection}/${id}${subpaths.length > 0 ? `/${subpaths.join('/')}` : ''}`);
+  return firestore.doc(
+    `${collection}/${id}${subpaths.length > 0 ? `/${subpaths.join('/')}` : ''}`
+  ) as FirebaseFirestore.DocumentReference<T>;
 };
 
-export const getDocumentReferenceClientSide = (
+export const getDocumentReferenceClientSide = <T extends DocumentData>(
   collection: string,
   id: string,
   ...subpaths: string[]
 ) => {
   const app = getApp();
   const firestore = getFirestoreClientSide(app);
-  return doc(firestore, collection, id, ...subpaths);
+  return doc(firestore, collection, id, ...subpaths) as DocumentReference<T>;
 };
 
-export const getDocumentReference = async (collection: string, id: string, ...subpaths: string[]) =>
-  (isServerSide() ? getDocumentReferenceServerSide : getDocumentReferenceClientSide)(
+export const getDocumentReference = async <T extends DocumentData>(
+  collection: string,
+  id: string,
+  ...subpaths: string[]
+) =>
+  (isServerSide() ? getDocumentReferenceServerSide : getDocumentReferenceClientSide)<T>(
     collection,
     id,
     ...subpaths
   );
 
-export const getDocumentSnapshot = async (
+export const getDocumentData = async <T extends DocumentData>(
   collection: string,
   id: string,
   ...subpaths: string[]
 ) => {
-  const documentReference = await getDocumentReference(collection, id, ...subpaths);
-  // checks if documentReference is instance of DocumentReference which is from firebase/firestore (client side only)
-  return documentReference instanceof DocumentReference
-    ? getDoc(documentReference)
-    : documentReference.get();
-};
-
-export const getDocumentData = async <T>(collection: string, id: string, ...subpaths: string[]) => {
   const documentReference = await getDocumentReference(collection, id, ...subpaths);
   // checks if documentReference is instance of DocumentReference which is from firebase/firestore (client side only)
   return (
@@ -65,8 +67,8 @@ export const getDocumentData = async <T>(collection: string, id: string, ...subp
   ).data() as T | undefined;
 };
 
-export const getCollectionReferenceClientSide = (collection: string) => {
+export const getCollectionReferenceClientSide = <T extends DocumentData>(collection: string) => {
   const app = getApp();
   const firestore = getFirestoreClientSide(app);
-  return getCollection(firestore, collection);
+  return getCollection(firestore, collection) as CollectionReference<T>;
 };
