@@ -1,14 +1,15 @@
+import styled from '@emotion/styled';
+import { useCallback, useMemo } from 'react';
+import { GetServerSideProps } from 'next';
+
 import { IMAGE_WITH_INFO_DEFAULT_ARGS } from 'components/ui/nft/components/ImageWithInfo/consts';
 import { DEFAULT_PROFILE_PHOTO } from 'components/ui/profile/Avatar/consts';
 import { Asset, AssetData } from 'libraries/models';
-import { GetServerSideProps } from 'next';
 import { Layout as AssetLayout } from 'components/ui/nft';
-import { Owner } from './components/Owner';
+import { Owner } from './components';
 import { getGatedContentComponent } from 'components/ui/nft/GatedContent/utils';
 import { useIsMobile } from 'libraries/window';
-import styled from '@emotion/styled';
 import tokens, { QUERY } from 'styles/tokens';
-import { useCallback } from 'react';
 
 interface AssetPageProps {
   assetData: Asset;
@@ -37,8 +38,8 @@ export const AssetContainer = styled.div`
   }
 `;
 
-export const AssetPage = ({ assetData }: AssetPageProps) => {
-  const {
+export const AssetPage = ({
+  assetData: {
     imageUrl,
     artistName,
     artistProfilePhoto,
@@ -53,16 +54,19 @@ export const AssetPage = ({ assetData }: AssetPageProps) => {
     ownerUsername,
     ownerType,
     gatedContent,
-  } = assetData;
-
-  const owner = (
-    <Owner
-      userId={ownerAddress}
-      assetId={id}
-      profilePhoto={ownerProfilePhoto}
-      username={ownerUsername}
-      type={ownerType}
-    />
+  },
+}: AssetPageProps) => {
+  const owner = useMemo(
+    () => (
+      <Owner
+        userId={ownerAddress}
+        assetId={id}
+        profilePhoto={ownerProfilePhoto}
+        username={ownerUsername}
+        type={ownerType}
+      />
+    ),
+    [ownerAddress, id, ownerProfilePhoto, ownerUsername, ownerType]
   );
 
   const gatedContentComponent = useCallback(
