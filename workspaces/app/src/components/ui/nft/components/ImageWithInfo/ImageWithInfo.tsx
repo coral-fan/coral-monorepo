@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import styled from '@emotion/styled';
 import { ArtistInfo } from './components';
 import { Artist } from 'libraries/models';
@@ -53,14 +53,14 @@ export const ImageWithInfo = ({
     }
   }, []);
 
-  const hasArtistId = artistId ? true : false;
+  const hasArtistId = useMemo(() => (artistId ? true : false), [artistId]);
 
   return (
     <ImageWithInfoContainer>
-      <Image src={imageUrl} alt={''} />
+      <Image src={imageUrl} alt="" />
       <ArtistInfoContainer isCard={isCard} imageInfoHeight={imageInfoHeight}>
         <ConditionalWrap
-          condition={hasArtistId}
+          shouldWrap={hasArtistId}
           wrap={(children) => (
             <LinkWrapper>
               <Link href={`/artist/${artistId}`}>{children}</Link>
