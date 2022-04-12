@@ -21,12 +21,13 @@ const ImageContent = styled(NextImage)`
 
 export interface ImageProp {
   src: string;
+  alt: string;
 }
 
-export const Image = ({ src }: ImageProp) => {
+export const Image = ({ src, alt }: ImageProp) => {
   return (
     <ImageWrapper>
-      <ImageContent src={src} alt={''} layout="fill" objectFit="contain" priority />
+      <ImageContent src={src} alt={alt} layout="fill" objectFit="contain" priority />
     </ImageWrapper>
   );
 };
