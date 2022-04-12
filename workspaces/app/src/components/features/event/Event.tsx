@@ -10,8 +10,7 @@ import {
 } from './components';
 import { getDocumentData } from 'libraries/firebase';
 import { Event, EventData } from 'libraries/models/event';
-import { ArtistData, Collection } from 'libraries/models';
-import { getCollection } from '../../../libraries/models/collection/utils';
+import { Collection, getCollection, getArtist } from 'libraries/models';
 
 const EventContainer = styled.div`
   display: flex;
@@ -82,7 +81,7 @@ export const getServerSideProps: GetServerSideProps<EventPageProps, { id: string
 
   const { artistId, exclusiveCollectionIds, ...event } = eventData;
 
-  const artistData = await getDocumentData<ArtistData>('artists', artistId);
+  const artistData = await getArtist(artistId);
 
   // TODO: think through how to deal with this
   if (!artistData) {

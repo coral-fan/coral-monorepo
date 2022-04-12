@@ -1,5 +1,5 @@
 import { getDocumentData } from 'libraries/firebase';
-import { ArtistData } from '../artist';
+import { getArtist } from '../artist';
 import { Collection, CollectionData } from './types';
 
 export const getCollection = async (id: CollectionData['id']): Promise<Collection | undefined> => {
@@ -11,7 +11,7 @@ export const getCollection = async (id: CollectionData['id']): Promise<Collectio
 
   const { artistId, ...collection } = collectionData;
 
-  const artistData = await getDocumentData<ArtistData>('artists', artistId);
+  const artistData = await getArtist(artistId);
 
   if (!artistData) {
     throw new Error(`Artist with ${artistId} doesn't exist.`);
