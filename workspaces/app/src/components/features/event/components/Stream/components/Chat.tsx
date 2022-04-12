@@ -54,7 +54,7 @@ export const Chat = ({ id }: ChatProps) => {
       script.innerHTML = JSON.stringify(getChatTangoConfiguration('coral-music'));
       ref.current.appendChild(script);
     }
-  }, []);
+  }, [id]);
 
   return <Wrapper ref={ref} />;
 };
