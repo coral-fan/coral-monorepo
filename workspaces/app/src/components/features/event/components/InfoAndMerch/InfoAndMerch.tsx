@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Heading } from 'components/ui';
+import { Event } from 'libraries/models/event';
 import { useIsDesktop } from 'libraries/window';
 import tokens, { QUERY } from 'styles/tokens';
 import { ArtistInfo, Merch } from './components';
@@ -9,8 +10,7 @@ const EventInfoAndMerchContainer = styled.div`
   display: flex;
   flex-direction: column;
   @media ${QUERY.LAPTOP} {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    flex-direction: row;
     padding-top: 16px;
     --gap: 64px;
   }
@@ -19,6 +19,7 @@ const EventInfoAndMerchContainer = styled.div`
 `;
 
 const EventInfo = styled.p`
+  flex: 1;
   --font-size: ${tokens.font.size.sm};
   @media ${QUERY.LAPTOP} {
     --font-size: ${tokens.font.size.md};
@@ -27,25 +28,42 @@ const EventInfo = styled.p`
   font-size: var(--font-size);
 `;
 
-export const InfoAndMerch = () => {
+export type InfoAndMerchProps = Pick<
+  Event,
+  | 'name'
+  | 'description'
+  | 'exclusiveCollections'
+  | 'artistId'
+  | 'artistName'
+  | 'artistProfilePhoto'
+  | 'artistSocialHandles'
+>;
+
+export const InfoAndMerch = ({
+  name,
+  description,
+  artistId,
+  artistName,
+  artistProfilePhoto,
+  artistSocialHandles,
+  exclusiveCollections,
+}: InfoAndMerchProps) => {
   const isDesktop = useIsDesktop();
 
   return (
     <>
       <Heading level={1} styleVariant={isDesktop ? 'h1' : 'h3'}>
-        Behind the Scenes Studio Tour
+        {name}
       </Heading>
-      <ArtistInfo />
+      <ArtistInfo
+        id={artistId}
+        name={artistName}
+        profilePhoto={artistProfilePhoto}
+        socialHandles={artistSocialHandles}
+      />
       <EventInfoAndMerchContainer>
-        <EventInfo>
-          Exclusive access to a one on one call with me between recording sessions on my next album.
-          With this token you’ll get 30 minutes of solo time with me and the band. To thank you for
-          being pat of this community, you have first dibs to some new stuff. I designed some
-          special merch with my friend Andy Warhol. These are limited edition 1/100 items. You can
-          also purchase my latest track titled “Fragments” for digital download before it hits the
-          stores next month.
-        </EventInfo>
-        <Merch />
+        <EventInfo>{description}</EventInfo>
+        {exclusiveCollections && <Merch exclusiveCollections={exclusiveCollections} />}
       </EventInfoAndMerchContainer>
     </>
   );
