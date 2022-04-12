@@ -8,7 +8,7 @@
   },
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["dom", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -28,5 +28,5 @@
     /* custom compilerOptions ends here */
   },
   "include": ["next-env.d.ts", "types/*.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "**/*.stories.tsx"]
+  "exclude": ["node_modules", "**/*.stories.tsx", "scripts"]
 }
