@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Event } from 'libraries/models/event';
 import { useEffect, useRef } from 'react';
 
 const getChatTangoConfiguration = (eventId: string) => ({
@@ -35,14 +36,18 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-export const Chat = () => {
+interface ChatProps {
+  id: Event['chatId'];
+}
+
+export const Chat = ({ id }: ChatProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (ref.current) {
       const script = document.createElement('script');
       script.src = '//st.chatango.com/js/gz/emb.js';
-      script.id = 'cid0020000309723245116';
+      script.id = id;
       script.setAttribute('data-cfasync', 'false');
       script.async = true;
       script.setAttribute('style', 'width:100%; height: 100%');

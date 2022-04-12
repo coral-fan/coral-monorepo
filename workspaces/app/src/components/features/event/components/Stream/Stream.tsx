@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Event } from 'libraries/models/event';
 import { QUERY } from 'styles';
 import { Chat, WebPlayer } from './components';
 
@@ -9,13 +10,11 @@ const Container = styled.div`
   }
 `;
 
-export interface StreamProps {
-  mediaId: string;
-}
+export type StreamProps = Pick<Event, 'streamId' | 'chatId'>;
 
-export const Stream = ({ mediaId }: StreamProps) => (
+export const Stream = ({ streamId, chatId }: StreamProps) => (
   <Container>
-    <WebPlayer mediaId={mediaId} />
-    <Chat />
+    <WebPlayer mediaId={streamId} />
+    <Chat id={chatId} />
   </Container>
 );
