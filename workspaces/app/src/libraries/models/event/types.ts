@@ -1,5 +1,5 @@
 import { Artist, ArtistData } from '../artist';
-import { CollectionData } from '../collection';
+import { Collection, CollectionData } from '../collection';
 
 export interface EventData {
   id: string;
@@ -11,13 +11,13 @@ export interface EventData {
   date: string;
   description: string;
   artistId: ArtistData['id'];
-  allowedCollections: CollectionData['id'][];
-  exclusiveCollections: CollectionData['id'][] | null;
+  allowedCollectionIds: CollectionData['id'][];
+  exclusiveCollectionIds: CollectionData['id'][] | null;
 }
 
-export interface Event extends Omit<EventData, 'artistId' | 'allowedCollections'> {
+export interface Event extends Omit<EventData, 'exclusiveCollectionIds'> {
   artistName: Artist['name'];
   artistProfilePhoto: Artist['profilePhoto'];
   artistSocialHandles: Artist['socialHandles'];
-  allowedCollections: Set<CollectionData['id']>;
+  exclusiveCollections: Collection[] | null;
 }
