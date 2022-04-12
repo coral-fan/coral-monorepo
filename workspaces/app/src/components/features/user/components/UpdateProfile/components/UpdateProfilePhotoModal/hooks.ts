@@ -41,7 +41,7 @@ export const useUpdateProfilePhoto = (initialSrc: string) => {
             });
           } else {
             const storage = getStorage();
-            const imageRef = ref(storage, `${uid}/profile-photo`);
+            const imageRef = ref(storage, `users/${uid}/profile-photo`);
             const result = await uploadBytes(imageRef, imageFile);
             const downloadUrl = await getDownloadURL(result.ref);
             await upsertUser(uid, {
