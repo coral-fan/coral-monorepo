@@ -1,35 +1,65 @@
 import { GetServerSideProps } from 'next';
 import styled from '@emotion/styled';
 import { GatedContent } from 'components/ui';
-import { BuyTicketButton, Stream, InfoAndMerch } from './components';
+import {
+  BuyTicketButton,
+  Stream,
+  InfoAndMerch,
+  InfoAndMerchProps,
+  StreamProps,
+} from './components';
+import { getDocumentData } from 'libraries/firebase';
+import { Event, EventData } from 'libraries/models/event';
+import { ArtistData, Collection } from 'libraries/models';
+import { getCollection } from '../../../libraries/models/collection/utils';
 
 const EventContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
 `;
-interface EventPageProps {
-  mediaId: string;
-}
+type EventPageProps = InfoAndMerchProps & StreamProps & Pick<Event, 'id' | 'allowedCollectionIds'>;
 
-export const EventPage = ({ mediaId }: EventPageProps) => (
-  <GatedContent
-    accessGrantingNfts={['0x71a517b09a62e3ddbdfab02d13bf237ad602f21b']}
-    accessDeniedModalProps={{
-      title: 'This is a private event',
-      message:
-        'This event is for members and ticket holders only. Buy a ticket now for special and exclusive perks.',
-      actionElement: <BuyTicketButton collectionId="1" />,
-    }}
-  >
-    <EventContainer>
-      <Stream mediaId={mediaId} />
-      <InfoAndMerch />
-    </EventContainer>
-  </GatedContent>
-);
+export const EventPage = ({
+  allowedCollectionIds,
+  id,
+  streamId,
+  chatId,
+  artistId,
+  artistName,
+  artistProfilePhoto,
+  artistSocialHandles,
+  name,
+  description,
+  exclusiveCollections,
+}: EventPageProps) => {
+  return (
+    <GatedContent
+      accessGrantingTokens={allowedCollectionIds}
+      accessDeniedModalProps={{
+        title: 'This is a private event',
+        message:
+          'This event is for members and ticket holders only. Buy a ticket now for special and exclusive perks.',
+        actionElement: <BuyTicketButton collectionId={id} />,
+      }}
+    >
+      <EventContainer>
+        <Stream streamId={streamId} chatId={chatId} />
+        <InfoAndMerch
+          name={name}
+          description={description}
+          artistId={artistId}
+          artistName={artistName}
+          artistProfilePhoto={artistProfilePhoto}
+          artistSocialHandles={artistSocialHandles}
+          exclusiveCollections={exclusiveCollections}
+        />
+      </EventContainer>
+    </GatedContent>
+  );
+};
 
-export const getServerSideProps: GetServerSideProps<EventPageProps, { eventId: string }> = async (
+export const getServerSideProps: GetServerSideProps<EventPageProps, { id: string }> = async (
   context
 ) => {
   const { params } = context;
@@ -40,14 +70,48 @@ export const getServerSideProps: GetServerSideProps<EventPageProps, { eventId: s
     };
   }
 
-  const { eventId } = params;
+  const { id } = params;
 
-  // For SproutVideo, mediaId is available after creating a new live stream
-  const mediaId = '799edeb6181ce1c4f0/11b5b9e45f6a3dbb';
+  const eventData = await getDocumentData<EventData>('events', id);
+
+  if (!eventData) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const { artistId, exclusiveCollectionIds, ...event } = eventData;
+
+  const artistData = await getDocumentData<ArtistData>('artists', artistId);
+
+  // TODO: think through how to deal with this
+  if (!artistData) {
+    throw Error('Artist not found.');
+  }
+
+  const {
+    name: artistName,
+    profilePhoto: artistProfilePhoto,
+    socialHandles: artistSocialHandles,
+  } = artistData;
+
+  const exclusiveCollections =
+    exclusiveCollectionIds === null
+      ? null
+      : (await Promise.allSettled(exclusiveCollectionIds.map(getCollection)))
+          .filter(
+            (result): result is PromiseFulfilledResult<Collection> => result.status === 'fulfilled'
+          )
+          .map((result) => result.value);
 
   return {
     props: {
-      mediaId,
+      ...event,
+      exclusiveCollections,
+      artistId,
+      artistName,
+      artistProfilePhoto,
+      artistSocialHandles,
     },
   };
 };

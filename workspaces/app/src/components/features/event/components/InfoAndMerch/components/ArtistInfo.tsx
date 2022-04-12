@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Link, SocialLinks } from 'components/ui';
 import { ArtistInfo as ArtistBadge } from 'components/ui/nft/components';
+import { Artist } from 'libraries/models';
 
 const Container = styled.div`
   display: flex;
@@ -8,25 +9,12 @@ const Container = styled.div`
   gap: 16px;
 `;
 
-export const ArtistInfo = () => (
+type ArtistInfoProps = Pick<Artist, 'id' | 'profilePhoto' | 'socialHandles' | 'name'>;
+export const ArtistInfo = ({ id, profilePhoto, name, socialHandles }: ArtistInfoProps) => (
   <Container>
-    <Link href={`/artist/${1}`}>
-      <ArtistBadge
-        profilePhoto={{
-          src: 'https://www.stereofox.com/images/86513/resized.jpg',
-          offsetPercentages: [0, 0],
-          scale: 1,
-        }}
-      >
-        Bonobo
-      </ArtistBadge>
+    <Link href={`/artist/${id}`}>
+      <ArtistBadge profilePhoto={profilePhoto}>{name}</ArtistBadge>
     </Link>
-    <SocialLinks
-      socialHandles={{
-        twitter: '',
-        instagram: '',
-        soundcloud: '',
-      }}
-    />
+    <SocialLinks socialHandles={socialHandles} />
   </Container>
 );
