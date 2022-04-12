@@ -85,7 +85,7 @@ export const getServerSideProps: GetServerSideProps<EventPageProps, { id: string
 
   // TODO: think through how to deal with this
   if (!artistData) {
-    throw Error('Artist not found.');
+    throw `Artist with ${artistId} doesn't exist.`;
   }
 
   const {
