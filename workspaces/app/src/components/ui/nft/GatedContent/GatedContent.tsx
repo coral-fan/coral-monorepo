@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { interval, mapTo, mergeMapTo, skipUntil, timer } from 'rxjs';
+import { interval, map, mergeMapTo, skipUntil, timer } from 'rxjs';
 import { useIsAuthenticated } from 'libraries/authentication';
 import { getWalletNfts$ } from 'libraries/blockchain/wallet/observables';
 import { useWallet } from 'libraries/blockchain';
@@ -12,11 +12,11 @@ import {
 } from './components';
 
 interface GatedContentProps {
-  accessGrantingNfts: string[];
+  accessGrantingTokens: string[];
   accessDeniedModalProps: AccessDeniedModalProps;
 }
 export const GatedContent: FC<GatedContentProps> = ({
-  accessGrantingNfts,
+  accessGrantingTokens,
   accessDeniedModalProps,
   children,
 }) => {
@@ -33,8 +33,7 @@ export const GatedContent: FC<GatedContentProps> = ({
       const doesUserHaveAccess$ = interval(8000).pipe(
         skipUntil(walletNftsMap$),
         mergeMapTo(walletNftsMap$),
-        // map((nftsMap) => accessGrantingNfts.some((address) => nftsMap[address] !== undefined))
-        mapTo(true)
+        map((nftsMap) => accessGrantingTokens.some((address) => nftsMap[address] !== undefined))
       );
 
       doesUserHaveAccess$.subscribe((doesHaveAccess) => {
@@ -46,7 +45,7 @@ export const GatedContent: FC<GatedContentProps> = ({
         .pipe(mergeMapTo(timer(2500)))
         .subscribe(() => setIsAccessGrantedModal(false));
     }
-  }, [accessGrantingNfts, isAuthenticated, address]);
+  }, [accessGrantingTokens, isAuthenticated, address]);
 
   if (!isAuthenticated) {
     return (
