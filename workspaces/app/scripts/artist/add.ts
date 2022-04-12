@@ -26,7 +26,7 @@ const addArtist = async () => {
   const artistDocSnapshot = await artistRef.get();
 
   if (artistDocSnapshot.exists) {
-    throw Error(`artist with id ${artist.id} already exists.`);
+    throw `artist with id ${artist.id} already exists.`;
   }
 
   await artistRef.set(artist);
