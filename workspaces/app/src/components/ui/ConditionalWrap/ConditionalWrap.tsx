@@ -1,12 +1,13 @@
 /*
   Component via https://gist.github.com/kitze/23d82bb9eb0baabfd03a6a720b1d637f
 */
-import { FC, ReactNode } from 'react';
+import { FC, ReactElement } from 'react';
 
-type ConditionalWrapProps = {
-  condition: boolean;
-  wrap: (children: ReactNode) => JSX.Element;
-};
+interface ConditionalWrapProps {
+  children: ReactElement;
+  shouldWrap: boolean;
+  wrap: (children: ReactElement) => JSX.Element;
+}
 
-export const ConditionalWrap: FC<ConditionalWrapProps> = ({ condition, wrap, children }) =>
-  condition ? wrap(children) : <>{children}</>;
+export const ConditionalWrap: FC<ConditionalWrapProps> = ({ shouldWrap, wrap, children }) =>
+  shouldWrap ? wrap(children) : children;
