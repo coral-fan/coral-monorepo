@@ -76,7 +76,7 @@ const tokenDataArrayToMap = (
 
 export const getWalletTokenBalances$ = (walletAddress: string) =>
   ajax<CovalentResponse<TokenBalanceData>>(
-    `${getCovalentTokenBalanceApiUrl(43114, walletAddress)}`
+    `${getCovalentTokenBalanceApiUrl(AVALANCHE.CHAIN_ID.INT, walletAddress)}`
   ).pipe(covalentRetryStrategy);
 
 export const getWalletNfts$ = (walletAddress: string) =>
