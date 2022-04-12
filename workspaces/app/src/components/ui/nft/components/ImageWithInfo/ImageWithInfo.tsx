@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
 import { useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 import { ArtistInfo } from './components';
@@ -35,7 +34,7 @@ export interface ImageWithInfoProps {
   imageUrl: string;
   artistName: Artist['name'];
   artistProfilePhoto: Artist['profilePhoto'];
-  id?: Artist['id'];
+  artistId?: Artist['id'];
   isCard?: boolean;
 }
 
@@ -43,7 +42,7 @@ export const ImageWithInfo = ({
   imageUrl,
   artistName,
   artistProfilePhoto,
-  id,
+  artistId,
   isCard,
 }: ImageWithInfoProps) => {
   const [imageInfoHeight, setImageInfoHeight] = useState(0);
@@ -54,15 +53,17 @@ export const ImageWithInfo = ({
     }
   }, []);
 
+  const hasArtistId = artistId ? true : false;
+
   return (
     <ImageWithInfoContainer>
-      <Image src={imageUrl} />
+      <Image src={imageUrl} alt={''} />
       <ArtistInfoContainer isCard={isCard} imageInfoHeight={imageInfoHeight}>
         <ConditionalWrap
-          condition={!!id}
+          condition={hasArtistId}
           wrap={(children) => (
             <LinkWrapper>
-              <Link href={`/artist/${id}`}>{children}</Link>
+              <Link href={`/artist/${artistId}`}>{children}</Link>
             </LinkWrapper>
           )}
         >

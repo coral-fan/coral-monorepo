@@ -63,7 +63,7 @@ export const Layout = ({
           imageUrl={imageUrl}
           artistName={artistName}
           artistProfilePhoto={artistProfilePhoto}
-          id={artistId}
+          artistId={artistId}
           isCard={false}
         />
       </ImageWrapper>
