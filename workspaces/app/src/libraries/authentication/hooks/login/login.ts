@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { signInWithCustomToken, getAuth } from 'firebase/auth';
 import { Web3Provider } from '@ethersproject/providers';
 import { useWallet } from 'libraries/blockchain';
@@ -6,6 +6,7 @@ import { useIsLoggingIn, useIsSigningUp } from '..';
 import { getNonce, getSignedAuthenticationMessage, getFirebaseCustomToken } from './utils';
 import { getIsUserSigningUp } from 'libraries/models';
 import { useRefetchPageData } from 'libraries/utils/hooks';
+import { Eip1193Bridge } from '@ethersproject/experimental';
 
 export const useLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
@@ -16,7 +17,7 @@ export const useLogin = () => {
   /* eslint @typescript-eslint/no-explicit-any: 'off' -- errors will always be typed as any */
   const [loginError, setLoginError] = useState<any>(null);
 
-  const login = async () => {
+  const login = useCallback(async () => {
     setIsLoggingIn(true);
     try {
       if (!isActive) {
@@ -25,9 +26,13 @@ export const useLogin = () => {
       if (connector.provider !== undefined) {
         // need to destructure so provider is not undefined in callback function
         const { provider } = connector;
-        const signer = new Web3Provider((method, params) =>
-          provider.request({ method, params })
-        ).getSigner();
+        const signer =
+          provider instanceof Eip1193Bridge
+            ? provider.signer
+            : new Web3Provider((method, params) =>
+                provider.request({ method, params })
+              ).getSigner();
+
         const address = await signer.getAddress();
         const nonce = await getNonce(address);
         const signedMessage = await getSignedAuthenticationMessage(signer, nonce);
@@ -40,10 +45,12 @@ export const useLogin = () => {
       }
       setIsLoggingIn(false);
     } catch (error) {
+      // TODO: replace with better logging tool?
+      console.log(error);
       setLoginError(error);
       setIsLoggingIn(false);
     }
-  };
+  }, [connector, isActive, refetchPageData, setIsLoggingIn, setIsSigningUp]);
 
   return { login, isLoggingIn, loginError };
 };
