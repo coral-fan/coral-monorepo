@@ -1,19 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useIsMetaMaskInjected } from '../metamask';
+import { CustomAuthConnector } from './custom-auth';
+import { Actions, Connector } from '@web3-react/types';
 import { initializeConnector } from '@web3-react/core';
 import { AVALANCHE } from 'consts';
-import { MetaMask } from '@web3-react/metamask';
-import { Actions } from '@web3-react/types';
 import { getWalletBalance$ } from './observables';
+import { MetaMask as MetaMaskConnector } from '@web3-react/metamask';
 
-const getMetaMaskConnector = (actions: Actions) => new MetaMask(actions);
+const getCustomAuthConnector = (actions: Actions) => new CustomAuthConnector(actions);
 
-export const [connector, { useProvider, useWeb3React }] = initializeConnector<MetaMask>(
-  getMetaMaskConnector,
-  [AVALANCHE.CHAIN_ID.INT]
-);
+const customAuth = initializeConnector<Connector>(getCustomAuthConnector, [AVALANCHE.CHAIN_ID.INT]);
+
+const getMetaMaskConnector = (actions: Actions) => new MetaMaskConnector(actions);
+
+const metaMask = initializeConnector<Connector>(getMetaMaskConnector, [AVALANCHE.CHAIN_ID.INT]);
 
 export const useWallet = () => {
-  const { account: address, active: isActive, chainId, error } = useWeb3React(useProvider());
+  const isMetaMaskInjected = useIsMetaMaskInjected();
+
+  const [connector, { useWeb3React, useProvider }] = useMemo(
+    () => (isMetaMaskInjected ? metaMask : customAuth),
+    [isMetaMaskInjected]
+  );
+
+  const provider = useProvider();
+
+  const { account: address, active: isActive, chainId, error } = useWeb3React(provider);
 
   const [balance, setBalance] = useState<number>();
 
