@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { HamburgerMenuButton, Menu, LogoHomeLink, InstallMetaMaskModal } from './components';
+import { HamburgerMenuButton, Menu, LogoHomeLink } from './components';
 import { useCallback, useState } from 'react';
 import { User } from 'libraries/models';
 import { useObservable } from 'libraries/utils';
