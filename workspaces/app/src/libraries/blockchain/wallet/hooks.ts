@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useIsMetaMaskInjected } from '../metamask';
-import { CustomAuthConnector } from './custom-auth';
 import { Actions, Connector } from '@web3-react/types';
 import { initializeConnector } from '@web3-react/core';
-import { AVALANCHE } from 'consts';
-import { getWalletBalance$ } from './observables';
 import { MetaMask as MetaMaskConnector } from '@web3-react/metamask';
+import { AVALANCHE } from 'consts';
 import { useUserUid } from 'libraries/models';
+import { CustomAuthConnector } from './custom-auth';
+import { useIsMetaMaskInjected } from '../metamask';
+import { getWalletBalance$ } from './observables';
 
 const getCustomAuthConnector = (actions: Actions) => new CustomAuthConnector(actions);
 
