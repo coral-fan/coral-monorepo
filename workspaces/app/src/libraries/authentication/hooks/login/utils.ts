@@ -25,5 +25,9 @@ export const getFirebaseCustomToken = async (address: string, signedMessage: str
   return idToken;
 };
 
-export const getSignedAuthenticationMessage = <T extends Signer>(signer: T, nonce: number) =>
-  signer.signMessage(getAuthenticationMessage(nonce));
+export const getSignedAuthenticationMessage = (signer: Signer, nonce: number) => {
+  const authenticationMessage = getAuthenticationMessage(nonce);
+  const signedMessage = signer.signMessage(authenticationMessage);
+
+  return signedMessage;
+};
