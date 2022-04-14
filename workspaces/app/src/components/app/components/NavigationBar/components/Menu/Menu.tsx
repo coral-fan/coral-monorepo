@@ -9,11 +9,9 @@ import { Item } from './Item';
 import { MenuProfileInfo } from '../MenuProfileInfo';
 import { usePush } from 'libraries/authentication/hooks/usePush';
 import { useRouter } from 'next/router';
-import { isMetaMaskInjected } from 'libraries/blockchain';
 
 interface MenuProps {
   userProfile?: UserProfile;
-  openInstallMetaMaskModal: () => void;
   closeMenuModal: () => void;
 }
 
@@ -41,7 +39,7 @@ const ClickableWrapper = styled.div`
   width: fit-content;
 `;
 
-export const Menu = ({ userProfile, openInstallMetaMaskModal, closeMenuModal }: MenuProps) => {
+export const Menu = ({ userProfile, closeMenuModal }: MenuProps) => {
   const { login } = useLogin();
   const logout = useLogout();
   const isAuthenticated = useIsAuthenticated();
@@ -67,9 +65,9 @@ export const Menu = ({ userProfile, openInstallMetaMaskModal, closeMenuModal }: 
   const unauthenticatedMenuItems: MenuItemProps[] = useMemo(
     () => [
       { name: 'Home', to: '/' },
-      { name: 'Sign In', onClick: isMetaMaskInjected() ? login : openInstallMetaMaskModal },
+      { name: 'Sign In', onClick: login },
     ],
-    [openInstallMetaMaskModal, login]
+    [login]
   );
 
   const menuItems = isAuthenticated ? authenticatedMenuItems : unauthenticatedMenuItems;
