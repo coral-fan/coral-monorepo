@@ -4,7 +4,7 @@ import { initializeConnector } from '@web3-react/core';
 import { MetaMask as MetaMaskConnector } from '@web3-react/metamask';
 import { AVALANCHE } from 'consts';
 import { useUserUid } from 'libraries/models';
-import { CustomAuthConnector } from './custom-auth';
+import { CustomAuthConnector } from './connectors';
 import { useIsMetaMaskInjected } from '../metamask';
 import { getWalletBalance$ } from './observables';
 
