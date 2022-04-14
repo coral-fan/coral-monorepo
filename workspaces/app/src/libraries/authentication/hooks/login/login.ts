@@ -26,12 +26,11 @@ export const useLogin = () => {
       if (connector.provider !== undefined) {
         // need to destructure so provider is not undefined in callback function
         const { provider } = connector;
+
         const signer =
           provider instanceof Eip1193Bridge
             ? provider.signer
-            : new Web3Provider((method, params) =>
-                provider.request({ method, params })
-              ).getSigner();
+            : new Web3Provider(provider).getSigner();
 
         const address = await signer.getAddress();
         const nonce = await getNonce(address);
