@@ -33,7 +33,7 @@ export class CustomAuthConnector extends Connector {
       });
 
       const wallet = new Wallet(privateKey, avalancheJsonRpcProvider);
-      this.provider = new Eip1193Bridge(wallet, wallet.provider);
+      this.provider = new Eip1193Bridge(wallet);
     } catch (error) {
       console.error(error);
     }
