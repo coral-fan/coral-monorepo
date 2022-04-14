@@ -1,5 +1,4 @@
-import { JsonRpcSigner } from '@ethersproject/providers';
-import { Wallet } from '@ethersproject/wallet';
+import { Signer } from 'ethers';
 import { getCoralAPIAxios } from 'libraries/utils/api';
 import { getAuthenticationMessage } from 'libraries/authentication';
 
@@ -26,5 +25,5 @@ export const getFirebaseCustomToken = async (address: string, signedMessage: str
   return idToken;
 };
 
-export const getSignedAuthenticationMessage = (signer: Wallet | JsonRpcSigner, nonce: number) =>
+export const getSignedAuthenticationMessage = <T extends Signer>(signer: T, nonce: number) =>
   signer.signMessage(getAuthenticationMessage(nonce));
