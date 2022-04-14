@@ -33,26 +33,9 @@ export const NavigationBar = () => {
   const openMenuModal = useCallback(() => setIsMenuOpen(true), []);
   const closeMenuModal = useCallback(() => setIsMenuOpen(false), []);
 
-  const [isInstallMetaMaskModalOpen, setIsInstallMetaMaskModalOpen] = useState(false);
-
-  const openInstallMetaMaskModal = useCallback(() => {
-    closeMenuModal();
-    setIsInstallMetaMaskModalOpen(true);
-  }, [closeMenuModal]);
-  const closeInstallMetaMaskModal = useCallback(() => setIsInstallMetaMaskModalOpen(false), []);
-
   return (
     <>
-      {isInstallMetaMaskModalOpen && (
-        <InstallMetaMaskModal closeModal={closeInstallMetaMaskModal} />
-      )}
-      {isMenuOpen && (
-        <Menu
-          closeMenuModal={closeMenuModal}
-          openInstallMetaMaskModal={openInstallMetaMaskModal}
-          userProfile={userProfile}
-        />
-      )}
+      {isMenuOpen && <Menu closeMenuModal={closeMenuModal} userProfile={userProfile} />}
       <Container>
         <LogoHomeLink />
         <HamburgerMenuButton onClick={openMenuModal} />
