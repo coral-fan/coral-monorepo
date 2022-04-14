@@ -1,9 +1,11 @@
 import { MetaMaskInpageProvider } from '@metamask/providers';
-import { isServerSide } from 'libraries/utils';
+import { getClientSideOnlyErrorMessage, isServerSide } from 'libraries/utils';
+
+const CLIENT_SIDE_ONLY_ERROR_MESSAGE = getClientSideOnlyErrorMessage('isMetaMaskInjected');
 
 export const isMetaMaskInjected = () => {
   if (isServerSide()) {
-    throw 'isMetaMaskInjected should only be called client-side.';
+    throw CLIENT_SIDE_ONLY_ERROR_MESSAGE;
   }
   return (
     window.ethereum !== undefined &&
