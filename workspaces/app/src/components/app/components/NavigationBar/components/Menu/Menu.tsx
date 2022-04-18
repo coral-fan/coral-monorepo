@@ -40,19 +40,15 @@ const ClickableWrapper = styled.div`
 `;
 
 export const Menu = ({ userProfile, closeMenuModal }: MenuProps) => {
-  const { login } = useLogin();
+  const { login } = useLogin(closeMenuModal);
   const logout = useLogout();
   const isAuthenticated = useIsAuthenticated();
   const uid = useUserUid();
-  const push = usePush();
-  const currentPath = useRouter().pathname;
 
   const handleLogout = useCallback(() => {
     logout();
-    if (currentPath !== '/') {
-      push('/');
-    }
-  }, [logout, currentPath, push]);
+    closeMenuModal();
+  }, [logout, closeMenuModal]);
 
   const authenticatedMenuItems: MenuItemProps[] = useMemo(
     () => [
