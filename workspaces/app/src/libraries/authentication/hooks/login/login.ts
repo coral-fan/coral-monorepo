@@ -8,7 +8,7 @@ import { getIsUserSigningUp } from 'libraries/models';
 import { useRefetchPageData } from 'libraries/utils/hooks';
 import { Eip1193Bridge } from '@ethersproject/experimental';
 
-export const useLogin = () => {
+export const useLogin = (onSuccessCallback?: () => void) => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
   const [, setIsSigningUp] = useIsSigningUp();
   const { connector, isActive } = useWallet();
@@ -41,6 +41,7 @@ export const useLogin = () => {
         const isSigningUp = await getIsUserSigningUp(userCredential.user.uid);
         setIsSigningUp(isSigningUp);
         refetchPageData();
+        onSuccessCallback && onSuccessCallback();
       }
       setIsLoggingIn(false);
     } catch (error) {
