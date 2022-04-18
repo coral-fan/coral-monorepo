@@ -2,6 +2,7 @@ import { Artist } from 'libraries/models';
 import { GetServerSideProps } from 'next';
 import { IMAGE_WITH_INFO_DEFAULT_ARGS } from 'components/ui/nft/components/ImageWithInfo/consts';
 import { ArtistProfile } from './components/ArtistProfile';
+import { SERVER_ENVIRONMENT } from 'consts';
 
 interface ArtistPageProps {
   artistData: Artist;
@@ -14,6 +15,12 @@ export const ArtistPage = ({ artistData }: ArtistPageProps) => (
 export const getServerSideProps: GetServerSideProps<ArtistPageProps, { artistId: string }> = async (
   context
 ) => {
+  if (SERVER_ENVIRONMENT === 'production') {
+    return {
+      notFound: true,
+    };
+  }
+
   const { params } = context;
 
   if (params === undefined) {

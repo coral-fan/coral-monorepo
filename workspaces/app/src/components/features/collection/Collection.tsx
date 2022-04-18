@@ -7,6 +7,7 @@ import { Collection } from 'libraries/models';
 import { DropOrAvailable, SimilarCollections, PartialCollection } from './components';
 import { Layout as CollectionLayout } from 'components/ui/nft';
 import { useMemo } from 'react';
+import { SERVER_ENVIRONMENT } from 'consts';
 
 interface CollectionPageProps {
   collectionData: Collection;
@@ -81,6 +82,12 @@ interface CollectionParams extends NextParsedUrlQuery {
 export const getServerSideProps: GetServerSideProps<CollectionPageProps, CollectionParams> = async (
   context
 ) => {
+  if (SERVER_ENVIRONMENT === 'production') {
+    return {
+      notFound: true,
+    };
+  }
+
   const { params } = context;
 
   if (params === undefined) {

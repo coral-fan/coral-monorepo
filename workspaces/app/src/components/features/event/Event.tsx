@@ -11,6 +11,7 @@ import {
 import { getDocumentData } from 'libraries/firebase';
 import { Event, EventData } from 'libraries/models/event';
 import { Collection, getCollection, getArtist } from 'libraries/models';
+import { SERVER_ENVIRONMENT } from 'consts';
 
 const EventContainer = styled.div`
   display: flex;
@@ -61,6 +62,12 @@ export const EventPage = ({
 export const getServerSideProps: GetServerSideProps<EventPageProps, { id: string }> = async (
   context
 ) => {
+  if (SERVER_ENVIRONMENT === 'production') {
+    return {
+      notFound: true,
+    };
+  }
+
   const { params } = context;
 
   if (params === undefined) {
