@@ -22,10 +22,9 @@ export const UserPage = ({ userData }: UserPageProps) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<
-  UserPageProps,
-  { userProfileId: string }
-> = async (context) => {
+export const getServerSideProps: GetServerSideProps<UserPageProps, { id: string }> = async (
+  context
+) => {
   const { params } = context;
 
   if (params === undefined) {
@@ -34,8 +33,8 @@ export const getServerSideProps: GetServerSideProps<
     };
   }
 
-  const { userProfileId } = params;
-  const publicUserData = await getDocumentData<PublicUserData>('users', userProfileId);
+  const { id } = params;
+  const publicUserData = await getDocumentData<PublicUserData>('users', id);
 
   if (publicUserData === undefined) {
     return {
@@ -57,8 +56,8 @@ export const getServerSideProps: GetServerSideProps<
         )?.uid;
 
   const privateUserData =
-    authenticatedUserUid === userProfileId
-      ? await getDocumentData<PrivateUserData>('users', userProfileId, 'private', 'data')
+    authenticatedUserUid === id
+      ? await getDocumentData<PrivateUserData>('users', id, 'private', 'data')
       : undefined;
 
   const assets: Asset[] =
@@ -70,7 +69,7 @@ export const getServerSideProps: GetServerSideProps<
             contractAddress: '1',
             collectionName: 'Bonobo',
             ownerUsername: publicUserData.username,
-            ownerAddress: userProfileId,
+            ownerAddress: id,
             ownerType: 'fan',
             ownerProfilePhoto: publicUserData.profilePhoto,
             gatedContent: {
@@ -88,7 +87,7 @@ export const getServerSideProps: GetServerSideProps<
             contractAddress: '1',
             collectionName: 'Behind the Scenes Studio Tour',
             ownerUsername: publicUserData.username,
-            ownerAddress: userProfileId,
+            ownerAddress: id,
             ownerType: 'fan',
             ownerProfilePhoto: publicUserData.profilePhoto,
             gatedContent: {
@@ -106,7 +105,7 @@ export const getServerSideProps: GetServerSideProps<
             contractAddress: '2',
             collectionName: 'Access Tour: This is an Extra Long Title',
             ownerUsername: publicUserData.username,
-            ownerAddress: userProfileId,
+            ownerAddress: id,
             ownerType: 'fan',
             ownerProfilePhoto: publicUserData.profilePhoto,
             gatedContent: {
@@ -124,7 +123,7 @@ export const getServerSideProps: GetServerSideProps<
             contractAddress: '3',
             collectionName: 'This Is An Event',
             ownerUsername: publicUserData.username,
-            ownerAddress: userProfileId,
+            ownerAddress: id,
             ownerType: 'fan',
             ownerProfilePhoto: publicUserData.profilePhoto,
             gatedContent: {
