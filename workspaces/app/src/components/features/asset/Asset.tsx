@@ -10,6 +10,7 @@ import { Owner } from './components';
 import { getGatedContentComponent } from 'components/ui/nft/GatedContent/utils';
 import { useIsMobile } from 'libraries/window';
 import tokens, { QUERY } from 'styles/tokens';
+import { SERVER_ENVIRONMENT } from 'consts';
 
 interface AssetPageProps {
   assetData: Asset;
@@ -21,9 +22,9 @@ export const AssetIdWrapper = styled.div`
   align-items: center;
   justify-content: center;
   height: ${tokens.buttons.size.mobile};
-  font-size: {$tokens.font.size.md};
-  letter-spacing: {$tokens.font.letter_spacing.md};
-  line-height: {$tokens.font.line_height.md};
+  font-size: ${tokens.font.size.md};
+  letter-spacing: ${tokens.font.letter_spacing.md};
+  line-height: ${tokens.font.line_height.md};
 `;
 
 export const AssetContainer = styled.div`
@@ -101,6 +102,12 @@ export const AssetPage = ({
 export const getServerSideProps: GetServerSideProps<AssetPageProps, { assetId: string }> = async (
   context
 ) => {
+  if (SERVER_ENVIRONMENT === 'production') {
+    return {
+      notFound: true,
+    };
+  }
+
   const { params } = context;
 
   if (params === undefined) {
