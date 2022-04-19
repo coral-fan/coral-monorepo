@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
-import { getUsdFormat } from 'libraries/utils/currency';
+import { getAvaxFormat, getUsdFormat } from 'libraries/currency/utils';
+import { useAvaxUsdPrice } from 'libraries/currency/hooks';
+import { ConditionalSpinner } from 'components/ui/Spinner';
 
 const { spacing, font } = tokens;
 
@@ -32,12 +34,16 @@ export interface PriceProp {
 
 export const Price = ({ priceUsd }: PriceProp) => {
   const formattedPriceUsd = getUsdFormat(priceUsd);
-  const formattedPriceAvax = priceUsd.toFixed(2);
+  const { exchangeRate, loading } = useAvaxUsdPrice();
+
+  const avaxPrice = !loading ? getAvaxFormat(priceUsd / exchangeRate) : 0;
 
   return (
     <PriceContainer>
       <PriceUsd>{formattedPriceUsd}</PriceUsd>
-      <PriceAvax>{formattedPriceAvax}</PriceAvax>
+      <ConditionalSpinner loading={loading} color={tokens.background.color.tertiary}>
+        <PriceAvax>{avaxPrice}</PriceAvax>
+      </ConditionalSpinner>
     </PriceContainer>
   );
 };
