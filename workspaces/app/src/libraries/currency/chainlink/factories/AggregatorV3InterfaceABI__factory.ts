@@ -7,7 +7,7 @@ import { Provider } from '@ethersproject/providers';
 import type {
   AggregatorV3InterfaceABI,
   AggregatorV3InterfaceABIInterface,
-} from '../AggregatorV3InterfaceABI';
+} from '../contracts/AggregatorV3InterfaceABI';
 
 const _abi = [
   {
