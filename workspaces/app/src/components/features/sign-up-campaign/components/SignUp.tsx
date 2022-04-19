@@ -39,13 +39,18 @@ const poweredByAvalancheStyle = css`
 `;
 
 const AvalancheLogo = getIconComponent('AvalancheLogo', avalancheLogoSVG);
+
 const poweredByStyle = css`
   width: 100%;
+`;
+
+const linkStyle = css`
+  display: flex;
 `;
 const PoweredByAvalanche = () => (
   <div css={poweredByAvalancheStyle}>
     <span css={poweredByStyle}>Powered By</span>
-    <Link href="https://www.avax.network/">
+    <Link css={linkStyle} href="https://www.avax.network/">
       <AvalancheLogo />
     </Link>
   </div>
