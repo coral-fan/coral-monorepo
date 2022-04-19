@@ -13,12 +13,7 @@ import {
 } from 'ethers';
 import { FunctionFragment, Result } from '@ethersproject/abi';
 import { Listener, Provider } from '@ethersproject/providers';
-import {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-} from '../../blockchain/contracts/common';
+import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
 export interface AggregatorV3InterfaceABIInterface extends utils.Interface {
   contractName: 'AggregatorV3InterfaceABI';
