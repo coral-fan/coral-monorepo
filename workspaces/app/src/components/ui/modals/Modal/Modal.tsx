@@ -55,11 +55,12 @@ const ContentContainer = styled.div`
   }
 `;
 
-type ContentProps = Pick<ModalProps, 'title' | 'variant' | 'contentStyle'> & ModalHasControlButton;
+type ContentProps = Pick<ModalProps, 'title' | 'variant' | 'contentStyle' | 'fullHeight'> &
+  ModalHasControlButton;
 
 const Content = styled(Card)<ContentProps>`
   max-width: 575px;
-  max-height: 400px;
+  max-height: ${({ fullHeight }) => (fullHeight ? '100%' : '400px')};
   color: ${({ variant }) =>
     variant === 'contrast' ? tokens.font.color.contrast : tokens.font.color.primary};
   padding: ${({ title }) => `${title ? '20px' : '8px'} 18px`};
@@ -103,6 +104,7 @@ export const Modal: FC<ModalProps> = ({
   mainContainerStyle,
   mainContainerHasNoGap,
   variant,
+  fullHeight,
 }) => {
   const documentBodyRef = useRef<Document['body']>();
 
@@ -130,6 +132,7 @@ export const Modal: FC<ModalProps> = ({
                 variant={variant}
                 modalHasControlButton={modalHasControlButton}
                 contentStyle={contentStyle}
+                fullHeight={fullHeight}
               >
                 {title && (
                   <Heading level={1} styleVariant={'h2'} colorVariant={variant}>

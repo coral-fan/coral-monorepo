@@ -6,6 +6,7 @@ export interface ModalProps {
   mainContainerHasNoGap?: boolean;
   contentStyle?: SerializedStyles;
   mainContainerStyle?: SerializedStyles;
+  fullHeight?: boolean;
   onClick?: () => void;
   variant?: Variant;
 }
