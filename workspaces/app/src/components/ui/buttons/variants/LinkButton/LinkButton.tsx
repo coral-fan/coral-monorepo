@@ -13,6 +13,7 @@ const Wrapper = styled(BaseButton)`
   background-color: inherit;
   border: none;
   text-align: left;
+  text-decoration: inherit;
   width: fit-content;
 
   &:hover {
