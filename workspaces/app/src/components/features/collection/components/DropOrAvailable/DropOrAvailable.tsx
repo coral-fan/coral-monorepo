@@ -2,19 +2,17 @@ import styled from '@emotion/styled';
 import { CtaButton, DropTimer } from 'components/ui';
 import { getMilliSecsDiff, getTimeRemaining$ } from 'libraries/time';
 import { useObservable } from 'libraries/utils';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { AvailableContainer } from 'components/ui/nft';
 import { Price, PriceProp } from '../Price';
 import { ProgressBar, ProgressBarProps } from '../ProgressBar';
+import { AssetInfoProps } from '../PaymentModal/components/AssetInfo';
+import { PaymentModal } from '../PaymentModal';
 
-interface DropOrAvailableProps extends ProgressBarProps, PriceProp {
+interface DropOrAvailableProps extends ProgressBarProps, PriceProp, AssetInfoProps {
   dropDate: string;
 }
-
-const handleBuyButtonClick = () => {
-  console.log('Bought');
-};
 
 const TRANSITION_NAME = 'fade';
 
@@ -38,7 +36,18 @@ export const DropOrAvailable = ({
   maxMintable,
   numMinted,
   dropDate,
+  collectionName,
+  artistName,
+  imageUrl,
+  artistProfilePhoto,
+  type,
 }: DropOrAvailableProps) => {
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const closePaymentModal = useCallback(() => setIsPaymentModalOpen(false), []);
+
+  const handleBuyButtonClick = () => {
+    setIsPaymentModalOpen(true);
+  };
   /*
     SwitchTransition implementation from:
     https://stackoverflow.com/questions/64126226/how-do-i-get-switchtranition-to-work-with-csstransition-with-typescript
@@ -79,6 +88,18 @@ export const DropOrAvailable = ({
             </AvailableContainer>
           ) : (
             <DropTimer tokenSupply={maxMintable} timestamp={dropDate} />
+          )}
+          {isPaymentModalOpen && (
+            <PaymentModal
+              title="Checkout"
+              closeShareModal={closePaymentModal}
+              imageUrl={imageUrl}
+              collectionName={collectionName}
+              artistName={artistName}
+              artistProfilePhoto={artistProfilePhoto}
+              type={type}
+              priceUsd={priceUsd}
+            />
           )}
         </FadeContainer>
       </CSSTransition>
