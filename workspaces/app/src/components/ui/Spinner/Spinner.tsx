@@ -4,6 +4,7 @@ import tokens from 'styles/tokens';
 import { SpinnerBaseProp as SpinnerProp } from './types';
 
 const SIZE = `20px`;
+const COLOR = `${tokens.background.color.primary}`;
 
 const spin = keyframes`
   0% {
@@ -19,6 +20,7 @@ const Wrapper = styled.div<SpinnerProp>`
   --size: ${({ size = SIZE }) => size};
   --ring-size: calc(var(--size) * 0.8);
   --ring-spacing: calc(var(--size) / 10);
+  --color: ${({ color = COLOR }) => color};
   /* */
 
   display: inline-block;
@@ -34,10 +36,10 @@ const Ring = styled.div`
   width: var(--ring-size);
   height: var(--ring-size);
   margin: var(--ring-spacing);
-  border: var(--ring-spacing) solid ${tokens.background.color.primary};
+  border: var(--ring-spacing) solid var(--color);
   border-radius: 50%;
   animation: ${spin} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: ${tokens.background.color.primary} transparent transparent transparent;
+  border-color: var(--color) transparent transparent transparent;
 
   &:nth-of-type(1) {
     animation-delay: -0.45s;
@@ -52,8 +54,8 @@ const Ring = styled.div`
   }
 `;
 
-export const Spinner = ({ size }: SpinnerProp) => (
-  <Wrapper size={size}>
+export const Spinner = ({ size, color }: SpinnerProp) => (
+  <Wrapper size={size} color={color}>
     <Ring />
     <Ring />
     <Ring />
