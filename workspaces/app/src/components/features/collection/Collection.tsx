@@ -41,9 +41,14 @@ export const CollectionPage = ({
         numMinted={numMinted}
         maxMintable={maxMintable}
         priceUsd={price}
+        collectionName={name}
+        artistName={artistName}
+        artistProfilePhoto={artistProfilePhoto}
+        imageUrl={imageUrl}
+        type={type}
       />
     ),
-    [dropDate, maxMintable, price]
+    [dropDate, maxMintable, price, name, artistName, artistProfilePhoto, imageUrl, type]
   );
 
   const similarCollectionsSection = useMemo(
