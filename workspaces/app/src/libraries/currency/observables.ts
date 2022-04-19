@@ -2,13 +2,16 @@ import { JsonRpcProvider } from '@ethersproject/providers';
 import { AVALANCHE, SERVER_ENVIRONMENT } from 'consts';
 import { ethers } from 'ethers';
 import { filter, forkJoin, from, map, merge, of, timer } from 'rxjs';
-import { AggregatorV3InterfaceABI__factory } from 'libraries/blockchain/contracts';
+import { AggregatorV3InterfaceABI__factory } from './chainlink/factories';
 import { CHAINLINK_AVAX_USD, CHAINLINK_AVAX_USD_TESTNET } from './consts';
 
 const avalancheRpcProvider = new JsonRpcProvider(AVALANCHE.RPC_URL);
+
 const chainlinkAvaxUsdAddress =
   SERVER_ENVIRONMENT === 'production' ? CHAINLINK_AVAX_USD : CHAINLINK_AVAX_USD_TESTNET;
+
 export type CurrencyType = 'usd' | 'avax';
+
 export const currencyPairs = ['avax_usd'] as const;
 
 export type CurrencyPair = typeof currencyPairs[number];
