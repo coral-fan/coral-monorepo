@@ -7,8 +7,6 @@ import { useUserUid } from 'libraries/models';
 import { UserProfile } from '../../NavigationBar';
 import { Item } from './Item';
 import { MenuProfileInfo } from '../MenuProfileInfo';
-import { usePush } from 'libraries/authentication/hooks/usePush';
-import { useRouter } from 'next/router';
 
 interface MenuProps {
   userProfile?: UserProfile;
