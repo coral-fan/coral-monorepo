@@ -6,7 +6,7 @@ import tokens from 'styles/tokens';
 import { BaseInfo, BaseInfoProps } from '../components';
 
 export interface DropCardProps
-  extends Omit<BaseInfoProps, 'titleHeadingLevel' | 'titleStyleVariant'> {
+  extends Omit<BaseInfoProps, 'titleHeadingLevel' | 'titleStyleVariant' | 'children'> {
   Badge: () => EmotionJSX.Element;
   id: string;
   dropDateTimestamp: string;

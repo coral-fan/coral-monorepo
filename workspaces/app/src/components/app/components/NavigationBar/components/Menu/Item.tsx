@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
 import { Link, LinkButton } from 'components/ui';
-import { FC } from 'react';
+import { ReactNode, ReactText } from 'react';
 import tokens from 'styles/tokens';
 
 interface BaseItemProp {
+  children?: ReactText | ReactNode;
   handleCloseMenu: () => void;
 }
 
@@ -35,7 +36,7 @@ const Wrapper = styled.div`
   }
 `;
 
-export const Item: FC<ItemProps> = ({ onClick, to, children, handleCloseMenu }) => {
+export const Item = ({ onClick, to, children, handleCloseMenu }: ItemProps) => {
   return (
     <Wrapper>
       {to ? (

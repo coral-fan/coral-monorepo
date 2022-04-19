@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import coralPlusSVG from './coralPlus.svg';
 import { getIconComponent } from 'components/ui/icons/utils';
 import tokens from 'styles/tokens';
-import { FC } from 'react';
+import { ReactNode } from 'react';
 
 const Container = styled.div`
   display: flex;
@@ -23,7 +23,11 @@ const Content = styled.p`
 
 const Icon = getIconComponent('CoralPlus', coralPlusSVG);
 
-export const Detail: FC = ({ children }) => (
+interface DetailProps {
+  children: ReactNode;
+}
+
+export const Detail = ({ children }: DetailProps) => (
   <Container>
     <Icon />
     <Content>{children}</Content>

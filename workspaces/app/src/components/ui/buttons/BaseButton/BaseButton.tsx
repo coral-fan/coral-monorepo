@@ -1,20 +1,21 @@
-import { FC } from 'react';
+import { ReactNode } from 'react';
 import { ConditionalSpinner } from '../../Spinner';
 import { ComponentProps } from 'react';
 import { buttonBaseStyle } from '../styles';
 
 export interface BaseButtonProps extends ComponentProps<'button'> {
+  children: ReactNode;
   loading?: boolean;
   spinnerSize?: string;
 }
 
-export const BaseButton: FC<BaseButtonProps> = ({
+export const BaseButton = ({
   children,
   loading,
-  spinnerSize,
   disabled,
+  spinnerSize,
   ...props
-}) => (
+}: BaseButtonProps) => (
   <button css={buttonBaseStyle} disabled={disabled} {...props}>
     <ConditionalSpinner loading={loading} size={spinnerSize}>
       {children}

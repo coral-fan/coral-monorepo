@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { delay, forkJoin, map, mergeMapTo, timer } from 'rxjs';
 import { useIsAuthenticated } from 'libraries/authentication';
 import { useWallet } from 'libraries/blockchain';
@@ -14,12 +14,13 @@ import { getDoesOwnToken } from 'libraries/blockchain/utils';
 interface GatedContentProps {
   accessGrantingTokens: string[];
   accessDeniedModalProps: AccessDeniedModalProps;
+  children: ReactNode;
 }
-export const GatedContent: FC<GatedContentProps> = ({
+export const GatedContent = ({
   accessGrantingTokens,
   accessDeniedModalProps,
   children,
-}) => {
+}: GatedContentProps) => {
   const isAuthenticated = useIsAuthenticated();
   const [doesUserHaveAccess, setDoesUserHaveAccess] = useState(false);
   const [isCheckingWallet, setIsCheckingWallet] = useState(true);

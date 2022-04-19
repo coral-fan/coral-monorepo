@@ -1,5 +1,5 @@
 import { css, jsx } from '@emotion/react';
-import { FC } from 'react';
+import { ReactNode } from 'react';
 import tokens from 'styles/tokens';
 import { Variant } from '../Card';
 
@@ -49,15 +49,11 @@ const getHeadingStyle = (
   ${styleDictionary[styleVariant]}
 `;
 export interface HeadingProps {
+  children: ReactNode;
   level: HeadingLevel;
   styleVariant: HeadingStyleVariant;
   colorVariant?: Variant;
 }
 
-export const Heading: FC<HeadingProps> = ({
-  children,
-  level,
-  styleVariant,
-  colorVariant,
-  ...props
-}) => jsx(`h${level}`, { css: getHeadingStyle(styleVariant, colorVariant), ...props }, children);
+export const Heading = ({ children, level, styleVariant, colorVariant, ...props }: HeadingProps) =>
+  jsx(`h${level}`, { css: getHeadingStyle(styleVariant, colorVariant), ...props }, children);

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { FC } from 'react';
+import { ReactNode } from 'react';
 import { BaseButton, BaseButtonProps as CtaButtonProps } from '../../BaseButton';
 import rightArrowSvg from './rightArrow.svg';
 import tokens from 'styles/tokens';
@@ -31,14 +31,17 @@ export const Container = styled.div`
 
 const RightArrowIcon = getIconComponent('rightArrow', rightArrowSvg);
 
-export const CtaContent: FC = ({ children }) => (
+interface CtaContentProps {
+  children: ReactNode;
+}
+export const CtaContent = ({ children }: CtaContentProps) => (
   <Container>
     {children}
     <RightArrowIcon size={24} />
   </Container>
 );
 
-export const CtaButton: FC<CtaButtonProps> = ({ children, loading, ...props }) => {
+export const CtaButton = ({ children, loading, ...props }: CtaButtonProps) => {
   return (
     <Wrapper loading={loading} {...props}>
       <CtaContent>{children}</CtaContent>

@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from '@emotion/styled';
 
@@ -92,11 +92,7 @@ const Main = styled.div<Pick<ModalProps, 'mainContainerHasNoGap' | 'mainContaine
   ${({ mainContainerStyle }) => mainContainerStyle}
 `;
 
-/* 
-  Using FC because it always implies children.
-  Prefer to define a props interface if children isn't a prop.
-*/
-export const Modal: FC<ModalProps> = ({
+export const Modal = ({
   children,
   title,
   onClick,
@@ -105,7 +101,7 @@ export const Modal: FC<ModalProps> = ({
   mainContainerHasNoGap,
   variant,
   fullHeight,
-}) => {
+}: ModalProps) => {
   const documentBodyRef = useRef<Document['body']>();
 
   const [isMounted, setIsMounted] = useState(false);

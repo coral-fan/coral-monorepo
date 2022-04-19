@@ -59,7 +59,7 @@ export const UpdateProfilePhotoModal = () => {
   );
 
   const avatarRef = useCallback(
-    (avatarWrapperElement) => {
+    (avatarWrapperElement: HTMLDivElement | null) => {
       if (avatarWrapperElement !== null) {
         getObjectPosition(avatarWrapperElement, offsetPercentages).subscribe(setOffsetPercentages);
       }

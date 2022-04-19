@@ -1,7 +1,7 @@
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import styled from '@emotion/styled';
 import { Heading, HeadingLevel, HeadingStyleVariant } from 'components/ui';
-import { FC } from 'react';
+import { ReactNode } from 'react';
 import tokens, { QUERY } from 'styles/tokens';
 
 export interface NftContentProps {
@@ -11,6 +11,7 @@ export interface NftContentProps {
   isCard: boolean;
   Badge?: () => EmotionJSX.Element;
   description?: string | false;
+  children?: ReactNode;
 }
 
 interface ContentContainerProps {
@@ -36,7 +37,7 @@ const Description = styled.p`
   letter-spacing: ${tokens.font.letter_spacing.md};
 `;
 
-export const NftContent: FC<NftContentProps> = ({
+export const NftContent = ({
   title,
   titleHeadingLevel,
   titleStyleVariant,
@@ -44,7 +45,7 @@ export const NftContent: FC<NftContentProps> = ({
   description,
   isCard,
   children,
-}) => (
+}: NftContentProps) => (
   <ContentContainer isCard={isCard}>
     <Heading level={titleHeadingLevel} styleVariant={titleStyleVariant}>
       {title}

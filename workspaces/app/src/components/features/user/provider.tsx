@@ -1,12 +1,13 @@
 import { User } from 'libraries/models';
-import { FC, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { UserPageContext } from './context';
 
 interface UserPageProviderProps {
   userData: User;
+  children: ReactNode;
 }
 
-export const UserPageProvider: FC<UserPageProviderProps> = ({ userData, children }) => {
+export const UserPageProvider = ({ userData, children }: UserPageProviderProps) => {
   const [user, setUser] = useState(userData);
 
   useEffect(() => {

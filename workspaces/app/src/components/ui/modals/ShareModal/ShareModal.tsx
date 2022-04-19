@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Modal } from 'components/ui';
 import { SocialIcon } from 'components/ui';
-import { FC } from 'react';
+import { ReactNode } from 'react';
 import { TwitterShareButton, FacebookShareButton } from 'react-share';
 import tokens from 'styles/tokens';
 
@@ -10,6 +10,7 @@ interface ShareModalProps {
   closeShareModal: () => void;
   url: string;
   postTitle: string;
+  children: ReactNode;
 }
 
 const ContentContainer = styled.div`
@@ -33,14 +34,14 @@ const SocialIconWrapper = styled.div`
   height: 45px;
 `;
 
-export const ShareModal: FC<ShareModalProps> = ({
+export const ShareModal = ({
   closeShareModal,
   title,
   url,
   postTitle,
   children,
-}) => (
-  <Modal title={title} onClick={closeShareModal} fullHeight>
+}: ShareModalProps) => (
+  <Modal title={title} onClick={closeShareModal}>
     <ContentContainer>{children}</ContentContainer>
     <SocialIconsContainer>
       <TwitterShareButton key={'twitter'} title={postTitle} url={url} via={'coral__fan'}>

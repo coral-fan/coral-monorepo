@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import styled from '@emotion/styled';
-import { FC } from 'react';
+import { ReactNode } from 'react';
 import tokens from 'styles/tokens';
 
 export interface BadgeProps {
   svg: string;
+  children: ReactNode;
 }
 
 const Container = styled.div`
@@ -23,7 +24,7 @@ const Wrapper = styled.div`
   text-transform: uppercase;
 `;
 
-export const BaseBadge: FC<BadgeProps> = ({ svg, children }) => {
+export const BaseBadge = ({ svg, children }: BadgeProps) => {
   return (
     <Container>
       <img src={svg} width={'auto'} height={'auto'} alt={''} />

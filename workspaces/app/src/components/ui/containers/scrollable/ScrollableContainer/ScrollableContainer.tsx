@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { ReactNode } from 'react';
 import tokens from 'styles/tokens';
 
 const Container = styled.div`
@@ -19,14 +20,14 @@ const Items = styled.div`
   gap: ${tokens.spacing.mobile.lg};
 `;
 
-interface ScrollableContainerProps<T> {
-  children: Array<T>;
+interface ScrollableContainerProps {
+  children: ReactNode[];
 }
 
 /*
 Without the comma in <T,>, the linter thinks it's an HTML Element without a closing tag.
 */
-export const ScrollableContainer = <T,>({ children }: ScrollableContainerProps<T>) => (
+export const ScrollableContainer = ({ children }: ScrollableContainerProps) => (
   <Container>
     <Items>{children}</Items>
   </Container>

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Footer, NavigationBar } from 'components/app/components';
 import { CLIENT_ENVIRONMENT } from 'consts';
-import { FC } from 'react';
+import { ReactNode } from 'react';
 import { QUERY } from 'styles';
 import tokens from 'styles/tokens';
 
@@ -38,7 +38,11 @@ const Main = styled.div`
   flex: 1;
 `;
 
-export const Layout: FC = ({ children }) => (
+interface LayoutProps {
+  children: ReactNode;
+}
+
+export const Layout = ({ children }: LayoutProps) => (
   <Container>
     <MaxWidthContainer>
       <NavigationBar />

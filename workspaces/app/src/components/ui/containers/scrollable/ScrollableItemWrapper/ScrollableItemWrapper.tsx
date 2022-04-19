@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { FC } from 'react';
+import { ReactNode } from 'react';
 import { QUERY } from 'styles';
 
 /*
@@ -24,4 +24,10 @@ const Wrapper = styled.div`
   }
 `;
 
-export const ScrollableItemWrapper: FC = ({ children }) => <Wrapper>{children}</Wrapper>;
+interface ScrollableItemWrapperProps {
+  children: ReactNode;
+}
+
+export const ScrollableItemWrapper = ({ children }: ScrollableItemWrapperProps) => (
+  <Wrapper>{children}</Wrapper>
+);

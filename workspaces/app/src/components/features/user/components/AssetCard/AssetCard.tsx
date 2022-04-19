@@ -6,7 +6,7 @@ import { BaseInfo, BaseInfoProps } from 'components/ui';
 import { Asset } from 'libraries/models';
 
 export interface AssetCardProps
-  extends Omit<BaseInfoProps, 'titleHeadingLevel' | 'titleStyleVariant' | 'id'>,
+  extends Omit<BaseInfoProps, 'titleHeadingLevel' | 'titleStyleVariant' | 'id' | 'children'>,
     Pick<Asset, 'id' | 'contractAddress'> {
   Badge: () => EmotionJSX.Element;
 }

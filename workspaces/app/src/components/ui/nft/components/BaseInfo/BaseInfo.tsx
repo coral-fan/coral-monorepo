@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { FC } from 'react';
 import tokens, { QUERY } from 'styles/tokens';
 import { ImageWithInfo, ImageWithInfoProps } from '..';
 import { NftContent, NftContentProps } from '../NftContent/NftContent';
@@ -17,7 +16,7 @@ const BaseInfoContainer = styled.div`
   }
 `;
 
-export const BaseInfo: FC<BaseInfoProps> = ({
+export const BaseInfo = ({
   imageUrl,
   artistName,
   artistProfilePhoto,
@@ -26,7 +25,7 @@ export const BaseInfo: FC<BaseInfoProps> = ({
   titleStyleVariant,
   isCard,
   children,
-}) => (
+}: BaseInfoProps) => (
   <BaseInfoContainer>
     <ImageWithInfo
       imageUrl={imageUrl}

@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import { ConditionalSpinner, Heading } from 'components/ui';
 import { useIsMobile } from 'libraries/window';
 import tokens, { QUERY } from 'styles/tokens';
-import { FC } from 'react';
 import { FadeInAnimation } from 'libraries/animation';
+import { ReactNode } from 'react';
 
 const ContentContainer = styled.div`
   width: 100%;
@@ -40,10 +40,12 @@ const SpinnerContainer = styled.div<SpinnerContainerProp>`
   margin: ${({ isLoading }) => (isLoading ? '40px' : 0)} 0;
 `;
 
-interface ProfileItemsProp {
+interface ProfileItemsProps {
   isLoading: boolean;
+  children: ReactNode;
 }
-export const ProfileItems: FC<ProfileItemsProp> = ({ isLoading, children }) => {
+
+export const ProfileItems = ({ isLoading, children }: ProfileItemsProps) => {
   const isMobile = useIsMobile();
 
   return (

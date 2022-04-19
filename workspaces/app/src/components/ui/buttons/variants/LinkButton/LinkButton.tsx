@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { FC } from 'react';
 import tokens from 'styles/tokens';
 import { BaseButton, BaseButtonProps as ButtonProps } from '../../BaseButton';
 
@@ -21,7 +20,7 @@ const Wrapper = styled(BaseButton)`
   }
 `;
 
-export const LinkButton: FC<ButtonProps> = ({ children, loading, ...props }) => (
+export const LinkButton = ({ children, loading, ...props }: ButtonProps) => (
   <Wrapper loading={loading} {...props}>
     {children}
   </Wrapper>
