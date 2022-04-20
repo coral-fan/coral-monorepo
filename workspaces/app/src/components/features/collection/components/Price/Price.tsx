@@ -12,12 +12,12 @@ const PriceContainer = styled.div`
   gap: ${spacing.mobile.md};
 `;
 
-const PriceUsd = styled.div`
+const UsdPrice = styled.div`
   color: ${font.color.primary};
   font-size: ${font.size.xl};
 `;
 
-const PriceAvax = styled.div`
+const AvaxPrice = styled.div`
   color: ${font.color.secondary};
   font-size: ${font.size.xs};
   letter-spacing: ${font.letter_spacing.xs};
@@ -29,20 +29,20 @@ const PriceAvax = styled.div`
 `;
 
 export interface PriceProp {
-  priceUsd: number;
+  usdPrice: number;
 }
 
-export const Price = ({ priceUsd }: PriceProp) => {
-  const formattedPriceUsd = getUsdFormat(priceUsd);
+export const Price = ({ usdPrice }: PriceProp) => {
+  const formattedusdPrice = getUsdFormat(usdPrice);
   const { exchangeRate, loading } = useAvaxUsdPrice();
 
-  const avaxPrice = loading ? 0 : getAvaxFormat(priceUsd / exchangeRate);
+  const avaxPrice = loading ? 0 : getAvaxFormat(usdPrice / exchangeRate);
 
   return (
     <PriceContainer>
-      <PriceUsd>{formattedPriceUsd}</PriceUsd>
+      <UsdPrice>{formattedusdPrice}</UsdPrice>
       <ConditionalSpinner loading={loading} color={tokens.background.color.tertiary}>
-        <PriceAvax>{avaxPrice}</PriceAvax>
+        <AvaxPrice>{avaxPrice}</AvaxPrice>
       </ConditionalSpinner>
     </PriceContainer>
   );
