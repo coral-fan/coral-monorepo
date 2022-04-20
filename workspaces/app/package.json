@@ -8,7 +8,7 @@
     "build": "next build",
     "lint": "next lint",
     "clean": "rm -rf node_modules && yarn clean:contracts && yarn clean:build",
-    "clean:contracts": "rm -rf src/libraries/blockchain/constracts",
+    "clean:contracts": "rm -rf src/libraries/blockchain/contracts",
     "clean:build": "rm -rf .next",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
