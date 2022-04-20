@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { ConditionalSpinner } from 'components/ui/Spinner';
 import tokens from 'styles/tokens';
 import { Currency } from '../Currency';
 
@@ -10,7 +9,6 @@ interface TransactionSummaryProps {
   altTotal: string;
   transactionFee: string;
   transactionFeePercentage: number;
-  isLoading: boolean;
 }
 
 const Container = styled.div`
@@ -60,30 +58,27 @@ export const TransactionSummary = ({
   altTotal,
   transactionFee,
   transactionFeePercentage,
-  isLoading,
 }: TransactionSummaryProps) => {
   return (
     <Container>
-      <ConditionalSpinner size={'100px'} color={tokens.background.color.brand} loading={isLoading}>
-        <LineItem>
-          <span>Item Price</span>
-          <Currency value={price} isAvax={isAvax} />
-        </LineItem>
-        <LineItem>
-          <TransactionFeeContainer>
-            <span>Transaction Fee</span>
-            <TransactionFeeDetail>{`${transactionFeePercentage}% of item price`}</TransactionFeeDetail>
-          </TransactionFeeContainer>
-          <Currency value={transactionFee} isAvax={isAvax} />
-        </LineItem>
-        <LineItem>
-          <span>Total</span>
-          <TotalPriceContainer>
-            <Currency value={total} isAvax={isAvax} />
-            <Currency value={altTotal} isAvax={!isAvax} isAlt={true} />
-          </TotalPriceContainer>
-        </LineItem>
-      </ConditionalSpinner>
+      <LineItem>
+        <span>Item Price</span>
+        <Currency value={price} isAvax={isAvax} />
+      </LineItem>
+      <LineItem>
+        <TransactionFeeContainer>
+          <span>Transaction Fee</span>
+          <TransactionFeeDetail>{`${transactionFeePercentage}% of item price`}</TransactionFeeDetail>
+        </TransactionFeeContainer>
+        <Currency value={transactionFee} isAvax={isAvax} />
+      </LineItem>
+      <LineItem>
+        <span>Total</span>
+        <TotalPriceContainer>
+          <Currency value={total} isAvax={isAvax} />
+          <Currency value={altTotal} isAvax={!isAvax} isAlt={true} />
+        </TotalPriceContainer>
+      </LineItem>
     </Container>
   );
 };
