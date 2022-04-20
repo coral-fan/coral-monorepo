@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
-import { LinkButton, Modal } from 'components/ui';
+import { Button, LinkButton, Modal } from 'components/ui';
+import { useWallet } from 'libraries/blockchain';
 import { useAvaxUsdPrice } from 'libraries/currency/hooks';
-import { getPaymentLineItems } from 'libraries/currency/utils';
+import { getAvaxFormat, getPaymentLineItems } from 'libraries/currency/utils';
 import { FC, useCallback, useState } from 'react';
 import tokens from 'styles/tokens';
-import { AssetInfo, AssetInfoProps } from './components/AssetInfo';
-import { TransactionSummary } from './components/TransactionSummary';
+import { AssetInfo, AssetInfoProps, AvaxIcon, TransactionSummary } from './components';
 
 const TRANSACTION_FEE = 0.01;
 
@@ -21,6 +21,26 @@ const ContentContainer = styled.div`
   flex-direction: column;
   gap: ${tokens.spacing.mobile.md};
   margin: auto;
+`;
+
+const WalletBalanceContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  min-height: 100px;
+  text-transform: uppercase;
+  font-weight: ${tokens.font.weight.bold};
+  gap: 4px;
+`;
+
+const WalletBalance = styled.div`
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: ${tokens.font.size.md};
+  letter-spacing: ${tokens.font.letter_spacing.md};
+  line-height: ${tokens.font.line_height.md};
 `;
 
 const SwitchPaymentMethod = styled.div`
@@ -42,7 +62,9 @@ export const PaymentModal: FC<PaymentModalProps> = ({
 }) => {
   const [isAvax, setIsAvax] = useState(true);
   const { exchangeRate, loading } = useAvaxUsdPrice();
+  const { balance } = useWallet();
 
+  const formattedBalance = balance && getAvaxFormat(balance);
   const priceAvax = !loading ? priceUsd / exchangeRate : 0;
 
   const { price, transactionFee, total, altTotal } = getPaymentLineItems(
@@ -73,11 +95,23 @@ export const PaymentModal: FC<PaymentModalProps> = ({
           transactionFeePercentage={TRANSACTION_FEE * 100}
           isLoading={loading}
         />
+        {isAvax && (
+          <WalletBalanceContainer>
+            <span>Wallet Balance</span>
+            <WalletBalance>
+              {/*ToDo: Use Denominated Value */}
+              {/*ToDo: Add loading state to useWallet */}
+              <AvaxIcon />
+              <span>{formattedBalance}</span>
+            </WalletBalance>
+          </WalletBalanceContainer>
+        )}
         <SwitchPaymentMethod>
           <LinkButton onClick={handleSwitchPaymentMethodClick}>
             {isAvax ? 'switch to pay with card' : 'switch to pay with wallet'}
           </LinkButton>
         </SwitchPaymentMethod>
+        <Button>pay and claim</Button>
       </ContentContainer>
     </Modal>
   );
