@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { CtaButton, DropTimer } from 'components/ui';
 import { getMilliSecsDiff, getTimeRemaining$ } from 'libraries/time';
 import { useObservable } from 'libraries/utils';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { AvailableContainer } from 'components/ui/nft';
 import { Price, PriceProp } from '../Price';
@@ -43,11 +43,10 @@ export const DropOrAvailable = ({
   type,
 }: DropOrAvailableProps) => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-  const closePaymentModal = useCallback(() => setIsPaymentModalOpen(false), []);
 
-  const handleBuyButtonClick = () => {
-    setIsPaymentModalOpen(true);
-  };
+  const closePaymentModal = useCallback(() => setIsPaymentModalOpen(false), []);
+  const handleBuyButtonClick = useCallback(() => setIsPaymentModalOpen(true), []);
+
   /*
     SwitchTransition implementation from:
     https://stackoverflow.com/questions/64126226/how-do-i-get-switchtranition-to-work-with-csstransition-with-typescript
