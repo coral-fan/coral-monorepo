@@ -8,9 +8,7 @@ import { AVAX_USD_PAIR_ADDRESS } from './consts';
 const avalancheRpcProvider = new JsonRpcProvider(AVALANCHE.RPC_URL);
 
 const avaxUsdPairAddress =
-  SERVER_ENVIRONMENT === 'production'
-    ? AVAX_USD_PAIR_ADDRESS.C_CHAIN
-    : AVAX_USD_PAIR_ADDRESS.FUJI_TESTNET;
+  AVAX_USD_PAIR_ADDRESS[SERVER_ENVIRONMENT === 'production' ? 'C_CHAIN' : 'FUJI_TESTNET'];
 
 export type CurrencyType = 'usd' | 'avax';
 
