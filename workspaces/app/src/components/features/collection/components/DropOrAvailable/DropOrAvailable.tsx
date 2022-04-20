@@ -32,7 +32,7 @@ const FadeContainer = styled.div`
 `;
 
 export const DropOrAvailable = ({
-  priceUsd,
+  usdPrice,
   maxMintable,
   numMinted,
   dropDate,
@@ -81,7 +81,7 @@ export const DropOrAvailable = ({
         <FadeContainer ref={nodeRef}>
           {isAvailable === 'true' ? (
             <AvailableContainer>
-              <Price priceUsd={priceUsd} />
+              <Price usdPrice={usdPrice} />
               <CtaButton onClick={handleBuyButtonClick}>Buy Now</CtaButton>
               <ProgressBar maxMintable={maxMintable} numMinted={numMinted} />
             </AvailableContainer>
@@ -97,7 +97,7 @@ export const DropOrAvailable = ({
               artistName={artistName}
               artistProfilePhoto={artistProfilePhoto}
               type={type}
-              priceUsd={priceUsd}
+              usdPrice={usdPrice}
             />
           )}
         </FadeContainer>

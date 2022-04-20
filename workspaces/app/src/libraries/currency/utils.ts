@@ -3,23 +3,23 @@ const usdFormat = Intl.NumberFormat('en-US', {
   currency: 'USD',
 });
 
-export const getUsdFormat = (priceUsd: number) => usdFormat.format(priceUsd);
+export const getUsdFormat = (usdPrice: number) => usdFormat.format(usdPrice);
 
-export const getAvaxFormat = (priceUsd: number) => priceUsd.toFixed(4);
+export const getAvaxFormat = (usdPrice: number) => usdPrice.toFixed(4);
 
 export const getPaymentLineItems = (
-  priceUsd: number,
-  priceAvax: number,
+  usdPrice: number,
+  avaxPrice: number,
   transactionFeePercentage: number,
   isAvax: boolean
 ) => {
-  const transactionFeeUsd = priceUsd * transactionFeePercentage;
-  const transactionFeeAvax = priceAvax * transactionFeePercentage;
+  const transactionFeeUsd = usdPrice * transactionFeePercentage;
+  const transactionFeeAvax = avaxPrice * transactionFeePercentage;
 
-  const totalUsd = priceUsd + transactionFeeUsd;
-  const totalAvax = priceAvax + transactionFeeAvax;
+  const totalUsd = usdPrice + transactionFeeUsd;
+  const totalAvax = avaxPrice + transactionFeeAvax;
 
-  const price = isAvax ? getAvaxFormat(priceAvax) : getUsdFormat(priceUsd);
+  const price = isAvax ? getAvaxFormat(avaxPrice) : getUsdFormat(usdPrice);
   const transactionFee = isAvax
     ? getAvaxFormat(transactionFeeAvax)
     : getUsdFormat(transactionFeeUsd);

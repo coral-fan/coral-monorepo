@@ -11,7 +11,7 @@ const TRANSACTION_FEE = 0.01;
 
 interface PaymentModalProps extends AssetInfoProps {
   title: string;
-  priceUsd: number;
+  usdPrice: number;
   closeShareModal: () => void;
 }
 
@@ -58,18 +58,18 @@ export const PaymentModal: FC<PaymentModalProps> = ({
   type,
   closeShareModal,
   title,
-  priceUsd,
+  usdPrice,
 }) => {
   const [isAvax, setIsAvax] = useState(true);
   const { exchangeRate, loading } = useAvaxUsdPrice();
   const { balance } = useWallet();
 
   const formattedBalance = balance && getAvaxFormat(balance);
-  const priceAvax = !loading ? priceUsd / exchangeRate : 0;
+  const avaxPrice = !loading ? usdPrice / exchangeRate : 0;
 
   const { price, transactionFee, total, altTotal } = getPaymentLineItems(
-    priceUsd,
-    priceAvax,
+    usdPrice,
+    avaxPrice,
     TRANSACTION_FEE,
     isAvax
   );
