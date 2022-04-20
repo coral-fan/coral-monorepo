@@ -43,6 +43,7 @@ const TransactionFeeContainer = styled.div`
 const TransactionFeeDetail = styled.span`
   color: ${tokens.font.color.secondary};
   text-transform: uppercase;
+  font-size: ${tokens.font.size.xs};
 `;
 
 const TotalPriceContainer = styled.div`

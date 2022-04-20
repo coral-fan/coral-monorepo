@@ -36,7 +36,7 @@ export const Price = ({ priceUsd }: PriceProp) => {
   const formattedPriceUsd = getUsdFormat(priceUsd);
   const { exchangeRate, loading } = useAvaxUsdPrice();
 
-  const avaxPrice = !loading ? getAvaxFormat(priceUsd / exchangeRate) : 0;
+  const avaxPrice = loading ? 0 : getAvaxFormat(priceUsd / exchangeRate);
 
   return (
     <PriceContainer>
