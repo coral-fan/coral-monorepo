@@ -34,14 +34,14 @@ export interface PriceProp {
 
 export const Price = ({ usdPrice }: PriceProp) => {
   const formattedusdPrice = getUsdFormat(usdPrice);
-  const { exchangeRate, loading } = useAvaxUsdPrice();
+  const { exchangeRate, isLoading } = useAvaxUsdPrice();
 
-  const avaxPrice = loading ? 0 : getAvaxFormat(usdPrice / exchangeRate);
+  const avaxPrice = isLoading ? 0 : getAvaxFormat(usdPrice / exchangeRate);
 
   return (
     <PriceContainer>
       <UsdPrice>{formattedusdPrice}</UsdPrice>
-      <ConditionalSpinner loading={loading} color={tokens.background.color.tertiary}>
+      <ConditionalSpinner loading={isLoading} color={tokens.background.color.tertiary}>
         <AvaxPrice>{avaxPrice}</AvaxPrice>
       </ConditionalSpinner>
     </PriceContainer>

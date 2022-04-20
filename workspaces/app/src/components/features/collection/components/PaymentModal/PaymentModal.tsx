@@ -61,11 +61,11 @@ export const PaymentModal: FC<PaymentModalProps> = ({
   usdPrice,
 }) => {
   const [isAvax, setIsAvax] = useState(true);
-  const { exchangeRate, loading } = useAvaxUsdPrice();
+  const { exchangeRate, isLoading } = useAvaxUsdPrice();
   const { balance } = useWallet();
 
   const formattedBalance = balance && getAvaxFormat(balance);
-  const avaxPrice = !loading ? usdPrice / exchangeRate : 0;
+  const avaxPrice = isLoading ? 0 : usdPrice / exchangeRate;
 
   const { price, transactionFee, total, altTotal } = getPaymentLineItems(
     usdPrice,
@@ -86,7 +86,11 @@ export const PaymentModal: FC<PaymentModalProps> = ({
           artistProfilePhoto={artistProfilePhoto}
           type={type}
         />
-        <ConditionalSpinner size={'100px'} color={tokens.background.color.brand} loading={loading}>
+        <ConditionalSpinner
+          size={'100px'}
+          color={tokens.background.color.brand}
+          loading={isLoading}
+        >
           <TransactionSummary
             isAvax={isAvax}
             price={price}
