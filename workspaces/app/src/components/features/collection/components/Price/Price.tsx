@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
-import { getAvaxFormat, getUsdFormat } from 'libraries/currency/utils';
-import { useAvaxUsdPrice } from 'libraries/currency/hooks';
+import { getAvaxFormat, getUsdFormat, useAvaxUsdPrice } from 'libraries/blockchain';
 import { ConditionalSpinner } from 'components/ui/Spinner';
 
 const { spacing, font } = tokens;
