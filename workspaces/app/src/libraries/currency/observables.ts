@@ -2,7 +2,7 @@ import { JsonRpcProvider } from '@ethersproject/providers';
 import { AVALANCHE, SERVER_ENVIRONMENT } from 'consts';
 import { ethers } from 'ethers';
 import { filter, forkJoin, from, map, merge, of, timer } from 'rxjs';
-import { AggregatorV3InterfaceABI__factory } from './chainlink/factories';
+import { AggregatorV3InterfaceABI__factory } from 'libraries/blockchain/contracts';
 import { CHAINLINK_AVAX_USD, CHAINLINK_AVAX_USD_TESTNET } from './consts';
 
 const avalancheRpcProvider = new JsonRpcProvider(AVALANCHE.RPC_URL);
