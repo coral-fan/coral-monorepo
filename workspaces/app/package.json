@@ -12,9 +12,9 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "generate-types": "typechain --target=ethers-v5 abis/*.json --out-dir src/libraries/blockchain/contracts",
-    "run-script": "env-cmd -f .env.development env-cmd -f .env.local ts-node"
+    "run-script": "env-cmd -f .env.development env-cmd -f .env.local ts-node",
+    "postinstall": "yarn generate-types"
   },
-  "postinstall": "yarn generate-types",
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
