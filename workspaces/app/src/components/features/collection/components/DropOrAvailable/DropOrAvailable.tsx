@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { CtaButton, DropTimer } from 'components/ui';
 import { getMilliSecsDiff, getTimeRemaining$ } from 'libraries/time';
 import { useObservable } from 'libraries/utils';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { AvailableContainer } from 'components/ui/nft';
 import { Price, PriceProp } from '../Price';

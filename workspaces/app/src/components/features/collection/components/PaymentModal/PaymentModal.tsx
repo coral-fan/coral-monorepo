@@ -1,8 +1,11 @@
 import styled from '@emotion/styled';
 import { Button, ConditionalSpinner, LinkButton, Modal } from 'components/ui';
-import { useWallet } from 'libraries/blockchain';
-import { useAvaxUsdPrice } from 'libraries/currency/hooks';
-import { getAvaxFormat, getPaymentLineItems } from 'libraries/currency/utils';
+import {
+  useWallet,
+  useAvaxUsdPrice,
+  getAvaxFormat,
+  getPaymentLineItems,
+} from 'libraries/blockchain';
 import { FC, useCallback, useState } from 'react';
 import tokens from 'styles/tokens';
 import { AssetInfo, AssetInfoProps, Currency, TransactionSummary } from './components';
