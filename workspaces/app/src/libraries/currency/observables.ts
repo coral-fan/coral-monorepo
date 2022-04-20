@@ -3,12 +3,14 @@ import { AVALANCHE, SERVER_ENVIRONMENT } from 'consts';
 import { ethers } from 'ethers';
 import { filter, forkJoin, from, map, merge, of, timer } from 'rxjs';
 import { AggregatorV3InterfaceABI__factory } from 'libraries/blockchain/contracts';
-import { CHAINLINK_AVAX_USD, CHAINLINK_AVAX_USD_TESTNET } from './consts';
+import { AVAX_USD_PAIR_ADDRESS } from './consts';
 
 const avalancheRpcProvider = new JsonRpcProvider(AVALANCHE.RPC_URL);
 
-const chainlinkAvaxUsdAddress =
-  SERVER_ENVIRONMENT === 'production' ? CHAINLINK_AVAX_USD : CHAINLINK_AVAX_USD_TESTNET;
+const avaxUsdPairAddress =
+  SERVER_ENVIRONMENT === 'production'
+    ? AVAX_USD_PAIR_ADDRESS.C_CHAIN
+    : AVAX_USD_PAIR_ADDRESS.FUJI_TESTNET;
 
 export type CurrencyType = 'usd' | 'avax';
 
@@ -17,7 +19,7 @@ export const currencyPairs = ['avax_usd'] as const;
 export type CurrencyPair = typeof currencyPairs[number];
 
 const CurrencyPairDictionary: Record<CurrencyPair, string> = {
-  avax_usd: chainlinkAvaxUsdAddress,
+  avax_usd: avaxUsdPairAddress,
 };
 
 export const getCurrencyPairPrice$ = (pair: CurrencyPair) => {
