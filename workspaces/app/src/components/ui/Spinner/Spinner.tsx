@@ -21,7 +21,6 @@ const Wrapper = styled.div<SpinnerProp>`
   --ring-size: calc(var(--size) * 0.8);
   --ring-spacing: calc(var(--size) / 10);
   --color: ${({ color = COLOR }) => color};
-  /* */
 
   display: inline-block;
   position: relative;
