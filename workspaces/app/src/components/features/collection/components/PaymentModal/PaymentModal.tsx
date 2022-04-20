@@ -5,7 +5,7 @@ import { useAvaxUsdPrice } from 'libraries/currency/hooks';
 import { getAvaxFormat, getPaymentLineItems } from 'libraries/currency/utils';
 import { FC, useCallback, useState } from 'react';
 import tokens from 'styles/tokens';
-import { AssetInfo, AssetInfoProps, AvaxIcon, Currency, TransactionSummary } from './components';
+import { AssetInfo, AssetInfoProps, Currency, TransactionSummary } from './components';
 
 const TRANSACTION_FEE = 0.01;
 
