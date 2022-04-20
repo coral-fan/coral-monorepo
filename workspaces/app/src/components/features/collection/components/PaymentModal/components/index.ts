@@ -1,4 +1,4 @@
 export * from './AssetInfo';
-export * from './DenominatedValue';
+export * from './Currency';
 export * from './icons';
 export * from './TransactionSummary';

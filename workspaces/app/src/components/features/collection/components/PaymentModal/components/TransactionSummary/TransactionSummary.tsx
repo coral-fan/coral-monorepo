@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { ConditionalSpinner } from 'components/ui/Spinner';
 import tokens from 'styles/tokens';
-import { DenominatedValue } from '../DenominatedValue';
+import { Currency } from '../Currency';
 
 interface TransactionSummaryProps {
   isAvax: boolean;
@@ -67,20 +67,20 @@ export const TransactionSummary = ({
       <ConditionalSpinner size={'100px'} color={tokens.background.color.brand} loading={isLoading}>
         <LineItem>
           <span>Item Price</span>
-          <DenominatedValue value={price} isAvax={isAvax} />
+          <Currency value={price} isAvax={isAvax} />
         </LineItem>
         <LineItem>
           <TransactionFeeContainer>
             <span>Transaction Fee</span>
             <TransactionFeeDetail>{`${transactionFeePercentage}% of item price`}</TransactionFeeDetail>
           </TransactionFeeContainer>
-          <DenominatedValue value={transactionFee} isAvax={isAvax} />
+          <Currency value={transactionFee} isAvax={isAvax} />
         </LineItem>
         <LineItem>
           <span>Total</span>
           <TotalPriceContainer>
-            <DenominatedValue value={total} isAvax={isAvax} />
-            <DenominatedValue value={altTotal} isAvax={!isAvax} isAlt={true} />
+            <Currency value={total} isAvax={isAvax} />
+            <Currency value={altTotal} isAvax={!isAvax} isAlt={true} />
           </TotalPriceContainer>
         </LineItem>
       </ConditionalSpinner>

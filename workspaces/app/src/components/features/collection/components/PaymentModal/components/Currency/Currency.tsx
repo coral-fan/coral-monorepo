@@ -8,7 +8,7 @@ interface AvaxPriceProps {
   isAlt?: boolean;
 }
 
-const Price = styled.div`
+const Value = styled.div`
   display: flex;
   align-items: baseline;
   gap: 6px;
@@ -17,7 +17,7 @@ const Price = styled.div`
   letter-spacing: ${tokens.font.letter_spacing.lg};
 `;
 
-const AltPrice = styled.div`
+const AltValue = styled.div`
   display: flex;
   gap: 6px;
   color: ${tokens.font.color.secondary};
@@ -26,19 +26,19 @@ const AltPrice = styled.div`
   letter-spacing: ${tokens.font.letter_spacing.xs};
 `;
 
-export const DenominatedValue = ({ value, isAlt, isAvax }: AvaxPriceProps) => {
+export const Currency = ({ value, isAlt, isAvax }: AvaxPriceProps) => {
   return (
     <>
       {!isAlt ? (
-        <Price>
+        <Value>
           {isAvax && <AvaxIcon size={14} />}
           {value}
-        </Price>
+        </Value>
       ) : (
-        <AltPrice>
+        <AltValue>
           {isAvax && <AvaxAltIcon />}
           {value}
-        </AltPrice>
+        </AltValue>
       )}
     </>
   );
