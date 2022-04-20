@@ -107,7 +107,7 @@ export const PaymentModal: FC<PaymentModalProps> = ({
           </PaymentMethodContainer>
           <SwitchPaymentMethod>
             <LinkButton onClick={handleSwitchPaymentMethodClick}>
-              {isAvax ? 'switch to pay with card' : 'switch to pay with wallet'}
+              {`switch to pay with ${isAvax ? 'card' : 'wallet'}`}
             </LinkButton>
           </SwitchPaymentMethod>
         </ConditionalSpinner>
