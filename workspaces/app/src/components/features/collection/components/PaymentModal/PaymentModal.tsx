@@ -16,7 +16,7 @@ interface PaymentModalProps extends AssetInfoProps {
 }
 
 const ContentContainer = styled.div`
-  width: 90%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: ${tokens.spacing.mobile.md};
