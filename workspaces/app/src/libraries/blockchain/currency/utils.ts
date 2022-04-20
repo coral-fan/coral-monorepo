@@ -13,18 +13,18 @@ export const getPaymentLineItems = (
   transactionFeePercentage: number,
   isAvax: boolean
 ) => {
-  const transactionFeeUsd = usdPrice * transactionFeePercentage;
-  const transactionFeeAvax = avaxPrice * transactionFeePercentage;
+  const usdTransactionFee = usdPrice * transactionFeePercentage;
+  const avaxTransactionFee = avaxPrice * transactionFeePercentage;
 
-  const totalUsd = usdPrice + transactionFeeUsd;
-  const totalAvax = avaxPrice + transactionFeeAvax;
+  const usdTotal = usdPrice + usdTransactionFee;
+  const avaxTotal = avaxPrice + avaxTransactionFee;
 
   const price = isAvax ? getAvaxFormat(avaxPrice) : getUsdFormat(usdPrice);
   const transactionFee = isAvax
-    ? getAvaxFormat(transactionFeeAvax)
-    : getUsdFormat(transactionFeeUsd);
-  const total = isAvax ? getAvaxFormat(totalAvax) : getUsdFormat(totalUsd);
-  const altTotal = isAvax ? getUsdFormat(totalUsd) : getAvaxFormat(totalAvax);
+    ? getAvaxFormat(avaxTransactionFee)
+    : getUsdFormat(usdTransactionFee);
+  const total = isAvax ? getAvaxFormat(avaxTotal) : getUsdFormat(usdTotal);
+  const altTotal = isAvax ? getUsdFormat(usdTotal) : getAvaxFormat(avaxTotal);
 
   return { price, transactionFee, total, altTotal };
 };
