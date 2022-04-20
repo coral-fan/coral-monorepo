@@ -15,7 +15,6 @@ const h2Style = css`
   font-size: ${size.xl};
   line-height: ${line_height.xl};
   letter-spacing: ${letter_spacing.xl};
-  text-transform: uppercase;
 `;
 
 const h3Style = css`
