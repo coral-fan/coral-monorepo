@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
-import { Button, LinkButton, Modal } from 'components/ui';
+import { Button, ConditionalSpinner, LinkButton, Modal } from 'components/ui';
 import { useWallet } from 'libraries/blockchain';
 import { useAvaxUsdPrice } from 'libraries/currency/hooks';
 import { getAvaxFormat, getPaymentLineItems } from 'libraries/currency/utils';
 import { FC, useCallback, useState } from 'react';
 import tokens from 'styles/tokens';
-import { AssetInfo, AssetInfoProps, AvaxIcon, TransactionSummary } from './components';
+import { AssetInfo, AssetInfoProps, AvaxIcon, Currency, TransactionSummary } from './components';
 
 const TRANSACTION_FEE = 0.01;
 
@@ -20,10 +20,10 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${tokens.spacing.mobile.md};
-  margin: auto;
+  align-items: center;
 `;
 
-const WalletBalanceContainer = styled.div`
+const PaymentMethodContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: end;
@@ -86,31 +86,31 @@ export const PaymentModal: FC<PaymentModalProps> = ({
           artistProfilePhoto={artistProfilePhoto}
           type={type}
         />
-        <TransactionSummary
-          isAvax={isAvax}
-          price={price}
-          total={total}
-          altTotal={altTotal}
-          transactionFee={transactionFee}
-          transactionFeePercentage={TRANSACTION_FEE * 100}
-          isLoading={loading}
-        />
-        {isAvax && (
-          <WalletBalanceContainer>
-            <span>Wallet Balance</span>
-            <WalletBalance>
-              {/*ToDo: Use Denominated Value */}
-              {/*ToDo: Add loading state to useWallet */}
-              <AvaxIcon />
-              <span>{formattedBalance}</span>
-            </WalletBalance>
-          </WalletBalanceContainer>
-        )}
-        <SwitchPaymentMethod>
-          <LinkButton onClick={handleSwitchPaymentMethodClick}>
-            {isAvax ? 'switch to pay with card' : 'switch to pay with wallet'}
-          </LinkButton>
-        </SwitchPaymentMethod>
+        <ConditionalSpinner size={'100px'} color={tokens.background.color.brand} loading={loading}>
+          <TransactionSummary
+            isAvax={isAvax}
+            price={price}
+            total={total}
+            altTotal={altTotal}
+            transactionFee={transactionFee}
+            transactionFeePercentage={TRANSACTION_FEE * 100}
+          />
+          <PaymentMethodContainer>
+            {isAvax && (
+              <>
+                <span>Wallet Balance</span>
+                <WalletBalance>
+                  {formattedBalance && <Currency value={formattedBalance} isAvax={isAvax} />}
+                </WalletBalance>
+              </>
+            )}
+          </PaymentMethodContainer>
+          <SwitchPaymentMethod>
+            <LinkButton onClick={handleSwitchPaymentMethodClick}>
+              {isAvax ? 'switch to pay with card' : 'switch to pay with wallet'}
+            </LinkButton>
+          </SwitchPaymentMethod>
+        </ConditionalSpinner>
         <Button>pay and claim</Button>
       </ContentContainer>
     </Modal>

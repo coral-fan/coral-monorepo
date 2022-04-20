@@ -15,3 +15,4 @@ export * from './nft';
 export * from './containers';
 export * from './modals';
 export * from './ConditionalWrap';
+export * from './Spinner';
