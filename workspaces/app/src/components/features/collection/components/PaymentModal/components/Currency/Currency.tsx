@@ -26,20 +26,15 @@ const AltValue = styled.div`
   letter-spacing: ${tokens.font.letter_spacing.xs};
 `;
 
-export const Currency = ({ value, isAlt, isAvax }: AvaxPriceProps) => {
-  return (
-    <>
-      {!isAlt ? (
-        <Value>
-          {isAvax && <AvaxIcon size={14} />}
-          {value}
-        </Value>
-      ) : (
-        <AltValue>
-          {isAvax && <AvaxAltIcon />}
-          {value}
-        </AltValue>
-      )}
-    </>
+export const Currency = ({ value, isAlt, isAvax }: AvaxPriceProps) =>
+  isAlt ? (
+    <AltValue>
+      {isAvax && <AvaxAltIcon />}
+      {value}
+    </AltValue>
+  ) : (
+    <Value>
+      {isAvax && <AvaxIcon size={14} />}
+      {value}
+    </Value>
   );
-};
