@@ -64,7 +64,7 @@ export const AssetInfo = ({
           </ImageWrapper>
         </LeftContainer>
         <RightContainer>
-          <Heading level={1} styleVariant={'h3'}>
+          <Heading level={2} styleVariant={'h3'}>
             {collectionName}
           </Heading>
           <ArtistInfo profilePhoto={artistProfilePhoto}>{artistName}</ArtistInfo>
