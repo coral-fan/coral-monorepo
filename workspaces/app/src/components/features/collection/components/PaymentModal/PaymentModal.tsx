@@ -6,15 +6,18 @@ import {
   getAvaxFormat,
   getPaymentLineItems,
 } from 'libraries/blockchain';
+import { Collection } from 'libraries/models';
 import { FC, useCallback, useState } from 'react';
 import tokens from 'styles/tokens';
 import { AssetInfo, AssetInfoProps, Currency, TransactionSummary } from './components';
+import { CreditCardModal } from './components/CreditCardModal';
 
 const TRANSACTION_FEE = 0.01;
 
 interface PaymentModalProps extends AssetInfoProps {
   title: string;
   usdPrice: number;
+  collectionId: Collection['id'];
   closeShareModal: () => void;
 }
 
@@ -62,8 +65,10 @@ export const PaymentModal: FC<PaymentModalProps> = ({
   closeShareModal,
   title,
   usdPrice,
+  collectionId,
 }) => {
   const [isAvax, setIsAvax] = useState(true);
+  const [showCreditCardModal, setShowCreditCardModal] = useState(false);
   const { exchangeRate, isLoading } = useAvaxUsdPrice();
   const { balance } = useWallet();
 
@@ -78,6 +83,15 @@ export const PaymentModal: FC<PaymentModalProps> = ({
   );
 
   const handleSwitchPaymentMethodClick = useCallback(() => setIsAvax(!isAvax), [isAvax]);
+
+  const handleButtonClick = async () => {
+    if (isAvax) {
+      console.log('web3 flow');
+    }
+    setShowCreditCardModal(true);
+  };
+
+  const closeCreditCardModal = useCallback(() => setShowCreditCardModal(false), []);
 
   return (
     <Modal title={title} onClick={closeShareModal} fullHeight={true}>
@@ -118,8 +132,16 @@ export const PaymentModal: FC<PaymentModalProps> = ({
             </LinkButton>
           </SwitchPaymentMethod>
         </ConditionalSpinner>
-        <Button>pay and claim</Button>
+        <Button onClick={handleButtonClick}>pay and claim</Button>
       </ContentContainer>
+      {showCreditCardModal && (
+        <CreditCardModal
+          onSuccessfulPayment={closeCreditCardModal}
+          closeModal={closeCreditCardModal}
+          collectionId={collectionId}
+          price={usdPrice}
+        />
+      )}
     </Modal>
   );
 };
