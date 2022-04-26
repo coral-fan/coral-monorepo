@@ -14,6 +14,7 @@ interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
   numMinted?: number;
   maxMintable: number;
   dropDate: string;
+  collectionId: string;
 }
 
 export const DropOrAvailable = ({
@@ -22,6 +23,7 @@ export const DropOrAvailable = ({
   numMinted,
   dropDate,
   collectionName,
+  collectionId,
   artistName,
   imageUrl,
   artistProfilePhoto,
@@ -69,6 +71,7 @@ export const DropOrAvailable = ({
           closeShareModal={closePaymentModal}
           imageUrl={imageUrl}
           collectionName={collectionName}
+          collectionId={collectionId}
           artistName={artistName}
           artistProfilePhoto={artistProfilePhoto}
           type={type}
