@@ -9,11 +9,24 @@ import { SERVER_ENVIRONMENT } from 'consts';
 import { useEffect, useMemo, useState } from 'react';
 import { getTokenTotalSupply } from 'libraries/blockchain/utils';
 
+<<<<<<< HEAD
 // similarCollections optional so failure to fetch
 // doesn't block page from loading
 interface CollectionPageProps extends Collection {
   similarCollections?: PartialCollection[];
+=======
+// stripe
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import { NEXT_PUBLIC_PUBLISHABLE_KEY } from 'libraries/stripe/consts';
+
+interface CollectionPageProps {
+  collectionData: Collection;
+  similarCollections: PartialCollection[];
+>>>>>>> ecc4a140 (Add Stripe Elements wrapper to Collection)
 }
+
+const stripePromise = loadStripe(NEXT_PUBLIC_PUBLISHABLE_KEY);
 
 export const CollectionPage = ({
   imageUrl,
@@ -49,13 +62,18 @@ export const CollectionPage = ({
         maxMintable={maxMintable}
         usdPrice={price}
         collectionName={name}
+        collectionId={id}
         artistName={artistName}
         artistProfilePhoto={artistProfilePhoto}
         imageUrl={imageUrl}
         type={type}
       />
     ),
+<<<<<<< HEAD
     [dropDate, maxMintable, price, name, artistName, artistProfilePhoto, imageUrl, type, numMinted]
+=======
+    [dropDate, maxMintable, price, name, artistName, artistProfilePhoto, imageUrl, type, id]
+>>>>>>> ecc4a140 (Add Stripe Elements wrapper to Collection)
   );
 
   const similarCollectionsSection = useMemo(
@@ -64,20 +82,24 @@ export const CollectionPage = ({
   );
 
   return (
-    <CollectionLayout
-      isAsset={false}
-      type={type}
-      imageUrl={imageUrl}
-      artistName={artistName}
-      artistProfilePhoto={artistProfilePhoto}
-      artistId={artistId}
-      name={name}
-      description={description}
-      details={details}
-      collectionId={id}
-      dropOrAvailable={dropOrAvailable}
-      similarCollections={similarCollectionsSection}
-    />
+    <>
+      <Elements stripe={stripePromise}>
+        <CollectionLayout
+          isAsset={false}
+          type={type}
+          imageUrl={imageUrl}
+          artistName={artistName}
+          artistProfilePhoto={artistProfilePhoto}
+          artistId={artistId}
+          name={name}
+          description={description}
+          details={details}
+          collectionId={id}
+          dropOrAvailable={dropOrAvailable}
+          similarCollections={similarCollectionsSection}
+        />
+      </Elements>
+    </>
   );
 };
 
