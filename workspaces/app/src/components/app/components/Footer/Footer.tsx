@@ -61,14 +61,11 @@ const LinksContainer = styled.div`
 `;
 
 const SITE_MAP_LINKS = [
-  ['Home', 'https://google.com'],
-  ['Terms of Service', 'https://google.com'],
-  ['Drops', 'https://google.com'],
-  ['Privacy', 'https://google.com'],
-  ['About Us', 'https://google.com'],
-  ['Instagram', 'https://google.com'],
-  ['FAQ', 'https://google.com'],
-  ['Twitter', 'https://google.com'],
+  ['Terms of Service', '/terms-of-service'],
+  ['Privacy', '/privacy'],
+  ['Instagram', 'https://www.instagram.com/coral_fan/'],
+  ['Twitter', 'https://twitter.com/coral__fan'],
+  ['Home', '/'],
 ];
 
 export const Footer = () => {
