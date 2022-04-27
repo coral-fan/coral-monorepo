@@ -2,6 +2,8 @@ import { useIsNetworkSupported } from 'libraries/blockchain';
 import { useIsSigningUp } from 'libraries/authentication';
 import { WrongNetworkModal } from './WrongNetworkModal';
 import { SignUpModal } from './SignUpModal';
+import { useRouter } from 'next/router';
+import { SITE_LINKS } from 'consts';
 
 interface ModalOrComponentProps {
   component: JSX.Element;
@@ -9,6 +11,13 @@ interface ModalOrComponentProps {
 export const ModalOrComponent = ({ component }: ModalOrComponentProps) => {
   const isNetworkSupported = useIsNetworkSupported();
   const [isSigningUp] = useIsSigningUp();
+
+  const { asPath } = useRouter();
+
+  // TODO: revisit to see if there's a better way to do this
+  if (asPath === SITE_LINKS.PRIVACY_POLICY || asPath === SITE_LINKS.TERMS_OF_SERVICE) {
+    return component;
+  }
 
   if (!isNetworkSupported) {
     return <WrongNetworkModal />;
