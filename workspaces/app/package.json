@@ -47,7 +47,7 @@
     "react-transition-group": "^4.4.2",
     "rxfire": "^6.0.3",
     "rxjs": "^7.3.0",
-    "theme-in-css": "^0.2.1",
+    "theme-in-css": "^0.2.2",
     "yup": "^0.32.11"
   },
   "devDependencies": {
