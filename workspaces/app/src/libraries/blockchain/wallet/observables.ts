@@ -10,7 +10,6 @@ import { COVALENT_API_KEY } from './consts';
 
 const COVALENT_API_BASE_URL = `https://api.covalenthq.com/v1`;
 
-// TODO: should be using test chain id in local dev environment. depends on how sdk works though...
 const getCovalentTokenBalanceApiUrl = (chainId: number, walletAddress: string) =>
   `${COVALENT_API_BASE_URL}/${chainId}/address/${walletAddress}/balances_v2/?key=${COVALENT_API_KEY}&nft=true&no-nft-fetch=true`;
 
