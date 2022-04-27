@@ -5,7 +5,7 @@
     "app": "yarn workspace app",
     "clean": "yarn workspaces run clean && rm -rf node_modules",
     "start:tunnel": "ngrok start --all --config ngrok.yaml",
-    "postinstall": "yarn workspaces run postinstall"
+    "postinstall": "patch-package && yarn workspaces run postinstall"
   },
   "workspaces": [
     "workspaces/*"
@@ -13,6 +13,8 @@
   "devDependencies": {
     "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.3.0",
+    "patch-package": "^6.4.7",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.4.1"
   },
   "dependencies": {
