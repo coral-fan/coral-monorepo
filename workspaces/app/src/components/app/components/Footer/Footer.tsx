@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import tokens, { QUERY } from 'styles/tokens';
 import { Link, SecondaryLogoIcon } from 'components/ui';
+import { SITE_MAP } from 'consts';
 
 const FOOTER_CONTENT = '© 2022 coral inc. all rights reserved.';
 
@@ -60,13 +61,7 @@ const LinksContainer = styled.div`
   ${textStyle};
 `;
 
-const SITE_MAP_LINKS = [
-  ['Terms of Service', '/terms-of-service'],
-  ['Privacy', '/privacy'],
-  ['Instagram', 'https://www.instagram.com/coral_fan/'],
-  ['Twitter', 'https://twitter.com/coral__fan'],
-  ['Home', '/'],
-];
+const SITE_MAP_LINKS = Object.values(SITE_MAP);
 
 export const Footer = () => {
   return (
