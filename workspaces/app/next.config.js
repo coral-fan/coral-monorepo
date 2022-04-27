@@ -25,7 +25,15 @@ module.exports = withImages({
         dns: false,
       };
     }
-
     return config;
+  },
+  async redirects() {
+    return [
+      {
+        source: '/serviceworker',
+        destination: '/serviceworker/redirect.html',
+        permanent: true,
+      },
+    ];
   },
 });
