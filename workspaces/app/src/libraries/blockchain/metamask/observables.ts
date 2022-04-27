@@ -1,21 +1,19 @@
-import { MetaMaskInpageProvider } from '@metamask/providers';
 import { AVALANCHE } from 'consts';
 import { delay, fromEvent, map, Observable, retryWhen, startWith, throwError } from 'rxjs';
 
-export const fromEthereumEvent = <T>(eventName: string) =>
-  /* 
-  casting due windowing typing collision from @metamask/detect-provider
-  unable to define custom global declaration of window for some reason
-  see node_modules/@metamask/detect-provider/dist/index.d.ts
-  */
-  fromEvent(window.ethereum as MetaMaskInpageProvider, eventName) as Observable<T>;
+export const fromMetaMaskEvent = <T>(eventName: string) => {
+  if (window.ethereum === undefined) {
+    throw 'Do not call fromEthereumEvent if window.etherum is undefined.';
+  }
 
-export const getChainIdChanged$ = () => fromEthereumEvent<string | null>('chainChanged');
+  return fromEvent(window.ethereum, eventName) as Observable<T>;
+};
+
+export const getChainIdChanged$ = () => fromMetaMaskEvent<string | null>('chainChanged');
 
 export const getIsNetworkSupported$ = () =>
   getChainIdChanged$().pipe(
-    // see above comment regarding casting
-    startWith((window.ethereum as MetaMaskInpageProvider).chainId),
+    startWith(window?.ethereum?.chainId ?? null),
     map((chainId) => {
       if (chainId === null) {
         return throwError(() => new Error());
