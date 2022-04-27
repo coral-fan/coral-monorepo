@@ -52,3 +52,11 @@ export const AVALANCHE = {
   RPC_URL: process.env.NEXT_PUBLIC_AVALANCHE_RPC_URL,
   BLOCK_EXPLORER_URL: process.env.NEXT_PUBLIC_AVALANCHE_BLOCK_EXPLORER_URL,
 };
+
+export const SITE_MAP = {
+  TERMS_OF_SERVICE: ['Terms of Service', '/terms-of-service'],
+  PRIVACY: ['Privacy', '/privacy'],
+  INSTAGRAM: ['Instagram', 'https://www.instagram.com/coral_fan/'],
+  TWITTER: ['Twitter', 'https://twitter.com/coral__fan'],
+  HOME: ['Home', '/'],
+};
