@@ -1,6 +1,12 @@
-import { Modal, Button, Toggle, Input } from 'components/ui';
+import styled from '@emotion/styled';
+import { Modal, Button, Toggle, Input, Link as BaseLink } from 'components/ui';
+import { SITE_LINKS } from 'consts';
 import { TogglesContainer, InputsContainer, SignUpForm } from './components';
 import { useSignUpForm } from './hook';
+
+const Link = styled(BaseLink)`
+  text-decoration: underline;
+`;
 
 export const SignUpModal = () => {
   const { register, errors, isValid, isSignUpSubmitting, handleSubmitSignUp, getValues } =
@@ -30,7 +36,15 @@ export const SignUpModal = () => {
             <Toggle {...register('doesOptIntoMarketing')}>Opt into marketing</Toggle>
           )}
           <Toggle {...register('doesAgree')}>
-            I agree to Coral&apos;s <u>privacy policy</u> and <u> terms &amp; conditions</u>
+            I agree to Coral&apos;s{' '}
+            <Link href={SITE_LINKS.PRIVACY_POLICY} openInNewTab>
+              privacy policy
+            </Link>{' '}
+            and{' '}
+            <Link href={SITE_LINKS.TERMS_OF_SERVICE} openInNewTab>
+              {' '}
+              terms of service
+            </Link>
           </Toggle>
         </TogglesContainer>
         <Button
