@@ -2,8 +2,9 @@ import { getAuth } from 'firebase/auth';
 import { getCollectionReferenceClientSide, getDocumentData } from 'libraries/firebase';
 import { user } from 'rxfire/auth';
 import { collectionData } from 'rxfire/firestore';
-import { filter, map, mergeMap } from 'rxjs';
+import { filter, map, mergeMap, startWith, tap } from 'rxjs';
 import { PublicUserData, User } from './types';
+import { getUidClientSide } from './utils';
 
 // client side only
 const getFirebaseUser$ = () => {
@@ -12,7 +13,11 @@ const getFirebaseUser$ = () => {
 };
 
 // client side only
-export const getUserUid$ = () => getFirebaseUser$().pipe(map((user) => user?.uid));
+export const getUserUid$ = () =>
+  getFirebaseUser$().pipe(
+    map((user) => user?.uid),
+    startWith(getUidClientSide())
+  );
 
 // client side only
 export const getUsernames$ = () => {
