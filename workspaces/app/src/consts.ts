@@ -55,8 +55,13 @@ export const AVALANCHE = {
 
 export const SITE_MAP = {
   TERMS_OF_SERVICE: ['Terms of Service', '/terms-of-service'],
-  PRIVACY: ['Privacy', '/privacy'],
+  PRIVACY_POLICY: ['Privacy Policy', '/privacy-policy'],
   INSTAGRAM: ['Instagram', 'https://www.instagram.com/coral_fan/'],
   TWITTER: ['Twitter', 'https://twitter.com/coral__fan'],
   HOME: ['Home', '/'],
 };
+
+export const SITE_LINKS = Object.entries(SITE_MAP).reduce(
+  (links, [key, value]) => ({ ...links, [key]: value[1] }),
+  {}
+) as Record<keyof typeof SITE_MAP, string>;
