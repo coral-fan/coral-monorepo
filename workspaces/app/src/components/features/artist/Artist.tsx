@@ -15,6 +15,7 @@ export const ArtistPage = ({ artistData }: ArtistPageProps) => (
 export const getServerSideProps: GetServerSideProps<ArtistPageProps, { artistId: string }> = async (
   context
 ) => {
+  //  TODO: remove conditional return for sign up campaign
   if (SERVER_ENVIRONMENT === 'production') {
     return {
       notFound: true,

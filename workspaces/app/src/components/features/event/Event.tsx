@@ -62,6 +62,7 @@ export const EventPage = ({
 export const getServerSideProps: GetServerSideProps<EventPageProps, { id: string }> = async (
   context
 ) => {
+  //  TODO: remove conditional return for sign up campaign
   if (SERVER_ENVIRONMENT === 'production') {
     return {
       notFound: true,
