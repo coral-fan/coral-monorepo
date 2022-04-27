@@ -1,6 +1,5 @@
 import { createElement, useCallback, useMemo } from 'react';
 import styled from '@emotion/styled';
-import tokens from 'styles/tokens';
 import { CLIENT_ENVIRONMENT } from 'consts';
 import { Link, Modal } from 'components/ui';
 import { useIsAuthenticated, useLogin, useLogout } from 'libraries/authentication';
