@@ -1,7 +1,7 @@
 import { getDocumentData } from 'libraries/firebase';
 import { IsUserSigningUpData } from '.';
 import { destroyCookie, parseCookies } from 'nookies';
-import { COOKIE_OPTIONS } from 'consts';
+import { COOKIE_OPTIONS, ID_TOKEN_KEY } from 'consts';
 import { initializeFirebaseAdmin } from 'libraries/firebase';
 import { getAuth } from 'firebase/auth';
 import { getApp } from 'firebase/app';
@@ -14,11 +14,12 @@ export const getUidServerSide = async (ctx: Context) => {
     const { getApp } = await import('firebase-admin/app');
     const app = getApp();
     const { getAuth } = await import('firebase-admin/auth');
+    // TODO: think of way to globally type cookies more strictly
     const cookies = parseCookies(ctx);
-    const { uid } = await getAuth(app).verifyIdToken(cookies.token);
+    const { uid } = await getAuth(app).verifyIdToken(cookies[ID_TOKEN_KEY]);
     return uid;
   } catch (_) {
-    destroyCookie(ctx, 'token', COOKIE_OPTIONS);
+    destroyCookie(ctx, ID_TOKEN_KEY, COOKIE_OPTIONS);
     return undefined;
   }
 };
