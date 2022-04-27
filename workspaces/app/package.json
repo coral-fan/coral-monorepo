@@ -6,6 +6,7 @@
     "start": "nodemon --watch next.config.js --exec 'next dev'",
     "start:debug": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
+    "serve": "next start",
     "lint": "next lint",
     "clean": "rm -rf node_modules && yarn clean:contracts && yarn clean:build",
     "clean:contracts": "rm -rf src/libraries/blockchain/contracts",
