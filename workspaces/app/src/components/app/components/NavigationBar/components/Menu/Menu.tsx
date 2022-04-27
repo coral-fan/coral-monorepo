@@ -1,6 +1,7 @@
 import { createElement, useCallback, useMemo } from 'react';
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
+import { CLIENT_ENVIRONMENT } from 'consts';
 import { Link, Modal } from 'components/ui';
 import { useIsAuthenticated, useLogin, useLogout } from 'libraries/authentication';
 import { useUserUid } from 'libraries/models';
@@ -28,10 +29,6 @@ interface LinkButtonItemProps extends BaseMenuItemProp {
 }
 
 type MenuItemProps = LinkItemProps | LinkButtonItemProps;
-
-const MenuProfileLink = styled(Link)`
-  border-bottom: solid 1px ${tokens.border.color.secondary};
-`;
 
 const ClickableWrapper = styled.div`
   width: fit-content;
@@ -70,12 +67,20 @@ export const Menu = ({ userProfile, closeMenuModal }: MenuProps) => {
     <Modal onClick={closeMenuModal} mainContainerHasNoGap>
       {isAuthenticated && userProfile && (
         <ClickableWrapper>
-          <MenuProfileLink href={`/user/${uid}`} onClick={closeMenuModal}>
+          {/* TODO: remove conditional renderl logic for sign up campaign */}
+          {CLIENT_ENVIRONMENT === 'production' ? (
             <MenuProfileInfo
               username={userProfile.username}
               profilePhoto={userProfile.profilePhoto}
             />
-          </MenuProfileLink>
+          ) : (
+            <Link href={`/user/${uid}`} onClick={closeMenuModal}>
+              <MenuProfileInfo
+                username={userProfile.username}
+                profilePhoto={userProfile.profilePhoto}
+              />
+            </Link>
+          )}
           {/* <NotificationItem handleCloseMenu={useCloseMenuModal} notificationsCount={notificationsCount} /> */}
         </ClickableWrapper>
       )}
