@@ -82,6 +82,7 @@ interface CollectionParams extends NextParsedUrlQuery {
 export const getServerSideProps: GetServerSideProps<CollectionPageProps, CollectionParams> = async (
   context
 ) => {
+  //  TODO: remove conditional return for sign up campaign
   if (SERVER_ENVIRONMENT === 'production') {
     return {
       notFound: true,

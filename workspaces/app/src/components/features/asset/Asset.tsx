@@ -102,6 +102,7 @@ export const AssetPage = ({
 export const getServerSideProps: GetServerSideProps<AssetPageProps, { assetId: string }> = async (
   context
 ) => {
+  //  TODO: remove conditional return for sign up campaign
   if (SERVER_ENVIRONMENT === 'production') {
     return {
       notFound: true,
