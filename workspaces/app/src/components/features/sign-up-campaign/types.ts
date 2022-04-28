@@ -1,5 +1,5 @@
 import { User } from 'libraries/models';
 
-export interface PrelaunchSignUpCampaignData {
-  users: User['id'][];
+export interface EarlySignUpCampaignData {
+  userUids: User['id'][];
 }
