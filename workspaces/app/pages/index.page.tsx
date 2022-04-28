@@ -1,1 +1,4 @@
-export { SignUpCampaign as default } from 'components/features/sign-up-campaign';
+export {
+  SignUpCampaign as default,
+  getServerSideProps,
+} from 'components/features/sign-up-campaign';
