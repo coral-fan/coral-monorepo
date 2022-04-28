@@ -1,9 +1,10 @@
-import { SERVER_ENVIRONMENT } from 'consts';
-import { getDocumentReferenceServerSide } from 'libraries/firebase';
+import { PrelaunchSignUpCampaignData } from 'components/features/sign-up-campaign/types';
+import { SERVER_ENVIRONMENT, SIGN_UP_CAMPAIGN_MAX_OPENINGS } from 'consts';
+import { getDocumentData, getDocumentReferenceServerSide } from 'libraries/firebase';
 import { IncomingUserData, PrivateUserData, PublicUserData } from 'libraries/models';
 import { USER_PROPERTIES, PRIVATE_USER_DATA_PROPERTIES } from './consts';
 
-const extractData = <T, U>(data: T, keys: Set<keyof U>): Partial<U> =>
+const extractData = <T, U>(data: T, keys: Set<keyof U>): Partial<T> =>
   Object.entries(data).reduce(
     (extractedData, [key, value]) =>
       // casting to prevent TS from throwing a hissy fit about Argument of type 'string' is not assignable to parameter of type 'keyof U'
@@ -46,6 +47,29 @@ export const upsertUser = async (uid: string, incomingUserData: IncomingUserData
   if (!isObjectEmpty(userData)) {
     const userDocRef = await getDocumentReferenceServerSide('users', uid);
     const userDocSnapshot = await userDocRef.get();
+
+    // TODO: remove sign up campaign logic
+    // logic starts here
+    if (!userDocSnapshot.exists) {
+      const signupCampaignDocRef = await getDocumentReferenceServerSide(
+        'app',
+        'prelaunch-sign-up-campaign'
+      );
+
+      const signupCampaignData = await getDocumentData<PrelaunchSignUpCampaignData>(
+        'app',
+        'prelaunch-sign-up-campaign'
+      );
+
+      if (signupCampaignData) {
+        const { users } = signupCampaignData;
+        if (users.length < SIGN_UP_CAMPAIGN_MAX_OPENINGS) {
+          signupCampaignDocRef.set({ users: [...users, uid] });
+        }
+      }
+    }
+    // logic ends here
+
     await userDocRef.set(
       userDocSnapshot.exists
         ? userData
