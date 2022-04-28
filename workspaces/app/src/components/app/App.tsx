@@ -41,7 +41,8 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
     <>
       <GlobalStyles />
       <Head>
-        <title></title>
+        {/* TODO: update title post sign up campaign */}
+        <title>Early Sign Up Campaign | Coral</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="" />
         {/* <link rel="icon" href="/favicon.ico" /> */}
