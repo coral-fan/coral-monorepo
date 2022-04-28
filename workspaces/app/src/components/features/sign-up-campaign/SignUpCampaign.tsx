@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
 import { useIsAuthenticated } from 'libraries/authentication';
 import { getDocumentData } from 'libraries/firebase';
+import { getUidServerSide } from 'libraries/models';
 import { GetServerSideProps } from 'next';
 import { SignUp, ThanksForSigningUp } from './components';
-import { PrelaunchSignUpCampaignData } from './types';
+import { EarlySignUpCampaignData } from './types';
 
 const Container = styled.div`
   flex: 1;
@@ -15,7 +16,8 @@ const Container = styled.div`
 `;
 
 export interface SignUpCampaignProps {
-  prelaunchSignUpUsers: PrelaunchSignUpCampaignData['users'];
+  prelaunchSignUpUsers: EarlySignUpCampaignData['userUids'];
+  isUserEarlySupporter: boolean;
 }
 
 export const SignUpCampaign = (props: SignUpCampaignProps) => {
@@ -28,19 +30,26 @@ export const SignUpCampaign = (props: SignUpCampaignProps) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<SignUpCampaignProps> = async () => {
-  const signUpCampaignData = await getDocumentData<PrelaunchSignUpCampaignData>(
+export const getServerSideProps: GetServerSideProps<SignUpCampaignProps> = async (ctx) => {
+  const signUpCampaignData = await getDocumentData<EarlySignUpCampaignData>(
     'app',
-    'prelaunch-sign-up-campaign'
+    'early-sign-up-campaign'
   );
 
   if (signUpCampaignData === undefined) {
     throw 'signUpCampaignData cannot be undefined.';
   }
 
+  const { userUids } = signUpCampaignData;
+
+  const uid = await getUidServerSide(ctx);
+
+  const isUserEarlySupporter = uid ? userUids.includes(uid) : false;
+
   return {
     props: {
-      prelaunchSignUpUsers: signUpCampaignData.users,
+      prelaunchSignUpUsers: userUids,
+      isUserEarlySupporter,
     },
   };
 };
