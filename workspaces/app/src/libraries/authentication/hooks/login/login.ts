@@ -36,11 +36,8 @@ export const useLogin = (onSuccessCallback?: () => void) => {
         const nonce = await getNonce(address);
         const signedMessage = await getSignedAuthenticationMessage(signer, nonce);
         const customToken = await getFirebaseCustomToken(address, signedMessage);
-        const userCredential = await signInWithCustomToken(getAuth(), customToken);
-
-        const isSigningUp = await getIsUserSigningUp(userCredential.user.uid);
-        setIsSigningUp(isSigningUp);
-        refetchPageData();
+        await signInWithCustomToken(getAuth(), customToken);
+        await refetchPageData();
         onSuccessCallback && onSuccessCallback();
       }
       setIsLoggingIn(false);
@@ -50,7 +47,7 @@ export const useLogin = (onSuccessCallback?: () => void) => {
       setLoginError(error);
       setIsLoggingIn(false);
     }
-  }, [connector, isActive, refetchPageData, setIsLoggingIn, setIsSigningUp]);
+  }, [connector, isActive, refetchPageData, setIsLoggingIn, onSuccessCallback]);
 
   return { login, isLoggingIn, loginError };
 };
