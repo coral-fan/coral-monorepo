@@ -53,18 +53,18 @@ export const upsertUser = async (uid: string, incomingUserData: IncomingUserData
     if (!userDocSnapshot.exists) {
       const signupCampaignDocRef = await getDocumentReferenceServerSide(
         'app',
-        'prelaunch-sign-up-campaign'
+        'early-sign-up-campaign'
       );
 
       const signupCampaignData = await getDocumentData<PrelaunchSignUpCampaignData>(
         'app',
-        'prelaunch-sign-up-campaign'
+        'early-sign-up-campaign'
       );
 
       if (signupCampaignData) {
-        const { users } = signupCampaignData;
-        if (users.length < SIGN_UP_CAMPAIGN_MAX_OPENINGS) {
-          signupCampaignDocRef.set({ users: [...users, uid] });
+        const { userUids } = signupCampaignData;
+        if (userUids.length < SIGN_UP_CAMPAIGN_MAX_OPENINGS) {
+          signupCampaignDocRef.set({ userUids: [...userUids, uid] });
         }
       }
     }
