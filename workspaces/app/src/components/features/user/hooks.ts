@@ -27,13 +27,9 @@ export const useIsUpdateProfilePhotoModalOpen = (): [boolean, SetIsModalOpen] =>
 };
 
 export const useIsCurrentUser = () => {
-  const { userProfileId } = useRouter().query;
-
-  if (typeof userProfileId !== 'string') {
-    throw Error('userProfileId must be of type string');
-  }
+  const { id } = useRouter().query;
 
   const currentUserUid = useUserUid();
 
-  return currentUserUid === userProfileId;
+  return currentUserUid === id;
 };
