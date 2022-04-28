@@ -21,7 +21,11 @@ export interface SignUpCampaignProps {
 export const SignUpCampaign = (props: SignUpCampaignProps) => {
   const isAuthenticated = useIsAuthenticated();
 
-  return <Container>{isAuthenticated ? <ThanksForSigningUp /> : <SignUp {...props} />}</Container>;
+  return (
+    <Container>
+      {isAuthenticated ? <ThanksForSigningUp {...props} /> : <SignUp {...props} />}
+    </Container>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps<SignUpCampaignProps> = async () => {
