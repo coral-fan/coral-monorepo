@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Button } from 'components/ui';
 import { QUERY } from 'styles';
-import { SignUpCampaignProps as ThanksForSigningUpProps } from '../SignUpCampaign';
+import { SignUpCampaignProps } from '../SignUpCampaign';
 import { CtaLayout } from './components';
 
 const Heading = styled.h1`
@@ -26,6 +26,8 @@ const shareButtonStyle = css`
   width: 250px;
   margin-top: 30px;
 `;
+
+type ThanksForSigningUpProps = Pick<SignUpCampaignProps, 'isUserEarlySupporter'>;
 
 export const ThanksForSigningUp = ({ isUserEarlySupporter }: ThanksForSigningUpProps) => {
   return (
