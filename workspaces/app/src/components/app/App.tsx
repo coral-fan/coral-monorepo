@@ -22,6 +22,9 @@ import { initializeStore } from 'libraries/state';
 
 initializeFirebaseApp();
 
+const getRandomSocialMediaPreviewImageUrl = () =>
+  `/images/social-media-preview/${Math.ceil(Math.random() * 5)}.png`;
+
 export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
   const store = initializeStore(initialState);
 
@@ -42,12 +45,13 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
       <GlobalStyles />
       <Head>
         {/* TODO: update title post sign up campaign */}
-        <title>Early Sign Up Campaign | Coral</title>
+        <title>Early Sign Up Campaign | CORAL</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           name="description"
           content="A modern marketplace for music, collectibles, events and experiences, is coming soon. Sign up for early access."
         />
+        <meta property="og:image" content={getRandomSocialMediaPreviewImageUrl()} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
