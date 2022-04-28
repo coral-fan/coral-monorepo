@@ -1,4 +1,4 @@
-import { PrelaunchSignUpCampaignData } from 'components/features/sign-up-campaign/types';
+import { EarlySignUpCampaignData } from 'components/features/sign-up-campaign/types';
 import { SERVER_ENVIRONMENT, SIGN_UP_CAMPAIGN_MAX_OPENINGS } from 'consts';
 import { getDocumentData, getDocumentReferenceServerSide } from 'libraries/firebase';
 import { IncomingUserData, PrivateUserData, PublicUserData } from 'libraries/models';
@@ -56,7 +56,7 @@ export const upsertUser = async (uid: string, incomingUserData: IncomingUserData
         'early-sign-up-campaign'
       );
 
-      const signupCampaignData = await getDocumentData<PrelaunchSignUpCampaignData>(
+      const signupCampaignData = await getDocumentData<EarlySignUpCampaignData>(
         'app',
         'early-sign-up-campaign'
       );
