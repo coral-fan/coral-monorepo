@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { upsertUser, useUsernames, useUserUid } from 'libraries/models';
 import { getSignUpSchema, SignUpSchema } from './schema';
-import { useIsSigningUp } from 'libraries/authentication';
 import { getCoralAPIAxios } from 'libraries/utils/api';
+import { useRefetchPageData } from 'libraries/utils';
 
 const axios = getCoralAPIAxios();
 
@@ -25,7 +25,7 @@ export const useSignUpForm = () => {
   const [isSignUpSubmitting, setIsSignUpSubmitting] = useState(false);
   const uid = useUserUid();
 
-  const [, setIsSigningUp] = useIsSigningUp();
+  const refetchPageData = useRefetchPageData();
 
   const handleSubmitSignUp = useMemo(
     () =>
@@ -35,14 +35,14 @@ export const useSignUpForm = () => {
           try {
             await upsertUser(uid, { username, email, doesOptIntoMarketing });
             await axios.post('is-signing-up', { isSigningUp: false });
-            setIsSigningUp(false);
+            await refetchPageData();
           } catch (_) {
             setIsSignUpSubmitting(false);
           }
         }
         setIsSignUpSubmitting(false);
       }),
-    [handleSubmit, uid, setIsSigningUp]
+    [handleSubmit, uid, refetchPageData]
   );
 
   return {
