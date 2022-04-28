@@ -13,17 +13,12 @@ const extractData = <T, U>(data: T, keys: Set<keyof U>): Partial<T> =>
   );
 const isObjectEmpty = (object: Record<string, unknown>) => Object.keys(object).length === 0;
 
-const DEFAULT_PROFILE_PHOTO_SRC =
-  SERVER_ENVIRONMENT === 'production'
-    ? 'https://firebasestorage.googleapis.com/v0/b/coral-fan.appspot.com/o/users%2Fdefault%2Fprofile-photo.png?alt=media&token=877096c6-9f69-4d3a-ba25-1f47b6682209'
-    : 'https://firebasestorage.googleapis.com/v0/b/coral-c373f.appspot.com/o/users%2Fdefault%2Fprofile-photo.png?alt=media&token=704a0037-c763-4685-b998-1682cce9f64f';
-
 type DefaultPublicUserData = Omit<PublicUserData, 'id' | 'username'>;
 
 const DEFAULT_PUBLIC_USER_DATA: DefaultPublicUserData = {
   type: 'fan',
   profilePhoto: {
-    src: DEFAULT_PROFILE_PHOTO_SRC,
+    src: '/images/default-profile-photo.png',
     offsetPercentages: [0, 0],
     scale: 1,
   },
