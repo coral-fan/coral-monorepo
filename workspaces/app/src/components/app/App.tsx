@@ -44,8 +44,11 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
         {/* TODO: update title post sign up campaign */}
         <title>Early Sign Up Campaign | Coral</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="" />
-        {/* <link rel="icon" href="/favicon.ico" /> */}
+        <meta
+          name="description"
+          content="A modern marketplace for music, collectibles, events and experiences, is coming soon. Sign up for early access."
+        />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
         <ReduxProvider store={store}>
