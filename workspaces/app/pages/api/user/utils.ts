@@ -1,5 +1,5 @@
 import { EarlySignUpCampaignData } from 'components/features/sign-up-campaign/types';
-import { SERVER_ENVIRONMENT, SIGN_UP_CAMPAIGN_MAX_OPENINGS } from 'consts';
+import { SIGN_UP_CAMPAIGN_MAX_OPENINGS } from 'consts';
 import { getDocumentData, getDocumentReferenceServerSide } from 'libraries/firebase';
 import { IncomingUserData, PrivateUserData, PublicUserData } from 'libraries/models';
 import { USER_PROPERTIES, PRIVATE_USER_DATA_PROPERTIES } from './consts';
