@@ -2,8 +2,10 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Button, Link } from 'components/ui';
 import { getIconComponent } from 'components/ui/icons/utils';
+import { SIGN_UP_CAMPAIGN_MAX_OPENINGS } from 'consts';
 import { useLogin } from 'libraries/authentication';
 import { QUERY } from 'styles/tokens';
+import { SignUpCampaignProps as SignUpProps } from '../SignUpCampaign';
 import avalancheLogoSVG from './avalanche-logo.svg';
 import { CtaLayout } from './components';
 
@@ -27,7 +29,9 @@ interface RewardSpotsProps {
   remaining: number;
 }
 const RewardSpots = ({ remaining }: RewardSpotsProps) => (
-  <span css={rewardSpotsStyle}>{remaining}/250 Early Reward Spots</span>
+  <span css={rewardSpotsStyle}>
+    {remaining}/{SIGN_UP_CAMPAIGN_MAX_OPENINGS} Early Reward Spots
+  </span>
 );
 
 const poweredByAvalancheStyle = css`
@@ -65,15 +69,17 @@ const Container = styled.div`
   max-width: 250px;
 `;
 
-export const SignUp = () => {
+export const SignUp = ({ prelaunchSignUpUsers }: SignUpProps) => {
   const { login, isLoggingIn } = useLogin();
+
+  const remaining = SIGN_UP_CAMPAIGN_MAX_OPENINGS - prelaunchSignUpUsers.length;
 
   return (
     <>
       <Heading>A modern marketplace for music, collectibles, events and experiences</Heading>
       <CtaLayout>
         <Container>
-          <RewardSpots remaining={198} />
+          <RewardSpots remaining={remaining} />
           <Button onClick={login} loading={isLoggingIn}>
             Sign Up
           </Button>
