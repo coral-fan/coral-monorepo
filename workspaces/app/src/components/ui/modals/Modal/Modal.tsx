@@ -68,13 +68,8 @@ const Content = styled(Card)<ContentProps>`
   gap: 18px;
   overflow: scroll;
 
-  @media ${QUERY.LAPTOP} {
+  @media ${QUERY.TABLET} {
     max-height: 750px;
-    ${({ modalHasControlButton }) =>
-      modalHasControlButton &&
-      css`
-        transform: translateY(calc(-1 * (${tokens.buttons.size.mobile} + 12px)));
-      `}
   }
 
   ${({ contentStyle }) => contentStyle}
