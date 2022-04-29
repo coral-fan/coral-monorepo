@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Button } from 'components/ui';
+import { Button, Image, ShareModal } from 'components/ui';
+import { useCallback, useState } from 'react';
 import { QUERY } from 'styles';
 import { SignUpCampaignProps } from '../SignUpCampaign';
 import { CtaLayout } from './components';
@@ -30,6 +31,10 @@ const shareButtonStyle = css`
 type ThanksForSigningUpProps = Pick<SignUpCampaignProps, 'isUserEarlySupporter'>;
 
 export const ThanksForSigningUp = ({ isUserEarlySupporter }: ThanksForSigningUpProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(true);
+  const openModal = useCallback(() => setIsModalOpen(true), []);
+  const closeModal = useCallback(() => setIsModalOpen(false), []);
+
   return (
     <>
       <Heading>Thanks For Signing Up</Heading>
@@ -44,8 +49,20 @@ export const ThanksForSigningUp = ({ isUserEarlySupporter }: ThanksForSigningUpP
             <span>Stay tuned for updates</span>
           )}
         </SecondaryInfo>
-        <Button css={shareButtonStyle}>Share</Button>
+        <Button css={shareButtonStyle} onClick={openModal}>
+          Share
+        </Button>
       </CtaLayout>
+      {isModalOpen && (
+        <ShareModal
+          title={'Share Early Sign Up Campaign'}
+          url={window.location.href}
+          postTitle={'Coral Early Sign Up Campaign'}
+          closeShareModal={closeModal}
+        >
+          <Image src={'/images/social-media-preview/1.png'} alt="" />
+        </ShareModal>
+      )}
     </>
   );
 };
