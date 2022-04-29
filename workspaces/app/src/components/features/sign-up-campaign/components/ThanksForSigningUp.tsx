@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Button, Image, ShareModal } from 'components/ui';
+import { Button, ButtonLink, Image, LinkButton, ShareModal } from 'components/ui';
+import { useLogout } from 'libraries/authentication';
 import { useCallback, useState } from 'react';
 import { QUERY } from 'styles';
 import { SignUpCampaignProps } from '../SignUpCampaign';
@@ -30,10 +31,16 @@ const shareButtonStyle = css`
 
 type ThanksForSigningUpProps = Pick<SignUpCampaignProps, 'isUserEarlySupporter'>;
 
+const UnderlinedLinkButton = styled(LinkButton)`
+  text-decoration: underline;
+`;
+
 export const ThanksForSigningUp = ({ isUserEarlySupporter }: ThanksForSigningUpProps) => {
   const [isModalOpen, setIsModalOpen] = useState(true);
   const openModal = useCallback(() => setIsModalOpen(true), []);
   const closeModal = useCallback(() => setIsModalOpen(false), []);
+
+  const logout = useLogout();
 
   return (
     <>
@@ -53,6 +60,7 @@ export const ThanksForSigningUp = ({ isUserEarlySupporter }: ThanksForSigningUpP
           Share
         </Button>
       </CtaLayout>
+      <UnderlinedLinkButton onClick={logout}>Logout</UnderlinedLinkButton>
       {isModalOpen && (
         <ShareModal
           title={'Share Early Sign Up Campaign'}
