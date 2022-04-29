@@ -4,22 +4,9 @@ import { Button, Link } from 'components/ui';
 import { getIconComponent } from 'components/ui/icons/utils';
 import { SIGN_UP_CAMPAIGN_MAX_OPENINGS } from 'consts';
 import { useLogin } from 'libraries/authentication';
-import { QUERY } from 'styles/tokens';
 import { SignUpCampaignProps as SignUpProps } from '../SignUpCampaign';
 import avalancheLogoSVG from './avalanche-logo.svg';
-import { CtaLayout } from './components';
-
-const Heading = styled.h1`
-  --font-size: 34px;
-  @media ${QUERY.TABLET} {
-    --font-size: 85px;
-  }
-  font-size: var(--font-size);
-
-  max-width: 1000px;
-
-  text-align: center;
-`;
+import { CoralSocialLinks, Heading, Layout } from './components';
 
 const rewardSpotsStyle = css`
   text-transform: uppercase;
@@ -60,7 +47,7 @@ const PoweredByAvalanche = () => (
   </div>
 );
 
-const Container = styled.div`
+const SubLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -76,15 +63,16 @@ export const SignUp = ({ prelaunchSignUpUsers }: SignUpProps) => {
 
   return (
     <>
-      <Heading>A modern marketplace for music, collectibles, events and experiences</Heading>
-      <CtaLayout>
-        <Container>
+      <Layout>
+        <Heading>A modern marketplace for music, collectibles, events and experiences</Heading>
+        <SubLayout>
           <RewardSpots remaining={remaining} />
           <Button onClick={login} loading={isLoggingIn}>
             Sign Up
           </Button>
-        </Container>
-      </CtaLayout>
+          <CoralSocialLinks />
+        </SubLayout>
+      </Layout>
       <PoweredByAvalanche />
     </>
   );
