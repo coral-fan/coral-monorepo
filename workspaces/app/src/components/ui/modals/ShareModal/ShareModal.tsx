@@ -22,7 +22,7 @@ const ContentContainer = styled.div`
 
 const SocialIconsContainer = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 16px;
   padding: 0px 6px;
 `;
