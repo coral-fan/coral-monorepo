@@ -39,12 +39,12 @@ export const SignUpModal = () => {
             I agree to Coral&apos;s{' '}
             <Link href={SITE_LINKS.PRIVACY_POLICY} openInNewTab>
               privacy policy
-            </Link>{' '}
-            and{' '}
+            </Link>
+            {/* and{' '}
             <Link href={SITE_LINKS.TERMS_OF_SERVICE} openInNewTab>
               {' '}
               terms of service
-            </Link>
+            </Link> */}
           </Toggle>
         </TogglesContainer>
         <Button
