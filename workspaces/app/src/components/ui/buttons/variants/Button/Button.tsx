@@ -4,11 +4,13 @@ import { FC } from 'react';
 import { BaseButton, BaseButtonProps as ButtonProps } from '../../BaseButton';
 import tokens from 'styles/tokens';
 
+const SIZE = tokens.font.size.sm;
+
 export const buttonStyle = css`
   width: 100%;
   padding: 15px;
   text-transform: uppercase;
-  font-size: ${tokens.font.size.sm};
+  font-size: ${SIZE};
   font-weight: ${tokens.font.weight.bold};
   line-height: ${tokens.font.line_height.sm};
   letter-spacing: ${tokens.font.letter_spacing.sm};
@@ -25,7 +27,7 @@ const Wrapper = styled(BaseButton)`
 `;
 
 export const Button: FC<ButtonProps> = ({ children, loading, ...props }) => (
-  <Wrapper loading={loading} {...props}>
+  <Wrapper loading={loading} spinnerSize={SIZE} {...props}>
     {children}
   </Wrapper>
 );
