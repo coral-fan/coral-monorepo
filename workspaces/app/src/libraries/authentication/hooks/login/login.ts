@@ -2,15 +2,13 @@ import { useCallback, useState } from 'react';
 import { signInWithCustomToken, getAuth } from 'firebase/auth';
 import { Web3Provider } from '@ethersproject/providers';
 import { useWallet } from 'libraries/blockchain';
-import { useIsLoggingIn, useIsSigningUp } from '..';
+import { useIsLoggingIn } from '..';
 import { getNonce, getSignedAuthenticationMessage, getFirebaseCustomToken } from './utils';
-import { getIsUserSigningUp } from 'libraries/models';
 import { useRefetchPageData } from 'libraries/utils/hooks';
 import { Eip1193Bridge } from '@ethersproject/experimental';
 
 export const useLogin = (onSuccessCallback?: () => void) => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
-  const [, setIsSigningUp] = useIsSigningUp();
   const { connector, isActive } = useWallet();
   const refetchPageData = useRefetchPageData();
   //TODO: should probably look into how to type errors better
