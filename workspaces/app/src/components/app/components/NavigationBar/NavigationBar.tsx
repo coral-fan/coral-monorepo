@@ -6,6 +6,7 @@ import { User } from 'libraries/models';
 import { useObservable } from 'libraries/utils';
 import { getUserProfile$ } from './observables';
 import tokens, { QUERY } from 'styles/tokens';
+import { CLIENT_ENVIRONMENT } from 'consts';
 
 const { mobile, desktop } = tokens.layout.padding;
 
@@ -38,7 +39,8 @@ export const NavigationBar = () => {
       {isMenuOpen && <Menu closeMenuModal={closeMenuModal} userProfile={userProfile} />}
       <Container>
         <LogoHomeLink />
-        <HamburgerMenuButton onClick={openMenuModal} />
+        {/* TODO: remove conditional logic post sign up campaign */}
+        {CLIENT_ENVIRONMENT !== 'production' && <HamburgerMenuButton onClick={openMenuModal} />}
       </Container>
     </>
   );
