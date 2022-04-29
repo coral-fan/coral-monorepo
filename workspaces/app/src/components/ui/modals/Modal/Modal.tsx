@@ -49,7 +49,7 @@ const ContentContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
-  @media ${QUERY.LAPTOP} {
+  @media ${QUERY.TABLET} {
     height: 100%;
     justify-content: center;
   }
@@ -70,6 +70,11 @@ const Content = styled(Card)<ContentProps>`
 
   @media ${QUERY.TABLET} {
     max-height: 750px;
+    ${({ modalHasControlButton }) =>
+      modalHasControlButton &&
+      css`
+        transform: translateY(calc(-1 * (${tokens.buttons.size.mobile} + 12px)));
+      `}
   }
 
   ${({ contentStyle }) => contentStyle}
