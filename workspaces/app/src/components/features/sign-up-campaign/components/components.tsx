@@ -1,8 +1,21 @@
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { SocialLinks } from 'components/ui';
 import { SocialHandles } from 'libraries/models';
-import { FC } from 'react';
+import { QUERY } from 'styles';
+
+export const Heading = styled.h1`
+  --font-size: 34px;
+
+  @media ${QUERY.TABLET} {
+    --font-size: 52px;
+  }
+
+  font-size: var(--font-size);
+  padding-bottom: 4px;
+
+  max-width: 1000px;
+  text-align: center;
+`;
 
 const CORAL_SOCIAL_HANDLES: SocialHandles = {
   instagram: 'coral_fan',
@@ -11,20 +24,12 @@ const CORAL_SOCIAL_HANDLES: SocialHandles = {
 
 export const CoralSocialLinks = () => <SocialLinks socialHandles={CORAL_SOCIAL_HANDLES} />;
 
-const containerStyle = css`
+export const Layout = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   width: 100%;
-`;
-const LayoutContainer = styled.div`
-  ${containerStyle}
+  flex-grow: 1;
   gap: 20px;
 `;
-
-export const CtaLayout: FC = ({ children }) => (
-  <LayoutContainer>
-    {children}
-    <CoralSocialLinks />
-  </LayoutContainer>
-);

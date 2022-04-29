@@ -1,24 +1,21 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Button, ButtonLink, Image, LinkButton, ShareModal } from 'components/ui';
+import { Button, Image, LinkButton, ShareModal } from 'components/ui';
 import { useLogout } from 'libraries/authentication';
 import { useCallback, useState } from 'react';
 import { QUERY } from 'styles';
 import { SignUpCampaignProps } from '../SignUpCampaign';
-import { CtaLayout } from './components';
+import { CoralSocialLinks, Heading, Layout } from './components';
 
-const Heading = styled.h1`
-  --font-size: 52px;
+const SecondaryInfo = styled.div`
+  --font-size: 18px;
 
   @media ${QUERY.TABLET} {
-    --font-size: 34px;
+    --font-size: 24px;
   }
 
   font-size: var(--font-size);
-`;
 
-const SecondaryInfo = styled.div`
-  font-size: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,7 +23,6 @@ const SecondaryInfo = styled.div`
 
 const shareButtonStyle = css`
   width: 250px;
-  margin-top: 30px;
 `;
 
 type ThanksForSigningUpProps = Pick<SignUpCampaignProps, 'isUserEarlySupporter'>;
@@ -36,7 +32,7 @@ const UnderlinedLinkButton = styled(LinkButton)`
 `;
 
 export const ThanksForSigningUp = ({ isUserEarlySupporter }: ThanksForSigningUpProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = useCallback(() => setIsModalOpen(true), []);
   const closeModal = useCallback(() => setIsModalOpen(false), []);
 
@@ -44,8 +40,8 @@ export const ThanksForSigningUp = ({ isUserEarlySupporter }: ThanksForSigningUpP
 
   return (
     <>
-      <Heading>Thanks For Signing Up</Heading>
-      <CtaLayout>
+      <Layout>
+        <Heading>Thanks For Signing Up</Heading>
         <SecondaryInfo>
           {isUserEarlySupporter ? (
             <>
@@ -59,8 +55,9 @@ export const ThanksForSigningUp = ({ isUserEarlySupporter }: ThanksForSigningUpP
         <Button css={shareButtonStyle} onClick={openModal}>
           Share
         </Button>
-      </CtaLayout>
-      <UnderlinedLinkButton onClick={logout}>Logout</UnderlinedLinkButton>
+        <CoralSocialLinks />
+        <UnderlinedLinkButton onClick={logout}>Logout</UnderlinedLinkButton>
+      </Layout>
       {isModalOpen && (
         <ShareModal
           title={'Share Early Sign Up Campaign'}
