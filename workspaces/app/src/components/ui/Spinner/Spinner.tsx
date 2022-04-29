@@ -18,8 +18,8 @@ const spin = keyframes`
 const Wrapper = styled.div<SpinnerProp>`
   /* spinner css variables */
   --size: ${({ size = SIZE }) => size};
-  --ring-size: calc(var(--size) * 0.8);
-  --ring-spacing: calc(var(--size) / 10);
+  --ring-size: calc(var(--size));
+  --ring-spacing: calc(var(--size) / 7.5);
   --color: ${({ color = COLOR }) => color};
 
   display: inline-block;
