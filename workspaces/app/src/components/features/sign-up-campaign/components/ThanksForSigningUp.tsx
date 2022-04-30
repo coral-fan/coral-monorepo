@@ -2,10 +2,10 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Button, Image, LinkButton, ShareModal } from 'components/ui';
 import { useLogout } from 'libraries/authentication';
-import { useCallback, useState } from 'react';
 import { QUERY } from 'styles';
 import { SignUpCampaignProps } from '../SignUpCampaign';
 import { CoralSocialLinks, Heading, Layout } from './components';
+import { useModal } from './hooks';
 
 const SecondaryInfo = styled.div`
   --font-size: 18px;
@@ -32,11 +32,9 @@ const UnderlinedLinkButton = styled(LinkButton)`
 `;
 
 export const ThanksForSigningUp = ({ isUserEarlySupporter }: ThanksForSigningUpProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = useCallback(() => setIsModalOpen(true), []);
-  const closeModal = useCallback(() => setIsModalOpen(false), []);
-
   const logout = useLogout();
+
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   return (
     <>
