@@ -1,12 +1,15 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Button, Link } from 'components/ui';
+import { Button, Link, Modal } from 'components/ui';
 import { getIconComponent } from 'components/ui/icons/utils';
 import { SIGN_UP_CAMPAIGN_MAX_OPENINGS } from 'consts';
 import { useLogin } from 'libraries/authentication';
+import { useIsMetaMaskInjected } from 'libraries/blockchain';
+import { useCallback, useState } from 'react';
 import { SignUpCampaignProps as SignUpProps } from '../SignUpCampaign';
 import avalancheLogoSVG from './avalanche-logo.svg';
 import { CoralSocialLinks, Heading, Layout } from './components';
+import { useModal } from './hooks';
 
 const rewardSpotsStyle = css`
   text-transform: uppercase;
@@ -56,8 +59,25 @@ const SubLayout = styled.div`
   max-width: 250px;
 `;
 
+const SignUpButton = styled(Button)`
+  max-width: 65%;
+`;
+
 export const SignUp = ({ prelaunchSignUpUsers }: SignUpProps) => {
-  const { login, isLoggingIn } = useLogin();
+  const { isModalOpen, openModal, closeModal } = useModal();
+
+  const [isLoggingInWithMetaMask, setIsLoggingInWithMetaMask] = useState(false);
+  const [isLoggingInWithSocial, setIsLoggingInWithSocial] = useState(false);
+
+  const { login, isLoggingIn } = useLogin(closeModal);
+
+  const loginWithMetaMask = useCallback(async () => {
+    setIsLoggingInWithMetaMask(true);
+    await login();
+    setIsLoggingInWithMetaMask(false);
+  }, [login]);
+
+  const isMetaMaskInjected = useIsMetaMaskInjected();
 
   const remaining = SIGN_UP_CAMPAIGN_MAX_OPENINGS - prelaunchSignUpUsers.length;
 
@@ -67,13 +87,35 @@ export const SignUp = ({ prelaunchSignUpUsers }: SignUpProps) => {
         <Heading>A modern marketplace for music, collectibles, events and experiences</Heading>
         <SubLayout>
           <RewardSpots remaining={remaining} />
-          <Button onClick={login} loading={isLoggingIn}>
+          <Button onClick={openModal} loading={isLoggingIn}>
             Sign Up
           </Button>
           <CoralSocialLinks />
         </SubLayout>
       </Layout>
       <PoweredByAvalanche />
+      {isModalOpen && (
+        <Modal
+          title={'Sign Up'}
+          onClick={closeModal}
+          mainContainerStyle={css`
+            padding: 16px 0;
+            align-items: center;
+          `}
+        >
+          <SignUpButton
+            onClick={loginWithMetaMask}
+            loading={isLoggingInWithMetaMask}
+            disabled={!isMetaMaskInjected || isLoggingInWithMetaMask}
+          >
+            Sign Up With MetaMask
+          </SignUpButton>
+          <span>OR</span>
+          <SignUpButton loading={isLoggingInWithSocial} disabled={isLoggingInWithMetaMask}>
+            Sign Up With Social Login
+          </SignUpButton>
+        </Modal>
+      )}
     </>
   );
 };
