@@ -14,7 +14,7 @@ const customAuth = initializeConnector<Connector>(getCustomAuthConnector, [AVALA
 
 const getMetaMaskConnector = (actions: Actions) => new MetaMaskConnector(actions);
 
-const metaMask = initializeConnector<Connector>(getMetaMaskConnector, [AVALANCHE.CHAIN_ID.INT]);
+const metaMask = initializeConnector<Connector>(getMetaMaskConnector);
 
 export const useWallet = () => {
   const isMetaMaskInjected = useIsMetaMaskInjected();
