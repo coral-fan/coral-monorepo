@@ -24,7 +24,7 @@ const linkStyle = css`
 export const PoweredByAvalanche = () => (
   <div css={poweredByAvalancheStyle}>
     <span css={poweredByStyle}>Powered By</span>
-    <Link css={linkStyle} href="https://www.avax.network/">
+    <Link css={linkStyle} href="https://www.avax.network/" openInNewTab>
       <AvalancheLogo />
     </Link>
   </div>
