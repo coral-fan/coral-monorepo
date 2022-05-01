@@ -4,8 +4,22 @@ import { Button, Image, LinkButton, ShareModal } from 'components/ui';
 import { useLogout } from 'libraries/authentication';
 import { QUERY } from 'styles';
 import { SignUpCampaignProps } from '../SignUpCampaign';
-import { CoralSocialLinks, Heading, Layout } from './components';
+import { CoralSocialLinks, Layout } from './components';
 import { useModal } from 'libraries/utils/hooks';
+
+const Heading = styled.h1`
+  --font-size: 34px;
+
+  @media ${QUERY.TABLET} {
+    --font-size: 52px;
+  }
+
+  font-size: var(--font-size);
+  padding-bottom: 4px;
+
+  max-width: 1000px;
+  text-align: center;
+`;
 
 const SecondaryInfo = styled.div`
   --font-size: 18px;
