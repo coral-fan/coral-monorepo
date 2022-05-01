@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react';
-import { interval, map, mergeMapTo, skipUntil, timer } from 'rxjs';
+import { delay, forkJoin, map, mergeMapTo, timer } from 'rxjs';
 import { useIsAuthenticated } from 'libraries/authentication';
-import { getWalletNfts$ } from 'libraries/blockchain/wallet/observables';
 import { useWallet } from 'libraries/blockchain';
 import {
   AccessDeniedModal,
@@ -10,6 +9,7 @@ import {
   CheckingNftModal,
   AccessDeniedModalProps,
 } from './components';
+import { getDoesOwnToken } from 'libraries/blockchain/utils';
 
 interface GatedContentProps {
   accessGrantingTokens: string[];
@@ -28,12 +28,13 @@ export const GatedContent: FC<GatedContentProps> = ({
 
   useEffect(() => {
     if (isAuthenticated && address) {
-      const walletNftsMap$ = getWalletNfts$(address);
-
-      const doesUserHaveAccess$ = interval(8000).pipe(
-        skipUntil(walletNftsMap$),
-        mergeMapTo(walletNftsMap$),
-        map((nftsMap) => accessGrantingTokens.some((address) => nftsMap[address] !== undefined))
+      const doesUserHaveAccess$ = forkJoin(
+        accessGrantingTokens.map((collectionAddress) => getDoesOwnToken(collectionAddress, address))
+      ).pipe(
+        delay(8000),
+        map((doesUserHaveAccessArray) =>
+          doesUserHaveAccessArray.some((doesHaveAccess) => doesHaveAccess === true)
+        )
       );
 
       doesUserHaveAccess$.subscribe((doesHaveAccess) => {
