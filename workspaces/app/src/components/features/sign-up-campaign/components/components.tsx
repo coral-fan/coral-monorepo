@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { SocialLinks, Link } from 'components/ui';
 import { SocialHandles } from 'libraries/models';
 import { getIconComponent } from 'components/ui/icons/utils';
-import avalancheLogoSVG from './avalanche-logo.svg';
+import { avalancheLogoSVG } from './assets';
 
 const poweredByAvalancheStyle = css`
   display: flex;
