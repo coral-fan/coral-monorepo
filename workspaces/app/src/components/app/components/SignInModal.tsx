@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Button, Modal } from 'components/ui';
 import { useLogin } from 'libraries/authentication';
-import { useWallet } from 'libraries/blockchain';
+import { useIsMetaMaskInjected, useWallet } from 'libraries/blockchain';
 
 interface SignInModalState {
   isModalOpen: boolean;
@@ -46,6 +46,8 @@ export const SignInModal = () => {
     await login('WEB3AUTH');
   }, [setConnectorType, closeModal, login]);
 
+  const isMetaMaskInjected = useIsMetaMaskInjected();
+
   if (!isModalOpen) {
     return null;
   }
@@ -60,7 +62,9 @@ export const SignInModal = () => {
         align-items: center;
       `}
     >
-      <SignUpButton onClick={loginWithMetaMask}>Sign Up With MetaMask</SignUpButton>
+      <SignUpButton onClick={loginWithMetaMask} disabled={!isMetaMaskInjected}>
+        Sign Up With MetaMask
+      </SignUpButton>
       <span>OR</span>
       <SignUpButton onClick={loginWithWeb3Auth}>Sign Up With Social Login</SignUpButton>
       <Footnote>
