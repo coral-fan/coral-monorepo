@@ -7,6 +7,7 @@ import { AVALANCHE } from 'consts';
 import { Web3AuthConnector, MetaMaskConnector } from './connectors';
 import { useIsMetaMaskInjected } from '../metamask';
 import { getWalletBalance$ } from './observables';
+import { useUserUid } from 'libraries/models';
 
 const getWeb3AuthConnector = (actions: Actions) => new Web3AuthConnector(actions);
 const getMetaMaskConnector = (actions: Actions) => new MetaMaskConnector(actions);
@@ -57,7 +58,9 @@ export const useWallet = () => {
 
   const provider = useProvider();
 
-  const { active: isActive, chainId, error, account: address } = useWeb3React(provider);
+  const { active: isActive, chainId, error } = useWeb3React(provider);
+
+  const address = useUserUid();
 
   const [balance, setBalance] = useState<number>();
 
