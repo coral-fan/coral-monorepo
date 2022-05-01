@@ -1,10 +1,8 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
-import { SocialLinks, Link } from 'components/ui';
-import { SocialHandles } from 'libraries/models';
+import { Link } from 'components/ui';
 import { getIconComponent } from 'components/ui/icons/utils';
-import { avalancheLogoSVG } from './assets';
-
+import { avalancheLogoSVG, instagramIconSVG, twitterIconSVG, discordIconSVG } from './assets';
 const poweredByAvalancheStyle = css`
   display: flex;
   justify-self: flex-end;
@@ -32,12 +30,37 @@ export const PoweredByAvalanche = () => (
   </div>
 );
 
-const CORAL_SOCIAL_HANDLES: SocialHandles = {
-  instagram: 'coral_fan',
-  twitter: 'coral__fan',
-};
+const InstagramIcon = getIconComponent('InstagramIcon', instagramIconSVG);
+const TwitterIcon = getIconComponent('TwitterIcon', twitterIconSVG);
+const DiscordIcon = getIconComponent('DiscordIcon', discordIconSVG);
 
-export const CoralSocialLinks = () => <SocialLinks socialHandles={CORAL_SOCIAL_HANDLES} />;
+const coralSocialHandles: [string, ReturnType<typeof getIconComponent>][] = [
+  ['https://www.instagram.com/coral_fan/', InstagramIcon],
+  ['https://twitter.com/coral__fan', TwitterIcon],
+  ['#', DiscordIcon],
+];
+
+const coralSocialLinksStyle = css`
+  display: flex;
+  gap: 10px;
+`;
+
+const socialLinksStyle = css`
+  &:hover {
+    filter: brightness(1.1);
+    transform: scale(1.05);
+  }
+`;
+
+export const CoralSocialLinks = () => (
+  <span css={coralSocialLinksStyle}>
+    {coralSocialHandles.map(([href, Icon], index) => (
+      <Link href={href} key={index} css={socialLinksStyle}>
+        <Icon />
+      </Link>
+    ))}
+  </span>
+);
 
 export const Layout = styled.div`
   display: flex;
