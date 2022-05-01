@@ -6,11 +6,13 @@ import { useCallback, useRef, useState } from 'react';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { AvailableContainer } from 'components/ui/nft';
 import { Price, PriceProp } from '../Price';
-import { ProgressBar, ProgressBarProps } from '../ProgressBar';
+import { ProgressBar } from '../ProgressBar';
 import { AssetInfoProps } from '../PaymentModal/components/AssetInfo';
 import { PaymentModal } from '../PaymentModal';
 
-interface DropOrAvailableProps extends ProgressBarProps, PriceProp, AssetInfoProps {
+interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
+  numMinted?: number;
+  maxMintable: number;
   dropDate: string;
 }
 
@@ -83,7 +85,7 @@ export const DropOrAvailable = ({
             <AvailableContainer>
               <Price usdPrice={usdPrice} />
               <CtaButton onClick={handleBuyButtonClick}>Buy Now</CtaButton>
-              <ProgressBar maxMintable={maxMintable} numMinted={numMinted} />
+              {numMinted && <ProgressBar maxMintable={maxMintable} numMinted={numMinted} />}
             </AvailableContainer>
           ) : (
             <DropTimer tokenSupply={maxMintable} timestamp={dropDate} />

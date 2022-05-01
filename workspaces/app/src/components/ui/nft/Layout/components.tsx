@@ -87,7 +87,7 @@ export const AvailableContainer = styled.div`
 export const NftAssetContainer = styled.div<IsAssetProps>`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   overflow: hidden;
 
   /*
@@ -128,10 +128,9 @@ export const AssetContentContainer = styled.div<IsAssetProps>`
   display: flex;
   flex-direction: column;
   gap: ${spacing.mobile.lg};
-  padding: 0px 16px;
-  ${({ isAsset }) =>
-    isAsset &&
-    css`
-      padding: 16px;
-    `};
+  padding: ${({ isAsset }) => (isAsset ? '16px' : '0px 16px')};
+
+  @media ${QUERY.TABLET} {
+    padding: ${({ isAsset }) => (isAsset ? '16px' : '0px')};
+  }
 `;
