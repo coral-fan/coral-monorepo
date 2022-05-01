@@ -14,7 +14,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   /* TODO: post sign up campaign launch */
-  /* justify-content: ${CLIENT_ENVIRONMENT === 'production' ? 'center' : 'space-between'}; */
+  justify-content: ${CLIENT_ENVIRONMENT === 'production' ? 'center' : 'space-between'};
   width: 100%;
   position: sticky;
   top: 0;
