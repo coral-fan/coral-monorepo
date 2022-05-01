@@ -29,7 +29,6 @@
     "@hookform/resolvers": "^2.8.8",
     "@metamask/providers": "^8.1.1",
     "@reduxjs/toolkit": "^1.6.2",
-    "@toruslabs/customauth": "^7.0.3",
     "@web3-react/core": "^8.0.18-beta.0",
     "@web3-react/metamask": "^8.0.14-beta.0",
     "@web3auth/base": "^0.9.3",
