@@ -1,17 +1,19 @@
 import { GetServerSideProps } from 'next';
 
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
-import { IMAGE_WITH_INFO_DEFAULT_ARGS } from 'components/ui/nft/components/ImageWithInfo/consts';
 
-import { Collection } from 'libraries/models';
+import { Collection, getCollection, getSimilarCollections } from 'libraries/models';
 import { DropOrAvailable, SimilarCollections, PartialCollection } from './components';
 import { Layout as CollectionLayout } from 'components/ui/nft';
-import { useMemo } from 'react';
 import { SERVER_ENVIRONMENT } from 'consts';
+import { useEffect, useMemo, useState } from 'react';
+import { getTokenTotalSupply } from 'libraries/blockchain/utils';
 
+// similarCollections optional so failure to fetch
+// doesn't block page from loading
 interface CollectionPageProps {
   collectionData: Collection;
-  similarCollections: PartialCollection[];
+  similarCollections?: PartialCollection[];
 }
 
 export const CollectionPage = ({
@@ -31,9 +33,16 @@ export const CollectionPage = ({
   },
   similarCollections,
 }: CollectionPageProps) => {
-  // Dummy Data: comes from Smart Contract Call
-  // Todo: Update AVAX pricing
-  const numMinted = 2500;
+  const [numMinted, setNumMinted] = useState(0);
+
+  useEffect(() => {
+    const fetchNumMinted = async (id: string) => {
+      const numMinted = await getTokenTotalSupply(id);
+      setNumMinted(numMinted);
+    };
+
+    fetchNumMinted(id);
+  }, [id]);
 
   const dropOrAvailable = useMemo(
     () => (
@@ -49,11 +58,11 @@ export const CollectionPage = ({
         type={type}
       />
     ),
-    [dropDate, maxMintable, price, name, artistName, artistProfilePhoto, imageUrl, type]
+    [dropDate, maxMintable, price, name, artistName, artistProfilePhoto, imageUrl, type, numMinted]
   );
 
   const similarCollectionsSection = useMemo(
-    () => <SimilarCollections similarCollections={similarCollections} />,
+    () => similarCollections && <SimilarCollections similarCollections={similarCollections} />,
     [similarCollections]
   );
 
@@ -76,7 +85,7 @@ export const CollectionPage = ({
 };
 
 interface CollectionParams extends NextParsedUrlQuery {
-  id: string;
+  collectionId: string;
 }
 
 export const getServerSideProps: GetServerSideProps<CollectionPageProps, CollectionParams> = async (
@@ -97,65 +106,18 @@ export const getServerSideProps: GetServerSideProps<CollectionPageProps, Collect
     };
   }
 
-  const { id } = params;
+  const { collectionId } = params;
 
-  // Call getSimilarDropsService to get similarCollectionData
-  const similarCollections: PartialCollection[] = [
-    {
-      id: '2',
-      name: 'Similar Collection!',
-      maxMintable: 10000,
-      type: 'video',
-      dropDate: '2022-06-01',
-      ...IMAGE_WITH_INFO_DEFAULT_ARGS,
-    },
-    {
-      id: '3',
-      name: 'Another Similar Collection!',
-      maxMintable: 5000,
-      type: 'event',
-      dropDate: '2022-09-01',
-      ...IMAGE_WITH_INFO_DEFAULT_ARGS,
-    },
-    {
-      id: '4',
-      name: 'Super Merch',
-      maxMintable: 5000,
-      type: 'merch',
-      dropDate: '2022-08-01',
-      ...IMAGE_WITH_INFO_DEFAULT_ARGS,
-    },
-    {
-      id: '4',
-      name: 'Super Merch Again',
-      maxMintable: 5000,
-      type: 'merch',
-      dropDate: '2022-08-01',
-      ...IMAGE_WITH_INFO_DEFAULT_ARGS,
-    },
-  ];
+  const collectionData = await getCollection(collectionId);
 
-  // Make database call with collectionId to get collectionData.
-  const collectionData: Collection = {
-    id,
-    name: 'Behind the Scenes Studio Tour',
-    maxMintable: 5000,
-    type: 'music',
-    gatedContent: {
-      type: 'url',
-      url: '/',
-    },
-    price: 300,
-    dropDate: '2022 Apr 07 19:13:00 EDT',
-    description:
-      'Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.',
-    details: [
-      'A personal call between just you and Bonobo',
-      'Available any time before March 1st, 2022',
-      "Accessible by Zoom after you've torn the ticket",
-    ],
-    ...IMAGE_WITH_INFO_DEFAULT_ARGS,
-  };
+  if (!collectionData) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const similarCollections = await getSimilarCollections(collectionId, 4);
+
   return {
     props: {
       collectionData,
