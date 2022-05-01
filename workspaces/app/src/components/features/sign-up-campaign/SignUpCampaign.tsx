@@ -4,6 +4,7 @@ import { getDocumentData } from 'libraries/firebase';
 import { getUidServerSide } from 'libraries/models';
 import { GetServerSideProps } from 'next';
 import { SignUp, ThanksForSigningUp } from './components';
+import { PoweredByAvalanche } from './components/PoweredByAvalanche';
 import { EarlySignUpCampaignData } from './types';
 
 const Container = styled.div`
@@ -26,6 +27,7 @@ export const SignUpCampaign = (props: SignUpCampaignProps) => {
   return (
     <Container>
       {isAuthenticated ? <ThanksForSigningUp {...props} /> : <SignUp {...props} />}
+      <PoweredByAvalanche />
     </Container>
   );
 };
