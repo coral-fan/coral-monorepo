@@ -22,26 +22,30 @@ const Container = styled.div`
 `;
 
 export const SimilarCollections = ({ similarCollections }: SimilarCollectionsProp) => (
-  <Container>
-    <Heading level={2} styleVariant={'h3'}>
-      Similar Drops
-    </Heading>
-    <ScrollableContainer>
-      {similarCollections.map((collection) => {
-        const { name, type, dropDate } = collection;
-        const Badge = getBadge(type);
-        return (
-          <ScrollableItemWrapper key={`${collection.artistName}-${name}-${dropDate}`}>
-            <DropCard
-              title={name}
-              Badge={Badge}
-              dropDateTimestamp={dropDate}
-              {...collection}
-              isCard={true}
-            />
-          </ScrollableItemWrapper>
-        );
-      })}
-    </ScrollableContainer>
-  </Container>
+  <>
+    {similarCollections.length > 0 && (
+      <Container>
+        <Heading level={2} styleVariant={'h3'}>
+          Similar Drops
+        </Heading>
+        <ScrollableContainer>
+          {similarCollections.map((collection) => {
+            const { name, type, dropDate } = collection;
+            const Badge = getBadge(type);
+            return (
+              <ScrollableItemWrapper key={`${collection.artistName}-${name}-${dropDate}`}>
+                <DropCard
+                  title={name}
+                  Badge={Badge}
+                  dropDateTimestamp={dropDate}
+                  {...collection}
+                  isCard={true}
+                />
+              </ScrollableItemWrapper>
+            );
+          })}
+        </ScrollableContainer>
+      </Container>
+    )}
+  </>
 );
