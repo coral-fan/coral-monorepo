@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+// TODO: refactor out & use zustand
 export const initialState = {
   isLoggingIn: false,
   isSigningUp: false,
