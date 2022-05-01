@@ -19,7 +19,14 @@ export const useSignInModalState = create<SignInModalState>((set) => ({
 }));
 
 const SignUpButton = styled(Button)`
-  max-width: 65%;
+  max-width: 80%;
+`;
+
+const Footnote = styled.span`
+  font-size: 11px;
+  max-width: 85%;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const SignInModal = () => {
@@ -56,6 +63,14 @@ export const SignInModal = () => {
       <SignUpButton onClick={loginWithMetaMask}>Sign Up With MetaMask</SignUpButton>
       <span>OR</span>
       <SignUpButton onClick={loginWithWeb3Auth}>Sign Up With Social Login</SignUpButton>
+      <Footnote>
+        * Don&apos;t have Metamask? Sign up with your Gmail, Twitter, Discord, Apple, Twitch, or
+        Facebook username and password.
+        <br />
+        If you create an account with one of the above, you will need to transfer cryptocurrency to
+        your newly created wallet address in order to make purchases with cryptocurrency. Join our
+        Discord for support.
+      </Footnote>
     </Modal>
   );
 };
