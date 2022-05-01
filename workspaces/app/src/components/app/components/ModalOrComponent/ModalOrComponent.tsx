@@ -2,6 +2,7 @@ import { useIsNetworkSupported } from 'libraries/blockchain';
 import { useIsSigningUp } from 'libraries/authentication';
 import { WrongNetworkModal } from './WrongNetworkModal';
 import { SignUpModal } from './SignUpModal';
+import { SignInModal } from '../SignInModal';
 // TODO: uncomment out post sign up campaign
 // import { useRouter } from 'next/router';
 // import { SITE_LINKS } from 'consts';
@@ -28,5 +29,10 @@ export const ModalOrComponent = ({ component }: ModalOrComponentProps) => {
     return <SignUpModal />;
   }
 
-  return component;
+  return (
+    <>
+      {component}
+      <SignInModal />
+    </>
+  );
 };
