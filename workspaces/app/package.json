@@ -32,6 +32,10 @@
     "@toruslabs/customauth": "^7.0.3",
     "@web3-react/core": "^8.0.18-beta.0",
     "@web3-react/metamask": "^8.0.14-beta.0",
+    "@web3auth/base": "^0.9.3",
+    "@web3auth/openlogin-adapter": "^0.9.3",
+    "@web3auth/ui": "^0.9.3",
+    "@web3auth/web3auth": "^0.9.3",
     "axios": "^0.21.4",
     "ethers": "^5.6.1",
     "firebase": "^9.1.0",
@@ -48,7 +52,8 @@
     "rxfire": "^6.0.3",
     "rxjs": "^7.3.0",
     "theme-in-css": "^0.2.2",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
