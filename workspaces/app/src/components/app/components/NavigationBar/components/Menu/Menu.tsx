@@ -2,11 +2,12 @@ import { createElement, useCallback, useMemo } from 'react';
 import styled from '@emotion/styled';
 import { CLIENT_ENVIRONMENT } from 'consts';
 import { Link, Modal } from 'components/ui';
-import { useIsAuthenticated, useLogin, useLogout } from 'libraries/authentication';
+import { useIsAuthenticated, useLogout } from 'libraries/authentication';
 import { useUserUid } from 'libraries/models';
 import { UserProfile } from '../../NavigationBar';
 import { Item } from './Item';
 import { MenuProfileInfo } from '../MenuProfileInfo';
+import { useSignInModalState } from 'components/app/components/SignInModal';
 
 interface MenuProps {
   userProfile?: UserProfile;
@@ -34,7 +35,6 @@ const ClickableWrapper = styled.div`
 `;
 
 export const Menu = ({ userProfile, closeMenuModal }: MenuProps) => {
-  const { login } = useLogin(closeMenuModal);
   const logout = useLogout();
   const isAuthenticated = useIsAuthenticated();
   const uid = useUserUid();
@@ -52,12 +52,19 @@ export const Menu = ({ userProfile, closeMenuModal }: MenuProps) => {
     [handleLogout]
   );
 
+  const { openModal } = useSignInModalState();
+
+  const handleSignIn = useCallback(() => {
+    closeMenuModal();
+    openModal();
+  }, [closeMenuModal, openModal]);
+
   const unauthenticatedMenuItems: MenuItemProps[] = useMemo(
     () => [
       { name: 'Home', to: '/' },
-      { name: 'Sign In', onClick: login },
+      { name: 'Sign In', onClick: handleSignIn },
     ],
-    [login]
+    [handleSignIn]
   );
 
   const menuItems = isAuthenticated ? authenticatedMenuItems : unauthenticatedMenuItems;
