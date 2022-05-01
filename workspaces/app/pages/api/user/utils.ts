@@ -32,8 +32,8 @@ const DEFAULT_PUBLIC_USER_DATA: DefaultPublicUserData = {
 type DefaultPrivateUserData = Omit<PrivateUserData, 'doesOptIntoMarketing'>;
 
 const DEFAULT_PRIVATE_USER_DATA: DefaultPrivateUserData = {
-  creditCardInformation: null,
   email: null,
+  stripePaymentMethodId: null,
 };
 
 export const upsertUser = async (uid: string, incomingUserData: IncomingUserData) => {
