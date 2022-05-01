@@ -8,11 +8,8 @@ import { Owner } from './components';
 import { getGatedContentComponent } from 'components/ui/nft/GatedContent/utils';
 import { useIsMobile } from 'libraries/window';
 import tokens, { QUERY } from 'styles/tokens';
-<<<<<<< HEAD
 import { SERVER_ENVIRONMENT } from 'consts';
-=======
 import { getAsset } from 'libraries/models/asset/utils';
->>>>>>> ee29fe54 (Refactor Asset to use data fetching)
 
 interface AssetPageProps {
   assetData: Asset;
@@ -101,7 +98,6 @@ export const AssetPage = ({
   );
 };
 
-<<<<<<< HEAD
 export const getServerSideProps: GetServerSideProps<AssetPageProps, { assetId: string }> = async (
   context
 ) => {
@@ -112,12 +108,6 @@ export const getServerSideProps: GetServerSideProps<AssetPageProps, { assetId: s
     };
   }
 
-=======
-export const getServerSideProps: GetServerSideProps<
-  AssetPageProps,
-  { collectionId: Collection['id']; assetId: string }
-> = async (context) => {
->>>>>>> ee29fe54 (Refactor Asset to use data fetching)
   const { params } = context;
 
   if (params === undefined) {

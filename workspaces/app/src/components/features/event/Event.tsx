@@ -10,11 +10,8 @@ import {
 } from './components';
 import { Event } from 'libraries/models/event';
 import { Collection, getCollection, getArtist } from 'libraries/models';
-<<<<<<< HEAD
 import { SERVER_ENVIRONMENT } from 'consts';
-=======
 import { getEvent } from 'libraries/models/event/utils';
->>>>>>> c1b0d42b (Abstract out getEvent for consistency)
 
 const EventContainer = styled.div`
   display: flex;
