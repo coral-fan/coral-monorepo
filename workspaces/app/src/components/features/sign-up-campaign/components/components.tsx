@@ -55,7 +55,7 @@ const socialLinksStyle = css`
 export const CoralSocialLinks = () => (
   <span css={coralSocialLinksStyle}>
     {coralSocialHandles.map(([href, Icon], index) => (
-      <Link href={href} key={index} css={socialLinksStyle}>
+      <Link href={href} key={index} css={socialLinksStyle} openInNewTab>
         <Icon />
       </Link>
     ))}
