@@ -5,7 +5,7 @@ import { useLogout } from 'libraries/authentication';
 import { QUERY } from 'styles';
 import { SignUpCampaignProps } from '../SignUpCampaign';
 import { CoralSocialLinks, Heading, Layout } from './components';
-import { useModal } from './hooks';
+import { useModal } from 'libraries/utils/hooks';
 
 const SecondaryInfo = styled.div`
   --font-size: 18px;
