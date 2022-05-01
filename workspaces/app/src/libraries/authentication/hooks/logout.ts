@@ -4,17 +4,19 @@ import { useIdToken } from '.';
 import { useCallback } from 'react';
 
 export const useLogout = () => {
-  const { isActive, connector } = useWallet();
+  const { isActive, connector, setConnectorType } = useWallet();
   const idToken = useIdToken();
 
+  // TODO: check if conditional checks matter for logging out actions (deactivate, signout, etc)
   const logout = useCallback(async () => {
     if (isActive) {
-      connector.deactivate();
+      await connector.deactivate();
+      setConnectorType(undefined);
     }
     if (idToken) {
       await getAuth().signOut();
     }
-  }, [isActive, connector, idToken]);
+  }, [isActive, connector, setConnectorType, idToken]);
 
   return logout;
 };
