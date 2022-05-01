@@ -1,4 +1,4 @@
-import { Asset, PrivateUserData, PublicUserData, User } from 'libraries/models';
+import { Asset, getPublicUserData, PrivateUserData, User } from 'libraries/models';
 import { GetServerSideProps } from 'next';
 import { getDocumentData } from 'libraries/firebase';
 import { getIdToken } from 'libraries/authentication';
@@ -7,7 +7,7 @@ import { ID_TOKEN_KEY, SERVER_ENVIRONMENT } from 'consts';
 import { getAuthenticationServerSide } from 'libraries/firebase/authentication';
 import { UserPageProvider } from './provider';
 import { UserProfile } from './components/UserProfile';
-import { IMAGE_WITH_INFO_DEFAULT_ARGS } from 'components/ui/nft/components/ImageWithInfo/consts';
+import { getAllOwnedTokenIds, getAssets } from 'libraries/models/asset/utils';
 
 interface UserPageProps {
   userData: User;
@@ -41,7 +41,13 @@ export const getServerSideProps: GetServerSideProps<UserPageProps, { id: string 
   }
 
   const { id } = params;
-  const publicUserData = await getDocumentData<PublicUserData>('users', id);
+  const publicUserData = await getPublicUserData(id);
+
+  if (!publicUserData) {
+    return {
+      notFound: true,
+    };
+  }
 
   if (publicUserData === undefined) {
     return {
@@ -67,80 +73,8 @@ export const getServerSideProps: GetServerSideProps<UserPageProps, { id: string 
       ? await getDocumentData<PrivateUserData>('users', id, 'private', 'data')
       : undefined;
 
-  const assets: Asset[] = [
-    {
-      id: 3671,
-      contractAddress: '1',
-      collectionName: 'Bonobo',
-      ownerUsername: publicUserData.username,
-      ownerAddress: id,
-      ownerType: 'fan',
-      ownerProfilePhoto: publicUserData.profilePhoto,
-      gatedContent: {
-        type: 'url',
-        url: '/',
-      },
-      type: 'music',
-      collectionDescription:
-        'Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.',
-      collectionDetails: null,
-      ...IMAGE_WITH_INFO_DEFAULT_ARGS,
-    },
-    {
-      id: 9,
-      contractAddress: '1',
-      collectionName: 'Behind the Scenes Studio Tour',
-      ownerUsername: publicUserData.username,
-      ownerAddress: id,
-      ownerType: 'fan',
-      ownerProfilePhoto: publicUserData.profilePhoto,
-      gatedContent: {
-        type: 'url',
-        url: '/',
-      },
-      type: 'music',
-      collectionDescription:
-        'Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.',
-      collectionDetails: null,
-      ...IMAGE_WITH_INFO_DEFAULT_ARGS,
-    },
-    {
-      id: 9732,
-      contractAddress: '2',
-      collectionName: 'Access Tour: This is an Extra Long Title',
-      ownerUsername: publicUserData.username,
-      ownerAddress: id,
-      ownerType: 'fan',
-      ownerProfilePhoto: publicUserData.profilePhoto,
-      gatedContent: {
-        type: 'url',
-        url: '/',
-      },
-      type: 'merch',
-      collectionDescription:
-        'Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.',
-      collectionDetails: null,
-      ...IMAGE_WITH_INFO_DEFAULT_ARGS,
-    },
-    {
-      id: 234,
-      contractAddress: '3',
-      collectionName: 'This Is An Event',
-      ownerUsername: publicUserData.username,
-      ownerAddress: id,
-      ownerType: 'fan',
-      ownerProfilePhoto: publicUserData.profilePhoto,
-      gatedContent: {
-        type: 'url',
-        url: '/',
-      },
-      type: 'event',
-      collectionDescription:
-        'Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.',
-      collectionDetails: null,
-      ...IMAGE_WITH_INFO_DEFAULT_ARGS,
-    },
-  ];
+  const ownedTokensMap = await getAllOwnedTokenIds(id);
+  const assets: Asset[] = await getAssets(ownedTokensMap);
 
   const userData: User = { ...publicUserData, ...privateUserData, assets, following: [] };
 
