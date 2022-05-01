@@ -1,16 +1,12 @@
 import { getDocumentData } from 'libraries/firebase';
 import { IsUserSigningUpData, PublicUserData } from '.';
 import { destroyCookie, parseCookies } from 'nookies';
-<<<<<<< HEAD
+
 import { COOKIE_OPTIONS, ID_TOKEN_KEY } from 'consts';
-=======
-import { AVALANCHE, COOKIE_OPTIONS } from 'consts';
->>>>>>> 691578d9 (Add getPublicUserData utility function)
+
 import { initializeFirebaseAdmin } from 'libraries/firebase';
 import { getAuth } from 'firebase/auth';
 import { getApp } from 'firebase/app';
-import { getCovalentTokenBalanceApiUrl, TokenData } from 'libraries/blockchain/wallet/observables';
-import axios from 'axios';
 
 type Context = Parameters<typeof parseCookies>[0] & Parameters<typeof destroyCookie>[0];
 

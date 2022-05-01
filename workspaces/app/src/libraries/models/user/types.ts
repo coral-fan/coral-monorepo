@@ -26,10 +26,7 @@ export interface PublicUserData {
 export interface PrivateUserData {
   email: NullableString;
   doesOptIntoMarketing: boolean;
-<<<<<<< HEAD
   stripePaymentMethodId: NullableString;
-=======
->>>>>>> 0fb95457 (Delete credit card info from data model)
 }
 
 //  id = wallet address
