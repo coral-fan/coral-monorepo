@@ -12,14 +12,15 @@ const Heading = styled.h1`
   --font-size: 52px;
 
   @media ${QUERY.TABLET} {
-    --font-size: 85px;
+    --font-size: 80px;
   }
 
   font-size: var(--font-size);
+  /* font-weight: 400; */
   padding-bottom: 4px;
 
   line-height: 94%;
-  max-width: 1000px;
+  max-width: 800px;
   text-align: center;
 `;
 
