@@ -5,19 +5,6 @@ import { Notification } from '../notification';
 import { NullableString, SocialHandles } from '../types';
 import { Photo } from '../types';
 
-export interface CreditCardInformation {
-  firstName: string;
-  lastName: string;
-  cardNumber: number;
-  expiration: string;
-  cvv: number;
-  billingAddress: {
-    address: string;
-    zipCode: number;
-    city: string;
-  };
-}
-
 export type UserType = 'fan' | 'super_fan' | 'artist';
 
 type ContractAddressToIdMap = Record<string, number>;
@@ -37,7 +24,7 @@ export interface PublicUserData {
 export interface PrivateUserData {
   email: NullableString;
   doesOptIntoMarketing: boolean;
-  creditCardInformation: CreditCardInformation | null;
+  stripePaymentMethodId: NullableString;
 }
 
 //  id = wallet address
