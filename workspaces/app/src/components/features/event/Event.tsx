@@ -8,10 +8,13 @@ import {
   InfoAndMerchProps,
   StreamProps,
 } from './components';
-import { getDocumentData } from 'libraries/firebase';
-import { Event, EventData } from 'libraries/models/event';
+import { Event } from 'libraries/models/event';
 import { Collection, getCollection, getArtist } from 'libraries/models';
+<<<<<<< HEAD
 import { SERVER_ENVIRONMENT } from 'consts';
+=======
+import { getEvent } from 'libraries/models/event/utils';
+>>>>>>> c1b0d42b (Abstract out getEvent for consistency)
 
 const EventContainer = styled.div`
   display: flex;
@@ -79,7 +82,7 @@ export const getServerSideProps: GetServerSideProps<EventPageProps, { id: string
 
   const { id } = params;
 
-  const eventData = await getDocumentData<EventData>('events', id);
+  const eventData = await getEvent(id);
 
   if (!eventData) {
     return {
