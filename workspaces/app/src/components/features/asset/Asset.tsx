@@ -2,15 +2,17 @@ import styled from '@emotion/styled';
 import { useCallback, useMemo } from 'react';
 import { GetServerSideProps } from 'next';
 
-import { IMAGE_WITH_INFO_DEFAULT_ARGS } from 'components/ui/nft/components/ImageWithInfo/consts';
-import { DEFAULT_PROFILE_PHOTO } from 'components/ui/profile/Avatar/consts';
-import { Asset, AssetData } from 'libraries/models';
+import { Asset, Collection } from 'libraries/models';
 import { Layout as AssetLayout } from 'components/ui/nft';
 import { Owner } from './components';
 import { getGatedContentComponent } from 'components/ui/nft/GatedContent/utils';
 import { useIsMobile } from 'libraries/window';
 import tokens, { QUERY } from 'styles/tokens';
+<<<<<<< HEAD
 import { SERVER_ENVIRONMENT } from 'consts';
+=======
+import { getAsset } from 'libraries/models/asset/utils';
+>>>>>>> ee29fe54 (Refactor Asset to use data fetching)
 
 interface AssetPageProps {
   assetData: Asset;
@@ -99,6 +101,7 @@ export const AssetPage = ({
   );
 };
 
+<<<<<<< HEAD
 export const getServerSideProps: GetServerSideProps<AssetPageProps, { assetId: string }> = async (
   context
 ) => {
@@ -109,6 +112,12 @@ export const getServerSideProps: GetServerSideProps<AssetPageProps, { assetId: s
     };
   }
 
+=======
+export const getServerSideProps: GetServerSideProps<
+  AssetPageProps,
+  { collectionId: Collection['id']; assetId: string }
+> = async (context) => {
+>>>>>>> ee29fe54 (Refactor Asset to use data fetching)
   const { params } = context;
 
   if (params === undefined) {
@@ -117,36 +126,15 @@ export const getServerSideProps: GetServerSideProps<AssetPageProps, { assetId: s
     };
   }
 
-  const { assetId } = params;
+  const { collectionId, assetId } = params;
 
-  // Make database call with assetId to get assetData.
-  const { contractAddress }: AssetData = {
-    id: parseInt(assetId),
-    contractAddress: '0x123456789',
-  };
+  const assetData = await getAsset(collectionId, parseInt(assetId));
 
-  const assetData: Asset = {
-    id: 1,
-    type: 'event',
-    gatedContent: {
-      type: 'event',
-      id: '0x123456789',
-    },
-    contractAddress,
-    collectionName: 'Behind the Scenes Studio Tour',
-    collectionDescription:
-      'Exclusive access to a one on one call with me between recording sessions on my next album. With this token you’ll get 30 minutes of solo time with me and the band.',
-    collectionDetails: [
-      'A personal call between just you and Bonobo',
-      'Available any time before March 1st, 2022',
-      "Accessible by Zoom after you've torn the ticket",
-    ],
-    ownerUsername: 'User123',
-    ownerAddress: '0x123456789',
-    ownerType: 'super_fan',
-    ownerProfilePhoto: DEFAULT_PROFILE_PHOTO,
-    ...IMAGE_WITH_INFO_DEFAULT_ARGS,
-  };
+  if (!assetData) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
