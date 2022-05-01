@@ -4,8 +4,24 @@ import { useSignInModalState } from 'components/app';
 import { Button } from 'components/ui';
 import { SIGN_UP_CAMPAIGN_MAX_OPENINGS } from 'consts';
 import { useLogin } from 'libraries/authentication';
+import { QUERY } from 'styles';
 import { SignUpCampaignProps as SignUpProps } from '../SignUpCampaign';
-import { CoralSocialLinks, Heading, Layout } from './components';
+import { CoralSocialLinks, Layout } from './components';
+
+const Heading = styled.h1`
+  --font-size: 52px;
+
+  @media ${QUERY.TABLET} {
+    --font-size: 85px;
+  }
+
+  font-size: var(--font-size);
+  padding-bottom: 4px;
+
+  line-height: 94%;
+  max-width: 1000px;
+  text-align: center;
+`;
 
 const rewardSpotsStyle = css`
   text-transform: uppercase;
