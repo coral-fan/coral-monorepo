@@ -11,11 +11,11 @@ export const WEB3AUTH = {
   LOGIN_METHOD_ORDER: [
     'google',
     'twitter',
+    'discord',
+    'apple',
+    'twitch',
     'facebook',
     // 'reddit',
-    // 'discord',
-    // 'twitch',
-    // 'apple',
     // 'line',
     // 'github',
     // 'kakao',
@@ -29,17 +29,19 @@ export const WEB3AUTH = {
     [WALLET_ADAPTERS.OPENLOGIN]: {
       label: WALLET_ADAPTERS.OPENLOGIN,
       loginMethods: {
+        // name properties must be added to prevent typescript error
         // google: {
+        //   name: 'google',
         //   showOnModal: false,
         // },
         // facebook: {
+        //   name: 'facebook',
         //   showOnModal: false,
         // },
-        // name properties must be added to prevent typescript error
-        apple: {
-          name: 'apple',
-          showOnModal: false,
-        },
+        // apple: {
+        //   name: 'apple',
+        //   showOnModal: false,
+        // },
         linkedin: {
           name: 'linkedin',
           showOnModal: false,
@@ -52,19 +54,20 @@ export const WEB3AUTH = {
           name: 'line',
           showOnModal: false,
         },
-        discord: {
-          name: 'discord',
-          showOnModal: false,
-        },
-        twitch: {
-          name: 'twitch',
-          showOnModal: false,
-        },
+        // discord: {
+        //   name: 'discord',
+        //   showOnModal: false,
+        // },
+        // twitch: {
+        //   name: 'twitch',
+        //   showOnModal: false,
+        // },
         kakao: {
           name: 'kakao',
           showOnModal: false,
         },
         // twitter: {
+        //   name: 'twitter',
         //   showOnModal: false,
         // },
         weibo: {
