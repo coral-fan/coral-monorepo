@@ -1,13 +1,15 @@
 import { DocumentReference } from 'firebase/firestore';
 import { Artist, ArtistData } from '../artist';
 import { Asset } from '../asset';
+import { Collection } from '../collection';
 import { Notification } from '../notification';
 import { NullableString, SocialHandles } from '../types';
 import { Photo } from '../types';
 
 export type UserType = 'fan' | 'super_fan' | 'artist';
 
-type ContractAddressToIdMap = Record<string, number>;
+export type ContractAddressToIdMap = Record<Collection['id'], Asset['id']>;
+
 export interface PublicUserData {
   id: string;
   username: string;
@@ -24,7 +26,10 @@ export interface PublicUserData {
 export interface PrivateUserData {
   email: NullableString;
   doesOptIntoMarketing: boolean;
+<<<<<<< HEAD
   stripePaymentMethodId: NullableString;
+=======
+>>>>>>> 0fb95457 (Delete credit card info from data model)
 }
 
 //  id = wallet address
