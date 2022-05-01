@@ -3,8 +3,7 @@ import { useIsAuthenticated } from 'libraries/authentication';
 import { getDocumentData } from 'libraries/firebase';
 import { getUidServerSide } from 'libraries/models';
 import { GetServerSideProps } from 'next';
-import { SignUp, ThanksForSigningUp } from './components';
-import { PoweredByAvalanche } from './components/PoweredByAvalanche';
+import { SignUp, ThanksForSigningUp, PoweredByAvalanche } from './components';
 import { EarlySignUpCampaignData } from './types';
 
 const Container = styled.div`
