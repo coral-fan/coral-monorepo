@@ -1,4 +1,6 @@
-import { getDocumentData } from 'libraries/firebase';
+import { PartialCollection } from 'components/features/collection/components';
+import { sortCollectionByDropDateDesc } from 'components/ui';
+import { getAllCollections, getDocumentData } from 'libraries/firebase';
 import { getArtist } from '../artist';
 import { Collection, CollectionData } from './types';
 
@@ -25,4 +27,50 @@ export const getCollection = async (id: CollectionData['id']): Promise<Collectio
     artistName,
     artistProfilePhoto,
   };
+};
+
+export const getSimilarCollections = async (
+  collectionId: CollectionData['id'],
+  n: number
+): Promise<PartialCollection[] | undefined> => {
+  const similarCollectionData = await getAllCollections<Collection>('collections');
+
+  if (!similarCollectionData) {
+    return similarCollectionData;
+  }
+
+  // Returns the next n collections to drop for now, exlcuding current collection
+  return (
+    await Promise.allSettled(
+      sortCollectionByDropDateDesc(similarCollectionData)
+        .filter(
+          ({ id, dropDate }) =>
+            id !== collectionId && new Date(dropDate).getTime() > new Date().getTime()
+        )
+        .slice(0, n)
+        .map(async ({ id, artistId, name, imageUrl, maxMintable, type, dropDate }) => {
+          const artistData = await getArtist(artistId);
+
+          if (!artistData) {
+            throw new Error(`Artist with ${artistId} doesn't exist.`);
+          }
+
+          return {
+            id,
+            artistId,
+            name,
+            imageUrl,
+            maxMintable,
+            type,
+            dropDate,
+            artistName: artistData.name,
+            artistProfilePhoto: artistData.profilePhoto,
+          };
+        })
+    )
+  )
+    .filter(
+      (result): result is PromiseFulfilledResult<PartialCollection> => result.status === 'fulfilled'
+    )
+    .map((result) => result.value);
 };
