@@ -8,6 +8,7 @@ import { getAuthenticationServerSide } from 'libraries/firebase/authentication';
 import { UserPageProvider } from './provider';
 import { UserProfile } from './components/UserProfile';
 import { getAllOwnedTokenIds, getAssets } from 'libraries/models/asset/utils';
+import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
 
 interface UserPageProps {
   userData: User;
@@ -22,7 +23,11 @@ export const UserPage = ({ userData }: UserPageProps) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<UserPageProps, { id: string }> = async (
+interface UserParams extends NextParsedUrlQuery {
+  id: string;
+}
+
+export const getServerSideProps: GetServerSideProps<UserPageProps, UserParams> = async (
   context
 ) => {
   //  TODO: remove conditional return for sign up campaign

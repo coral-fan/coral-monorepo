@@ -12,6 +12,7 @@ import { Event } from 'libraries/models/event';
 import { Collection, getCollection, getArtist } from 'libraries/models';
 import { SERVER_ENVIRONMENT } from 'consts';
 import { getEvent } from 'libraries/models/event/utils';
+import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
 
 const EventContainer = styled.div`
   display: flex;
@@ -59,7 +60,11 @@ export const EventPage = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps<EventPageProps, { id: string }> = async (
+interface EventParams extends NextParsedUrlQuery {
+  id: string;
+}
+
+export const getServerSideProps: GetServerSideProps<EventPageProps, EventParams> = async (
   context
 ) => {
   //  TODO: remove conditional return for sign up campaign

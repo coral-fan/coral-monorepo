@@ -10,6 +10,7 @@ import { useIsMobile } from 'libraries/window';
 import tokens, { QUERY } from 'styles/tokens';
 import { SERVER_ENVIRONMENT } from 'consts';
 import { getAsset } from 'libraries/models/asset/utils';
+import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
 
 type AssetPageProps = Asset;
 
@@ -94,10 +95,14 @@ export const AssetPage = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps<
-  AssetPageProps,
-  { collectionId: string; assetId: string }
-> = async (context) => {
+interface AssetParams extends NextParsedUrlQuery {
+  collectionId: string;
+  assetId: string;
+}
+
+export const getServerSideProps: GetServerSideProps<AssetPageProps, AssetParams> = async (
+  context
+) => {
   //  TODO: remove conditional return for sign up campaign
   if (SERVER_ENVIRONMENT === 'production') {
     return {

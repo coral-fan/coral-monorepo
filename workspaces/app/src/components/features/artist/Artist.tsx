@@ -2,6 +2,7 @@ import { Artist, Collection, getArtist, getCollection } from 'libraries/models';
 import { GetServerSideProps } from 'next';
 import { ArtistProfile } from './components/ArtistProfile';
 import { SERVER_ENVIRONMENT } from 'consts';
+import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
 
 type ArtistPageProps = Artist;
 
@@ -9,7 +10,11 @@ export const ArtistPage = (artistData: ArtistPageProps) => (
   <ArtistProfile artistData={artistData} />
 );
 
-export const getServerSideProps: GetServerSideProps<ArtistPageProps, { id: string }> = async (
+interface ArtistParams extends NextParsedUrlQuery {
+  id: string;
+}
+
+export const getServerSideProps: GetServerSideProps<ArtistPageProps, ArtistParams> = async (
   context
 ) => {
   //  TODO: remove conditional return for sign up campaign
