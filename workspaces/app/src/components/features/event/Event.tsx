@@ -19,6 +19,7 @@ const EventContainer = styled.div`
   flex-direction: column;
   gap: 16px;
 `;
+
 type EventPageProps = InfoAndMerchProps & StreamProps & Pick<Event, 'id' | 'allowedCollectionIds'>;
 
 export const EventPage = ({
@@ -110,7 +111,8 @@ export const getServerSideProps: GetServerSideProps<EventPageProps, EventParams>
   const exclusiveCollections =
     exclusiveCollectionIds === null
       ? null
-      : (await Promise.allSettled(exclusiveCollectionIds.map(getCollection)))
+      : // TODO: Refactor Promise.allSettled with RxJs
+        (await Promise.allSettled(exclusiveCollectionIds.map(getCollection)))
           .filter(
             (result): result is PromiseFulfilledResult<Collection> => result.status === 'fulfilled'
           )
