@@ -2,7 +2,7 @@ import { GetServerSideProps } from 'next';
 
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
 
-import { Collection, getCollection, getSimilarCollections } from 'libraries/models';
+import { Collection, getCollection, getSimilarCollections } from 'libraries/models/collection';
 import { DropOrAvailable, SimilarCollections, PartialCollection } from './components';
 import { Layout as CollectionLayout } from 'components/ui/nft';
 import { SERVER_ENVIRONMENT } from 'consts';
@@ -11,26 +11,23 @@ import { getTokenTotalSupply } from 'libraries/blockchain/utils';
 
 // similarCollections optional so failure to fetch
 // doesn't block page from loading
-interface CollectionPageProps {
-  collectionData: Collection;
+interface CollectionPageProps extends Collection {
   similarCollections?: PartialCollection[];
 }
 
 export const CollectionPage = ({
-  collectionData: {
-    imageUrl,
-    artistName,
-    artistProfilePhoto,
-    artistId,
-    name,
-    type,
-    description,
-    maxMintable,
-    details,
-    dropDate,
-    price,
-    id,
-  },
+  imageUrl,
+  artistName,
+  artistProfilePhoto,
+  artistId,
+  name,
+  type,
+  description,
+  maxMintable,
+  details,
+  dropDate,
+  price,
+  id,
   similarCollections,
 }: CollectionPageProps) => {
   const [numMinted, setNumMinted] = useState(0);
@@ -120,7 +117,7 @@ export const getServerSideProps: GetServerSideProps<CollectionPageProps, Collect
 
   return {
     props: {
-      collectionData,
+      ...collectionData,
       similarCollections,
     },
   };
