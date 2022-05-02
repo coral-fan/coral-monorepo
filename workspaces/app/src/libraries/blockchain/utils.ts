@@ -1,6 +1,6 @@
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { AVALANCHE } from 'consts';
-import { BaseABI__factory } from './contracts';
+import { BaseABI__factory } from './contracts/factories/BaseABI__factory';
 
 const avalancheRpcProvider = new JsonRpcProvider(AVALANCHE.RPC_URL);
 
