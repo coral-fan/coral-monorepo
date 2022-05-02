@@ -17,16 +17,10 @@ const poweredByStyle = css`
   width: 100%;
 `;
 
-const linkStyle = css`
-  display: flex;
-`;
-
 export const PoweredByAvalanche = () => (
   <div css={poweredByAvalancheStyle}>
     <span css={poweredByStyle}>Powered By</span>
-    <Link css={linkStyle} href="https://www.avax.network/" openInNewTab>
-      <AvalancheLogo />
-    </Link>
+    <AvalancheLogo />
   </div>
 );
 
@@ -37,7 +31,7 @@ const DiscordIcon = getIconComponent('DiscordIcon', discordIconSVG);
 const coralSocialHandles: [string, ReturnType<typeof getIconComponent>][] = [
   ['https://www.instagram.com/coral_fan/', InstagramIcon],
   ['https://twitter.com/coral__fan', TwitterIcon],
-  ['#', DiscordIcon],
+  ['https://discord.gg/eHdUVxMZG3', DiscordIcon],
 ];
 
 const coralSocialLinksStyle = css`
