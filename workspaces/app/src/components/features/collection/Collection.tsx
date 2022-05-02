@@ -110,7 +110,7 @@ export const getServerSideProps: GetServerSideProps<CollectionPageProps, Collect
 
   const collectionData = await getCollection(collectionId);
 
-  if (!collectionData) {
+  if (collectionData === undefined) {
     return {
       notFound: true,
     };

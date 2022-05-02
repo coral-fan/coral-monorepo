@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useCallback, useMemo } from 'react';
 import { GetServerSideProps } from 'next';
 
-import { Asset, Collection } from 'libraries/models';
+import { Asset } from 'libraries/models';
 import { Layout as AssetLayout } from 'components/ui/nft';
 import { Owner } from './components';
 import { getGatedContentComponent } from 'components/ui/nft/GatedContent/utils';
@@ -11,9 +11,7 @@ import tokens, { QUERY } from 'styles/tokens';
 import { SERVER_ENVIRONMENT } from 'consts';
 import { getAsset } from 'libraries/models/asset/utils';
 
-interface AssetPageProps {
-  assetData: Asset;
-}
+type AssetPageProps = Asset;
 
 export const AssetIdWrapper = styled.div`
   display: flex;
@@ -39,23 +37,21 @@ export const AssetContainer = styled.div`
 `;
 
 export const AssetPage = ({
-  assetData: {
-    imageUrl,
-    artistName,
-    artistProfilePhoto,
-    artistId,
-    collectionName,
-    type,
-    collectionDescription,
-    collectionDetails,
-    contractAddress,
-    id,
-    ownerAddress,
-    ownerProfilePhoto,
-    ownerUsername,
-    ownerType,
-    gatedContent,
-  },
+  imageUrl,
+  artistName,
+  artistProfilePhoto,
+  artistId,
+  collectionName,
+  type,
+  collectionDescription,
+  collectionDetails,
+  contractAddress,
+  id,
+  ownerAddress,
+  ownerProfilePhoto,
+  ownerUsername,
+  ownerType,
+  gatedContent,
 }: AssetPageProps) => {
   const owner = useMemo(
     () => (
@@ -98,9 +94,10 @@ export const AssetPage = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps<AssetPageProps, { assetId: string }> = async (
-  context
-) => {
+export const getServerSideProps: GetServerSideProps<
+  AssetPageProps,
+  { collectionId: string; assetId: string }
+> = async (context) => {
   //  TODO: remove conditional return for sign up campaign
   if (SERVER_ENVIRONMENT === 'production') {
     return {
@@ -120,7 +117,7 @@ export const getServerSideProps: GetServerSideProps<AssetPageProps, { assetId: s
 
   const assetData = await getAsset(collectionId, parseInt(assetId));
 
-  if (!assetData) {
+  if (assetData === undefined) {
     return {
       notFound: true,
     };
@@ -128,7 +125,7 @@ export const getServerSideProps: GetServerSideProps<AssetPageProps, { assetId: s
 
   return {
     props: {
-      assetData,
+      ...assetData,
     },
   };
 };

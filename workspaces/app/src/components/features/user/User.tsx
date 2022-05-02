@@ -43,12 +43,6 @@ export const getServerSideProps: GetServerSideProps<UserPageProps, { id: string 
   const { id } = params;
   const publicUserData = await getPublicUserData(id);
 
-  if (!publicUserData) {
-    return {
-      notFound: true,
-    };
-  }
-
   if (publicUserData === undefined) {
     return {
       notFound: true,
