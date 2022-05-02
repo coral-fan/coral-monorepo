@@ -6,7 +6,7 @@ import { ComponentPropsWithRef, forwardRef } from 'react';
 
 const Container = styled.div`
   display: flex;
-  width: fit-content;
+  width: max-content;
   background: rgba(0, 0, 0, 0.5);
   border-radius: ${tokens.border.radius.md};
   align-items: center;
