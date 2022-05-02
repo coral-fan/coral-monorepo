@@ -15,6 +15,15 @@ const Container = styled.div`
   gap: 50px;
 `;
 
+const VideoBackground = styled.video`
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+`;
 export interface SignUpCampaignProps {
   prelaunchSignUpUsers: EarlySignUpCampaignData['userUids'];
   isUserEarlySupporter: boolean;
@@ -24,10 +33,15 @@ export const SignUpCampaign = (props: SignUpCampaignProps) => {
   const isAuthenticated = useIsAuthenticated();
 
   return (
-    <Container>
-      {isAuthenticated ? <ThanksForSigningUp {...props} /> : <SignUp {...props} />}
-      <PoweredByAvalanche />
-    </Container>
+    <>
+      <VideoBackground autoPlay playsInline muted loop>
+        <source src="/videos/background.mp4" />
+      </VideoBackground>
+      <Container>
+        {isAuthenticated ? <ThanksForSigningUp {...props} /> : <SignUp {...props} />}
+        <PoweredByAvalanche />
+      </Container>
+    </>
   );
 };
 
