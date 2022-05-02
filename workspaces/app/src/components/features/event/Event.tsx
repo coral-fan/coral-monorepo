@@ -81,7 +81,7 @@ export const getServerSideProps: GetServerSideProps<EventPageProps, { id: string
 
   const eventData = await getEvent(id);
 
-  if (!eventData) {
+  if (eventData === undefined) {
     return {
       notFound: true,
     };

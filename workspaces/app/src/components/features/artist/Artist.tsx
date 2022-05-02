@@ -3,15 +3,13 @@ import { GetServerSideProps } from 'next';
 import { ArtistProfile } from './components/ArtistProfile';
 import { SERVER_ENVIRONMENT } from 'consts';
 
-interface ArtistPageProps {
-  artistData: Artist;
-}
+type ArtistPageProps = Artist;
 
-export const ArtistPage = ({ artistData }: ArtistPageProps) => (
+export const ArtistPage = (artistData: ArtistPageProps) => (
   <ArtistProfile artistData={artistData} />
 );
 
-export const getServerSideProps: GetServerSideProps<ArtistPageProps, { artistId: string }> = async (
+export const getServerSideProps: GetServerSideProps<ArtistPageProps, { id: string }> = async (
   context
 ) => {
   //  TODO: remove conditional return for sign up campaign
