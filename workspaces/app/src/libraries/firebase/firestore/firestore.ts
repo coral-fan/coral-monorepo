@@ -11,8 +11,6 @@ import {
 } from 'firebase/firestore';
 import { initializeFirebaseAdmin } from '..';
 import { isServerSide } from 'libraries/utils/environment';
-import { collectionData } from 'rxfire/firestore';
-import { map } from 'rxjs';
 
 const getFirestoreServerSide = async () => {
   await initializeFirebaseAdmin();
@@ -92,9 +90,20 @@ export const getCollectionReference = async <T extends CollectionReference>(coll
   );
 };
 
-export const getAllDocuments = <T>(collection: string) => {
-  const collectionReference = getCollectionReferenceClientSide<T>(collection);
-  return collectionData(collectionReference).pipe(
-    map((collections) => collections.map((collection) => collection))
-  );
+export const getAllDocuments = async <T extends DocumentData>(collection: string) => {
+  const collectionReference = await getCollectionReference(collection);
+
+  const documentArray = <DocumentData[]>[];
+
+  // TODO Use RxFire CollectionData();
+  const snapshot =
+    collectionReference instanceof CollectionReference
+      ? await getDocs(collectionReference)
+      : await collectionReference.get();
+
+  snapshot.forEach((doc) => {
+    documentArray.push(doc.data());
+  });
+
+  return documentArray as T[] | undefined;
 };
