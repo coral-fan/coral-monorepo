@@ -1,6 +1,6 @@
 import { getBadge } from 'components/ui/badges/utils';
 import { Asset } from 'libraries/models';
-import { ConditionalSpinner, ProfileItems } from 'components/ui';
+import { ProfileItems } from 'components/ui';
 import { ItemsPlaceholder, ProfileItemWrapper } from 'components/ui/profile';
 import { AssetCard } from '../AssetCard';
 

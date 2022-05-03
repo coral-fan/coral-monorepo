@@ -17,14 +17,16 @@ interface UserPageProps {
 
 export const UserPage = ({ userData }: UserPageProps) => {
   const uid = useUserUid();
-  const [assets, setAssets] = useState<Asset[]>([]);
+  const { assets } = userData;
+  const [currentAssets, setCurrentAssets] = useState<Asset[]>(assets);
   const [isAssetsLoading, setIsAssetsLoading] = useState(true);
 
+  // TODO: Handle assets in DB
   useEffect(() => {
     const populateAssets = async (uid: string) => {
       const ownedTokensMap = await getAllOwnedTokenIds(uid);
-      const assets: Asset[] = await getAssets(ownedTokensMap);
-      setAssets(assets);
+      const currentAssets: Asset[] = await getAssets(ownedTokensMap);
+      setCurrentAssets(currentAssets);
       setIsAssetsLoading(false);
     };
     uid && populateAssets(uid);
@@ -32,7 +34,7 @@ export const UserPage = ({ userData }: UserPageProps) => {
 
   return (
     <UserPageProvider userData={userData}>
-      <UserProfile isAssetsLoading={isAssetsLoading} assets={assets} />
+      <UserProfile isAssetsLoading={isAssetsLoading} assets={currentAssets} />
     </UserPageProvider>
   );
 };
@@ -86,6 +88,7 @@ export const getServerSideProps: GetServerSideProps<UserPageProps, UserParams> =
       ? await getDocumentData<PrivateUserData>('users', id, 'private', 'data')
       : undefined;
 
+  // TODO: Store Assets in DB, update on each page load
   const userData: User = { ...publicUserData, ...privateUserData, assets: [], following: [] };
 
   return {
