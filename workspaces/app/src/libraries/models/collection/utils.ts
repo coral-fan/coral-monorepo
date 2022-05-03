@@ -34,7 +34,7 @@ export const getSimilarCollections = async (
   const similarCollectionData = await getAllDocuments<Collection>('collections');
 
   if (similarCollectionData) {
-    // Returns the next n collections to drop for now, exlcuding current collection
+    // Returns the next n collections to drop for now, excluding current collection
     return (
       // TODO: Refactor Promise.allSettled with RxJs
       (
