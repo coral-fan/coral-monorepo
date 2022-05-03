@@ -6,6 +6,7 @@ import { QUERY } from 'styles';
 import { SignUpCampaignProps } from '../SignUpCampaign';
 import { CoralSocialLinks, Layout } from './components';
 import { useModal } from 'libraries/utils/hooks';
+import { getRandomSocialMediaPreviewImageUrl } from 'components/app';
 
 const Heading = styled.h1`
   --font-size: 34px;
@@ -77,7 +78,7 @@ export const ThanksForSigningUp = ({ isUserEarlySupporter }: ThanksForSigningUpP
           postTitle={'Coral Early Sign Up Campaign'}
           closeShareModal={closeModal}
         >
-          <Image src={'/images/social-media-preview/1.png'} alt="" />
+          <Image src={getRandomSocialMediaPreviewImageUrl()} alt="" />
         </ShareModal>
       )}
     </>
