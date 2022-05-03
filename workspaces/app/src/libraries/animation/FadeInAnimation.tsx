@@ -3,7 +3,7 @@ import { FC, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 const TRANSITION_NAME = 'fade';
-const ANIMATION_DURATION = 1000;
+const ANIMATION_DURATION = 300;
 
 const FadeContainer = styled.div`
   &.${TRANSITION_NAME}-enter {

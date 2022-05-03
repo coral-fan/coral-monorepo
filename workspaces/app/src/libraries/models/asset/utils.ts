@@ -49,33 +49,40 @@ type CollectionTokenMap = Record<string, number[]>;
 
 export const getAllOwnedTokenIds = async (userAddress: string) => {
   return (
-    await Promise.allSettled(
-      CORAL_CONTRACTS.map(async (contract) => ({
-        [contract]: await getOwnedTokensByCollection(contract, userAddress),
-      }))
+    // TODO: Refactor Promise.allSettled with RxJs
+    (
+      await Promise.allSettled(
+        CORAL_CONTRACTS.map(async (contract) => ({
+          [contract]: await getOwnedTokensByCollection(contract, userAddress),
+        }))
+      )
     )
-  )
-    .filter(
-      (result): result is PromiseFulfilledResult<CollectionTokenMap> =>
-        result.status === 'fulfilled'
-    )
-    .map((result) => result.value);
+      .filter(
+        (result): result is PromiseFulfilledResult<CollectionTokenMap> =>
+          result.status === 'fulfilled'
+      )
+      .map((result) => result.value)
+  );
 };
 
 export const getAssets = async (ownedTokensMap: CollectionTokenMap[]) =>
+  // TODO: Refactor Promise.allSettled with RxJs
   (
     await Promise.allSettled(
       ownedTokensMap.map(async (collection) => {
         const [contract] = Object.keys(collection);
         return (
-          await Promise.allSettled(
-            collection[contract].map(async (assetId) => await getAsset(contract, assetId))
+          // TODO: Refactor Promise.allSettled with RxJs
+          (
+            await Promise.allSettled(
+              collection[contract].map(async (assetId) => await getAsset(contract, assetId))
+            )
           )
-        )
-          .filter(
-            (result): result is PromiseFulfilledResult<Asset> => result.status === 'fulfilled'
-          )
-          .map((result) => result.value);
+            .filter(
+              (result): result is PromiseFulfilledResult<Asset> => result.status === 'fulfilled'
+            )
+            .map((result) => result.value)
+        );
       })
     )
   )

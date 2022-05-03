@@ -93,7 +93,7 @@ export const getCollectionReference = async <T extends CollectionReference>(coll
 export const getAllDocuments = async <T extends DocumentData>(collection: string) => {
   const collectionReference = await getCollectionReference(collection);
 
-  const documentArray = <DocumentData[]>[];
+  const documentArray: DocumentData[] = [];
 
   // TODO Use RxFire CollectionData();
   const snapshot =
