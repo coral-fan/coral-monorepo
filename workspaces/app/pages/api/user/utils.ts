@@ -46,20 +46,20 @@ export const upsertUser = async (uid: string, incomingUserData: IncomingUserData
     // TODO: remove sign up campaign logic
     // logic starts here
     if (!userDocSnapshot.exists) {
-      const signupCampaignDocRef = await getDocumentReferenceServerSide(
+      const signUpCampaignDocRef = await getDocumentReferenceServerSide(
         'app',
         'early-sign-up-campaign'
       );
 
-      const signupCampaignData = await getDocumentData<EarlySignUpCampaignData>(
+      const signUpCampaignData = await getDocumentData<EarlySignUpCampaignData>(
         'app',
         'early-sign-up-campaign'
       );
 
-      if (signupCampaignData) {
-        const { userUids } = signupCampaignData;
+      if (signUpCampaignData) {
+        const { userUids } = signUpCampaignData;
         if (userUids.length < SIGN_UP_CAMPAIGN_MAX_OPENINGS) {
-          signupCampaignDocRef.set({ userUids: [...userUids, uid] });
+          signUpCampaignDocRef.set({ userUids: [...userUids, uid] });
         }
       }
     }
