@@ -37,7 +37,7 @@ const SpinnerContainer = styled.div<SpinnerContainerProp>`
   display: flex;
   width: 100%;
   justify-content: center;
-  margin-top: ${({ isLoading }) => (isLoading ? '40px' : 0)};
+  margin: ${({ isLoading }) => (isLoading ? '40px' : 0)} 0;
 `;
 
 interface ProfileItemsProp {
