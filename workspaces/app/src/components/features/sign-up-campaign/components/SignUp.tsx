@@ -12,6 +12,10 @@ const Heading = styled.h1`
   --font-size: 52px;
 
   @media ${QUERY.TABLET} {
+    --font-size: 64px;
+  }
+
+  @media ${QUERY.LAPTOP} {
     --font-size: 80px;
   }
 
@@ -20,7 +24,6 @@ const Heading = styled.h1`
   padding-bottom: 4px;
 
   line-height: 94%;
-  max-width: 800px;
   text-align: center;
 `;
 
@@ -56,7 +59,10 @@ export const SignUp = ({ prelaunchSignUpUsers }: SignUpProps) => {
   return (
     <>
       <Layout>
-        <Heading>The marketplace for a new era of music.</Heading>
+        <Heading>
+          The marketplace
+          <br /> for a new era of music.
+        </Heading>
         <SubLayout>
           <RewardSpots remaining={remaining} />
           <Button onClick={openModal} loading={isLoggingIn} disabled={isLoggingIn}>
