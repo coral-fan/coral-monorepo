@@ -13,11 +13,12 @@ import { getUidClientSide, getUidServerSide } from 'libraries/models';
 import { GlobalStyles } from 'styles';
 
 // components
-import { Managers, Layout, ModalOrComponent } from './components';
+import { Provider as ReduxProvider } from 'react-redux';
+import { ErrorBoundary } from 'react-error-boundary';
+import { Managers, Layout, ModalOrComponent, ErrorBoundaryFallback } from './components';
 
 // state/logic
 import { useEffect, useState } from 'react';
-import { Provider as ReduxProvider } from 'react-redux';
 import { initializeStore } from 'libraries/state';
 
 initializeFirebaseApp();
@@ -41,7 +42,7 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
   }, []);
 
   return (
-    <>
+    <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
       <GlobalStyles />
       <Head>
         {/* TODO: update title post sign up campaign */}
@@ -64,7 +65,7 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
           ) : null}
         </ReduxProvider>
       </main>
-    </>
+    </ErrorBoundary>
   );
 };
 
