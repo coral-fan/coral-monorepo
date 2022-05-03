@@ -1,4 +1,4 @@
-import { Asset, getPublicUserData, PrivateUserData, User } from 'libraries/models';
+import { Asset, getPublicUserData, PrivateUserData, User, useUserUid } from 'libraries/models';
 import { GetServerSideProps } from 'next';
 import { getDocumentData } from 'libraries/firebase';
 import { getIdToken } from 'libraries/authentication';
@@ -9,16 +9,30 @@ import { UserPageProvider } from './provider';
 import { UserProfile } from './components/UserProfile';
 import { getAllOwnedTokenIds, getAssets } from 'libraries/models/asset/utils';
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
+import { useEffect, useState } from 'react';
 
 interface UserPageProps {
   userData: User;
 }
 
 export const UserPage = ({ userData }: UserPageProps) => {
-  const { assets } = userData;
+  const uid = useUserUid();
+  const [assets, setAssets] = useState<Asset[]>([]);
+  const [isAssetsLoading, setIsAssetsLoading] = useState(true);
+
+  useEffect(() => {
+    const populateAssets = async (uid: string) => {
+      const ownedTokensMap = await getAllOwnedTokenIds(uid);
+      const assets: Asset[] = await getAssets(ownedTokensMap);
+      setAssets(assets);
+      setIsAssetsLoading(false);
+    };
+    uid && populateAssets(uid);
+  }, [uid]);
+
   return (
     <UserPageProvider userData={userData}>
-      <UserProfile assets={assets} />
+      <UserProfile isAssetsLoading={isAssetsLoading} assets={assets} />
     </UserPageProvider>
   );
 };
@@ -72,10 +86,7 @@ export const getServerSideProps: GetServerSideProps<UserPageProps, UserParams> =
       ? await getDocumentData<PrivateUserData>('users', id, 'private', 'data')
       : undefined;
 
-  const ownedTokensMap = await getAllOwnedTokenIds(id);
-  const assets: Asset[] = await getAssets(ownedTokensMap);
-
-  const userData: User = { ...publicUserData, ...privateUserData, assets, following: [] };
+  const userData: User = { ...publicUserData, ...privateUserData, assets: [], following: [] };
 
   return {
     props: {
