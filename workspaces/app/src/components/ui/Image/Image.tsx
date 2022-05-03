@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import styled from '@emotion/styled';
-import NextImage from 'next/image';
+import NextImage, { ImageProps as NextImageProps } from 'next/image';
 
 // image components
 const ImageWrapper = styled.div`
@@ -19,12 +19,9 @@ const ImageContent = styled(NextImage)`
   height: unset !important;
 `;
 
-export interface ImageProp {
-  src: string;
-  alt: string;
-}
+type ImageProps = Pick<NextImageProps, 'alt' | 'src'>;
 
-export const Image = ({ src, alt }: ImageProp) => {
+export const Image = ({ src, alt }: ImageProps) => {
   return (
     <ImageWrapper>
       <ImageContent src={src} alt={alt} layout="fill" objectFit="contain" priority />
