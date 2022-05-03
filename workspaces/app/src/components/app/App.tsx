@@ -23,8 +23,8 @@ import { initializeStore } from 'libraries/state';
 
 initializeFirebaseApp();
 
-const getRandomSocialMediaPreviewImageUrl = () =>
-  `/images/social-media-preview/${Math.ceil(Math.random() * 5)}.png`;
+export const getRandomSocialMediaPreviewImageUrl = () =>
+  `/images/social-media-preview/${Math.ceil(Math.random() * 5)}.jpg`;
 
 export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
   const store = initializeStore(initialState);
