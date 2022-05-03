@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { CLIENT_ENVIRONMENT } from 'consts';
 import { createTheme } from 'theme-in-css';
 
 /*
@@ -69,11 +70,13 @@ const tokens = createTheme({
   layout: {
     padding: {
       mobile: {
-        vertical: '22px',
+        // TODO: remove conditional logic post sign up campaign
+        vertical: CLIENT_ENVIRONMENT === 'production' ? '14px' : '22px',
         horizontal: '24px',
       },
       desktop: {
-        vertical: '36px',
+        // TODO: remove conditional logic post sign up campaign
+        vertical: CLIENT_ENVIRONMENT === 'production' ? '24px' : '36px',
         horizontal: '64px',
       },
     },
@@ -145,7 +148,7 @@ const tokens = createTheme({
   buttons: {
     size: {
       mobile: '45px',
-      desktop: '55px',
+      desktop: '60px',
     },
   },
 });
