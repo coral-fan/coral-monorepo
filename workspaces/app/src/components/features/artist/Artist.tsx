@@ -44,6 +44,7 @@ export const getServerSideProps: GetServerSideProps<ArtistPageProps, ArtistParam
 
   const { collections, ...artist } = artistData;
 
+  // TODO: Refactor Promise.allSettled with RxJs
   const artistCollections = (await Promise.allSettled(collections.map(getCollection)))
     .filter((result): result is PromiseFulfilledResult<Collection> => result.status === 'fulfilled')
     .map((result) => result.value);
