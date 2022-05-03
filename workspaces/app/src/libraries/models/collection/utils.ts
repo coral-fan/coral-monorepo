@@ -1,7 +1,6 @@
 import { PartialCollection } from 'components/features/collection/components';
 import { sortCollectionByDropDateDesc } from 'components/ui';
 import { getAllDocuments, getDocumentData } from 'libraries/firebase';
-import { lastValueFrom } from 'rxjs';
 import { getArtist } from '../artist';
 import { Collection, CollectionData } from './types';
 
@@ -32,8 +31,7 @@ export const getSimilarCollections = async (
   collectionId: CollectionData['id'],
   n: number
 ): Promise<PartialCollection[] | undefined> => {
-  const similarCollectionData$ = getAllDocuments<Collection>('collections');
-  const similarCollectionData = await lastValueFrom(similarCollectionData$);
+  const similarCollectionData = await getAllDocuments<Collection>('collections');
 
   if (similarCollectionData) {
     // Returns the next n collections to drop for now, exlcuding current collection
@@ -42,11 +40,11 @@ export const getSimilarCollections = async (
       (
         await Promise.allSettled(
           sortCollectionByDropDateDesc(similarCollectionData)
-            // .filter(
-            //   ({ id, dropDate }) =>
-            //     id !== collectionId && new Date(dropDate).getTime() > new Date().getTime()
-            // )
-            // .slice(0, n)
+            .filter(
+              ({ id, dropDate }) =>
+                id !== collectionId && new Date(dropDate).getTime() > new Date().getTime()
+            )
+            .slice(0, n)
             .map(async ({ id, artistId, name, imageUrl, maxMintable, type, dropDate }) => {
               const artistData = await getArtist(artistId);
 
