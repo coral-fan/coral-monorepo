@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useIsAuthenticated } from 'libraries/authentication';
-import { getDocumentData } from 'libraries/firebase';
+import { getDocumentData, getDocumentReferenceServerSide } from 'libraries/firebase';
 import { getUidServerSide } from 'libraries/models';
 import { GetServerSideProps } from 'next';
 import { SignUp, ThanksForSigningUp, PoweredByAvalanche } from './components';
@@ -47,13 +47,19 @@ export const SignUpCampaign = (props: SignUpCampaignProps) => {
 };
 
 export const getServerSideProps: GetServerSideProps<SignUpCampaignProps> = async (ctx) => {
-  const signUpCampaignData = await getDocumentData<EarlySignUpCampaignData>(
+  let signUpCampaignData = await getDocumentData<EarlySignUpCampaignData>(
     'app',
     'early-sign-up-campaign'
   );
 
-  if (signUpCampaignData === undefined) {
-    throw 'signUpCampaignData cannot be undefined.';
+  if (!signUpCampaignData) {
+    const signUpCampaignDocRef = await getDocumentReferenceServerSide(
+      'app',
+      'early-sign-up-campaign'
+    );
+
+    signUpCampaignData = { userUids: [] };
+    signUpCampaignDocRef.set(signUpCampaignData);
   }
 
   const { userUids } = signUpCampaignData;
