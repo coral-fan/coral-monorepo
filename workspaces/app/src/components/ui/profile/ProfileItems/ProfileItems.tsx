@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
-import { Heading } from 'components/ui';
+import { ConditionalSpinner, Heading } from 'components/ui';
 import { useIsMobile } from 'libraries/window';
 import tokens, { QUERY } from 'styles/tokens';
 import { FC } from 'react';
+import { FadeInAnimation } from 'libraries/animation';
 
 const ContentContainer = styled.div`
   width: 100%;
@@ -29,8 +30,22 @@ const CollectionContainer = styled.div`
   }
 `;
 
-export const ProfileItems: FC = ({ children }) => {
+interface SpinnerContainerProp {
+  isLoading: boolean;
+}
+const SpinnerContainer = styled.div<SpinnerContainerProp>`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: ${({ isLoading }) => (isLoading ? '40px' : 0)};
+`;
+
+interface ProfileItemsProp {
+  isLoading: boolean;
+}
+export const ProfileItems: FC<ProfileItemsProp> = ({ isLoading, children }) => {
   const isMobile = useIsMobile();
+
   return (
     <ContentContainer>
       {!isMobile && (
@@ -38,7 +53,16 @@ export const ProfileItems: FC = ({ children }) => {
           Collections
         </Heading>
       )}
-      <CollectionContainer>{children}</CollectionContainer>
+      <SpinnerContainer isLoading={isLoading}>
+        <ConditionalSpinner
+          size={'100px'}
+          color={tokens.border.color.brand}
+          loading={isLoading}
+        ></ConditionalSpinner>
+      </SpinnerContainer>
+      <FadeInAnimation isLoading={isLoading}>
+        <CollectionContainer>{children}</CollectionContainer>
+      </FadeInAnimation>
     </ContentContainer>
   );
 };
