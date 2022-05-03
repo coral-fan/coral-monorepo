@@ -35,7 +35,8 @@ export const SignUpCampaign = (props: SignUpCampaignProps) => {
   return (
     <>
       <VideoBackground autoPlay playsInline muted loop>
-        <source src="/videos/background.mp4" />
+        <source src="/videos/background.webm" type="video/webm" />
+        <source src="/videos/background.mp4" type="video/mp4" />
       </VideoBackground>
       <Container>
         {isAuthenticated ? <ThanksForSigningUp {...props} /> : <SignUp {...props} />}
