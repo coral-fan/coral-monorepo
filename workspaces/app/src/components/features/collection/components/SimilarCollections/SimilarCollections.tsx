@@ -21,31 +21,28 @@ const Container = styled.div`
   padding-top: ${tokens.spacing.mobile.xl};
 `;
 
-export const SimilarCollections = ({ similarCollections }: SimilarCollectionsProp) => (
-  <>
-    {similarCollections.length > 0 && (
-      <Container>
-        <Heading level={2} styleVariant={'h3'}>
-          Similar Drops
-        </Heading>
-        <ScrollableContainer>
-          {similarCollections.map((collection) => {
-            const { name, type, dropDate } = collection;
-            const Badge = getBadge(type);
-            return (
-              <ScrollableItemWrapper key={`${collection.artistName}-${name}-${dropDate}`}>
-                <DropCard
-                  title={name}
-                  Badge={Badge}
-                  dropDateTimestamp={dropDate}
-                  {...collection}
-                  isCard={true}
-                />
-              </ScrollableItemWrapper>
-            );
-          })}
-        </ScrollableContainer>
-      </Container>
-    )}
-  </>
-);
+export const SimilarCollections = ({ similarCollections }: SimilarCollectionsProp) =>
+  similarCollections.length > 0 ? (
+    <Container>
+      <Heading level={2} styleVariant={'h3'}>
+        Similar Drops
+      </Heading>
+      <ScrollableContainer>
+        {similarCollections.map((collection) => {
+          const { name, type, dropDate } = collection;
+          const Badge = getBadge(type);
+          return (
+            <ScrollableItemWrapper key={`${collection.artistName}-${name}-${dropDate}`}>
+              <DropCard
+                title={name}
+                Badge={Badge}
+                dropDateTimestamp={dropDate}
+                {...collection}
+                isCard={true}
+              />
+            </ScrollableItemWrapper>
+          );
+        })}
+      </ScrollableContainer>
+    </Container>
+  ) : null;
