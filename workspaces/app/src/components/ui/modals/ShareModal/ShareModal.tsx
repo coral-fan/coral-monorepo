@@ -40,7 +40,7 @@ export const ShareModal: FC<ShareModalProps> = ({
   postTitle,
   children,
 }) => (
-  <Modal title={title} onClick={closeShareModal}>
+  <Modal title={title} onClick={closeShareModal} fullHeight>
     <ContentContainer>{children}</ContentContainer>
     <SocialIconsContainer>
       <TwitterShareButton key={'twitter'} title={postTitle} url={url} via={'coral__fan'}>
