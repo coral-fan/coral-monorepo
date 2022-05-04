@@ -75,7 +75,7 @@ export const ThanksForSigningUp = ({ isUserEarlySupporter }: ThanksForSigningUpP
         <ShareModal
           title={'Share'}
           url={window.location.href}
-          postTitle={'Coral Early Sign Up Campaign'}
+          postTitle={'Coral'}
           closeShareModal={closeModal}
         >
           <Image src={getRandomSocialMediaPreviewImageUrl()} alt="" />
