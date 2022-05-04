@@ -24,7 +24,7 @@ import { initializeStore } from 'libraries/state';
 initializeFirebaseApp();
 
 export const getRandomSocialMediaPreviewImageUrl = () =>
-  `/images/social-media-preview/${Math.ceil(Math.random() * 5)}.jpg`;
+  `https://coral.fan/images/social-media-preview/${Math.ceil(Math.random() * 5)}.jpg`;
 
 export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
   const store = initializeStore(initialState);
@@ -52,8 +52,27 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
           name="description"
           content="The marketplace for a new era of music is coming soon. Sign up for early access."
         />
+        {/* social media share meta data starts here*/}
+        <meta property="og:url" content="https://coral.fan/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Early Sign Up Campaign | CORAL" />
+        <meta
+          property="og:description"
+          content="The marketplace for a new era of music is coming soon. Sign up for early access."
+        />
         <meta property="og:image" content={getRandomSocialMediaPreviewImageUrl()} />
+
         <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="coral.fan" />
+        <meta property="twitter:url" content="https://coral.fan/" />
+        <meta name="twitter:title" content="Early Sign Up Campaign | CORAL" />
+        <meta
+          name="twitter:description"
+          content="The marketplace for a new era of music is coming soon. Sign up for early access."
+        />
+        <meta name="twitter:image" content={getRandomSocialMediaPreviewImageUrl()} />
+        {/* social media share meta data ends here*/}
+
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
