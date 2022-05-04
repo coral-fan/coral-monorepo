@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "app": "yarn workspace app",
+    "contracts": "yarn workspace contracts",
     "clean": "yarn workspaces run clean && rm -rf node_modules",
     "patch-package": "patch-package",
     "start:tunnel": "ngrok start --all --config ngrok.yaml",
