@@ -6,6 +6,7 @@ Authentication and database handled by [Firebase](https://firebase.google.com/) 
 
 ## Setup
 
+Please first make sure you have [Yarn Classic](https://classic.yarnpkg.com/lang/en/docs/install) installed.
 To set up the project, run the following commands below:
 
 ```bash
@@ -24,8 +25,13 @@ Next, go to the Firebase Console and go to Project Settings as below:
 Inside of Project Settings, navigate to the Service Accounts tab, and click the Generate new private key.
 ![image](./documentation/images/firebase_project_settings.png)
 
-Save this file somewhere safe.
+Take the JSON data from this file and add it to `.local.env` in the [app](/workspaces/app) workspace.
+
 **NOTE**: Please **DO NOT** save this file anywhere inside the `coral-monorepo` directory.
+
+Please also go the _General_ tab in the same view on the Firebase dashboard and copy the values under _SDK setup and configuration_ in the _Your apps_ section, convert it to `JSON` and add it to `.local.env` in the [app](/workspaces/app) workspace.
+
+You can find more instructions & details regarding environment variable details in the [`app` Workspace README](/workspaces/app/README.md).
 
 ### Local Mobile Device Testing
 

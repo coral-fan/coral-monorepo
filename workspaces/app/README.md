@@ -5,15 +5,15 @@
 Before running the web client locally, please make sure you have a `.env.local` environment variable file with the following values:
 
 ```shell
-FIREBASE_ADMIN_CREDENTIAL_PATH="<LOCAL PATH_TO FIREBASE ADMIN CREDENTIALS>"
-FIREBASE_ADMIN_CREDENTIAL_JSON="<RAW JSON DATA FIREBASE ADMIN CREDENTIALS>"
+FIREBASE_ADMIN_CREDENTIAL_JSON="<RAW JSON DATA FOR FIREBASE ADMIN CREDENTIALS>"
+NEXT_PUBLIC_FIREBASE_CONFIG_JSON="<RAW JSON DATA FOR FIREBASE CONFIG>"
 NEXT_PUBLIC_COVALENT_API_KEY="<COVALENT API KEY>"
 NEXT_PUBLIC_WEB3AUTH_CLIENT_ID="<WEB3AUTH CLIENT ID>"
 ```
 
-Please note that any values surrounded by `<` `>` and are placeholder values, and must be filled in with the actual value.
+Please note that any values surrounded by `<` `>` and are placeholder values, and must be filled in with actual values.
 
-Lastly, for `FIREBASE_ADMIN_CREDENTIAL_JSON`, you will need to take the content of your local Firebase credentials file, remove line breaks (you can use [this](https://www.textfixer.com/tools/remove-line-breaks.php)) and paste it.
+Lastly, for `FIREBASE_ADMIN_CREDENTIAL_JSON` & `NEXT_PUBLIC_FIREBASE_CONFIG_JSON`, please ensure the values are in JSON format, and remove line breaks.
 
 ## Scripts
 
