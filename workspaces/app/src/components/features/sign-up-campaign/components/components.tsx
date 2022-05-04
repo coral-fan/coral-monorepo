@@ -31,7 +31,7 @@ const DiscordIcon = getIconComponent('DiscordIcon', discordIconSVG);
 const coralSocialHandles: [string, ReturnType<typeof getIconComponent>][] = [
   ['https://www.instagram.com/coral_fan/', InstagramIcon],
   ['https://twitter.com/coral__fan', TwitterIcon],
-  ['https://discord.gg/eHdUVxMZG3', DiscordIcon],
+  ['https://discord.gg/qYbRMd7BGd', DiscordIcon],
 ];
 
 const coralSocialLinksStyle = css`
