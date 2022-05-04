@@ -73,7 +73,7 @@ export const ThanksForSigningUp = ({ isUserEarlySupporter }: ThanksForSigningUpP
       </Layout>
       {isModalOpen && (
         <ShareModal
-          title={'Share Early Sign Up Campaign'}
+          title={'Share'}
           url={window.location.href}
           postTitle={'Coral Early Sign Up Campaign'}
           closeShareModal={closeModal}
