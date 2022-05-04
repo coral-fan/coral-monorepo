@@ -53,6 +53,7 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
           content="A modern marketplace for music, collectibles, events and experiences, is coming soon. Sign up for early access."
         />
         <meta property="og:image" content={getRandomSocialMediaPreviewImageUrl()} />
+        <meta name="twitter:card" content="summary_large_image" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
