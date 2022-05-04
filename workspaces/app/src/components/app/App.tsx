@@ -50,7 +50,7 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           name="description"
-          content="A modern marketplace for music, collectibles, events and experiences, is coming soon. Sign up for early access."
+          content="The marketplace for a new era of music is coming soon. Sign up for early access."
         />
         <meta property="og:image" content={getRandomSocialMediaPreviewImageUrl()} />
         <meta name="twitter:card" content="summary_large_image" />
