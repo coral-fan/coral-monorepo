@@ -21,12 +21,14 @@ export const SignUpModal = () => {
           <Input
             label="Pick a username"
             placeholder="username"
+            autoComplete="off"
             {...register('username')}
             error={errors?.username?.message}
           />
           <Input
             label="Email Address (Optional)"
             placeholder="example@email.com"
+            autoComplete="off"
             {...register('email')}
             error={errors?.email?.message}
           />
