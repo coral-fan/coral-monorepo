@@ -9,21 +9,15 @@ import { SERVER_ENVIRONMENT } from 'consts';
 import { useEffect, useMemo, useState } from 'react';
 import { getTokenTotalSupply } from 'libraries/blockchain/utils';
 
-<<<<<<< HEAD
-// similarCollections optional so failure to fetch
-// doesn't block page from loading
-interface CollectionPageProps extends Collection {
-  similarCollections?: PartialCollection[];
-=======
 // stripe
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import { NEXT_PUBLIC_PUBLISHABLE_KEY } from 'libraries/stripe/consts';
 
-interface CollectionPageProps {
-  collectionData: Collection;
-  similarCollections: PartialCollection[];
->>>>>>> ecc4a140 (Add Stripe Elements wrapper to Collection)
+// similarCollections optional so failure to fetch
+// doesn't block page from loading
+interface CollectionPageProps extends Collection {
+  similarCollections?: PartialCollection[];
 }
 
 const stripePromise = loadStripe(NEXT_PUBLIC_PUBLISHABLE_KEY);
@@ -69,11 +63,18 @@ export const CollectionPage = ({
         type={type}
       />
     ),
-<<<<<<< HEAD
-    [dropDate, maxMintable, price, name, artistName, artistProfilePhoto, imageUrl, type, numMinted]
-=======
-    [dropDate, maxMintable, price, name, artistName, artistProfilePhoto, imageUrl, type, id]
->>>>>>> ecc4a140 (Add Stripe Elements wrapper to Collection)
+    [
+      dropDate,
+      maxMintable,
+      price,
+      name,
+      artistName,
+      artistProfilePhoto,
+      imageUrl,
+      type,
+      numMinted,
+      id,
+    ]
   );
 
   const similarCollectionsSection = useMemo(
