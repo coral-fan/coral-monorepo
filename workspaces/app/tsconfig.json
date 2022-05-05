@@ -23,7 +23,10 @@
     "incremental": true,
     /* custom compilerOptions starts here */
     "baseUrl": "./src", // this options enables aliases for directories in src (example: import library/hooks/...)
-    "jsxImportSource": "@emotion/react" // enable React component to accept css prop */
+    "jsxImportSource": "@emotion/react", // enable React component to accept css prop */
+    "paths": {
+      "@coral/contracts": ["../../contracts"]
+    }
     /* custom compilerOptions ends here */
   },
   "include": ["next-env.d.ts", "types/*.d.ts", "**/*.ts", "**/*.tsx"],
