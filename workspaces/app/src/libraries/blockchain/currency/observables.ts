@@ -2,7 +2,7 @@ import { JsonRpcProvider } from '@ethersproject/providers';
 import { AVALANCHE, SERVER_ENVIRONMENT } from 'consts';
 import { ethers } from 'ethers';
 import { forkJoin, from, map } from 'rxjs';
-import { AggregatorV3InterfaceABI__factory } from 'libraries/blockchain/contracts';
+import { ChainLinkOracleAggregatorV3__factory } from '@coral/contracts';
 import { AVAX_USD_PAIR_ADDRESS } from './consts';
 
 const avalancheRpcProvider = new JsonRpcProvider(AVALANCHE.RPC_URL);
@@ -20,7 +20,7 @@ type CurrencyPair = keyof typeof currencyPairDictionary;
 
 export const getCurrencyPairPrice$ = (pair: CurrencyPair) => {
   const address = currencyPairDictionary[pair];
-  const priceFeed = AggregatorV3InterfaceABI__factory.connect(address, avalancheRpcProvider);
+  const priceFeed = ChainLinkOracleAggregatorV3__factory.connect(address, avalancheRpcProvider);
 
   return forkJoin({
     roundData: from(priceFeed.latestRoundData()),
