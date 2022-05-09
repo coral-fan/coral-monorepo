@@ -48,12 +48,15 @@ export const CollectionPage = ({
     fetchNumMinted(id);
   }, [id]);
 
+  const isSoldOut = numMinted >= maxMintable;
+
   const dropOrAvailable = useMemo(
     () => (
       <DropOrAvailable
         dropDate={dropDate}
         numMinted={numMinted}
         maxMintable={maxMintable}
+        isSoldOut={isSoldOut}
         usdPrice={price}
         collectionName={name}
         collectionId={id}
@@ -74,6 +77,7 @@ export const CollectionPage = ({
       type,
       numMinted,
       id,
+      isSoldOut,
     ]
   );
 

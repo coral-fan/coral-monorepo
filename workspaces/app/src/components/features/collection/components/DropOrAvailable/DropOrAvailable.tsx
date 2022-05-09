@@ -15,6 +15,7 @@ interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
   maxMintable: number;
   dropDate: string;
   collectionId: string;
+  isSoldOut: boolean;
 }
 
 export const DropOrAvailable = ({
@@ -28,11 +29,15 @@ export const DropOrAvailable = ({
   imageUrl,
   artistProfilePhoto,
   type,
+  isSoldOut,
 }: DropOrAvailableProps) => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   const closePaymentModal = useCallback(() => setIsPaymentModalOpen(false), []);
-  const handleBuyButtonClick = useCallback(() => setIsPaymentModalOpen(true), []);
+  const handleBuyButtonClick = useCallback(
+    () => !isSoldOut && setIsPaymentModalOpen(true),
+    [isSoldOut]
+  );
 
   /*
     SwitchTransition implementation from:
@@ -59,7 +64,9 @@ export const DropOrAvailable = ({
       {isAvailable === 'true' ? (
         <AvailableContainer>
           <Price usdPrice={usdPrice} />
-          <CtaButton onClick={handleBuyButtonClick}>Buy Now</CtaButton>
+          <CtaButton onClick={handleBuyButtonClick} disabled={isSoldOut}>
+            {!isSoldOut ? 'Buy Now' : 'Sold Out'}
+          </CtaButton>
           {numMinted && <ProgressBar maxMintable={maxMintable} numMinted={numMinted} />}
         </AvailableContainer>
       ) : (
@@ -68,7 +75,7 @@ export const DropOrAvailable = ({
       {isPaymentModalOpen && (
         <PaymentModal
           title="Checkout"
-          closeShareModal={closePaymentModal}
+          closePaymentModal={closePaymentModal}
           imageUrl={imageUrl}
           collectionName={collectionName}
           collectionId={collectionId}
