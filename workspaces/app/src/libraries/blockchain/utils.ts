@@ -36,6 +36,10 @@ export const getOwnedTokensByCollection = async (
   const bigNumTokenBalance = await contract.balanceOf(userAddress);
   const tokenBalance = bigNumTokenBalance.toNumber();
 
+  if (tokenBalance === 0) {
+    return;
+  }
+
   const tokenIds = [];
   for (let i = 0; i < tokenBalance; i++) {
     const bigNumTokenId = await contract.tokenOfOwnerByIndex(userAddress, i);
