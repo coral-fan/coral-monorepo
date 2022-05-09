@@ -3,7 +3,7 @@ import { getCollectionReferenceClientSide, getDocumentData } from 'libraries/fir
 import { user } from 'rxfire/auth';
 import { collectionData } from 'rxfire/firestore';
 import { filter, map, mergeMap, startWith, tap } from 'rxjs';
-import { PublicUserData, User } from './types';
+import { PrivateUserData, PublicUserData, User } from './types';
 import { getUidClientSide } from './utils';
 
 // client side only
@@ -34,4 +34,12 @@ export const getUser$ = () =>
     mergeMap((uid) => getDocumentData<User>('users', uid)),
     filter((user): user is User => user !== undefined),
     map((user) => user)
+  );
+
+export const getStripeCustomerId$ = () =>
+  getUserUid$().pipe(
+    filter((uid): uid is string => uid !== undefined),
+    mergeMap((uid) => getDocumentData<PrivateUserData>('users', uid, 'private', 'data')),
+    filter((user): user is PrivateUserData => user !== undefined),
+    map((user) => user.stripeCustomerId)
   );
