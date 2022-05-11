@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { getUpdateProfileInfoSchema, UpdateUserSchema } from './schemas';
-import { upsertUser, useUsernames, useUserUid } from 'libraries/models';
+import { useUpsertUser, useUsernames, useUserUid } from 'libraries/models';
 import { useRefetchPageData } from 'libraries/utils/hooks';
 import { useIsUpdateProfileInfoModalOpen, useUser } from 'components/features/user/hooks';
 
@@ -32,6 +32,8 @@ export const useUpdateProfileInfoForm = () => {
   const refetchPageData = useRefetchPageData();
 
   const [, setIsModalOpen] = useIsUpdateProfileInfoModalOpen();
+
+  const upsertUser = useUpsertUser();
 
   const handleSubmitUpdateProfileInfo = useMemo(
     () =>
@@ -66,7 +68,7 @@ export const useUpdateProfileInfoForm = () => {
           setIsModalOpen(false);
         }
       }),
-    [handleSubmit, uid, socialHandlesFromDb, setUser, refetchPageData, setIsModalOpen]
+    [handleSubmit, uid, socialHandlesFromDb, setUser, refetchPageData, setIsModalOpen, upsertUser]
   );
 
   return {
