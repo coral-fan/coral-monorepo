@@ -31,7 +31,7 @@ export const globalStyles = css`
     font-style: 'normal';
     font-weight: 400;
     font-display: swap;
-    src: url('./fonts/FTKunstGrotesk-Regular.woff2') format('woff2');
+    src: url('/fonts/FTKunstGrotesk-Regular.woff2') format('woff2');
   }
 
   @font-face {
