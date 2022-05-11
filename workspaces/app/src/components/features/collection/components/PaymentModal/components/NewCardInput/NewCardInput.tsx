@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { StripeCardElementChangeEvent, StripeError } from '@stripe/stripe-js';
-import { Button, Toggle } from 'components/ui';
+import { Toggle } from 'components/ui';
 import { useUpsertUser, useUserUid } from 'libraries/models';
 import { FormEvent, useState } from 'react';
 import { cardElementOptions } from '../../styles';

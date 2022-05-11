@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { ConditionalSpinner, LinkButton, Modal } from 'components/ui';
 import { useAvaxUsdPrice, getPaymentLineItems } from 'libraries/blockchain';
 import { Collection, useStripeCustomerId } from 'libraries/models';
-import { FC, useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import tokens from 'styles/tokens';
 import { AssetInfo, AssetInfoProps, ExistingCardPayment, TransactionSummary } from './components';
 import { AvaxPayment } from './components/AvaxPayment';
@@ -48,7 +48,7 @@ const DifferentCardLink = styled(LinkButton)`
   line-height: ${tokens.font.line_height.xs};
 `;
 
-export const PaymentModal: FC<PaymentModalProps> = ({
+export const PaymentModal = ({
   imageUrl,
   collectionName,
   artistName,
@@ -58,7 +58,7 @@ export const PaymentModal: FC<PaymentModalProps> = ({
   title,
   usdPrice,
   collectionId,
-}) => {
+}: PaymentModalProps) => {
   const [isAvax, setIsAvax] = useState(true);
   const [useExistingCard, setUseExistingCard] = useState(true);
 
