@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { FC, ReactNode, useRef } from 'react';
+import { ReactNode, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 const TRANSITION_NAME = 'fade';

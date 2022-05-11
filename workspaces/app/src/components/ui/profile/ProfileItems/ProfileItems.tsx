@@ -57,7 +57,7 @@ export const ProfileItems = ({ isLoading, children }: ProfileItemsProps) => {
         </Heading>
       )}
       <SpinnerContainer isLoading={isLoading}>
-        <Spinner size={'100px'} color={tokens.border.color.brand} />
+        {isLoading && <Spinner size={'100px'} color={tokens.border.color.brand} />}
       </SpinnerContainer>
       <FadeInAnimation isLoading={isLoading}>
         <CollectionContainer>{children}</CollectionContainer>
