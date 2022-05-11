@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { upsertUser, useUsernames, useUserUid } from 'libraries/models';
+import { useUpsertUser, useUsernames, useUserUid } from 'libraries/models';
 import { getSignUpSchema, SignUpSchema } from './schema';
 import { getCoralAPIAxios } from 'libraries/utils/api';
 import { useRefetchPageData } from 'libraries/utils';
@@ -27,6 +27,8 @@ export const useSignUpForm = () => {
 
   const refetchPageData = useRefetchPageData();
 
+  const upsertUser = useUpsertUser();
+
   const handleSubmitSignUp = useMemo(
     () =>
       handleSubmit(async ({ username, email, doesOptIntoMarketing }) => {
@@ -42,7 +44,7 @@ export const useSignUpForm = () => {
         }
         setIsSignUpSubmitting(false);
       }),
-    [handleSubmit, uid, refetchPageData]
+    [handleSubmit, uid, refetchPageData, upsertUser]
   );
 
   return {
