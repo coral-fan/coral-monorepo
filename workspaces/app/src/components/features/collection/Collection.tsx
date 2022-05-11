@@ -12,7 +12,7 @@ import { getTokenTotalSupply } from 'libraries/blockchain/utils';
 // stripe
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-import { NEXT_PUBLIC_PUBLISHABLE_KEY } from 'libraries/stripe/consts';
+import { NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY } from 'libraries/stripe/consts';
 
 // similarCollections optional so failure to fetch
 // doesn't block page from loading
@@ -20,7 +20,7 @@ interface CollectionPageProps extends Collection {
   similarCollections?: PartialCollection[];
 }
 
-const stripePromise = loadStripe(NEXT_PUBLIC_PUBLISHABLE_KEY);
+const stripePromise = loadStripe(NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 export const CollectionPage = ({
   imageUrl,
@@ -87,24 +87,22 @@ export const CollectionPage = ({
   );
 
   return (
-    <>
-      <Elements stripe={stripePromise}>
-        <CollectionLayout
-          isAsset={false}
-          type={type}
-          imageUrl={imageUrl}
-          artistName={artistName}
-          artistProfilePhoto={artistProfilePhoto}
-          artistId={artistId}
-          name={name}
-          description={description}
-          details={details}
-          collectionId={id}
-          dropOrAvailable={dropOrAvailable}
-          similarCollections={similarCollectionsSection}
-        />
-      </Elements>
-    </>
+    <Elements stripe={stripePromise}>
+      <CollectionLayout
+        isAsset={false}
+        type={type}
+        imageUrl={imageUrl}
+        artistName={artistName}
+        artistProfilePhoto={artistProfilePhoto}
+        artistId={artistId}
+        name={name}
+        description={description}
+        details={details}
+        collectionId={id}
+        dropOrAvailable={dropOrAvailable}
+        similarCollections={similarCollectionsSection}
+      />
+    </Elements>
   );
 };
 
