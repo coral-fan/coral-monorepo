@@ -1,4 +1,4 @@
-import { Asset, getPublicUserData, PrivateUserData, User, useUserUid } from 'libraries/models';
+import { Asset, getPublicUserData, PrivateUserData, User } from 'libraries/models';
 import { GetServerSideProps } from 'next';
 import { getDocumentData } from 'libraries/firebase';
 import { getIdToken } from 'libraries/authentication';
@@ -9,28 +9,27 @@ import { UserPageProvider } from './provider';
 import { UserProfile } from './components/UserProfile';
 import { getAllOwnedTokenIds, getAssets } from 'libraries/models/asset/utils';
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
-import { useEffect, useState } from 'react';
-
+import { useCallback, useEffect, useState } from 'react';
 interface UserPageProps {
   userData: User;
 }
 
 export const UserPage = ({ userData }: UserPageProps) => {
-  const uid = useUserUid();
-  const { assets } = userData;
+  const { id, assets } = userData;
   const [currentAssets, setCurrentAssets] = useState<Asset[]>(assets);
   const [isAssetsLoading, setIsAssetsLoading] = useState(true);
 
+  const populateAssets = useCallback(async (walletAddress: string) => {
+    const ownedTokensMap = await getAllOwnedTokenIds(walletAddress);
+    const currentAssets: Asset[] = await getAssets(ownedTokensMap);
+    setCurrentAssets(currentAssets);
+    setIsAssetsLoading(false);
+  }, []);
+
   // TODO: Handle assets in DB
   useEffect(() => {
-    const populateAssets = async (uid: string) => {
-      const ownedTokensMap = await getAllOwnedTokenIds(uid);
-      const currentAssets: Asset[] = await getAssets(ownedTokensMap);
-      setCurrentAssets(currentAssets);
-      setIsAssetsLoading(false);
-    };
-    uid && populateAssets(uid);
-  }, [uid]);
+    populateAssets(id);
+  }, [populateAssets, id]);
 
   return (
     <UserPageProvider userData={userData}>
@@ -89,7 +88,7 @@ export const getServerSideProps: GetServerSideProps<UserPageProps, UserParams> =
       : undefined;
 
   // TODO: Store Assets in DB, update on each page load
-  const userData: User = { ...publicUserData, ...privateUserData, assets: [], following: [] };
+  const userData: User = { id, ...publicUserData, ...privateUserData, assets: [], following: [] };
 
   return {
     props: {
