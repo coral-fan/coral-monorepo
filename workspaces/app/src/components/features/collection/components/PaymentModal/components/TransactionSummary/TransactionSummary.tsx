@@ -24,7 +24,7 @@ const LineItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 19px 0px;
+  padding: 14px 0px;
   font-size: ${tokens.font.size.sm};
   line-height: ${tokens.font.line_height.sm};
   letter-spacing: ${tokens.font.letter_spacing.sm};
