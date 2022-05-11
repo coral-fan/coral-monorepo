@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
-import { ConditionalSpinner, Heading } from 'components/ui';
+import { Heading } from 'components/ui';
 import { useIsMobile } from 'libraries/window';
 import tokens, { QUERY } from 'styles/tokens';
 import { FadeInAnimation } from 'libraries/animation';
 import { ReactNode } from 'react';
+import { Spinner } from 'components/ui/Spinner/Spinner';
 
 const ContentContainer = styled.div`
   width: 100%;
@@ -56,11 +57,7 @@ export const ProfileItems = ({ isLoading, children }: ProfileItemsProps) => {
         </Heading>
       )}
       <SpinnerContainer isLoading={isLoading}>
-        <ConditionalSpinner
-          size={'100px'}
-          color={tokens.border.color.brand}
-          loading={isLoading}
-        ></ConditionalSpinner>
+        <Spinner size={'100px'} color={tokens.border.color.brand} />
       </SpinnerContainer>
       <FadeInAnimation isLoading={isLoading}>
         <CollectionContainer>{children}</CollectionContainer>
