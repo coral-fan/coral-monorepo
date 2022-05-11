@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
-import { FC } from 'react';
 import { BaseButton, BaseButtonProps as ButtonProps } from '../../BaseButton';
 import tokens from 'styles/tokens';
 
@@ -26,7 +25,7 @@ const Wrapper = styled(BaseButton)`
   ${buttonStyle}
 `;
 
-export const Button: FC<ButtonProps> = ({ children, loading, ...props }) => (
+export const Button = ({ children, loading, ...props }: ButtonProps) => (
   <Wrapper loading={loading} spinnerSize={SIZE} {...props}>
     {children}
   </Wrapper>
