@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { LinkButton } from 'components/ui';
 import tokens from 'styles/tokens';
 
 export const CheckoutContainer = styled.div`
