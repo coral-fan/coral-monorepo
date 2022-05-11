@@ -1,16 +1,12 @@
 import styled from '@emotion/styled';
-import { Button, ConditionalSpinner, LinkButton, Modal } from 'components/ui';
-import {
-  useWallet,
-  useAvaxUsdPrice,
-  getAvaxFormat,
-  getPaymentLineItems,
-} from 'libraries/blockchain';
-import { Collection } from 'libraries/models';
-import { FC, useCallback, useState } from 'react';
+import { ConditionalSpinner, LinkButton, Modal } from 'components/ui';
+import { useAvaxUsdPrice, getPaymentLineItems } from 'libraries/blockchain';
+import { Collection, useStripeCustomerId } from 'libraries/models';
+import { FC, useCallback, useMemo, useState } from 'react';
 import tokens from 'styles/tokens';
-import { AssetInfo, AssetInfoProps, Currency, TransactionSummary } from './components';
-import { CreditCardModal } from './components/CreditCardModal';
+import { AssetInfo, AssetInfoProps, ExistingCardPayment, TransactionSummary } from './components';
+import { AvaxPayment } from './components/AvaxPayment';
+import { NewCardInput } from './components/NewCardInput';
 
 const TRANSACTION_FEE = 0.01;
 
@@ -18,42 +14,38 @@ interface PaymentModalProps extends AssetInfoProps {
   title: string;
   usdPrice: number;
   collectionId: Collection['id'];
-  closeShareModal: () => void;
+  closePaymentModal: () => void;
 }
 
 const ContentContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: ${tokens.spacing.mobile.md};
+  gap: 16px;
   align-items: center;
 `;
 
-const PaymentMethodContainer = styled.div`
+const HeadingContainer = styled.div`
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: end;
-  align-items: center;
-  min-height: 100px;
+  justify-content: space-between;
+`;
+
+const Heading = styled.div`
+  font-size: ${tokens.font.size.xs};
+  letter-spacing: ${tokens.font.letter_spacing.xs};
+  line-height: ${tokens.font.line_height.xs};
   text-transform: uppercase;
-  font-weight: ${tokens.font.weight.bold};
-  gap: 4px;
 `;
 
-const WalletBalance = styled.div`
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  font-size: ${tokens.font.size.md};
-  letter-spacing: ${tokens.font.letter_spacing.md};
-  line-height: ${tokens.font.line_height.md};
-`;
-
-const SwitchPaymentMethod = styled.div`
+const DifferentCardLink = styled(LinkButton)`
   display: flex;
   justify-content: center;
   text-transform: uppercase;
   text-decoration: underline;
+  font-size: ${tokens.font.size.xs};
+  letter-spacing: ${tokens.font.letter_spacing.xs};
+  line-height: ${tokens.font.line_height.xs};
 `;
 
 export const PaymentModal: FC<PaymentModalProps> = ({
@@ -62,39 +54,38 @@ export const PaymentModal: FC<PaymentModalProps> = ({
   artistName,
   artistProfilePhoto,
   type,
-  closeShareModal,
+  closePaymentModal,
   title,
   usdPrice,
   collectionId,
 }) => {
   const [isAvax, setIsAvax] = useState(true);
-  const [showCreditCardModal, setShowCreditCardModal] = useState(false);
-  const { exchangeRate, isLoading } = useAvaxUsdPrice();
-  const { balance } = useWallet();
+  const [useExistingCard, setUseExistingCard] = useState(true);
 
-  const formattedBalance = balance && getAvaxFormat(balance);
+  const { exchangeRate, isLoading } = useAvaxUsdPrice();
+
+  // Stripe customer Id means user has a card on file
+  const stripeCustomerId = useStripeCustomerId();
+
   const avaxPrice = isLoading ? 0 : usdPrice / exchangeRate;
 
-  const { price, transactionFee, total, altTotal } = getPaymentLineItems(
-    usdPrice,
-    avaxPrice,
-    TRANSACTION_FEE,
-    isAvax
-  );
+  const { total, formattedPrice, formattedTransactionFee, formattedTotal, formattedAltTotal } =
+    getPaymentLineItems(usdPrice, avaxPrice, TRANSACTION_FEE, isAvax);
 
   const handleSwitchPaymentMethodClick = useCallback(() => setIsAvax(!isAvax), [isAvax]);
 
-  const handleButtonClick = async () => {
-    if (isAvax) {
-      console.log('web3 flow');
-    }
-    setShowCreditCardModal(true);
-  };
+  const handleUseDifferentCardClick = useCallback(
+    () => setUseExistingCard(!useExistingCard),
+    [useExistingCard]
+  );
 
-  const closeCreditCardModal = useCallback(() => setShowCreditCardModal(false), []);
+  const showExistingCardMethod = useMemo(
+    () => stripeCustomerId && useExistingCard,
+    [stripeCustomerId, useExistingCard]
+  );
 
   return (
-    <Modal title={title} onClick={closeShareModal} fullHeight={true}>
+    <Modal title={title} onClick={closePaymentModal} fullHeight={true}>
       <ContentContainer>
         <AssetInfo
           imageUrl={imageUrl}
@@ -103,45 +94,47 @@ export const PaymentModal: FC<PaymentModalProps> = ({
           artistProfilePhoto={artistProfilePhoto}
           type={type}
         />
-        <ConditionalSpinner
-          size={'100px'}
-          color={tokens.background.color.brand}
-          loading={isLoading}
-        >
+        <ConditionalSpinner size={'60px'} color={tokens.background.color.brand} loading={isLoading}>
           <TransactionSummary
             isAvax={isAvax}
-            price={price}
-            total={total}
-            altTotal={altTotal}
-            transactionFee={transactionFee}
+            price={formattedPrice}
+            total={formattedTotal}
+            altTotal={formattedAltTotal}
+            transactionFee={formattedTransactionFee}
             transactionFeePercentage={TRANSACTION_FEE * 100}
           />
-          <PaymentMethodContainer>
-            {isAvax && (
+          <HeadingContainer>
+            {isAvax ? (
+              <Heading>Pay with AVAX</Heading>
+            ) : (
               <>
-                <span>Wallet Balance</span>
-                <WalletBalance>
-                  {formattedBalance && <Currency value={formattedBalance} isAvax={isAvax} />}
-                </WalletBalance>
+                <Heading>{showExistingCardMethod ? 'Card On File' : 'Payment Details'}</Heading>
+                <DifferentCardLink type="button" onClick={handleUseDifferentCardClick}>
+                  {showExistingCardMethod ? 'Use a Different Card' : 'Use Existing Card'}
+                </DifferentCardLink>
               </>
             )}
-          </PaymentMethodContainer>
-          <SwitchPaymentMethod>
-            <LinkButton onClick={handleSwitchPaymentMethodClick}>
-              {`switch to pay with ${isAvax ? 'card' : 'wallet'}`}
-            </LinkButton>
-          </SwitchPaymentMethod>
+          </HeadingContainer>
+          {isAvax ? (
+            <AvaxPayment total={total} handleSwitchPaymentClick={handleSwitchPaymentMethodClick} />
+          ) : showExistingCardMethod ? (
+            <ExistingCardPayment
+              stripeCustomerId={stripeCustomerId}
+              total={total}
+              handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
+              collectionId={collectionId}
+              onSuccessfulPayment={() => ''}
+            />
+          ) : (
+            <NewCardInput
+              total={total}
+              handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
+              collectionId={collectionId}
+              onSuccessfulPayment={() => ''}
+            />
+          )}
         </ConditionalSpinner>
-        <Button onClick={handleButtonClick}>pay and claim</Button>
       </ContentContainer>
-      {showCreditCardModal && (
-        <CreditCardModal
-          onSuccessfulPayment={closeCreditCardModal}
-          closeModal={closeCreditCardModal}
-          collectionId={collectionId}
-          price={usdPrice}
-        />
-      )}
     </Modal>
   );
 };
