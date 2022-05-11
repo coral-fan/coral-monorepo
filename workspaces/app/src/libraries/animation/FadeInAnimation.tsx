@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { FC, useRef } from 'react';
+import { FC, ReactNode, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 const TRANSITION_NAME = 'fade';
@@ -17,9 +17,10 @@ const FadeContainer = styled.div`
 
 interface FadeAnimationProp {
   isLoading: boolean;
+  children: ReactNode;
 }
 
-export const FadeInAnimation: FC<FadeAnimationProp> = ({ isLoading, children }) => {
+export const FadeInAnimation = ({ isLoading, children }: FadeAnimationProp) => {
   const nodeRef = useRef<HTMLDivElement>(null);
   return (
     <CSSTransition

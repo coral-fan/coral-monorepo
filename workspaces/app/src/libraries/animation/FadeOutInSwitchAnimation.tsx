@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { FC, Key, useRef } from 'react';
+import { FC, Key, ReactNode, useRef } from 'react';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
 const TRANSITION_NAME = 'fade';
@@ -21,9 +21,10 @@ const FadeContainer = styled.div`
 
 interface FadeAnimationProp {
   isAvailable: Key;
+  children: ReactNode;
 }
 
-export const FadeOutInSwitchAnimation: FC<FadeAnimationProp> = ({ isAvailable, children }) => {
+export const FadeOutInSwitchAnimation = ({ isAvailable, children }: FadeAnimationProp) => {
   const nodeRef = useRef<HTMLDivElement>(null);
   return (
     <SwitchTransition mode="out-in">
