@@ -19,12 +19,20 @@ export const getPaymentLineItems = (
   const usdTotal = usdPrice + usdTransactionFee;
   const avaxTotal = avaxPrice + avaxTransactionFee;
 
-  const price = isAvax ? getAvaxFormat(avaxPrice) : getUsdFormat(usdPrice);
-  const transactionFee = isAvax
+  const formattedPrice = isAvax ? getAvaxFormat(avaxPrice) : getUsdFormat(usdPrice);
+  const formattedTransactionFee = isAvax
     ? getAvaxFormat(avaxTransactionFee)
     : getUsdFormat(usdTransactionFee);
-  const total = isAvax ? getAvaxFormat(avaxTotal) : getUsdFormat(usdTotal);
-  const altTotal = isAvax ? getUsdFormat(usdTotal) : getAvaxFormat(avaxTotal);
+  const formattedTotal = isAvax ? getAvaxFormat(avaxTotal) : getUsdFormat(usdTotal);
+  const formattedAltTotal = isAvax ? getUsdFormat(usdTotal) : getAvaxFormat(avaxTotal);
 
-  return { price, transactionFee, total, altTotal };
+  const total = isAvax ? avaxTotal : usdTotal;
+
+  return {
+    total,
+    formattedPrice,
+    formattedTransactionFee,
+    formattedTotal,
+    formattedAltTotal,
+  };
 };
