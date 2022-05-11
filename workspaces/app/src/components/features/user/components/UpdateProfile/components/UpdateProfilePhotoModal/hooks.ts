@@ -1,6 +1,6 @@
 import { useIsUpdateProfilePhotoModalOpen } from 'components/features/user/hooks';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
-import { OffsetPercentages, upsertUser, useUserUid } from 'libraries/models';
+import { OffsetPercentages, useUpsertUser, useUserUid } from 'libraries/models';
 import { useRefetchPageData } from 'libraries/utils';
 import { ChangeEvent, useCallback, useState } from 'react';
 
@@ -25,6 +25,8 @@ export const useUpdateProfilePhoto = (initialSrc: string) => {
   );
   const refetchPageData = useRefetchPageData();
   const [, setIsModalOpen] = useIsUpdateProfilePhotoModalOpen();
+
+  const upsertUser = useUpsertUser();
 
   const updateProfilePhoto = useCallback(
     async (offsetPercentages: OffsetPercentages, scale: number) => {
