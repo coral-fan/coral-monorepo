@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { ConditionalSpinner, LinkButton, Modal } from 'components/ui';
+import { TRANSACTION_FEE } from 'consts';
 import { useAvaxUsdPrice, getPaymentLineItems } from 'libraries/blockchain';
 import { Collection, useStripeCustomerId } from 'libraries/models';
 import { useCallback, useMemo, useState } from 'react';
@@ -7,8 +8,6 @@ import tokens from 'styles/tokens';
 import { AssetInfo, AssetInfoProps, ExistingCardPayment, TransactionSummary } from './components';
 import { AvaxPayment } from './components/AvaxPayment';
 import { NewCardInput } from './components/NewCardInput';
-
-const TRANSACTION_FEE = 0.01;
 
 interface PaymentModalProps extends AssetInfoProps {
   title: string;
@@ -79,7 +78,7 @@ export const PaymentModal = ({
     [useExistingCard]
   );
 
-  const showExistingCardMethod = useMemo(
+  const hasExistingCard = useMemo(
     () => stripeCustomerId && useExistingCard,
     [stripeCustomerId, useExistingCard]
   );
@@ -108,16 +107,18 @@ export const PaymentModal = ({
               <Heading>Pay with AVAX</Heading>
             ) : (
               <>
-                <Heading>{showExistingCardMethod ? 'Card On File' : 'Payment Details'}</Heading>
-                <DifferentCardLink type="button" onClick={handleUseDifferentCardClick}>
-                  {showExistingCardMethod ? 'Use a Different Card' : 'Use Existing Card'}
-                </DifferentCardLink>
+                <Heading>{hasExistingCard ? 'Card On File' : 'Payment Details'}</Heading>
+                {stripeCustomerId && (
+                  <DifferentCardLink type="button" onClick={handleUseDifferentCardClick}>
+                    {hasExistingCard ? 'Use a Different Card' : 'Use Existing Card'}
+                  </DifferentCardLink>
+                )}
               </>
             )}
           </HeadingContainer>
           {isAvax ? (
             <AvaxPayment total={total} handleSwitchPaymentClick={handleSwitchPaymentMethodClick} />
-          ) : showExistingCardMethod ? (
+          ) : hasExistingCard ? (
             <ExistingCardPayment
               stripeCustomerId={stripeCustomerId}
               total={total}
