@@ -1,5 +1,5 @@
 import { TRANSACTION_FEE } from 'consts';
-import { getDocumentData, getDocumentReferenceServerSide } from 'libraries/firebase';
+import { getDocumentData } from 'libraries/firebase';
 import { getEnvironmentVariableErrorMessage } from 'libraries/utils/errors';
 import Stripe from 'stripe';
 import { Handler } from '../types';

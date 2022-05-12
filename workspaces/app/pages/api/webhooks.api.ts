@@ -34,14 +34,29 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
       return;
     }
     const event = stripe.webhooks.constructEvent(buf, sig, webhookSecret);
-    console.log('event', event);
+
+    const { request } = event;
+    // TODO: Handle duplicate event using idempotency key from request
+
+    if (event.type === 'payment_intent.amount_capturable_updated') {
+      const object = event.data.object as Stripe.PaymentIntent;
+
+      if (object.status === 'requires_capture') {
+        // TODO: Call mintNFT utility function with paymentIntentId
+        console.log('MINT NFT');
+      }
+    }
+
+    if (event.type === 'payment_intent.succeeded') {
+      const object = event.data.object as Stripe.PaymentIntent;
+      // TODO: Send successful mint + capture back to client
+    }
   } catch (err: unknown) {
     if (err instanceof Error) {
       console.log(`Webhook error: ${err.message}`);
       return res.status(400).send(`Webhook error: ${err.message}`);
     }
   }
-  res.status(200).send(`success`);
 };
 
 export default getHandler({ post });
