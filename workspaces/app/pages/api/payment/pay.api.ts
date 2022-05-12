@@ -1,3 +1,5 @@
+import { TRANSACTION_FEE } from 'consts';
+import { getDocumentReferenceServerSide } from 'libraries/firebase';
 import { getEnvironmentVariableErrorMessage } from 'libraries/utils/errors';
 import Stripe from 'stripe';
 import { Handler } from '../types';
@@ -11,24 +13,42 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2020-08-
 
 const post: Handler = async (req, res) => {
   try {
-    // Temporary
-    // Must validate amount server side
-    const { amount, savePaymentInfo, stripeCustomerId, paymentMethodId, collectionId } = req.body;
+    const { amount, savePaymentInfo, stripeCustomerId, paymentMethodId, collectionId, uid } =
+      req.body;
+
+    // Confirm price
+    const collectionRefDoc = await getDocumentReferenceServerSide('collections', `${collectionId}`);
+    const collectionSnapshotDoc = await collectionRefDoc.get();
+    const collectionData = collectionSnapshotDoc.data();
+
+    if (!collectionData) {
+      throw Error('Cannot find collection');
+    }
+
+    const { price } = collectionData;
+    const totalTransactionAmount = price * (1 + TRANSACTION_FEE);
+
+    if (amount < totalTransactionAmount) {
+      throw Error('Amount does not match calculated total');
+    }
 
     // If user agrees to save info: Assign stripeCustomerId to new variable or create one if it does not exist
     const customerId = savePaymentInfo
       ? stripeCustomerId ?? (await stripe.customers.create()).id
       : undefined;
-    console.log(customerId);
+
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
       currency: 'usd',
       customer: customerId,
       setup_future_usage: 'on_session',
       payment_method_types: ['card'],
-      capture_method: 'manual',
+      // capture_method: 'manual',
       payment_method: paymentMethodId,
+      metadata: { collection_id: collectionId, uid: uid },
     });
+
+    console.log(paymentIntent);
 
     res.status(200).send({
       clientSecret: paymentIntent.client_secret,
