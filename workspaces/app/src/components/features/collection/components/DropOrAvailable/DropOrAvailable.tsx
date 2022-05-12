@@ -9,6 +9,8 @@ import { ProgressBar } from '../ProgressBar';
 import { AssetInfoProps } from '../PaymentModal/components/AssetInfo';
 import { PaymentModal } from '../PaymentModal';
 import { FadeOutInSwitchAnimation } from 'libraries/animation';
+import { useIsAuthenticated, useLogin } from 'libraries/authentication';
+import { SignInModal, useSignInModalState } from 'components/app';
 
 interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
   numMinted?: number;
@@ -33,10 +35,20 @@ export const DropOrAvailable = ({
 }: DropOrAvailableProps) => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
+  const isAuthenticated = useIsAuthenticated();
+  const { isLoggingIn } = useLogin();
+  const { openModal } = useSignInModalState();
+
   const closePaymentModal = useCallback(() => setIsPaymentModalOpen(false), []);
+
   const handleBuyButtonClick = useCallback(
-    () => !isSoldOut && setIsPaymentModalOpen(true),
-    [isSoldOut]
+    () =>
+      isAuthenticated && !isSoldOut
+        ? setIsPaymentModalOpen(true)
+        : !isAuthenticated && !isSoldOut
+        ? openModal()
+        : null,
+    [isSoldOut, isAuthenticated, openModal]
   );
 
   /*
@@ -64,15 +76,17 @@ export const DropOrAvailable = ({
       {isAvailable === 'true' ? (
         <AvailableContainer>
           <Price usdPrice={usdPrice} />
-          <CtaButton onClick={handleBuyButtonClick} disabled={isSoldOut}>
-            {!isSoldOut ? 'Buy Now' : 'Sold Out'}
+          <CtaButton onClick={handleBuyButtonClick} disabled={isSoldOut || isLoggingIn}>
+            {isSoldOut ? 'Sold Out' : 'Buy Now'}
           </CtaButton>
+          {JSON.stringify(isPaymentModalOpen)}
           {numMinted && <ProgressBar maxMintable={maxMintable} numMinted={numMinted} />}
         </AvailableContainer>
       ) : (
         <DropTimer tokenSupply={maxMintable} timestamp={dropDate} />
       )}
-      {isPaymentModalOpen && (
+      {!isAuthenticated && isLoggingIn && <SignInModal />}
+      {isAuthenticated && isPaymentModalOpen && (
         <PaymentModal
           title="Checkout"
           closePaymentModal={closePaymentModal}
