@@ -1,6 +1,6 @@
 import { NullableString } from 'libraries/models';
 import axios from 'axios';
-import { Stripe, StripeCardElement, StripeCardNumberElement } from '@stripe/stripe-js';
+import { Stripe, StripeCardElement } from '@stripe/stripe-js';
 
 interface PaymentIntentProps {
   amount: number;
@@ -8,6 +8,7 @@ interface PaymentIntentProps {
   paymentMethodId: string;
   collectionId: string;
   stripeCustomerId?: NullableString;
+  uid: string;
 }
 
 export const createPaymentIntent = async ({
@@ -16,6 +17,7 @@ export const createPaymentIntent = async ({
   stripeCustomerId,
   paymentMethodId,
   collectionId,
+  uid,
 }: PaymentIntentProps) => {
   const {
     data: { clientSecret, customerId },
@@ -25,6 +27,7 @@ export const createPaymentIntent = async ({
     paymentMethodId,
     stripeCustomerId,
     collectionId,
+    uid,
   });
 
   return { clientSecret, customerId };

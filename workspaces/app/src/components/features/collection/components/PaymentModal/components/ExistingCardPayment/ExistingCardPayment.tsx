@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import { CardCvcElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { StripeCardCvcElementChangeEvent, StripeError } from '@stripe/stripe-js';
 import axios from 'axios';
-import { LinkButton, Toggle } from 'components/ui';
+import { Toggle } from 'components/ui';
 import { Spinner } from 'components/ui/Spinner/Spinner';
-import { NullableString } from 'libraries/models';
+import { NullableString, useUserUid } from 'libraries/models';
 import { FormEvent, useEffect, useState } from 'react';
 import tokens from 'styles/tokens';
 import { cardElementOptions } from '../../styles';
@@ -70,6 +70,8 @@ export const ExistingCardPayment = ({
   const elements = useElements();
   const stripe = useStripe();
 
+  const uid = useUserUid();
+
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await axios.get('/api/payment/get_card', {
@@ -96,7 +98,7 @@ export const ExistingCardPayment = ({
 
     setIsProcessing(true);
 
-    if (!stripe || !paymentMethod || !elements) {
+    if (!stripe || !paymentMethod || !elements || !uid) {
       console.log('Stripe or payment method not found');
       return;
     }
@@ -109,6 +111,7 @@ export const ExistingCardPayment = ({
       stripeCustomerId,
       paymentMethodId: paymentMethod.id,
       collectionId,
+      uid,
     });
 
     if (!cardCvcElement) {
@@ -126,6 +129,8 @@ export const ExistingCardPayment = ({
         },
       }
     );
+
+    console.log(paymentIntent);
 
     if (confirmCardError) {
       setError(confirmCardError);
