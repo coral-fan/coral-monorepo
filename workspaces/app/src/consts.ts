@@ -67,3 +67,5 @@ export const SITE_LINKS = Object.entries(SITE_MAP).reduce(
 ) as Record<keyof typeof SITE_MAP, string>;
 
 export const SIGN_UP_CAMPAIGN_MAX_OPENINGS = 250;
+
+export const TRANSACTION_FEE = 0.05;
