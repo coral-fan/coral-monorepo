@@ -9,8 +9,8 @@ if (!process.env.STRIPE_SECRET_KEY) {
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2020-08-27' });
 
-const get: Handler = async (req, res) => {
-  const customer = req.query.customer as string;
+const post: Handler = async (req, res) => {
+  const { customer } = req.body;
 
   try {
     const paymentMethods = await stripe.customers.listPaymentMethods(customer, {
@@ -45,4 +45,4 @@ const get: Handler = async (req, res) => {
   }
 };
 
-export default getHandler({ get });
+export default getHandler({ post });
