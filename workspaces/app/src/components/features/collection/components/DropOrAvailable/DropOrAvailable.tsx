@@ -76,16 +76,19 @@ export const DropOrAvailable = ({
       {isAvailable === 'true' ? (
         <AvailableContainer>
           <Price usdPrice={usdPrice} />
-          <CtaButton onClick={handleBuyButtonClick} disabled={isSoldOut || isLoggingIn}>
-            {isSoldOut ? 'Sold Out' : 'Buy Now'}
+          <CtaButton
+            onClick={handleBuyButtonClick}
+            disabled={isSoldOut || isLoggingIn}
+            loading={isLoggingIn}
+          >
+            {isAuthenticated ? (isSoldOut ? 'Sold Out' : 'Buy Now') : 'Sign in to Purchase'}
           </CtaButton>
-          {JSON.stringify(isPaymentModalOpen)}
           {numMinted && <ProgressBar maxMintable={maxMintable} numMinted={numMinted} />}
         </AvailableContainer>
       ) : (
         <DropTimer tokenSupply={maxMintable} timestamp={dropDate} />
       )}
-      {!isAuthenticated && isLoggingIn && <SignInModal />}
+      <SignInModal />
       {isAuthenticated && isPaymentModalOpen && (
         <PaymentModal
           title="Checkout"
