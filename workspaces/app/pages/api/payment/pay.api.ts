@@ -1,5 +1,5 @@
 import { TRANSACTION_FEE } from 'consts';
-import { getDocumentReferenceServerSide } from 'libraries/firebase';
+import { getDocumentData, getDocumentReferenceServerSide } from 'libraries/firebase';
 import { getEnvironmentVariableErrorMessage } from 'libraries/utils/errors';
 import Stripe from 'stripe';
 import { Handler } from '../types';
@@ -17,9 +17,7 @@ const post: Handler = async (req, res) => {
       req.body;
 
     // Confirm price
-    const collectionRefDoc = await getDocumentReferenceServerSide('collections', `${collectionId}`);
-    const collectionSnapshotDoc = await collectionRefDoc.get();
-    const collectionData = collectionSnapshotDoc.data();
+    const collectionData = await getDocumentData('collections', `${collectionId}`);
 
     if (!collectionData) {
       throw Error('Cannot find collection');
@@ -28,6 +26,7 @@ const post: Handler = async (req, res) => {
     const { price } = collectionData;
     const totalTransactionAmount = price * (1 + TRANSACTION_FEE);
 
+    console.log('Price: ', price);
     if (amount < totalTransactionAmount) {
       throw Error('Amount does not match calculated total');
     }
