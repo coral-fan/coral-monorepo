@@ -79,6 +79,7 @@ export const NewCardInput = ({
       savePaymentInfo: true,
       paymentMethodId: paymentMethod.id,
       collectionId,
+      uid,
     });
 
     //confirmCardPayment
@@ -86,6 +87,7 @@ export const NewCardInput = ({
       payment_method: paymentMethod.id,
     });
 
+    // TODO: Move to server side
     if (paymentIntent?.status === 'succeeded' && savePaymentInfo) {
       upsertUser(uid, {
         stripeCustomerId: customerId,
