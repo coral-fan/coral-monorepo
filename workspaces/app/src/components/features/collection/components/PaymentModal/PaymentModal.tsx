@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
+import { useSignInModalState } from 'components/app';
 import { ConditionalSpinner, LinkButton, Modal } from 'components/ui';
 import { TRANSACTION_FEE } from 'consts';
+import { useIsAuthenticated, useLogin } from 'libraries/authentication';
 import { useAvaxUsdPrice, getPaymentLineItems } from 'libraries/blockchain';
 import { Collection, useStripeCustomerId } from 'libraries/models';
 import { useCallback, useMemo, useState } from 'react';
