@@ -60,7 +60,7 @@ type ContentProps = Pick<ModalProps, 'title' | 'variant' | 'contentStyle' | 'ful
 
 const Content = styled(Card)<ContentProps>`
   max-width: 575px;
-  max-height: ${({ fullHeight }) => (fullHeight ? '100%' : '400px')};
+  max-height: ${({ fullHeight }) => (fullHeight ? '100%' : '420px')};
   color: ${({ variant }) =>
     variant === 'contrast' ? tokens.font.color.contrast : tokens.font.color.primary};
   padding: ${({ title }) => `${title ? '20px' : '8px'} 18px`};
