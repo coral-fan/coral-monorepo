@@ -44,7 +44,7 @@ const post: Handler = async (req, res) => {
       payment_method_types: ['card'],
       // capture_method: 'manual',
       payment_method: paymentMethodId,
-      metadata: { collection_id: collectionId, uid: uid },
+      metadata: { collection_id: collectionId, userAddress: uid },
     });
 
     console.log(paymentIntent);

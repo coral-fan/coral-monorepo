@@ -19,8 +19,8 @@
         "payment_method": "pm_card_visa",
         "return_url": "https://stripe.com",
         "metadata": {
-          "collection_id": "0xf6a817e0af31d1f8accf9e301c2a9bb08962c160",
-          "uid": "0xA34D4367Bd647B996b1e2A790073e9022fa73De8"
+          "collectionId": "0xf6a817e0af31d1f8accf9e301c2a9bb08962c160",
+          "userAddress": "0xA34D4367Bd647B996b1e2A790073e9022fa73De8"
         }
       }
     }
