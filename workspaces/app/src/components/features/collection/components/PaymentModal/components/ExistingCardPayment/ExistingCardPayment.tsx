@@ -74,7 +74,7 @@ export const ExistingCardPayment = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await axios.post('/api/payment/get_card', {
+      const { data } = await axios.post('/api/payment/get-card', {
         customer: stripeCustomerId,
       });
       setPaymentMethod(data);

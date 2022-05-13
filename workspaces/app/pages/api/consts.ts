@@ -1,1 +1,1 @@
-export const ERROR_RESPONSE = { error: 'An error occured.' };
+export const ERROR_RESPONSE = { error: 'An error occurred.' };

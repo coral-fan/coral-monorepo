@@ -64,7 +64,6 @@ export const upsertUser = async (uid: string, incomingUserData: IncomingUserData
       }
     }
     // logic ends here
-
     await userDocRef.set(
       userDocSnapshot.exists
         ? userData
