@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Owner } from 'components/features/asset/components';
-import { ButtonLink, Link } from 'components/ui';
+import { ButtonLink } from 'components/ui';
 import { getBadge } from 'components/ui/badges/utils';
 import {
   AssetContentContainer,

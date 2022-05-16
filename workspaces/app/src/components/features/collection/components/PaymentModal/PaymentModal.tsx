@@ -11,7 +11,6 @@ import {
   DifferentCardLink,
   Heading,
   HeadingContainer,
-  ProcessingContainer,
 } from './components/components';
 import { NewCardInput } from './components/NewCardInput';
 import { PaymentSuccess } from './components/PaymentSuccess';
