@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import { CardCvcElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { StripeCardCvcElementChangeEvent, StripeError } from '@stripe/stripe-js';
-import axios from 'axios';
-import { Toggle } from 'components/ui';
-import { Spinner } from 'components/ui/Spinner/Spinner';
-import { NullableString, useUserUid } from 'libraries/models';
 import { FormEvent, useEffect, useState } from 'react';
+import axios from 'axios';
+
+import { Toggle, Spinner } from 'components/ui';
+import { NullableString, useUserUid } from 'libraries/models';
 import tokens from 'styles/tokens';
 import { cardElementOptions } from '../../styles';
 import { createPaymentIntent } from '../../utils';
@@ -164,7 +164,7 @@ export const ExistingCardPayment = ({
           </Toggle>
         </Container>
         <SwitchPaymentMethod handleClick={handleSwitchPaymentClick} isAvax={false} />
-        <PaymentButton disabled={!cardComplete || !authorization} total={total} />
+        <PaymentButton disabled={!cardComplete || !authorization || isProcessing} total={total} />
       </CheckoutContainer>
     </Form>
   );

@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { StripeCardElementChangeEvent, StripeError } from '@stripe/stripe-js';
-import { ConditionalSpinner, Spinner, Toggle } from 'components/ui';
-import { Overlay } from 'components/ui/modals/Modal/components';
+import { Toggle } from 'components/ui';
 import { useUpsertUser, useUserUid } from 'libraries/models';
 import { FormEvent, useState } from 'react';
 import { cardElementOptions } from '../../styles';
@@ -40,7 +39,6 @@ export const NewCardInput = ({
 
   const [error, setError] = useState<StripeError>();
   const [cardComplete, setCardComplete] = useState(false);
-  const [disableButton, setDisableButton] = useState(false);
   const [savePaymentInfo, setSavePaymentInfo] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -52,8 +50,6 @@ export const NewCardInput = ({
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // We want to immediately disable the button on form submit
-    setDisableButton(true);
     setIsProcessing(true);
 
     if (!stripe || !elements || !uid) {
@@ -108,6 +104,7 @@ export const NewCardInput = ({
       setIsProcessing(false);
     }
 
+    //TODO: Delete once PaymentModal listens to successful mint
     setIsProcessing(false);
   };
 
@@ -125,7 +122,7 @@ export const NewCardInput = ({
           </Toggle>
         </PaymentInfoContainer>
         <SwitchPaymentMethod handleClick={handleSwitchPaymentClick} isAvax={false} />
-        <PaymentButton disabled={!cardComplete} total={total} />
+        <PaymentButton disabled={!cardComplete || isProcessing} total={total} />
       </CheckoutContainer>
     </Form>
   );
