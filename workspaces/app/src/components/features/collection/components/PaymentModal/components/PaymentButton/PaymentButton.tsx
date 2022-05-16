@@ -1,4 +1,4 @@
-import { Button, ConditionalSpinner } from 'components/ui';
+import { Button } from 'components/ui';
 
 interface PaymentButtonProps {
   total: number;

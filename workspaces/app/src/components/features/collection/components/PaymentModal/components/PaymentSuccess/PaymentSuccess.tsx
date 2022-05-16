@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Owner } from 'components/features/asset/components';
-import { Link } from 'components/ui';
+import { ButtonLink, Link } from 'components/ui';
 import { getBadge } from 'components/ui/badges/utils';
 import {
   AssetContentContainer,
@@ -21,6 +21,7 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 16px;
 `;
 
 export const PaymentSuccess = ({
@@ -66,22 +67,21 @@ export const PaymentSuccess = ({
   );
 
   return (
-    <Link href={`/collection/${collectionId}/asset/${assetId}`}>
-      <Container>
-        <NftAssetContainer isAsset={true}>
-          {image}
-          <AssetContentContainer isAsset={true} isPurchaseSuccess={true}>
-            <NftContent
-              title={collectionName}
-              titleHeadingLevel={2}
-              titleStyleVariant={'h1'}
-              Badge={Badge}
-              isCard={false}
-            />
-            {owner}
-          </AssetContentContainer>
-        </NftAssetContainer>
-      </Container>
-    </Link>
+    <Container>
+      <NftAssetContainer isAsset={true}>
+        {image}
+        <AssetContentContainer isAsset={true} isPurchaseSuccess={true}>
+          <NftContent
+            title={collectionName}
+            titleHeadingLevel={2}
+            titleStyleVariant={'h2'}
+            Badge={Badge}
+            isCard={false}
+          />
+          {owner}
+        </AssetContentContainer>
+      </NftAssetContainer>
+      <ButtonLink href={`/collection/${collectionId}/asset/${assetId}`}>View Your NFT</ButtonLink>
+    </Container>
   );
 };
