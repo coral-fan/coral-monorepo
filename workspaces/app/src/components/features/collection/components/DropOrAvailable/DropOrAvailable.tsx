@@ -11,6 +11,7 @@ import { PaymentModal } from '../PaymentModal';
 import { FadeOutInSwitchAnimation } from 'libraries/animation';
 import { useIsAuthenticated, useLogin } from 'libraries/authentication';
 import { SignInModal, useSignInModalState } from 'components/app';
+import { Details, GatedContent } from 'libraries/models';
 
 interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
   numMinted?: number;
@@ -18,6 +19,9 @@ interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
   dropDate: string;
   collectionId: string;
   isSoldOut: boolean;
+  collectionDetails: Details;
+  gatedContent: GatedContent;
+  artistId: string;
 }
 
 export const DropOrAvailable = ({
@@ -27,11 +31,14 @@ export const DropOrAvailable = ({
   dropDate,
   collectionName,
   collectionId,
+  collectionDetails,
+  artistId,
   artistName,
   imageUrl,
   artistProfilePhoto,
   type,
   isSoldOut,
+  gatedContent,
 }: DropOrAvailableProps) => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
@@ -91,15 +98,17 @@ export const DropOrAvailable = ({
       <SignInModal />
       {isAuthenticated && isPaymentModalOpen && (
         <PaymentModal
-          title="Checkout"
           closePaymentModal={closePaymentModal}
           imageUrl={imageUrl}
           collectionName={collectionName}
           collectionId={collectionId}
+          collectionDetails={collectionDetails}
+          artistId={artistId}
           artistName={artistName}
           artistProfilePhoto={artistProfilePhoto}
           type={type}
           usdPrice={usdPrice}
+          gatedContent={gatedContent}
         />
       )}
     </FadeOutInSwitchAnimation>

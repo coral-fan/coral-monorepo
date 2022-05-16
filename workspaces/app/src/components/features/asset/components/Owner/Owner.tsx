@@ -15,7 +15,7 @@ const Card = styled(BaseCard)`
   }
 `;
 
-interface OwnerProps extends Pick<User, 'username' | 'profilePhoto' | 'type'> {
+export interface OwnerProps extends Pick<User, 'username' | 'profilePhoto' | 'type'> {
   userId: User['id'];
   assetId: Asset['id'];
 }

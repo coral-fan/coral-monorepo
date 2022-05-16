@@ -20,7 +20,7 @@ interface NewCardInputProps {
   total: number;
   collectionId: string;
   handleSwitchPaymentClick: () => void;
-  onSuccessfulPayment: () => void;
+  setProcessingState: (processingPayment: boolean) => void;
 }
 
 const PaymentInfoContainer = styled(PaymentMethodContainer)`
@@ -31,7 +31,7 @@ export const NewCardInput = ({
   total,
   collectionId,
   handleSwitchPaymentClick,
-  onSuccessfulPayment,
+  setProcessingState,
 }: NewCardInputProps) => {
   const elements = useElements();
   const stripe = useStripe();
@@ -39,7 +39,7 @@ export const NewCardInput = ({
   const uid = useUserUid();
 
   const [error, setError] = useState<StripeError>();
-  const [isProcessing, setIsProcessing] = useState(false);
+
   const [cardComplete, setCardComplete] = useState(false);
   const [savePaymentInfo, setSavePaymentInfo] = useState(true);
 
@@ -51,7 +51,7 @@ export const NewCardInput = ({
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setIsProcessing(true);
+    setProcessingState(true);
 
     if (!stripe || !elements || !uid) {
       console.log('Stripe, element or uid not found');
@@ -83,9 +83,12 @@ export const NewCardInput = ({
     });
 
     //confirmCardPayment
-    const { paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: paymentMethod.id,
-    });
+    const { paymentIntent, error: confirmCardError } = await stripe.confirmCardPayment(
+      clientSecret,
+      {
+        payment_method: paymentMethod.id,
+      }
+    );
 
     // TODO: Move to server side
     if (paymentIntent?.status === 'succeeded' && savePaymentInfo) {
@@ -94,8 +97,12 @@ export const NewCardInput = ({
       });
     }
 
-    setIsProcessing(false);
-    onSuccessfulPayment();
+    if (confirmCardError) {
+      setError(confirmCardError);
+      setProcessingState(false);
+    }
+
+    setProcessingState(false);
   };
 
   return (
@@ -111,7 +118,7 @@ export const NewCardInput = ({
           </Toggle>
         </PaymentInfoContainer>
         <SwitchPaymentMethod handleClick={handleSwitchPaymentClick} isAvax={false} />
-        <PaymentButton disabled={!cardComplete} isProcessing={isProcessing} total={total} />
+        <PaymentButton disabled={!cardComplete} total={total} />
       </CheckoutContainer>
     </Form>
   );

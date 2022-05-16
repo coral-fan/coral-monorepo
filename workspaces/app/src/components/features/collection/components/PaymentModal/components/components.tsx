@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { LinkButton } from 'components/ui';
 import tokens from 'styles/tokens';
 
 export const CheckoutContainer = styled.div`
@@ -41,4 +42,45 @@ export const CardElementContainer = styled.div<CardElementContainerProps>`
 export const ErrorContainer = styled.span`
   text-align: center;
   color: ${tokens.font.color.error};
+`;
+
+export const ProcessingContainer = styled.div`
+  height: 420px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ContentContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+`;
+
+export const HeadingContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const Heading = styled.div`
+  font-size: ${tokens.font.size.xs};
+  letter-spacing: ${tokens.font.letter_spacing.xs};
+  line-height: ${tokens.font.line_height.xs};
+  text-transform: uppercase;
+`;
+
+export const DifferentCardLink = styled(LinkButton)`
+  display: flex;
+  justify-content: center;
+  text-transform: uppercase;
+  text-decoration: underline;
+  font-size: ${tokens.font.size.xs};
+  letter-spacing: ${tokens.font.letter_spacing.xs};
+  line-height: ${tokens.font.line_height.xs};
 `;

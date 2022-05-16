@@ -25,7 +25,7 @@ interface CardPaymentProps {
   total: number;
   collectionId: string;
   handleSwitchPaymentClick: () => void;
-  onSuccessfulPayment: () => void;
+  setProcessingState: (processingPayment: boolean) => void;
 }
 
 interface PaymentMethodData {
@@ -58,10 +58,9 @@ export const ExistingCardPayment = ({
   total,
   collectionId,
   handleSwitchPaymentClick,
-  onSuccessfulPayment,
+  setProcessingState,
 }: CardPaymentProps) => {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodData>();
-  const [isProcessing, setIsProcessing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<StripeError>();
   const [cardComplete, setCardComplete] = useState(false);
@@ -96,7 +95,7 @@ export const ExistingCardPayment = ({
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setIsProcessing(true);
+    setProcessingState(true);
 
     if (!stripe || !paymentMethod || !elements || !uid) {
       console.log('Stripe or payment method not found');
@@ -130,13 +129,15 @@ export const ExistingCardPayment = ({
       }
     );
 
+    // TODO: Remove console.log
     console.log(paymentIntent);
 
     if (confirmCardError) {
       setError(confirmCardError);
-      console.log(confirmCardError);
+      setProcessingState(false);
     }
-    setIsProcessing(false);
+
+    setProcessingState(false);
   };
 
   return (
@@ -161,11 +162,7 @@ export const ExistingCardPayment = ({
           </Toggle>
         </Container>
         <SwitchPaymentMethod handleClick={handleSwitchPaymentClick} isAvax={false} />
-        <PaymentButton
-          disabled={!cardComplete || !authorization}
-          isProcessing={isProcessing}
-          total={total}
-        />
+        <PaymentButton disabled={!cardComplete || !authorization} total={total} />
       </CheckoutContainer>
     </Form>
   );
