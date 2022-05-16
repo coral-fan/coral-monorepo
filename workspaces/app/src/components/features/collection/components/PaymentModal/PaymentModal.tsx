@@ -40,7 +40,6 @@ export const PaymentModal = ({
 }: PaymentModalProps) => {
   const [isAvax, setIsAvax] = useState(true);
   const [useExistingCard, setUseExistingCard] = useState(true);
-  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [isSuccessfulPayment, setIsSuccessfulPayment] = useState(false);
 
   // Avax Exchange Rate and Price
@@ -55,11 +54,6 @@ export const PaymentModal = ({
     getPaymentLineItems(usdPrice, avaxPrice, TRANSACTION_FEE, isAvax);
 
   const handleSwitchPaymentMethodClick = useCallback(() => setIsAvax(!isAvax), [isAvax]);
-
-  const handleProcessingPayment = useCallback(
-    (processingPayment: boolean) => setIsProcessingPayment(processingPayment),
-    []
-  );
 
   const handleUseDifferentCardClick = useCallback(
     () => setUseExistingCard(!useExistingCard),
@@ -86,13 +80,7 @@ export const PaymentModal = ({
   return (
     <Modal title={title} onClick={closePaymentModal} fullHeight={true}>
       <ContentContainer>
-        {isProcessingPayment && (
-          <ProcessingContainer>
-            <Spinner size={'100px'} color={tokens.background.color.brand} />
-            <span>Processing your purchase...</span>
-          </ProcessingContainer>
-        )}
-        {!isSuccessfulPayment && !isProcessingPayment && (
+        {!isSuccessfulPayment && (
           <>
             <AssetInfo
               imageUrl={imageUrl}
@@ -139,14 +127,12 @@ export const PaymentModal = ({
                   total={total}
                   handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
                   collectionId={collectionId}
-                  setProcessingState={handleProcessingPayment}
                 />
               ) : (
                 <NewCardInput
                   total={total}
                   handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
                   collectionId={collectionId}
-                  setProcessingState={handleProcessingPayment}
                 />
               )}
             </ConditionalSpinner>

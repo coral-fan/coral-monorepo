@@ -18,6 +18,7 @@ import {
 } from '../components';
 import { getCreditCardIcon, isValidCreditCardType } from '../icons/CreditCardIcon';
 import { PaymentButton } from '../PaymentButton';
+import { ProcessingOverlay } from '../ProcessingOverlay';
 import { SwitchPaymentMethod } from '../SwitchPaymentMethod';
 
 interface CardPaymentProps {
@@ -25,7 +26,6 @@ interface CardPaymentProps {
   total: number;
   collectionId: string;
   handleSwitchPaymentClick: () => void;
-  setProcessingState: (processingPayment: boolean) => void;
 }
 
 interface PaymentMethodData {
@@ -58,13 +58,13 @@ export const ExistingCardPayment = ({
   total,
   collectionId,
   handleSwitchPaymentClick,
-  setProcessingState,
 }: CardPaymentProps) => {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodData>();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<StripeError>();
   const [cardComplete, setCardComplete] = useState(false);
   const [authorization, setAuthorization] = useState(true);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const elements = useElements();
   const stripe = useStripe();
@@ -95,7 +95,7 @@ export const ExistingCardPayment = ({
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setProcessingState(true);
+    setIsProcessing(true);
 
     if (!stripe || !paymentMethod || !elements || !uid) {
       console.log('Stripe or payment method not found');
@@ -134,15 +134,17 @@ export const ExistingCardPayment = ({
 
     if (confirmCardError) {
       setError(confirmCardError);
-      setProcessingState(false);
+      setIsProcessing(false);
     }
 
-    setProcessingState(false);
+    //TODO: Delete once PaymentModal listens to successful mint
+    setIsProcessing(false);
   };
 
   return (
     <Form onSubmit={handleFormSubmit}>
       <CheckoutContainer>
+        {isProcessing && <ProcessingOverlay />}
         <Container>
           <CardInfoContainer>
             {CreditCardIcon ? (
