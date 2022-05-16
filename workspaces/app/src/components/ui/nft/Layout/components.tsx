@@ -1,15 +1,17 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import tokens, { QUERY } from 'styles/tokens';
+import { colors } from 'styles';
 
 const { layout, spacing, buttons, border } = tokens;
 const { desktop, mobile } = layout.padding;
 
-interface IsAssetProps {
+interface AssetDisplayProps {
   isAsset: boolean;
+  isPurchaseSuccess?: boolean;
 }
 
-export const Container = styled.div<IsAssetProps>`
+export const Container = styled.div<AssetDisplayProps>`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -41,7 +43,7 @@ export const Container = styled.div<IsAssetProps>`
   }
 `;
 
-export const ImageWrapper = styled.div<IsAssetProps>`
+export const ImageWrapper = styled.div<AssetDisplayProps>`
   width: 100%;
 
   @media ${QUERY.TABLET} {
@@ -59,7 +61,7 @@ export const ImageWrapper = styled.div<IsAssetProps>`
   }
 `;
 
-export const ContentContainer = styled.div<IsAssetProps>`
+export const ContentContainer = styled.div<AssetDisplayProps>`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -84,7 +86,7 @@ export const AvailableContainer = styled.div`
   padding-bottom: ${spacing.mobile.xl};
 `;
 
-export const NftAssetContainer = styled.div<IsAssetProps>`
+export const NftAssetContainer = styled.div<AssetDisplayProps>`
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -124,11 +126,13 @@ export const GatedContentWrapper = styled.div`
   margin-top: calc(-1 * ${spacing.mobile.lg});
 `;
 
-export const AssetContentContainer = styled.div<IsAssetProps>`
+export const AssetContentContainer = styled.div<AssetDisplayProps>`
   display: flex;
   flex-direction: column;
   gap: ${spacing.mobile.lg};
   padding: ${({ isAsset }) => (isAsset ? '16px' : '0px 16px')};
+  background-color: ${({ isPurchaseSuccess }) =>
+    isPurchaseSuccess ? colors.gray[11] : 'transparent'};
 
   @media ${QUERY.TABLET} {
     padding: ${({ isAsset }) => (isAsset ? '16px' : '0px')};
