@@ -2,6 +2,7 @@ import { TRANSACTION_FEE } from 'consts';
 import { getDocumentData } from 'libraries/firebase';
 import { getEnvironmentVariableErrorMessage } from 'libraries/utils/errors';
 import Stripe from 'stripe';
+import { ERROR_RESPONSE } from '../consts';
 import { Handler } from '../types';
 import { getHandler } from '../utils';
 
@@ -20,15 +21,14 @@ const post: Handler = async (req, res) => {
     const collectionData = await getDocumentData('collections', `${collectionId}`);
 
     if (!collectionData) {
-      throw Error('Cannot find collection');
+      throw 'Cannot find collection';
     }
 
     const { price } = collectionData;
     const totalTransactionAmount = price * (1 + TRANSACTION_FEE);
 
-    console.log('Price: ', price);
     if (amount < totalTransactionAmount) {
-      throw Error('Amount does not match calculated total');
+      throw 'Amount does not match calculated total';
     }
 
     // If user agrees to save info: Assign stripeCustomerId to new variable or create one if it does not exist
@@ -47,8 +47,6 @@ const post: Handler = async (req, res) => {
       metadata: { collection_id: collectionId, userAddress: uid },
     });
 
-    console.log(paymentIntent);
-
     res.status(200).send({
       clientSecret: paymentIntent.client_secret,
       customerId,
@@ -59,16 +57,16 @@ const post: Handler = async (req, res) => {
   } catch (e: any) {
     switch (e.type) {
       case 'StripeCardError':
-        console.log(`A payment error occurred: ${e.message}`);
+        console.error(`A payment error occurred: ${e.message}`);
         break;
       case 'StripeInvalidRequestError':
-        console.log(`An invalid request occurred: ${e.message}`);
+        console.error(`An invalid request occurred: ${e.message}`);
         break;
       default:
-        console.log(`Another problem occurred, maybe unrelated to Stripe: ${e.message}.`);
+        console.error(`Another problem occurred, maybe unrelated to Stripe: ${e.message}.`);
         break;
     }
-    res.status(500).json({ statusCode: 500, message: e.message });
+    res.status(500).send(ERROR_RESPONSE);
   }
 };
 
