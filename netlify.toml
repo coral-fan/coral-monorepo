@@ -9,3 +9,5 @@ included_files = ["node_modules/microtime/prebuilds/**"]
 package = "@netlify/plugin-nextjs"
 [[plugins]]
 package = "netlify-plugin-contextual-env"
+[[plugins]]
+package = "netlify-plugin-inline-functions-env"
