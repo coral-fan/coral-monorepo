@@ -7,11 +7,6 @@ export const COOKIE_OPTIONS = {
 
 export const ID_TOKEN_KEY = 'id_token';
 
-// environment variable const
-if (!process.env.NODE_ENV) {
-  throw Error(getEnvironmentVariableErrorMessage('NODE_ENV'));
-}
-
 export const SERVER_ENVIRONMENT = process.env.NODE_ENV;
 
 if (!process.env.NEXT_PUBLIC_ENV) {
