@@ -1,71 +1,87 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.8.4;
 
-/*
-    Implementation from:
-    https://medium.com/scrappy-squirrels/tutorial-writing-an-nft-collectible-smart-contract-9c7e235e96da
-*/
-
-import 'hardhat/console.sol';
-
+import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
 import '@openzeppelin/contracts/utils/Counters.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
-import '@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol';
 
-contract NFTCollectible is ERC721Enumerable, Ownable {
+import '@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol';
+
+contract NFTCollectible is ERC721, Ownable {
   using Counters for Counters.Counter;
 
   Counters.Counter private _tokenIds;
 
-  uint256 public constant MAX_SUPPLY = 10;
-  uint256 public constant PRICE = 0.01 ether;
-  uint256 public constant MAX_PER_MINT = 2;
+  uint8 public constant MAX_SUPPLY = 50;
+
+  uint256 public usdPrice;
+  uint256 public platformFeeNumerator;
+  uint256 public totalUsdPrice;
 
   string public baseTokenURI;
 
-  constructor(string memory baseURI) ERC721('Test NFT v2', 'CGNF') {
-    setBaseURI(baseURI);
+  AggregatorV3Interface internal priceFeed;
+
+  constructor(
+    string memory _baseURI,
+    uint256 _usdPrice,
+    uint256 _platformFeeNumerator
+  ) ERC721('Coral Test v1', 'CTV1') {
+    usdPrice = _usdPrice;
+    platformFeeNumerator = _platformFeeNumerator;
+    totalUsdPrice = usdPrice + ((usdPrice * (platformFeeNumerator * 10)) / 1000);
+
+    setBaseURI(_baseURI);
+    _tokenIds.increment();
+
+    // Avax-Usd on FUJI Testnet
+    priceFeed = AggregatorV3Interface(0x5498BB86BC934c8D34FDA08E81D444153d0D06aD);
   }
 
-  function _baseURI() internal view virtual override returns (string memory) {
-    return baseTokenURI;
+  function totalSupply() external view returns (uint256) {
+    return _tokenIds.current() - 1;
+  }
+
+  // TODO: Set to Private
+  function getLatestPrice() public view returns (int256) {
+    (, int256 price, , , ) = priceFeed.latestRoundData();
+    return price;
+  }
+
+  function getAvaxTotalPrice() internal view returns (uint256) {
+    uint256 usdPriceAt108 = totalUsdPrice * (10**8);
+    uint256 avaxPriceAt108 = uint256(getLatestPrice());
+
+    uint256 avaxPrice = usdPriceAt108 / avaxPriceAt108;
+
+    return avaxPrice;
+  }
+
+  function getAvaxPriceInWei() public view returns (uint256) {
+    return getAvaxTotalPrice() * (10**18);
   }
 
   function setBaseURI(string memory _baseTokenURI) public onlyOwner {
     baseTokenURI = _baseTokenURI;
   }
 
-  function mintNFTs(uint256 _count) public payable {
-    uint256 totalMinted = _tokenIds.current();
-    uint256 potentialMinted = totalMinted + _count;
-    uint256 totalCost = PRICE * _count;
-    require(potentialMinted <= MAX_SUPPLY, 'Already Sold Out');
-    require(_count > 0 && _count <= MAX_PER_MINT, 'Cannot mint this number of NFTs');
-    require(msg.value >= totalCost, 'Not enough ether to purchase');
-
-    for (uint256 i = 0; i < _count; i++) {
-      _mintSingleNFT();
-    }
+  function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+    require(_exists(tokenId), 'ERC721Metadata: URI query for nonexistent token');
+    return baseTokenURI;
   }
 
-  function _mintSingleNFT() private {
+  function mintNFT() public payable onlyOwner {
+    uint256 avaxPriceInWei = getAvaxTotalPrice() * (10**18);
+    require(msg.value >= avaxPriceInWei, 'Not enough ether to purchase');
+
     uint256 newTokenID = _tokenIds.current();
+    require(newTokenID <= MAX_SUPPLY, 'Already Sold Out');
+
     _safeMint(msg.sender, newTokenID);
     _tokenIds.increment();
   }
 
-  function tokensOfOwner(address _owner) external view returns (uint256[] memory) {
-    uint256 tokenCount = balanceOf(_owner);
-    uint256[] memory tokenIDs = new uint256[](tokenCount);
-
-    for (uint256 i = 0; i < tokenCount; i++) {
-      tokenIDs[i] = tokenOfOwnerByIndex(_owner, i);
-    }
-
-    return tokenIDs;
-  }
-
-  function withdraw() public payable onlyOwner {
+  function withdraw() public onlyOwner {
     uint256 balance = address(this).balance;
     require(balance > 0, 'Nothing to withdraw');
 
