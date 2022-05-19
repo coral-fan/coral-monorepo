@@ -2,7 +2,10 @@ import { CORAL_CONTRACTS } from 'libraries/blockchain/consts';
 import { getOwnedTokensByCollection, getTokenOwner } from 'libraries/blockchain/utils';
 import { Asset, Collection, getCollection, getPublicUserData } from 'libraries/models';
 
-export const getAsset = async (collectionId: Collection['id'], assetId: number) => {
+export const getAsset = async (
+  collectionId: Collection['id'],
+  assetId: number
+): Promise<Asset | undefined> => {
   const collectionData = await getCollection(collectionId);
   const ownerAddress = await getTokenOwner(collectionId, assetId);
   const ownerData = await getPublicUserData(ownerAddress);
@@ -24,7 +27,7 @@ export const getAsset = async (collectionId: Collection['id'], assetId: number) 
     gatedContent,
   } = collectionData;
 
-  const assetData = {
+  return {
     imageUrl,
     artistName,
     artistProfilePhoto,
@@ -41,8 +44,6 @@ export const getAsset = async (collectionId: Collection['id'], assetId: number) 
     ownerType: ownerData.type,
     id: assetId,
   };
-
-  return assetData;
 };
 
 type CollectionTokenMap = Record<string, number[]>;
