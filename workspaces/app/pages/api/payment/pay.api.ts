@@ -1,5 +1,6 @@
 import { TRANSACTION_FEE } from 'consts';
 import { getDocumentData } from 'libraries/firebase';
+import { Collection } from 'libraries/models';
 import { getEnvironmentVariableErrorMessage } from 'libraries/utils/errors';
 import Stripe from 'stripe';
 import { ERROR_RESPONSE } from '../consts';
@@ -18,17 +19,20 @@ const post: Handler = async (req, res) => {
       req.body;
 
     // Confirm price
-    const collectionData = await getDocumentData('collections', `${collectionId}`);
+    const collectionData = await getDocumentData<Collection>('collections', `${collectionId}`);
 
     if (!collectionData) {
-      throw 'Cannot find collection';
+      throw new Error(`Cannot find collection ${collectionId}`);
     }
 
     const { price } = collectionData;
-    const totalTransactionAmount = price * (1 + TRANSACTION_FEE);
+
+    const totalTransactionAmount = Math.ceil(price * (1 + TRANSACTION_FEE) * 100);
 
     if (amount < totalTransactionAmount) {
-      throw 'Amount does not match calculated total';
+      throw new Error(
+        `Amount (${amount}) does not match calculated total (${totalTransactionAmount})`
+      );
     }
 
     // If user agrees to save info: Assign stripeCustomerId to new variable or create one if it does not exist
@@ -53,7 +57,7 @@ const post: Handler = async (req, res) => {
     });
 
     // TODO: Type error properly
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- must type error as any to check type property
   } catch (e: any) {
     switch (e.type) {
       case 'StripeCardError':
@@ -63,7 +67,7 @@ const post: Handler = async (req, res) => {
         console.error(`An invalid request occurred: ${e.message}`);
         break;
       default:
-        console.error(`Another problem occurred, maybe unrelated to Stripe: ${e.message}.`);
+        console.error(`A problem occurred: ${e.message}.`);
         break;
     }
     res.status(500).send(ERROR_RESPONSE);
