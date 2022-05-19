@@ -3,6 +3,7 @@ import { getDocumentData } from 'libraries/firebase';
 import { Collection } from 'libraries/models';
 import { getEnvironmentVariableErrorMessage } from 'libraries/utils/errors';
 import Stripe from 'stripe';
+import { boolean, InferType, number, object, string } from 'yup';
 import { ERROR_RESPONSE } from '../consts';
 import { Handler } from '../types';
 import { getHandler } from '../utils';
@@ -11,12 +12,27 @@ if (!process.env.STRIPE_SECRET_KEY) {
   throw Error(getEnvironmentVariableErrorMessage('STRIPE_SECRET_KEY'));
 }
 
+const createPaymentIntentSchema = object({
+  amount: number().required(),
+  shouldSavePaymentInfo: boolean().required(),
+  paymentMethodId: string().required(),
+  collectionId: string().required(),
+  stripeCustomerId: string().nullable(),
+  userId: string().required(),
+});
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2020-08-27' });
 
 const post: Handler = async (req, res) => {
   try {
-    const { amount, savePaymentInfo, stripeCustomerId, paymentMethodId, collectionId, uid } =
-      req.body;
+    const {
+      amount,
+      shouldSavePaymentInfo,
+      stripeCustomerId,
+      paymentMethodId,
+      collectionId,
+      userId,
+    } = await createPaymentIntentSchema.validate(req.body);
 
     // Confirm price
     const collectionData = await getDocumentData<Collection>('collections', `${collectionId}`);
@@ -29,16 +45,18 @@ const post: Handler = async (req, res) => {
 
     const totalTransactionAmount = Math.ceil(price * (1 + TRANSACTION_FEE) * 100);
 
-    if (amount < totalTransactionAmount) {
+    if (amount !== totalTransactionAmount) {
       throw new Error(
         `Amount (${amount}) does not match calculated total (${totalTransactionAmount})`
       );
     }
 
-    // If user agrees to save info: Assign stripeCustomerId to new variable or create one if it does not exist
-    const customerId = savePaymentInfo
-      ? stripeCustomerId ?? (await stripe.customers.create()).id
-      : undefined;
+    const customerId =
+      stripeCustomerId ??
+      (shouldSavePaymentInfo ? (await stripe.customers.create({ name: userId })).id : undefined);
+
+    console.log(stripeCustomerId);
+    console.log(customerId);
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
@@ -48,12 +66,12 @@ const post: Handler = async (req, res) => {
       payment_method_types: ['card'],
       // capture_method: 'manual',
       payment_method: paymentMethodId,
-      metadata: { collection_id: collectionId, userAddress: uid },
+      metadata: { collectionId: collectionId, userId },
     });
 
     res.status(200).send({
       clientSecret: paymentIntent.client_secret,
-      customerId,
+      stripeCustomerId: customerId,
     });
 
     // TODO: Type error properly
