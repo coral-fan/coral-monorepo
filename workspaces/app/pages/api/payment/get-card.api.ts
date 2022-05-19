@@ -1,5 +1,6 @@
 import { getEnvironmentVariableErrorMessage } from 'libraries/utils/errors';
 import Stripe from 'stripe';
+import { object, string } from 'yup';
 import { Handler } from '../types';
 import { getHandler } from '../utils';
 
@@ -7,13 +8,16 @@ if (!process.env.STRIPE_SECRET_KEY) {
   throw Error(getEnvironmentVariableErrorMessage('STRIPE_SECRET_KEY'));
 }
 
+const getCardAPISchema = object({
+  stripeCustomerId: string().required(),
+});
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2020-08-27' });
 
 const post: Handler = async (req, res) => {
-  const { customer } = req.body;
-
   try {
-    const paymentMethods = await stripe.customers.listPaymentMethods(customer, {
+    const { stripeCustomerId } = await getCardAPISchema.validate(req.body);
+    const paymentMethods = await stripe.customers.listPaymentMethods(stripeCustomerId, {
       type: 'card',
     });
 
@@ -38,7 +42,7 @@ const post: Handler = async (req, res) => {
         console.log(`An invalid request occurred: ${e.message}`);
         break;
       default:
-        console.log(`Another problem occurred, maybe unrelated to Stripe: ${e.message}.`);
+        console.log(`Another problem occurred: ${e.message}.`);
         break;
     }
     res.status(500).json({ statusCode: 500, message: e.message });
