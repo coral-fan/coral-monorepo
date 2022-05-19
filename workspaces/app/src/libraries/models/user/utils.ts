@@ -34,12 +34,4 @@ export const getIsUserSigningUp = async (uid: string) => {
   return isUserSigningUpData?.isSigningUp ?? false;
 };
 
-export const getPublicUserData = async (uid: string) => {
-  const data = await getDocumentData<PublicUserData>('users', uid);
-
-  if (!data) {
-    return;
-  }
-
-  return { ...data };
-};
+export const getPublicUserData = (uid: string) => getDocumentData<PublicUserData>('users', uid);
