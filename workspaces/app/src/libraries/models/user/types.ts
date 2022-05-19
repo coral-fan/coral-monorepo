@@ -11,6 +11,7 @@ export type UserType = 'fan' | 'super_fan' | 'artist';
 export type ContractAddressToIdMap = Record<Collection['id'], Asset['id']>;
 
 export interface PublicUserData {
+  id: string;
   username: string;
   type: UserType;
   profilePhoto: Photo;
