@@ -1,4 +1,4 @@
-import { Artist, ArtistData } from '../artist';
+import { ArtistData } from '../artist';
 import { Collection, CollectionData } from '../collection';
 
 export interface EventData {
@@ -16,8 +16,8 @@ export interface EventData {
 }
 
 export interface Event extends Omit<EventData, 'exclusiveCollectionIds'> {
-  artistName: Artist['name'];
-  artistProfilePhoto: Artist['profilePhoto'];
-  artistSocialHandles: Artist['socialHandles'];
+  artistName: ArtistData['name'];
+  artistProfilePhoto: ArtistData['profilePhoto'];
+  artistSocialHandles: ArtistData['socialHandles'];
   exclusiveCollections: Collection[] | null;
 }

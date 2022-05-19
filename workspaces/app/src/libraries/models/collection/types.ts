@@ -31,7 +31,7 @@ export interface CollectionData {
 }
 
 export interface Collection extends Omit<CollectionData, 'artistId'> {
-  artistName: Artist['name'];
-  artistProfilePhoto: Artist['profilePhoto'];
-  artistId: Artist['id'];
+  artistId: ArtistData['id'];
+  artistName: ArtistData['name'];
+  artistProfilePhoto: ArtistData['profilePhoto'];
 }
