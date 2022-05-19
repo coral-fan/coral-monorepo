@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import { CardCvcElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { StripeCardCvcElementChangeEvent, StripeError } from '@stripe/stripe-js';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { Toggle, Spinner } from 'components/ui';
-import { NullableString, useUserUid } from 'libraries/models';
+import { useUserUid } from 'libraries/models';
 import tokens from 'styles/tokens';
 import { cardElementOptions } from '../../styles';
 import { createPaymentIntent } from '../../utils';
@@ -22,7 +22,7 @@ import { ProcessingOverlay } from '../ProcessingOverlay';
 import { SwitchPaymentMethod } from '../SwitchPaymentMethod';
 
 interface CardPaymentProps {
-  stripeCustomerId: NullableString;
+  stripeCustomerId: string;
   total: number;
   collectionId: string;
   handleSwitchPaymentClick: () => void;
@@ -60,7 +60,6 @@ export const ExistingCardPayment = ({
   handleSwitchPaymentClick,
 }: CardPaymentProps) => {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodData>();
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<StripeError>();
   const [cardComplete, setCardComplete] = useState(false);
   const [authorization, setAuthorization] = useState(true);
@@ -77,7 +76,6 @@ export const ExistingCardPayment = ({
         customer: stripeCustomerId,
       });
       setPaymentMethod(data);
-      setIsLoading(false);
     };
     fetchData();
   }, [stripeCustomerId]);
@@ -87,59 +85,63 @@ export const ExistingCardPayment = ({
     isValidCreditCardType(paymentMethod.brand) &&
     getCreditCardIcon(paymentMethod.brand);
 
-  const handleOnChange = ({ error, complete }: StripeCardCvcElementChangeEvent) => {
+  const handleOnChange = useCallback(({ error, complete }: StripeCardCvcElementChangeEvent) => {
     error ? setError(error) : setError(undefined);
     setCardComplete(complete);
-  };
+  }, []);
 
-  const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleFormSubmit = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setIsProcessing(true);
 
-    setIsProcessing(true);
+      try {
+        if (!stripe || !paymentMethod || !elements || !uid) {
+          throw 'Stripe, paymentMethod, elements or uid not found.';
+        }
 
-    if (!stripe || !paymentMethod || !elements || !uid) {
-      console.log('Stripe or payment method not found');
-      return;
-    }
+        const cardCvcElement = elements.getElement(CardCvcElement);
 
-    const cardCvcElement = elements.getElement(CardCvcElement);
+        if (!cardCvcElement) {
+          throw 'Stripe card CVC element not found.';
+        }
 
-    const { clientSecret } = await createPaymentIntent({
-      amount: total,
-      savePaymentInfo: true,
-      stripeCustomerId,
-      paymentMethodId: paymentMethod.id,
-      collectionId,
-      uid,
-    });
+        const { clientSecret } = await createPaymentIntent({
+          total,
+          shouldSavePaymentInfo: false,
+          stripeCustomerId,
+          paymentMethodId: paymentMethod.id,
+          collectionId,
+          uid,
+        });
 
-    if (!cardCvcElement) {
-      return;
-    }
+        const { paymentIntent, error: confirmCardError } = await stripe.confirmCardPayment(
+          clientSecret,
+          {
+            payment_method: paymentMethod.id,
+            payment_method_options: {
+              card: {
+                cvc: cardCvcElement,
+              },
+            },
+          }
+        );
 
-    const { paymentIntent, error: confirmCardError } = await stripe.confirmCardPayment(
-      clientSecret,
-      {
-        payment_method: paymentMethod.id,
-        payment_method_options: {
-          card: {
-            cvc: cardCvcElement,
-          },
-        },
+        // TODO: Remove console.log
+        console.log(paymentIntent);
+
+        if (confirmCardError) {
+          setError(confirmCardError);
+        }
+
+        //TODO: Delete once PaymentModal listens to successful mint
+        setIsProcessing(false);
+      } catch (e) {
+        console.error(e);
       }
-    );
-
-    // TODO: Remove console.log
-    console.log(paymentIntent);
-
-    if (confirmCardError) {
-      setError(confirmCardError);
-      setIsProcessing(false);
-    }
-
-    //TODO: Delete once PaymentModal listens to successful mint
-    setIsProcessing(false);
-  };
+    },
+    [collectionId, elements, paymentMethod, stripe, stripeCustomerId, total, uid]
+  );
 
   return (
     <Form onSubmit={handleFormSubmit}>
