@@ -3,13 +3,13 @@ import { AVALANCHE, SERVER_ENVIRONMENT } from 'consts';
 import { ethers } from 'ethers';
 import {
   distinctUntilChanged,
-  forkJoin,
   from,
   fromEvent,
   map,
   Observable,
   startWith,
   switchMap,
+  withLatestFrom,
 } from 'rxjs';
 import {
   ChainLinkOracleAggregatorV3__factory,
@@ -32,20 +32,19 @@ type CurrencyPair = keyof typeof currencyPairDictionary;
 
 const newBlock$ = fromEvent(avalancheRpcProvider, 'block') as Observable<number>;
 
-const getPriceFeedData$ = (priceFeed: ChainLinkOracleAggregatorV3) =>
-  forkJoin({
-    roundData: from(priceFeed.latestRoundData()),
-    decimals: from(priceFeed.decimals()),
-  });
+const getRoundData$ = (priceFeed: ChainLinkOracleAggregatorV3) => from(priceFeed.latestRoundData());
 
 export const getCurrencyPairPrice$ = (pair: CurrencyPair) => {
   const address = currencyPairDictionary[pair];
   const priceFeed = ChainLinkOracleAggregatorV3__factory.connect(address, avalancheRpcProvider);
 
+  const decimals$ = from(priceFeed.decimals());
+
   return newBlock$.pipe(
-    startWith(getPriceFeedData$(priceFeed)),
-    switchMap(() => getPriceFeedData$(priceFeed)),
-    map(({ roundData, decimals }) => ethers.utils.formatUnits(roundData.answer, decimals)),
+    startWith(getRoundData$(priceFeed)),
+    switchMap(() => getRoundData$(priceFeed)),
+    withLatestFrom(decimals$),
+    map(([roundData, decimals]) => ethers.utils.formatUnits(roundData.answer, decimals)),
     map((priceString) => parseFloat(priceString)),
     distinctUntilChanged()
   );
