@@ -15,11 +15,9 @@ export type GatedContent = GatedUrl | GatedEvent | null;
 export type Details = string[] | null;
 
 export interface CollectionData {
-  // id = nft smart contract address
-  id: string;
   name: string;
   /* blockchain data index cache */
-  artistId: ArtistData['id'];
+  artistId: Artist['id'];
   imageUrl: string;
   maxMintable: number;
   type: CollectionType;
@@ -31,7 +29,9 @@ export interface CollectionData {
 }
 
 export interface Collection extends Omit<CollectionData, 'artistId'> {
-  artistId: ArtistData['id'];
+  // id = nft smart contract address
+  id: string;
+  artistId: Artist['id'];
   artistName: ArtistData['name'];
   artistProfilePhoto: ArtistData['profilePhoto'];
 }
