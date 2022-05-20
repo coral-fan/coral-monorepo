@@ -4,7 +4,6 @@ import { Asset } from '..';
 
 export interface ArtistData {
   // id = coral wallet address, not artist's personal wallet address
-  id: string;
   name: string;
   bio: string;
   quote: NullableString;
@@ -15,6 +14,7 @@ export interface ArtistData {
 }
 // id = coral wallet address
 export interface Artist extends Omit<ArtistData, 'collections' | 'assets'> {
+  id: string;
   collections: Collection[];
   assets: Asset[];
 }
