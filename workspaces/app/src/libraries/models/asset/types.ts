@@ -1,9 +1,9 @@
 import { Collection, CollectionData } from '../collection';
-import { PublicUserData } from '../user';
+import { PublicUserData, User } from '../user';
 
 export interface AssetData {
   id: number;
-  contractAddress: CollectionData['id'];
+  contractAddress: Collection['id'];
 }
 // owner is derived from on chain data
 export interface Asset extends AssetData {
@@ -18,7 +18,7 @@ export interface Asset extends AssetData {
   collectionDescription: CollectionData['description'];
   collectionDetails: CollectionData['details'];
   ownerUsername: PublicUserData['username'];
-  ownerAddress: PublicUserData['id'];
+  ownerAddress: User['id'];
   ownerType: PublicUserData['type'];
   ownerProfilePhoto: PublicUserData['profilePhoto'];
 }
