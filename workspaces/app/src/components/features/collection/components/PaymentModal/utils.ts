@@ -1,14 +1,13 @@
-import { NullableString } from 'libraries/models';
 import axios from 'axios';
 import { Stripe, StripeCardElement } from '@stripe/stripe-js';
-
-interface PaymentIntentFields {
+import { Collection, PrivateUserData } from 'libraries/models';
+interface CreatePaymentIntentParameters {
   total: number;
   shouldSavePaymentInfo: boolean;
   paymentMethodId: string;
-  collectionId: string;
-  stripeCustomerId?: NullableString;
-  uid: string;
+  collectionId: Collection['id'];
+  stripeCustomerId: PrivateUserData['stripeCustomerId'];
+  userId: string;
 }
 
 export const createPaymentIntent = async ({
@@ -17,19 +16,19 @@ export const createPaymentIntent = async ({
   stripeCustomerId,
   paymentMethodId,
   collectionId,
-  uid,
-}: PaymentIntentFields) => {
-  const { data } = await axios.post<{ clientSecret: string; stripeCustomerId: string }>(
-    '/api/payment/pay',
-    {
-      amount: Math.ceil(total * 100),
-      shouldSavePaymentInfo,
-      paymentMethodId,
-      stripeCustomerId,
-      collectionId,
-      uid,
-    }
-  );
+  userId,
+}: CreatePaymentIntentParameters) => {
+  const { data } = await axios.post<{
+    clientSecret: string;
+    stripeCustomerId: string | undefined;
+  }>('/api/payment/pay', {
+    amount: Math.ceil(total * 100),
+    shouldSavePaymentInfo,
+    paymentMethodId,
+    stripeCustomerId,
+    collectionId,
+    userId,
+  });
 
   return data;
 };
