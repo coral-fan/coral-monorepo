@@ -35,11 +35,11 @@ export const Merch = ({ exclusiveCollections }: MerchProps) => {
         Exclusive Items
       </Heading>
       <ScrollableContainer>
-        {exclusiveCollections.map((collection, i) => {
-          const { name, type, dropDate } = collection;
+        {exclusiveCollections.map((collection) => {
+          const { id, name, type, dropDate } = collection;
           const Badge = getBadge(type);
           return (
-            <ScrollableItemWrapper key={i}>
+            <ScrollableItemWrapper key={id}>
               <DropCard
                 title={name}
                 Badge={Badge}
