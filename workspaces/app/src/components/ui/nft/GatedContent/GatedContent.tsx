@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react';
-import { delay, forkJoin, map, mergeMapTo, timer } from 'rxjs';
+import { delay, forkJoin, map, mergeMap, timer } from 'rxjs';
 import { useIsAuthenticated } from 'libraries/authentication';
 import { useWallet } from 'libraries/blockchain';
 import {
@@ -38,14 +38,20 @@ export const GatedContent = ({
         )
       );
 
-      doesUserHaveAccess$.subscribe((doesHaveAccess) => {
+      const subscription = doesUserHaveAccess$.subscribe((doesHaveAccess) => {
         setDoesUserHaveAccess(doesHaveAccess);
         setIsCheckingWallet(false);
       });
 
       doesUserHaveAccess$
-        .pipe(mergeMapTo(timer(2500)))
+        .pipe(mergeMap(() => timer(2500)))
         .subscribe(() => setIsAccessGrantedModal(false));
+
+      return () => subscription.unsubscribe();
+    } else {
+      setDoesUserHaveAccess(false);
+      setIsCheckingWallet(true);
+      setIsAccessGrantedModal(true);
     }
   }, [accessGrantingTokens, isAuthenticated, address]);
 
