@@ -112,6 +112,7 @@ export const getServerSideProps: GetServerSideProps<EventPageProps, EventParams>
 
   return {
     props: {
+      id,
       ...event,
       exclusiveCollections,
       artistId,
