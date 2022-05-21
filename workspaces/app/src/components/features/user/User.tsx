@@ -81,7 +81,13 @@ export const getServerSideProps: GetServerSideProps<UserPageProps, UserParams> =
       : undefined;
 
   // TODO: Store Assets in DB, update on each page load
-  const userData: User = { id, ...publicUserData, ...privateUserData, assets: [], following: [] };
+  const userData: User = {
+    id,
+    ...publicUserData,
+    ...privateUserData,
+    assets: [],
+    following: [],
+  };
 
   return {
     props: {
