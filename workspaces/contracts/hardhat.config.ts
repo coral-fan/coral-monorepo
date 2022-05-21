@@ -1,6 +1,8 @@
 import '@nomiclabs/hardhat-etherscan';
 import '@nomiclabs/hardhat-waffle';
 import '@typechain/hardhat';
+import '@nomiclabs/hardhat-ethers';
+import 'hardhat-gas-reporter';
 import { HardhatUserConfig } from 'hardhat/types';
 import { config } from 'dotenv';
 
@@ -24,11 +26,16 @@ const hardhatConfig: HardhatUserConfig = {
   defaultNetwork: 'hardhat',
   etherscan: {
     apiKey: {
-      avalanche: SNOWTRACE_API_KEY,
+      avalancheFujiTestnet: SNOWTRACE_API_KEY,
     },
   },
-  solidity: '0.8.4',
+  solidity: '0.8.14',
   networks: {
+    hardhat: {
+      forking: {
+        url: 'https://api.avax-test.network/ext/bc/C/rpc',
+      },
+    },
     fuji: {
       url: 'https://api.avax-test.network/ext/bc/C/rpc',
       chainId: 43113,
@@ -42,7 +49,7 @@ const hardhatConfig: HardhatUserConfig = {
   },
   paths: {
     sources: 'src',
-    tests: 'tests',
+    tests: 'test',
   },
   typechain: {
     outDir: 'dist',
