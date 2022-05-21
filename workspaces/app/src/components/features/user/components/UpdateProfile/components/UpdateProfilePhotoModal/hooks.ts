@@ -59,7 +59,7 @@ export const useUpdateProfilePhoto = (initialSrc: string) => {
         }
       }
     },
-    [imageFile, initialSrc, refetchPageData, setIsModalOpen, uid]
+    [imageFile, initialSrc, refetchPageData, setIsModalOpen, uid, upsertUser]
   );
 
   return {
