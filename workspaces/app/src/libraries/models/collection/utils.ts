@@ -4,7 +4,7 @@ import { getAllDocuments, getDocumentData } from 'libraries/firebase';
 import { getArtist } from '../artist';
 import { Collection, CollectionData } from './types';
 
-export const getCollection = async (id: CollectionData['id']): Promise<Collection | undefined> => {
+export const getCollection = async (id: Collection['id']): Promise<Collection | undefined> => {
   const collectionData = await getDocumentData<CollectionData>('collections', id);
 
   if (collectionData) {
@@ -19,6 +19,7 @@ export const getCollection = async (id: CollectionData['id']): Promise<Collectio
     const { name: artistName, profilePhoto: artistProfilePhoto } = artistData;
 
     return {
+      id,
       ...collection,
       artistId,
       artistName,
@@ -28,7 +29,7 @@ export const getCollection = async (id: CollectionData['id']): Promise<Collectio
 };
 
 export const getSimilarCollections = async (
-  collectionId: CollectionData['id'],
+  collectionId: Collection['id'],
   n: number
 ): Promise<PartialCollection[] | undefined> => {
   const similarCollectionData = await getAllDocuments<Collection>('collections');
