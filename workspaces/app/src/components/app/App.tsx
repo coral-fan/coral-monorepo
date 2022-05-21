@@ -46,7 +46,7 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
       <GlobalStyles />
       <Head>
         {/* TODO: update title post sign up campaign */}
-        <title>Early Sign Up Campaign | CORAL</title>
+        <title>Coral - Sign up for early rewards</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           name="description"
@@ -55,7 +55,7 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
         {/* social media share meta data starts here*/}
         <meta property="og:url" content="https://coral.fan/" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Early Sign Up Campaign | CORAL" />
+        <meta property="og:title" content="Coral - Sign up for early rewards" />
         <meta
           property="og:description"
           content="The marketplace for a new era of music is coming soon. Sign up for early access."
@@ -65,7 +65,7 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta property="twitter:domain" content="coral.fan" />
         <meta property="twitter:url" content="https://coral.fan/" />
-        <meta name="twitter:title" content="Early Sign Up Campaign | CORAL" />
+        <meta name="twitter:title" content="Coral - Sign up for early rewards" />
         <meta
           name="twitter:description"
           content="The marketplace for a new era of music is coming soon. Sign up for early access."
