@@ -7,6 +7,7 @@ import { COOKIE_OPTIONS, ID_TOKEN_KEY } from 'consts';
 import { initializeFirebaseAdmin } from 'libraries/firebase';
 import { getAuth } from 'firebase/auth';
 import { getApp } from 'firebase/app';
+import { User } from './types';
 
 type Context = Parameters<typeof parseCookies>[0] & Parameters<typeof destroyCookie>[0];
 
@@ -28,10 +29,10 @@ export const getUidServerSide = async (ctx: Context) => {
 
 export const getUidClientSide = () => getAuth(getApp()).currentUser?.uid;
 
-export const getIsUserSigningUp = async (uid: string) => {
-  const isUserSigningUpData = await getDocumentData<IsUserSigningUpData>('is-signing-up', uid);
+export const getIsUserSigningUp = async (id: User['id']) => {
+  const isUserSigningUpData = await getDocumentData<IsUserSigningUpData>('is-signing-up', id);
 
   return isUserSigningUpData?.isSigningUp ?? false;
 };
 
-export const getPublicUserData = (uid: string) => getDocumentData<PublicUserData>('users', uid);
+export const getPublicUserData = (id: User['id']) => getDocumentData<PublicUserData>('users', id);

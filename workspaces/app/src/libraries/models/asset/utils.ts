@@ -1,6 +1,7 @@
 import { CORAL_CONTRACTS } from 'libraries/blockchain/consts';
 import { getOwnedTokensByCollection, getTokenOwner } from 'libraries/blockchain/utils';
 import { Asset, Collection, getCollection, getPublicUserData } from 'libraries/models';
+import { User } from '../user';
 
 export const getAsset = async (
   collectionId: Collection['id'],
@@ -48,7 +49,7 @@ export const getAsset = async (
 
 type CollectionTokenMap = Record<string, number[]>;
 
-export const getAllOwnedTokenIds = async (userAddress: string) => {
+export const getAllOwnedTokenIds = async (userAddress: User['id']) => {
   return (
     // TODO: Refactor Promise.allSettled with RxJs
     (
