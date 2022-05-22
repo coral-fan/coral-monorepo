@@ -3,7 +3,7 @@ import { getDocumentData } from 'libraries/firebase';
 import { Collection } from 'libraries/models';
 import { getEnvironmentVariableErrorMessage } from 'libraries/utils/errors';
 import Stripe from 'stripe';
-import { boolean, InferType, number, object, string } from 'yup';
+import { boolean, number, object, string } from 'yup';
 import { ERROR_RESPONSE } from '../consts';
 import { Handler } from '../types';
 import { getHandler } from '../utils';
@@ -54,9 +54,6 @@ const post: Handler = async (req, res) => {
     const customerId =
       stripeCustomerId ??
       (shouldSavePaymentInfo ? (await stripe.customers.create({ name: userId })).id : undefined);
-
-    console.log(stripeCustomerId);
-    console.log(customerId);
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
