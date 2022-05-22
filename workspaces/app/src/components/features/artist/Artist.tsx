@@ -43,6 +43,7 @@ export const getServerSideProps: GetServerSideProps<ArtistPageProps, ArtistParam
 
   return {
     props: {
+      id,
       ...artist,
       collections: artistCollections,
       assets: [],
