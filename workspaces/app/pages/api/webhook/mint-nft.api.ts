@@ -54,26 +54,26 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
     return res.status(500).send(ERROR_RESPONSE);
   }
 
+  let transactionDocRef: FirebaseFirestore.DocumentReference<TransactionData> | undefined;
   try {
     const event = stripe.webhooks.constructEvent(buf, sig, webhookSecret);
     const paymentIntent = event.data.object as Stripe.PaymentIntent;
 
     if (paymentIntent.status === 'requires_capture') {
       const { id, metadata } = paymentIntent;
-      const { userAddress, collectionId } = metadata;
+      const { collectionId, userId } = metadata;
 
-      if (!userAddress || !collectionId) {
-        throw 'userAddress or collectionId does not exist in metadata field';
+      if (!userId || !collectionId) {
+        throw 'userId or collectionId does not exist in metadata field';
       }
-      const transactionDocRef = await getDocumentReferenceServerSide<TransactionData>(
-        'transactions',
-        id
-      );
+      transactionDocRef = await getDocumentReferenceServerSide<TransactionData>('transactions', id);
 
       await transactionDocRef.create({
-        userId: userAddress,
-        transactionHash: null,
+        userId,
+        collectionId,
         status: 'pending',
+        hash: null,
+        assetId: null,
       });
 
       // Relayer - Mint NFT
@@ -82,15 +82,20 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
 
       const nftContract = NFTCollectible__factory.connect(collectionId, signer);
       //  TODO: replace with custodial mint function that is costless besides gas
-      const tx = await nftContract.mintNFTs(1, {
+      const { hash } = await nftContract.mintNFTs(1, {
         value: ethers.utils.parseEther('0.01'),
       });
 
-      await transactionDocRef.update('transactionHash', tx.hash);
+      await transactionDocRef.update('hash', hash);
     }
-  } catch (e) {
-    // set error state in firestore
-    console.error(e);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- must type error as any to access properties
+  } catch (e: any) {
+    transactionDocRef?.get().then((data) => {
+      if (data.exists) {
+        transactionDocRef?.update('status', 'rejected');
+      }
+    });
+    console.error(e.message);
   }
 
   return res.status(200).send('');
