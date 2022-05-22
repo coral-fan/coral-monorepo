@@ -8,20 +8,6 @@ import visaSVG from '../assets/creditCards/visa.svg';
 
 import { getIconComponent } from 'components/ui/icons/utils';
 
-const creditCardTypes = [
-  'amex',
-  'chinaUnionPay',
-  'diners',
-  'discover',
-  'jcb',
-  'mastercard',
-  'visa',
-] as const;
-export type CreditCardIconType = typeof creditCardTypes[number];
-
-export const isValidCreditCardType = (brand: any): brand is CreditCardIconType =>
-  creditCardTypes.includes(brand);
-
 const creditCardDictionary = {
   amex: amexSVG,
   chinaUnionPay: chinaUnionPaySVG,
@@ -31,5 +17,11 @@ const creditCardDictionary = {
   mastercard: mastercardSVG,
   visa: visaSVG,
 };
+
+export type CreditCardIconType = keyof typeof creditCardDictionary;
+
+export const isValidCreditCardType = (brand: string): brand is CreditCardIconType =>
+  brand in creditCardDictionary;
+
 export const getCreditCardIcon = (cardType: CreditCardIconType) =>
   getIconComponent(`${cardType}Card`, creditCardDictionary[cardType]);
