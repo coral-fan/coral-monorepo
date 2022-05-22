@@ -40,6 +40,6 @@ export const getStripeCustomerId$ = () =>
   getUserUid$().pipe(
     filter((uid): uid is string => uid !== undefined),
     mergeMap((uid) => getDocumentData<PrivateUserData>('users', uid, 'private', 'data')),
-    filter((user): user is PrivateUserData => user !== undefined),
-    map((user) => user.stripeCustomerId)
+    filter((privateUserData): privateUserData is PrivateUserData => user !== undefined),
+    map((privateUserData) => privateUserData.stripeCustomerId)
   );
