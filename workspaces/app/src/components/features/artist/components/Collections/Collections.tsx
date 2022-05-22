@@ -13,10 +13,10 @@ export const Collections = ({ collections }: CollectionProps) => (
   <ProfileItems isLoading={false}>
     {collections.length > 0 ? (
       sortCollectionByDropDateDesc(collections).map((collection) => {
-        const { name, type, dropDate } = collection;
+        const { id, name, type, dropDate } = collection;
         const Badge = getBadge(type);
         return (
-          <ProfileItemWrapper key={name}>
+          <ProfileItemWrapper key={id}>
             <DropCard
               title={name}
               Badge={Badge}
