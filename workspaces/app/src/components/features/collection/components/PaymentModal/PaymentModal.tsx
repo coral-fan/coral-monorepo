@@ -1,4 +1,4 @@
-import { ConditionalSpinner, Modal, Spinner } from 'components/ui';
+import { ConditionalSpinner, Modal } from 'components/ui';
 import { TRANSACTION_FEE } from 'consts';
 import { useAvaxUsdPrice, getPaymentLineItems } from 'libraries/blockchain';
 import { Collection, Details, GatedContent, useStripeCustomerId } from 'libraries/models';
@@ -38,7 +38,6 @@ export const PaymentModal = ({
   collectionDetails,
 }: PaymentModalProps) => {
   const [isAvax, setIsAvax] = useState(true);
-  const [useExistingCard, setUseExistingCard] = useState(true);
   const [isSuccessfulPayment, setIsSuccessfulPayment] = useState(false);
 
   // Avax Exchange Rate and Price
@@ -48,20 +47,20 @@ export const PaymentModal = ({
   // Stripe customer Id means user has a card on file
   const stripeCustomerId = useStripeCustomerId();
 
+  const [shouldUseExistingCard, setShouldUseExistingCard] = useState(stripeCustomerId !== null);
+
   // Transaction Line Items
   const { total, formattedPrice, formattedTransactionFee, formattedTotal, formattedAltTotal } =
-    getPaymentLineItems(usdPrice, avaxPrice, TRANSACTION_FEE, isAvax);
+    useMemo(
+      () => getPaymentLineItems(usdPrice, avaxPrice, TRANSACTION_FEE, isAvax),
+      [avaxPrice, usdPrice, isAvax]
+    );
 
-  const handleSwitchPaymentMethodClick = useCallback(() => setIsAvax(!isAvax), [isAvax]);
+  const handleSwitchPaymentMethodClick = useCallback(() => setIsAvax((isAvax) => !isAvax), []);
 
   const handleUseDifferentCardClick = useCallback(
-    () => setUseExistingCard(!useExistingCard),
-    [useExistingCard]
-  );
-
-  const hasExistingCard = useMemo(
-    () => stripeCustomerId && useExistingCard,
-    [stripeCustomerId, useExistingCard]
+    () => setShouldUseExistingCard((useExistingCard) => !useExistingCard),
+    []
   );
 
   const title = useMemo(
@@ -79,7 +78,24 @@ export const PaymentModal = ({
   return (
     <Modal title={title} onClick={closePaymentModal} fullHeight={true}>
       <ContentContainer>
-        {!isSuccessfulPayment && (
+        {isSuccessfulPayment ? (
+          <PaymentSuccess
+            assetId={101} //TODO: Get asset ID from successful transaction
+            collectionName={collectionName}
+            imageUrl={imageUrl}
+            type={type}
+            gatedContent={gatedContent}
+            artistId={artistId}
+            artistName={artistName}
+            artistProfilePhoto={artistProfilePhoto}
+            collectionDetails={collectionDetails}
+            ownerUsername={''} //TODO: Get data from Firestore
+            ownerAddress={''} //TODO: Should this come from chain or just use current user?
+            ownerType={'fan'} //TODO: Get data from Firestore
+            ownerProfilePhoto={artistProfilePhoto}
+            collectionId={collectionId}
+          />
+        ) : (
           <>
             <AssetInfo
               imageUrl={imageUrl}
@@ -106,10 +122,10 @@ export const PaymentModal = ({
                   <Heading>Pay with AVAX</Heading>
                 ) : (
                   <>
-                    <Heading>{hasExistingCard ? 'Card On File' : 'Payment Details'}</Heading>
+                    <Heading>{shouldUseExistingCard ? 'Card On File' : 'Payment Details'}</Heading>
                     {stripeCustomerId && (
                       <DifferentCardLink type="button" onClick={handleUseDifferentCardClick}>
-                        {hasExistingCard ? 'Use a Different Card' : 'Use Existing Card'}
+                        {shouldUseExistingCard ? 'Use a Different Card' : 'Use Existing Card'}
                       </DifferentCardLink>
                     )}
                   </>
@@ -120,7 +136,7 @@ export const PaymentModal = ({
                   total={total}
                   handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
                 />
-              ) : hasExistingCard ? (
+              ) : shouldUseExistingCard && stripeCustomerId ? (
                 <ExistingCardPayment
                   stripeCustomerId={stripeCustomerId}
                   total={total}
@@ -129,6 +145,7 @@ export const PaymentModal = ({
                 />
               ) : (
                 <NewCardInput
+                  stripeCustomerId={stripeCustomerId}
                   total={total}
                   handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
                   collectionId={collectionId}
@@ -136,24 +153,6 @@ export const PaymentModal = ({
               )}
             </ConditionalSpinner>
           </>
-        )}
-        {isSuccessfulPayment && (
-          <PaymentSuccess
-            assetId={101} //TODO: Get asset ID from successful transaction
-            collectionName={collectionName}
-            imageUrl={imageUrl}
-            type={type}
-            gatedContent={gatedContent}
-            artistId={artistId}
-            artistName={artistName}
-            artistProfilePhoto={artistProfilePhoto}
-            collectionDetails={collectionDetails}
-            ownerUsername={''} //TODO: Get data from Firestore
-            ownerAddress={''} //TODO: Should this come from chain or just use current user?
-            ownerType={'fan'} //TODO: Get data from Firestore
-            ownerProfilePhoto={artistProfilePhoto}
-            collectionId={collectionId}
-          />
         )}
       </ContentContainer>
     </Modal>
