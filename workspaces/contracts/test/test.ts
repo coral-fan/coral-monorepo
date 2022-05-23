@@ -4,8 +4,8 @@ import { Contract, ContractFactory } from 'ethers';
 import { ethers, waffle } from 'hardhat';
 import hre from 'hardhat';
 
-const ESTIMATED_NFT_PRICE = '3.39';
-const INSUFFICIENT_AVAX = '3.2';
+const ESTIMATED_NFT_PRICE = '3.2';
+const INSUFFICIENT_AVAX = '3.1';
 const MAX_SUPPLY = 50;
 const ONLY_OWNER_ERROR_MESSAGE = 'Ownable: caller is not the owner';
 
@@ -24,6 +24,8 @@ describe('NFT Contract', () => {
     [owner, addr1, addr2, relayer1, relayer2] = await hre.ethers.getSigners();
 
     contract = await NFTContract.deploy();
+
+    await contract.connect(owner).setSaleState(true);
   });
 
   describe('Deployment', () => {
@@ -180,6 +182,12 @@ describe('NFT Contract', () => {
       expect(await provider.getBalance(owner.address)).to.equal(
         ethers.utils.parseEther(ESTIMATED_NFT_PRICE).sub(gasSpent).add(startingBalance)
       );
+    });
+
+    it('Owner can pause sale', async () => {
+      await contract.connect(owner).setSaleState(false);
+
+      await expect(contract.connect(addr1).publicMint()).to.be.revertedWith('Sale not active');
     });
   });
 
