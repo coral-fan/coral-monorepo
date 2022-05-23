@@ -8,7 +8,6 @@ import { Owner } from './components';
 import { getGatedContentComponent } from 'components/ui/nft/GatedContent/utils';
 import { useIsMobile } from 'libraries/window';
 import tokens, { QUERY } from 'styles/tokens';
-import { SERVER_ENVIRONMENT } from 'consts';
 import { getAsset } from 'libraries/models/asset/utils';
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
 
@@ -103,13 +102,6 @@ interface AssetParams extends NextParsedUrlQuery {
 export const getServerSideProps: GetServerSideProps<AssetPageProps, AssetParams> = async (
   context
 ) => {
-  //  TODO: remove conditional return for sign up campaign
-  if (SERVER_ENVIRONMENT === 'production') {
-    return {
-      notFound: true,
-    };
-  }
-
   const { params } = context;
 
   if (params === undefined) {

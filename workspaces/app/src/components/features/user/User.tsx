@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next';
 import { getDocumentData } from 'libraries/firebase';
 import { getIdToken } from 'libraries/authentication';
 import { destroyCookie } from 'nookies';
-import { ID_TOKEN_KEY, SERVER_ENVIRONMENT } from 'consts';
+import { ID_TOKEN_KEY } from 'consts';
 import { getAuthenticationServerSide } from 'libraries/firebase/authentication';
 import { UserPageProvider } from './provider';
 import { UserProfile } from './components/UserProfile';
@@ -45,13 +45,6 @@ interface UserParams extends NextParsedUrlQuery {
 export const getServerSideProps: GetServerSideProps<UserPageProps, UserParams> = async (
   context
 ) => {
-  //  TODO: remove conditional return for sign up campaign
-  if (SERVER_ENVIRONMENT === 'production') {
-    return {
-      notFound: true,
-    };
-  }
-
   const { params } = context;
 
   if (params === undefined) {
