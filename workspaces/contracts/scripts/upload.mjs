@@ -6,6 +6,7 @@ import { config } from 'dotenv';
 
 config();
 
+// TODO: https://ember.help/questions/60
 const NFT_STORAGE_KEY = process.env.NFT_STORAGE_API_KEY;
 
 if (!NFT_STORAGE_KEY) {
@@ -21,7 +22,6 @@ async function fileFromPath(filePath) {
 async function storeNFT(imagePath, name, description) {
   const image = await fileFromPath(imagePath);
 
-  // Create a new NFTStorage client
   const nftstorage = new NFTStorage({ token: NFT_STORAGE_KEY });
 
   return nftstorage.store({
@@ -43,9 +43,6 @@ async function main() {
   console.log(result);
 }
 
-// Don't forget to actually call the main function!
-// We can't `await` things at the top level, so this adds
-// a .catch() to grab any errors and print them to the console.
 main().catch((err) => {
   console.error(err);
   process.exit(1);

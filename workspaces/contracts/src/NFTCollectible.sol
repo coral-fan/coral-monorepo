@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 pragma solidity >=0.8.14;
 
 import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
@@ -12,7 +12,8 @@ contract NFTCollectible is ERC721, Ownable, AvaxUsd {
 
   uint256 public constant MAX_SUPPLY = 50;
   uint256 public constant USD_PRICE_PER_TOKEN = 100;
-  uint256 public constant MAX_TOKENS_PER_WALLET = 10;
+
+  bool public isSaleActive = false;
 
   string private _tokenURI =
     'ipfs://bafyreibbhcuoijlbwmxbuq6neafvmodzbgqoxdday62cdmks6rek35yuna/metadata.json';
@@ -39,25 +40,24 @@ contract NFTCollectible is ERC721, Ownable, AvaxUsd {
   }
 
   function relayMint(address to) external {
+    require(isSaleActive, 'Sale not active');
     require(_relayList[msg.sender] == true, 'Not on relay list');
 
     uint256 newTokenID = _tokenIds.current();
     require(newTokenID <= MAX_SUPPLY, 'Already Sold Out');
-
-    // require(balanceOf(to) < MAX_TOKENS_PER_WALLET, 'Wallet already owns maximum amount');
 
     _mint(to, newTokenID);
     _tokenIds.increment();
   }
 
   function publicMint() external payable {
+    require(isSaleActive, 'Sale not active');
+
     uint256 avaxTokenPrice = getAvaxPrice(USD_PRICE_PER_TOKEN);
     require(msg.value >= avaxTokenPrice, 'Not enough ether to purchase');
 
     uint256 newTokenID = _tokenIds.current();
     require(newTokenID <= MAX_SUPPLY, 'Already Sold Out');
-
-    // require(balanceOf(msg.sender) < MAX_TOKENS_PER_WALLET, 'Wallet already owns maximum amount');
 
     _mint(msg.sender, newTokenID);
     _tokenIds.increment();
@@ -77,5 +77,9 @@ contract NFTCollectible is ERC721, Ownable, AvaxUsd {
 
   function revokeRelayAddrPrivilege(address _relayAddr) external onlyOwner {
     _relayList[_relayAddr] = false;
+  }
+
+  function setSaleState(bool _newState) external onlyOwner {
+    isSaleActive = _newState;
   }
 }
