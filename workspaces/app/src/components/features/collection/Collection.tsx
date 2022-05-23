@@ -5,7 +5,6 @@ import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
 import { Collection, getCollection, getSimilarCollections } from 'libraries/models/collection';
 import { DropOrAvailable, SimilarCollections, PartialCollection } from './components';
 import { Layout as CollectionLayout } from 'components/ui/nft';
-import { SERVER_ENVIRONMENT } from 'consts';
 import { useEffect, useMemo, useState } from 'react';
 import { getTokenTotalSupply } from 'libraries/blockchain/utils';
 
@@ -119,13 +118,6 @@ interface CollectionParams extends NextParsedUrlQuery {
 export const getServerSideProps: GetServerSideProps<CollectionPageProps, CollectionParams> = async (
   context
 ) => {
-  //  TODO: remove conditional return for sign up campaign
-  if (SERVER_ENVIRONMENT === 'production') {
-    return {
-      notFound: true,
-    };
-  }
-
   const { params } = context;
 
   if (params === undefined) {

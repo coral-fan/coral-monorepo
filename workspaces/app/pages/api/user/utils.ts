@@ -1,8 +1,11 @@
-import { EarlySignUpCampaignData } from 'components/features/sign-up-campaign/types';
 import { SIGN_UP_CAMPAIGN_MAX_OPENINGS } from 'consts';
 import { getDocumentData, getDocumentReferenceServerSide } from 'libraries/firebase';
-import { IncomingUserData, PrivateUserData, PublicUserData } from 'libraries/models';
+import { IncomingUserData, PrivateUserData, PublicUserData, User } from 'libraries/models';
 import { USER_PROPERTIES, PRIVATE_USER_DATA_PROPERTIES } from './consts';
+
+interface EarlySignUpCampaignData {
+  userUids: User['id'][];
+}
 
 const extractData = <T, U>(data: T, keys: Set<keyof U>): Partial<T> =>
   Object.entries(data).reduce(

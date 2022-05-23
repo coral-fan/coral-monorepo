@@ -10,7 +10,6 @@ import {
 } from './components';
 import { Event } from 'libraries/models/event';
 import { Collection, getCollection, getArtist } from 'libraries/models';
-import { SERVER_ENVIRONMENT } from 'consts';
 import { getEvent } from 'libraries/models/event/utils';
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
 
@@ -68,13 +67,6 @@ interface EventParams extends NextParsedUrlQuery {
 export const getServerSideProps: GetServerSideProps<EventPageProps, EventParams> = async (
   context
 ) => {
-  //  TODO: remove conditional return for sign up campaign
-  if (SERVER_ENVIRONMENT === 'production') {
-    return {
-      notFound: true,
-    };
-  }
-
   const { params } = context;
 
   if (params === undefined) {

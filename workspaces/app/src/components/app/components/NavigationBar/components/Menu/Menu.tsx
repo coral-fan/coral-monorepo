@@ -1,6 +1,5 @@
 import { createElement, useCallback, useMemo } from 'react';
 import styled from '@emotion/styled';
-import { CLIENT_ENVIRONMENT } from 'consts';
 import { Link, Modal } from 'components/ui';
 import { useIsAuthenticated, useLogout } from 'libraries/authentication';
 import { useUserUid } from 'libraries/models';
@@ -73,20 +72,12 @@ export const Menu = ({ userProfile, closeMenuModal }: MenuProps) => {
     <Modal onClick={closeMenuModal} mainContainerHasNoGap>
       {isAuthenticated && userProfile && (
         <ClickableWrapper>
-          {/* TODO: remove conditional renderl logic for sign up campaign */}
-          {CLIENT_ENVIRONMENT === 'production' ? (
+          <Link href={`/user/${uid}`} onClick={closeMenuModal}>
             <MenuProfileInfo
               username={userProfile.username}
               profilePhoto={userProfile.profilePhoto}
             />
-          ) : (
-            <Link href={`/user/${uid}`} onClick={closeMenuModal}>
-              <MenuProfileInfo
-                username={userProfile.username}
-                profilePhoto={userProfile.profilePhoto}
-              />
-            </Link>
-          )}
+          </Link>
           {/* <NotificationItem handleCloseMenu={useCloseMenuModal} notificationsCount={notificationsCount} /> */}
         </ClickableWrapper>
       )}
