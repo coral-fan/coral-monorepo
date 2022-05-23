@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { StripeCardElementChangeEvent, StripeError } from '@stripe/stripe-js';
 import { Toggle } from 'components/ui';
-import { useUpsertUser, useUserUid } from 'libraries/models';
+import { NullableString, useUpsertUser, useUserUid } from 'libraries/models';
 import { FormEvent, useCallback, useState } from 'react';
 import { cardElementOptions } from '../../styles';
 import { createPaymentIntent, createPaymentMethod } from '../../utils';
@@ -18,6 +18,7 @@ import { ProcessingOverlay } from '../ProcessingOverlay';
 import { SwitchPaymentMethod } from '../SwitchPaymentMethod';
 
 interface NewCardInputProps {
+  stripeCustomerId: NullableString;
   total: number;
   collectionId: string;
   handleSwitchPaymentClick: () => void;
@@ -28,6 +29,7 @@ const PaymentInfoContainer = styled(PaymentMethodContainer)`
 `;
 
 export const NewCardInput = ({
+  stripeCustomerId,
   total,
   collectionId,
   handleSwitchPaymentClick,
@@ -50,64 +52,70 @@ export const NewCardInput = ({
   const handleSubmit = useCallback(
     async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-
       setIsProcessing(true);
 
-      if (!stripe || !elements || !uid) {
-        console.log('Stripe, element or uid not found');
-        // Stripe.js has not yet loaded.
-        // Make sure to disable form submission until Stripe.js has loaded.
-        return;
-      }
-
-      const cardElement = elements.getElement(CardElement);
-
-      if (!cardElement) {
-        console.log('No card element found');
-        return;
-      }
-
-      const { paymentMethod } = await createPaymentMethod(cardElement, stripe);
-
-      if (!paymentMethod) {
-        console.log('No payment method found');
-        return;
-      }
-
-      const { clientSecret, stripeCustomerId } = await createPaymentIntent({
-        total,
-        shouldSavePaymentInfo,
-        paymentMethodId: paymentMethod.id,
-        collectionId,
-        uid,
-      });
-
-      //confirmCardPayment
-      const { paymentIntent, error: confirmCardError } = await stripe.confirmCardPayment(
-        clientSecret,
-        {
-          payment_method: paymentMethod.id,
+      try {
+        if (!stripe || !elements || !uid) {
+          throw 'Stripe, element or uid not found';
         }
-      );
 
-      // TODO: Remove console.log
-      console.log(paymentIntent);
+        const cardElement = elements.getElement(CardElement);
 
-      if (paymentIntent?.status === 'succeeded' && shouldSavePaymentInfo) {
-        await upsertUser(uid, {
+        if (!cardElement) {
+          throw 'No card element found.';
+        }
+
+        const { paymentMethod } = await createPaymentMethod(cardElement, stripe);
+
+        if (!paymentMethod) {
+          throw 'No payment method found';
+        }
+
+        const response = await createPaymentIntent({
+          total,
+          shouldSavePaymentInfo,
           stripeCustomerId,
+          paymentMethodId: paymentMethod.id,
+          collectionId,
+          userId: uid,
         });
+
+        //confirmCardPayment
+        const { paymentIntent, error: confirmCardError } = await stripe.confirmCardPayment(
+          response.clientSecret,
+          {
+            payment_method: paymentMethod.id,
+          }
+        );
+
+        // TODO: Remove console.log
+        console.log(paymentIntent);
+
+        if (paymentIntent?.status === 'succeeded' && response.stripeCustomerId) {
+          await upsertUser(uid, {
+            stripeCustomerId: response.stripeCustomerId,
+          });
+        }
+
+        if (confirmCardError) {
+          setError(confirmCardError);
+        }
+      } catch (e) {
+        console.error(e);
       }
 
-      if (confirmCardError) {
-        setError(confirmCardError);
-        setIsProcessing(false);
-      }
-
-      //TODO: Delete once PaymentModal listens to successful mint
       setIsProcessing(false);
     },
-    [collectionId, elements, shouldSavePaymentInfo, stripe, total, uid, upsertUser]
+    [
+      collectionId,
+      elements,
+      shouldSavePaymentInfo,
+      stripe,
+      stripeCustomerId,
+      total,
+      uid,
+      upsertUser,
+    ]
   );
 
   return (
