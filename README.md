@@ -68,6 +68,7 @@ Using this script, you can run arbitrary scripts for each respective workspace:
 #### Available Workspaces
 
 - [app](/workspaces/app)
+- [contracts](/workspaces/contracts)
 
 ### `yarn start:tunnel`
 
