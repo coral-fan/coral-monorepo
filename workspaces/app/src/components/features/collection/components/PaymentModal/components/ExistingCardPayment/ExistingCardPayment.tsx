@@ -61,8 +61,8 @@ export const ExistingCardPayment = ({
 }: CardPaymentProps) => {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodData>();
   const [error, setError] = useState<StripeError>();
-  const [cardComplete, setCardComplete] = useState(false);
-  const [authorization, setAuthorization] = useState(true);
+  const [isCardInformationValid, setIsCardInformationValid] = useState(false);
+  const [isAuthorizedToChargeCard, setIsAuthorizedToChargeCard] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
 
   const elements = useElements();
@@ -72,8 +72,8 @@ export const ExistingCardPayment = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await axios.post('/api/payment/get-card', {
-        customer: stripeCustomerId,
+      const { data } = await axios.post<PaymentMethodData>('/api/payment/get-card', {
+        stripeCustomerId,
       });
       setPaymentMethod(data);
     };
@@ -87,7 +87,7 @@ export const ExistingCardPayment = ({
 
   const handleOnChange = useCallback(({ error, complete }: StripeCardCvcElementChangeEvent) => {
     error ? setError(error) : setError(undefined);
-    setCardComplete(complete);
+    setIsCardInformationValid(complete);
   }, []);
 
   const handleFormSubmit = useCallback(
@@ -112,7 +112,7 @@ export const ExistingCardPayment = ({
           stripeCustomerId,
           paymentMethodId: paymentMethod.id,
           collectionId,
-          uid,
+          userId: uid,
         });
 
         const { paymentIntent, error: confirmCardError } = await stripe.confirmCardPayment(
@@ -133,12 +133,10 @@ export const ExistingCardPayment = ({
         if (confirmCardError) {
           setError(confirmCardError);
         }
-
-        //TODO: Delete once PaymentModal listens to successful mint
-        setIsProcessing(false);
       } catch (e) {
         console.error(e);
       }
+      setIsProcessing(false);
     },
     [collectionId, elements, paymentMethod, stripe, stripeCustomerId, total, uid]
   );
@@ -161,12 +159,20 @@ export const ExistingCardPayment = ({
             </CardElementContainer>
           </CardInfoContainer>
           {error && <ErrorContainer>{error.message}</ErrorContainer>}
-          <Toggle onChange={() => setAuthorization(!authorization)} checked={authorization}>
+          <Toggle
+            onChange={() =>
+              setIsAuthorizedToChargeCard((isCardAuthorizedToCharge) => !isCardAuthorizedToCharge)
+            }
+            checked={isAuthorizedToChargeCard}
+          >
             I authorize Coral to charge my card on file.
           </Toggle>
         </Container>
         <SwitchPaymentMethod handleClick={handleSwitchPaymentClick} isAvax={false} />
-        <PaymentButton disabled={!cardComplete || !authorization || isProcessing} total={total} />
+        <PaymentButton
+          disabled={!isCardInformationValid || !isAuthorizedToChargeCard || isProcessing}
+          total={total}
+        />
       </CheckoutContainer>
     </Form>
   );
