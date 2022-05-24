@@ -4,46 +4,50 @@ import fs from 'fs';
 import path from 'path';
 import { config } from 'dotenv';
 
+/*
+  Pull in proper metadata file here
+*/
+import { metadata } from '../assets/coral-test-v3/metadata/coral-test-v3-metadata.mjs';
+
 config();
 
-// TODO: https://ember.help/questions/60
+/*
+  Set proper imagePath here
+*/
+const imagePath =
+  '/Users/0xmaks/Dev/Coral/coral-monorepo/workspaces/contracts/assets/coral-test-v3/image/coral-test-v3-image.png';
+
 const NFT_STORAGE_KEY = process.env.NFT_STORAGE_API_KEY;
 
 if (!NFT_STORAGE_KEY) {
   throw 'Please set NFT_STORAGE_KEY in a .env file in this directory';
 }
 
-async function fileFromPath(filePath) {
+const fileFromPath = async (filePath) => {
   const content = await fs.promises.readFile(filePath);
   const type = mime.getType(filePath);
   return new File([content], path.basename(filePath), { type });
-}
+};
 
-async function storeNFT(imagePath, name, description) {
+const main = async () => {
   const image = await fileFromPath(imagePath);
 
   const nftstorage = new NFTStorage({ token: NFT_STORAGE_KEY });
+  console.log({ image, ...metadata });
 
-  return nftstorage.store({
+  const upload = await nftstorage.store({
     image,
-    name,
-    description,
+    ...metadata,
   });
-}
 
-async function main() {
-  const args = process.argv.slice(2);
-  if (args.length !== 3) {
-    console.error(`usage: ${process.argv[0]} ${process.argv[1]} <image-path> <name> <description>`);
+  console.log('Metadata URI: ', upload.url);
+
+  return upload;
+};
+
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
     process.exit(1);
-  }
-
-  const [imagePath, name, description] = args;
-  const result = await storeNFT(imagePath, name, description);
-  console.log(result);
-}
-
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+  });
