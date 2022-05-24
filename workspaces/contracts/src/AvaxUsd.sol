@@ -31,7 +31,7 @@ contract AvaxUsd is Ownable {
     return avaxTokenPrice;
   }
 
-  function setPriceFeedAddress(address _newAddress) public onlyOwner {
+  function setPriceFeedAddress(address _newAddress) external onlyOwner {
     priceFeed = AggregatorV3Interface(_newAddress);
   }
 }
