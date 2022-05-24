@@ -1,12 +1,12 @@
 import { getEnvironmentVariableErrorMessage } from 'libraries/utils';
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
 import { TransactionData } from 'libraries/models';
-import { Handler } from '../types';
-import { getHandler } from '../utils';
+import { Handler } from '../../types';
+import { getHandler } from '../../utils';
 import Stripe from 'stripe';
 import { buffer } from 'micro';
 import { NextApiRequest, NextApiResponse } from 'next/types';
-import { ERROR_RESPONSE } from '../consts';
+import { ERROR_RESPONSE } from '../../consts';
 
 // defender
 import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
