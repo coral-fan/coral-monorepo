@@ -1,11 +1,18 @@
 import hre from 'hardhat';
 
 // Define the NFT
-const baseURI = 'ipfs://bafyreibbhcuoijlbwmxbuq6neafvmodzbgqoxdday62cdmks6rek35yuna/metadata.json';
 
 async function main() {
   await hre.run('verify:verify', {
-    address: '0x99321B52A696167E0ed571dAFdb79FBd934E965a',
+    address: '0xd2500179117ac7faa3706080Be799bfcd4d31794',
+    constructorArguments: [
+      'Coral Test 0524',
+      'CT24',
+      25,
+      50,
+      2,
+      'ipfs://bafyreihkbouhmgy7gp6ijixpputnzbip2fkqez2k7v6laon72f3u3rebdu/metadata.json',
+    ],
   });
 }
 
