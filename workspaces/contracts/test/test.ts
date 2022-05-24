@@ -1,13 +1,19 @@
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { expect } from 'chai';
-import { Contract, ContractFactory } from 'ethers';
+import { Contract, ContractFactory, Signer } from 'ethers';
 import { ethers, waffle } from 'hardhat';
 import hre from 'hardhat';
 
-const ESTIMATED_NFT_PRICE = '3.2';
-const INSUFFICIENT_AVAX = '3.1';
-const MAX_SUPPLY = 50;
 const ONLY_OWNER_ERROR_MESSAGE = 'Ownable: caller is not the owner';
+
+const constructorArgs = {
+  name: 'Coral Test 0524',
+  symbol: 'CT24',
+  usdPricePerToken: 25,
+  maxSupply: 50,
+  maxTokensPerWallet: 2,
+  baseTokenURI: 'ipfs://bafyreihkbouhmgy7gp6ijixpputnzbip2fkqez2k7v6laon72f3u3rebdu/metadata.json',
+};
 
 describe('NFT Contract', () => {
   let NFTContract: ContractFactory;
@@ -20,10 +26,20 @@ describe('NFT Contract', () => {
 
   beforeEach(async () => {
     // Get the ContractFactory and Signers here.
-    NFTContract = await hre.ethers.getContractFactory('NFTCollectible');
+    NFTContract = await hre.ethers.getContractFactory('Coral');
     [owner, addr1, addr2, relayer1, relayer2] = await hre.ethers.getSigners();
 
-    contract = await NFTContract.deploy();
+    const { name, symbol, usdPricePerToken, maxSupply, maxTokensPerWallet, baseTokenURI } =
+      constructorArgs;
+
+    contract = await NFTContract.deploy(
+      name,
+      symbol,
+      usdPricePerToken,
+      maxSupply,
+      maxTokensPerWallet,
+      baseTokenURI
+    );
 
     await contract.connect(owner).setSaleState(true);
   });
@@ -40,83 +56,83 @@ describe('NFT Contract', () => {
 
   describe('Public Mints', () => {
     it('Should return addr1 tokenBalance of 1', async () => {
-      await contract
-        .connect(addr1)
-        .publicMint({ value: ethers.utils.parseEther(ESTIMATED_NFT_PRICE) });
+      const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
+      await contract.connect(addr1).publicMint({ value: estimatedTokenPrice });
 
       expect(await contract.balanceOf(addr1.address)).to.equal(ethers.BigNumber.from(1));
     });
 
-    it('Should return addr2 tokenBalance of 5', async () => {
-      await contract
-        .connect(addr2)
-        .publicMint({ value: ethers.utils.parseEther(ESTIMATED_NFT_PRICE) });
-      await contract
-        .connect(addr2)
-        .publicMint({ value: ethers.utils.parseEther(ESTIMATED_NFT_PRICE) });
-      await contract
-        .connect(addr2)
-        .publicMint({ value: ethers.utils.parseEther(ESTIMATED_NFT_PRICE) });
-      await contract
-        .connect(addr2)
-        .publicMint({ value: ethers.utils.parseEther(ESTIMATED_NFT_PRICE) });
-      await contract
-        .connect(addr2)
-        .publicMint({ value: ethers.utils.parseEther(ESTIMATED_NFT_PRICE) });
+    it('Should return addr2 tokenBalance of 2', async () => {
+      const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
+      await contract.connect(addr2).publicMint({ value: estimatedTokenPrice });
+      await contract.connect(addr2).publicMint({ value: estimatedTokenPrice });
 
-      expect(await contract.balanceOf(addr2.address)).to.equal(ethers.BigNumber.from(5));
+      expect(await contract.balanceOf(addr2.address)).to.equal(ethers.BigNumber.from(2));
     });
 
     it('Should emit successful transfer event', async () => {
-      await expect(
-        contract.connect(addr1).publicMint({ value: ethers.utils.parseEther(ESTIMATED_NFT_PRICE) })
-      )
+      const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
+      await expect(contract.connect(addr1).publicMint({ value: estimatedTokenPrice }))
         .to.emit(contract, 'Transfer')
         .withArgs(ethers.constants.AddressZero, addr1.address, 1);
     });
 
     it('Should revert due to insufficient Avax', async () => {
+      const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
+      const insufficientPrice = estimatedTokenPrice.sub(10000000);
       await expect(
-        contract.connect(addr1).publicMint({ value: ethers.utils.parseEther(INSUFFICIENT_AVAX) })
+        contract.connect(addr1).publicMint({ value: insufficientPrice })
       ).to.be.revertedWith(`Not enough ether to purchase`);
     });
 
-    it(`Contract should have eth balance of ${ESTIMATED_NFT_PRICE} avax after mint`, async () => {
+    it(`Contract should have eth balance of estimated NFT avax after mint`, async () => {
       const provider = waffle.provider;
+      const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
 
-      await contract
-        .connect(addr1)
-        .publicMint({ value: ethers.utils.parseEther(ESTIMATED_NFT_PRICE) });
+      await contract.connect(addr1).publicMint({ value: estimatedTokenPrice });
 
-      expect(await provider.getBalance(contract.address)).to.equal(
-        ethers.utils.parseEther(ESTIMATED_NFT_PRICE)
-      );
+      expect(await provider.getBalance(contract.address)).to.equal(estimatedTokenPrice);
     });
 
     it('Should revert after total supply is minted', async () => {
+      const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
       const mintMaxSupplyPlusOne = async () => {
-        for (let i = 1; i <= MAX_SUPPLY + 1; i++) {
-          await contract
-            .connect(addr2)
-            .publicMint({ value: ethers.utils.parseEther(ESTIMATED_NFT_PRICE) });
+        for (let i = 1; i <= constructorArgs.maxSupply + 1; i++) {
+          let wallet = ethers.Wallet.createRandom();
+          wallet = wallet.connect(ethers.provider);
+          await addr1.sendTransaction({ to: wallet.address, value: ethers.utils.parseEther('4') });
+          await contract.connect(wallet).publicMint({ value: estimatedTokenPrice });
         }
       };
 
       await expect(mintMaxSupplyPlusOne()).to.revertedWith('Already Sold Out');
     });
 
-    it(`Should return total supply of ${MAX_SUPPLY}`, async () => {
-      const mintMaxSupplyPlusOne = async () => {
-        for (let i = 1; i <= MAX_SUPPLY; i++) {
-          await contract
-            .connect(addr2)
-            .publicMint({ value: ethers.utils.parseEther(ESTIMATED_NFT_PRICE) });
+    it('Should revert because max wallet balance exceeded', async () => {
+      const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
+      await contract.connect(addr2).publicMint({ value: estimatedTokenPrice });
+      await contract.connect(addr2).publicMint({ value: estimatedTokenPrice });
+      await expect(
+        contract.connect(addr2).publicMint({ value: estimatedTokenPrice })
+      ).to.revertedWith('Wallet already owns maximum amount');
+    });
+
+    it(`Should return total supply of ${constructorArgs.maxSupply}`, async () => {
+      const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
+      const mintMaxSupply = async () => {
+        for (let i = 1; i <= constructorArgs.maxSupply; i++) {
+          let wallet = ethers.Wallet.createRandom();
+          wallet = wallet.connect(ethers.provider);
+          await addr1.sendTransaction({ to: wallet.address, value: ethers.utils.parseEther('4') });
+          await contract.connect(wallet).publicMint({ value: estimatedTokenPrice });
         }
       };
 
-      await mintMaxSupplyPlusOne();
+      await mintMaxSupply();
 
-      expect(await contract.totalSupply()).to.equal(ethers.BigNumber.from(MAX_SUPPLY));
+      expect(await contract.totalSupply()).to.equal(
+        ethers.BigNumber.from(constructorArgs.maxSupply)
+      );
     });
   });
 
@@ -170,17 +186,15 @@ describe('NFT Contract', () => {
     it('Owner of contract should be able to withdraw funds', async () => {
       const provider = waffle.provider;
       const startingBalance = await owner.getBalance();
-
-      await contract
-        .connect(addr1)
-        .publicMint({ value: ethers.utils.parseEther(ESTIMATED_NFT_PRICE) });
+      const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
+      await contract.connect(addr1).publicMint({ value: estimatedTokenPrice });
 
       const tx = await contract.connect(owner).withdraw();
       const receipt = await tx.wait();
       const gasSpent = receipt.gasUsed.mul(receipt.effectiveGasPrice);
 
       expect(await provider.getBalance(owner.address)).to.equal(
-        ethers.utils.parseEther(ESTIMATED_NFT_PRICE).sub(gasSpent).add(startingBalance)
+        estimatedTokenPrice.sub(gasSpent).add(startingBalance)
       );
     });
 
@@ -189,37 +203,42 @@ describe('NFT Contract', () => {
 
       await expect(contract.connect(addr1).publicMint()).to.be.revertedWith('Sale not active');
     });
+
+    it('Set new priceFeedAddress should revert because caller is not owner', async () => {
+      await expect(
+        contract.connect(addr1).setPriceFeedAddress('0x5498BB86BC934c8D34FDA08E81D444153d0D06aD')
+      ).to.be.revertedWith(ONLY_OWNER_ERROR_MESSAGE);
+    });
+
+    it('Owner sets new price feed address', async () => {
+      const tx = await contract
+        .connect(owner)
+        .setPriceFeedAddress('0x5498BB86BC934c8D34FDA08E81D444153d0D06aD');
+
+      const receipt = await tx.wait();
+
+      expect(receipt.status).to.equal(1);
+    });
+
+    it('Owner can transfer ownership', async () => {
+      await contract.connect(owner).transferOwnership(addr1.address);
+      expect(await contract.owner()).to.equal(addr1.address);
+    });
   });
-
-  // describe('Burnable', () => {
-  //   it('Should return total supply of 0 after minting and burning', async () => {
-  //     await contract
-  //       .connect(addr1)
-  //       .publicMint({ value: ethers.utils.parseEther(ESTIMATED_NFT_PRICE) });
-
-  //     await contract.connect(addr1).burn(1);
-
-  //     expect(await contract.totalSupply()).to.equal(ethers.BigNumber.from(0));
-  //   });
-  // });
 
   describe('Token URI', () => {
     it('Should return correct URI', async () => {
-      await contract
-        .connect(addr1)
-        .publicMint({ value: ethers.utils.parseEther(ESTIMATED_NFT_PRICE) });
+      const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
+      await contract.connect(addr1).publicMint({ value: estimatedTokenPrice });
 
-      expect(await contract.tokenURI(1)).to.equal(
-        'ipfs://bafyreibbhcuoijlbwmxbuq6neafvmodzbgqoxdday62cdmks6rek35yuna/metadata.json'
-      );
+      expect(await contract.tokenURI(1)).to.equal(constructorArgs.baseTokenURI);
     });
 
     it('Should return updated URI', async () => {
+      const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
       await contract.connect(owner).setTokenURI('ipfs://newTokenURI/metadata.json');
 
-      await contract
-        .connect(addr1)
-        .publicMint({ value: ethers.utils.parseEther(ESTIMATED_NFT_PRICE) });
+      await contract.connect(addr1).publicMint({ value: estimatedTokenPrice });
 
       expect(await contract.tokenURI(1)).to.equal('ipfs://newTokenURI/metadata.json');
     });
