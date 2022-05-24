@@ -6,21 +6,32 @@ import '@openzeppelin/contracts/utils/Counters.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
 import './AvaxUsd.sol';
 
-contract NFTCollectible is ERC721, Ownable, AvaxUsd {
+contract Coral is ERC721, Ownable, AvaxUsd {
   using Counters for Counters.Counter;
   Counters.Counter private _tokenIds;
 
-  uint256 public constant MAX_SUPPLY = 50;
-  uint256 public constant USD_PRICE_PER_TOKEN = 100;
+  uint256 public usdPricePerToken;
+  uint256 public maxSupply;
+  uint8 public maxTokensPerWallet;
+  string private baseTokenURI;
 
   bool public isSaleActive = false;
 
-  string private _tokenURI =
-    'ipfs://bafyreibbhcuoijlbwmxbuq6neafvmodzbgqoxdday62cdmks6rek35yuna/metadata.json';
-
   mapping(address => bool) private _relayList;
 
-  constructor() ERC721('Coral Test v1', 'CTV1') {
+  constructor(
+    string memory _name,
+    string memory _symbol,
+    uint256 _usdPricePerToken,
+    uint256 _maxSupply,
+    uint8 _maxTokensPerWallet,
+    string memory _baseTokenURI
+  ) ERC721(_name, _symbol) {
+    usdPricePerToken = _usdPricePerToken;
+    maxSupply = _maxSupply;
+    maxTokensPerWallet = _maxTokensPerWallet;
+    baseTokenURI = _baseTokenURI;
+
     // Start token count at 1;
     _tokenIds.increment();
   }
@@ -31,20 +42,21 @@ contract NFTCollectible is ERC721, Ownable, AvaxUsd {
   }
 
   function setTokenURI(string memory _newTokenURI) external onlyOwner {
-    _tokenURI = _newTokenURI;
+    baseTokenURI = _newTokenURI;
   }
 
   function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
     require(_exists(tokenId), 'ERC721Metadata: URI query for nonexistent token');
-    return _tokenURI;
+    return baseTokenURI;
   }
 
   function relayMint(address to) external {
     require(isSaleActive, 'Sale not active');
     require(_relayList[msg.sender] == true, 'Not on relay list');
+    require(balanceOf(to) < maxTokensPerWallet, 'Wallet already owns maximum amount');
 
     uint256 newTokenID = _tokenIds.current();
-    require(newTokenID <= MAX_SUPPLY, 'Already Sold Out');
+    require(newTokenID <= maxSupply, 'Already Sold Out');
 
     _mint(to, newTokenID);
     _tokenIds.increment();
@@ -52,12 +64,13 @@ contract NFTCollectible is ERC721, Ownable, AvaxUsd {
 
   function publicMint() external payable {
     require(isSaleActive, 'Sale not active');
+    require(balanceOf(msg.sender) < maxTokensPerWallet, 'Wallet already owns maximum amount');
 
-    uint256 avaxTokenPrice = getAvaxPrice(USD_PRICE_PER_TOKEN);
+    uint256 avaxTokenPrice = _getAvaxPrice(usdPricePerToken);
     require(msg.value >= avaxTokenPrice, 'Not enough ether to purchase');
 
     uint256 newTokenID = _tokenIds.current();
-    require(newTokenID <= MAX_SUPPLY, 'Already Sold Out');
+    require(newTokenID <= maxSupply, 'Already Sold Out');
 
     _mint(msg.sender, newTokenID);
     _tokenIds.increment();
@@ -81,5 +94,9 @@ contract NFTCollectible is ERC721, Ownable, AvaxUsd {
 
   function setSaleState(bool _newState) external onlyOwner {
     isSaleActive = _newState;
+  }
+
+  function getTokenPriceInAvax() public view returns (uint256) {
+    return _getAvaxPrice(usdPricePerToken);
   }
 }
