@@ -10,7 +10,7 @@ import { ERROR_RESPONSE } from '../../consts';
 
 // defender
 import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
-import { NFTCollectible__factory } from '@coral/contracts';
+import { Coral__factory } from '@coral/contracts';
 import { ethers } from 'ethers';
 
 if (!process.env.STRIPE_WEBHOOK_SIGNING_SECRET) {
@@ -80,11 +80,9 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
       const provider = new DefenderRelayProvider(RELAYER_CREDENTIALS);
       const signer = new DefenderRelaySigner(RELAYER_CREDENTIALS, provider, { speed: 'fast' });
 
-      const nftContract = NFTCollectible__factory.connect(collectionId, signer);
-      //  TODO: replace with custodial mint function that is costless besides gas
-      const { hash } = await nftContract.mintNFTs(1, {
-        value: ethers.utils.parseEther('0.01'),
-      });
+      const nftContract = Coral__factory.connect(collectionId, signer);
+
+      const { hash } = await nftContract.relayMint(userId);
 
       await transactionDocRef.update('hash', hash);
     }
