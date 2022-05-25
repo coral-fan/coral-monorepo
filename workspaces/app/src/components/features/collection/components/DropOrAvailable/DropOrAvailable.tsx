@@ -63,12 +63,15 @@ export const DropOrAvailable = ({
     https://stackoverflow.com/questions/64126226/how-do-i-get-switchtranition-to-work-with-csstransition-with-typescript
   */
 
-  const getMilliSecondsRemaining = useCallback(
+  const getMilliSecondsRemaining$ = useCallback(
     () => getTimeRemaining$(dropDate, (milliSecsDiff) => milliSecsDiff),
     [dropDate]
   );
 
-  const millisecondsRemaining = useObservable(getMilliSecondsRemaining, getMilliSecsDiff(dropDate));
+  const millisecondsRemaining = useObservable(
+    getMilliSecondsRemaining$,
+    getMilliSecsDiff(dropDate)
+  );
 
   /*
     Cast boolean as strings because SwitchTransitions requires a string key
