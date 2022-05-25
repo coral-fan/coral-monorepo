@@ -2,7 +2,7 @@ import { getAuth } from 'firebase/auth';
 import { getCollectionReferenceClientSide, getDocumentData } from 'libraries/firebase';
 import { user } from 'rxfire/auth';
 import { collectionData } from 'rxfire/firestore';
-import { filter, map, mergeMap, startWith, tap } from 'rxjs';
+import { filter, from, map, mergeMap, startWith } from 'rxjs';
 import { PrivateUserData, PublicUserData, User } from './types';
 import { getUidClientSide } from './utils';
 
@@ -28,13 +28,7 @@ export const getUsernames$ = () => {
 };
 
 //client side only
-export const getUser$ = () =>
-  getUserUid$().pipe(
-    filter((uid): uid is string => uid !== undefined),
-    mergeMap((uid) => getDocumentData<User>('users', uid)),
-    filter((user): user is User => user !== undefined),
-    map((user) => user)
-  );
+export const getPublicUserData$ = (uid: string) => from(getDocumentData<User>('users', uid));
 
 export const getStripeCustomerId$ = () =>
   getUserUid$().pipe(
