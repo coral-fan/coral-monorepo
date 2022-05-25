@@ -1,0 +1,9 @@
+{
+  "contractName": "Coral",
+  "name": "Name",
+  "symbol": "Symbol",
+  "usdPricePerToken": 25,
+  "maxSupply": 50,
+  "maxTokensPerWallet": 2,
+  "baseTokenURI": "Insert after using Upload"
+}

@@ -5,17 +5,17 @@ import path from 'path';
 import { config } from 'dotenv';
 
 /*
-  Pull in proper metadata file here
+  Pull in proper metadata file here (make sure you pull from correct directory)
 */
-import { metadata } from '../assets/coral-test-v3/metadata/coral-test-v3-metadata.mjs';
+import { metadata } from '../projects/coral-test-v4/metadata/metadata.mjs';
 
 config();
 
 /*
-  Set proper imagePath here
+  Set proper imagePath here (make sure you pull from correct directory)
 */
 const imagePath =
-  '/Users/0xmaks/Dev/Coral/coral-monorepo/workspaces/contracts/assets/coral-test-v3/image/coral-test-v3-image.png';
+  '/Users/0xmaks/Dev/Coral/coral-monorepo/workspaces/contracts/projects/coral-test-v4/image/image.png';
 
 const NFT_STORAGE_KEY = process.env.NFT_STORAGE_API_KEY;
 

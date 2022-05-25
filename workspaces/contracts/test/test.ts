@@ -4,16 +4,12 @@ import { Contract, ContractFactory, Signer } from 'ethers';
 import { ethers, waffle } from 'hardhat';
 import hre from 'hardhat';
 
-const ONLY_OWNER_ERROR_MESSAGE = 'Ownable: caller is not the owner';
+/*
+Update constructorArgs here
+*/
+import constructorArgs from '../projects/coral-test-v4/config.json';
 
-const constructorArgs = {
-  name: 'Coral Test 0524',
-  symbol: 'CT24',
-  usdPricePerToken: 25,
-  maxSupply: 50,
-  maxTokensPerWallet: 2,
-  baseTokenURI: 'ipfs://bafyreihkbouhmgy7gp6ijixpputnzbip2fkqez2k7v6laon72f3u3rebdu/metadata.json',
-};
+const ONLY_OWNER_ERROR_MESSAGE = 'Ownable: caller is not the owner';
 
 describe('NFT Contract', () => {
   let NFTContract: ContractFactory;
@@ -26,7 +22,7 @@ describe('NFT Contract', () => {
 
   beforeEach(async () => {
     // Get the ContractFactory and Signers here.
-    NFTContract = await hre.ethers.getContractFactory('Coral');
+    NFTContract = await hre.ethers.getContractFactory(constructorArgs.contractName);
     [owner, addr1, addr2, relayer1, relayer2] = await hre.ethers.getSigners();
 
     const { name, symbol, usdPricePerToken, maxSupply, maxTokensPerWallet, baseTokenURI } =
@@ -157,6 +153,14 @@ describe('NFT Contract', () => {
       await contract.connect(relayer1).relayMint(addr1.address);
       expect(await contract.balanceOf(addr1.address)).to.equal(ethers.BigNumber.from(1));
     });
+
+    it('Should emit successful RelayMint event', async () => {
+      await contract.connect(owner).addRelayAddr(relayer1.address);
+
+      await expect(contract.connect(relayer1).relayMint(addr1.address))
+        .to.emit(contract, 'RelayMint')
+        .withArgs(addr1.address, 1);
+    });
   });
 
   describe('Admin', () => {
@@ -206,14 +210,14 @@ describe('NFT Contract', () => {
 
     it('Set new priceFeedAddress should revert because caller is not owner', async () => {
       await expect(
-        contract.connect(addr1).setPriceFeedAddress('0x5498BB86BC934c8D34FDA08E81D444153d0D06aD')
+        contract.connect(addr1).setPriceFeedAddress('0x0A77230d17318075983913bC2145DB16C7366156')
       ).to.be.revertedWith(ONLY_OWNER_ERROR_MESSAGE);
     });
 
     it('Owner sets new price feed address', async () => {
       const tx = await contract
         .connect(owner)
-        .setPriceFeedAddress('0x5498BB86BC934c8D34FDA08E81D444153d0D06aD');
+        .setPriceFeedAddress('0x0A77230d17318075983913bC2145DB16C7366156');
 
       const receipt = await tx.wait();
 
