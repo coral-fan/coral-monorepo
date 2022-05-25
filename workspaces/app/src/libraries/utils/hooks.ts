@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Observable } from 'rxjs';
 
 export const useObservable = <T>(
-  getObservable: (initialState?: T) => Observable<T>,
+  getObservable: () => Observable<T>,
   initialState: T,
   invariant?: () => boolean
 ) => {
@@ -11,7 +11,7 @@ export const useObservable = <T>(
 
   useEffect(() => {
     if (invariant ? invariant() : true) {
-      const observable$ = getObservable(initialState);
+      const observable$ = getObservable();
       const subscription = observable$.subscribe(setState);
       return () => subscription.unsubscribe();
     }
