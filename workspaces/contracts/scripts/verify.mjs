@@ -1,17 +1,24 @@
 import hre from 'hardhat';
+/*
+Update import directory
+*/
+import constructorArgs from '../projects/coral-test-v4/config.json' assert { type: 'json' };
 
-// Define the NFT
+const CONTRACT_ADDRESS = '0xd3aC73861B6f5d6A5Bb9A09bA3C558637246187A';
+
+const { name, symbol, usdPricePerToken, maxSupply, maxTokensPerWallet, baseTokenURI } =
+  constructorArgs;
 
 async function main() {
   await hre.run('verify:verify', {
-    address: '0xd2500179117ac7faa3706080Be799bfcd4d31794',
+    address: CONTRACT_ADDRESS,
     constructorArguments: [
-      'Coral Test 0524',
-      'CT24',
-      25,
-      50,
-      2,
-      'ipfs://bafyreihkbouhmgy7gp6ijixpputnzbip2fkqez2k7v6laon72f3u3rebdu/metadata.json',
+      name,
+      symbol,
+      usdPricePerToken,
+      maxSupply,
+      maxTokensPerWallet,
+      baseTokenURI,
     ],
   });
 }

@@ -1,0 +1,9 @@
+{
+  "contractName": "Coral",
+  "name": "Coral Test 0525",
+  "symbol": "CT25",
+  "usdPricePerToken": 50,
+  "maxSupply": 100,
+  "maxTokensPerWallet": 2,
+  "baseTokenURI": "ipfs://bafyreicskkqgcf2puvmsipaapsrbkk34plfebn2phqvkpcw5wno6lcttre/metadata.json"
+}

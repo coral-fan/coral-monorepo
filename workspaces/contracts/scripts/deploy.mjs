@@ -1,20 +1,23 @@
 import hre from 'hardhat';
 
-const constructorArgs = {
-  name: 'Coral Test 0524',
-  symbol: 'CT24',
-  usdPricePerToken: 25,
-  maxSupply: 50,
-  maxTokensPerWallet: 2,
-  baseTokenURI: 'ipfs://bafyreihkbouhmgy7gp6ijixpputnzbip2fkqez2k7v6laon72f3u3rebdu/metadata.json',
-};
+/*
+Update constructorArgs import directory
+*/
+import constructorArgs from '../projects/coral-test-v4/config.json' assert { type: 'json' };
 
 async function main() {
-  // Get contract that we want to deploy
-  const contractFactory = await hre.ethers.getContractFactory('Coral');
+  const {
+    contractName,
+    name,
+    symbol,
+    usdPricePerToken,
+    maxSupply,
+    maxTokensPerWallet,
+    baseTokenURI,
+  } = constructorArgs;
 
-  const { name, symbol, usdPricePerToken, maxSupply, maxTokensPerWallet, baseTokenURI } =
-    constructorArgs;
+  // Get contract that we want to deploy
+  const contractFactory = await hre.ethers.getContractFactory(contractName);
 
   // Deploy contract with the correct constructor arguments
   const contract = await contractFactory.deploy(
