@@ -61,7 +61,7 @@ const post: Handler = async (req, res) => {
       customer: customerId,
       setup_future_usage: 'on_session',
       payment_method_types: ['card'],
-      // capture_method: 'manual',
+      capture_method: 'manual',
       payment_method: paymentMethodId,
       metadata: { collectionId: collectionId, userId },
     });
