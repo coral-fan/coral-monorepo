@@ -35,7 +35,7 @@ export interface DropTimerProps {
 }
 
 export const DropTimer = ({ tokenSupply, timestamp }: DropTimerProps) => {
-  const getTimeRemaining = useCallback(
+  const memoizedGetTimeRemaining$ = useCallback(
     () => getTimeRemaining$(timestamp, getTimeParts),
     [timestamp]
   );
@@ -45,7 +45,7 @@ export const DropTimer = ({ tokenSupply, timestamp }: DropTimerProps) => {
     [timestamp]
   );
 
-  const timeRemaining = useObservable(getTimeRemaining, initialTimeRemaining);
+  const timeRemaining = useObservable(memoizedGetTimeRemaining$, initialTimeRemaining);
 
   const { daysDiff, hoursDiff, minutesDiff, secondsDiff } = timeRemaining;
 
