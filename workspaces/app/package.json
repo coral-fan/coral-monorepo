@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon --watch next.config.js --exec 'next dev'",
     "start:debug": "NODE_OPTIONS='--inspect' next dev",
-    "start:stripe": "stripe listen --forward-to http://localhost:3000/api/webhooks/stripe/mint-nft --events=payment_intent.requires_action",
+    "start:stripe": "stripe listen --forward-to http://localhost:3000/api/webhook/stripe/mint-nft --events=payment_intent.amount_capturable_updated",
     "build": "next build",
     "serve": "next start",
     "lint": "next lint",
