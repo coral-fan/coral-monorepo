@@ -19,6 +19,8 @@ contract Coral is ERC721, Ownable, AvaxUsd {
 
   mapping(address => bool) private _relayList;
 
+  event RelayMint(address indexed to, uint256 indexed tokenId);
+
   constructor(
     string memory _name,
     string memory _symbol,
@@ -35,8 +37,6 @@ contract Coral is ERC721, Ownable, AvaxUsd {
     // Start token count at 1;
     _tokenIds.increment();
   }
-
-  event RelayMint(address indexed to, uint256 indexed tokenId);
 
   function totalSupply() public view returns (uint256) {
     // Subtract 1 since Token count starts at 1;
