@@ -14860,7 +14860,7 @@ next@12.1.7-canary.9:
     "@next/swc-win32-ia32-msvc" "12.1.7-canary.9"
     "@next/swc-win32-x64-msvc" "12.1.7-canary.9"
 
-nft.storage@^6.2.0:
+nft.storage@^6.3.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/nft.storage/-/nft.storage-6.3.0.tgz#3413e2e2b8a4c6461a6b27f385ee650458551d2c"
   integrity sha512-4E2ZTZfFIxH5mn6/NSnr/kat86CVUJdkgpS6AiLjVA6d0eMVuimSKdLGsL4bp/P2X11RyRzEakSKOLgw2KE5Eg==
