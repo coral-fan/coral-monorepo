@@ -49,7 +49,7 @@ const hardhatConfig: HardhatUserConfig = {
   },
   paths: {
     sources: 'src',
-    tests: 'test',
+    tests: 'tests',
   },
   typechain: {
     outDir: 'dist',
