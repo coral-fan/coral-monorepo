@@ -1,8 +1,8 @@
 /*
 this configuration is still needed because swc doesn't currently handle emotion package.
 see https://nextjs.org/docs/messages/swc-disabled.
-
 */
+// TODO: remove babel config to use swc. issue with page extensions though https://github.com/vercel/next.js/issues/32403, but can fix by structure api like pages
 {
   "presets": [
     [
