@@ -1,0 +1,35 @@
+{
+  "contract": {
+    "address": "0x32B00d522c4B060F2C45a6ef3151cA59363535f4",
+    "contractName": "Coral",
+    "name": "Coral Test 0527",
+    "symbol": "CT27",
+    "usdPricePerToken": 10,
+    "maxSupply": 500,
+    "maxTokensPerWallet": 2,
+    "description": "This is a new collection! Deployed late on Friday May 27th",
+    "tokenURI": "ipfs://bafyreiet67kme3qnbdzki57tdirhspkwibgs3qbqezu5xnuztgh4jac5ye/metadata.json",
+    "numAttributes": 2,
+    "attributes": [
+      {
+        "trait_type": "Type",
+        "value": "All Access"
+      },
+      {
+        "trait_type": "Is Genesis",
+        "value": "True"
+      }
+    ]
+  },
+  "collectionData": {
+    "artistId": "",
+    "imageUrl": "",
+    "type": "",
+    "dropDate": "",
+    "details": "",
+    "gatedContent": {
+      "type": "",
+      "id": ""
+    }
+  }
+}
