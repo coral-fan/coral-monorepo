@@ -1,6 +1,6 @@
 import { getEnvironmentVariableErrorMessage } from 'libraries/utils';
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
-import { TransactionData } from 'libraries/models';
+import { PurchaseData } from 'libraries/models';
 import { Handler } from '../../types';
 import { getHandler } from '../../utils';
 import Stripe from 'stripe';
@@ -54,7 +54,7 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
     return res.status(500).send(ERROR_RESPONSE);
   }
 
-  let transactionDocRef: FirebaseFirestore.DocumentReference<TransactionData> | undefined;
+  let transactionDocRef: FirebaseFirestore.DocumentReference<PurchaseData> | undefined;
   try {
     const event = stripe.webhooks.constructEvent(buf, sig, webhookSecret);
     const paymentIntent = event.data.object as Stripe.PaymentIntent;
@@ -66,7 +66,7 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
       if (!userId || !collectionId) {
         throw 'userId or collectionId does not exist in metadata field';
       }
-      transactionDocRef = await getDocumentReferenceServerSide<TransactionData>('transactions', id);
+      transactionDocRef = await getDocumentReferenceServerSide<PurchaseData>('transactions', id);
 
       await transactionDocRef.create({
         userId,
