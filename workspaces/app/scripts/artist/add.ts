@@ -1,8 +1,9 @@
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
 import { ArtistData } from 'libraries/models';
 
+const id = '0xabcdefghijklmnopqrstuvwxyz01234567891011';
+
 const artist: ArtistData = {
-  id: '0xabcdefghijklmnopqrstuvwxyz01234567891011',
   name: 'Test',
   profilePhoto: {
     src: '',
@@ -22,11 +23,11 @@ const artist: ArtistData = {
 
 const addArtist = async () => {
   console.log('adding artist...');
-  const artistRef = await getDocumentReferenceServerSide('artists', artist.id);
+  const artistRef = await getDocumentReferenceServerSide('artists', id);
   const artistDocSnapshot = await artistRef.get();
 
   if (artistDocSnapshot.exists) {
-    throw `artist with id ${artist.id} already exists.`;
+    throw `artist with id ${id} already exists.`;
   }
 
   await artistRef.set(artist);
