@@ -1,8 +1,8 @@
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
 import { ArtistData, CollectionData } from 'libraries/models';
 
+const id = '0xf6a817e0af31d1f8accf9e301c2a9bb08962c160';
 const collection: CollectionData = {
-  id: '0xf6a817e0af31d1f8accf9e301c2a9bb08962c160',
   name: 'Test NFT',
   artistId: '0xabcdefghijklmnopqrstuvwxyz01234567891011',
   imageUrl:
@@ -30,7 +30,6 @@ const addCollection = async () => {
     throw Error(`artist with id ${artistId} doesn't exist.`);
   }
 
-  const { id } = collection;
   const collectionRef = await getDocumentReferenceServerSide<CollectionData>('collections', id);
   const collectionDocSnapshot = await collectionRef.get();
 

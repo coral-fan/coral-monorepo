@@ -2,8 +2,8 @@ import { getDocumentReferenceServerSide } from 'libraries/firebase';
 import { ArtistData, CollectionData } from 'libraries/models';
 import { EventData } from 'libraries/models/event';
 
+const id = 'test';
 const event: EventData = {
-  id: 'test',
   streamId: '799edeb6181ce1c4f0/11b5b9e45f6a3dbb',
   chatId: 'cid0020000309723245116',
   name: 'Test',
@@ -42,7 +42,6 @@ const addEvent = async () => {
     }
   });
 
-  const { id } = event;
   const eventRef = await getDocumentReferenceServerSide<EventData>('events', id);
   const eventDocSnapshot = await eventRef.get();
 
