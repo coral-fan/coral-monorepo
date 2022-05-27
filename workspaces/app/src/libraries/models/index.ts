@@ -5,4 +5,4 @@ export * from './notification';
 export * from './user';
 export * from './event';
 export * from './types';
-export * from './transaction';
+export * from './purchase';
