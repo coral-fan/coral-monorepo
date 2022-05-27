@@ -34,7 +34,6 @@ const Ring = styled.div`
   position: absolute;
   width: var(--ring-size);
   height: var(--ring-size);
-  margin: var(--ring-spacing);
   border: var(--ring-spacing) solid var(--color);
   border-radius: 50%;
   animation: ${spin} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
