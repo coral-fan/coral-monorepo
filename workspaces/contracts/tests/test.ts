@@ -10,8 +10,9 @@ Update constructorArgs here
 import constructorArgs from '../projects/coral-test-v4/config.json';
 
 const ONLY_OWNER_ERROR_MESSAGE = 'Ownable: caller is not the owner';
+const contractName = constructorArgs.contractName;
 
-describe('NFT Contract', () => {
+describe(`Running Tests on ${contractName}...`, () => {
   let NFTContract: ContractFactory;
   let contract: Contract;
   let owner: SignerWithAddress;
