@@ -15,37 +15,28 @@ if (!process.env.NEXT_PUBLIC_ENV) {
 
 export const CLIENT_ENVIRONMENT = process.env.NEXT_PUBLIC_ENV;
 
-// api consts
-if (!process.env.NEXT_PUBLIC_CORAL_API_ENDPOINT) {
-  throw Error(getEnvironmentVariableErrorMessage('NEXT_PUBLIC_API_ENDPOINT'));
-}
+export const CORAL_API_ENDPOINT = 'api';
 
-export const CORAL_API_ENDPOINT = process.env.NEXT_PUBLIC_CORAL_API_ENDPOINT;
+const shouldUseAvalancheMainnet = process.env.NEXT_PUBLIC_SHOULD_USE_AVALANCHE_MAINNET === 'true';
 
-// avalanche consts
-if (!process.env.NEXT_PUBLIC_AVALANCHE_CHAIN_ID) {
-  throw Error(getEnvironmentVariableErrorMessage('NEXT_PUBLIC_AVALANCE_CHAIN_ID'));
-}
-if (!process.env.NEXT_PUBLIC_AVALANCHE_CHAIN_NAME) {
-  throw Error(getEnvironmentVariableErrorMessage('NEXT_PUBLIC_AVALANCHE_CHAIN_NAME'));
-}
-if (!process.env.NEXT_PUBLIC_AVALANCHE_RPC_URL) {
-  throw Error(getEnvironmentVariableErrorMessage('NEXT_PUBLIC_AVALANCHE_RPC_URL'));
-}
-if (!process.env.NEXT_PUBLIC_AVALANCHE_BLOCK_EXPLORER_URL) {
-  throw Error(getEnvironmentVariableErrorMessage('NEXT_PUBLIC_AVALANCHE_BLOCK_EXPLORER_URL'));
-}
-
-const chainIdHex = process.env.NEXT_PUBLIC_AVALANCHE_CHAIN_ID;
+const CHAIN_ID_HEX = shouldUseAvalancheMainnet ? '0xa86a' : '0xa869';
 
 export const AVALANCHE = {
   CHAIN_ID: {
-    HEX: chainIdHex,
-    INT: parseInt(chainIdHex),
+    HEX: CHAIN_ID_HEX,
+    INT: parseInt(CHAIN_ID_HEX),
   },
-  CHAIN_NAME: process.env.NEXT_PUBLIC_AVALANCHE_CHAIN_NAME,
-  RPC_URL: process.env.NEXT_PUBLIC_AVALANCHE_RPC_URL,
-  BLOCK_EXPLORER_URL: process.env.NEXT_PUBLIC_AVALANCHE_BLOCK_EXPLORER_URL,
+  ...(shouldUseAvalancheMainnet
+    ? {
+        CHAIN_NAME: 'Avalanche Mainnet C-Chain',
+        RPC_URL: 'https://api.avax.network/ext/bc/C/rpc',
+        BLOCK_EXPLORER_URL: 'https://cchain.explorer.avax.network/',
+      }
+    : {
+        CHAIN_NAME: 'Avalanche FUJI C-Chain',
+        RPC_URL: 'https://api.avax-test.network/ext/bc/C/rpc',
+        BLOCK_EXPLORER_URL: 'https://cchain.explorer.avax-test.network/',
+      }),
 };
 
 export const SITE_MAP = {
