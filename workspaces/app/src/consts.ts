@@ -15,7 +15,7 @@ if (!process.env.NEXT_PUBLIC_ENV) {
 
 export const CLIENT_ENVIRONMENT = process.env.NEXT_PUBLIC_ENV;
 
-export const CORAL_API_ENDPOINT = 'api';
+export const CORAL_API_ENDPOINT = '/api';
 
 const shouldUseAvalancheMainnet = process.env.NEXT_PUBLIC_SHOULD_USE_AVALANCHE_MAINNET === 'true';
 
