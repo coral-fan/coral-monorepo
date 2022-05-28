@@ -1,10 +1,11 @@
+import { Timestamp } from 'firebase-admin/firestore';
 import { getCollectionReferenceServerSide } from 'libraries/firebase';
 import { PurchaseData } from 'libraries/models';
 import { ERROR_RESPONSE } from './consts';
 import { Handler } from './types';
 import { getHandler } from './utils';
 
-type DefaultPurchaseData = Omit<PurchaseData, 'userId' | 'collectionId' | 'metadata'>;
+type DefaultPurchaseData = Pick<PurchaseData, 'status' | 'transactionHash' | 'assetId'>;
 
 const DEFAULT_PURCHASE_DATA: DefaultPurchaseData = {
   status: 'pending',
@@ -20,6 +21,7 @@ const post: Handler = async (req, res) => {
 
     const purchaseData: PurchaseData = {
       ...DEFAULT_PURCHASE_DATA,
+      timestamp: Timestamp.now(),
       userId,
       collectionId,
       metadata: metadata ?? null,
