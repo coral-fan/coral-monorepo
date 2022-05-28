@@ -6,7 +6,7 @@ import Stripe from 'stripe';
 import { boolean, number, object, string } from 'yup';
 import { ERROR_RESPONSE } from '../consts';
 import { Handler } from '../types';
-import { getHandler } from '../utils';
+import { getHandler, getPurchaseDocumentReference } from '../utils';
 
 if (!process.env.STRIPE_SECRET_KEY) {
   throw Error(getEnvironmentVariableErrorMessage('STRIPE_SECRET_KEY'));
@@ -19,11 +19,14 @@ const createPaymentIntentSchema = object({
   collectionId: string().required(),
   stripeCustomerId: string().nullable(),
   userId: string().required(),
+  purchaseId: string().required(),
 });
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2020-08-27' });
 
 const post: Handler = async (req, res) => {
+  let purchaseDocRef;
+
   try {
     const {
       amount,
@@ -32,7 +35,10 @@ const post: Handler = async (req, res) => {
       paymentMethodId,
       collectionId,
       userId,
+      purchaseId,
     } = await createPaymentIntentSchema.validate(req.body);
+
+    purchaseDocRef = await getPurchaseDocumentReference(purchaseId);
 
     // Confirm price
     const collectionData = await getDocumentData<Collection>('collections', `${collectionId}`);
@@ -63,8 +69,13 @@ const post: Handler = async (req, res) => {
       payment_method_types: ['card'],
       capture_method: 'manual',
       payment_method: paymentMethodId,
-      metadata: { collectionId: collectionId, userId },
+      metadata: { collectionId, userId, purchaseId },
     });
+
+    await purchaseDocRef.set(
+      { metadata: { stripePaymentIntentId: paymentIntent.id } },
+      { merge: true }
+    );
 
     res.status(200).send({
       clientSecret: paymentIntent.client_secret,
@@ -85,6 +96,9 @@ const post: Handler = async (req, res) => {
         console.error(`A problem occurred: ${e.message}.`);
         break;
     }
+
+    purchaseDocRef?.set({ status: 'rejected' }, { merge: true });
+
     res.status(500).send(ERROR_RESPONSE);
   }
 };
