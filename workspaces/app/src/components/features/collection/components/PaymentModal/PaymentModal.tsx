@@ -1,8 +1,16 @@
 import { ConditionalSpinner, Modal } from 'components/ui';
 import { TRANSACTION_FEE } from 'consts';
 import { useAvaxUsdPrice, getPaymentLineItems } from 'libraries/blockchain';
-import { Collection, Details, GatedContent, useStripeCustomerId } from 'libraries/models';
-import { useCallback, useMemo, useState } from 'react';
+import { getDocumentReferenceClientSide } from 'libraries/firebase';
+import {
+  Collection,
+  Details,
+  GatedContent,
+  PurchaseData,
+  useStripeCustomerId,
+} from 'libraries/models';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { docData } from 'rxfire/firestore';
 import tokens from 'styles/tokens';
 import { AssetInfo, AssetInfoProps, ExistingCardPayment, TransactionSummary } from './components';
 import { AvaxPayment } from './components/AvaxPayment';
@@ -14,6 +22,7 @@ import {
 } from './components/components';
 import { NewCardInput } from './components/NewCardInput';
 import { PaymentSuccess } from './components/PaymentSuccess';
+import { useCurrentUser } from './hooks';
 
 interface PaymentModalProps extends AssetInfoProps {
   usdPrice: number;
@@ -38,7 +47,6 @@ export const PaymentModal = ({
   collectionDetails,
 }: PaymentModalProps) => {
   const [isAvax, setIsAvax] = useState(true);
-  const [isSuccessfulPayment, setIsSuccessfulPayment] = useState(false);
 
   // Avax Exchange Rate and Price
   const { exchangeRate, isLoading: isAvaxPriceLoading } = useAvaxUsdPrice();
@@ -63,10 +71,37 @@ export const PaymentModal = ({
     []
   );
 
+  const [purchaseId, setPurchaseId] = useState<string>();
+  const [assetId, setAssetId] = useState<number>();
+
   const title = useMemo(
-    () => (isSuccessfulPayment ? 'Congratulations, you now own...' : 'Checkout'),
-    [isSuccessfulPayment]
+    () => (assetId ? 'Congratulations, you now own...' : 'Checkout'),
+    [assetId]
   );
+
+  const currentUser = useCurrentUser();
+
+  const [isMintingNFT, setIsMintingNFT] = useState(false);
+
+  useEffect(() => {
+    if (purchaseId !== undefined) {
+      setIsMintingNFT(true);
+      const purchaseDocRef = getDocumentReferenceClientSide<PurchaseData>('purchases', purchaseId);
+      const purchaseData$ = docData(purchaseDocRef);
+
+      const subscription = purchaseData$.subscribe(({ status, assetId }) => {
+        if (status === 'rejected') {
+          setIsMintingNFT(false);
+        }
+        if (status === 'completed' && assetId !== null) {
+          setAssetId(assetId);
+          setIsMintingNFT(false);
+        }
+      });
+
+      return () => subscription.unsubscribe();
+    }
+  }, [purchaseId]);
 
   // TODO: Listen for successful mint
   // On successful mint:
@@ -78,9 +113,9 @@ export const PaymentModal = ({
   return (
     <Modal title={title} onClick={closePaymentModal} fullHeight={true}>
       <ContentContainer>
-        {isSuccessfulPayment ? (
+        {assetId !== undefined && currentUser ? (
           <PaymentSuccess
-            assetId={101} //TODO: Get asset ID from successful transaction
+            assetId={assetId}
             collectionName={collectionName}
             imageUrl={imageUrl}
             type={type}
@@ -89,9 +124,9 @@ export const PaymentModal = ({
             artistName={artistName}
             artistProfilePhoto={artistProfilePhoto}
             collectionDetails={collectionDetails}
-            ownerUsername={''} //TODO: Get data from Firestore
-            ownerAddress={''} //TODO: Should this come from chain or just use current user?
-            ownerType={'fan'} //TODO: Get data from Firestore
+            ownerUsername={currentUser.username}
+            ownerAddress={currentUser.id}
+            ownerType={currentUser.type}
             ownerProfilePhoto={artistProfilePhoto}
             collectionId={collectionId}
           />
@@ -107,7 +142,7 @@ export const PaymentModal = ({
             <ConditionalSpinner
               size={'60px'}
               color={tokens.background.color.brand}
-              loading={isAvaxPriceLoading}
+              loading={isAvaxPriceLoading || isMintingNFT}
             >
               <TransactionSummary
                 isAvax={isAvax}
@@ -135,6 +170,7 @@ export const PaymentModal = ({
                 <AvaxPayment
                   total={total}
                   handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
+                  setPurchaseId={setPurchaseId}
                 />
               ) : shouldUseExistingCard && stripeCustomerId ? (
                 <ExistingCardPayment
@@ -142,6 +178,7 @@ export const PaymentModal = ({
                   total={total}
                   handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
                   collectionId={collectionId}
+                  setPurchaseId={setPurchaseId}
                 />
               ) : (
                 <NewCardInput
@@ -149,6 +186,7 @@ export const PaymentModal = ({
                   total={total}
                   handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
                   collectionId={collectionId}
+                  setPurchaseId={setPurchaseId}
                 />
               )}
             </ConditionalSpinner>

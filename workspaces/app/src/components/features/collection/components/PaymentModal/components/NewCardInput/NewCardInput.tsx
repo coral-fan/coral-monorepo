@@ -5,7 +5,7 @@ import { Toggle } from 'components/ui';
 import { NullableString, useUpsertUser, useUserUid } from 'libraries/models';
 import { FormEvent, useCallback, useState } from 'react';
 import { cardElementOptions } from '../../styles';
-import { createPaymentIntent, createPaymentMethod } from '../../utils';
+import { createPaymentIntent, createPaymentMethod, createPurchase } from '../../utils';
 import {
   CardElementContainer,
   CheckoutContainer,
@@ -22,6 +22,7 @@ interface NewCardInputProps {
   total: number;
   collectionId: string;
   handleSwitchPaymentClick: () => void;
+  setPurchaseId: (id: string) => void;
 }
 
 const PaymentInfoContainer = styled(PaymentMethodContainer)`
@@ -33,6 +34,7 @@ export const NewCardInput = ({
   total,
   collectionId,
   handleSwitchPaymentClick,
+  setPurchaseId,
 }: NewCardInputProps) => {
   const elements = useElements();
   const stripe = useStripe();
@@ -71,6 +73,11 @@ export const NewCardInput = ({
           throw 'No payment method found';
         }
 
+        const purchaseId = await createPurchase({
+          userId: uid,
+          collectionId,
+        });
+
         const response = await createPaymentIntent({
           total,
           shouldSavePaymentInfo,
@@ -78,6 +85,7 @@ export const NewCardInput = ({
           paymentMethodId: paymentMethod.id,
           collectionId,
           userId: uid,
+          purchaseId,
         });
 
         //confirmCardPayment
@@ -91,10 +99,14 @@ export const NewCardInput = ({
         // TODO: Remove console.log
         console.log(paymentIntent);
 
-        if (paymentIntent?.status === 'succeeded' && response.stripeCustomerId) {
-          await upsertUser(uid, {
-            stripeCustomerId: response.stripeCustomerId,
-          });
+        if (paymentIntent?.status === 'succeeded') {
+          if (response.stripeCustomerId) {
+            await upsertUser(uid, {
+              stripeCustomerId: response.stripeCustomerId,
+            });
+
+            setPurchaseId(purchaseId);
+          }
         }
 
         if (confirmCardError) {
@@ -115,6 +127,7 @@ export const NewCardInput = ({
       total,
       uid,
       upsertUser,
+      setPurchaseId,
     ]
   );
 
