@@ -8,7 +8,7 @@ import { Toggle, Spinner } from 'components/ui';
 import { useUserUid } from 'libraries/models';
 import tokens from 'styles/tokens';
 import { cardElementOptions } from '../../styles';
-import { createPaymentIntent } from '../../utils';
+import { createPaymentIntent, createPurchase } from '../../utils';
 import {
   CardElementContainer,
   CheckoutContainer,
@@ -26,6 +26,7 @@ interface CardPaymentProps {
   total: number;
   collectionId: string;
   handleSwitchPaymentClick: () => void;
+  setPurchaseId: (id: string) => void;
 }
 
 interface PaymentMethodData {
@@ -58,6 +59,7 @@ export const ExistingCardPayment = ({
   total,
   collectionId,
   handleSwitchPaymentClick,
+  setPurchaseId,
 }: CardPaymentProps) => {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodData>();
   const [error, setError] = useState<StripeError>();
@@ -106,6 +108,11 @@ export const ExistingCardPayment = ({
           throw 'Stripe card CVC element not found.';
         }
 
+        const purchaseId = await createPurchase({
+          userId: uid,
+          collectionId,
+        });
+
         const { clientSecret } = await createPaymentIntent({
           total,
           shouldSavePaymentInfo: false,
@@ -113,6 +120,7 @@ export const ExistingCardPayment = ({
           paymentMethodId: paymentMethod.id,
           collectionId,
           userId: uid,
+          purchaseId,
         });
 
         const { paymentIntent, error: confirmCardError } = await stripe.confirmCardPayment(
@@ -130,6 +138,10 @@ export const ExistingCardPayment = ({
         // TODO: Remove console.log
         console.log(paymentIntent);
 
+        if (paymentIntent?.status === 'requires_capture') {
+          setPurchaseId(purchaseId);
+        }
+
         if (confirmCardError) {
           setError(confirmCardError);
         }
@@ -138,7 +150,7 @@ export const ExistingCardPayment = ({
       }
       setIsProcessing(false);
     },
-    [collectionId, elements, paymentMethod, stripe, stripeCustomerId, total, uid]
+    [collectionId, elements, paymentMethod, stripe, stripeCustomerId, total, uid, setPurchaseId]
   );
 
   return (
