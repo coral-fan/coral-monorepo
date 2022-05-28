@@ -1,6 +1,8 @@
-import axios from 'axios';
 import { Stripe, StripeCardElement } from '@stripe/stripe-js';
-import { Collection, PrivateUserData } from 'libraries/models';
+import { Collection, PrivateUserData, PurchaseData } from 'libraries/models';
+import { getCoralAPIAxios } from 'libraries/utils';
+
+const axios = getCoralAPIAxios();
 interface CreatePaymentIntentParameters {
   total: number;
   shouldSavePaymentInfo: boolean;
@@ -8,6 +10,7 @@ interface CreatePaymentIntentParameters {
   collectionId: Collection['id'];
   stripeCustomerId: PrivateUserData['stripeCustomerId'];
   userId: string;
+  purchaseId: string;
 }
 
 export const createPaymentIntent = async ({
@@ -17,17 +20,19 @@ export const createPaymentIntent = async ({
   paymentMethodId,
   collectionId,
   userId,
+  purchaseId,
 }: CreatePaymentIntentParameters) => {
   const { data } = await axios.post<{
     clientSecret: string;
     stripeCustomerId: string | undefined;
-  }>('/api/payment/pay', {
+  }>('payment/pay', {
     amount: Math.ceil(total * 100),
     shouldSavePaymentInfo,
     paymentMethodId,
     stripeCustomerId,
     collectionId,
     userId,
+    purchaseId,
   });
 
   return data;
@@ -44,4 +49,18 @@ export const createPaymentMethod = async (cardElement: StripeCardElement, stripe
   });
 
   return { paymentMethod, paymentMethodError: error };
+};
+
+interface CreatePurchaseParameters {
+  userId: PurchaseData['userId'];
+  collectionId: PurchaseData['collectionId'];
+  metadata?: PurchaseData['metadata'];
+}
+
+export const createPurchase = async (createPurchaseParameters: CreatePurchaseParameters) => {
+  const {
+    data: { id },
+  } = await axios.post<{ id: string }>('purchase', createPurchaseParameters);
+
+  return id;
 };
