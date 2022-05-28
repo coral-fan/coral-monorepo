@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase-admin/firestore';
+import { Asset } from '../asset';
 import { Collection } from '../collection';
 import { User } from '../user';
 
@@ -20,6 +22,7 @@ export interface PurchaseData {
   collectionId: Collection['id'];
   status: Status;
   transactionHash: null | string;
-  assetId: null | string;
+  assetId: null | Asset['id'];
+  timestamp: ReturnType<typeof Timestamp.now>;
   metadata: null | Metadata;
 }
