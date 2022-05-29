@@ -4,28 +4,31 @@ import { getAllDocuments, getDocumentData } from 'libraries/firebase';
 import { getArtist } from '../artist';
 import { Collection, CollectionData } from './types';
 
-export const getCollection = async (id: Collection['id']): Promise<Collection | undefined> => {
+export const getCollection = async (id: Collection['id']) => {
   const collectionData = await getDocumentData<CollectionData>('collections', id);
 
-  if (collectionData) {
-    const { artistId, ...collection } = collectionData;
-
-    const artistData = await getArtist(artistId);
-
-    if (!artistData) {
-      throw new Error(`Artist with ${artistId} doesn't exist.`);
-    }
-
-    const { name: artistName, profilePhoto: artistProfilePhoto } = artistData;
-
-    return {
-      id,
-      ...collection,
-      artistId,
-      artistName,
-      artistProfilePhoto,
-    };
+  if (collectionData === undefined) {
+    throw new Error(`Collection with id ${id} doesn't exist.`);
   }
+  const { artistId, ...partialCollectionData } = collectionData;
+
+  const artistData = await getArtist(artistId);
+
+  if (!artistData) {
+    throw new Error(`Artist with ${artistId} doesn't exist.`);
+  }
+
+  const { name: artistName, profilePhoto: artistProfilePhoto } = artistData;
+
+  const collection: Collection = {
+    id,
+    ...partialCollectionData,
+    artistId,
+    artistName,
+    artistProfilePhoto,
+  };
+
+  return collection;
 };
 
 export const getSimilarCollections = async (
