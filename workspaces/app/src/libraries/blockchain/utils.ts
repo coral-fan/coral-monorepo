@@ -4,10 +4,9 @@ import { Coral__factory } from '@coral/contracts';
 
 const avalancheRpcProvider = new JsonRpcProvider(AVALANCHE.RPC_URL);
 
-export const getTokenOwner = async (address: string, assetId: number) => {
+export const getTokenOwner = (address: string, assetId: number) => {
   const contract = Coral__factory.connect(address, avalancheRpcProvider);
-
-  return await contract.ownerOf(assetId);
+  return contract.ownerOf(assetId);
 };
 
 export const getTokenTotalSupply = async (address: string) => {
