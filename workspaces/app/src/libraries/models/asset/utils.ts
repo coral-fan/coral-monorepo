@@ -1,20 +1,15 @@
 import { CORAL_CONTRACTS } from 'libraries/blockchain/consts';
-import { getOwnedTokensByCollection, getTokenOwner } from 'libraries/blockchain/utils';
-import { Asset, Collection, getCollection, getPublicUserData } from 'libraries/models';
-import { User } from '../user';
+import { getTokenOwner } from 'libraries/blockchain/utils';
+import { Asset, Collection, getCollection, getPublicUserData, User } from 'libraries/models';
+import { OwnedNfts } from '../ownedNfts';
+import { PublicUserData } from '../user';
 
-export const getAsset = async (
-  collectionId: Collection['id'],
-  assetId: number
-): Promise<Asset | undefined> => {
-  const collectionData = await getCollection(collectionId);
-  const ownerAddress = await getTokenOwner(collectionId, assetId);
-  const ownerData = await getPublicUserData(ownerAddress);
-
-  if (!collectionData || !ownerData) {
-    return;
-  }
-
+const getAssetWithKnownCollectionAndOwner = async (
+  collection: Collection,
+  assetId: Asset['id'],
+  ownerAddress: User['id'],
+  owner?: PublicUserData
+) => {
   const {
     imageUrl,
     artistName,
@@ -26,9 +21,9 @@ export const getAsset = async (
     details: collectionDetails,
     id: contractAddress,
     gatedContent,
-  } = collectionData;
+  } = collection;
 
-  return {
+  const asset: Asset = {
     imageUrl,
     artistName,
     artistProfilePhoto,
@@ -40,44 +35,51 @@ export const getAsset = async (
     contractAddress,
     gatedContent,
     ownerAddress,
-    ownerProfilePhoto: ownerData.profilePhoto,
-    ownerUsername: ownerData.username,
-    ownerType: ownerData.type,
+    // TODO: use const for default photo
+    ownerProfilePhoto: owner?.profilePhoto ?? {
+      src: '/images/default-profile-photo.png',
+      offsetPercentages: [0, 0],
+      scale: 1,
+    },
+    ownerUsername: owner?.username ?? ownerAddress,
+    ownerType: owner?.type ?? 'fan',
     id: assetId,
   };
+
+  return asset;
 };
 
-type CollectionTokenMap = Record<string, number[]>;
+export const getAsset = async (collectionId: Collection['id'], assetId: number): Promise<Asset> => {
+  const collection = await getCollection(collectionId);
+  const ownerAddress = await getTokenOwner(collectionId, assetId);
+  const owner = await getPublicUserData(ownerAddress);
 
-export const getAllOwnedTokenIds = async (userAddress: User['id']) => {
-  return (
-    // TODO: Refactor Promise.allSettled with RxJs
-    (
-      await Promise.allSettled(
-        CORAL_CONTRACTS.map(async (contract) => ({
-          [contract]: await getOwnedTokensByCollection(contract, userAddress),
-        }))
-      )
-    )
-      .filter(
-        (result): result is PromiseFulfilledResult<CollectionTokenMap> =>
-          result.status === 'fulfilled'
-      )
-      .map((result) => result.value)
-  );
+  return getAssetWithKnownCollectionAndOwner(collection, assetId, ownerAddress, owner);
 };
 
-export const getAssets = async (ownedTokensMap: CollectionTokenMap[]) =>
+export const getAssets = async (ownerAddress: User['id'], ownedNfts: OwnedNfts) => {
+  /** 
+   owner can be undefined, will fallback to:
+    - default profile photo value
+    - using public address as username
+    - using link profile to snowtrace
+  **/
+  const owner = await getPublicUserData(ownerAddress);
+
+  // TODO: Generally clean up this code, a bit confusing
+  // TODO: silently fails, should probably not do this lol
   // TODO: Refactor Promise.allSettled with RxJs
-  (
+  return (
     await Promise.allSettled(
-      ownedTokensMap.map(async (collection) => {
-        const [contract] = Object.keys(collection);
+      Object.entries(ownedNfts).map(async ([collectionId, assetIds]) => {
+        const collection = await getCollection(collectionId);
         return (
           // TODO: Refactor Promise.allSettled with RxJs
           (
             await Promise.allSettled(
-              collection[contract].map(async (assetId) => await getAsset(contract, assetId))
+              assetIds.map((assetId) =>
+                getAssetWithKnownCollectionAndOwner(collection, assetId, ownerAddress, owner)
+              )
             )
           )
             .filter(
@@ -91,3 +93,4 @@ export const getAssets = async (ownedTokensMap: CollectionTokenMap[]) =>
     .filter((result): result is PromiseFulfilledResult<Asset[]> => result.status === 'fulfilled')
     .map((result) => result.value)
     .flatMap((assets) => assets);
+};
