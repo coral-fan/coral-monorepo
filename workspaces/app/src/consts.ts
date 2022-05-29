@@ -30,12 +30,12 @@ export const AVALANCHE = {
     ? {
         CHAIN_NAME: 'Avalanche Mainnet C-Chain',
         RPC_URL: 'https://api.avax.network/ext/bc/C/rpc',
-        BLOCK_EXPLORER_URL: 'https://cchain.explorer.avax.network/',
+        BLOCK_EXPLORER_URL: 'https://testnet.snowtrace.io',
       }
     : {
         CHAIN_NAME: 'Avalanche FUJI C-Chain',
         RPC_URL: 'https://api.avax-test.network/ext/bc/C/rpc',
-        BLOCK_EXPLORER_URL: 'https://cchain.explorer.avax-test.network/',
+        BLOCK_EXPLORER_URL: 'https://snowtrace.io',
       }),
 };
 
