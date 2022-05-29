@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Card as BaseCard, Link, ProfileInfo } from 'components/ui';
+import { AVALANCHE } from 'consts';
 import { Asset, User, UserType } from 'libraries/models';
 import tokens, { QUERY } from 'styles/tokens';
 
@@ -29,7 +30,11 @@ const AssetId = styled.span`
 `;
 
 export const Owner = ({ userId, assetId, username, profilePhoto, type }: OwnerProps) => (
-  <Link href={`/user/${userId}`}>
+  <Link
+    href={
+      userId === username ? `${AVALANCHE.BLOCK_EXPLORER_URL}/address/${userId}` : `/user/${userId}`
+    }
+  >
     <Card variant="secondary">
       <ProfileInfo {...{ username, profilePhoto, secondaryInfo: getUserType(type) }} />
       <AssetId>#{assetId}</AssetId>
