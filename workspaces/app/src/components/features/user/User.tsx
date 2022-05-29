@@ -1,4 +1,4 @@
-import { Asset, getPublicUserData, PrivateUserData, User } from 'libraries/models';
+import { getPublicUserData, OwnedNfts, PrivateUserData, User } from 'libraries/models';
 import { GetServerSideProps } from 'next';
 import { getDocumentData } from 'libraries/firebase';
 import { getIdToken } from 'libraries/authentication';
@@ -7,33 +7,19 @@ import { ID_TOKEN_KEY } from 'consts';
 import { getAuthenticationServerSide } from 'libraries/firebase/authentication';
 import { UserPageProvider } from './provider';
 import { UserProfile } from './components/UserProfile';
-import { getAllOwnedTokenIds, getAssets } from 'libraries/models/asset/utils';
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
-import { useCallback, useEffect, useState } from 'react';
+import { getAssets } from 'libraries/models/asset/utils';
 interface UserPageProps {
   userData: User;
 }
 
 export const UserPage = ({ userData }: UserPageProps) => {
-  const { id, assets } = userData;
-  const [currentAssets, setCurrentAssets] = useState<Asset[]>(assets);
-  const [isAssetsLoading, setIsAssetsLoading] = useState(true);
-
-  const populateAssets = useCallback(async (walletAddress: string) => {
-    const ownedTokensMap = await getAllOwnedTokenIds(walletAddress);
-    const currentAssets: Asset[] = await getAssets(ownedTokensMap);
-    setCurrentAssets(currentAssets);
-    setIsAssetsLoading(false);
-  }, []);
-
-  // TODO: Handle assets in DB
-  useEffect(() => {
-    populateAssets(id);
-  }, [populateAssets, id]);
+  // TODO: look to see if asssets can be used from context instead
+  const { assets } = userData;
 
   return (
     <UserPageProvider userData={userData}>
-      <UserProfile isAssetsLoading={isAssetsLoading} assets={currentAssets} />
+      <UserProfile assets={assets} />
     </UserPageProvider>
   );
 };
@@ -80,13 +66,22 @@ export const getServerSideProps: GetServerSideProps<UserPageProps, UserParams> =
       ? await getDocumentData<PrivateUserData>('users', id, 'private', 'data')
       : undefined;
 
+  const ownedNfts = (await getDocumentData<OwnedNfts>('nft-ownership', id)) ?? {};
+
+  const assets = ownedNfts ? await getAssets(id, ownedNfts) : [];
+
+  const { following: followingArtistIds, ...partialPublicUserData } = publicUserData;
+
+  // TODO: Add real following logic
+  const following = followingArtistIds.length > 0 ? [] : [];
+
   // TODO: Store Assets in DB, update on each page load
   const userData: User = {
     id,
-    ...publicUserData,
+    ...partialPublicUserData,
     ...privateUserData,
-    assets: [],
-    following: [],
+    following,
+    assets,
   };
 
   return {
