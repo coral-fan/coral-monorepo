@@ -10,7 +10,7 @@ interface CollectionProps {
 }
 
 export const Collections = ({ collections }: CollectionProps) => (
-  <ProfileItems isLoading={false}>
+  <ProfileItems>
     {collections.length > 0 ? (
       sortCollectionByDropDateDesc(collections).map((collection) => {
         const { id, name, type, dropDate } = collection;
