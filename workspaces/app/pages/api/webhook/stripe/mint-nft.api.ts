@@ -2,7 +2,7 @@ import { getEnvironmentVariableErrorMessage } from 'libraries/utils';
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
 import { PurchaseData } from 'libraries/models';
 import { Handler } from '../../types';
-import { getHandler } from '../../utils';
+import { getHandler, getPurchaseDocumentReference } from '../../utils';
 import Stripe from 'stripe';
 import { buffer } from 'micro';
 import { NextApiRequest, NextApiResponse } from 'next/types';
@@ -51,48 +51,43 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
   const webhookSecret = STRIPE_WEBHOOK_SIGNING_SECRET;
 
   if (!sig || !webhookSecret) {
-    return res.status(500).send(ERROR_RESPONSE);
+    return res.status(500).json(ERROR_RESPONSE);
   }
 
-  let transactionDocRef: FirebaseFirestore.DocumentReference<PurchaseData> | undefined;
+  let purchaseDocRef;
   try {
     const event = stripe.webhooks.constructEvent(buf, sig, webhookSecret);
     const paymentIntent = event.data.object as Stripe.PaymentIntent;
 
     if (paymentIntent.status === 'requires_capture') {
-      const { id, metadata } = paymentIntent;
-      const { collectionId, userId } = metadata;
+      const { metadata } = paymentIntent;
+      const { collectionId, userId, purchaseId } = metadata;
 
-      if (!userId || !collectionId) {
+      if (!userId || !collectionId || !purchaseId) {
         throw 'userId or collectionId does not exist in metadata field';
       }
-      transactionDocRef = await getDocumentReferenceServerSide<PurchaseData>('transactions', id);
+      purchaseDocRef = await getPurchaseDocumentReference(purchaseId);
 
-      await transactionDocRef.create({
-        userId,
-        collectionId,
-        status: 'pending',
-        hash: null,
-        assetId: null,
-      });
+      const purchaseDocSnapshot = await purchaseDocRef.get();
 
-      // Relayer - Mint NFT
-      const provider = new DefenderRelayProvider(RELAYER_CREDENTIALS);
-      const signer = new DefenderRelaySigner(RELAYER_CREDENTIALS, provider, { speed: 'fast' });
+      const shouldRelayMint = !purchaseDocSnapshot.data()?.transactionHash;
+      if (shouldRelayMint) {
+        // Relayer - Mint NFT
+        // const provider = new DefenderRelayProvider(RELAYER_CREDENTIALS);
+        // const signer = new DefenderRelaySigner(RELAYER_CREDENTIALS, provider, { speed: 'fast' });
 
-      const nftContract = Coral__factory.connect(collectionId, signer);
+        // const nftContract = Coral__factory.connect(collectionId, signer);
 
-      const { hash } = await nftContract.relayMint(userId);
+        // const { hash } = await nftContract.relayMint(userId);
 
-      await transactionDocRef.update('hash', hash);
+        // await purchaseDocRef.set({ transactionHash: hash }, { merge: true });
+
+        console.log('minting nft...');
+      }
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- must type error as any to access properties
   } catch (e: any) {
-    transactionDocRef?.get().then((data) => {
-      if (data.exists) {
-        transactionDocRef?.update('status', 'rejected');
-      }
-    });
+    purchaseDocRef?.set({ status: 'rejected' }, { merge: true });
     console.error(e.message);
   }
 
