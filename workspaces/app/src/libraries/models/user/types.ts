@@ -1,5 +1,4 @@
-import { DocumentReference } from 'firebase/firestore';
-import { Artist, ArtistData } from '../artist';
+import { Artist } from '../artist';
 import { Asset } from '../asset';
 import { Collection } from '../collection';
 import { Notification } from '../notification';
@@ -19,7 +18,7 @@ export interface PublicUserData {
   notifications: Notification[];
   // map of contract address to asset id
   assets: ContractAddressToIdMap;
-  following: DocumentReference<ArtistData>[];
+  following: Artist['id'][];
 }
 
 export interface PrivateUserData {
