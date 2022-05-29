@@ -13,11 +13,10 @@ import { Assets } from '../Assets';
 import { Asset } from 'libraries/models';
 
 interface UserProfileProps {
-  isAssetsLoading: boolean;
   assets: Asset[];
 }
 
-export const UserProfile = ({ assets, isAssetsLoading }: UserProfileProps) => {
+export const UserProfile = ({ assets }: UserProfileProps) => {
   const [{ username, profilePhoto, socialHandles, bio }] = useUser();
   const isCurrentUser = useIsCurrentUser();
 
@@ -60,11 +59,6 @@ export const UserProfile = ({ assets, isAssetsLoading }: UserProfileProps) => {
     [isCurrentUser, isUpdateProfileInfoModalOpen, openUpdateProfileInfoModal]
   );
 
-  const userAssets = useMemo(
-    () => <Assets isLoading={isAssetsLoading} assets={assets} />,
-    [isAssetsLoading, assets]
-  );
-
   return (
     <Profile
       username={username}
@@ -73,7 +67,7 @@ export const UserProfile = ({ assets, isAssetsLoading }: UserProfileProps) => {
       socialHandles={socialHandles}
       editAvatar={editAvatar}
       editProfileInfo={editProfileInfo}
-      items={userAssets}
+      items={<Assets assets={assets} />}
     />
   );
 };
