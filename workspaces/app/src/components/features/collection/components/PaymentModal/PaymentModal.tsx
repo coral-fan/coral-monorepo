@@ -170,7 +170,6 @@ export const PaymentModal = ({
                 <AvaxPayment
                   total={total}
                   handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
-                  setPurchaseId={setPurchaseId}
                 />
               ) : shouldUseExistingCard && stripeCustomerId ? (
                 <ExistingCardPayment
