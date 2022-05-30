@@ -71,23 +71,25 @@ export const getAssets = async (ownerAddress: User['id'], ownedNfts: OwnedNfts) 
   // TODO: Refactor Promise.allSettled with RxJs
   return (
     await Promise.allSettled(
-      Object.entries(ownedNfts).map(async ([collectionId, assetIds]) => {
-        const collection = await getCollection(collectionId);
-        return (
-          // TODO: Refactor Promise.allSettled with RxJs
-          (
-            await Promise.allSettled(
-              assetIds.map((assetId) =>
-                getAssetWithKnownCollectionAndOwner(collection, assetId, ownerAddress, owner)
+      Object.entries(ownedNfts)
+        .filter((entry): entry is [string, number[]] => entry[1] !== undefined)
+        .map(async ([collectionId, assetIds]) => {
+          const collection = await getCollection(collectionId);
+          return (
+            // TODO: Refactor Promise.allSettled with RxJs
+            (
+              await Promise.allSettled(
+                assetIds.map((assetId) =>
+                  getAssetWithKnownCollectionAndOwner(collection, assetId, ownerAddress, owner)
+                )
               )
             )
-          )
-            .filter(
-              (result): result is PromiseFulfilledResult<Asset> => result.status === 'fulfilled'
-            )
-            .map((result) => result.value)
-        );
-      })
+              .filter(
+                (result): result is PromiseFulfilledResult<Asset> => result.status === 'fulfilled'
+              )
+              .map((result) => result.value)
+          );
+        })
     )
   )
     .filter((result): result is PromiseFulfilledResult<Asset[]> => result.status === 'fulfilled')
