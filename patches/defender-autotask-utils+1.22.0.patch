@@ -1,0 +1,13 @@
+diff --git a/node_modules/defender-autotask-utils/lib/types.d.ts b/node_modules/defender-autotask-utils/lib/types.d.ts
+index fd54b1b..779a1dd 100644
+--- a/node_modules/defender-autotask-utils/lib/types.d.ts
++++ b/node_modules/defender-autotask-utils/lib/types.d.ts
+@@ -144,7 +144,7 @@ interface SentinelBaseAbiConditionSummary extends SentinelBaseConditionSummary {
+         [key: string]: any;
+     };
+ }
+-interface EventConditionSummary extends SentinelBaseAbiConditionSummary {
++export interface EventConditionSummary extends SentinelBaseAbiConditionSummary {
+     type: 'event';
+ }
+ interface FunctionConditionSummary extends SentinelBaseAbiConditionSummary {
