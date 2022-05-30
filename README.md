@@ -46,6 +46,8 @@ tunnels:
     addr: 3000
     proto: http
     hostname: coral.ngrok.io
+version: 2
+region: us
 ```
 
 Please note that any values surrounded by `<` `>` and are placeholder values, and must be filled in with the actual value.
