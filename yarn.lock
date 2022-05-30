@@ -8577,6 +8577,11 @@ default-browser-id@^1.0.4:
     meow "^3.1.0"
     untildify "^2.0.0"
 
+defender-autotask-utils@^1.22.0:
+  version "1.22.0"
+  resolved "https://registry.yarnpkg.com/defender-autotask-utils/-/defender-autotask-utils-1.22.0.tgz#ef80b32b7cf47ea81dda234143a1b7b57979650b"
+  integrity sha512-K1gdGFqjgrnp53eQKCJE7YooJnOOVxrD8OuHULtai9MUJB540QQ9hCYJcu49X8/gJVTcvnv+jVM66P49vsrndg==
+
 defender-base-client@1.21.3:
   version "1.21.3"
   resolved "https://registry.yarnpkg.com/defender-base-client/-/defender-base-client-1.21.3.tgz#4c1c6358d598f7cb249c8853d8507759f9983fe1"
