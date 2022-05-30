@@ -1,1 +1,1 @@
-export type OwnedNfts = Record<string, number[]>;
+export type OwnedNfts = Record<string, number[] | undefined>;
