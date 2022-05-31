@@ -2,17 +2,13 @@ import { getEnvironmentVariableErrorMessage } from 'libraries/utils/errors';
 import Stripe from 'stripe';
 import { object, string } from 'yup';
 import { Handler } from '../types';
-import { getHandler } from '../utils';
-
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw Error(getEnvironmentVariableErrorMessage('STRIPE_SECRET_KEY'));
-}
+import { getHandler, getStripe } from '../utils';
 
 const captureAPISchema = object({
   paymentIntentId: string().required(),
 });
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2020-08-27' });
+const stripe = getStripe();
 
 const post: Handler = async (req, res) => {
   try {

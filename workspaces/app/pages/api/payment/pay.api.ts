@@ -1,16 +1,10 @@
 import { TRANSACTION_FEE } from 'consts';
 import { getDocumentData } from 'libraries/firebase';
 import { Collection } from 'libraries/models';
-import { getEnvironmentVariableErrorMessage } from 'libraries/utils/errors';
-import Stripe from 'stripe';
 import { boolean, number, object, string } from 'yup';
 import { ERROR_RESPONSE } from '../consts';
 import { Handler } from '../types';
-import { getHandler, getPurchaseDocumentReference } from '../utils';
-
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw Error(getEnvironmentVariableErrorMessage('STRIPE_SECRET_KEY'));
-}
+import { getHandler, getPurchaseDocumentReference, getStripe } from '../utils';
 
 const createPaymentIntentSchema = object({
   amount: number().required(),
@@ -22,7 +16,7 @@ const createPaymentIntentSchema = object({
   purchaseId: string().required(),
 });
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2020-08-27' });
+const stripe = getStripe();
 
 const post: Handler = async (req, res) => {
   let purchaseDocRef;
