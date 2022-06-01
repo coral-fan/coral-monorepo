@@ -61,6 +61,7 @@
     "rxjs": "^7.3.0",
     "stripe": "^8.219.0",
     "theme-in-css": "^0.2.2",
+    "uuid": "^8.3.2",
     "yup": "^0.32.11",
     "zustand": "^4.0.0-rc.1"
   },
@@ -78,6 +79,7 @@
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.3",
     "@types/react-transition-group": "^4.4.4",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.3.1",
     "@typescript-eslint/parser": "^5.3.1",
     "@web3-react/types": "^8.0.10-beta.0",
