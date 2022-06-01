@@ -7,7 +7,7 @@ import hre from 'hardhat';
 /*
 Update constructorArgs here
 */
-import config from '../projects/coral-test-0601/config.json';
+import config from '../projects/brooklyn-::-test-1/config.json';
 const constructorArgs = config.contract;
 const contractName = constructorArgs.contractName;
 
