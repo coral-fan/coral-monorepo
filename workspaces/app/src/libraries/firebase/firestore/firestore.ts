@@ -84,26 +84,26 @@ export const getCollectionReferenceServerSide = async <
   return firestore.collection(collection) as FirebaseFirestore.CollectionReference<T>;
 };
 
-export const getCollectionReference = async <T extends CollectionReference>(collection: string) => {
+export const getCollectionReference = async <T>(collection: string) => {
   return (isServerSide() ? getCollectionReferenceServerSide : getCollectionReferenceClientSide)<T>(
     collection
   );
 };
 
+export type DocumentDataWithId<T> = T & { id: string };
+
 export const getAllDocuments = async <T extends DocumentData>(collection: string) => {
-  const collectionReference = await getCollectionReference(collection);
+  const collectionRef = await getCollectionReference<T>(collection);
 
-  const documentArray: DocumentData[] = [];
+  const documentArray: DocumentDataWithId<T>[] = [];
 
-  // TODO Use RxFire CollectionData();
-  const snapshot =
-    collectionReference instanceof CollectionReference
-      ? await getDocs(collectionReference)
-      : await collectionReference.get();
+  const querySnapshot = await (collectionRef instanceof CollectionReference
+    ? getDocs(collectionRef)
+    : collectionRef.get());
 
-  snapshot.forEach((doc) => {
-    documentArray.push(doc.data());
+  querySnapshot.forEach((docSnapshot) => {
+    documentArray.push({ id: docSnapshot.id, ...docSnapshot.data() });
   });
 
-  return documentArray as T[] | undefined;
+  return documentArray;
 };
