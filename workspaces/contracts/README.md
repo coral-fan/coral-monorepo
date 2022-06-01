@@ -12,6 +12,14 @@
 
 - Review and update the `config.json` as needed - please add values for `dropDate`, `details` and `gatedContent`.
 
+## Test
+
+- Import the directory of the project you'd like to test in `tests/test.ts`: `import config from '../projects/<YOUR_PROJECT_DIR_HERE>/config.json';`
+
+- Note: Hardhat times out over large mint sizes, may need to adjust the config to a lower maxSupply number to test. REMEMBER TO CHANGE THIS VALUE BACK AFTER TESTING, AND BEFORE DEPLOYING.
+
+- Run `npx hardhat test --network 'hardhat'`
+
 ## Run Task
 
 - Change the default network in `hardhat.config.json` to `fuji`
