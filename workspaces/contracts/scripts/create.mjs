@@ -19,7 +19,7 @@ Initial JSON File Config
 const initialConfig = {
   contract: {
     address: '',
-    contractName: 'Coral',
+    contractName: 'CoralNftV1',
     name: collectionName,
     symbol: '',
     usdPricePerToken: 0,
@@ -35,7 +35,7 @@ const initialConfig = {
     imageUrl: '',
     type: '',
     dropDate: '',
-    details: '',
+    details: [],
     gatedContent: {
       type: '',
       id: '',
@@ -61,31 +61,9 @@ const createDirectories = () => {
   console.log('>>> New project directory created...');
 };
 
-const removeDirectory = () => {
-  const __dirname = path.resolve();
-  const dir = path.resolve(__dirname, 'projects', dirName);
-  fs.rmSync(dir, { recursive: true });
-};
-
-const fileExists = (contractName) => {
-  const __dirname = path.resolve();
-  const fullPath = path.resolve(__dirname, 'src', 'projects', `${contractName}.sol`);
-
-  return fs.existsSync(fullPath);
-};
-
 const createInitialConfigJSON = () => {
   const json = JSON.stringify(initialConfig, null, 2);
   fs.writeFileSync(`projects/${dirName}/config.json`, json, 'utf8');
-};
-
-const addImage = async () => {
-  const artistRef = await addDocumentReferenceServerSide(
-    'artists',
-    '0xabcdefghijklmnopqrstuvwxyz01234567891011'
-  );
-  const artistDocSnapshot = await artistRef.add();
-  console.log(artistDocSnapshot);
 };
 
 const rl = readline.createInterface({
@@ -170,6 +148,31 @@ const addMaxSupply = () => {
   });
 };
 
+const addArtistId = () => {
+  return new Promise((resolve, reject) => {
+    rl.question("What is the artist's ID (wallet address)? ", (answer) => {
+      initialConfig.collectionData.artistId = answer;
+      resolve();
+    });
+  });
+};
+
+const addCollectionType = () => {
+  const answerArray = ['video', 'music', 'event', 'merch'];
+  return new Promise((resolve, reject) => {
+    rl.question(`What type of collection? [ ${answerArray.join(' / ')} ] `, (answer) => {
+      if (answerArray.includes(answer)) {
+        initialConfig.collectionData.type = answer;
+        resolve();
+      } else {
+        console.log(`Please choose one of: ${answerArray.join(' / ')}`);
+        console.log(` `);
+        resolve(addCollectionType());
+      }
+    });
+  });
+};
+
 const printConfig = () => {
   console.log(`---------------------------------------------`);
   console.log(`>>> ${collectionName.toUpperCase()} created: `);
@@ -184,15 +187,28 @@ const printConfig = () => {
 
 const main = async () => {
   createDirectories();
+  console.log(`---------------------------------------------`);
   console.log(`Let's populate the initial config File for ${collectionName}: `);
+  console.log(`---------------------------------------------`);
+  console.log(` `);
   await addSymbol();
   await addDescription();
   await addNumAttributes();
   await addAttributes(initialConfig.contract.numAttributes);
   await addUsdPrice();
   await addMaxSupply();
+  console.log(`---------------------------------------------`);
+  console.log(`Next let's add artist and collection data for ${collectionName}: `);
+  console.log(`---------------------------------------------`);
+  console.log(` `);
+  await addArtistId();
+  await addCollectionType();
   rl.close();
   createInitialConfigJSON();
+  console.log(`---------------------------------------------`);
+  console.log(`Generating initial config file for ${collectionName}...`);
+  console.log(`---------------------------------------------`);
+  console.log(` `);
   printConfig();
 };
 
