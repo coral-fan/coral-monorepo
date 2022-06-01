@@ -19,7 +19,7 @@ contract CoralNftV1 is ERC721, Ownable, AvaxUsd {
 
   mapping(address => bool) private _relayList;
 
-  event RelayMint(address indexed to, uint256 indexed tokenId);
+  event RelayMint(uint256 indexed tokenId);
 
   constructor(
     string memory _name,
@@ -63,7 +63,7 @@ contract CoralNftV1 is ERC721, Ownable, AvaxUsd {
     _mint(to, newTokenID);
     _tokenIds.increment();
 
-    emit RelayMint(to, newTokenID);
+    emit RelayMint(newTokenID);
   }
 
   function publicMint() external payable {
