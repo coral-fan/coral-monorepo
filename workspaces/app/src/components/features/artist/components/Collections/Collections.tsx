@@ -22,7 +22,7 @@ export const Collections = ({ collections }: CollectionProps) => (
               Badge={Badge}
               dropDateTimestamp={dropDate}
               {...collection}
-              //To Do: Remove description prop after data fetching added
+              //TODO: Remove description prop after data fetching added
               description={''}
               isCard
             />
