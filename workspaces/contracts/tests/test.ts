@@ -161,7 +161,7 @@ describe(`Running Tests on ${contractName}...`, () => {
 
       await expect(contract.connect(relayer1).relayMint(addr1.address))
         .to.emit(contract, 'RelayMint')
-        .withArgs(addr1.address, 1);
+        .withArgs(1);
     });
   });
 
