@@ -3,7 +3,7 @@ import hre from 'hardhat';
 /*
 Update constructorArgs import directory
 */
-import constructorArgs from '../projects/coral-test-v4/config.json' assert { type: 'json' };
+import constructorArgs from '../../projects/coral-test-v4/config.json' assert { type: 'json' };
 
 async function main() {
   const {
