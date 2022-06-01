@@ -1,7 +1,7 @@
 import { CtaButton, DropTimer } from 'components/ui';
 import { getMilliSecsDiff, getTimeRemaining$ } from 'libraries/time';
 import { useObservable } from 'libraries/utils';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { AvailableContainer } from 'components/ui/nft';
 import { Price, PriceProp } from '../Price';
@@ -81,6 +81,8 @@ export const DropOrAvailable = ({
   */
   const isAvailable = millisecondsRemaining > 0 ? 'false' : 'true';
 
+  const numMintedDisplay = useMemo(() => numMinted ?? 0, [numMinted]);
+
   return (
     <FadeOutInSwitchAnimation isAvailable={isAvailable}>
       {isAvailable === 'true' ? (
@@ -93,7 +95,7 @@ export const DropOrAvailable = ({
           >
             {isAuthenticated ? (isSoldOut ? 'Sold Out' : 'Buy Now') : 'Sign in to Purchase'}
           </CtaButton>
-          {numMinted && <ProgressBar maxMintable={maxMintable} numMinted={numMinted} />}
+          <ProgressBar maxMintable={maxMintable} numMinted={numMintedDisplay} />
         </AvailableContainer>
       ) : (
         <DropTimer tokenSupply={maxMintable} timestamp={dropDate} />
