@@ -10,7 +10,7 @@ import { ERROR_RESPONSE } from '../../consts';
 
 // defender
 import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
-import { Coral__factory } from '@coral/contracts';
+import { CoralNftV1__factory } from '@coral/contracts';
 import { ethers } from 'ethers';
 
 if (!process.env.STRIPE_WEBHOOK_SIGNING_SECRET) {
@@ -76,7 +76,7 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
         // const provider = new DefenderRelayProvider(RELAYER_CREDENTIALS);
         // const signer = new DefenderRelaySigner(RELAYER_CREDENTIALS, provider, { speed: 'fast' });
 
-        // const nftContract = Coral__factory.connect(collectionId, signer);
+        // const nftContract = CoralNftV1__factory.connect(collectionId, signer);
 
         // const { hash } = await nftContract.relayMint(userId);
 
