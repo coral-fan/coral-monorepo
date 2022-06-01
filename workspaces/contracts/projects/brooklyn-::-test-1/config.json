@@ -1,0 +1,35 @@
+{
+  "contract": {
+    "address": "0xd0233FD2a013F480e482Dce4da35B1dA81009317",
+    "contractName": "CoralNftV1",
+    "name": "Brooklyn :: Test 1",
+    "symbol": "BK1",
+    "usdPricePerToken": 8,
+    "maxSupply": 100,
+    "maxTokensPerWallet": 2,
+    "description": "I must not fear. Fear is the mind-killer. Fear is the little-death that brings total obliteration. I will face my fear. I will permit it to pass over me and through me. And when it has gone past I will turn the inner eye to see its path. Where the fear has gone there will be nothing. Only I will remain.",
+    "tokenURI": "ipfs://bafyreiaejmush6rka64p6dgzk7fwj5onfkv7pdpj7qlitejyamvjusnx6q/metadata.json",
+    "numAttributes": 1,
+    "attributes": [
+      {
+        "trait_type": "Influence",
+        "value": "Dune"
+      }
+    ]
+  },
+  "collectionData": {
+    "artistId": "0xabcdefghijklmnopqrstuvwxyz01234567891011",
+    "imageUrl": "",
+    "type": "event",
+    "dropDate": "2022-04-25T16:00:00Z",
+    "details": [
+      "The mystery of life isn't a problem to solve, but a reality to experience.",
+      "Hope clouds observation.",
+      "It is impossible to live in the past, difficult to live in the present and a waste to live in the future."
+    ],
+    "gatedContent": {
+      "type": "url",
+      "url": "https://coral.fan"
+    }
+  }
+}

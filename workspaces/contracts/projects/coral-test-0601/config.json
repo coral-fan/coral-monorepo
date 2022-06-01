@@ -1,0 +1,35 @@
+{
+  "contract": {
+    "address": "0x5db87e634d61794EdA79c0602Df8814b34e44578",
+    "contractName": "CoralNftV1",
+    "name": "Coral Test 0601",
+    "symbol": "CT061",
+    "usdPricePerToken": 5,
+    "maxSupply": 1000,
+    "maxTokensPerWallet": 20,
+    "description": "This is brand new collection deployed by your friends at Coral.",
+    "tokenURI": "ipfs://bafyreialjr2wmhmoox2ihy7ofwxlx3e7iulbinwavtjpicd3nbhjmq3h5q/metadata.json",
+    "numAttributes": 2,
+    "attributes": [
+      {
+        "trait_type": "Type",
+        "value": "All Access"
+      },
+      {
+        "trait_type": "Genesis",
+        "value": "True"
+      }
+    ]
+  },
+  "collectionData": {
+    "artistId": "0xabcdefghijklmnopqrstuvwxyz01234567891011",
+    "imageUrl": "",
+    "type": "event",
+    "dropDate": "2022-06-01T12:00:00Z",
+    "details": ["Detail One", "Detail Two", "Detail Three"],
+    "gatedContent": {
+      "type": "event",
+      "id": "1"
+    }
+  }
+}
