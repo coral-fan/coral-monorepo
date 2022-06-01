@@ -2,12 +2,13 @@ import hre from 'hardhat';
 /*
 Update import directory
 */
-import constructorArgs from '../projects/coral-test-v4/config.json' assert { type: 'json' };
+import constructorArgs from '../projects/coral-test-0601/config.json' assert { type: 'json' };
 
-const CONTRACT_ADDRESS = '0xd3aC73861B6f5d6A5Bb9A09bA3C558637246187A';
+const CONTRACT_ADDRESS = '0x189348c6c4EB8Ff9a56521fA61d8D0B959eFCf28';
 
-const { name, symbol, usdPricePerToken, maxSupply, maxTokensPerWallet, baseTokenURI } =
-  constructorArgs;
+const { contract } = constructorArgs;
+const { name, symbol, usdPricePerToken, maxSupply, maxTokensPerWallet, baseTokenURI } = contract;
+console.log(contract);
 
 async function main() {
   await hre.run('verify:verify', {
