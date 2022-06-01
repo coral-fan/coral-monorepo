@@ -1,50 +1,22 @@
 import { subtask, task } from 'hardhat/config';
-import { NFTStorage, File } from 'nft.storage';
-import mime from 'mime';
+import { NFTStorage } from 'nft.storage';
 import fs from 'fs';
-import { readFile, writeFile } from 'fs/promises';
-import path from 'path';
+import { readFile } from 'fs/promises';
 import { config } from 'dotenv';
 import { types } from 'hardhat/config';
+import {
+  fileExists,
+  fileFromPath,
+  getConfigFilePath,
+  getImagePath,
+  parseCollectionName,
+  sleep,
+} from './utils/utils';
 
 config();
 
 const NFT_STORAGE_KEY = process.env.NFT_STORAGE_API_KEY;
 
-/*
-Utility Functions
-*/
-const parseCollectionName = (collectionName: string) =>
-  collectionName
-    .replace(/^\.*\/|\/?[^\/]+\.[a-z]+|\/$/g, '')
-    .replaceAll(' ', '-')
-    .toLowerCase();
-
-const fileExists = (filepath: string) => {
-  return fs.existsSync(filepath);
-};
-
-const getImagePath = (projectDir: string) => {
-  const __dirname = path.resolve();
-  return path.resolve(__dirname, 'projects', projectDir, 'image', 'image.png');
-};
-
-const getConfigFilePath = (projectDir: string) => {
-  const __dirname = path.resolve();
-  return path.resolve(__dirname, 'projects', projectDir, 'config.json');
-};
-
-const fileFromPath = async (filePath: string) => {
-  const content = await fs.promises.readFile(filePath);
-  const type = mime.getType(filePath);
-  if (type) {
-    return new File([content], path.basename(filePath), { type });
-  }
-};
-
-/*
-Tasks
-*/
 task('create-and-deploy', 'Creates and Deploys a new Project')
   .addParam('project', 'The name of the Project')
   .setAction(async ({ project }, hre) => {
@@ -61,8 +33,6 @@ task('create-and-deploy', 'Creates and Deploys a new Project')
     const args = JSON.parse(constructorArgs);
     const verifyArgs = JSON.stringify({ address, ...args });
 
-    await hre.run('verify-contract', { verifyArgs });
-
     const projectData = await readFile(configPath, 'utf8');
     const configFile = JSON.parse(projectData);
 
@@ -70,6 +40,15 @@ task('create-and-deploy', 'Creates and Deploys a new Project')
     configFile.contract.tokenURI = args.baseTokenURI;
 
     fs.writeFileSync(configPath, JSON.stringify(configFile, null, 2), 'utf8');
+
+    console.log(' ');
+    console.log('Verifying contract - please wait 15 seconds....');
+
+    // Wait 15 seconds to verify
+    await sleep(15000);
+    console.log('Starting verification now...');
+
+    await hre.run('verify-contract', { verifyArgs });
   });
 
 subtask('upload', 'Upload metadata via nft.storage')
@@ -133,9 +112,12 @@ subtask('deploy-contract', 'Deploy contract')
   .setAction(async ({ constructorArgs }, hre) => {
     const args = JSON.parse(constructorArgs);
     console.log(args);
+
     // Passing Coral in directly as contract name because otherwise
     // hre.ethers was pulling in the Chainlink ABI (?)
-    const contractFactory = await hre.ethers.getContractFactory('Coral');
+    const contractFactory = await hre.ethers.getContractFactory('CoralNftV1');
+
+    console.log('Contract Factory: ', contractFactory);
 
     const contract = await contractFactory.deploy(
       args.name,
@@ -159,15 +141,23 @@ subtask('verify-contract', 'Verify contract')
     const { address, name, symbol, usdPricePerToken, maxSupply, maxTokensPerWallet, baseTokenURI } =
       JSON.parse(verifyArgs);
 
-    await hre.run('verify:verify', {
-      address,
-      constructorArguments: [
-        name,
-        symbol,
-        usdPricePerToken,
-        maxSupply,
-        maxTokensPerWallet,
-        baseTokenURI,
-      ],
-    });
+    try {
+      await hre.run('verify:verify', {
+        address,
+        constructorArguments: [
+          name,
+          symbol,
+          usdPricePerToken,
+          maxSupply,
+          maxTokensPerWallet,
+          baseTokenURI,
+        ],
+      });
+    } catch (e: any) {
+      if (e.message.includes('Reason: Already Verified')) {
+        console.log('Contract is already verified!');
+      } else {
+        console.log(e.message);
+      }
+    }
   });
