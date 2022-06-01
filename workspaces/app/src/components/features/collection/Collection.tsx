@@ -119,30 +119,36 @@ interface CollectionParams extends NextParsedUrlQuery {
 export const getServerSideProps: GetServerSideProps<CollectionPageProps, CollectionParams> = async (
   context
 ) => {
-  const { params } = context;
+  try {
+    const { params } = context;
 
-  if (params === undefined) {
+    if (params === undefined) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const { collectionId } = params;
+
+    const collectionData = await getCollection(collectionId);
+
+    if (collectionData === undefined) {
+      return {
+        notFound: true,
+      };
+    }
+    const similarCollections = await getSimilarCollections(collectionId, 4);
+
+    return {
+      props: {
+        ...collectionData,
+        similarCollections,
+      },
+    };
+  } catch (e) {
+    console.error(e);
     return {
       notFound: true,
     };
   }
-
-  const { collectionId } = params;
-
-  const collectionData = await getCollection(collectionId);
-
-  if (collectionData === undefined) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const similarCollections = await getSimilarCollections(collectionId, 4);
-
-  return {
-    props: {
-      ...collectionData,
-      similarCollections,
-    },
-  };
 };
