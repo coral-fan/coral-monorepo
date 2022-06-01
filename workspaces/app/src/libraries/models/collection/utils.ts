@@ -31,12 +31,8 @@ export const getCollection = async (id: Collection['id']) => {
   return collection;
 };
 
-export const getSimilarCollections = async (
-  collectionId: Collection['id'],
-  n: number
-): Promise<PartialCollection[] | undefined> => {
-  const similarCollectionData = await getAllDocuments<Collection>('collections');
-
+export const getSimilarCollections = async (collectionId: Collection['id'], n: number) => {
+  const similarCollectionData = await getAllDocuments<CollectionData>('collections');
   if (similarCollectionData) {
     // Returns the next n collections to drop for now, excluding current collection
     return (
