@@ -25,7 +25,8 @@
     "baseUrl": "./src", // this options enables aliases for directories in src (example: import library/hooks/...)
     "jsxImportSource": "@emotion/react", // enable React component to accept css prop */
     "paths": {
-      "@coral/contracts": ["../../contracts"]
+      "@coral/contracts": ["../../contracts"],
+      "@coral/contracts/*": ["../../contracts/*"]
     }
     /* custom compilerOptions ends here */
   },
