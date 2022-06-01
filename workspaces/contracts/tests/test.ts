@@ -1,16 +1,17 @@
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { expect } from 'chai';
-import { Contract, ContractFactory, Signer } from 'ethers';
+import { Contract, ContractFactory } from 'ethers';
 import { ethers, waffle } from 'hardhat';
 import hre from 'hardhat';
 
 /*
 Update constructorArgs here
 */
-import constructorArgs from '../projects/coral-test-v4/config.json';
+import config from '../projects/coral-test-0601/config.json';
+const constructorArgs = config.contract;
+const contractName = constructorArgs.contractName;
 
 const ONLY_OWNER_ERROR_MESSAGE = 'Ownable: caller is not the owner';
-const contractName = constructorArgs.contractName;
 
 describe(`Running Tests on ${contractName}...`, () => {
   let NFTContract: ContractFactory;
@@ -26,7 +27,7 @@ describe(`Running Tests on ${contractName}...`, () => {
     NFTContract = await hre.ethers.getContractFactory(constructorArgs.contractName);
     [owner, addr1, addr2, relayer1, relayer2] = await hre.ethers.getSigners();
 
-    const { name, symbol, usdPricePerToken, maxSupply, maxTokensPerWallet, baseTokenURI } =
+    const { name, symbol, usdPricePerToken, maxSupply, maxTokensPerWallet, tokenURI } =
       constructorArgs;
 
     contract = await NFTContract.deploy(
@@ -35,7 +36,7 @@ describe(`Running Tests on ${contractName}...`, () => {
       usdPricePerToken,
       maxSupply,
       maxTokensPerWallet,
-      baseTokenURI
+      tokenURI
     );
 
     await contract.connect(owner).setSaleState(true);
@@ -236,7 +237,7 @@ describe(`Running Tests on ${contractName}...`, () => {
       const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
       await contract.connect(addr1).publicMint({ value: estimatedTokenPrice });
 
-      expect(await contract.tokenURI(1)).to.equal(constructorArgs.baseTokenURI);
+      expect(await contract.tokenURI(1)).to.equal(constructorArgs.tokenURI);
     });
 
     it('Should return updated URI', async () => {
