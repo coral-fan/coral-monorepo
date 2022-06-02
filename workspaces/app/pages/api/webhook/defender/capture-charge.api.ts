@@ -29,7 +29,8 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
         for (const reason of matchReasons) {
           if (reason.type === 'event') {
             const { params, signature } = reason as EventConditionSummary;
-            if (signature === 'RelayMint(uint256)') {
+            // TODO: revert back to exact signature?
+            if (signature.includes('RelayMint')) {
               try {
                 const { tokenId } = await relayMintParamsSchema.validate(params);
 
