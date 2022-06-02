@@ -1,5 +1,3 @@
-import { getEnvironmentVariableErrorMessage } from 'libraries/utils/errors';
-import Stripe from 'stripe';
 import { object, string } from 'yup';
 import { ERROR_RESPONSE } from '../consts';
 import { Handler } from '../types';
