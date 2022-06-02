@@ -6,10 +6,10 @@ if (process.argv.length != 3) {
   throw Error('Please add project name as parameter');
 }
 
-const collectionName = process.argv[2];
+const projectName = process.argv[2];
 
-const dirName = collectionName
-  .replace(/^\.*\/|\/?[^\/]+\.[a-z]+|\/$/g, '')
+const dirName = projectName
+  .replace(/^\.*\/|\/|\/?[^\/]+\.[a-z]+|\/$/g, '')
   .replaceAll(' ', '-')
   .toLowerCase();
 

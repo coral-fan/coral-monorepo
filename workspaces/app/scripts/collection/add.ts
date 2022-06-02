@@ -12,7 +12,7 @@ Utility Functions
 // TODO: Create shared library for file / path functions for app and contract workspaces
 const parseProjectName = (projectName: string) =>
   projectName
-    .replace(/^\.*\/|\/?[^\/]+\.[a-z]+|\/$/g, '')
+    .replace(/^\.*\/|\/|\/?[^\/]+\.[a-z]+|\/$/g, '')
     .replaceAll(' ', '-')
     .toLowerCase();
 

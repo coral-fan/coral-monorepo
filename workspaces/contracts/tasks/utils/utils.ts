@@ -3,9 +3,9 @@ import mime from 'mime';
 import fs from 'fs';
 import path from 'path';
 
-export const parseCollectionName = (collectionName: string) =>
-  collectionName
-    .replace(/^\.*\/|\/?[^\/]+\.[a-z]+|\/$/g, '')
+export const parseProjectName = (projectName: string) =>
+  projectName
+    .replace(/^\.*\/|\/|\/?[^\/]+\.[a-z]+|\/$/g, '')
     .replaceAll(' ', '-')
     .toLowerCase();
 

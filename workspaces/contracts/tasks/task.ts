@@ -9,7 +9,7 @@ import {
   fileFromPath,
   getConfigFilePath,
   getImagePath,
-  parseCollectionName,
+  parseProjectName,
   sleep,
 } from './utils/utils';
 
@@ -21,7 +21,7 @@ const NFT_STORAGE_KEY = process.env.NFT_STORAGE_API_KEY;
 task('create-and-deploy', 'Creates and Deploys a new Project')
   .addParam('project', 'The name of the Project')
   .setAction(async ({ project }, hre) => {
-    const projectDir = parseCollectionName(project);
+    const projectDir = parseProjectName(project);
     const configPath = getConfigFilePath(projectDir);
 
     if (!fileExists(configPath)) {
@@ -118,8 +118,6 @@ subtask('deploy-contract', 'Deploy contract')
     // Passing Coral in directly as contract name because otherwise
     // hre.ethers was pulling in the Chainlink ABI (?)
     const contractFactory = await hre.ethers.getContractFactory('CoralNftV1');
-
-    console.log('Contract Factory: ', contractFactory);
 
     const contract = await contractFactory.deploy(
       args.name,
