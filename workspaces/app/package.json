@@ -61,7 +61,6 @@
     "rxjs": "^7.3.0",
     "stripe": "^8.219.0",
     "theme-in-css": "^0.2.2",
-    "uuid": "^8.3.2",
     "yup": "^0.32.11",
     "zustand": "^4.0.0-rc.1"
   },
@@ -92,6 +91,7 @@
     "storybook-dark-mode": "^1.0.8",
     "ts-node": "^10.7.0",
     "tsconfig-paths": "^3.14.1",
-    "typechain": "^7.0.1"
+    "typechain": "^7.0.1",
+    "uuid": "^8.3.2"
   }
 }
