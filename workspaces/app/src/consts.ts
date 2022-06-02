@@ -17,16 +17,14 @@ export const CLIENT_ENVIRONMENT = process.env.NEXT_PUBLIC_ENV;
 
 export const CORAL_API_ENDPOINT = '/api';
 
-const shouldUseAvalancheMainnet = process.env.NEXT_PUBLIC_SHOULD_USE_AVALANCHE_MAINNET === 'true';
-
-const CHAIN_ID_HEX = shouldUseAvalancheMainnet ? '0xa86a' : '0xa869';
+const CHAIN_ID_HEX = CLIENT_ENVIRONMENT === 'production' ? '0xa86a' : '0xa869';
 
 export const AVALANCHE = {
   CHAIN_ID: {
     HEX: CHAIN_ID_HEX,
     INT: parseInt(CHAIN_ID_HEX),
   },
-  ...(shouldUseAvalancheMainnet
+  ...(CLIENT_ENVIRONMENT === 'production'
     ? {
         CHAIN_NAME: 'Avalanche Mainnet C-Chain',
         RPC_URL: 'https://api.avax.network/ext/bc/C/rpc',
