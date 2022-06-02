@@ -4,13 +4,14 @@ import { getStorage } from 'firebase-admin/storage';
 import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
 import { readFile } from 'fs/promises';
+import { FieldValue } from 'firebase-admin/firestore';
 
 /*
 Utility Functions
 */
 // TODO: Create shared library for file / path functions for app and contract workspaces
-const parseCollectionName = (collectionName: string) =>
-  collectionName
+const parseProjectName = (projectName: string) =>
+  projectName
     .replace(/^\.*\/|\/?[^\/]+\.[a-z]+|\/$/g, '')
     .replaceAll(' ', '-')
     .toLowerCase();
@@ -26,15 +27,17 @@ const getConfigFilePath = (projectDir: string) => {
 };
 
 /*
-Script pulls collection name in from arguments
+Script pulls collection name in from arguments.
+`projectName` refers to the directory name in `contracts/projects` where configuration files
+and assets are stored.
 */
-const collectionName = process.argv[2];
+const projectName = process.argv[2];
 
-const addCollection = async (collectionName: string) => {
+const addCollection = async (projectName: string) => {
   console.log('Adding collection...');
 
   // Get config file
-  const projectDir = parseCollectionName(collectionName);
+  const projectDir = parseProjectName(projectName);
   const configFilePath = getConfigFilePath(projectDir);
   const projectData = await readFile(configFilePath, 'utf8');
   const configFile = JSON.parse(projectData);
@@ -107,7 +110,9 @@ const addCollection = async (collectionName: string) => {
 
   await collectionRef.set(collection);
 
+  await artistRef.update({ collections: FieldValue.arrayUnion(address) });
+
   console.log('Collection added!');
 };
 
-addCollection(collectionName);
+addCollection(projectName);
