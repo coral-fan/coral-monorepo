@@ -1,4 +1,3 @@
-import { CORAL_CONTRACTS } from 'libraries/blockchain/consts';
 import { getTokenOwner } from 'libraries/blockchain/utils';
 import { Asset, Collection, getCollection, getPublicUserData, User } from 'libraries/models';
 import { OwnedNfts } from '../ownedNfts';
