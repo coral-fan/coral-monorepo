@@ -135,9 +135,6 @@ export const ExistingCardPayment = ({
           }
         );
 
-        // TODO: Remove console.log
-        console.log(paymentIntent);
-
         if (paymentIntent?.status === 'requires_capture') {
           setPurchaseId(purchaseId);
         }

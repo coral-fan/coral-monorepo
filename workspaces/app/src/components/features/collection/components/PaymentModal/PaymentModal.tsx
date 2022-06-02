@@ -103,13 +103,6 @@ export const PaymentModal = ({
     }
   }, [purchaseId]);
 
-  // TODO: Listen for successful mint
-  // On successful mint:
-  // setIsSuccessfulPayment(true);
-  // closePaymentModal
-
-  // TODO: Error Modal if charge is declined or other error comes back from Stripe
-
   return (
     <Modal title={title} onClick={closePaymentModal} fullHeight={true}>
       <ContentContainer>
