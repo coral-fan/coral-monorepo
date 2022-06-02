@@ -1,15 +1,14 @@
-import { getEnvironmentVariableErrorMessage } from 'libraries/utils';
-import { Handler } from '../../types';
-import { getHandler, getPurchaseDocumentReference } from '../../utils';
-import Stripe from 'stripe';
 import { NextApiRequest, NextApiResponse } from 'next/types';
-import { ERROR_RESPONSE } from '../../consts';
-
-// defender
+import Stripe from 'stripe';
+import { buffer } from 'micro';
 import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
+
+import { getEnvironmentVariableErrorMessage } from 'libraries/utils';
 import { CoralNftV1__factory } from '@coral/contracts';
 
-import { buffer } from 'micro';
+import { ERROR_RESPONSE } from '../../consts';
+import { getHandler, getPurchaseDocumentReference } from '../../utils';
+import { Handler } from '../../types';
 
 if (!process.env.STRIPE_WEBHOOK_SIGNING_SECRET) {
   throw Error(getEnvironmentVariableErrorMessage('STRIPE_WEBHOOK_SIGNING_SECRET'));
