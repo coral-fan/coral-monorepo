@@ -96,10 +96,7 @@ export const NewCardInput = ({
           }
         );
 
-        // TODO: Remove console.log
-        console.log(paymentIntent);
-
-        if (paymentIntent?.status === 'succeeded') {
+        if (paymentIntent?.status === 'requires_capture') {
           if (response.stripeCustomerId) {
             await upsertUser(uid, {
               stripeCustomerId: response.stripeCustomerId,
