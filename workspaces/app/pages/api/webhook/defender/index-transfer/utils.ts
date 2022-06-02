@@ -22,7 +22,7 @@ export const removeNFTOwnership = async (
 
   if (ownedNfts) {
     const ownedNftsFromCollection = ownedNfts[contractAddress];
-    if (Array.isArray(ownedNftsFromCollection)) {
+    if (Array.isArray(ownedNftsFromCollection) && ownedNftsFromCollection.length > 0) {
       const updatedOwnedNftsFromCollection = ownedNftsFromCollection.filter(
         (assetId) => assetId !== tokenId
       );
