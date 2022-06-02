@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Button } from 'components/ui';
 import { Spinner } from 'components/ui/Spinner/Spinner';
 import { getAvaxFormat, useWallet } from 'libraries/blockchain';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import tokens from 'styles/tokens';
 import { CheckoutContainer, PaymentMethodContainer } from '../components';
 import { Currency } from '../Currency';
@@ -42,30 +42,28 @@ interface AvaxPaymentProps {
   handleSwitchPaymentClick: () => void;
 }
 export const AvaxPayment = ({ total, handleSwitchPaymentClick }: AvaxPaymentProps) => {
-  const [sufficientFunds, setSufficientFunds] = useState(false);
+  const [sufficientFunds, setSufficientFunds] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [formattedBalance, setFormattedBalance] = useState<string>();
   const { balance } = useWallet();
 
   useEffect(() => {
-    if (balance) {
+    if (balance !== undefined) {
+      setFormattedBalance(getAvaxFormat(balance));
       setSufficientFunds(balance >= total);
+
       setIsLoading(false);
     }
   }, [balance, total]);
 
-  const formattedBalance = balance ? getAvaxFormat(balance) : '0';
-
-  const handleButtonClick = async () => {
+  const handleButtonClick = useCallback(async () => {
     console.log(`Buy NFT for ${total} AVAX`);
-  };
+  }, [total]);
 
   return (
     <CheckoutContainer>
       <WalletBalanceContainer>
-        {isLoading ? (
-          <Spinner color={tokens.border.color.brand} size={'60px'} />
-        ) : (
+        {!isLoading && typeof formattedBalance === 'string' ? (
           <WalletBalance>
             <Heading>Wallet Balance</Heading>
             <Currency value={formattedBalance} isAvax={true} />
@@ -73,6 +71,8 @@ export const AvaxPayment = ({ total, handleSwitchPaymentClick }: AvaxPaymentProp
               <InsufficientFunds>Insufficient funds in wallet</InsufficientFunds>
             )}
           </WalletBalance>
+        ) : (
+          <Spinner color={tokens.border.color.brand} size={'60px'} />
         )}
       </WalletBalanceContainer>
       <SwitchPaymentMethod handleClick={handleSwitchPaymentClick} isAvax={true} />
