@@ -25,7 +25,9 @@
 
 - Run `npx hardhat test --network 'hardhat'`
 
-## Run Task
+## Run Deploy Task
+
+- IMPORTANT: Review and confirm that the values in the `config.json` file are all correct.
 
 - Run `npx hardhat create-and-deploy --project "<PROJECT_NAME>" --network 'fuji'` to trigger the hardhat task that uploads metadata, deploys and verifies the contract.
 
