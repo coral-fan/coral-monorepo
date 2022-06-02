@@ -17,6 +17,7 @@ config();
 
 const NFT_STORAGE_KEY = process.env.NFT_STORAGE_API_KEY;
 
+// TODO: Separate tasks and subtasks in more modular way (different files and directories)
 task('create-and-deploy', 'Creates and Deploys a new Project')
   .addParam('project', 'The name of the Project')
   .setAction(async ({ project }, hre) => {
@@ -44,6 +45,7 @@ task('create-and-deploy', 'Creates and Deploys a new Project')
     console.log(' ');
     console.log('Verifying contract - please wait 15 seconds....');
 
+    // TODO: Poll for contract state rater than waiting set amount of time
     // Wait 15 seconds to verify
     await sleep(15000);
     console.log('Starting verification now...');
