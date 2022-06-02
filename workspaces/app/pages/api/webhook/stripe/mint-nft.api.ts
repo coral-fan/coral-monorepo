@@ -1,17 +1,15 @@
 import { getEnvironmentVariableErrorMessage } from 'libraries/utils';
-import { getDocumentReferenceServerSide } from 'libraries/firebase';
-import { PurchaseData } from 'libraries/models';
 import { Handler } from '../../types';
 import { getHandler, getPurchaseDocumentReference } from '../../utils';
 import Stripe from 'stripe';
-import { buffer } from 'micro';
 import { NextApiRequest, NextApiResponse } from 'next/types';
 import { ERROR_RESPONSE } from '../../consts';
 
 // defender
 import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { CoralNftV1__factory } from '@coral/contracts';
-import { ethers } from 'ethers';
+
+import { buffer } from 'micro';
 
 if (!process.env.STRIPE_WEBHOOK_SIGNING_SECRET) {
   throw Error(getEnvironmentVariableErrorMessage('STRIPE_WEBHOOK_SIGNING_SECRET'));
@@ -50,7 +48,8 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
   const sig = req.headers['stripe-signature'];
   const webhookSecret = STRIPE_WEBHOOK_SIGNING_SECRET;
 
-  if (!sig || !webhookSecret) {
+  if (!sig) {
+    console.error(`Stripe signature (stripe-signature) not in request header!`);
     return res.status(500).json(ERROR_RESPONSE);
   }
 
@@ -70,25 +69,27 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
 
       const purchaseDocSnapshot = await purchaseDocRef.get();
 
+      // this check ensures a mint transaction hasn't been made for the purchase yet
       const shouldRelayMint = !purchaseDocSnapshot.data()?.transactionHash;
       if (shouldRelayMint) {
         // Relayer - Mint NFT
-        // const provider = new DefenderRelayProvider(RELAYER_CREDENTIALS);
-        // const signer = new DefenderRelaySigner(RELAYER_CREDENTIALS, provider, { speed: 'fast' });
+        const provider = new DefenderRelayProvider(RELAYER_CREDENTIALS);
+        const signer = new DefenderRelaySigner(RELAYER_CREDENTIALS, provider, { speed: 'fast' });
 
-        // const nftContract = CoralNftV1__factory.connect(collectionId, signer);
+        const nftContract = CoralNftV1__factory.connect(collectionId, signer);
 
-        // const { hash } = await nftContract.relayMint(userId);
+        const { hash } = await nftContract.relayMint(userId);
 
-        // await purchaseDocRef.set({ transactionHash: hash }, { merge: true });
-
-        console.log('minting nft...');
+        await purchaseDocRef.set({ transactionHash: hash }, { merge: true });
       }
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- must type error as any to access properties
   } catch (e: any) {
     purchaseDocRef?.set({ status: 'rejected' }, { merge: true });
-    console.error(e.message);
+    console.error(e);
+    if (e instanceof stripe.errors.StripeSignatureVerificationError) {
+      return res.status(500).send(ERROR_RESPONSE);
+    }
   }
 
   return res.status(200).send('');
