@@ -26,8 +26,6 @@ const isNotZeroAddress = (address: string) => address !== ethers.constants.Addre
 export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { events } = req.body as SentinelConditionRequest;
   if (events) {
-    // TODO: remove!
-    console.log(JSON.stringify(events));
     for (const sentinelTriggerEvent of events) {
       if (sentinelTriggerEvent.type === SubscriberType.BLOCK) {
         const {
