@@ -4,6 +4,11 @@
 
 - If deploying to mainnet, you **must** update the `priceFeed` address with the correct mainnet address for the Avax-USD pair: [Chainlink Datafeed - Avalanche](https://docs.chain.link/docs/avalanche-price-feeds/)
 
+- Must have the following API keys set in your `contracts/.env` file:
+  - `SNOWTRACE_API_KEY`
+  - `FUJI_TESTNET_PRIVATE_KEY`
+  - `NFT_STORAGE_API_KEY`
+
 ## Setup Project
 
 - From `contracts`, run `node scripts/create.mjs "<PROJECT_NAME>"` and follow the prompts. This creates an initial configuration file.
