@@ -22,11 +22,7 @@
 
 ## Run Task
 
-- Change the default network in `hardhat.config.json` to `fuji`
-
-- Run `npx hardhat create-and-deploy --project "<PROJECT_NAME>"` to trigger the hardhat task that uploads metadata, deploys and verifies the contract.
-
-- Change back the default network to `hardhat`
+- Run `npx hardhat create-and-deploy --project "<PROJECT_NAME>" --network 'fuji'` to trigger the hardhat task that uploads metadata, deploys and verifies the contract.
 
 ## Update Firestore DB
 
