@@ -93,7 +93,7 @@ export const DropOrAvailable = ({
             disabled={isSoldOut || isLoggingIn}
             loading={isLoggingIn}
           >
-            {isSoldOut ? 'Sold Out' : isAuthenticated ? 'Buy Now' : 'Sign in to Purchase'}
+            {isSoldOut ? 'Sold Out' : isAuthenticated ? 'Buy Now' : 'Sign In To Purchase'}
           </CtaButton>
           <ProgressBar maxMintable={maxMintable} numMinted={numMintedDisplay} />
         </AvailableContainer>
