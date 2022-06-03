@@ -62,21 +62,18 @@ export const NewCardInput = ({
 
       try {
         if (!stripe || !elements || !uid) {
-          errorToast();
           throw 'Stripe, element or uid not found';
         }
 
         const cardElement = elements.getElement(CardElement);
 
         if (!cardElement) {
-          errorToast();
           throw 'No card element found.';
         }
 
         const { paymentMethod } = await createPaymentMethod(cardElement, stripe);
 
         if (!paymentMethod) {
-          errorToast();
           throw 'No payment method found';
         }
 
