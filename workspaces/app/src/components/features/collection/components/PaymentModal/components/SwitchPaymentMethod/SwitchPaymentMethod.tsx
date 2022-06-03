@@ -10,10 +10,16 @@ export const PaymentMethodLinkButton = styled(LinkButton)`
 
 interface SwitchPaymentMethodProps {
   isAvax: boolean;
+  isWalletUser: boolean;
   handleClick: () => void;
 }
-export const SwitchPaymentMethod = ({ isAvax, handleClick }: SwitchPaymentMethodProps) => (
-  <PaymentMethodLinkButton type="button" onClick={handleClick}>
-    {`switch to pay with ${isAvax ? 'card' : 'wallet'}`}
-  </PaymentMethodLinkButton>
-);
+export const SwitchPaymentMethod = ({
+  isAvax,
+  isWalletUser,
+  handleClick,
+}: SwitchPaymentMethodProps) =>
+  isWalletUser ? (
+    <PaymentMethodLinkButton type="button" onClick={handleClick}>
+      {`switch to pay with ${isAvax ? 'card' : 'wallet'}`}
+    </PaymentMethodLinkButton>
+  ) : null;

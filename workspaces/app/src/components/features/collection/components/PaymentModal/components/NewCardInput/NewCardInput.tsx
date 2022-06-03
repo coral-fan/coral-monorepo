@@ -23,6 +23,7 @@ interface NewCardInputProps {
   collectionId: string;
   handleSwitchPaymentClick: () => void;
   setPurchaseId: (id: string) => void;
+  isWalletUser: boolean;
 }
 
 const PaymentInfoContainer = styled(PaymentMethodContainer)`
@@ -35,6 +36,7 @@ export const NewCardInput = ({
   collectionId,
   handleSwitchPaymentClick,
   setPurchaseId,
+  isWalletUser,
 }: NewCardInputProps) => {
   const elements = useElements();
   const stripe = useStripe();
@@ -149,7 +151,11 @@ export const NewCardInput = ({
             Save my payment info for later
           </Toggle>
         </PaymentInfoContainer>
-        <SwitchPaymentMethod handleClick={handleSwitchPaymentClick} isAvax={false} />
+        <SwitchPaymentMethod
+          handleClick={handleSwitchPaymentClick}
+          isAvax={false}
+          isWalletUser={isWalletUser}
+        />
         <PaymentButton disabled={!cardComplete || isProcessing} total={total} />
       </CheckoutContainer>
     </Form>
