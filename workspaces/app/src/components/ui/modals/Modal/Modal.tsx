@@ -55,17 +55,20 @@ const ContentContainer = styled.div`
   }
 `;
 
-type ContentProps = Pick<ModalProps, 'title' | 'variant' | 'contentStyle' | 'fullHeight'> &
+type ContentProps = Pick<
+  ModalProps,
+  'title' | 'variant' | 'contentStyle' | 'fullHeight' | 'isNarrow'
+> &
   ModalHasControlButton;
 
 const Content = styled(Card)<ContentProps>`
-  max-width: 575px;
+  max-width: ${({ isNarrow }) => (isNarrow ? '400px' : '575px')};
   max-height: ${({ fullHeight }) => (fullHeight ? '100%' : '420px')};
   color: ${({ variant }) =>
     variant === 'contrast' ? tokens.font.color.contrast : tokens.font.color.primary};
   padding: ${({ title }) => `${title ? '20px' : '8px'} 18px`};
   box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.5);
-  gap: 18px;
+  gap: 20px;
   overflow: scroll;
 
   @media ${QUERY.TABLET} {
@@ -101,6 +104,7 @@ export const Modal = ({
   mainContainerHasNoGap,
   variant,
   fullHeight,
+  isNarrow,
 }: ModalProps) => {
   const documentBodyRef = useRef<Document['body']>();
 
@@ -129,6 +133,7 @@ export const Modal = ({
                 modalHasControlButton={modalHasControlButton}
                 contentStyle={contentStyle}
                 fullHeight={fullHeight}
+                isNarrow={isNarrow}
               >
                 {title && (
                   <Heading level={1} styleVariant={'h2'} colorVariant={variant}>
