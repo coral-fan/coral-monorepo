@@ -11,4 +11,5 @@ export interface ModalProps {
   fullHeight?: boolean;
   onClick?: () => void;
   variant?: Variant;
+  isNarrow?: boolean;
 }
