@@ -22,7 +22,7 @@ import { useEffect, useState } from 'react';
 import { initializeStore } from 'libraries/state';
 
 // toast
-import { Toast } from './components/Toasts/Toast';
+import { Toast } from './components';
 
 initializeFirebaseApp();
 
