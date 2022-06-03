@@ -13,15 +13,6 @@ config();
 
 const { SNOWTRACE_API_KEY, FUJI_TESTNET_PRIVATE_KEY } = process.env;
 
-if (!SNOWTRACE_API_KEY) {
-  throw 'Please set SNOWTRACE_API_KEY in a .env file in this directory';
-}
-
-// TODO: throw specific error here
-if (!FUJI_TESTNET_PRIVATE_KEY) {
-  throw 'Please set FUJI_TESTNET_PRIVATE_KEY in a .env file in this directory';
-}
-
 const hardhatConfig: HardhatUserConfig = {
   defaultNetwork: 'hardhat',
   etherscan: {
@@ -39,7 +30,7 @@ const hardhatConfig: HardhatUserConfig = {
     fuji: {
       url: 'https://api.avax-test.network/ext/bc/C/rpc',
       chainId: 43113,
-      accounts: [FUJI_TESTNET_PRIVATE_KEY],
+      accounts: FUJI_TESTNET_PRIVATE_KEY ? [FUJI_TESTNET_PRIVATE_KEY] : [],
     },
     mainnet: {
       url: 'https://api.avax.network/ext/bc/C/rpc',
