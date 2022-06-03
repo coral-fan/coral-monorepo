@@ -27,6 +27,7 @@ interface CardPaymentProps {
   collectionId: string;
   handleSwitchPaymentClick: () => void;
   setPurchaseId: (id: string) => void;
+  isWalletUser: boolean;
 }
 
 interface PaymentMethodData {
@@ -60,6 +61,7 @@ export const ExistingCardPayment = ({
   collectionId,
   handleSwitchPaymentClick,
   setPurchaseId,
+  isWalletUser,
 }: CardPaymentProps) => {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodData>();
   const [error, setError] = useState<StripeError>();
@@ -190,7 +192,11 @@ export const ExistingCardPayment = ({
             I authorize Coral to charge my card on file.
           </Toggle>
         </Container>
-        <SwitchPaymentMethod handleClick={handleSwitchPaymentClick} isAvax={false} />
+        <SwitchPaymentMethod
+          handleClick={handleSwitchPaymentClick}
+          isAvax={false}
+          isWalletUser={isWalletUser}
+        />
         <PaymentButton
           disabled={!isCardInformationValid || !isAuthorizedToChargeCard || isProcessing}
           total={total}
