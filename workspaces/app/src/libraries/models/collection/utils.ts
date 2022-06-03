@@ -40,10 +40,7 @@ export const getSimilarCollections = async (collectionId: Collection['id'], n: n
       (
         await Promise.allSettled(
           sortCollectionByDropDateDesc(similarCollectionData)
-            .filter(
-              ({ id, dropDate }) =>
-                id !== collectionId && new Date(dropDate).getTime() > new Date().getTime()
-            )
+            .filter(({ id, dropDate }) => id !== collectionId)
             .slice(0, n)
             .map(async ({ id, artistId, name, imageUrl, maxMintable, type, dropDate }) => {
               const artistData = await getArtist(artistId);
