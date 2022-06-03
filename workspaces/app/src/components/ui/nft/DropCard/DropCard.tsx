@@ -55,7 +55,10 @@ export const DropCard = ({ Badge, dropDateTimestamp, id, ...baseInfoProps }: Dro
         <BadgeAndDropDateContainer>
           <Badge />
           <DropDateContainer>
-            <span>Drops On</span>
+            <span>
+              {new Date(dropDateTimestamp).getTime() < new Date().getTime() ? 'Dropped ' : 'Drops '}
+              on
+            </span>
             <span>{formatDropCardDate(dropDateTimestamp)}</span>
           </DropDateContainer>
         </BadgeAndDropDateContainer>
