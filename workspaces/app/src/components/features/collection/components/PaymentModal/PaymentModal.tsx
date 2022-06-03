@@ -23,6 +23,7 @@ import {
 import { NewCardInput } from './components/NewCardInput';
 import { PaymentSuccess } from './components/PaymentSuccess';
 import { useCurrentUser } from './hooks';
+import { useErrorToast } from 'libraries/utils/toasts';
 
 interface PaymentModalProps extends AssetInfoProps {
   usdPrice: number;
@@ -83,6 +84,8 @@ export const PaymentModal = ({
 
   const [isMintingNFT, setIsMintingNFT] = useState(false);
 
+  const errorToast = useErrorToast();
+
   useEffect(() => {
     if (purchaseId !== undefined) {
       setIsMintingNFT(true);
@@ -91,6 +94,7 @@ export const PaymentModal = ({
 
       const subscription = purchaseData$.subscribe(({ status, assetId }) => {
         if (status === 'rejected') {
+          errorToast();
           setIsMintingNFT(false);
         }
         if (status === 'completed' && assetId !== null) {
