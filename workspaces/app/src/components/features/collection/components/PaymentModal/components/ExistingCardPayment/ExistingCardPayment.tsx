@@ -21,6 +21,10 @@ import { PaymentButton } from '../PaymentButton';
 import { ProcessingOverlay } from '../ProcessingOverlay';
 import { SwitchPaymentMethod } from '../SwitchPaymentMethod';
 
+import toast from 'react-hot-toast';
+
+const errorToast = () => toast.error('Something went wrong - please try again');
+
 interface CardPaymentProps {
   stripeCustomerId: string;
   total: number;
@@ -99,12 +103,14 @@ export const ExistingCardPayment = ({
 
       try {
         if (!stripe || !paymentMethod || !elements || !uid) {
+          errorToast();
           throw 'Stripe, paymentMethod, elements or uid not found.';
         }
 
         const cardCvcElement = elements.getElement(CardCvcElement);
 
         if (!cardCvcElement) {
+          errorToast();
           throw 'Stripe card CVC element not found.';
         }
 
@@ -143,6 +149,7 @@ export const ExistingCardPayment = ({
           setError(confirmCardError);
         }
       } catch (e) {
+        errorToast();
         console.error(e);
       }
       setIsProcessing(false);

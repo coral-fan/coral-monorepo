@@ -17,6 +17,10 @@ import { PaymentButton } from '../PaymentButton';
 import { ProcessingOverlay } from '../ProcessingOverlay';
 import { SwitchPaymentMethod } from '../SwitchPaymentMethod';
 
+import toast from 'react-hot-toast';
+
+const errorToast = () => toast.error('Something went wrong - please try again');
+
 interface NewCardInputProps {
   stripeCustomerId: NullableString;
   total: number;
@@ -58,18 +62,21 @@ export const NewCardInput = ({
 
       try {
         if (!stripe || !elements || !uid) {
+          errorToast();
           throw 'Stripe, element or uid not found';
         }
 
         const cardElement = elements.getElement(CardElement);
 
         if (!cardElement) {
+          errorToast();
           throw 'No card element found.';
         }
 
         const { paymentMethod } = await createPaymentMethod(cardElement, stripe);
 
         if (!paymentMethod) {
+          errorToast();
           throw 'No payment method found';
         }
 
@@ -96,6 +103,7 @@ export const NewCardInput = ({
           }
         );
 
+        // TODO: Move to webhook?
         if (paymentIntent?.status === 'requires_capture') {
           if (response.stripeCustomerId) {
             await upsertUser(uid, {
@@ -110,6 +118,7 @@ export const NewCardInput = ({
           setError(confirmCardError);
         }
       } catch (e) {
+        errorToast();
         console.error(e);
       }
 
