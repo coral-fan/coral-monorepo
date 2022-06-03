@@ -15,14 +15,11 @@ import { GlobalStyles } from 'styles';
 // components
 import { Provider as ReduxProvider } from 'react-redux';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Managers, Layout, ModalOrComponent, ErrorBoundaryFallback } from './components';
+import { Managers, Layout, ModalOrComponent, ErrorBoundaryFallback, Toast } from './components';
 
 // state/logic
 import { useEffect, useState } from 'react';
 import { initializeStore } from 'libraries/state';
-
-// toast
-import { Toast } from './components';
 
 initializeFirebaseApp();
 
