@@ -105,7 +105,7 @@ export const PaymentModal = ({
 
       return () => subscription.unsubscribe();
     }
-  }, [purchaseId]);
+  }, [purchaseId, errorToast]);
 
   return (
     <Modal title={title} onClick={closePaymentModal} fullHeight={true}>
