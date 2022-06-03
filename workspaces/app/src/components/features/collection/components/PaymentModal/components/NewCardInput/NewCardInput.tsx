@@ -16,11 +16,7 @@ import {
 import { PaymentButton } from '../PaymentButton';
 import { ProcessingOverlay } from '../ProcessingOverlay';
 import { SwitchPaymentMethod } from '../SwitchPaymentMethod';
-
-import toast from 'react-hot-toast';
-
-const errorToast = () => toast.error('Something went wrong - please try again');
-
+import { useErrorToast } from 'libraries/utils/toasts';
 interface NewCardInputProps {
   stripeCustomerId: NullableString;
   total: number;
@@ -49,6 +45,8 @@ export const NewCardInput = ({
   const [cardComplete, setCardComplete] = useState(false);
   const [shouldSavePaymentInfo, setShouldSavePaymentInfo] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
+
+  const errorToast = useErrorToast();
 
   const handleOnChange = useCallback(({ error, complete }: StripeCardElementChangeEvent) => {
     error ? setError(error) : setError(undefined);
@@ -131,6 +129,7 @@ export const NewCardInput = ({
       uid,
       upsertUser,
       setPurchaseId,
+      errorToast,
     ]
   );
 

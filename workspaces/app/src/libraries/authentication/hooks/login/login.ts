@@ -5,9 +5,7 @@ import { ConnectorType, CONNECTOR_MAP, useWallet } from 'libraries/blockchain';
 import { useIsLoggingIn } from '..';
 import { getNonce, getSignedAuthenticationMessage, getFirebaseCustomToken } from './utils';
 import { useRefetchPageData } from 'libraries/utils/hooks';
-import toast from 'react-hot-toast';
-
-const successToast = () => toast.success('Sign In Successful!');
+import { useSuccessToast } from 'libraries/utils/toasts';
 
 export const useLogin = (onSuccessCallback?: () => void) => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
@@ -16,6 +14,7 @@ export const useLogin = (onSuccessCallback?: () => void) => {
   //TODO: should probably look into how to type errors better
   /* eslint @typescript-eslint/no-explicit-any: 'off' -- errors will always be typed as any */
   const [loginError, setLoginError] = useState<any>(null);
+  const successToast = useSuccessToast();
 
   const login = useCallback(
     async (connectorTypeOverride?: ConnectorType) => {
@@ -42,7 +41,7 @@ export const useLogin = (onSuccessCallback?: () => void) => {
           onSuccessCallback && onSuccessCallback();
         }
         setIsLoggingIn(false);
-        successToast();
+        successToast('Sign In Successful!');
       } catch (error) {
         // TODO: replace with better logging tool?
         console.error(error);
@@ -50,7 +49,7 @@ export const useLogin = (onSuccessCallback?: () => void) => {
         setIsLoggingIn(false);
       }
     },
-    [defaultConnector, refetchPageData, setIsLoggingIn, onSuccessCallback]
+    [defaultConnector, refetchPageData, setIsLoggingIn, onSuccessCallback, successToast]
   );
 
   return { login, isLoggingIn, loginError };

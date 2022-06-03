@@ -20,11 +20,7 @@ import { getCreditCardIcon, isValidCreditCardType } from '../icons/CreditCardIco
 import { PaymentButton } from '../PaymentButton';
 import { ProcessingOverlay } from '../ProcessingOverlay';
 import { SwitchPaymentMethod } from '../SwitchPaymentMethod';
-
-import toast from 'react-hot-toast';
-
-const errorToast = () => toast.error('Something went wrong - please try again');
-
+import { useErrorToast } from 'libraries/utils/toasts';
 interface CardPaymentProps {
   stripeCustomerId: string;
   total: number;
@@ -75,6 +71,8 @@ export const ExistingCardPayment = ({
   const stripe = useStripe();
 
   const uid = useUserUid();
+
+  const errorToast = useErrorToast();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -152,7 +150,17 @@ export const ExistingCardPayment = ({
       }
       setIsProcessing(false);
     },
-    [collectionId, elements, paymentMethod, stripe, stripeCustomerId, total, uid, setPurchaseId]
+    [
+      collectionId,
+      elements,
+      paymentMethod,
+      stripe,
+      stripeCustomerId,
+      total,
+      uid,
+      setPurchaseId,
+      errorToast,
+    ]
   );
 
   return (

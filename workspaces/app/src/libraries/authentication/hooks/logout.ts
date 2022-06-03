@@ -2,13 +2,13 @@ import { useWallet } from 'libraries/blockchain';
 import { getAuth } from 'firebase/auth';
 import { useIdToken } from '.';
 import { useCallback } from 'react';
-import toast from 'react-hot-toast';
-
-const successToast = () => toast.success('Signed out');
+import { useSuccessToast } from 'libraries/utils/toasts';
 
 export const useLogout = () => {
   const { isActive, connector, setConnectorType } = useWallet();
   const idToken = useIdToken();
+
+  const successToast = useSuccessToast();
 
   // TODO: check if conditional checks matter for logging out actions (deactivate, signout, etc)
   const logout = useCallback(async () => {
@@ -19,8 +19,8 @@ export const useLogout = () => {
     if (idToken) {
       await getAuth().signOut();
     }
-    successToast();
-  }, [isActive, connector, setConnectorType, idToken]);
+    successToast('Signed out!');
+  }, [isActive, connector, setConnectorType, idToken, successToast]);
 
   return logout;
 };
