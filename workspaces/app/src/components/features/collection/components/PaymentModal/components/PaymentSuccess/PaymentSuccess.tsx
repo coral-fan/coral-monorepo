@@ -1,15 +1,11 @@
 import styled from '@emotion/styled';
 import { Owner } from 'components/features/asset/components';
-import { ButtonLink } from 'components/ui';
+import { ButtonLink, Heading } from 'components/ui';
 import { getBadge } from 'components/ui/badges/utils';
-import {
-  AssetContentContainer,
-  ImageWithInfo,
-  NftAssetContainer,
-  NftContent,
-} from 'components/ui/nft';
+import { ImageWithInfo, NftAssetContainer } from 'components/ui/nft';
 import { Asset } from 'libraries/models';
 import { useMemo } from 'react';
+import tokens from 'styles/tokens';
 
 interface PaymentSuccessProps
   extends Omit<Asset, 'id' | 'contractAddress' | 'collectionDescription'> {
@@ -22,6 +18,19 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+`;
+
+const AssetInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  background-color: ${tokens.background.color.tertiary};
+  gap: 16px;
+`;
+
+const AssetInfoBottom = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const PaymentSuccess = ({
@@ -40,19 +49,6 @@ export const PaymentSuccess = ({
 }: PaymentSuccessProps) => {
   const Badge = getBadge(type);
 
-  const owner = useMemo(
-    () => (
-      <Owner
-        userId={ownerAddress}
-        assetId={assetId}
-        profilePhoto={ownerProfilePhoto}
-        username={ownerUsername}
-        type={ownerType}
-      />
-    ),
-    [ownerAddress, assetId, ownerProfilePhoto, ownerUsername, ownerType]
-  );
-
   const image = useMemo(
     () => (
       <ImageWithInfo
@@ -70,16 +66,17 @@ export const PaymentSuccess = ({
     <Container>
       <NftAssetContainer isAsset={true}>
         {image}
-        <AssetContentContainer isAsset={true} isPurchaseSuccess={true}>
-          <NftContent
-            title={collectionName}
-            titleHeadingLevel={2}
-            titleStyleVariant={'h2'}
-            Badge={Badge}
-            isCard={false}
-          />
-          {owner}
-        </AssetContentContainer>
+        <AssetInfoContainer>
+          <Heading level={2} styleVariant={'h3'}>
+            {collectionName}
+          </Heading>
+          <AssetInfoBottom>
+            <Badge />
+            <Heading level={3} styleVariant={'h4'}>
+              #{assetId}
+            </Heading>
+          </AssetInfoBottom>
+        </AssetInfoContainer>
       </NftAssetContainer>
       <ButtonLink href={`/collection/${collectionId}/asset/${assetId}`}>View Your NFT</ButtonLink>
     </Container>
