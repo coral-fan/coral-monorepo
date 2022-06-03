@@ -18,11 +18,11 @@ Please **ONLY** work in the `workspaces/app/src/components/features/home` direct
 
 Specifically, you should only be using touching the `Home.tsx` file in the directory, but add files to this directory as necessary.
 
-Please however feel free to configure Tailwind (`workspaces/app/tailwind.config.js` & `workspaces/app/postcss.config.js`) to your linking.
+Please however feel free to configure Tailwind (`workspaces/app/src/styles/global.css`, `workspaces/app/tailwind.config.js` & `workspaces/app/postcss.config.js`) to your linking.
 
 If you need to touch other areas of the codebase, please reach out to Aki on Slack.
 
-Once you are done, please open a Pull Request on Github to the `main` branch.
+Once you are done, please open a Pull Request (PR) on Github to the `main` branch. Please use proper capitalization in your PR.
 
 Lastly, please use semantic HTML.
 
@@ -37,7 +37,7 @@ Best practices include, but are not limited to:
   - Links should be `a` elements
   - etc.
 
-**NOTE**: Modifications have bene made to the codebase so that minimal sensitive information is necessary for you to work. If any checks fail, or the `build` script fails, that is expected, and will be resolved after you open a pull request.
+**NOTE**: Modifications have been made to the codebase so that minimal sensitive information is necessary for you to work. If any checks fail, or the `build` script fails, that is expected, and will be resolved after you open a pull request.
 
 ### `git` Commits
 
