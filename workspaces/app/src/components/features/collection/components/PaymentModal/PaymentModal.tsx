@@ -1,6 +1,6 @@
 import { ConditionalSpinner, Modal } from 'components/ui';
 import { TRANSACTION_FEE } from 'consts';
-import { useAvaxUsdPrice, getPaymentLineItems } from 'libraries/blockchain';
+import { useAvaxUsdPrice, getPaymentLineItems, useWallet } from 'libraries/blockchain';
 import { getDocumentReferenceClientSide } from 'libraries/firebase';
 import {
   Collection,
@@ -47,7 +47,9 @@ export const PaymentModal = ({
   gatedContent,
   collectionDetails,
 }: PaymentModalProps) => {
-  const [isAvax, setIsAvax] = useState(true);
+  const { isActive: isWalletUser } = useWallet();
+
+  const [isAvax, setIsAvax] = useState(isWalletUser);
 
   // Avax Exchange Rate and Price
   const { exchangeRate, isLoading: isAvaxPriceLoading } = useAvaxUsdPrice();
@@ -107,8 +109,10 @@ export const PaymentModal = ({
     }
   }, [purchaseId, errorToast]);
 
+  const modalIsNarrow = assetId !== undefined;
+
   return (
-    <Modal title={title} onClick={closePaymentModal} fullHeight={true}>
+    <Modal title={title} onClick={closePaymentModal} fullHeight={true} isNarrow={modalIsNarrow}>
       <ContentContainer>
         {assetId !== undefined && currentUser ? (
           <PaymentSuccess
@@ -163,10 +167,14 @@ export const PaymentModal = ({
                   </>
                 )}
               </HeadingContainer>
-              {isAvax ? (
+              {isAvax && isWalletUser ? (
                 <AvaxPayment
                   total={total}
+                  collectionId={collectionId}
                   handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
+                  setAssetId={setAssetId}
+                  setIsMintingNFT={setIsMintingNFT}
+                  closePaymentModal={closePaymentModal}
                 />
               ) : shouldUseExistingCard && stripeCustomerId ? (
                 <ExistingCardPayment
@@ -175,6 +183,7 @@ export const PaymentModal = ({
                   handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
                   collectionId={collectionId}
                   setPurchaseId={setPurchaseId}
+                  isWalletUser={isWalletUser}
                 />
               ) : (
                 <NewCardInput
@@ -183,9 +192,11 @@ export const PaymentModal = ({
                   handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
                   collectionId={collectionId}
                   setPurchaseId={setPurchaseId}
+                  isWalletUser={isWalletUser}
                 />
               )}
             </ConditionalSpinner>
+            {isMintingNFT && 'Minting NFT...'}
           </>
         )}
       </ContentContainer>
