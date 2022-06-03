@@ -61,6 +61,7 @@ export const PaymentModal = ({
   const [shouldUseExistingCard, setShouldUseExistingCard] = useState(stripeCustomerId !== null);
 
   // Transaction Line Items
+  // TODO: Update pricing every block to reflect correct AvaxUsd pricing
   const { total, formattedPrice, formattedTransactionFee, formattedTotal, formattedAltTotal } =
     useMemo(
       () => getPaymentLineItems(usdPrice, avaxPrice, TRANSACTION_FEE, isAvax),
