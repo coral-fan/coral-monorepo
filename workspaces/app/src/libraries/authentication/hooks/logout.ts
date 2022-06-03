@@ -2,6 +2,9 @@ import { useWallet } from 'libraries/blockchain';
 import { getAuth } from 'firebase/auth';
 import { useIdToken } from '.';
 import { useCallback } from 'react';
+import toast from 'react-hot-toast';
+
+const successToast = () => toast.success('Signed out');
 
 export const useLogout = () => {
   const { isActive, connector, setConnectorType } = useWallet();
@@ -16,6 +19,7 @@ export const useLogout = () => {
     if (idToken) {
       await getAuth().signOut();
     }
+    successToast();
   }, [isActive, connector, setConnectorType, idToken]);
 
   return logout;

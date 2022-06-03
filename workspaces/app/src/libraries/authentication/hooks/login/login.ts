@@ -5,6 +5,9 @@ import { ConnectorType, CONNECTOR_MAP, useWallet } from 'libraries/blockchain';
 import { useIsLoggingIn } from '..';
 import { getNonce, getSignedAuthenticationMessage, getFirebaseCustomToken } from './utils';
 import { useRefetchPageData } from 'libraries/utils/hooks';
+import toast from 'react-hot-toast';
+
+const successToast = () => toast.success('Sign In Successful!');
 
 export const useLogin = (onSuccessCallback?: () => void) => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
@@ -39,6 +42,7 @@ export const useLogin = (onSuccessCallback?: () => void) => {
           onSuccessCallback && onSuccessCallback();
         }
         setIsLoggingIn(false);
+        successToast();
       } catch (error) {
         // TODO: replace with better logging tool?
         console.error(error);

@@ -21,6 +21,9 @@ import { Managers, Layout, ModalOrComponent, ErrorBoundaryFallback } from './com
 import { useEffect, useState } from 'react';
 import { initializeStore } from 'libraries/state';
 
+// toast
+import { Toast } from './components/Toasts/Toast';
+
 initializeFirebaseApp();
 
 export const getRandomSocialMediaPreviewImageUrl = () =>
@@ -84,6 +87,7 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
             </Layout>
           ) : null}
         </ReduxProvider>
+        <Toast />
       </main>
     </ErrorBoundary>
   );
