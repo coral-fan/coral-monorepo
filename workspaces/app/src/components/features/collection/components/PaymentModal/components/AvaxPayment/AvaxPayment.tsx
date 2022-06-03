@@ -1,7 +1,10 @@
+import { CoralNftV1__factory } from '@coral/contracts/dist';
 import styled from '@emotion/styled';
 import { Button } from 'components/ui';
 import { Spinner } from 'components/ui/Spinner/Spinner';
+import { ethers } from 'ethers';
 import { getAvaxFormat, useWallet } from 'libraries/blockchain';
+import { useErrorToast } from 'libraries/utils/toasts';
 import { useCallback, useEffect, useState } from 'react';
 import tokens from 'styles/tokens';
 import { CheckoutContainer, PaymentMethodContainer } from '../components';
@@ -39,13 +42,24 @@ const InsufficientFunds = styled.span`
 
 interface AvaxPaymentProps {
   total: number;
+  collectionId: string;
   handleSwitchPaymentClick: () => void;
+  setAssetId: (assetId: number) => void;
+  setIsMintingNFT: (isMinting: boolean) => void;
+  closePaymentModal: () => void;
 }
-export const AvaxPayment = ({ total, handleSwitchPaymentClick }: AvaxPaymentProps) => {
+export const AvaxPayment = ({
+  total,
+  collectionId,
+  handleSwitchPaymentClick,
+  setAssetId,
+  setIsMintingNFT,
+  closePaymentModal,
+}: AvaxPaymentProps) => {
   const [sufficientFunds, setSufficientFunds] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [formattedBalance, setFormattedBalance] = useState<string>();
-  const { balance } = useWallet();
+  const { provider, isActive, balance } = useWallet();
 
   useEffect(() => {
     if (balance !== undefined) {
@@ -56,9 +70,46 @@ export const AvaxPayment = ({ total, handleSwitchPaymentClick }: AvaxPaymentProp
     }
   }, [balance, total]);
 
+  const errorToast = useErrorToast();
+
   const handleButtonClick = useCallback(async () => {
-    console.log(`Buy NFT for ${total} AVAX`);
-  }, [total]);
+    try {
+      if (isActive && provider) {
+        const signer = provider.getSigner();
+        const nftContract = CoralNftV1__factory.connect(collectionId, signer);
+
+        const txn = await nftContract.publicMint({
+          value: ethers.utils.parseEther(total.toString()),
+        });
+
+        setIsMintingNFT(true);
+
+        const txnReceipt = await txn.wait(1);
+        const logs = txnReceipt.logs[0];
+        const assetId = parseInt(logs.topics[3]);
+
+        setAssetId(assetId);
+        setIsMintingNFT(false);
+      }
+    } catch (e: any) {
+      if (e.code === 4001) {
+        errorToast('User rejected transaction');
+        closePaymentModal();
+      } else {
+        errorToast();
+        console.error(e);
+      }
+    }
+  }, [
+    isActive,
+    total,
+    provider,
+    collectionId,
+    setAssetId,
+    setIsMintingNFT,
+    errorToast,
+    closePaymentModal,
+  ]);
 
   return (
     <CheckoutContainer>
@@ -75,7 +126,11 @@ export const AvaxPayment = ({ total, handleSwitchPaymentClick }: AvaxPaymentProp
           <Spinner color={tokens.border.color.brand} size={'60px'} />
         )}
       </WalletBalanceContainer>
-      <SwitchPaymentMethod handleClick={handleSwitchPaymentClick} isAvax={true} />
+      <SwitchPaymentMethod
+        handleClick={handleSwitchPaymentClick}
+        isAvax={true}
+        isWalletUser={isActive}
+      />
       <Button disabled={!sufficientFunds} onClick={handleButtonClick}>
         Mint
       </Button>
