@@ -103,14 +103,12 @@ export const ExistingCardPayment = ({
 
       try {
         if (!stripe || !paymentMethod || !elements || !uid) {
-          errorToast();
           throw 'Stripe, paymentMethod, elements or uid not found.';
         }
 
         const cardCvcElement = elements.getElement(CardCvcElement);
 
         if (!cardCvcElement) {
-          errorToast();
           throw 'Stripe card CVC element not found.';
         }
 
