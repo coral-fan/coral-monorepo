@@ -8,7 +8,6 @@ const { desktop, mobile } = layout.padding;
 
 interface AssetDisplayProps {
   isAsset: boolean;
-  isPurchaseSuccess?: boolean;
 }
 
 export const Container = styled.div<AssetDisplayProps>`
@@ -131,8 +130,7 @@ export const AssetContentContainer = styled.div<AssetDisplayProps>`
   flex-direction: column;
   gap: ${spacing.mobile.lg};
   padding: ${({ isAsset }) => (isAsset ? '16px' : '0px 16px')};
-  background-color: ${({ isPurchaseSuccess }) =>
-    isPurchaseSuccess ? colors.gray[11] : 'transparent'};
+  background-color: 'transparent';
 
   @media ${QUERY.TABLET} {
     padding: ${({ isAsset }) => (isAsset ? '16px' : '0px')};
