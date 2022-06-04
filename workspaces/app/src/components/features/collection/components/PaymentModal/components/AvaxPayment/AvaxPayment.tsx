@@ -94,7 +94,6 @@ export const AvaxPayment = ({
     } catch (e: any) {
       if (e.code === 4001) {
         errorToast('User rejected transaction');
-        closePaymentModal();
         if (e.code === -32603) {
           errorToast('AVAX price is out of sync, please try again');
         }
@@ -103,16 +102,7 @@ export const AvaxPayment = ({
         console.error(e);
       }
     }
-  }, [
-    isActive,
-    total,
-    provider,
-    collectionId,
-    setAssetId,
-    setIsMintingNFT,
-    errorToast,
-    closePaymentModal,
-  ]);
+  }, [isActive, total, provider, collectionId, setAssetId, setIsMintingNFT, errorToast]);
 
   return (
     <CheckoutContainer>
