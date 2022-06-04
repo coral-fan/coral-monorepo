@@ -1,4 +1,4 @@
-import { getCurrencyPairPrice$ } from './observables';
+import { getAvaxTokenPrice$, getCurrencyPairPrice$ } from './observables';
 import { useEffect, useState } from 'react';
 import { delay, tap } from 'rxjs';
 
@@ -20,4 +20,24 @@ export const useAvaxUsdPrice = () => {
   }, []);
 
   return { exchangeRate, isLoading };
+};
+
+export const useAvaxTokenPrice = (collectionId: string) => {
+  const [avaxTokenPrice, setAvaxTokenPrice] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const subscription = getAvaxTokenPrice$(collectionId)
+      .pipe(
+        tap(() => setIsLoading(true)),
+        delay(1000)
+      )
+      .subscribe((avaxTokenPrice) => {
+        setAvaxTokenPrice(avaxTokenPrice);
+        setIsLoading(false);
+      });
+    return () => subscription.unsubscribe();
+  }, [collectionId]);
+
+  return { avaxTokenPrice, isLoading };
 };

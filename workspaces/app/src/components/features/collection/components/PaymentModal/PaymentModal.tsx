@@ -1,6 +1,6 @@
 import { ConditionalSpinner, Modal } from 'components/ui';
 import { TRANSACTION_FEE } from 'consts';
-import { useAvaxUsdPrice, getPaymentLineItems, useWallet } from 'libraries/blockchain';
+import { getPaymentLineItems, useWallet, useAvaxTokenPrice } from 'libraries/blockchain';
 import { getDocumentReferenceClientSide } from 'libraries/firebase';
 import {
   Collection,
@@ -52,8 +52,8 @@ export const PaymentModal = ({
   const [isAvax, setIsAvax] = useState(isWalletUser);
 
   // Avax Exchange Rate and Price
-  const { exchangeRate, isLoading: isAvaxPriceLoading } = useAvaxUsdPrice();
-  const avaxPrice = isAvaxPriceLoading ? 0 : usdPrice / exchangeRate;
+  const { avaxTokenPrice, isLoading: isAvaxPriceLoading } = useAvaxTokenPrice(collectionId);
+  const avaxPrice = isAvaxPriceLoading ? 0 : avaxTokenPrice;
 
   // Stripe customer Id means user has a card on file
   const stripeCustomerId = useStripeCustomerId();
@@ -113,7 +113,7 @@ export const PaymentModal = ({
   const modalIsNarrow = assetId !== undefined;
 
   return (
-    <Modal title={title} onClick={closePaymentModal} fullHeight={true} isNarrow={modalIsNarrow}>
+    <Modal title={title} onClick={closePaymentModal} fullHeight isNarrow={modalIsNarrow}>
       <ContentContainer>
         {assetId !== undefined && currentUser ? (
           <PaymentSuccess
