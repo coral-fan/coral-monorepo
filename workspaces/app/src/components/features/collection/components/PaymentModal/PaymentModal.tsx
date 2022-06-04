@@ -35,6 +35,7 @@ interface PaymentModalProps extends AssetInfoProps {
 }
 
 const CHARGE_AVAX_TRANSACTION_FEE = false;
+const CHARGE_CC_TRANSACTION_FEE = false;
 
 export const PaymentModal = ({
   imageUrl,
@@ -63,7 +64,13 @@ export const PaymentModal = ({
   const [shouldUseExistingCard, setShouldUseExistingCard] = useState(stripeCustomerId !== null);
 
   // Transaction Line Items
-  const transactionFee = CHARGE_AVAX_TRANSACTION_FEE ? TRANSACTION_FEE : 0;
+  const transactionFee = isAvax
+    ? CHARGE_AVAX_TRANSACTION_FEE
+      ? TRANSACTION_FEE
+      : 0
+    : CHARGE_CC_TRANSACTION_FEE
+    ? TRANSACTION_FEE
+    : 0;
 
   const { total, formattedPrice, formattedTransactionFee, formattedTotal, formattedAltTotal } =
     useMemo(
