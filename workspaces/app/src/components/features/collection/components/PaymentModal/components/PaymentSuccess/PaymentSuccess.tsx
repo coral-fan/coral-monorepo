@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { Owner } from 'components/features/asset/components';
 import { ButtonLink, Heading } from 'components/ui';
 import { getBadge } from 'components/ui/badges/utils';
 import { ImageWithInfo, NftAssetContainer } from 'components/ui/nft';
@@ -42,10 +41,6 @@ export const PaymentSuccess = ({
   collectionId,
   collectionName,
   type,
-  ownerAddress,
-  ownerProfilePhoto,
-  ownerUsername,
-  ownerType,
 }: PaymentSuccessProps) => {
   const Badge = getBadge(type);
 
