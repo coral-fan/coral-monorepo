@@ -95,6 +95,9 @@ export const AvaxPayment = ({
       if (e.code === 4001) {
         errorToast('User rejected transaction');
         closePaymentModal();
+        if (e.code === -32603) {
+          errorToast('AVAX price is out of sync, please try again');
+        }
       } else {
         errorToast();
         console.error(e);

@@ -69,7 +69,9 @@ export const TransactionSummary = ({
       <LineItem>
         <TransactionFeeContainer>
           <span>Transaction Fee</span>
-          <TransactionFeeDetail>{`${transactionFeePercentage}% of item price`}</TransactionFeeDetail>
+          {transactionFeePercentage !== 0 && (
+            <TransactionFeeDetail>{`${transactionFeePercentage}% of item price`}</TransactionFeeDetail>
+          )}
         </TransactionFeeContainer>
         <Currency value={transactionFee} isAvax={isAvax} />
       </LineItem>

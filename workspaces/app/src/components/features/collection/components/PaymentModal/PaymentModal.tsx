@@ -34,6 +34,8 @@ interface PaymentModalProps extends AssetInfoProps {
   closePaymentModal: () => void;
 }
 
+const CHARGE_AVAX_TRANSACTION_FEE = false;
+
 export const PaymentModal = ({
   imageUrl,
   collectionName,
@@ -61,11 +63,12 @@ export const PaymentModal = ({
   const [shouldUseExistingCard, setShouldUseExistingCard] = useState(stripeCustomerId !== null);
 
   // Transaction Line Items
-  // TODO: Update pricing every block to reflect correct AvaxUsd pricing
+  const transactionFee = CHARGE_AVAX_TRANSACTION_FEE ? TRANSACTION_FEE : 0;
+
   const { total, formattedPrice, formattedTransactionFee, formattedTotal, formattedAltTotal } =
     useMemo(
-      () => getPaymentLineItems(usdPrice, avaxPrice, TRANSACTION_FEE, isAvax),
-      [avaxPrice, usdPrice, isAvax]
+      () => getPaymentLineItems(usdPrice, avaxPrice, transactionFee, isAvax),
+      [avaxPrice, usdPrice, isAvax, transactionFee]
     );
 
   const handleSwitchPaymentMethodClick = useCallback(() => setIsAvax((isAvax) => !isAvax), []);
@@ -152,7 +155,7 @@ export const PaymentModal = ({
                 total={formattedTotal}
                 altTotal={formattedAltTotal}
                 transactionFee={formattedTransactionFee}
-                transactionFeePercentage={TRANSACTION_FEE * 100}
+                transactionFeePercentage={transactionFee * 100}
               />
               <HeadingContainer>
                 {isAvax ? (
