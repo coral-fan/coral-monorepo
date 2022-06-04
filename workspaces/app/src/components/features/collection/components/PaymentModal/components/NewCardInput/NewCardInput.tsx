@@ -151,11 +151,9 @@ export const NewCardInput = ({
             Save my payment info for later
           </Toggle>
         </PaymentInfoContainer>
-        <SwitchPaymentMethod
-          handleClick={handleSwitchPaymentClick}
-          isAvax={false}
-          isWalletUser={isWalletUser}
-        />
+        {isWalletUser && (
+          <SwitchPaymentMethod handleClick={handleSwitchPaymentClick} isAvax={false} />
+        )}
         <PaymentButton disabled={!cardComplete || isProcessing} total={total} />
       </CheckoutContainer>
     </Form>

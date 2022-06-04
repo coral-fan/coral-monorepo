@@ -192,11 +192,9 @@ export const ExistingCardPayment = ({
             I authorize Coral to charge my card on file.
           </Toggle>
         </Container>
-        <SwitchPaymentMethod
-          handleClick={handleSwitchPaymentClick}
-          isAvax={false}
-          isWalletUser={isWalletUser}
-        />
+        {isWalletUser && (
+          <SwitchPaymentMethod handleClick={handleSwitchPaymentClick} isAvax={false} />
+        )}
         <PaymentButton
           disabled={!isCardInformationValid || !isAuthorizedToChargeCard || isProcessing}
           total={total}
