@@ -126,12 +126,8 @@ export const AvaxPayment = ({
           <Spinner color={tokens.border.color.brand} size={'60px'} />
         )}
       </WalletBalanceContainer>
-      <SwitchPaymentMethod
-        handleClick={handleSwitchPaymentClick}
-        isAvax={true}
-        isWalletUser={isActive}
-      />
-      <Button disabled={!sufficientFunds} onClick={handleButtonClick}>
+      <SwitchPaymentMethod handleClick={handleSwitchPaymentClick} isAvax={true} />
+      <Button disabled={!sufficientFunds || !isActive} onClick={handleButtonClick}>
         Mint
       </Button>
     </CheckoutContainer>
