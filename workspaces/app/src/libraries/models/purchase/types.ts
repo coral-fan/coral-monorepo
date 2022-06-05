@@ -1,4 +1,3 @@
-import { Timestamp } from 'firebase-admin/firestore';
 import { Asset } from '../asset';
 import { Collection } from '../collection';
 import { User } from '../user';
