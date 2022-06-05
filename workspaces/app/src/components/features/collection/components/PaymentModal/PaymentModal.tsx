@@ -2,13 +2,7 @@ import { ConditionalSpinner, Modal } from 'components/ui';
 import { TRANSACTION_FEE } from 'consts';
 import { getPaymentLineItems, useWallet, useAvaxTokenPrice } from 'libraries/blockchain';
 import { getDocumentReferenceClientSide } from 'libraries/firebase';
-import {
-  Collection,
-  Details,
-  GatedContent,
-  PurchaseData,
-  useStripeCustomerId,
-} from 'libraries/models';
+import { Collection, Details, PurchaseData, useStripeCustomerId } from 'libraries/models';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { docData } from 'rxfire/firestore';
 import tokens from 'styles/tokens';
@@ -22,7 +16,6 @@ import {
 } from './components/components';
 import { NewCardInput } from './components/NewCardInput';
 import { PaymentSuccess } from './components/PaymentSuccess';
-import { useCurrentUser } from './hooks';
 import { useErrorToast } from 'libraries/utils/toasts';
 
 interface PaymentModalProps extends AssetInfoProps {
@@ -30,7 +23,6 @@ interface PaymentModalProps extends AssetInfoProps {
   artistId: string;
   collectionId: Collection['id'];
   collectionDetails: Details;
-  gatedContent: GatedContent;
   closePaymentModal: () => void;
 }
 
@@ -47,8 +39,6 @@ export const PaymentModal = ({
   closePaymentModal,
   usdPrice,
   collectionId,
-  gatedContent,
-  collectionDetails,
 }: PaymentModalProps) => {
   const { isActive: isWalletUser } = useWallet();
 
@@ -93,8 +83,6 @@ export const PaymentModal = ({
     [assetId]
   );
 
-  const currentUser = useCurrentUser();
-
   const [isMintingNFT, setIsMintingNFT] = useState(false);
 
   const errorToast = useErrorToast();
@@ -120,26 +108,18 @@ export const PaymentModal = ({
     }
   }, [purchaseId, errorToast]);
 
-  const isPaymentSuccessful = assetId !== undefined;
-
   return (
-    <Modal title={title} onClick={closePaymentModal} fullHeight isNarrow={isPaymentSuccessful}>
+    <Modal title={title} onClick={closePaymentModal} fullHeight isNarrow={assetId !== undefined}>
       <ContentContainer>
-        {isPaymentSuccessful && currentUser ? (
+        {assetId !== undefined ? (
           <PaymentSuccess
             assetId={assetId}
             collectionName={collectionName}
             imageUrl={imageUrl}
             type={type}
-            gatedContent={gatedContent}
             artistId={artistId}
             artistName={artistName}
             artistProfilePhoto={artistProfilePhoto}
-            collectionDetails={collectionDetails}
-            ownerUsername={currentUser.username}
-            ownerAddress={currentUser.id}
-            ownerType={currentUser.type}
-            ownerProfilePhoto={artistProfilePhoto}
             collectionId={collectionId}
           />
         ) : (
