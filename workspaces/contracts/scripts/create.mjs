@@ -20,7 +20,7 @@ const initialConfig = {
   contract: {
     address: '',
     contractName: 'CoralNftV1',
-    name: collectionName,
+    name: projectName,
     symbol: '',
     usdPricePerToken: 0,
     maxSupply: 0,
@@ -44,7 +44,7 @@ const initialConfig = {
 };
 
 console.log(`---------------------------------------------`);
-console.log(`>>> Creating new project: ${collectionName.toUpperCase()}`);
+console.log(`>>> Creating new project: ${projectName.toUpperCase()}`);
 console.log(`---------------------------------------------`);
 console.log(` `);
 
@@ -175,7 +175,7 @@ const addCollectionType = () => {
 
 const printConfig = () => {
   console.log(`---------------------------------------------`);
-  console.log(`>>> ${collectionName.toUpperCase()} created: `);
+  console.log(`>>> ${projectName.toUpperCase()} created: `);
   console.log(`---------------------------------------------`);
   console.log(` `);
   console.log(initialConfig);
@@ -188,7 +188,7 @@ const printConfig = () => {
 const main = async () => {
   createDirectories();
   console.log(`---------------------------------------------`);
-  console.log(`Let's populate the initial config File for ${collectionName}: `);
+  console.log(`Let's populate the initial config File for ${projectName}: `);
   console.log(`---------------------------------------------`);
   console.log(` `);
   await addSymbol();
@@ -198,7 +198,7 @@ const main = async () => {
   await addUsdPrice();
   await addMaxSupply();
   console.log(`---------------------------------------------`);
-  console.log(`Next let's add artist and collection data for ${collectionName}: `);
+  console.log(`Next let's add artist and collection data for ${projectName}: `);
   console.log(`---------------------------------------------`);
   console.log(` `);
   await addArtistId();
@@ -206,7 +206,7 @@ const main = async () => {
   rl.close();
   createInitialConfigJSON();
   console.log(`---------------------------------------------`);
-  console.log(`Generating initial config file for ${collectionName}...`);
+  console.log(`Generating initial config file for ${projectName}...`);
   console.log(`---------------------------------------------`);
   console.log(` `);
   printConfig();
