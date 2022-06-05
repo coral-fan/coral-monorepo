@@ -5,7 +5,7 @@ import { getProgressBarStyle } from './utils';
 
 export interface ProgressBarProps {
   numMinted: number;
-  maxMintable: number;
+  maxSupply: number;
 }
 
 const { spacing, border, background, font } = tokens;
@@ -42,16 +42,16 @@ const ProgressIndicator = styled.div`
   background: ${background.color.contrast};
 `;
 
-export const ProgressBar = ({ numMinted, maxMintable }: ProgressBarProps) => {
-  const numAvailable = maxMintable - numMinted;
+export const ProgressBar = ({ numMinted, maxSupply }: ProgressBarProps) => {
+  const numAvailable = maxSupply - numMinted;
   return (
     <Container>
       <ProgressBarBackground>
-        <ProgressIndicator css={getProgressBarStyle({ numMinted, maxMintable })} />
+        <ProgressIndicator css={getProgressBarStyle({ numMinted, maxSupply })} />
       </ProgressBarBackground>
       <TextContainer>
         <span>{numAvailable} Available</span>
-        <span>{maxMintable} Drops</span>
+        <span>{maxSupply} Drops</span>
       </TextContainer>
     </Container>
   );

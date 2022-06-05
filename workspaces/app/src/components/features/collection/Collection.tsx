@@ -29,7 +29,7 @@ export const CollectionPage = ({
   name,
   type,
   description,
-  maxMintable,
+  maxSupply,
   details,
   dropDate,
   price,
@@ -47,14 +47,14 @@ export const CollectionPage = ({
     fetchNumMinted(id);
   }, [id]);
 
-  const isSoldOut = numMinted >= maxMintable;
+  const isSoldOut = numMinted >= maxSupply;
 
   const dropOrAvailable = useMemo(
     () => (
       <DropOrAvailable
         dropDate={dropDate}
         numMinted={numMinted}
-        maxMintable={maxMintable}
+        maxSupply={maxSupply}
         isSoldOut={isSoldOut}
         usdPrice={price}
         collectionName={name}
@@ -70,7 +70,7 @@ export const CollectionPage = ({
     [
       artistId,
       dropDate,
-      maxMintable,
+      maxSupply,
       price,
       name,
       artistName,
