@@ -18,7 +18,7 @@ export interface PublicUserData {
   notifications: Notification[];
   // map of contract address to asset id
   assets: ContractAddressToIdMap;
-  following: Artist['id'][];
+  followingArtistIds: Artist['id'][];
 }
 
 export interface PrivateUserData {
@@ -29,11 +29,11 @@ export interface PrivateUserData {
 
 //  id = wallet address
 export interface User
-  extends Omit<PublicUserData, 'assets' | 'following'>,
+  extends Omit<PublicUserData, 'assets' | 'followingArtistIds'>,
     Partial<PrivateUserData> {
   id: string;
   assets: Asset[];
-  following: Artist[];
+  followingArtists: Artist[];
 }
 
 /*

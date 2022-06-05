@@ -70,17 +70,17 @@ export const getServerSideProps: GetServerSideProps<UserPageProps, UserParams> =
 
   const assets = ownedNfts ? await getAssets(id, ownedNfts) : [];
 
-  const { following: followingArtistIds, ...partialPublicUserData } = publicUserData;
+  const { followingArtistIds, ...partialPublicUserData } = publicUserData;
 
   // TODO: Add real following logic
-  const following = followingArtistIds.length > 0 ? [] : [];
+  const followingArtists = followingArtistIds.length > 0 ? [] : [];
 
   // TODO: Store Assets in DB, update on each page load
   const userData: User = {
     id,
     ...partialPublicUserData,
     ...privateUserData,
-    following,
+    followingArtists,
     assets,
   };
 
