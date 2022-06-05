@@ -15,7 +15,7 @@ import { Details } from 'libraries/models';
 
 interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
   numMinted?: number;
-  maxMintable: number;
+  maxSupply: number;
   dropDate: string;
   collectionId: string;
   isSoldOut: boolean;
@@ -25,7 +25,7 @@ interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
 
 export const DropOrAvailable = ({
   usdPrice,
-  maxMintable,
+  maxSupply,
   numMinted,
   dropDate,
   collectionName,
@@ -93,10 +93,10 @@ export const DropOrAvailable = ({
           >
             {isSoldOut ? 'Sold Out' : isAuthenticated ? 'Buy Now' : 'Sign In To Purchase'}
           </CtaButton>
-          <ProgressBar maxMintable={maxMintable} numMinted={numMintedDisplay} />
+          <ProgressBar maxSupply={maxSupply} numMinted={numMintedDisplay} />
         </AvailableContainer>
       ) : (
-        <DropTimer tokenSupply={maxMintable} timestamp={dropDate} />
+        <DropTimer tokenSupply={maxSupply} timestamp={dropDate} />
       )}
       <SignInModal />
       {isAuthenticated && isPaymentModalOpen && (
