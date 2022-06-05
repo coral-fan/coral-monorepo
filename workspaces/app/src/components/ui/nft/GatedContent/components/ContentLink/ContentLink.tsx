@@ -8,8 +8,8 @@ const Wrapper = styled(Link)`
   color: ${tokens.font.color.brand};
 `;
 
-type MusicDownloadLinkProps = Pick<GatedUrl, 'url'>;
+type ContentLinkProps = Pick<GatedUrl, 'url'>;
 
-export const ContentLink = ({ url }: MusicDownloadLinkProps) => (
+export const ContentLink = ({ url }: ContentLinkProps) => (
   <Wrapper href={url}>Download Content</Wrapper>
 );
