@@ -15,7 +15,7 @@ export const getCollection = async (id: Collection['id']) => {
   const artistData = await getArtist(artistId);
 
   if (!artistData) {
-    throw new Error(`Artist with ${artistId} doesn't exist.`);
+    throw new Error(`Artist with id ${artistId} doesn't exist.`);
   }
 
   const { name: artistName, profilePhoto: artistProfilePhoto } = artistData;
@@ -36,30 +36,32 @@ export const getSimilarCollections = async (collectionId: Collection['id'], n: n
   if (similarCollectionData) {
     // Returns the next n collections to drop for now, excluding current collection
     return (
-      // TODO: Refactor Promise.allSettled with RxJs
+      // TODO: Refactor Promise.allSettled with RxJs. Also look at error handling as it fails silently
       (
         await Promise.allSettled(
           sortCollectionByDropDateDesc(similarCollectionData)
-            .filter(({ id, dropDate }) => id !== collectionId)
+            .filter(({ id }) => id !== collectionId)
             .slice(0, n)
-            .map(async ({ id, artistId, name, imageUrl, maxMintable, type, dropDate }) => {
+            .map(async ({ id, artistId, name, imageUrl, maxSupply, type, dropDate }) => {
               const artistData = await getArtist(artistId);
 
               if (!artistData) {
-                return;
+                throw new Error(`Artist with id ${artistId} doesn't exist.`);
               }
 
-              return {
+              const partialCollection: PartialCollection = {
                 id,
                 artistId,
                 name,
                 imageUrl,
-                maxMintable,
+                maxSupply,
                 type,
                 dropDate,
                 artistName: artistData.name,
                 artistProfilePhoto: artistData.profilePhoto,
               };
+
+              return partialCollection;
             })
         )
       )
