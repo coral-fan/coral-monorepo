@@ -1,5 +1,10 @@
 import { useEffect } from 'react';
-import { getIdToken$, useIsAuthenticated, useLogout } from 'libraries/authentication';
+import {
+  getIdToken$,
+  useIsAuthenticated,
+  useIsLoggingIn,
+  useLogout,
+} from 'libraries/authentication';
 import { filter } from 'rxjs';
 import { fromMetaMaskEvent, isMetaMaskInjected } from 'libraries/blockchain';
 
@@ -17,14 +22,20 @@ export const LogoutManager = () => {
     return () => subscription.unsubscribe();
   }, [logout, isAuthenticated]);
 
+  const [isLoggingIn] = useIsLoggingIn();
+
   // logic to ensure the user is logged out when the account changes on metamask
   useEffect(() => {
     if (isMetaMaskInjected()) {
-      const subscription = fromMetaMaskEvent('accountsChanged').subscribe(logout);
+      const subscription = fromMetaMaskEvent('accountsChanged').subscribe(() => {
+        if (!isLoggingIn) {
+          logout();
+        }
+      });
 
       return () => subscription.unsubscribe();
     }
-  }, [logout]);
+  }, [isLoggingIn, logout]);
 
   return <></>;
 };
