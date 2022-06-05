@@ -120,12 +120,12 @@ export const PaymentModal = ({
     }
   }, [purchaseId, errorToast]);
 
-  const paymentIsSuccessful = assetId !== undefined;
+  const isPaymentSuccessful = assetId !== undefined;
 
   return (
-    <Modal title={title} onClick={closePaymentModal} fullHeight isNarrow={paymentIsSuccessful}>
+    <Modal title={title} onClick={closePaymentModal} fullHeight isNarrow={isPaymentSuccessful}>
       <ContentContainer>
-        {paymentIsSuccessful && currentUser ? (
+        {isPaymentSuccessful && currentUser ? (
           <PaymentSuccess
             assetId={assetId}
             collectionName={collectionName}
