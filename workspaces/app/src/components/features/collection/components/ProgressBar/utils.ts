@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { ProgressBarProps } from './ProgressBar';
 
-export const getProgressBarStyle = ({ numMinted, maxMintable }: ProgressBarProps) =>
+export const getProgressBarStyle = ({ numMinted, maxSupply }: ProgressBarProps) =>
   css`
-    width: ${(numMinted / maxMintable) * 100}%;
+    width: ${(numMinted / maxSupply) * 100}%;
   `;
