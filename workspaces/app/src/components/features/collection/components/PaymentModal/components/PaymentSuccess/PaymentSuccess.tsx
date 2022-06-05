@@ -7,7 +7,10 @@ import { useMemo } from 'react';
 import tokens from 'styles/tokens';
 
 interface PaymentSuccessProps
-  extends Omit<Asset, 'id' | 'contractAddress' | 'collectionDescription'> {
+  extends Pick<
+    Asset,
+    'imageUrl' | 'artistName' | 'artistProfilePhoto' | 'artistId' | 'collectionName' | 'type'
+  > {
   collectionId: string;
   assetId: number;
 }
