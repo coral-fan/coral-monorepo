@@ -10,7 +10,7 @@ export interface EventData {
   date: string;
   description: string;
   artistId: Artist['id'];
-  allowedCollectionIds: Collection['id'][];
+  accessGrantingTokenAddresses: Collection['id'][];
   exclusiveCollectionIds: Collection['id'][] | null;
 }
 
