@@ -35,7 +35,6 @@ export const CollectionPage = ({
   price,
   id,
   similarCollections,
-  gatedContent,
 }: CollectionPageProps) => {
   const [numMinted, setNumMinted] = useState(0);
 
@@ -66,7 +65,6 @@ export const CollectionPage = ({
         artistProfilePhoto={artistProfilePhoto}
         imageUrl={imageUrl}
         type={type}
-        gatedContent={gatedContent}
       />
     ),
     [
@@ -83,7 +81,6 @@ export const CollectionPage = ({
       id,
       isSoldOut,
       details,
-      gatedContent,
     ]
   );
 
