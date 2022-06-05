@@ -1,4 +1,4 @@
-import { TRANSACTION_FEE } from 'consts';
+import { CC_TRANSACTION_FEE } from 'consts';
 import { getDocumentData } from 'libraries/firebase';
 import { Collection } from 'libraries/models';
 import { boolean, number, object, string } from 'yup';
@@ -43,7 +43,7 @@ const post: Handler = async (req, res) => {
 
     const { price } = collectionData;
 
-    const totalTransactionAmount = Math.ceil(price * (1 + TRANSACTION_FEE) * 100);
+    const totalTransactionAmount = Math.ceil(price * (1 + CC_TRANSACTION_FEE) * 100);
 
     if (amount !== totalTransactionAmount) {
       throw new Error(
@@ -79,6 +79,7 @@ const post: Handler = async (req, res) => {
     // TODO: Type error properly
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- must type error as any to check type property
   } catch (e: any) {
+    console.error(e);
     switch (e.type) {
       case 'StripeCardError':
         console.error(`A payment error occurred: ${e.message}`);
