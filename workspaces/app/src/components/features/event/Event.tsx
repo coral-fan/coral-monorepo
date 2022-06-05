@@ -19,10 +19,12 @@ const EventContainer = styled.div`
   gap: 16px;
 `;
 
-type EventPageProps = InfoAndMerchProps & StreamProps & Pick<Event, 'id' | 'allowedCollectionIds'>;
+type EventPageProps = InfoAndMerchProps &
+  StreamProps &
+  Pick<Event, 'id' | 'accessGrantingTokenAddresses'>;
 
 export const EventPage = ({
-  allowedCollectionIds,
+  accessGrantingTokenAddresses,
   id,
   streamId,
   chatId,
@@ -36,7 +38,7 @@ export const EventPage = ({
 }: EventPageProps) => {
   return (
     <GatedContent
-      accessGrantingTokens={allowedCollectionIds}
+      accessGrantingTokenAddresses={accessGrantingTokenAddresses}
       accessDeniedModalProps={{
         title: 'This is a private event',
         message:
