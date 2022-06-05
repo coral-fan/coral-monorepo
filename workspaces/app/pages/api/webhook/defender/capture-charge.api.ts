@@ -64,7 +64,7 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
                   });
 
                   throw new Error(
-                    `There should not be multiple purchases associated with hash ${hash}.`
+                    `There shouldn't be multiple purchases associated with hash ${hash}.`
                   );
                 }
 
