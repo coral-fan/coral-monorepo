@@ -1,28 +1,24 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { signInWithCustomToken, getAuth } from 'firebase/auth';
 import { Web3Provider } from '@ethersproject/providers';
-import { ConnectorType, CONNECTOR_MAP, useWallet } from 'libraries/blockchain';
+import { ConnectorType, CONNECTOR_MAP } from 'libraries/blockchain';
 import { useIsLoggingIn } from '..';
 import { getNonce, getSignedAuthenticationMessage, getFirebaseCustomToken } from './utils';
 import { useRefetchPageData } from 'libraries/utils/hooks';
-import { useSuccessToast } from 'libraries/utils/toasts';
+import { useErrorToast, useSuccessToast } from 'libraries/utils/toasts';
 
-export const useLogin = (onSuccessCallback?: () => void) => {
+export const useLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
-  const { connector: defaultConnector } = useWallet();
   const refetchPageData = useRefetchPageData();
-  //TODO: should probably look into how to type errors better
-  /* eslint @typescript-eslint/no-explicit-any: 'off' -- errors will always be typed as any */
-  const [loginError, setLoginError] = useState<any>(null);
+
   const successToast = useSuccessToast();
+  const errorToast = useErrorToast();
 
   const login = useCallback(
-    async (connectorTypeOverride?: ConnectorType) => {
+    async (connectorType: ConnectorType) => {
       setIsLoggingIn(true);
       try {
-        const connector = connectorTypeOverride
-          ? CONNECTOR_MAP[connectorTypeOverride][0]
-          : defaultConnector;
+        const [connector] = CONNECTOR_MAP[connectorType];
 
         await connector.activate();
 
@@ -38,19 +34,20 @@ export const useLogin = (onSuccessCallback?: () => void) => {
           const customToken = await getFirebaseCustomToken(address, signedMessage);
           await signInWithCustomToken(getAuth(), customToken);
           await refetchPageData();
-          onSuccessCallback && onSuccessCallback();
+          successToast('Signed in!');
         }
-        setIsLoggingIn(false);
-        successToast('Sign In Successful!');
-      } catch (error) {
-        // TODO: replace with better logging tool?
-        console.error(error);
-        setLoginError(error);
-        setIsLoggingIn(false);
+      } catch (e) {
+        console.error(e);
+        if (e instanceof Error) {
+          if (!e.message.includes('MetaMask')) {
+            errorToast('Sign in unsuccessful. Please try again');
+          }
+        }
       }
+      setIsLoggingIn(false);
     },
-    [defaultConnector, refetchPageData, setIsLoggingIn, onSuccessCallback, successToast]
+    [refetchPageData, setIsLoggingIn, successToast, errorToast]
   );
 
-  return { login, isLoggingIn, loginError };
+  return { login, isLoggingIn };
 };
