@@ -18,6 +18,7 @@ export const CONNECTOR_MAP = {
 
 export type ConnectorType = keyof typeof CONNECTOR_MAP;
 
+// TODO: revisit connector state implementation
 interface ConnectorState {
   defaultConnectorType: ConnectorType;
   setDefaultConnectorType: (defaultConnectorType: ConnectorType) => void;
@@ -50,14 +51,12 @@ export const useWallet = () => {
     setDefaultConnectorType(isMetaMaskInjected ? 'METAMASK' : 'WEB3AUTH');
   }, [setDefaultConnectorType, isMetaMaskInjected]);
 
-  const [connector, { useWeb3React, useProvider }] = useMemo(
+  const [connector, { useAccount, useChainId, useError, useIsActive, useProvider }] = useMemo(
     () => CONNECTOR_MAP[connectorType ?? defaultConnectorType],
     [connectorType, defaultConnectorType]
   );
 
-  const provider = useProvider();
-
-  const { account: address, active: isActive, chainId, error } = useWeb3React(provider);
+  const address = useAccount();
 
   const [balance, setBalance] = useState<number>();
 
@@ -66,6 +65,14 @@ export const useWallet = () => {
       getWalletBalance$(address).subscribe(setBalance);
     }
   }, [address]);
+
+  const chainId = useChainId();
+
+  const error = useError();
+
+  const isActive = useIsActive();
+
+  const provider = useProvider();
 
   return {
     isActive,
