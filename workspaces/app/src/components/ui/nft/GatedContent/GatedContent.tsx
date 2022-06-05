@@ -12,12 +12,12 @@ import {
 import { getDoesOwnToken } from 'libraries/blockchain/utils';
 
 interface GatedContentProps {
-  accessGrantingTokens: string[];
+  accessGrantingTokenAddresses: string[];
   accessDeniedModalProps: AccessDeniedModalProps;
   children: ReactNode;
 }
 export const GatedContent = ({
-  accessGrantingTokens,
+  accessGrantingTokenAddresses,
   accessDeniedModalProps,
   children,
 }: GatedContentProps) => {
@@ -30,7 +30,9 @@ export const GatedContent = ({
   useEffect(() => {
     if (isAuthenticated && address) {
       const doesUserHaveAccess$ = forkJoin(
-        accessGrantingTokens.map((collectionAddress) => getDoesOwnToken(collectionAddress, address))
+        accessGrantingTokenAddresses.map((collectionAddress) =>
+          getDoesOwnToken(collectionAddress, address)
+        )
       ).pipe(
         delay(8000),
         map((doesUserHaveAccessArray) =>
@@ -53,7 +55,7 @@ export const GatedContent = ({
       setIsCheckingWallet(true);
       setIsAccessGrantedModal(true);
     }
-  }, [accessGrantingTokens, isAuthenticated, address]);
+  }, [accessGrantingTokenAddresses, isAuthenticated, address]);
 
   if (!isAuthenticated) {
     return (
