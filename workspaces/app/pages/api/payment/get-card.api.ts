@@ -28,6 +28,7 @@ const post: Handler = async (req, res) => {
     // TODO: Type error properly
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
+    console.error(e);
     switch (e.type) {
       case 'StripeCardError':
         console.log(`A payment error occurred: ${e.message}`);
