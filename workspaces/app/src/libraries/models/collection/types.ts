@@ -26,6 +26,7 @@ export interface CollectionData {
   description: string;
   details: Details;
   gatedContent: GatedContent;
+  maxMintablePerWallet: number;
 }
 
 export interface Collection extends Omit<CollectionData, 'artistId'> {
