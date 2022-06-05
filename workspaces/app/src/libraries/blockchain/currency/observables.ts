@@ -15,7 +15,6 @@ import {
   ChainLinkOracleAggregatorV3__factory,
   ChainLinkOracleAggregatorV3,
   CoralNftV1__factory,
-  CoralNftV1,
 } from '@coral/contracts';
 import { AVAX_USD_PAIR_ADDRESS } from './consts';
 
