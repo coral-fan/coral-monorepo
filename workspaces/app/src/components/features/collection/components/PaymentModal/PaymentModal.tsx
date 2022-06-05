@@ -1,5 +1,5 @@
 import { ConditionalSpinner, Modal } from 'components/ui';
-import { TRANSACTION_FEE } from 'consts';
+import { AVAX_TRANSACTION_FEE, CC_TRANSACTION_FEE } from 'consts';
 import { getPaymentLineItems, useWallet, useAvaxTokenPrice } from 'libraries/blockchain';
 import { getDocumentReferenceClientSide } from 'libraries/firebase';
 import { Collection, Details, PurchaseData, useStripeCustomerId } from 'libraries/models';
@@ -26,9 +26,6 @@ interface PaymentModalProps extends AssetInfoProps {
   closePaymentModal: () => void;
 }
 
-const CHARGE_AVAX_TRANSACTION_FEE = false;
-const CHARGE_CC_TRANSACTION_FEE = false;
-
 export const PaymentModal = ({
   imageUrl,
   collectionName,
@@ -53,14 +50,7 @@ export const PaymentModal = ({
 
   const [shouldUseExistingCard, setShouldUseExistingCard] = useState(stripeCustomerId !== null);
 
-  // Transaction Line Items
-  const transactionFee = isAvax
-    ? CHARGE_AVAX_TRANSACTION_FEE
-      ? TRANSACTION_FEE
-      : 0
-    : CHARGE_CC_TRANSACTION_FEE
-    ? TRANSACTION_FEE
-    : 0;
+  const transactionFee = isAvax ? AVAX_TRANSACTION_FEE : CC_TRANSACTION_FEE;
 
   const { total, formattedPrice, formattedTransactionFee, formattedTotal, formattedAltTotal } =
     useMemo(
