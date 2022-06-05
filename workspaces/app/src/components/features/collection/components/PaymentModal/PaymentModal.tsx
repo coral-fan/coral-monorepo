@@ -166,7 +166,7 @@ export const PaymentModal = ({
               />
               <HeadingContainer>
                 {isAvax ? (
-                  <Heading>Pay with AVAX</Heading>
+                  <Heading>Paying with AVAX...</Heading>
                 ) : (
                   <>
                     <Heading>{shouldUseExistingCard ? 'Card On File' : 'Payment Details'}</Heading>
