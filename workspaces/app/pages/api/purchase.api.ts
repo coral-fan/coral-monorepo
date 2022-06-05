@@ -1,4 +1,3 @@
-import { Timestamp } from 'firebase-admin/firestore';
 import { getCollectionReferenceServerSide } from 'libraries/firebase';
 import { PurchaseData } from 'libraries/models';
 import { ERROR_RESPONSE } from './consts';
@@ -21,7 +20,7 @@ const post: Handler = async (req, res) => {
 
     const purchaseData: PurchaseData = {
       ...DEFAULT_PURCHASE_DATA,
-      timestamp: Timestamp.now(),
+      timestamp: new Date().toISOString(),
       userId,
       collectionId,
       metadata: metadata ?? null,

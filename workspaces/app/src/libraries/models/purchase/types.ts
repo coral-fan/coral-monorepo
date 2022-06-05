@@ -23,6 +23,6 @@ export interface PurchaseData {
   status: Status;
   transactionHash: null | string;
   assetId: null | Asset['id'];
-  timestamp: ReturnType<typeof Timestamp.now>;
+  timestamp: string;
   metadata: null | Metadata;
 }
