@@ -42,14 +42,8 @@ export const getSimilarCollections = async (collectionId: Collection['id'], n: n
           sortCollectionByDropDateDesc(similarCollectionData)
             .filter(({ id }) => id !== collectionId)
             .slice(0, n)
-            .map(async ({ id, artistId, name, imageUrl, maxSupply, type, dropDate }) => {
-              const artistData = await getArtist(artistId);
-
-              if (!artistData) {
-                throw new Error(`Artist with id ${artistId} doesn't exist.`);
-              }
-
-              const partialCollection: PartialCollection = {
+            .map(
+              async ({
                 id,
                 artistId,
                 name,
@@ -57,12 +51,30 @@ export const getSimilarCollections = async (collectionId: Collection['id'], n: n
                 maxSupply,
                 type,
                 dropDate,
-                artistName: artistData.name,
-                artistProfilePhoto: artistData.profilePhoto,
-              };
+                maxMintablePerWallet,
+              }) => {
+                const artistData = await getArtist(artistId);
 
-              return partialCollection;
-            })
+                if (!artistData) {
+                  throw new Error(`Artist with id ${artistId} doesn't exist.`);
+                }
+
+                const partialCollection: PartialCollection = {
+                  id,
+                  artistId,
+                  name,
+                  imageUrl,
+                  maxSupply,
+                  type,
+                  dropDate,
+                  maxMintablePerWallet,
+                  artistName: artistData.name,
+                  artistProfilePhoto: artistData.profilePhoto,
+                };
+
+                return partialCollection;
+              }
+            )
         )
       )
         .filter(
