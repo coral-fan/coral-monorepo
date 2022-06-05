@@ -33,4 +33,14 @@
 
 ## Update Firestore DB
 
-- From `coral-monorepo` run `yarn app run-script scripts/collection/add.ts "<PROJECT_NAME>`
+- From `coral-monorepo` run `yarn app run-script scripts/collection/add.ts '<PROJECT_NAME>'`
+
+## Add Contract Address to Sentinel
+
+- Add the contract address to both the `Relay Mint Events` and `Transfer Events` Sentinels
+
+## Update Smart Contract As Needed
+
+- Add Relay Address
+
+- Transfer ownership
