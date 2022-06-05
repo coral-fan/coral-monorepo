@@ -52,15 +52,12 @@ export const getCurrencyPairPrice$ = (pair: CurrencyPair) => {
   );
 };
 
-const getInitialAvaxTokenPrice$ = (nftContract: CoralNftV1) =>
-  from(nftContract.getTokenPriceInAvax());
-
 export const getAvaxTokenPrice$ = (collectionId: string) => {
   const nftContract = CoralNftV1__factory.connect(collectionId, avalancheRpcProvider);
 
   return newBlock$.pipe(
-    startWith(getInitialAvaxTokenPrice$(nftContract)),
-    switchMap(() => getInitialAvaxTokenPrice$(nftContract)),
+    startWith(() => from(nftContract.getTokenPriceInAvax())),
+    switchMap(() => from(nftContract.getTokenPriceInAvax())),
     map((price) => ethers.utils.formatEther(price)),
     map((priceString) => parseFloat(priceString)),
     distinctUntilChanged()
