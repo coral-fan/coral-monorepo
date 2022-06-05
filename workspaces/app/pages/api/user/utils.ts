@@ -29,7 +29,7 @@ const DEFAULT_PUBLIC_USER_DATA: DefaultPublicUserData = {
   socialHandles: {},
   notifications: [],
   assets: {},
-  following: [],
+  followingArtistIds: [],
 };
 
 type DefaultPrivateUserData = Omit<PrivateUserData, 'doesOptIntoMarketing'>;
