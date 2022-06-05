@@ -12,6 +12,9 @@ export const useLogout = () => {
 
   // TODO: check if conditional checks matter for logging out actions (deactivate, signout, etc)
   const logout = useCallback(async () => {
+    if (isActive && idToken) {
+      successToast('Signed out!');
+    }
     if (isActive) {
       await connector.deactivate();
       setConnectorType(undefined);
@@ -19,7 +22,6 @@ export const useLogout = () => {
     if (idToken) {
       await getAuth().signOut();
     }
-    successToast('Signed out!');
   }, [isActive, connector, setConnectorType, idToken, successToast]);
 
   return logout;
