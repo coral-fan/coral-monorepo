@@ -1,12 +1,10 @@
 import { Collection, CollectionData } from '../collection';
 import { PublicUserData, User } from '../user';
 
-export interface AssetData {
+// owner is derived from on chain data
+export interface Asset {
   id: number;
   contractAddress: Collection['id'];
-}
-// owner is derived from on chain data
-export interface Asset extends AssetData {
   collectionName: CollectionData['name'];
   // image url could be a single image or an unique image for a generative NFT
   imageUrl: string;
@@ -22,5 +20,3 @@ export interface Asset extends AssetData {
   ownerType: PublicUserData['type'];
   ownerProfilePhoto: PublicUserData['profilePhoto'];
 }
-
-// TODO: we will eventually need to index transaction history
