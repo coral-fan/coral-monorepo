@@ -4,6 +4,7 @@ import { Button } from 'components/ui';
 import { Spinner } from 'components/ui/Spinner/Spinner';
 import { ethers } from 'ethers';
 import { getAvaxFormat, useWallet } from 'libraries/blockchain';
+import { safeRoundUp } from 'libraries/utils/math';
 import { useErrorToast } from 'libraries/utils/toasts';
 import { useCallback, useEffect, useState } from 'react';
 import tokens from 'styles/tokens';
@@ -46,7 +47,6 @@ interface AvaxPaymentProps {
   handleSwitchPaymentClick: () => void;
   setAssetId: (assetId: number) => void;
   setIsMintingNFT: (isMinting: boolean) => void;
-  closePaymentModal: () => void;
 }
 export const AvaxPayment = ({
   total,
@@ -54,7 +54,6 @@ export const AvaxPayment = ({
   handleSwitchPaymentClick,
   setAssetId,
   setIsMintingNFT,
-  closePaymentModal,
 }: AvaxPaymentProps) => {
   const [sufficientFunds, setSufficientFunds] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -78,8 +77,10 @@ export const AvaxPayment = ({
         const signer = provider.getSigner();
         const nftContract = CoralNftV1__factory.connect(collectionId, signer);
 
+        const roundedTotal = safeRoundUp(total, 10);
+
         const txn = await nftContract.publicMint({
-          value: ethers.utils.parseEther(total.toString()),
+          value: ethers.utils.parseEther(roundedTotal.toString()),
         });
 
         setIsMintingNFT(true);
@@ -94,9 +95,8 @@ export const AvaxPayment = ({
     } catch (e: any) {
       if (e.code === 4001) {
         errorToast('User rejected transaction');
-        if (e.code === -32603) {
-          errorToast('AVAX price is out of sync, please try again');
-        }
+      } else if (e.code === 'UNPREDICTABLE_GAS_LIMIT') {
+        errorToast('AVAX price out of sync - please try again');
       } else {
         errorToast();
         console.error(e);
