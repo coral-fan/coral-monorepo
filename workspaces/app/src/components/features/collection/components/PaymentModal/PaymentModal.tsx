@@ -185,7 +185,6 @@ export const PaymentModal = ({
                   handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
                   setAssetId={setAssetId}
                   setIsMintingNFT={setIsMintingNFT}
-                  closePaymentModal={closePaymentModal}
                 />
               ) : shouldUseExistingCard && stripeCustomerId ? (
                 <ExistingCardPayment
