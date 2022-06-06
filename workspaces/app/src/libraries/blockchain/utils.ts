@@ -9,25 +9,11 @@ export const getTokenOwner = (address: string, assetId: number) => {
   return contract.ownerOf(assetId);
 };
 
-export const getTokenTotalSupply = async (address: string) => {
-  const contract = CoralNftV1__factory.connect(address, avalancheRpcProvider);
-
-  const bigNumTotalSupply = await contract.totalSupply();
-
-  return bigNumTotalSupply.toNumber();
-};
-
-export const getUserTokenBalance = async (collectionAddress: string, userAddress: string) => {
+export const getDoesOwnToken = async (collectionAddress: string, userAddress: string) => {
   const contract = CoralNftV1__factory.connect(collectionAddress, avalancheRpcProvider);
 
   const bigNumTokenBalance = await contract.balanceOf(userAddress);
   const tokenBalance = bigNumTokenBalance.toNumber();
-
-  return tokenBalance;
-};
-
-export const getDoesOwnToken = async (collectionAddress: string, userAddress: string) => {
-  const tokenBalance = await getUserTokenBalance(collectionAddress, userAddress);
 
   return tokenBalance > 0;
 };
