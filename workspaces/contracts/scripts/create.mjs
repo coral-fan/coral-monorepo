@@ -158,7 +158,7 @@ const addArtistId = () => {
 };
 
 const addCollectionType = () => {
-  const answerArray = ['video', 'music', 'event', 'merch'];
+  const answerArray = ['video', 'music', 'event', 'merch', 'all_access'];
   return new Promise((resolve, reject) => {
     rl.question(`What type of collection? [ ${answerArray.join(' / ')} ] `, (answer) => {
       if (answerArray.includes(answer)) {
