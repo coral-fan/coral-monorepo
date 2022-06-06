@@ -1,7 +1,6 @@
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { AVALANCHE } from 'consts';
 import { CoralNftV1__factory } from '@coral/contracts';
-import { user } from 'rxfire/auth';
 
 const avalancheRpcProvider = new JsonRpcProvider(AVALANCHE.RPC_URL);
 
