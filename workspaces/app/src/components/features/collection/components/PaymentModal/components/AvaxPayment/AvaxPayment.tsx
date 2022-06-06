@@ -93,13 +93,20 @@ export const AvaxPayment = ({
         setIsMintingNFT(false);
       }
     } catch (e: any) {
+      console.error(e);
+
+      // This error comes from MetaMask
       if (e.code === 4001) {
         errorToast('User rejected transaction');
-      } else if (e.code === 'UNPREDICTABLE_GAS_LIMIT') {
-        errorToast('AVAX price out of sync - please try again');
       } else {
-        errorToast();
-        console.error(e);
+        // These errors come from estimateGas call
+        // TODO: Add any additional errors
+        switch (e.reason) {
+          case 'execution reverted: Not enough ether to purchase':
+            errorToast('AVAX price out of sync - please try again');
+          default:
+            errorToast();
+        }
       }
     }
   }, [isActive, total, provider, collectionId, setAssetId, setIsMintingNFT, errorToast]);
