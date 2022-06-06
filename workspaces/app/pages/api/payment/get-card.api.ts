@@ -29,17 +29,6 @@ const post: Handler = async (req, res) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
     console.error(e);
-    switch (e.type) {
-      case 'StripeCardError':
-        console.log(`A payment error occurred: ${e.message}`);
-        break;
-      case 'StripeInvalidRequestError':
-        console.log(`An invalid request occurred: ${e.message}`);
-        break;
-      default:
-        console.log(`Another problem occurred: ${e.message}.`);
-        break;
-    }
     res.status(500).json({ statusCode: 500, message: e.message });
   }
 };
