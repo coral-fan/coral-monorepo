@@ -11,8 +11,7 @@ import { FadeOutInSwitchAnimation } from 'libraries/animation';
 import { useIsAuthenticated, useLogin } from 'libraries/authentication';
 import { SignInModal, useSignInModalState } from 'components/app';
 import { Details, useUserUid } from 'libraries/models';
-import { getUserTokenBalance } from 'libraries/blockchain/utils';
-import { from, map } from 'rxjs';
+import { getUserTokenBalance$ } from 'libraries/blockchain/observables';
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
 
@@ -52,7 +51,7 @@ export const DropOrAvailable = ({
   maxMintablePerWallet,
 }: DropOrAvailableProps) => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-  const [userTokenBalance, setUserTokenBalance] = useState(0);
+  const [isMaxTokensOwned, setIsMaxTokensOwned] = useState(false);
 
   const isAuthenticated = useIsAuthenticated();
   const { isLoggingIn } = useLogin();
@@ -98,19 +97,13 @@ export const DropOrAvailable = ({
 
   useEffect(() => {
     if (userId) {
-      const userTokenBalance$ = from(getUserTokenBalance(collectionId, userId)).pipe(
-        map((tokenBalance) => tokenBalance)
-      );
-
-      const subscription = userTokenBalance$.subscribe((tokenBalance) =>
-        setUserTokenBalance(tokenBalance)
+      const subscription = getUserTokenBalance$(collectionId, userId).subscribe((tokenBalance) =>
+        setIsMaxTokensOwned(tokenBalance >= maxMintablePerWallet)
       );
 
       return () => subscription.unsubscribe();
     }
-  }, [collectionId, userId]);
-
-  const maxTokensOwned = userTokenBalance >= maxMintablePerWallet;
+  }, [collectionId, userId, maxMintablePerWallet]);
 
   return (
     <FadeOutInSwitchAnimation isAvailable={isAvailable}>
@@ -119,12 +112,12 @@ export const DropOrAvailable = ({
           <Price usdPrice={usdPrice} />
           <CtaButton
             onClick={handleBuyButtonClick}
-            disabled={isSoldOut || isLoggingIn || maxTokensOwned}
+            disabled={isSoldOut || isLoggingIn || isMaxTokensOwned}
             loading={isLoggingIn}
           >
             {isSoldOut ? 'Sold Out' : isAuthenticated ? 'Buy Now' : 'Sign In To Purchase'}
           </CtaButton>
-          {maxTokensOwned && (
+          {isMaxTokensOwned && (
             <MaxOwnedNotification>
               Maximum of {maxMintablePerWallet} NFTs per wallet already owned
             </MaxOwnedNotification>
