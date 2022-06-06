@@ -43,7 +43,7 @@ const addCollection = async (projectName: string) => {
   const configFile = JSON.parse(projectData);
 
   const { contract, collectionData } = configFile;
-  const { name, address, description, maxSupply, usdPricePerToken } = contract;
+  const { name, address, description, maxSupply, usdPricePerToken, maxTokensPerWallet } = contract;
   const { artistId, type, dropDate, details, gatedContent } = collectionData;
 
   const artistRef = await getDocumentReferenceServerSide<ArtistData>('artists', artistId);
@@ -99,18 +99,22 @@ const addCollection = async (projectName: string) => {
     name: name,
     artistId: artistId,
     imageUrl: fileUrl,
-    maxMintable: maxSupply,
+    maxSupply,
     type: type as CollectionType,
     price: usdPricePerToken,
     dropDate: dropDate,
     description: description,
     details: details,
     gatedContent: gatedContent as GatedEvent,
+    maxMintablePerWallet: maxTokensPerWallet,
   };
 
   await collectionRef.set(collection);
 
-  await artistRef.update({ collections: FieldValue.arrayUnion(address) });
+  await artistRef.update({
+    collections: FieldValue.arrayUnion(address),
+    collectionIds: FieldValue.arrayUnion(address),
+  });
 
   console.log('Collection added!');
 };
