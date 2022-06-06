@@ -6,12 +6,12 @@ import { Collection, getCollection, getSimilarCollections } from 'libraries/mode
 import { DropOrAvailable, SimilarCollections, PartialCollection } from './components';
 import { Layout as CollectionLayout } from 'components/ui/nft';
 import { useEffect, useMemo, useState } from 'react';
-import { getTokenTotalSupply } from 'libraries/blockchain/utils';
 
 // stripe
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import { NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY } from 'libraries/stripe/consts';
+import { getTokenTotalSupply$ } from 'libraries/blockchain/observables';
 
 // similarCollections optional so failure to fetch
 // doesn't block page from loading
@@ -38,17 +38,16 @@ export const CollectionPage = ({
   maxMintablePerWallet,
 }: CollectionPageProps) => {
   const [numMinted, setNumMinted] = useState(0);
+  const [isSoldOut, setIsSoldOut] = useState(false);
 
   useEffect(() => {
-    const fetchNumMinted = async (id: string) => {
-      const numMinted = await getTokenTotalSupply(id);
-      setNumMinted(numMinted);
-    };
+    const subscription = getTokenTotalSupply$(id).subscribe((totalSupply) => {
+      setNumMinted(totalSupply);
+      setIsSoldOut(totalSupply >= maxSupply);
+    });
 
-    fetchNumMinted(id);
-  }, [id]);
-
-  const isSoldOut = numMinted >= maxSupply;
+    return () => subscription.unsubscribe();
+  }, [id, maxSupply]);
 
   const dropOrAvailable = useMemo(
     () => (
