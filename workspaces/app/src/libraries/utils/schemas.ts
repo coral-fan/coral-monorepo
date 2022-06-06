@@ -4,6 +4,7 @@ export const getUsernameSchema = (usernames: Set<string>, currentUsername?: stri
   return string()
     .required()
     .min(3)
+    .max(15)
     .matches(/^([a-zA-Z\d_])+$/g, 'Only alphanumeric characters and _ are allowed')
     .test({
       name: 'is-username-unique',
