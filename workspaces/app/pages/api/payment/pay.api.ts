@@ -80,18 +80,6 @@ const post: Handler = async (req, res) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- must type error as any to check type property
   } catch (e: any) {
     console.error(e);
-    switch (e.type) {
-      case 'StripeCardError':
-        console.error(`A payment error occurred: ${e.message}`);
-        break;
-      case 'StripeInvalidRequestError':
-        console.error(`An invalid request occurred: ${e.message}`);
-        break;
-      default:
-        console.error(`A problem occurred: ${e.message}.`);
-        break;
-    }
-
     purchaseDocRef?.set({ status: 'rejected' }, { merge: true });
 
     res.status(500).send(ERROR_RESPONSE);
