@@ -69,7 +69,7 @@ const Content = styled(Card)<ContentProps>`
   padding: ${({ title }) => `${title ? '20px' : '8px'} 18px`};
   box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.5);
   gap: 20px;
-  overflow: scroll;
+  overflow: auto;
 
   @media ${QUERY.TABLET} {
     max-height: 750px;
