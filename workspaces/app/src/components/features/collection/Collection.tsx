@@ -35,6 +35,7 @@ export const CollectionPage = ({
   price,
   id,
   similarCollections,
+  maxMintablePerWallet,
 }: CollectionPageProps) => {
   const [numMinted, setNumMinted] = useState(0);
 
@@ -60,6 +61,7 @@ export const CollectionPage = ({
         collectionName={name}
         collectionId={id}
         collectionDetails={details}
+        maxMintablePerWallet={maxMintablePerWallet}
         artistId={artistId}
         artistName={artistName}
         artistProfilePhoto={artistProfilePhoto}
@@ -81,6 +83,7 @@ export const CollectionPage = ({
       id,
       isSoldOut,
       details,
+      maxMintablePerWallet,
     ]
   );
 
