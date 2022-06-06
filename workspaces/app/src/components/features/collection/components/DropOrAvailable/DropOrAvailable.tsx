@@ -1,8 +1,7 @@
 import { CtaButton, DropTimer } from 'components/ui';
 import { getMilliSecsDiff, getTimeRemaining$ } from 'libraries/time';
 import { useObservable } from 'libraries/utils';
-import { useCallback, useMemo, useState } from 'react';
-
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AvailableContainer } from 'components/ui/nft';
 import { Price, PriceProp } from '../Price';
 import { ProgressBar } from '../ProgressBar';
@@ -11,7 +10,11 @@ import { PaymentModal } from '../PaymentModal';
 import { FadeOutInSwitchAnimation } from 'libraries/animation';
 import { useIsAuthenticated, useLogin } from 'libraries/authentication';
 import { SignInModal, useSignInModalState } from 'components/app';
-import { Details } from 'libraries/models';
+import { Details, useUserUid } from 'libraries/models';
+import { getUserTokenBalance } from 'libraries/blockchain/utils';
+import { from, map } from 'rxjs';
+import styled from '@emotion/styled';
+import tokens from 'styles/tokens';
 
 interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
   numMinted?: number;
@@ -21,7 +24,16 @@ interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
   isSoldOut: boolean;
   collectionDetails: Details;
   artistId: string;
+  maxMintablePerWallet: number;
 }
+
+const MaxOwnedNotification = styled.span`
+  font-size: ${tokens.font.size.sm};
+  letter-spacing: ${tokens.font.letter_spacing.sm};
+  line-height: ${tokens.font.line_height.sm};
+  color: ${tokens.font.color.secondary};
+  font-style: italic;
+`;
 
 export const DropOrAvailable = ({
   usdPrice,
@@ -37,12 +49,15 @@ export const DropOrAvailable = ({
   artistProfilePhoto,
   type,
   isSoldOut,
+  maxMintablePerWallet,
 }: DropOrAvailableProps) => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [userTokenBalance, setUserTokenBalance] = useState(0);
 
   const isAuthenticated = useIsAuthenticated();
   const { isLoggingIn } = useLogin();
   const { openModal } = useSignInModalState();
+  const userId = useUserUid();
 
   const closePaymentModal = useCallback(() => setIsPaymentModalOpen(false), []);
 
@@ -81,6 +96,22 @@ export const DropOrAvailable = ({
 
   const numMintedDisplay = useMemo(() => numMinted ?? 0, [numMinted]);
 
+  useEffect(() => {
+    if (userId) {
+      const userTokenBalance$ = from(getUserTokenBalance(collectionId, userId)).pipe(
+        map((tokenBalance) => tokenBalance)
+      );
+
+      const subscription = userTokenBalance$.subscribe((tokenBalance) =>
+        setUserTokenBalance(tokenBalance)
+      );
+
+      return () => subscription.unsubscribe();
+    }
+  }, [collectionId, userId]);
+
+  const maxTokensOwned = userTokenBalance >= maxMintablePerWallet;
+
   return (
     <FadeOutInSwitchAnimation isAvailable={isAvailable}>
       {isAvailable === 'true' ? (
@@ -88,11 +119,16 @@ export const DropOrAvailable = ({
           <Price usdPrice={usdPrice} />
           <CtaButton
             onClick={handleBuyButtonClick}
-            disabled={isSoldOut || isLoggingIn}
+            disabled={isSoldOut || isLoggingIn || maxTokensOwned}
             loading={isLoggingIn}
           >
             {isSoldOut ? 'Sold Out' : isAuthenticated ? 'Buy Now' : 'Sign In To Purchase'}
           </CtaButton>
+          {maxTokensOwned && (
+            <MaxOwnedNotification>
+              Maximum of {maxMintablePerWallet} NFTs per wallet already owned
+            </MaxOwnedNotification>
+          )}
           <ProgressBar maxSupply={maxSupply} numMinted={numMintedDisplay} />
         </AvailableContainer>
       ) : (
