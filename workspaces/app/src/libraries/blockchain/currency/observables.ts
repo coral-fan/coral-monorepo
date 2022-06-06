@@ -1,22 +1,14 @@
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { AVALANCHE, SERVER_ENVIRONMENT } from 'consts';
 import { ethers } from 'ethers';
-import {
-  distinctUntilChanged,
-  from,
-  fromEvent,
-  map,
-  Observable,
-  startWith,
-  switchMap,
-  withLatestFrom,
-} from 'rxjs';
+import { distinctUntilChanged, from, map, startWith, switchMap, withLatestFrom } from 'rxjs';
 import {
   ChainLinkOracleAggregatorV3__factory,
   ChainLinkOracleAggregatorV3,
   CoralNftV1__factory,
 } from '@coral/contracts';
 import { AVAX_USD_PAIR_ADDRESS } from './consts';
+import { newBlock$ } from '../observables';
 
 const avalancheRpcProvider = new JsonRpcProvider(AVALANCHE.RPC_URL);
 
@@ -30,8 +22,6 @@ const currencyPairDictionary = {
 };
 
 type CurrencyPair = keyof typeof currencyPairDictionary;
-
-const newBlock$ = fromEvent(avalancheRpcProvider, 'block') as Observable<number>;
 
 const getRoundData$ = (priceFeed: ChainLinkOracleAggregatorV3) => from(priceFeed.latestRoundData());
 
