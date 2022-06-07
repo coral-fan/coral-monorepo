@@ -1,3 +1,5 @@
+// TODO: implement home page in house
+/* eslint-disable @next/next/no-img-element */
 import { useSignInModalState } from 'components/app';
 import { useIsAuthenticated } from 'libraries/authentication';
 
@@ -96,7 +98,7 @@ export const Home = () => {
             <div className="grid grid-cols-1 gap-10 lg:gap-20 mb-10 lg:mb-16">
               <div className="border-t border-gray-2 border-opacity-20 pt-3.5 grid grid-cols-10 lg:grid-cols-12 gap-5">
                 <div className="col-span-2">
-                  <img src="/images/plus.svg" className="w-12 h-12" />
+                  <img src="/images/plus.svg" className="w-12 h-12" alt="" />
                 </div>
                 <div className="col-span-8 lg:col-span-10 grid grid-cols-1 lg:grid-cols-10 gap-2.5 lg:gap-5">
                   <h4 className="lg:col-span-4 text-lg leading-lh-3 tracking-wide uppercase">
@@ -110,7 +112,7 @@ export const Home = () => {
               </div>
               <div className="border-t border-gray-2 border-opacity-20 pt-3.5 grid grid-cols-10 lg:grid-cols-12 gap-5">
                 <div className="col-span-2">
-                  <img src="/images/plus.svg" className="w-12 h-12" />
+                  <img src="/images/plus.svg" className="w-12 h-12" alt="" />
                 </div>
                 <div className="col-span-8 lg:col-span-10 grid grid-cols-1 lg:grid-cols-10 gap-2.5 lg:gap-5">
                   <h4 className="lg:col-span-4 text-lg leading-lh-3 tracking-wide uppercase">
@@ -149,7 +151,7 @@ export const Home = () => {
             <div className="grid grid-cols-1 gap-10 lg:gap-20 mb-10 lg:mb-16">
               <div className="border-t border-gray-2 border-opacity-20 pt-3.5 grid grid-cols-10 lg:grid-cols-12 gap-5">
                 <div className="col-span-2">
-                  <img src="/images/plus.svg" className="w-12 h-12" />
+                  <img src="/images/plus.svg" className="w-12 h-12" alt="" />
                 </div>
                 <div className="col-span-8 lg:col-span-10 grid grid-cols-1 lg:grid-cols-10 gap-2.5 lg:gap-5">
                   <h4 className="lg:col-span-4 text-lg leading-lh-3 tracking-wide uppercase">
@@ -163,7 +165,7 @@ export const Home = () => {
               </div>
               <div className="border-t border-gray-2 border-opacity-20 pt-3.5 grid grid-cols-10 lg:grid-cols-12 gap-5">
                 <div className="col-span-2">
-                  <img src="/images/plus.svg" className="w-12 h-12" />
+                  <img src="/images/plus.svg" className="w-12 h-12" alt="" />
                 </div>
                 <div className="col-span-8 lg:col-span-10 grid grid-cols-1 lg:grid-cols-10 gap-2.5 lg:gap-5">
                   <h4 className="lg:col-span-4 text-lg leading-lh-3 tracking-wide uppercase">
@@ -177,7 +179,7 @@ export const Home = () => {
               </div>
               <div className="border-t border-gray-2 border-opacity-20 pt-3.5 grid grid-cols-10 lg:grid-cols-12 gap-5">
                 <div className="col-span-2">
-                  <img src="/images/plus.svg" className="w-12 h-12" />
+                  <img src="/images/plus.svg" className="w-12 h-12" alt="" />
                 </div>
                 <div className="col-span-8 lg:col-span-10 grid grid-cols-1 lg:grid-cols-10 gap-2.5 lg:gap-5">
                   <h4 className="lg:col-span-4 text-lg leading-lh-3 tracking-wide uppercase">
@@ -191,7 +193,7 @@ export const Home = () => {
               </div>
               <div className="border-t border-gray-2 border-opacity-20 pt-3.5 grid grid-cols-10 lg:grid-cols-12 gap-5">
                 <div className="col-span-2">
-                  <img src="/images/plus.svg" className="w-12 h-12" />
+                  <img src="/images/plus.svg" className="w-12 h-12" alt="" />
                 </div>
                 <div className="col-span-8 lg:col-span-10 grid grid-cols-1 lg:grid-cols-10 gap-2.5 lg:gap-5">
                   <h4 className="lg:col-span-4 text-lg leading-lh-3 tracking-wide uppercase">
@@ -233,7 +235,7 @@ export const Home = () => {
             <div className="grid grid-cols-1 gap-10 lg:gap-20">
               <div className="grid grid-cols-10 lg:grid-cols-12 gap-5">
                 <div className="col-span-2">
-                  <img src="/images/plus.svg" className="w-12 h-12" />
+                  <img src="/images/plus.svg" className="w-12 h-12" alt="" />
                 </div>
                 <div className="col-span-8 lg:col-span-10 grid grid-cols-1 lg:grid-cols-10 gap-2.5 lg:gap-5">
                   <h4 className="lg:col-span-4 text-lg leading-lh-3 tracking-wide uppercase">
@@ -255,7 +257,7 @@ export const Home = () => {
               </div>
               <div className="border-t border-gray-2 border-opacity-20 pt-3.5 grid grid-cols-10 lg:grid-cols-12 gap-5">
                 <div className="col-span-2">
-                  <img src="/images/plus.svg" className="w-12 h-12" />
+                  <img src="/images/plus.svg" className="w-12 h-12" alt="" />
                 </div>
                 <div className="col-span-8 lg:col-span-10 grid grid-cols-1 lg:grid-cols-10 gap-2.5 lg:gap-5">
                   <h4 className="lg:col-span-4 text-lg leading-lh-3 tracking-wide uppercase">
@@ -269,7 +271,7 @@ export const Home = () => {
               </div>
               <div className="border-t border-gray-2 border-opacity-20 pt-3.5 grid grid-cols-10 lg:grid-cols-12 gap-5">
                 <div className="col-span-2">
-                  <img src="/images/plus.svg" className="w-12 h-12" />
+                  <img src="/images/plus.svg" className="w-12 h-12" alt="" />
                 </div>
                 <div className="col-span-8 lg:col-span-10 grid grid-cols-1 lg:grid-cols-10 gap-2.5 lg:gap-5">
                   <h4 className="lg:col-span-4 text-lg leading-lh-3 tracking-wide uppercase">
@@ -283,7 +285,7 @@ export const Home = () => {
               </div>
               <div className="border-t border-gray-2 border-opacity-20 pt-3.5 grid grid-cols-10 lg:grid-cols-12 gap-5">
                 <div className="col-span-2">
-                  <img src="/images/plus.svg" className="w-12 h-12" />
+                  <img src="/images/plus.svg" className="w-12 h-12" alt="" />
                 </div>
                 <div className="col-span-8 lg:col-span-10 grid grid-cols-1 lg:grid-cols-10 gap-2.5 lg:gap-5">
                   <h4 className="lg:col-span-4 text-lg leading-lh-3 tracking-wide uppercase">
