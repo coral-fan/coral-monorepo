@@ -5,6 +5,7 @@ import { useIsAuthenticated } from 'libraries/authentication';
 
 export const Home = () => {
   const { openModal } = useSignInModalState();
+  const openSignUpModal = () => openModal({ isSignUp: true });
   const isAuthenticated = useIsAuthenticated();
   return (
     <div>
@@ -35,7 +36,7 @@ export const Home = () => {
               Sign up
             </div>
             <button
-              onClick={openModal}
+              onClick={openSignUpModal}
               disabled={isAuthenticated}
               className="absolute top-0 left-0 w-full h-full z-10"
             ></button>
@@ -130,7 +131,7 @@ export const Home = () => {
             </div>
           </div>
           <button
-            onClick={openModal}
+            onClick={openSignUpModal}
             disabled={isAuthenticated}
             className="absolute top-0 left-0 w-full h-full z-10"
           ></button>
@@ -326,7 +327,7 @@ export const Home = () => {
               </p>
             </div>
             <button
-              onClick={openModal}
+              onClick={openSignUpModal}
               disabled={isAuthenticated}
               className="absolute top-0 left-0 w-full h-full z-10"
             ></button>
