@@ -72,6 +72,7 @@ subtask('upload', 'Upload metadata via nft.storage')
       usdPricePerToken,
       maxSupply,
       maxTokensPerWallet,
+      saleStartTime,
       description,
       attributes,
     } = JSON.parse(projectData).contract;
@@ -98,6 +99,7 @@ subtask('upload', 'Upload metadata via nft.storage')
       maxSupply,
       maxTokensPerWallet,
       baseTokenURI: '',
+      saleStartTime,
     };
 
     if (upload) {
@@ -125,7 +127,8 @@ subtask('deploy-contract', 'Deploy contract')
       args.usdPricePerToken,
       args.maxSupply,
       args.maxTokensPerWallet,
-      args.baseTokenURI
+      args.baseTokenURI,
+      args.saleStartTime
     );
 
     await contract.deployed();
@@ -138,8 +141,16 @@ subtask('deploy-contract', 'Deploy contract')
 subtask('verify-contract', 'Verify contract')
   .addParam('verifyArgs', 'Arguments supplied to the verify script', {}, types.json)
   .setAction(async ({ verifyArgs }, hre) => {
-    const { address, name, symbol, usdPricePerToken, maxSupply, maxTokensPerWallet, baseTokenURI } =
-      JSON.parse(verifyArgs);
+    const {
+      address,
+      name,
+      symbol,
+      usdPricePerToken,
+      maxSupply,
+      maxTokensPerWallet,
+      baseTokenURI,
+      saleStartTime,
+    } = JSON.parse(verifyArgs);
 
     try {
       await hre.run('verify:verify', {
@@ -151,6 +162,7 @@ subtask('verify-contract', 'Verify contract')
           maxSupply,
           maxTokensPerWallet,
           baseTokenURI,
+          saleStartTime,
         ],
       });
     } catch (e: any) {
