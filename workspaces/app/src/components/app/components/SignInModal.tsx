@@ -20,7 +20,7 @@ interface SignInModalState {
 const useSignInModalState = create<SignInModalState>((set) => ({
   isModalOpen: false,
   isSignUp: false,
-  openModal: ({ isSignUp } = { isSignUp: false }) => set(() => ({ ModalOpen: true, isSignUp })),
+  openModal: ({ isSignUp } = { isSignUp: false }) => set(() => ({ isModalOpen: true, isSignUp })),
   closeModal: () => set(() => ({ isModalOpen: false })),
 }));
 
