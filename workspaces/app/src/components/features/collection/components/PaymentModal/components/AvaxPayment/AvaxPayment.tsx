@@ -92,6 +92,8 @@ export const AvaxPayment = ({
         setAssetId(assetId);
         setIsMintingNFT(false);
       }
+      // TODO: add type guard for e object
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- need any for error handling
     } catch (e: any) {
       console.error(e);
 
