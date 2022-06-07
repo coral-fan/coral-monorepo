@@ -14,6 +14,30 @@ const dirName = projectName
   .toLowerCase();
 
 /*
+https://stackoverflow.com/questions/6177975/how-to-validate-date-with-format-mm-dd-yyyy-in-javascript
+*/
+const isValidDate = (s) => {
+  // Assumes s is "mm/dd/yyyy"
+  if (!/^\d\d\/\d\d\/\d\d\d\d$/.test(s)) {
+    return false;
+  }
+  const parts = s.split('/').map((p) => parseInt(p, 10));
+  parts[0] -= 1;
+  const d = new Date(parts[2], parts[0], parts[1]);
+  return d.getMonth() === parts[0] && d.getDate() === parts[1] && d.getFullYear() === parts[2];
+};
+
+const isValidTime = (t) => {
+  const isValid = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(t);
+  return isValid;
+};
+
+const convertToSeconds = (date) => {
+  const d = new Date(date);
+  return Math.floor(d.getTime() / 1000);
+};
+
+/*
 Initial JSON File Config
 */
 const initialConfig = {
@@ -25,6 +49,7 @@ const initialConfig = {
     usdPricePerToken: 0,
     maxSupply: 0,
     maxTokensPerWallet: 2,
+    saleStartTime: 0,
     description: '',
     tokenURI: '',
     numAttributes: 0,
@@ -148,6 +173,46 @@ const addMaxSupply = () => {
   });
 };
 
+/*
+Set Starting Time
+*/
+let date;
+const addSalesStartingDate = () => {
+  return new Promise((resolve, reject) => {
+    rl.question('What is the drop date? Please enter in "MM/DD/YYYY" format: ', (answer) => {
+      if (isValidDate(answer)) {
+        const dateParts = answer.split('/').map((p) => parseInt(p));
+        date = new Date(dateParts[2], dateParts[0] - 1, dateParts[1]);
+        resolve();
+      } else {
+        console.log('Please use proper format');
+        resolve(addSalesStartingDate());
+      }
+    });
+  });
+};
+
+const addSalesStartingTime = () => {
+  return new Promise((resolve, reject) => {
+    rl.question(
+      'What is the drop time? Please enter in 24HR "HH:MM" format, aka "21:00": ',
+      (answer) => {
+        if (isValidTime(answer)) {
+          const timeParts = answer.split(':').map((part) => parseInt(part));
+          date.setHours(timeParts[0], timeParts[1]);
+          initialConfig.collectionData.dropDate = date;
+          console.log('Drop Date: ', date);
+          initialConfig.contract.saleStartTime = convertToSeconds(date);
+          resolve();
+        } else {
+          console.log('Please use proper format');
+          resolve(addSalesStartingTime());
+        }
+      }
+    );
+  });
+};
+
 const addArtistId = () => {
   return new Promise((resolve, reject) => {
     rl.question("What is the artist's ID (wallet address)? ", (answer) => {
@@ -197,6 +262,8 @@ const main = async () => {
   await addAttributes(initialConfig.contract.numAttributes);
   await addUsdPrice();
   await addMaxSupply();
+  await addSalesStartingDate();
+  await addSalesStartingTime();
   console.log(`---------------------------------------------`);
   console.log(`Next let's add artist and collection data for ${projectName}: `);
   console.log(`---------------------------------------------`);
