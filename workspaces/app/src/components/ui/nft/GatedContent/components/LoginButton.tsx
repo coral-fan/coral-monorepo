@@ -1,13 +1,13 @@
-import { useSignInModalState } from 'components/app';
+import { useOpenSignInModal } from 'components/app';
 import { Button } from 'components/ui';
 import { useLogin } from 'libraries/authentication';
 
 export const LoginButton = () => {
   const { isLoggingIn } = useLogin();
-  const { openModal } = useSignInModalState();
+  const handleOpenSignInModal = useOpenSignInModal();
 
   return (
-    <Button onClick={openModal} loading={isLoggingIn} disabled={isLoggingIn}>
+    <Button onClick={handleOpenSignInModal} loading={isLoggingIn} disabled={isLoggingIn}>
       Login
     </Button>
   );

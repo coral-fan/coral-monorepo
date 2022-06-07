@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import tokens from 'styles/tokens';
 import { useIsSigningUp, useLogin } from 'libraries/authentication';
 import { Button } from 'components/ui';
-import { useSignInModalState } from '../../SignInModal';
+import { useOpenSignInModal } from '../../SignInModal';
 
 const loginButtonStyle = css`
   width: 95px;
@@ -16,10 +16,15 @@ export const LoginButton = () => {
 
   const isPending = isLoggingIn || isSigningUp;
 
-  const { openModal } = useSignInModalState();
+  const handleOpenSignInModal = useOpenSignInModal();
 
   return (
-    <Button css={loginButtonStyle} onClick={openModal} disabled={isPending} loading={isPending}>
+    <Button
+      css={loginButtonStyle}
+      onClick={handleOpenSignInModal}
+      disabled={isPending}
+      loading={isPending}
+    >
       Login
     </Button>
   );

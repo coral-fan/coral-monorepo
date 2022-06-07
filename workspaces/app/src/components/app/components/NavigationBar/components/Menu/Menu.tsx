@@ -6,7 +6,7 @@ import { useUserUid } from 'libraries/models';
 import { UserProfile } from '../../NavigationBar';
 import { Item } from './Item';
 import { MenuProfileInfo } from '../MenuProfileInfo';
-import { useSignInModalState } from 'components/app/components/SignInModal';
+import { useOpenSignInModal } from 'components/app/components/SignInModal';
 
 interface MenuProps {
   userProfile?: UserProfile;
@@ -51,12 +51,12 @@ export const Menu = ({ userProfile, closeMenuModal }: MenuProps) => {
     [handleLogout]
   );
 
-  const { openModal } = useSignInModalState();
+  const openSignInModal = useOpenSignInModal();
 
   const handleSignIn = useCallback(() => {
     closeMenuModal();
-    openModal();
-  }, [closeMenuModal, openModal]);
+    openSignInModal();
+  }, [closeMenuModal, openSignInModal]);
 
   const unauthenticatedMenuItems: MenuItemProps[] = useMemo(
     () => [
