@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import create from 'zustand';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -8,13 +8,15 @@ import { useIsMetaMaskInjected, useWallet } from 'libraries/blockchain';
 
 interface SignInModalState {
   isModalOpen: boolean;
-  openModal: () => void;
+  isSignUp: boolean;
+  openModal: (options: { isSignUp: boolean }) => void;
   closeModal: () => void;
 }
 
 export const useSignInModalState = create<SignInModalState>((set) => ({
   isModalOpen: false,
-  openModal: () => set(() => ({ isModalOpen: true })),
+  isSignUp: false,
+  openModal: ({ isSignUp } = { isSignUp: false }) => set(() => ({ isModalOpen: true, isSignUp })),
   closeModal: () => set(() => ({ isModalOpen: false })),
 }));
 
@@ -26,7 +28,10 @@ const Footnote = styled.span`
 
 export const SignInModal = () => {
   const { setConnectorType } = useWallet();
-  const { isModalOpen, closeModal } = useSignInModalState();
+  const { isModalOpen, closeModal, isSignUp } = useSignInModalState();
+
+  const actionText = useMemo(() => (isSignUp ? 'Sign Up' : 'Sign In'), [isSignUp]);
+
   const { login } = useLogin();
 
   const loginWithMetaMask = useCallback(async () => {
@@ -50,7 +55,7 @@ export const SignInModal = () => {
   return (
     <Modal
       // TODO: change to Sign In post sign up campaign launch
-      title={'Sign Up'}
+      title={actionText}
       onClick={closeModal}
       mainContainerStyle={css`
         padding: 16px 0;
@@ -58,10 +63,10 @@ export const SignInModal = () => {
       `}
     >
       <Button onClick={loginWithMetaMask} disabled={!isMetaMaskInjected}>
-        Sign Up With MetaMask
+        {actionText} With MetaMask
       </Button>
       <span>OR</span>
-      <Button onClick={loginWithWeb3Auth}>Sign Up With Social Login</Button>
+      <Button onClick={loginWithWeb3Auth}>{actionText} With Social Login</Button>
       <Footnote>
         * Don&apos;t have Metamask? Sign up with your Gmail, Twitter, Discord, Apple, Twitch, or
         Facebook username and password.
