@@ -6,19 +6,30 @@ import { Button, Modal } from 'components/ui';
 import { useLogin } from 'libraries/authentication';
 import { useIsMetaMaskInjected, useWallet } from 'libraries/blockchain';
 
+interface SignInModalOptions {
+  isSignUp: boolean;
+}
+
 interface SignInModalState {
   isModalOpen: boolean;
   isSignUp: boolean;
-  openModal: (options: { isSignUp: boolean }) => void;
+  openModal: (options?: SignInModalOptions) => void;
   closeModal: () => void;
 }
 
-export const useSignInModalState = create<SignInModalState>((set) => ({
+const useSignInModalState = create<SignInModalState>((set) => ({
   isModalOpen: false,
   isSignUp: false,
-  openModal: ({ isSignUp } = { isSignUp: false }) => set(() => ({ isModalOpen: true, isSignUp })),
+  openModal: ({ isSignUp } = { isSignUp: false }) => set(() => ({ ModalOpen: true, isSignUp })),
   closeModal: () => set(() => ({ isModalOpen: false })),
 }));
+
+export const useOpenSignInModal = (options?: SignInModalOptions) => {
+  const { openModal } = useSignInModalState();
+  const openSignInModalHandler = useCallback(() => openModal(options), [openModal, options]);
+
+  return openSignInModalHandler;
+};
 
 const Footnote = styled.span`
   font-size: 11px;
@@ -63,7 +74,7 @@ export const SignInModal = () => {
       `}
     >
       <Button onClick={loginWithMetaMask} disabled={!isMetaMaskInjected}>
-        {actionText} With MetaMask
+        Sign Up With MetaMask
       </Button>
       <span>OR</span>
       <Button onClick={loginWithWeb3Auth}>{actionText} With Social Login</Button>
