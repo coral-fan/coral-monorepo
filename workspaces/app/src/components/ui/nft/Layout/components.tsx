@@ -1,7 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import tokens, { QUERY } from 'styles/tokens';
-import { colors } from 'styles';
 
 const { layout, spacing, buttons, border } = tokens;
 const { desktop, mobile } = layout.padding;
