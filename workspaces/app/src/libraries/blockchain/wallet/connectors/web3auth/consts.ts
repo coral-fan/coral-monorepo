@@ -12,7 +12,7 @@ export const WEB3AUTH = {
     'google',
     'twitter',
     'discord',
-    'apple',
+    // 'apple',
     'twitch',
     'facebook',
     // 'reddit',
