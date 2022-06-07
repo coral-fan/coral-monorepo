@@ -40,7 +40,7 @@ const ModalControlContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 100%;
-  z-index: 2;
+  z-index: 2147483647;
 `;
 
 const ContentContainer = styled.div`
