@@ -1,5 +1,5 @@
 import { AVALANCHE } from 'consts';
-import { catchError, fromEvent, map, Observable, of, retry, startWith } from 'rxjs';
+import { catchError, fromEvent, map, Observable, of, retry, startWith, tap } from 'rxjs';
 
 export const fromMetaMaskEvent = <T>(eventName: string) => {
   if (window.ethereum === undefined) {
@@ -17,12 +17,6 @@ interface BraveNavigator extends Navigator {
   };
 }
 
-// TODO: revisit to see if this is the best way to approach this. very ugly solution...hate brave browser 😠
-/**
- * why the code below is so convoluted:
- * Brave browser injects it's own ethereum object into the window that has a similar shape as the MetaMask ethereum object
- * as a result, ethereum.chainId is initialized to 0x1 (Ethereum mainnet), and we need to poll to ensure we're picking up the chainID from MetaMask
- **/
 const isBrowserBrave = () =>
   typeof (window.navigator as BraveNavigator).brave?.isBrave === 'function';
 
@@ -30,20 +24,21 @@ const isBrowserBrave = () =>
 const getChainId = () => window.ethereum?.chainId?.toLowerCase();
 
 export const getIsNetworkSupported$ = () => {
-  let shouldPollMetaMask = isBrowserBrave();
+  let shouldPollMetaMask = true;
   return getChainIdChanged$().pipe(
-    // startWith triggers the pipeline without any chain id changed events needing to be emitted
-    startWith(undefined),
-    // tap(console.log),
+    map((chainId) => chainId?.toLowerCase()),
+    startWith(getChainId()),
     map((_chainId) => {
-      // lowercase in case chainId is capitalized for some reason
-      const chainId = _chainId?.toLowerCase() ?? getChainId();
-
+      // retry logic doesn't update chainId value (so if undefined, stays undefined for retries), so need to retrieve if value is nullish
+      const chainId = _chainId ?? getChainId();
       if (shouldPollMetaMask) {
-        // TODO: may need to check for null values. there used to be an issue where value initialized to null, even though ethereum was injected, but need to double check
-        if (chainId === '0x1') {
+        /*
+         * chainId is initially nullish when app loads on Chrome
+         * on Brave, chainId is initially 0x1 due to injected Brave wallet
+         */
+        if (!chainId || (chainId === '0x1' && isBrowserBrave())) {
           //  error is thrown here so retry will trigger
-          throw 'MetaMask chain ID is potentially uninitialized in Brave Browser.';
+          throw 'Polling MetaMask.';
         }
         shouldPollMetaMask = false;
       }
@@ -56,7 +51,7 @@ export const getIsNetworkSupported$ = () => {
       // set this to true so retry logic won't trigger anymore
       shouldPollMetaMask = false;
       const chainId = getChainId();
-      // returns observable here because this is what' expected by catchError
+      // returns observable here because this is what is expected by catchError
       return of(chainId === AVALANCHE.CHAIN_ID.HEX);
     })
   );
