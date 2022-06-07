@@ -36,6 +36,7 @@ const ModalContainer = styled.div<ModalHasControlButton>`
   }
 `;
 
+// TODO: restore z-index after implementing home page in house?
 const ModalControlContainer = styled.div`
   display: flex;
   justify-content: flex-end;
