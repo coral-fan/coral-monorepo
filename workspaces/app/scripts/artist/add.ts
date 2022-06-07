@@ -17,8 +17,7 @@ const artist: ArtistData = {
     spotify: 'test',
     soundcloud: 'test',
   },
-  collections: [],
-  assets: [],
+  collectionIds: [],
 };
 
 const addArtist = async () => {
