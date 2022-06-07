@@ -9,11 +9,11 @@ import { AssetInfoProps } from '../PaymentModal/components/AssetInfo';
 import { PaymentModal } from '../PaymentModal';
 import { FadeOutInSwitchAnimation } from 'libraries/animation';
 import { useIsAuthenticated, useLogin } from 'libraries/authentication';
-import { SignInModal, useSignInModalState } from 'components/app';
 import { Details, useUserUid } from 'libraries/models';
 import { getUserTokenBalance$ } from 'libraries/blockchain/observables';
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
+import { SignInModal, useOpenSignInModal } from 'components/app';
 
 interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
   numMinted?: number;
@@ -55,7 +55,7 @@ export const DropOrAvailable = ({
 
   const isAuthenticated = useIsAuthenticated();
   const { isLoggingIn } = useLogin();
-  const { openModal } = useSignInModalState();
+  const openSignInModal = useOpenSignInModal();
   const userId = useUserUid();
 
   const closePaymentModal = useCallback(() => setIsPaymentModalOpen(false), []);
@@ -65,9 +65,9 @@ export const DropOrAvailable = ({
       isAuthenticated && !isSoldOut
         ? setIsPaymentModalOpen(true)
         : !isAuthenticated && !isSoldOut
-        ? openModal()
+        ? openSignInModal()
         : null,
-    [isSoldOut, isAuthenticated, openModal]
+    [isSoldOut, isAuthenticated, openSignInModal]
   );
 
   /*

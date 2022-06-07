@@ -1,11 +1,11 @@
 // TODO: implement home page in house
 /* eslint-disable @next/next/no-img-element */
-import { useSignInModalState } from 'components/app';
 import { useIsAuthenticated } from 'libraries/authentication';
+import { useOpenSignInModal } from 'components/app';
 
 export const Home = () => {
-  const { openModal } = useSignInModalState();
-  const openSignUpModal = () => openModal({ isSignUp: true });
+  const handleOpenSignUpModal = useOpenSignInModal({ isSignUp: true });
+
   const isAuthenticated = useIsAuthenticated();
   return (
     <div>
@@ -36,7 +36,7 @@ export const Home = () => {
               Sign up
             </div>
             <button
-              onClick={openSignUpModal}
+              onClick={handleOpenSignUpModal}
               disabled={isAuthenticated}
               className="absolute top-0 left-0 w-full h-full z-10"
             ></button>
@@ -131,7 +131,7 @@ export const Home = () => {
             </div>
           </div>
           <button
-            onClick={openSignUpModal}
+            onClick={handleOpenSignUpModal}
             disabled={isAuthenticated}
             className="absolute top-0 left-0 w-full h-full z-10"
           ></button>
@@ -327,7 +327,7 @@ export const Home = () => {
               </p>
             </div>
             <button
-              onClick={openSignUpModal}
+              onClick={handleOpenSignUpModal}
               disabled={isAuthenticated}
               className="absolute top-0 left-0 w-full h-full z-10"
             ></button>
