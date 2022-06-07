@@ -112,7 +112,6 @@ const addCollection = async (projectName: string) => {
   await collectionRef.set(collection);
 
   await artistRef.update({
-    collections: FieldValue.arrayUnion(address),
     collectionIds: FieldValue.arrayUnion(address),
   });
 
