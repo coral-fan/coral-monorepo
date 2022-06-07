@@ -14,10 +14,17 @@ contract CoralNftV1 is ERC721, Ownable, AvaxUsd {
   uint256 public maxSupply;
   uint8 public maxTokensPerWallet;
   string private baseTokenURI;
+  uint256 public saleStartTime;
 
-  bool public isSaleActive = false;
+  bool public isSaleActive = true;
 
   mapping(address => bool) private _relayList;
+
+  modifier MintOpen() {
+    require(isSaleActive, 'Sale not active');
+    require(block.timestamp >= saleStartTime, 'Sale has not started yet');
+    _;
+  }
 
   event RelayMint(uint256 indexed tokenId);
 
@@ -27,12 +34,14 @@ contract CoralNftV1 is ERC721, Ownable, AvaxUsd {
     uint256 _usdPricePerToken,
     uint256 _maxSupply,
     uint8 _maxTokensPerWallet,
-    string memory _baseTokenURI
+    string memory _baseTokenURI,
+    uint256 _saleStartTime
   ) ERC721(_name, _symbol) {
     usdPricePerToken = _usdPricePerToken;
     maxSupply = _maxSupply;
     maxTokensPerWallet = _maxTokensPerWallet;
     baseTokenURI = _baseTokenURI;
+    saleStartTime = _saleStartTime;
 
     // Start token count at 1;
     _tokenIds.increment();
@@ -52,8 +61,7 @@ contract CoralNftV1 is ERC721, Ownable, AvaxUsd {
     return baseTokenURI;
   }
 
-  function relayMint(address to) external {
-    require(isSaleActive, 'Sale not active');
+  function relayMint(address to) external MintOpen {
     require(_relayList[msg.sender] == true, 'Not on relay list');
     require(balanceOf(to) < maxTokensPerWallet, 'Wallet already owns maximum amount');
 
@@ -66,8 +74,7 @@ contract CoralNftV1 is ERC721, Ownable, AvaxUsd {
     emit RelayMint(newTokenID);
   }
 
-  function publicMint() external payable {
-    require(isSaleActive, 'Sale not active');
+  function publicMint() external payable MintOpen {
     require(balanceOf(msg.sender) < maxTokensPerWallet, 'Wallet already owns maximum amount');
 
     uint256 avaxTokenPrice = _getAvaxPrice(usdPricePerToken);
@@ -100,7 +107,11 @@ contract CoralNftV1 is ERC721, Ownable, AvaxUsd {
     isSaleActive = _newState;
   }
 
-  function getTokenPriceInAvax() public view returns (uint256) {
+  function setSaleStartTime(uint256 _newTime) external onlyOwner {
+    saleStartTime = _newTime;
+  }
+
+  function getTokenPriceInAvax() external view returns (uint256) {
     return _getAvaxPrice(usdPricePerToken);
   }
 }
