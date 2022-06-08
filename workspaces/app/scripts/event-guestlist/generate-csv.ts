@@ -5,7 +5,7 @@ import { stringify } from 'csv-stringify';
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
 import { EventGuestLists, PublicUserData } from 'libraries/models';
 
-const collectionId = '0xF6A817E0af31D1F8acCF9E301C2a9bB08962c160';
+const collectionId = '0x5B1C9E4381c8624B76059B1083aC5bFB27b91b2A';
 
 const columns = ['Username', 'User ID', 'Has Entered Event'];
 
