@@ -7,11 +7,19 @@ import hre from 'hardhat';
 /*
 Update constructorArgs here
 */
-import config from '../projects/<YOUR_PROJECT_NAME_HERE>/config.json';
+import config from '../projects/house-harkonnen-genesis-drop/config.json';
 const constructorArgs = config.contract;
 const contractName = constructorArgs.contractName;
 
 const ONLY_OWNER_ERROR_MESSAGE = 'Ownable: caller is not the owner';
+
+const setTime = async () => {
+  const todayInSeconds = Math.floor(new Date().getTime() / 1000) - 1000;
+
+  if (todayInSeconds < constructorArgs.saleStartTime) {
+    await ethers.provider.send('evm_mine', [constructorArgs.saleStartTime]);
+  }
+};
 
 describe(`Running Tests on ${contractName}...`, () => {
   let NFTContract: ContractFactory;
@@ -24,11 +32,20 @@ describe(`Running Tests on ${contractName}...`, () => {
 
   beforeEach(async () => {
     // Get the ContractFactory and Signers here.
-    NFTContract = await hre.ethers.getContractFactory(constructorArgs.contractName);
+    NFTContract = await hre.ethers.getContractFactory(contractName);
     [owner, addr1, addr2, relayer1, relayer2] = await hre.ethers.getSigners();
 
-    const { name, symbol, usdPricePerToken, maxSupply, maxTokensPerWallet, tokenURI } =
-      constructorArgs;
+    const {
+      name,
+      symbol,
+      usdPricePerToken,
+      maxSupply,
+      maxTokensPerWallet,
+      tokenURI,
+      saleStartTime,
+      royaltyFeeRecipient,
+      royaltyFeeNumerator,
+    } = constructorArgs;
 
     contract = await NFTContract.deploy(
       name,
@@ -36,10 +53,13 @@ describe(`Running Tests on ${contractName}...`, () => {
       usdPricePerToken,
       maxSupply,
       maxTokensPerWallet,
-      tokenURI
+      tokenURI,
+      saleStartTime,
+      royaltyFeeRecipient,
+      royaltyFeeNumerator
     );
 
-    await contract.connect(owner).setSaleState(true);
+    // await contract.connect(owner).setSaleState(true);
   });
 
   describe('Deployment', () => {
@@ -52,8 +72,62 @@ describe(`Running Tests on ${contractName}...`, () => {
     });
   });
 
+  describe('Prior to Drop Date Mints', () => {
+    it('Public mint should revert because prior to drop date', async () => {
+      const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
+
+      await expect(
+        contract.connect(addr1).publicMint({ value: estimatedTokenPrice })
+      ).to.be.revertedWith('Sale has not started yet');
+    });
+
+    it('Relay mint should revert because prior to drop date', async () => {
+      await contract.connect(owner).addRelayAddr(relayer1.address);
+      await expect(contract.connect(relayer1).relayMint(relayer1.address)).to.be.revertedWith(
+        'Sale has not started yet'
+      );
+    });
+  });
+
+  describe('Airdrop Mints', () => {
+    const TOTAL_ADDRESSES = Math.ceil(constructorArgs.maxSupply / 3);
+    it('Should successfully airdrop NFTS', async () => {
+      const wallets = [];
+      for (let i = 1; i <= TOTAL_ADDRESSES; i++) {
+        let wallet = ethers.Wallet.createRandom();
+        wallets.push(wallet.address);
+      }
+
+      await contract.connect(owner).airdropMint(wallets);
+
+      expect(await contract.totalSupply()).to.equal(ethers.BigNumber.from(TOTAL_ADDRESSES));
+      expect(await contract.ownerOf(2)).to.equal(wallets[1]);
+      expect(await contract.ownerOf(3)).to.equal(wallets[2]);
+    });
+
+    it('Should revert because called by non-owner', async () => {
+      await expect(
+        contract.connect(addr1).airdropMint([addr1.address, addr2.address])
+      ).to.be.revertedWith(ONLY_OWNER_ERROR_MESSAGE);
+    });
+
+    it('Should revert because airdropMint is closed', async () => {
+      await contract.connect(owner).closeAirdropMint();
+      await expect(
+        contract.connect(owner).airdropMint([addr1.address, addr2.address])
+      ).to.be.revertedWith('Airdrop mint no longer available');
+    });
+  });
+
   describe('Public Mints', () => {
     it('Should return addr1 tokenBalance of 1', async () => {
+      /*
+        BLOCK TIMESTAMP IS UPDATED HERE
+      */
+      setTime();
+      /*
+        FUTURE TESTS USING FAST-FORWARDED TIMESTAMP
+      */
       const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
       await contract.connect(addr1).publicMint({ value: estimatedTokenPrice });
 
@@ -185,6 +259,24 @@ describe(`Running Tests on ${contractName}...`, () => {
       );
     });
 
+    it('Owner should be able to revoke all relayList privileges', async () => {
+      await contract.connect(owner).addRelayAddr(relayer1.address);
+      await contract.connect(owner).addRelayAddr(relayer2.address);
+
+      await contract.connect(relayer1).relayMint(addr1.address);
+      await contract.connect(relayer2).relayMint(addr1.address);
+
+      await contract.connect(owner).revokeAllRelayAddrPrivileges();
+
+      await expect(contract.connect(relayer1).relayMint(addr1.address)).to.be.revertedWith(
+        'Not on relay list'
+      );
+
+      await expect(contract.connect(relayer2).relayMint(addr1.address)).to.be.revertedWith(
+        'Not on relay list'
+      );
+    });
+
     it('Withdraw should revert because caller is not the owner', async () => {
       await expect(contract.connect(addr1).withdraw()).to.be.revertedWith(ONLY_OWNER_ERROR_MESSAGE);
     });
@@ -249,10 +341,12 @@ describe(`Running Tests on ${contractName}...`, () => {
       expect(await contract.tokenURI(1)).to.equal('ipfs://newTokenURI/metadata.json');
     });
 
-    it('Should revert because caller is not owner', async () => {
+    it('Should revert because sale is not active', async () => {
+      await contract.connect(owner).setSaleState(false);
+      const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
       await expect(
-        contract.connect(addr1).setTokenURI('ipfs://newTokenURI/metadata.json')
-      ).to.be.revertedWith(ONLY_OWNER_ERROR_MESSAGE);
+        contract.connect(addr1).publicMint({ value: estimatedTokenPrice })
+      ).to.be.revertedWith('Sale not active');
     });
   });
 });
