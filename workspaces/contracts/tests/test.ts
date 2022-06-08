@@ -7,7 +7,7 @@ import hre from 'hardhat';
 /*
 Update constructorArgs here
 */
-import config from '../projects/house-harkonnen-genesis-drop/config.json';
+import config from '../projects/test-mint-100x/config.json';
 const constructorArgs = config.contract;
 const contractName = constructorArgs.contractName;
 
@@ -29,11 +29,12 @@ describe(`Running Tests on ${contractName}...`, () => {
   let addr2: SignerWithAddress;
   let relayer1: SignerWithAddress;
   let relayer2: SignerWithAddress;
+  let newOwner: SignerWithAddress;
 
   beforeEach(async () => {
     // Get the ContractFactory and Signers here.
     NFTContract = await hre.ethers.getContractFactory(contractName);
-    [owner, addr1, addr2, relayer1, relayer2] = await hre.ethers.getSigners();
+    [owner, addr1, addr2, relayer1, relayer2, newOwner] = await hre.ethers.getSigners();
 
     const {
       name,
@@ -347,6 +348,32 @@ describe(`Running Tests on ${contractName}...`, () => {
       await expect(
         contract.connect(addr1).publicMint({ value: estimatedTokenPrice })
       ).to.be.revertedWith('Sale not active');
+    });
+
+    it('Revoke all privileges should revert because caller is not the owner', async () => {
+      await expect(contract.connect(addr1).revokeAllRelayAddrPrivileges()).to.be.revertedWith(
+        ONLY_OWNER_ERROR_MESSAGE
+      );
+    });
+
+    it('Should transfer ownership, new owner should be able to withdraw', async () => {
+      await expect(contract.connect(newOwner).withdraw()).to.be.revertedWith(
+        ONLY_OWNER_ERROR_MESSAGE
+      );
+      await contract.connect(owner).transferOwnership(newOwner.address);
+
+      const provider = waffle.provider;
+      const startingBalance = await newOwner.getBalance();
+      const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
+      await contract.connect(addr1).publicMint({ value: estimatedTokenPrice });
+
+      const tx = await contract.connect(newOwner).withdraw();
+      const receipt = await tx.wait();
+      const gasSpent = receipt.gasUsed.mul(receipt.effectiveGasPrice);
+
+      expect(await provider.getBalance(newOwner.address)).to.equal(
+        estimatedTokenPrice.sub(gasSpent).add(startingBalance)
+      );
     });
   });
 });
