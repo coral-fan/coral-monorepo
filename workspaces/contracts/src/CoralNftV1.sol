@@ -20,6 +20,7 @@ contract CoralNftV1 is ERC721, ERC2981, Ownable, AvaxUsd {
   bool private airdropMintOpen = true;
   bool public isSaleActive = true;
 
+  // Manage approved relay list
   mapping(address => bool) private _relayList;
   address[] private _relayAddresses;
 
@@ -118,12 +119,11 @@ contract CoralNftV1 is ERC721, ERC2981, Ownable, AvaxUsd {
   }
 
   /// Admin
-  function withdraw() external onlyOwner {
+  function withdraw() external payable onlyOwner {
     uint256 balance = address(this).balance;
-    require(balance > 0, 'Nothing to withdraw');
 
-    (bool success, ) = payable(msg.sender).call{ value: balance }('');
-    require(success, 'Transfer failed');
+    require(balance > 0, 'Nothing to withdraw');
+    payable(msg.sender).transfer(balance);
   }
 
   function addRelayAddr(address _newRelayAddr) external onlyOwner {
