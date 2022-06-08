@@ -74,7 +74,7 @@ export const SignInModal = () => {
       `}
     >
       <Button onClick={loginWithMetaMask} disabled={!isMetaMaskInjected}>
-        Sign Up With MetaMask
+        {actionText} With MetaMask
       </Button>
       <span>OR</span>
       <Button onClick={loginWithWeb3Auth}>{actionText} With Social Login</Button>
