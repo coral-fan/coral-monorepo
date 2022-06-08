@@ -29,7 +29,8 @@ export const LogoutManager = () => {
     if (isMetaMaskInjected()) {
       const subscription = fromMetaMaskEvent('accountsChanged').subscribe(() => {
         if (!isLoggingIn) {
-          logout();
+          // page reload required to prevent accountsChanged event from firing after being auto-logged out and logging into another account and using metamask
+          logout().then(() => window.location.reload());
         }
       });
 
