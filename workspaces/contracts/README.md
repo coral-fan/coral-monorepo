@@ -13,9 +13,11 @@
 
 - From `contracts`, run `node scripts/create.mjs "<PROJECT_NAME>"` and follow the prompts. This creates an initial configuration file.
 
+- For `dropDate`, please enter the date and time in your local environment, the output will be converted to UTC time.
+
 - After the script finishes running, add the image to the new project directory's image folder, and name it `image.png`.
 
-- Review and update the `config.json` as needed - please add values for `dropDate`, `details` and `gatedContent`.
+- Review and update the `config.json` as needed - please add values for `details` and `gatedContent`.
 
 ## Test
 
@@ -40,7 +42,5 @@
 - Add the contract address to both the `Relay Mint Events` and `Transfer Events` Sentinels
 
 ## Update Smart Contract As Needed
-
-- Add Relay Address
 
 - Transfer ownership
