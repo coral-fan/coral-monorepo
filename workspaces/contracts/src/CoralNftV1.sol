@@ -4,9 +4,10 @@ pragma solidity ^0.8.14;
 import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
 import '@openzeppelin/contracts/utils/Counters.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
+import '@openzeppelin/contracts/token/common/ERC2981.sol';
 import './AvaxUsd.sol';
 
-contract CoralNftV1 is ERC721, Ownable, AvaxUsd {
+contract CoralNftV1 is ERC721, ERC2981, Ownable, AvaxUsd {
   using Counters for Counters.Counter;
   Counters.Counter private _tokenIds;
 
@@ -16,9 +17,11 @@ contract CoralNftV1 is ERC721, Ownable, AvaxUsd {
   string private baseTokenURI;
   uint256 public saleStartTime;
 
+  bool private airdropMintOpen = true;
   bool public isSaleActive = true;
 
   mapping(address => bool) private _relayList;
+  address[] private _relayAddresses;
 
   modifier MintOpen() {
     require(isSaleActive, 'Sale not active');
@@ -35,7 +38,9 @@ contract CoralNftV1 is ERC721, Ownable, AvaxUsd {
     uint256 _maxSupply,
     uint8 _maxTokensPerWallet,
     string memory _baseTokenURI,
-    uint256 _saleStartTime
+    uint256 _saleStartTime,
+    address _royaltyRecipient,
+    uint96 _royaltyFeeNumerator
   ) ERC721(_name, _symbol) {
     usdPricePerToken = _usdPricePerToken;
     maxSupply = _maxSupply;
@@ -45,9 +50,13 @@ contract CoralNftV1 is ERC721, Ownable, AvaxUsd {
 
     // Start token count at 1;
     _tokenIds.increment();
+
+    // Set Royalties
+    _setDefaultRoyalty(_royaltyRecipient, _royaltyFeeNumerator);
   }
 
-  function totalSupply() public view returns (uint256) {
+  /// Tokens
+  function totalSupply() external view returns (uint256) {
     // Subtract 1 since Token count starts at 1;
     return _tokenIds.current() - 1;
   }
@@ -61,6 +70,7 @@ contract CoralNftV1 is ERC721, Ownable, AvaxUsd {
     return baseTokenURI;
   }
 
+  /// Minting
   function relayMint(address to) external MintOpen {
     require(_relayList[msg.sender] == true, 'Not on relay list');
     require(balanceOf(to) < maxTokensPerWallet, 'Wallet already owns maximum amount');
@@ -87,6 +97,27 @@ contract CoralNftV1 is ERC721, Ownable, AvaxUsd {
     _tokenIds.increment();
   }
 
+  function airdropMint(address[] memory _recipients) external onlyOwner {
+    require(airdropMintOpen, 'Airdrop mint no longer available');
+
+    for (uint256 i = 0; i < _recipients.length; ) {
+      uint256 newTokenID = _tokenIds.current();
+      require(newTokenID <= maxSupply, 'Already Sold Out');
+
+      _mint(_recipients[i], newTokenID);
+      _tokenIds.increment();
+
+      unchecked {
+        ++i;
+      }
+    }
+  }
+
+  function closeAirdropMint() external onlyOwner {
+    airdropMintOpen = false;
+  }
+
+  /// Admin
   function withdraw() external onlyOwner {
     uint256 balance = address(this).balance;
     require(balance > 0, 'Nothing to withdraw');
@@ -97,10 +128,21 @@ contract CoralNftV1 is ERC721, Ownable, AvaxUsd {
 
   function addRelayAddr(address _newRelayAddr) external onlyOwner {
     _relayList[_newRelayAddr] = true;
+    _relayAddresses.push(_newRelayAddr);
   }
 
   function revokeRelayAddrPrivilege(address _relayAddr) external onlyOwner {
     _relayList[_relayAddr] = false;
+  }
+
+  function revokeAllRelayAddrPrivileges() external onlyOwner {
+    for (uint256 i = 0; i < _relayAddresses.length; ) {
+      _relayList[_relayAddresses[i]] = false;
+
+      unchecked {
+        ++i;
+      }
+    }
   }
 
   function setSaleState(bool _newState) external onlyOwner {
@@ -113,5 +155,32 @@ contract CoralNftV1 is ERC721, Ownable, AvaxUsd {
 
   function getTokenPriceInAvax() external view returns (uint256) {
     return _getAvaxPrice(usdPricePerToken);
+  }
+
+  /**
+   * @dev See {IERC165-supportsInterface}.
+   */
+  function supportsInterface(bytes4 interfaceId)
+    public
+    view
+    virtual
+    override(ERC721, ERC2981)
+    returns (bool)
+  {
+    return super.supportsInterface(interfaceId);
+  }
+
+  /**
+   * @dev See {ERC2981-_setDefaultRoyalty}.
+   */
+  function setDefaultRoyalty(address receiver, uint96 feeNumerator) external onlyOwner {
+    _setDefaultRoyalty(receiver, feeNumerator);
+  }
+
+  /**
+   * @dev See {ERC2981-_deleteDefaultRoyalty}.
+   */
+  function deleteDefaultRoyalty() external onlyOwner {
+    _deleteDefaultRoyalty();
   }
 }
