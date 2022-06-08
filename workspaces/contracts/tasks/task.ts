@@ -12,10 +12,18 @@ import {
   parseProjectName,
   sleep,
 } from './utils/utils';
+import { Contract, ContractFactory } from 'ethers';
 
 config();
 
 const NFT_STORAGE_KEY = process.env.NFT_STORAGE_API_KEY;
+if (!process.env.FUJI_TESTNET_PRIVATE_KEY) {
+  throw Error('Environmental variable not found');
+}
+
+const PK = process.env.FUJI_TESTNET_PRIVATE_KEY;
+
+const RELAY_ADDRESSES = ['0x070a9c67173b6fef04802caff90388fa3edfec81'];
 
 // TODO: Separate tasks and subtasks in more modular way (different files and directories)
 task('create-and-deploy', 'Creates and Deploys a new Project')
@@ -51,6 +59,10 @@ task('create-and-deploy', 'Creates and Deploys a new Project')
     console.log('Starting verification now...');
 
     await hre.run('verify-contract', { verifyArgs });
+
+    console.log('Adding relay addresses...');
+
+    await hre.run('add-relay-addresses', { address });
   });
 
 subtask('upload', 'Upload metadata via nft.storage')
@@ -75,6 +87,8 @@ subtask('upload', 'Upload metadata via nft.storage')
       saleStartTime,
       description,
       attributes,
+      royaltyFeeRecipient,
+      royaltyFeeNumerator,
     } = JSON.parse(projectData).contract;
 
     if (!image) {
@@ -100,6 +114,8 @@ subtask('upload', 'Upload metadata via nft.storage')
       maxTokensPerWallet,
       baseTokenURI: '',
       saleStartTime,
+      royaltyFeeRecipient,
+      royaltyFeeNumerator,
     };
 
     if (upload) {
@@ -119,16 +135,18 @@ subtask('deploy-contract', 'Deploy contract')
 
     // Passing Coral in directly as contract name because otherwise
     // hre.ethers was pulling in the Chainlink ABI (?)
-    const contractFactory = await hre.ethers.getContractFactory('CoralNftV1');
+    const contractFactory: ContractFactory = await hre.ethers.getContractFactory('CoralNftV1');
 
-    const contract = await contractFactory.deploy(
+    const contract: Contract = await contractFactory.deploy(
       args.name,
       args.symbol,
       args.usdPricePerToken,
       args.maxSupply,
       args.maxTokensPerWallet,
       args.baseTokenURI,
-      args.saleStartTime
+      args.saleStartTime,
+      args.royaltyFeeRecipient,
+      args.royaltyFeeNumerator
     );
 
     await contract.deployed();
@@ -150,6 +168,8 @@ subtask('verify-contract', 'Verify contract')
       maxTokensPerWallet,
       baseTokenURI,
       saleStartTime,
+      royaltyFeeRecipient,
+      royaltyFeeNumerator,
     } = JSON.parse(verifyArgs);
 
     try {
@@ -163,6 +183,8 @@ subtask('verify-contract', 'Verify contract')
           maxTokensPerWallet,
           baseTokenURI,
           saleStartTime,
+          royaltyFeeRecipient,
+          royaltyFeeNumerator,
         ],
       });
     } catch (e: any) {
@@ -170,6 +192,26 @@ subtask('verify-contract', 'Verify contract')
         console.log('Contract is already verified!');
       } else {
         console.log(e.message);
+      }
+    }
+  });
+
+subtask('add-relay-addresses', 'Set Relay Addresses')
+  .addParam('address', 'Deployed contract Address')
+  .setAction(async ({ address }, { ethers }) => {
+    const provider = ethers.provider;
+    const signer = new ethers.Wallet(PK, provider);
+
+    const contractFactory: ContractFactory = await ethers.getContractFactory('CoralNftV1');
+    const contract = new ethers.Contract(address, contractFactory.interface, signer);
+
+    for (let i = 0; i < RELAY_ADDRESSES.length; i++) {
+      const txn = await contract.addRelayAddr(RELAY_ADDRESSES[i]);
+      const receipt = await txn.wait();
+      if (receipt.status === 1) {
+        console.log(`Relay Address: ${RELAY_ADDRESSES[i]} added...`);
+      } else {
+        console.log(`Relay Address not added!`);
       }
     }
   });
