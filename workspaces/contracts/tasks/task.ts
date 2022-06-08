@@ -14,30 +14,36 @@ import {
 } from './utils/utils';
 import { Contract, ContractFactory } from 'ethers';
 import { SentinelClient } from 'defender-sentinel-client';
-
+import type { CreateBlockSubscriberResponse } from 'defender-sentinel-client/lib/models/subscriber';
 config();
 
 if (!process.env.FUJI_TESTNET_PRIVATE_KEY) {
   throw Error(`Missing environment variable: FUJI_TESTNET_PRIVATE_KEY`);
 }
 
-if (!process.env.DEFENDER_API_KEY) {
+if (!process.env.DEFENDER_TEAM_API_KEY) {
   throw Error(`Missing environment variable: DEFENDER_API_KEY`);
 }
 
-if (!process.env.DEFENDER_SECRET_KEY) {
+if (!process.env.DEFENDER_TEAM_SECRET_KEY) {
   throw Error(`Missing environment variable: DEFENDER_SECRET_KEY`);
 }
 
-const DEFENDER_API_KEY = process.env.DEFENDER_API_KEY;
-const DEFENDER_SECRET_KEY = process.env.DEFENDER_SECRET_KEY;
+const DEFENDER_TEAM_API_KEY = process.env.DEFENDER_TEAM_API_KEY;
+const DEFENDER_TEAM_SECRET_KEY = process.env.DEFENDER_TEAM_SECRET_KEY;
 const NFT_STORAGE_KEY = process.env.NFT_STORAGE_API_KEY;
 const PK = process.env.FUJI_TESTNET_PRIVATE_KEY;
+
 const RELAY_ADDRESSES = ['0x070a9c67173b6fef04802caff90388fa3edfec81'];
+const SENTINEL_IDS = [
+  '7b0b2398-31d7-4c93-a560-efb85e541ce4',
+  'b89eefbf-5f44-466c-9c7f-fe9251db0f6a',
+  'f4302190-7921-4b82-89c9-bab6423c0c88',
+];
 
 const sentinelClient = new SentinelClient({
-  apiKey: DEFENDER_API_KEY,
-  apiSecret: DEFENDER_SECRET_KEY,
+  apiKey: DEFENDER_TEAM_API_KEY,
+  apiSecret: DEFENDER_TEAM_SECRET_KEY,
 });
 
 // TODO: Separate tasks and subtasks in more modular way (different files and directories)
@@ -78,6 +84,12 @@ task('create-and-deploy', 'Creates and Deploys a new Project')
     console.log('Adding relay addresses...');
 
     await hre.run('add-relay-addresses', { address });
+
+    console.log('Updating sentinels...');
+
+    const newAddress = address;
+
+    await hre.run('update-sentinels', { newAddress });
   });
 
 subtask('upload', 'Upload metadata via nft.storage')
@@ -231,8 +243,34 @@ subtask('add-relay-addresses', 'Set Relay Addresses')
     }
   });
 
-task('update-sentinels', 'Update Sentinels', async () => {
-  const sentinelResponse = await sentinelClient.get('f4302190-7921-4b82-89c9-bab6423c0c88');
-  console.log(sentinelResponse);
-  console.log(sentinelResponse.addressRules.map((rule) => rule.addresses.join(',')));
-});
+task('update-sentinels', 'Update Sentinels')
+  .addParam('newAddress', 'Deployed contract Address')
+  .setAction(async ({ newAddress }) => {
+    for (let i = 0; i < SENTINEL_IDS.length; i++) {
+      const sentinelId = SENTINEL_IDS[i];
+
+      const sentinelResponse = await sentinelClient.get(sentinelId);
+      const createBlockSubscriberResponse = sentinelResponse as CreateBlockSubscriberResponse;
+
+      if (createBlockSubscriberResponse.addressRules === undefined) {
+        throw 'sentinelResponse does not match interface for CreateBlockSubscriberResponse';
+      }
+
+      const addressesByRule = createBlockSubscriberResponse.addressRules.map(
+        (rule) => rule.addresses
+      );
+
+      // Assumes single rule
+      // TODO: Research Sentinel rules
+      const addresses = addressesByRule[0];
+
+      addresses.push(newAddress);
+
+      // Ensure unique addresses
+      const addressesSet = new Set(addresses);
+      const uniqueAddresses = [...addressesSet];
+
+      await sentinelClient.update(sentinelId, { type: 'BLOCK', addresses: uniqueAddresses });
+      console.log(`Added ${newAddress} to ${sentinelResponse.name}`);
+    }
+  });
