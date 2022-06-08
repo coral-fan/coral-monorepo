@@ -13,17 +13,32 @@ import {
   sleep,
 } from './utils/utils';
 import { Contract, ContractFactory } from 'ethers';
+import { SentinelClient } from 'defender-sentinel-client';
 
 config();
 
-const NFT_STORAGE_KEY = process.env.NFT_STORAGE_API_KEY;
 if (!process.env.FUJI_TESTNET_PRIVATE_KEY) {
-  throw Error('Environmental variable not found');
+  throw Error(`Missing environment variable: FUJI_TESTNET_PRIVATE_KEY`);
 }
 
-const PK = process.env.FUJI_TESTNET_PRIVATE_KEY;
+if (!process.env.DEFENDER_API_KEY) {
+  throw Error(`Missing environment variable: DEFENDER_API_KEY`);
+}
 
+if (!process.env.DEFENDER_SECRET_KEY) {
+  throw Error(`Missing environment variable: DEFENDER_SECRET_KEY`);
+}
+
+const DEFENDER_API_KEY = process.env.DEFENDER_API_KEY;
+const DEFENDER_SECRET_KEY = process.env.DEFENDER_SECRET_KEY;
+const NFT_STORAGE_KEY = process.env.NFT_STORAGE_API_KEY;
+const PK = process.env.FUJI_TESTNET_PRIVATE_KEY;
 const RELAY_ADDRESSES = ['0x070a9c67173b6fef04802caff90388fa3edfec81'];
+
+const sentinelClient = new SentinelClient({
+  apiKey: DEFENDER_API_KEY,
+  apiSecret: DEFENDER_SECRET_KEY,
+});
 
 // TODO: Separate tasks and subtasks in more modular way (different files and directories)
 task('create-and-deploy', 'Creates and Deploys a new Project')
@@ -215,3 +230,9 @@ subtask('add-relay-addresses', 'Set Relay Addresses')
       }
     }
   });
+
+task('update-sentinels', 'Update Sentinels', async () => {
+  const sentinelResponse = await sentinelClient.get('f4302190-7921-4b82-89c9-bab6423c0c88');
+  console.log(sentinelResponse);
+  console.log(sentinelResponse.addressRules.map((rule) => rule.addresses.join(',')));
+});
