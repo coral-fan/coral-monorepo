@@ -8,6 +8,8 @@
   - `SNOWTRACE_API_KEY`
   - `FUJI_TESTNET_PRIVATE_KEY`
   - `NFT_STORAGE_API_KEY`
+  - `DEFENDER_TEAM_API_KEY`
+  - `DEFENDER_TEAM_SECRET_KEY`
 
 ## Setup Project
 
@@ -40,6 +42,8 @@
 ## Add Contract Address to Sentinel
 
 - Add the contract address to both the `Relay Mint Events` and `Transfer Events` Sentinels
+
+## Run Airdrop Script (if applicable)
 
 ## Update Smart Contract As Needed
 
