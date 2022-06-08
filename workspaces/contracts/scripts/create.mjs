@@ -50,6 +50,8 @@ const initialConfig = {
     maxSupply: 0,
     maxTokensPerWallet: 2,
     saleStartTime: 0,
+    royaltyFeeRecipient: '',
+    royaltyFeeNumerator: 0,
     description: '',
     tokenURI: '',
     numAttributes: 0,
@@ -213,6 +215,28 @@ const addSalesStartingTime = () => {
   });
 };
 
+/*
+Royalty Fee Setup
+*/
+const addRoyaltyFeeRecipient = () => {
+  return new Promise((resolve, reject) => {
+    rl.question('What address should ERC-2981 Royalty Fees go to? ', (answer) => {
+      initialConfig.contract.royaltyFeeRecipient = answer;
+      resolve();
+    });
+  });
+};
+
+const addRoyaltyFeeNumerator = () => {
+  return new Promise((resolve, reject) => {
+    rl.question('How many basis points (e.g. 5% is 500) is the Royalty Fee? ', (answer) => {
+      initialConfig.contract.royaltyFeeNumerator = parseInt(answer);
+      console.log(`Royalty Fee: ${answer}, or ${(answer / 10000).toFixed(2)}%`);
+      resolve();
+    });
+  });
+};
+
 const addArtistId = () => {
   return new Promise((resolve, reject) => {
     rl.question("What is the artist's ID (wallet address)? ", (answer) => {
@@ -264,6 +288,8 @@ const main = async () => {
   await addMaxSupply();
   await addSalesStartingDate();
   await addSalesStartingTime();
+  await addRoyaltyFeeRecipient();
+  await addRoyaltyFeeNumerator();
   console.log(`---------------------------------------------`);
   console.log(`Next let's add artist and collection data for ${projectName}: `);
   console.log(`---------------------------------------------`);
