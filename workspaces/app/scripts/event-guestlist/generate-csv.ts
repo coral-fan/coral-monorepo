@@ -3,8 +3,7 @@ import path from 'path';
 import { stringify } from 'csv-stringify';
 
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
-import { EventGuestLists } from '../../pages/api/webhook/defender/index-event-guest.api';
-import { PublicUserData } from 'libraries/models';
+import { EventGuestLists, PublicUserData } from 'libraries/models';
 
 const collectionId = '0xF6A817E0af31D1F8acCF9E301C2a9bB08962c160';
 
