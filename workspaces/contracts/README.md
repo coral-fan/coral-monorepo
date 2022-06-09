@@ -4,6 +4,8 @@
 
 - If deploying to mainnet, you **must** update the `priceFeed` address with the correct mainnet address for the Avax-USD pair: [Chainlink Datafeed - Avalanche](https://docs.chain.link/docs/avalanche-price-feeds/)
 
+- NOTE: All script commands assume you are deploying to TESTNET, i.e. `fuji`. Update network for mainnet deployments.
+
 - Must have the following API keys set in your `contracts/.env` file:
   - `SNOWTRACE_API_KEY`
   - `FUJI_TESTNET_PRIVATE_KEY`
@@ -39,12 +41,14 @@
 
 - From `coral-monorepo` run `yarn app run-script scripts/collection/add.ts '<PROJECT_NAME>'`
 
-## Add Contract Address to Sentinel
-
-- Add the contract address to both the `Relay Mint Events` and `Transfer Events` Sentinels
-
 ## Run Airdrop Script (if applicable)
 
-## Update Smart Contract As Needed
+## Transfer Ownership
 
-- Transfer ownership
+- Populate the `CONTRACT_ADDRESS` and `NEW_OWNER_ADDRESS` fields.
+
+  - `CONTRACT_ADDRESS` refers to the contract that you are transferring ownership of.
+  - `NEW_OWNER_ADDRESS` refers to the address of the new owner that will be able to perform all `onlyOwner` functions.
+  - `NEW_OWNER_ADDRESS` _MUST BE_ one of Coral's Multi-Sig wallets.
+
+- From `contracts`, run `npx hardhat transfer-ownership --network 'fuji'`
