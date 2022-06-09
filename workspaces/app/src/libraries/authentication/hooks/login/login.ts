@@ -6,6 +6,7 @@ import { useIsLoggingIn } from '..';
 import { getNonce, getSignedAuthenticationMessage, getFirebaseCustomToken } from './utils';
 import { useRefetchPageData } from 'libraries/utils/hooks';
 import { useErrorToast, useSuccessToast } from 'libraries/utils/toasts';
+import { MetaMaskConnector } from 'libraries/blockchain/wallet/connectors';
 
 export const useLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useIsLoggingIn();
@@ -33,8 +34,13 @@ export const useLogin = () => {
           const signedMessage = await getSignedAuthenticationMessage(signer, nonce);
           const customToken = await getFirebaseCustomToken(address, signedMessage);
           await signInWithCustomToken(getAuth(), customToken);
-          await refetchPageData();
-          successToast('Signed in!');
+          if (connector instanceof MetaMaskConnector) {
+            successToast('Signed in!');
+            window.location.reload();
+          } else {
+            await refetchPageData();
+            successToast('Signed in!');
+          }
         }
       } catch (e) {
         console.error(e);
