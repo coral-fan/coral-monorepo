@@ -1,7 +1,7 @@
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { AVALANCHE, SERVER_ENVIRONMENT } from 'consts';
 import { ethers } from 'ethers';
-import { distinctUntilChanged, from, map, startWith, switchMap, withLatestFrom } from 'rxjs';
+import { distinctUntilChanged, from, map, retry, startWith, switchMap, withLatestFrom } from 'rxjs';
 import {
   ChainLinkOracleAggregatorV3__factory,
   ChainLinkOracleAggregatorV3,
@@ -37,7 +37,8 @@ export const getCurrencyPairPrice$ = (pair: CurrencyPair) => {
     withLatestFrom(decimals$),
     map(([roundData, decimals]) => ethers.utils.formatUnits(roundData.answer, decimals)),
     map((priceString) => parseFloat(priceString)),
-    distinctUntilChanged()
+    distinctUntilChanged(),
+    retry()
   );
 };
 
@@ -49,6 +50,7 @@ export const getAvaxTokenPrice$ = (collectionId: string) => {
     switchMap(() => nftContract.getTokenPriceInAvax()),
     map((price) => ethers.utils.formatEther(price)),
     map((priceString) => parseFloat(priceString)),
-    distinctUntilChanged()
+    distinctUntilChanged(),
+    retry()
   );
 };
