@@ -42,14 +42,16 @@ export const useLogin = () => {
             successToast('Signed in!');
           }
         }
-      } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- need any for error handling
+      } catch (e: any) {
         console.error(e);
-        if (e instanceof Error) {
-          if (!e.message.includes('MetaMask')) {
-            errorToast('Sign in unsuccessful. Please try again');
-          }
+        if (e.code === 4001) {
+          errorToast('User rejected transaction');
+        } else {
+          errorToast('Sign in unsuccessful. Please try again');
         }
       }
+
       setIsLoggingIn(false);
     },
     [refetchPageData, setIsLoggingIn, successToast, errorToast]
