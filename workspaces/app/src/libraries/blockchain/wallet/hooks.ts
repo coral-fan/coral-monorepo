@@ -4,11 +4,15 @@ import { initializeConnector } from '@web3-react/core';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 import { AVALANCHE } from 'consts';
-import { Web3AuthConnector, MetaMaskConnector } from './connectors';
+// ! UNCOMMENT OUT
+// import { Web3AuthConnector, MetaMaskConnector } from './connectors';
+import { MetaMaskConnector } from './connectors';
 import { useIsMetaMaskInjected } from '../metamask';
 import { getWalletBalance$ } from './observables';
 
-const getWeb3AuthConnector = (actions: Actions) => new Web3AuthConnector(actions);
+// ! UNCOMMENT OUT
+// const getWeb3AuthConnector = (actions: Actions) => new Web3AuthConnector(actions);
+const getWeb3AuthConnector = (actions: Actions) => new MetaMaskConnector(actions);
 const getMetaMaskConnector = (actions: Actions) => new MetaMaskConnector(actions);
 
 export const CONNECTOR_MAP = {
