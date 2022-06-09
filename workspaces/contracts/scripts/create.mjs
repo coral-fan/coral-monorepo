@@ -69,6 +69,7 @@ const initialConfig = {
       type: '',
       id: '',
     },
+    isInPerson: false,
   },
 };
 
@@ -249,7 +250,7 @@ const addArtistId = () => {
 };
 
 const addCollectionType = () => {
-  const answerArray = ['video', 'music', 'event', 'merch', 'all_access'];
+  const answerArray = ['video', 'music', 'stream', 'merch', 'all_access'];
   return new Promise((resolve, reject) => {
     rl.question(`What type of collection? [ ${answerArray.join(' / ')} ] `, (answer) => {
       if (answerArray.includes(answer)) {
@@ -261,6 +262,25 @@ const addCollectionType = () => {
         resolve(addCollectionType());
       }
     });
+  });
+};
+
+const addIsInPerson = () => {
+  const answerArray = ['yes', 'no'];
+  return new Promise((resolve, reject) => {
+    rl.question(
+      `Is this collection for an in-person event? [ ${answerArray.join(' / ')} ] `,
+      (answer) => {
+        if (answerArray.includes(answer)) {
+          initialConfig.collectionData.isInPerson = answer === answerArray[0] ? true : false;
+          resolve();
+        } else {
+          console.log(`Please choose one of: ${answerArray.join(' / ')}`);
+          console.log(` `);
+          resolve(addIsInPerson());
+        }
+      }
+    );
   });
 };
 
@@ -298,6 +318,7 @@ const main = async () => {
   console.log(` `);
   await addArtistId();
   await addCollectionType();
+  await addIsInPerson();
   rl.close();
   createInitialConfigJSON();
   console.log(`---------------------------------------------`);
