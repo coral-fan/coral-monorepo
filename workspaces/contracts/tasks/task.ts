@@ -17,18 +17,6 @@ import { SentinelClient } from 'defender-sentinel-client';
 import type { CreateBlockSubscriberResponse } from 'defender-sentinel-client/lib/models/subscriber';
 config();
 
-if (!process.env.FUJI_TESTNET_PRIVATE_KEY) {
-  throw Error(`Missing environment variable: FUJI_TESTNET_PRIVATE_KEY`);
-}
-
-if (!process.env.DEFENDER_TEAM_API_KEY) {
-  throw Error(`Missing environment variable: DEFENDER_API_KEY`);
-}
-
-if (!process.env.DEFENDER_TEAM_SECRET_KEY) {
-  throw Error(`Missing environment variable: DEFENDER_SECRET_KEY`);
-}
-
 const DEFENDER_TEAM_API_KEY = process.env.DEFENDER_TEAM_API_KEY;
 const DEFENDER_TEAM_SECRET_KEY = process.env.DEFENDER_TEAM_SECRET_KEY;
 const NFT_STORAGE_KEY = process.env.NFT_STORAGE_API_KEY;
@@ -40,11 +28,6 @@ const SENTINEL_IDS = [
   'b89eefbf-5f44-466c-9c7f-fe9251db0f6a',
   'f4302190-7921-4b82-89c9-bab6423c0c88',
 ];
-
-const sentinelClient = new SentinelClient({
-  apiKey: DEFENDER_TEAM_API_KEY,
-  apiSecret: DEFENDER_TEAM_SECRET_KEY,
-});
 
 // TODO: Separate tasks and subtasks in more modular way (different files and directories)
 task('create-and-deploy', 'Creates and Deploys a new Project')
@@ -226,6 +209,10 @@ subtask('verify-contract', 'Verify contract')
 subtask('add-relay-addresses', 'Set Relay Addresses')
   .addParam('address', 'Deployed contract Address')
   .setAction(async ({ address }, { ethers }) => {
+    if (!PK) {
+      throw 'Private Key Missing';
+    }
+
     const provider = ethers.provider;
     const signer = new ethers.Wallet(PK, provider);
 
@@ -246,6 +233,15 @@ subtask('add-relay-addresses', 'Set Relay Addresses')
 subtask('update-sentinels', 'Update Sentinels')
   .addParam('newAddress', 'Deployed contract Address')
   .setAction(async ({ newAddress }) => {
+    if (!DEFENDER_TEAM_API_KEY || !DEFENDER_TEAM_SECRET_KEY) {
+      throw 'Defender API Keys Missing';
+    }
+
+    const sentinelClient = new SentinelClient({
+      apiKey: DEFENDER_TEAM_API_KEY,
+      apiSecret: DEFENDER_TEAM_SECRET_KEY,
+    });
+
     for (let i = 0; i < SENTINEL_IDS.length; i++) {
       const sentinelId = SENTINEL_IDS[i];
 
