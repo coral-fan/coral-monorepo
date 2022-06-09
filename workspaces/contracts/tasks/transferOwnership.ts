@@ -1,7 +1,7 @@
 import { task } from 'hardhat/config';
 import { Contract, ContractFactory } from 'ethers';
 
-const PK = process.env.FUJI_TESTNET_PRIVATE_KEY;
+const PRIVATE_KEY = process.env.FUJI_TESTNET_PRIVATE_KEY;
 
 // TODO: Update with Multi-Sig Address
 // Should this be an env variable?
@@ -18,8 +18,8 @@ const CONTRACT_ADDRESS = '0x7f9804c220DCA83C0c0cB1c04d942Ffe2fdBEbF5';
 const NEW_OWNER_ADDRESS = '0xA34D4367Bd647B996b1e2A790073e9022fa73De8';
 
 task('transfer-ownership', 'Set Relay Addresses', async (_, { ethers }) => {
-  if (!PK) {
-    throw 'Private Key Missing';
+  if (!PRIVATE_KEY) {
+    throw 'Private key not found';
   }
 
   if (!APPROVED_NEW_OWNER_ADDRESSES.includes(NEW_OWNER_ADDRESS)) {
@@ -27,7 +27,7 @@ task('transfer-ownership', 'Set Relay Addresses', async (_, { ethers }) => {
   }
 
   const provider = ethers.provider;
-  const signer = new ethers.Wallet(PK, provider);
+  const signer = new ethers.Wallet(PRIVATE_KEY, provider);
 
   const contractFactory: ContractFactory = await ethers.getContractFactory('CoralNftV1');
   const contract = new Contract(CONTRACT_ADDRESS, contractFactory.interface, signer);
