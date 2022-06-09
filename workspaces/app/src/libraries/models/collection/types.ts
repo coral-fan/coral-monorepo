@@ -1,9 +1,9 @@
 import { Artist, ArtistData } from '../artist';
 
-export type CollectionType = 'video' | 'music' | 'event' | 'merch' | 'all_access';
+export type CollectionType = 'video' | 'music' | 'stream' | 'merch' | 'all_access';
 
-export interface GatedEvent {
-  type: 'event';
+export interface GatedStream {
+  type: 'stream';
   id: string;
 }
 export interface GatedUrl {
@@ -11,7 +11,7 @@ export interface GatedUrl {
   url: string;
 }
 
-export type GatedContent = GatedUrl | GatedEvent | null;
+export type GatedContent = GatedUrl | GatedStream | null;
 export type Details = string[] | null;
 
 export interface CollectionData {

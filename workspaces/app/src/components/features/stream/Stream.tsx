@@ -8,25 +8,25 @@ import {
   InfoAndMerchProps,
   StreamProps,
 } from './components';
-import { Event } from 'libraries/models/event';
+import { Event } from 'libraries/models/stream';
 import { Collection, getCollection, getArtist } from 'libraries/models';
-import { getEvent } from 'libraries/models/event/utils';
+import { getStreamData } from 'libraries/models/stream/utils';
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
 
-const EventContainer = styled.div`
+const StreamContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
 `;
 
-type EventPageProps = InfoAndMerchProps &
+type StreamPageProps = InfoAndMerchProps &
   StreamProps &
   Pick<Event, 'id' | 'accessGrantingTokenAddresses'>;
 
-export const EventPage = ({
+export const StreamPage = ({
   accessGrantingTokenAddresses,
   id,
-  streamId,
+  sproutMediaId,
   chatId,
   artistId,
   artistName,
@@ -35,19 +35,19 @@ export const EventPage = ({
   name,
   description,
   exclusiveCollections,
-}: EventPageProps) => {
+}: StreamPageProps) => {
   return (
     <GatedContent
       accessGrantingTokenAddresses={accessGrantingTokenAddresses}
       accessDeniedModalProps={{
-        title: 'This is a private event',
+        title: 'This is a private stream',
         message:
-          'This event is for members and ticket holders only. Buy a ticket now for special and exclusive perks.',
+          'This stream is for members and ticket holders only. Buy a ticket now for special and exclusive perks.',
         actionElement: <BuyTicketButton collectionId={id} />,
       }}
     >
-      <EventContainer>
-        <Stream streamId={streamId} chatId={chatId} />
+      <StreamContainer>
+        <Stream sproutMediaId={sproutMediaId} chatId={chatId} />
         <InfoAndMerch
           name={name}
           description={description}
@@ -57,7 +57,7 @@ export const EventPage = ({
           artistSocialHandles={artistSocialHandles}
           exclusiveCollections={exclusiveCollections}
         />
-      </EventContainer>
+      </StreamContainer>
     </GatedContent>
   );
 };
@@ -66,7 +66,7 @@ interface EventParams extends NextParsedUrlQuery {
   id: string;
 }
 
-export const getServerSideProps: GetServerSideProps<EventPageProps, EventParams> = async (
+export const getServerSideProps: GetServerSideProps<StreamPageProps, EventParams> = async (
   context
 ) => {
   const { params } = context;
@@ -79,15 +79,15 @@ export const getServerSideProps: GetServerSideProps<EventPageProps, EventParams>
 
   const { id } = params;
 
-  const eventData = await getEvent(id);
+  const streamData = await getStreamData(id);
 
-  if (eventData === undefined) {
+  if (streamData === undefined) {
     return {
       notFound: true,
     };
   }
 
-  const { artistId, exclusiveCollectionIds, ...event } = eventData;
+  const { artistId, exclusiveCollectionIds, ...stream } = streamData;
 
   const artistData = await getArtist(artistId);
 
@@ -115,7 +115,7 @@ export const getServerSideProps: GetServerSideProps<EventPageProps, EventParams>
   return {
     props: {
       id,
-      ...event,
+      ...stream,
       exclusiveCollections,
       artistId,
       artistName,

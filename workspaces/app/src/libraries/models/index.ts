@@ -3,7 +3,7 @@ export * from './asset';
 export * from './collection';
 export * from './notification';
 export * from './user';
-export * from './event';
+export * from './stream';
 export * from './types';
 export * from './purchase';
 export * from './ownedNfts';

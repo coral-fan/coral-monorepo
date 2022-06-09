@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Link } from 'components/ui';
 import { CtaContent, CtaWrapperStyle } from 'components/ui/buttons/variants/CtaButton';
-import { GatedEvent } from 'libraries/models';
+import { GatedStream } from 'libraries/models';
 import tokens from 'styles/tokens';
 
 const Wrapper = styled(Link)`
@@ -12,12 +12,12 @@ const Wrapper = styled(Link)`
   border-top: dashed ${tokens.background.color.secondary} 3px;
 `;
 
-interface EventLinkProps {
-  eventId: GatedEvent['id'];
+interface StreamLinkProps {
+  eventId: GatedStream['id'];
 }
 
-export const EventLink = ({ eventId }: EventLinkProps) => (
-  <Wrapper href={`/event/${eventId}`}>
-    <CtaContent>Access Event</CtaContent>
+export const StreamLink = ({ eventId }: StreamLinkProps) => (
+  <Wrapper href={`/stream/${eventId}`}>
+    <CtaContent>Access Stream</CtaContent>
   </Wrapper>
 );
