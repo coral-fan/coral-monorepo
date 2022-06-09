@@ -1,45 +1,52 @@
 import { task } from 'hardhat/config';
 import { Contract, ContractFactory } from 'ethers';
+import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 
-const PRIVATE_KEY = process.env.FUJI_TESTNET_PRIVATE_KEY;
+const DEPLOYER_RELAY_API_KEY = process.env.DEPLOYER_RELAY_API_KEY;
+const DEPLOYER_RELAY_SECRET_KEY = process.env.DEPLOYER_RELAY_SECRET_KEY;
 
-// TODO: Update with Multi-Sig Address
-// Should this be an env variable?
-const APPROVED_NEW_OWNER_ADDRESSES = [
-  '0x91BB59085E5aCc4dC6b515cf84F3be0Afc9d5a6c',
-  '0x2208BBb8dE9c16C7e18a03C93BFd893137552241',
-  '0xA34D4367Bd647B996b1e2A790073e9022fa73De8',
-];
+// TODO: Update with New Multi-Sig Address
+const APPROVED_MUTLI_SIG_ADDRESSES = process.env.APPROVED_MULTI_SIG_ADDRESSES;
+const NEW_OWNER_ADDRESS = process.env.MULTI_SIG_ADDRESS;
 
-/*
-Populate correct values here before transferring ownership
-*/
-const CONTRACT_ADDRESS = '0x7f9804c220DCA83C0c0cB1c04d942Ffe2fdBEbF5';
-const NEW_OWNER_ADDRESS = '0xA34D4367Bd647B996b1e2A790073e9022fa73De8';
+task('transfer-ownership', 'Set Relay Addresses')
+  .addParam('contractAddress', 'Multisig Contract Address')
+  .setAction(async ({ contractAddress }, { ethers }) => {
+    if (!DEPLOYER_RELAY_API_KEY || !DEPLOYER_RELAY_SECRET_KEY) {
+      throw 'Deployer Relay keys not found';
+    }
 
-task('transfer-ownership', 'Set Relay Addresses', async (_, { ethers }) => {
-  if (!PRIVATE_KEY) {
-    throw 'Private key not found';
-  }
+    const relayerCredentials = {
+      apiKey: DEPLOYER_RELAY_API_KEY,
+      apiSecret: DEPLOYER_RELAY_SECRET_KEY,
+    };
 
-  if (!APPROVED_NEW_OWNER_ADDRESSES.includes(NEW_OWNER_ADDRESS)) {
-    throw `${NEW_OWNER_ADDRESS} is not an approved address!`;
-  }
+    if (!NEW_OWNER_ADDRESS || !APPROVED_MUTLI_SIG_ADDRESSES) {
+      throw 'Addresses not found';
+    }
 
-  const provider = ethers.provider;
-  const signer = new ethers.Wallet(PRIVATE_KEY, provider);
+    if (!APPROVED_MUTLI_SIG_ADDRESSES.split(',').includes(NEW_OWNER_ADDRESS)) {
+      throw `${NEW_OWNER_ADDRESS} is not an approved address!`;
+    }
 
-  const contractFactory: ContractFactory = await ethers.getContractFactory('CoralNftV1');
-  const contract = new Contract(CONTRACT_ADDRESS, contractFactory.interface, signer);
+    try {
+      const provider = new DefenderRelayProvider(relayerCredentials);
+      const signer = new DefenderRelaySigner(relayerCredentials, provider, { speed: 'fast' });
 
-  console.log(`Transferring ownership of ${CONTRACT_ADDRESS} to ${NEW_OWNER_ADDRESS}....`);
+      const contractFactory: ContractFactory = await ethers.getContractFactory('CoralNftV1');
+      const contract = new Contract(contractAddress, contractFactory.interface, signer);
 
-  const txn = await contract.transferOwnership(NEW_OWNER_ADDRESS);
-  const receipt = await txn.wait();
+      console.log(`Transferring ownership of ${contractAddress} to ${NEW_OWNER_ADDRESS}....`);
 
-  if (receipt.status === 1) {
-    console.log(`Ownership of ${CONTRACT_ADDRESS} transferred to: ${NEW_OWNER_ADDRESS}`);
-  } else {
-    console.log(`Error, ownership not transferred`);
-  }
-});
+      const txn = await contract.transferOwnership(NEW_OWNER_ADDRESS);
+      const receipt = await txn.wait();
+
+      if (receipt.status === 1) {
+        console.log(
+          `Ownership of ${contractAddress} successfully transferred to ${NEW_OWNER_ADDRESS}`
+        );
+      }
+    } catch (e: any) {
+      console.error(`ERROR: ${e.error.reason}`);
+    }
+  });
