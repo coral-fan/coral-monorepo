@@ -24,7 +24,7 @@ contract CoralNftV1 is ERC721, ERC2981, Ownable, AvaxUsd {
   mapping(address => bool) private _relayList;
   address[] private _relayAddresses;
 
-  modifier MintOpen() {
+  modifier mintOpen() {
     require(isSaleActive, 'Sale not active');
     require(block.timestamp >= saleStartTime, 'Sale has not started yet');
     _;
@@ -72,7 +72,7 @@ contract CoralNftV1 is ERC721, ERC2981, Ownable, AvaxUsd {
   }
 
   /// Minting
-  function relayMint(address to) external MintOpen {
+  function relayMint(address to) external mintOpen {
     require(_relayList[msg.sender] == true, 'Not on relay list');
     require(balanceOf(to) < maxTokensPerWallet, 'Wallet already owns maximum amount');
 
@@ -85,7 +85,7 @@ contract CoralNftV1 is ERC721, ERC2981, Ownable, AvaxUsd {
     emit RelayMint(newTokenID);
   }
 
-  function publicMint() external payable MintOpen {
+  function publicMint() external payable mintOpen {
     require(balanceOf(msg.sender) < maxTokensPerWallet, 'Wallet already owns maximum amount');
 
     uint256 avaxTokenPrice = _getAvaxPrice(usdPricePerToken);
@@ -119,7 +119,7 @@ contract CoralNftV1 is ERC721, ERC2981, Ownable, AvaxUsd {
   }
 
   /// Admin
-  function withdraw() external payable onlyOwner {
+  function withdraw() external onlyOwner {
     uint256 balance = address(this).balance;
 
     require(balance > 0, 'Nothing to withdraw');
