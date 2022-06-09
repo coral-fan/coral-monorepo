@@ -1,9 +1,9 @@
 import { Artist, ArtistData } from '../artist';
 import { Collection } from '../collection';
 
-export interface EventData {
+export interface StreamData {
   // sprout media id
-  streamId: string;
+  sproutMediaId: string;
   // chatango id
   chatId: string;
   name: string;
@@ -14,7 +14,7 @@ export interface EventData {
   exclusiveCollectionIds: Collection['id'][] | null;
 }
 
-export interface Event extends Omit<EventData, 'exclusiveCollectionIds'> {
+export interface Event extends Omit<StreamData, 'exclusiveCollectionIds'> {
   id: string;
   artistName: ArtistData['name'];
   artistProfilePhoto: ArtistData['profilePhoto'];

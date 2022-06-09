@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Event } from 'libraries/models/event';
+import { Event } from 'libraries/models/stream';
 import { useEffect, useRef } from 'react';
 
 const getChatTangoConfiguration = (eventId: string) => ({

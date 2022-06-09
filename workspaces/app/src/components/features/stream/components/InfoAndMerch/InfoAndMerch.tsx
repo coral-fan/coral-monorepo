@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Heading } from 'components/ui';
-import { Event } from 'libraries/models/event';
+import { Event } from 'libraries/models/stream';
 import { useIsDesktop } from 'libraries/window';
 import tokens, { QUERY } from 'styles/tokens';
 import { ArtistInfo, Merch } from './components';

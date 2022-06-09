@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { DropCard, Heading, ScrollableItemWrapper, ScrollableContainer } from 'components/ui';
 import { getBadge } from 'components/ui/badges/utils';
 import { Collection } from 'libraries/models';
-import { Event } from 'libraries/models/event';
+import { Event } from 'libraries/models/stream';
 import { useIsDesktop } from 'libraries/window';
 import tokens from 'styles/tokens';
 
