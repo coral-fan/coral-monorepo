@@ -17,8 +17,8 @@ export const Tag = styled.div`
 
   @media ${QUERY.LAPTOP} {
     font-size: ${tokens.font.size.sm};
-    line-height: {$tokens.font.line_height.sm};
-    letter-spacing: {$tokens.font.letter_spacing.sm};
+    line-height: ${tokens.font.line_height.sm};
+    letter-spacing: ${tokens.font.letter_spacing.sm};
     padding: 6px;
   }
 `;
