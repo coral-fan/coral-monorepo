@@ -28,7 +28,6 @@ const DEFAULT_PUBLIC_USER_DATA: DefaultPublicUserData = {
   bio: null,
   socialHandles: {},
   notifications: [],
-  assets: {},
   followingArtistIds: [],
 };
 

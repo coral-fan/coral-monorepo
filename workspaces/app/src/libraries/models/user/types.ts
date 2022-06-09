@@ -17,7 +17,6 @@ export interface PublicUserData {
   socialHandles: SocialHandles;
   notifications: Notification[];
   // map of contract address to asset id
-  assets: ContractAddressToIdMap;
   followingArtistIds: Artist['id'][];
 }
 
