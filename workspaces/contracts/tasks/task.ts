@@ -2,7 +2,6 @@ import { subtask, task } from 'hardhat/config';
 import { NFTStorage } from 'nft.storage';
 import fs from 'fs';
 import { readFile } from 'fs/promises';
-import { config } from 'dotenv';
 import { types } from 'hardhat/config';
 import {
   fileExists,
@@ -15,6 +14,8 @@ import {
 import { Contract, ContractFactory } from 'ethers';
 import { SentinelClient } from 'defender-sentinel-client';
 import type { CreateBlockSubscriberResponse } from 'defender-sentinel-client/lib/models/subscriber';
+import { config } from 'dotenv';
+
 config();
 
 const DEFENDER_TEAM_API_KEY = process.env.DEFENDER_TEAM_API_KEY;
@@ -217,7 +218,7 @@ subtask('add-relay-addresses', 'Set Relay Addresses')
     const signer = new ethers.Wallet(PK, provider);
 
     const contractFactory: ContractFactory = await ethers.getContractFactory('CoralNftV1');
-    const contract = new ethers.Contract(address, contractFactory.interface, signer);
+    const contract = new Contract(address, contractFactory.interface, signer);
 
     for (let i = 0; i < RELAY_ADDRESSES.length; i++) {
       const txn = await contract.addRelayAddr(RELAY_ADDRESSES[i]);
