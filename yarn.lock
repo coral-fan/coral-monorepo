@@ -8616,10 +8616,10 @@ defender-base-client@1.21.3:
     lodash "^4.17.19"
     node-fetch "^2.6.0"
 
-defender-base-client@1.23.0:
-  version "1.23.0"
-  resolved "https://registry.yarnpkg.com/defender-base-client/-/defender-base-client-1.23.0.tgz#baf3ba0bc4cba8eeca0a6a230eed55155cf575ea"
-  integrity sha512-vCtiHEg/RAuI7iCJXuUV41gQP2JxWZdKVEL4m/mZjTO/mSvnaXCa5VkhfquQqQbh0eGN1ynBZvAZyTDOx1J2mQ==
+defender-base-client@1.24.0:
+  version "1.24.0"
+  resolved "https://registry.yarnpkg.com/defender-base-client/-/defender-base-client-1.24.0.tgz#7696e43c9f29be0446b4a33129e0db692d75c916"
+  integrity sha512-5z1pbJLSiDxPik/LcbaYtKvea9c/u0wfzxWKIj/SkfqiY8PumeRvju9yHEvkuksVWUmAIBg0JoJTtn6haUjkMA==
   dependencies:
     amazon-cognito-identity-js "^4.3.3"
     axios "^0.21.2"
@@ -8637,14 +8637,14 @@ defender-relay-client@^1.21.3:
     lodash "^4.17.19"
     node-fetch "^2.6.0"
 
-defender-sentinel-client@^1.23.0:
-  version "1.23.0"
-  resolved "https://registry.yarnpkg.com/defender-sentinel-client/-/defender-sentinel-client-1.23.0.tgz#d9fca2fad8bb0c8214fddd56910fae994a9486fa"
-  integrity sha512-jw8nLO12SyeQOwbqVNfqcQON0HHtUGaYCOdSbwI+/1xl1x9iGmLX2ET2PcyCC3UIgmywIDrMQhjz/AjfaMHu3w==
+defender-sentinel-client@^1.24.0:
+  version "1.24.0"
+  resolved "https://registry.yarnpkg.com/defender-sentinel-client/-/defender-sentinel-client-1.24.0.tgz#35a965f200e0de56a9963b4d37f110ff0539a465"
+  integrity sha512-nEF6GGwCdfW8iUVW/CgN1jaBDCMjyHqQwOV6gsJxUHyb3b5B4C6r+IwIYMAcREfXJyEIpqhGuZNIQ1xpjg4MVQ==
   dependencies:
     "@ethersproject/abi" "^5.5.0"
     axios "^0.21.2"
-    defender-base-client "1.23.0"
+    defender-base-client "1.24.0"
     lodash "^4.17.19"
     node-fetch "^2.6.0"
 
