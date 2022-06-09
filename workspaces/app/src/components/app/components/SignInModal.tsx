@@ -79,8 +79,8 @@ export const SignInModal = () => {
       <span>OR</span>
       <Button onClick={loginWithWeb3Auth}>{actionText} With Social Login</Button>
       <Footnote>
-        * Don&apos;t have Metamask? Sign up with your Gmail, Twitter, Discord, Apple, Twitch, or
-        Facebook username and password.
+        * Don&apos;t have Metamask? Sign up with your Gmail, Twitter, Discord, Twitch, or Facebook
+        username and password.
         <br />
         <br />
         If you create an account with one of the above, you will need to transfer cryptocurrency to
