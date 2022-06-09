@@ -8637,6 +8637,17 @@ defender-relay-client@^1.21.3:
     lodash "^4.17.19"
     node-fetch "^2.6.0"
 
+defender-relay-client@^1.24.0:
+  version "1.24.0"
+  resolved "https://registry.yarnpkg.com/defender-relay-client/-/defender-relay-client-1.24.0.tgz#808c73fb2229783f045b005b7c919868a822fe9f"
+  integrity sha512-41+HHtJl5vu68mAn1iLPTYsvfl+S4VQuUsQ8HxdglpT6cRLQjcnJ5bxl11ZUVIiz7BztpbWAMBuUg3sS7r17SA==
+  dependencies:
+    amazon-cognito-identity-js "^4.3.3"
+    axios "^0.21.2"
+    defender-base-client "1.24.0"
+    lodash "^4.17.19"
+    node-fetch "^2.6.0"
+
 defender-sentinel-client@^1.24.0:
   version "1.24.0"
   resolved "https://registry.yarnpkg.com/defender-sentinel-client/-/defender-sentinel-client-1.24.0.tgz#35a965f200e0de56a9963b4d37f110ff0539a465"
