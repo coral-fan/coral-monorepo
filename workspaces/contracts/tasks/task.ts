@@ -21,7 +21,7 @@ config();
 const DEFENDER_TEAM_API_KEY = process.env.DEFENDER_TEAM_API_KEY;
 const DEFENDER_TEAM_SECRET_KEY = process.env.DEFENDER_TEAM_SECRET_KEY;
 const NFT_STORAGE_KEY = process.env.NFT_STORAGE_API_KEY;
-const PK = process.env.FUJI_TESTNET_PRIVATE_KEY;
+const PRIVATE_KEY = process.env.FUJI_TESTNET_PRIVATE_KEY;
 
 const RELAY_ADDRESSES = ['0x070a9c67173b6fef04802caff90388fa3edfec81'];
 const SENTINEL_IDS = [
@@ -210,12 +210,12 @@ subtask('verify-contract', 'Verify contract')
 subtask('add-relay-addresses', 'Set Relay Addresses')
   .addParam('address', 'Deployed contract Address')
   .setAction(async ({ address }, { ethers }) => {
-    if (!PK) {
+    if (!PRIVATE_KEY) {
       throw 'Private Key Missing';
     }
 
     const provider = ethers.provider;
-    const signer = new ethers.Wallet(PK, provider);
+    const signer = new ethers.Wallet(PRIVATE_KEY, provider);
 
     const contractFactory: ContractFactory = await ethers.getContractFactory('CoralNftV1');
     const contract = new Contract(address, contractFactory.interface, signer);
