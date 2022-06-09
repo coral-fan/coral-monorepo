@@ -1,7 +1,6 @@
 import { PrivateUserDataProperties, UserProperties } from './types';
 
 export const USER_PROPERTIES = new Set<UserProperties>([
-  'assets',
   'notifications',
   'profilePhoto',
   'type',
