@@ -6,12 +6,19 @@
 
 - NOTE: All script commands assume you are deploying to TESTNET, i.e. `fuji`. Update network for mainnet deployments.
 
-- Must have the following API keys set in your `contracts/.env` file:
+- Must have the following environmental variables set in your `contracts/.env` file:
   - `SNOWTRACE_API_KEY`
-  - `FUJI_TESTNET_PRIVATE_KEY`
   - `NFT_STORAGE_API_KEY`
   - `DEFENDER_TEAM_API_KEY`
-  - `DEFENDER_TEAM_SECRET_KEY`
+  - `DEPLOYER_RELAY_API_KEY_FUJI`
+  - `DEPLOYER_RELAY_SECRET_KEY_FUJI`
+  - `DEPLOYER_RELAY_API_KEY_MAINNET`
+  - `DEPLOYER_RELAY_SECRET_KEY_MAINNET`
+  - `APPROVED_MULTI_SIG_ADDRESSES`
+  - `MULTI_SIG_ADDRESS`
+  - `PAYMENT_RELAY_ADDRESSES_FUJI`
+  - `PAYMENT_RELAY_ADDRESSES_MAINNET`
+  - `CONTRACT_NAME`
 
 ## Setup Project
 
@@ -29,13 +36,15 @@
 
 - Note: Hardhat times out over large mint sizes, may need to adjust the config to a lower maxSupply number to test. REMEMBER TO CHANGE THIS VALUE BACK AFTER TESTING, AND BEFORE DEPLOYING.
 
-- Run `npx hardhat test --network 'hardhat'`
+- Run `npx hardhat test` (Note: default network is set to `hardhat`)
 
 ## Run Deploy Task
 
 - IMPORTANT: Review and confirm that the values in the `config.json` file are all correct.
 
-- Run `npx hardhat create-and-deploy --project "<PROJECT_NAME>" --network 'fuji'` to trigger the hardhat task that uploads metadata, deploys and verifies the contract.
+- Run `npx hardhat create-and-deploy --project "<PROJECT_NAME>" --network <NETWORK_NAME>` to trigger the hardhat task that uploads metadata, deploys and verifies the contract.
+
+- Note: For testnet, set `NETWORK_NAME` to `fuji`; To deploy to mainnet, set `NETWORK_NAME` to `mainnet`
 
 ## Update Firestore DB
 
@@ -45,10 +54,6 @@
 
 ## Transfer Ownership
 
-- Populate the `CONTRACT_ADDRESS` and `NEW_OWNER_ADDRESS` fields.
+- From `contracts`, run `npx hardhat transfer-ownership --contract-address '<CONTRACT_ADDRESS>' --network <NETWORK_NAME>`
 
-  - `CONTRACT_ADDRESS` refers to the contract that you are transferring ownership of.
-  - `NEW_OWNER_ADDRESS` refers to the address of the new owner that will be able to perform all `onlyOwner` functions.
-  - `NEW_OWNER_ADDRESS` _MUST BE_ one of Coral's Multi-Sig wallets.
-
-- From `contracts`, run `npx hardhat transfer-ownership --network 'fuji'`
+- Note: For testnet, set `NETWORK_NAME` to `fuji`; To deploy to mainnet, set `NETWORK_NAME` to `mainnet`
