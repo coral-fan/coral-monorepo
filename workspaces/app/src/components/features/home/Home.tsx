@@ -24,6 +24,11 @@ export const Home = () => {
             The marketplace for a new era of music.
           </h1>
           <div className="group w-full mt-8 mb-10 sm:my-auto flex flex-col lg:flex-row items-start justify-between bg-orange-1 rounded-1 py-4 px-5 relative hover:bg-gray-2 duration-300">
+            <button
+              onClick={handleOpenSignUpModal}
+              disabled={isAuthenticated}
+              className="absolute top-0 left-0 w-full h-full"
+            ></button>
             <div className="flex flex-col items-start lg:w-4/5 mb-4 lg:mb-0">
               <h3 className="text-2xl leading-7 xl:text-1 lg:leading-none tracking-3 uppercase text-gray-1 font-medium mb-4 xl:mb-6">
                 Sign Up
@@ -35,11 +40,6 @@ export const Home = () => {
             <div className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-1 py-2 px-2.5 bg-gray-2 rounded-full hover:bg-orange-1 duration-300 group-hover:bg-orange-1 text-gray-1">
               Sign up
             </div>
-            <button
-              onClick={handleOpenSignUpModal}
-              disabled={isAuthenticated}
-              className="absolute top-0 left-0 w-full h-full z-10"
-            ></button>
           </div>
           <div className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-2 py-2 px-2.5 bg-gray-2 bg-opacity-20 rounded-full duration-300 mt-auto">
             Scroll for latest collections
@@ -49,6 +49,8 @@ export const Home = () => {
 
       <section className="grid grid-cols-12 gap-4 lg:gap-5 mb-20 lg:mb-24 xl:mb-48 group relative duration-300">
         <div className="col-span-12 sm:col-span-6 group-hover:opacity-60 duration-300">
+          {/* ADD VB LINK HERE */}
+          <a href="#" className="absolute top-0 left-0 w-full h-full"></a>
           <hr className="mb-3 lg:mb-5 border-gray-2 border-opacity-20"></hr>
           <h2 className="text-1 leading-none xl:text-2 xl:leading-none tracking-3 mb-2 font-medium duration-300 inline-block">
             Van Buren Records
@@ -77,18 +79,22 @@ export const Home = () => {
             ></img>
           </div>
         </div>
-        <a href="#" className="absolute top-0 left-0 w-full h-full z-10"></a>
       </section>
 
       <section className="mb-20 lg:mb-24 xl:mb-48">
         <hr className="mb-3 lg:mb-5 border-gray-2 border-opacity-20"></hr>
-        <div className="grid grid-cols-12 gap-4 lg:gap-5 group relative duration-300">
+        <div className="grid grid-cols-12 gap-4 lg:gap-5 group relative">
+          <button
+            onClick={handleOpenSignUpModal}
+            disabled={isAuthenticated}
+            className="absolute top-0 left-0 w-full h-full"
+          ></button>
           <div className="col-span-12 sm:col-span-6 mb-2.5 sm:mb-0 relative">
-            <div className="rounded-1 group-hover:rounded-2 overflow-hidden duration-300">
+            <div className="rounded-1 overflow-hidden">
               <div className="w-full h-full bg-white aspect-square"></div>
             </div>
           </div>
-          <div className="col-span-12 sm:col-span-6 flex flex-col items-start group-hover:opacity-60 duration-300">
+          <div className="col-span-12 sm:col-span-6 flex flex-col items-start duration-300">
             <h2 className="text-1 leading-none xl:text-2 xl:leading-none tracking-3 mb-2 font-medium duration-300 inline-block mb-10 md:mb-16 xl:mb-24">
               Simple Sign Up
             </h2>
@@ -120,8 +126,8 @@ export const Home = () => {
                     Social Login
                   </h4>
                   <p className="lg:col-span-6 text-lg leading-lh-3 tracking-2">
-                    Sign up with Gmail, Twitter, Discord, Apple, Twitch, or Facebook. We will create
-                    a wallet you control for you.{' '}
+                    Sign up with Gmail, Twitter, Discord, Twitch, or Facebook. We will create a
+                    wallet you control for you.
                   </p>
                 </div>
               </div>
@@ -130,11 +136,6 @@ export const Home = () => {
               SIGN UP
             </div>
           </div>
-          <button
-            onClick={handleOpenSignUpModal}
-            disabled={isAuthenticated}
-            className="absolute top-0 left-0 w-full h-full z-10"
-          ></button>
         </div>
       </section>
 
@@ -314,6 +315,11 @@ export const Home = () => {
       <section className="max-w-screen-s-1 w-full mx-auto">
         <div className="grid sm:grid-cols-2 gap-4 lg:gap-5">
           <div className="group lg:min-h-min-h-1 flex bg-orange-1 rounded-1 py-4 px-5 relative hover:bg-gray-2 duration-300">
+            <button
+              onClick={handleOpenSignUpModal}
+              disabled={isAuthenticated}
+              className="absolute top-0 left-0 w-full h-full"
+            ></button>
             <div className="flex flex-col items-start lg:w-11/12">
               <h3 className="text-1 leading-none lg:text-2 lg:leading-lh-2 tracking-3 text-gray-1 font-medium mb-8">
                 Sign Up for Early Access
@@ -326,13 +332,9 @@ export const Home = () => {
                 reserve your spot.
               </p>
             </div>
-            <button
-              onClick={handleOpenSignUpModal}
-              disabled={isAuthenticated}
-              className="absolute top-0 left-0 w-full h-full z-10"
-            ></button>
           </div>
           <div className="group lg:min-h-min-h-1 flex bg-gray-2 bg-opacity-10 rounded-1 py-4 px-5 relative hover:bg-opacity-20 duration-300">
+            <a href="mailto:support@coral.fan" className="absolute top-0 left-0 w-full h-full"></a>
             <div className="flex flex-col items-start lg:w-3/4">
               <h3 className="text-1 leading-none lg:text-2 lg:leading-lh-2 tracking-3 font-medium mb-8">
                 Coral For Artists and Labels
@@ -344,10 +346,6 @@ export const Home = () => {
                 Contact us to learn more about how Coral can support you as an artist or label.
               </p>
             </div>
-            <a
-              href="mailto:support@coral.fan"
-              className="absolute top-0 left-0 w-full h-full z-10"
-            ></a>
           </div>
         </div>
       </section>
