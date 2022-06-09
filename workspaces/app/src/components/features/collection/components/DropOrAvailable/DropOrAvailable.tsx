@@ -117,7 +117,7 @@ export const DropOrAvailable = ({
           >
             {isSoldOut ? 'Sold Out' : isAuthenticated ? 'Buy Now' : 'Sign In To Purchase'}
           </CtaButton>
-          {isMaxTokensOwned && (
+          {isAuthenticated && isMaxTokensOwned && (
             <MaxOwnedNotification>
               Maximum of {maxMintablePerWallet} NFTs per wallet already owned
             </MaxOwnedNotification>
