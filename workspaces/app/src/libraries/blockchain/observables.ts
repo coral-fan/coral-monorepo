@@ -1,12 +1,11 @@
 import { CoralNftV1__factory } from '@coral/contracts/dist';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { AVALANCHE } from 'consts';
-import { fromEvent, startWith, Observable, switchMap, map, retry, tap } from 'rxjs';
+import { fromEvent, startWith, Observable, switchMap, map, retry } from 'rxjs';
 
 const avalancheRpcProvider = new JsonRpcProvider(AVALANCHE.RPC_URL);
 
 export const newBlock$ = (fromEvent(avalancheRpcProvider, 'block') as Observable<number>).pipe(
-  tap(console.log),
   retry()
 );
 
