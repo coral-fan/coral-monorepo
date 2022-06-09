@@ -38,10 +38,10 @@ export const WEB3AUTH = {
         //   name: 'facebook',
         //   showOnModal: false,
         // },
-        // apple: {
-        //   name: 'apple',
-        //   showOnModal: false,
-        // },
+        apple: {
+          name: 'apple',
+          showOnModal: false,
+        },
         linkedin: {
           name: 'linkedin',
           showOnModal: false,
