@@ -14,21 +14,11 @@ import {
 import { Contract, ContractFactory } from 'ethers';
 import { SentinelClient } from 'defender-sentinel-client';
 import type { CreateBlockSubscriberResponse } from 'defender-sentinel-client/lib/models/subscriber';
+import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
+import { getConsts, Network } from './utils/getConsts';
+
 import { config } from 'dotenv';
-
 config();
-
-const DEFENDER_TEAM_API_KEY = process.env.DEFENDER_TEAM_API_KEY;
-const DEFENDER_TEAM_SECRET_KEY = process.env.DEFENDER_TEAM_SECRET_KEY;
-const NFT_STORAGE_KEY = process.env.NFT_STORAGE_API_KEY;
-const PRIVATE_KEY = process.env.FUJI_TESTNET_PRIVATE_KEY;
-
-const RELAY_ADDRESSES = ['0x070a9c67173b6fef04802caff90388fa3edfec81'];
-const SENTINEL_IDS = [
-  '7b0b2398-31d7-4c93-a560-efb85e541ce4',
-  'b89eefbf-5f44-466c-9c7f-fe9251db0f6a',
-  'f4302190-7921-4b82-89c9-bab6423c0c88',
-];
 
 // TODO: Separate tasks and subtasks in more modular way (different files and directories)
 task('create-and-deploy', 'Creates and Deploys a new Project')
@@ -62,26 +52,30 @@ task('create-and-deploy', 'Creates and Deploys a new Project')
     // Wait 15 seconds to verify
     await sleep(15000);
     console.log('Starting verification now...');
-
     await hre.run('verify-contract', { verifyArgs });
 
     console.log('Adding relay addresses...');
-
     await hre.run('add-relay-addresses', { address });
 
     console.log('Updating sentinels...');
-
     const newAddress = address;
 
-    await hre.run('update-sentinels', { newAddress });
+    // Don't think you can pass boolean via hardhat, must be string
+    const isInPerson = configFile.collectionData.isInPerson.toString();
+    await hre.run('update-sentinels', { newAddress, isInPerson });
   });
 
 subtask('upload', 'Upload metadata via nft.storage')
   .addParam('projectDir', 'The project directory')
-  .setAction(async ({ projectDir }) => {
-    if (!NFT_STORAGE_KEY) {
-      throw 'Please set NFT_STORAGE_KEY in a .env file in this directory';
+  .setAction(async ({ projectDir }, hre) => {
+    const network = hre.network.name as Network;
+
+    const { nftStorageKey } = getConsts(network) || {};
+
+    if (!nftStorageKey) {
+      throw `nftStorageKey not found, please check environment variables`;
     }
+
     const imagePath = getImagePath(projectDir);
     const configPath = getConfigFilePath(projectDir);
     const image = await fileFromPath(imagePath);
@@ -108,7 +102,7 @@ subtask('upload', 'Upload metadata via nft.storage')
 
     const metadata = { name: name, description: description, attributes: attributes, image };
     console.log(metadata);
-    const client = new NFTStorage({ token: NFT_STORAGE_KEY });
+    const client = new NFTStorage({ token: nftStorageKey });
 
     const upload =
       image &&
@@ -141,30 +135,53 @@ subtask('upload', 'Upload metadata via nft.storage')
 subtask('deploy-contract', 'Deploy contract')
   .addParam('constructorArgs', 'Contract constructor arguments', {}, types.json)
   .setAction(async ({ constructorArgs }, hre) => {
+    const { ethers } = hre;
+    const network = hre.network.name as Network;
+
+    const { contractName, deployerRelayApiKey, deployerRelaySecretKey } = getConsts(network) || {};
+
     const args = JSON.parse(constructorArgs);
-    console.log(args);
+    console.log('Constructor Args: ', args);
 
-    // Passing Coral in directly as contract name because otherwise
-    // hre.ethers was pulling in the Chainlink ABI (?)
-    const contractFactory: ContractFactory = await hre.ethers.getContractFactory('CoralNftV1');
+    if (!contractName) {
+      throw 'Contract name not found';
+    }
 
-    const contract: Contract = await contractFactory.deploy(
-      args.name,
-      args.symbol,
-      args.usdPricePerToken,
-      args.maxSupply,
-      args.maxTokensPerWallet,
-      args.baseTokenURI,
-      args.saleStartTime,
-      args.royaltyFeeRecipient,
-      args.royaltyFeeNumerator
-    );
+    if (!deployerRelayApiKey || !deployerRelaySecretKey) {
+      throw 'Deployer Relay keys not found';
+    }
 
-    await contract.deployed();
+    const relayerCredentials = {
+      apiKey: deployerRelayApiKey,
+      apiSecret: deployerRelaySecretKey,
+    };
 
-    console.log('Contract deployed to: ', contract.address);
+    const provider = new DefenderRelayProvider(relayerCredentials);
+    const signer = new DefenderRelaySigner(relayerCredentials, provider, { speed: 'fast' });
 
-    return contract.address;
+    const contractFactory: ContractFactory = await ethers.getContractFactory(contractName, signer);
+
+    try {
+      const contract: Contract = await contractFactory.deploy(
+        args.name,
+        args.symbol,
+        args.usdPricePerToken,
+        args.maxSupply,
+        args.maxTokensPerWallet,
+        args.baseTokenURI,
+        args.saleStartTime,
+        args.royaltyFeeRecipient,
+        args.royaltyFeeNumerator
+      );
+
+      await contract.deployed();
+
+      console.log('Contract deployed to: ', contract.address);
+
+      return contract.address;
+    } catch (e: any) {
+      console.error(`ERROR: ${e.error.reason}`);
+    }
   });
 
 subtask('verify-contract', 'Verify contract')
@@ -209,42 +226,76 @@ subtask('verify-contract', 'Verify contract')
 
 subtask('add-relay-addresses', 'Set Relay Addresses')
   .addParam('address', 'Deployed contract Address')
-  .setAction(async ({ address }, { ethers }) => {
-    if (!PRIVATE_KEY) {
-      throw 'Private Key Missing';
+  .setAction(async ({ address }, hre) => {
+    const { ethers } = hre;
+    const network = hre.network.name as Network;
+
+    const { contractName, deployerRelayApiKey, deployerRelaySecretKey, paymentRelayAddresses } =
+      getConsts(network) || {};
+
+    if (!contractName) {
+      throw 'Contract name not found';
     }
 
-    const provider = ethers.provider;
-    const signer = new ethers.Wallet(PRIVATE_KEY, provider);
+    if (!deployerRelayApiKey || !deployerRelaySecretKey) {
+      throw 'Deployer Relay keys not found';
+    }
 
-    const contractFactory: ContractFactory = await ethers.getContractFactory('CoralNftV1');
+    if (!paymentRelayAddresses || paymentRelayAddresses.length === 0) {
+      throw 'No relay addresses found';
+    }
+
+    const relayerCredentials = {
+      apiKey: deployerRelayApiKey,
+      apiSecret: deployerRelaySecretKey,
+    };
+
+    const provider = new DefenderRelayProvider(relayerCredentials);
+    const signer = new DefenderRelaySigner(relayerCredentials, provider, { speed: 'fast' });
+
+    const contractFactory: ContractFactory = await ethers.getContractFactory(contractName);
     const contract = new Contract(address, contractFactory.interface, signer);
 
-    for (let i = 0; i < RELAY_ADDRESSES.length; i++) {
-      const txn = await contract.addRelayAddr(RELAY_ADDRESSES[i]);
+    for (let i = 0; i < paymentRelayAddresses.length; i++) {
+      const txn = await contract.addRelayAddr(paymentRelayAddresses[i]);
       const receipt = await txn.wait();
       if (receipt.status === 1) {
-        console.log(`Relay Address: ${RELAY_ADDRESSES[i]} added...`);
+        console.log(`Relay Address: ${paymentRelayAddresses[i]} added...`);
       } else {
         console.log(`Relay Address not added!`);
       }
     }
   });
 
-subtask('update-sentinels', 'Update Sentinels')
+task('update-sentinels', 'Update Sentinels')
   .addParam('newAddress', 'Deployed contract Address')
-  .setAction(async ({ newAddress }) => {
-    if (!DEFENDER_TEAM_API_KEY || !DEFENDER_TEAM_SECRET_KEY) {
+  .addParam('isInPerson', 'Is in Person flag')
+  .setAction(async ({ newAddress, isInPerson }, hre) => {
+    const network = hre.network.name as Network;
+
+    const { defenderTeamApiKey, defenderTeamSecretKey, sentinelIds } = getConsts(network) || {};
+
+    if (!defenderTeamApiKey || !defenderTeamSecretKey) {
       throw 'Defender API Keys Missing';
     }
 
     const sentinelClient = new SentinelClient({
-      apiKey: DEFENDER_TEAM_API_KEY,
-      apiSecret: DEFENDER_TEAM_SECRET_KEY,
+      apiKey: defenderTeamApiKey,
+      apiSecret: defenderTeamSecretKey,
     });
 
-    for (let i = 0; i < SENTINEL_IDS.length; i++) {
-      const sentinelId = SENTINEL_IDS[i];
+    // Don't think you can pass boolean via hardhat, must be string
+    const filteredSentinelIds =
+      isInPerson === 'true'
+        ? sentinelIds && Object.values(sentinelIds)
+        : sentinelIds && [sentinelIds.relayMint, sentinelIds.transfer];
+
+    if (!filteredSentinelIds) {
+      throw 'Sentinel Ids not found';
+    }
+
+    for (let i = 0; i < filteredSentinelIds.length; i++) {
+      const sentinelId = filteredSentinelIds[i];
 
       const sentinelResponse = await sentinelClient.get(sentinelId);
       const createBlockSubscriberResponse = sentinelResponse as CreateBlockSubscriberResponse;
