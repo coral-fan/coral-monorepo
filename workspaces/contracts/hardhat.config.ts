@@ -30,7 +30,7 @@ const hardhatConfig: HardhatUserConfig = {
     fuji: {
       url: 'https://api.avax-test.network/ext/bc/C/rpc',
       chainId: 43113,
-      accounts: FUJI_TESTNET_PRIVATE_KEY ? [FUJI_TESTNET_PRIVATE_KEY] : [],
+      accounts: [],
     },
     mainnet: {
       url: 'https://api.avax.network/ext/bc/C/rpc',
