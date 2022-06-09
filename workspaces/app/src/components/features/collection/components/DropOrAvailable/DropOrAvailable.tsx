@@ -1,3 +1,5 @@
+// TODO: Refactor CtaButton and button handler logic
+
 import { CtaButton, DropTimer } from 'components/ui';
 import { getMilliSecsDiff, getTimeRemaining$ } from 'libraries/time';
 import { useObservable } from 'libraries/utils';
@@ -105,6 +107,7 @@ export const DropOrAvailable = ({
     }
   }, [collectionId, userId, maxMintablePerWallet]);
 
+  // TODO: Refactor CtaButton conditional logic
   return (
     <FadeOutInSwitchAnimation isAvailable={isAvailable}>
       {isAvailable === 'true' ? (
@@ -112,12 +115,12 @@ export const DropOrAvailable = ({
           <Price usdPrice={usdPrice} />
           <CtaButton
             onClick={handleBuyButtonClick}
-            disabled={isSoldOut || isLoggingIn || isMaxTokensOwned}
+            disabled={isSoldOut || isLoggingIn || (isMaxTokensOwned && isAuthenticated)}
             loading={isLoggingIn}
           >
             {isSoldOut ? 'Sold Out' : isAuthenticated ? 'Buy Now' : 'Sign In To Purchase'}
           </CtaButton>
-          {isAuthenticated && isMaxTokensOwned && (
+          {!isSoldOut && isAuthenticated && isMaxTokensOwned && (
             <MaxOwnedNotification>
               Maximum of {maxMintablePerWallet} NFTs per wallet already owned
             </MaxOwnedNotification>
