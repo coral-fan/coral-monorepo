@@ -243,7 +243,7 @@ subtask('add-relay-addresses', 'Set Relay Addresses')
     }
   });
 
-task('update-sentinels', 'Update Sentinels')
+subtask('update-sentinels', 'Update Sentinels')
   .addParam('newAddress', 'Deployed contract Address')
   .setAction(async ({ newAddress }) => {
     for (let i = 0; i < SENTINEL_IDS.length; i++) {
