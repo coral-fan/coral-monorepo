@@ -9,17 +9,18 @@ const DEPLOYER_RELAY_SECRET_KEY = process.env.DEPLOYER_RELAY_SECRET_KEY;
 const APPROVED_MUTLI_SIG_ADDRESSES = process.env.APPROVED_MULTI_SIG_ADDRESSES;
 const NEW_OWNER_ADDRESS = process.env.MULTI_SIG_ADDRESS;
 
+const CONTRACT_NAME = process.env.CONTRACT_NAME;
+
 task('transfer-ownership', 'Set Relay Addresses')
   .addParam('contractAddress', 'Multisig Contract Address')
   .setAction(async ({ contractAddress }, { ethers }) => {
+    if (!CONTRACT_NAME) {
+      throw 'Contract name not found';
+    }
+
     if (!DEPLOYER_RELAY_API_KEY || !DEPLOYER_RELAY_SECRET_KEY) {
       throw 'Deployer Relay keys not found';
     }
-
-    const relayerCredentials = {
-      apiKey: DEPLOYER_RELAY_API_KEY,
-      apiSecret: DEPLOYER_RELAY_SECRET_KEY,
-    };
 
     if (!NEW_OWNER_ADDRESS || !APPROVED_MUTLI_SIG_ADDRESSES) {
       throw 'Addresses not found';
@@ -29,11 +30,15 @@ task('transfer-ownership', 'Set Relay Addresses')
       throw `${NEW_OWNER_ADDRESS} is not an approved address!`;
     }
 
+    const relayerCredentials = {
+      apiKey: DEPLOYER_RELAY_API_KEY,
+      apiSecret: DEPLOYER_RELAY_SECRET_KEY,
+    };
     try {
       const provider = new DefenderRelayProvider(relayerCredentials);
       const signer = new DefenderRelaySigner(relayerCredentials, provider, { speed: 'fast' });
 
-      const contractFactory: ContractFactory = await ethers.getContractFactory('CoralNftV1');
+      const contractFactory: ContractFactory = await ethers.getContractFactory(CONTRACT_NAME);
       const contract = new Contract(contractAddress, contractFactory.interface, signer);
 
       console.log(`Transferring ownership of ${contractAddress} to ${NEW_OWNER_ADDRESS}....`);
