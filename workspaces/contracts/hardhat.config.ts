@@ -16,9 +16,7 @@ const { SNOWTRACE_API_KEY, FUJI_TESTNET_PRIVATE_KEY } = process.env;
 const hardhatConfig: HardhatUserConfig = {
   defaultNetwork: 'hardhat',
   etherscan: {
-    apiKey: {
-      avalancheFujiTestnet: SNOWTRACE_API_KEY,
-    },
+    apiKey: SNOWTRACE_API_KEY,
   },
   solidity: '0.8.14',
   networks: {
