@@ -1,7 +1,6 @@
 import { task } from 'hardhat/config';
 import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { getDeploymentConsts, Network } from './utils/getDeploymentConsts';
-import { CoralNftV1__factory } from '../dist';
 
 /*
 Multi-Sig that ownership will be transferred to.
@@ -16,6 +15,7 @@ const APPROVED_MUTLI_SIG_ADDRESSES = process.env.APPROVED_MULTI_SIG_ADDRESSES;
 task('transfer-ownership', 'Transfer contract ownership to Multi-Sig')
   .addParam('contractAddress', 'NFT Contract Address with ownership being transferred')
   .setAction(async ({ contractAddress }, hre) => {
+    const { CoralNftV1__factory } = await import('../dist');
     const network = hre.network.name as Network;
 
     const { contractName, deployerRelayApiKey, deployerRelaySecretKey } =
