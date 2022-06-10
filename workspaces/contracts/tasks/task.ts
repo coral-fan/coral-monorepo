@@ -1,8 +1,7 @@
-import { subtask, task } from 'hardhat/config';
+import { subtask, task, types } from 'hardhat/config';
 import { NFTStorage } from 'nft.storage';
 import fs from 'fs';
 import { readFile } from 'fs/promises';
-import { types } from 'hardhat/config';
 import {
   fileExists,
   fileFromPath,
@@ -15,7 +14,6 @@ import { SentinelClient } from 'defender-sentinel-client';
 import type { CreateBlockSubscriberResponse } from 'defender-sentinel-client/lib/models/subscriber';
 import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { getDeploymentConsts, Network } from './utils/getDeploymentConsts';
-import { CoralNftV1__factory } from '../dist';
 
 import { config } from 'dotenv';
 config();
@@ -131,6 +129,7 @@ subtask('upload', 'Upload metadata via nft.storage')
 subtask('deploy-contract', 'Deploy contract')
   .addParam('constructorArgs', 'Contract constructor arguments', {}, types.json)
   .setAction(async ({ constructorArgs }, hre) => {
+    const { CoralNftV1__factory } = await import('../dist');
     const network = hre.network.name as Network;
 
     const { deployerRelayApiKey, deployerRelaySecretKey } = getDeploymentConsts(network);
@@ -212,6 +211,7 @@ subtask('verify-contract', 'Verify contract')
 subtask('add-relay-addresses', 'Set Relay Addresses')
   .addParam('address', 'Deployed contract Address')
   .setAction(async ({ address }, hre) => {
+    const { CoralNftV1__factory } = await import('../dist');
     const network = hre.network.name as Network;
 
     const { deployerRelayApiKey, deployerRelaySecretKey, paymentRelayAddresses } =
