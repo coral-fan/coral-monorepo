@@ -16,7 +16,6 @@ import { SentinelClient } from 'defender-sentinel-client';
 import type { CreateBlockSubscriberResponse } from 'defender-sentinel-client/lib/models/subscriber';
 import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { getDeploymentConsts, Network } from './utils/getDeploymentConsts';
-import { CoralNftV1__factory } from 'contracts/dist';
 
 import { config } from 'dotenv';
 import { Contract, ContractFactory } from 'ethers';
