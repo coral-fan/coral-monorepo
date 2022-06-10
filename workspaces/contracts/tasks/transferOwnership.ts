@@ -1,24 +1,32 @@
 import { task } from 'hardhat/config';
 import { Contract, ContractFactory } from 'ethers';
 import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
+import { getDeploymentConsts, Network } from './utils/getDeploymentConsts';
 
-const DEPLOYER_RELAY_API_KEY = process.env.DEPLOYER_RELAY_API_KEY;
-const DEPLOYER_RELAY_SECRET_KEY = process.env.DEPLOYER_RELAY_SECRET_KEY;
-
-// TODO: Update with New Multi-Sig Address
-const APPROVED_MUTLI_SIG_ADDRESSES = process.env.APPROVED_MULTI_SIG_ADDRESSES;
+/*
+Multi-Sig that ownership will be transferred to.
+*/
 const NEW_OWNER_ADDRESS = process.env.MULTI_SIG_ADDRESS;
 
-const CONTRACT_NAME = process.env.CONTRACT_NAME;
+/*
+List of approved Multi-Sig addresses acts as additional check.
+*/
+const APPROVED_MUTLI_SIG_ADDRESSES = process.env.APPROVED_MULTI_SIG_ADDRESSES;
 
-task('transfer-ownership', 'Set Relay Addresses')
-  .addParam('contractAddress', 'Multisig Contract Address')
-  .setAction(async ({ contractAddress }, { ethers }) => {
-    if (!CONTRACT_NAME) {
+task('transfer-ownership', 'Transfer contract ownership to Multi-Sig')
+  .addParam('contractAddress', 'NFT Contract Address with ownership being transferred')
+  .setAction(async ({ contractAddress }, hre) => {
+    const { ethers } = hre;
+    const network = hre.network.name as Network;
+
+    const { contractName, deployerRelayApiKey, deployerRelaySecretKey } =
+      getDeploymentConsts(network) || {};
+
+    if (!contractName) {
       throw 'Contract name not found';
     }
 
-    if (!DEPLOYER_RELAY_API_KEY || !DEPLOYER_RELAY_SECRET_KEY) {
+    if (!deployerRelayApiKey || !deployerRelaySecretKey) {
       throw 'Deployer Relay keys not found';
     }
 
@@ -31,14 +39,15 @@ task('transfer-ownership', 'Set Relay Addresses')
     }
 
     const relayerCredentials = {
-      apiKey: DEPLOYER_RELAY_API_KEY,
-      apiSecret: DEPLOYER_RELAY_SECRET_KEY,
+      apiKey: deployerRelayApiKey,
+      apiSecret: deployerRelaySecretKey,
     };
+
     try {
       const provider = new DefenderRelayProvider(relayerCredentials);
       const signer = new DefenderRelaySigner(relayerCredentials, provider, { speed: 'fast' });
 
-      const contractFactory: ContractFactory = await ethers.getContractFactory(CONTRACT_NAME);
+      const contractFactory: ContractFactory = await ethers.getContractFactory(contractName);
       const contract = new Contract(contractAddress, contractFactory.interface, signer);
 
       console.log(`Transferring ownership of ${contractAddress} to ${NEW_OWNER_ADDRESS}....`);

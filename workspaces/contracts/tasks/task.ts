@@ -15,7 +15,7 @@ import { Contract, ContractFactory } from 'ethers';
 import { SentinelClient } from 'defender-sentinel-client';
 import type { CreateBlockSubscriberResponse } from 'defender-sentinel-client/lib/models/subscriber';
 import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
-import { getConsts, Network } from './utils/getConsts';
+import { getDeploymentConsts, Network } from './utils/getDeploymentConsts';
 
 import { config } from 'dotenv';
 config();
@@ -70,7 +70,7 @@ subtask('upload', 'Upload metadata via nft.storage')
   .setAction(async ({ projectDir }, hre) => {
     const network = hre.network.name as Network;
 
-    const { nftStorageKey } = getConsts(network) || {};
+    const { nftStorageKey } = getDeploymentConsts(network) || {};
 
     if (!nftStorageKey) {
       throw `nftStorageKey not found, please check environment variables`;
@@ -138,7 +138,8 @@ subtask('deploy-contract', 'Deploy contract')
     const { ethers } = hre;
     const network = hre.network.name as Network;
 
-    const { contractName, deployerRelayApiKey, deployerRelaySecretKey } = getConsts(network) || {};
+    const { contractName, deployerRelayApiKey, deployerRelaySecretKey } =
+      getDeploymentConsts(network) || {};
 
     const args = JSON.parse(constructorArgs);
     console.log('Constructor Args: ', args);
@@ -231,7 +232,7 @@ subtask('add-relay-addresses', 'Set Relay Addresses')
     const network = hre.network.name as Network;
 
     const { contractName, deployerRelayApiKey, deployerRelaySecretKey, paymentRelayAddresses } =
-      getConsts(network) || {};
+      getDeploymentConsts(network) || {};
 
     if (!contractName) {
       throw 'Contract name not found';
@@ -269,11 +270,12 @@ subtask('add-relay-addresses', 'Set Relay Addresses')
 
 task('update-sentinels', 'Update Sentinels')
   .addParam('newAddress', 'Deployed contract Address')
-  .addParam('isInPerson', 'Is in Person flag')
+  .addParam('isInPerson', 'isInPerson flag')
   .setAction(async ({ newAddress, isInPerson }, hre) => {
     const network = hre.network.name as Network;
 
-    const { defenderTeamApiKey, defenderTeamSecretKey, sentinelIds } = getConsts(network) || {};
+    const { defenderTeamApiKey, defenderTeamSecretKey, sentinelIds } =
+      getDeploymentConsts(network) || {};
 
     if (!defenderTeamApiKey || !defenderTeamSecretKey) {
       throw 'Defender API Keys Missing';
@@ -285,6 +287,7 @@ task('update-sentinels', 'Update Sentinels')
     });
 
     // Don't think you can pass boolean via hardhat, must be string
+    // If not in person, do not need to update in person transfer sentinel
     const filteredSentinelIds =
       isInPerson === 'true'
         ? sentinelIds && Object.values(sentinelIds)
