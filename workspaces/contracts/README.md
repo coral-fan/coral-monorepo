@@ -4,8 +4,6 @@
 
 - If deploying to mainnet, you **must** update the `priceFeed` address with the correct mainnet address for the Avax-USD pair: [Chainlink Datafeed - Avalanche](https://docs.chain.link/docs/avalanche-price-feeds/)
 
-- NOTE: All script commands assume you are deploying to TESTNET, i.e. `fuji`. Update network for mainnet deployments.
-
 - Must have the following environmental variables set in your `contracts/.env` file:
   - `SNOWTRACE_API_KEY`
   - `NFT_STORAGE_API_KEY`
@@ -41,6 +39,8 @@
 ## Run Deploy Task
 
 - IMPORTANT: Review and confirm that the values in the `config.json` file are all correct.
+
+- Are you deploying to `mainnet`? Did you update the Chainlink pricefeed address?
 
 - Run `npx hardhat create-and-deploy --project "<PROJECT_NAME>" --network <NETWORK_NAME>` to trigger the hardhat task that uploads metadata, deploys and verifies the contract.
 
