@@ -11,12 +11,19 @@ import './tasks';
 
 config();
 
-const { SNOWTRACE_API_KEY, FUJI_TESTNET_PRIVATE_KEY } = process.env;
+const { SNOWTRACE_API_KEY } = process.env;
+
+if (!SNOWTRACE_API_KEY) {
+  throw 'SNOWTRACE_API_KEY not found';
+}
 
 const hardhatConfig: HardhatUserConfig = {
   defaultNetwork: 'hardhat',
   etherscan: {
-    apiKey: SNOWTRACE_API_KEY,
+    apiKey: {
+      avalancheFujiTestnet: SNOWTRACE_API_KEY,
+      avalanche: SNOWTRACE_API_KEY,
+    },
   },
   solidity: '0.8.14',
   networks: {
