@@ -2,9 +2,9 @@ node_modules
 .env
 projects
 
-# Hardhat files
+## Hardhat files
 cache
 artifacts
 
-# Typechain types
+## Typechain types
 types
