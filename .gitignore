@@ -13,3 +13,6 @@ dist
 .DS_Store
 
 ngrok.yaml
+
+# Sentinel IDs
+sentinels.config.ts
