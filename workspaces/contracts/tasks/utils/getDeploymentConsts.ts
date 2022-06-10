@@ -1,3 +1,4 @@
+import { sentinelIdsFuji, sentinelIdsMainnet } from '../../sentinels.config';
 import { config } from 'dotenv';
 config();
 
@@ -59,25 +60,24 @@ interface DeploymentConstNetworkDependentObject {
   sentinelIds: SentinelObject;
 }
 
+type DeploymentType = DeploymentConstBaseObject & DeploymentConstNetworkDependentObject;
+
 /*
 Sentinels listen to relayMint and transfer events, sending events to our webhooks
-that manage indexing and payment captures.
+that manage indexing and payment captures. These Ids are mapped to their
+events in the sentinel.config.ts file.
 */
-const SENTINEL_IDS_FUJI: SentinelObject = {
-  transferInPerson: '7b0b2398-31d7-4c93-a560-efb85e541ce4',
-  relayMint: 'b89eefbf-5f44-466c-9c7f-fe9251db0f6a',
-  transfer: 'f4302190-7921-4b82-89c9-bab6423c0c88',
-};
+const SENTINEL_IDS_FUJI: SentinelObject = sentinelIdsFuji;
+const SENTINEL_IDS_MAINNET: SentinelObject = sentinelIdsMainnet;
 
-const SENTINEL_IDS_MAINNET: SentinelObject = {
-  transferInPerson: 'tbd',
-  relayMint: 'tbd',
-  transfer: 'tbd',
-};
-
-export const getDeploymentConsts = (network: Network) => {
+export const getDeploymentConsts = (network: Network): DeploymentType => {
+  // TODO: Throw more specific error message
   if (!CONTRACT_NAME || !NFT_STORAGE_KEY || !DEFENDER_TEAM_API_KEY || !DEFENDER_TEAM_SECRET_KEY) {
     throw MISSING_ENV_VARIABLE;
+  }
+
+  if (network !== 'fuji' && network !== 'mainnet') {
+    throw 'Network must be fuji or mainnet';
   }
 
   /*
@@ -95,46 +95,42 @@ export const getDeploymentConsts = (network: Network) => {
   */
   if (network === 'fuji') {
     if (
-      DEPLOYER_RELAY_API_KEY_FUJI &&
-      DEPLOYER_RELAY_SECRET_KEY_FUJI &&
-      PAYMENT_RELAY_ADDRESSES_FUJI
+      !DEPLOYER_RELAY_API_KEY_FUJI ||
+      !DEPLOYER_RELAY_SECRET_KEY_FUJI ||
+      !PAYMENT_RELAY_ADDRESSES_FUJI
     ) {
-      const fujiConstObject: DeploymentConstNetworkDependentObject = {
-        deployerRelayApiKey: DEPLOYER_RELAY_API_KEY_FUJI,
-        deployerRelaySecretKey: DEPLOYER_RELAY_SECRET_KEY_FUJI,
-        paymentRelayAddresses: PAYMENT_RELAY_ADDRESSES_FUJI.split(','),
-        sentinelIds: SENTINEL_IDS_FUJI,
-      };
-      return {
-        ...baseObject,
-        ...fujiConstObject,
-      };
-    } else {
       throw MISSING_ENV_VARIABLE;
     }
-  }
-
-  /*
-  MAINNET
-  */
-  if (network === 'mainnet') {
+    const fujiConstObject: DeploymentConstNetworkDependentObject = {
+      deployerRelayApiKey: DEPLOYER_RELAY_API_KEY_FUJI,
+      deployerRelaySecretKey: DEPLOYER_RELAY_SECRET_KEY_FUJI,
+      paymentRelayAddresses: PAYMENT_RELAY_ADDRESSES_FUJI.split(','),
+      sentinelIds: SENTINEL_IDS_FUJI,
+    };
+    return {
+      ...baseObject,
+      ...fujiConstObject,
+    };
+  } else {
+    /*
+    MAINNET
+    */
     if (
-      DEPLOYER_RELAY_API_KEY_MAINNET &&
-      DEPLOYER_RELAY_SECRET_KEY_MAINNET &&
-      PAYMENT_RELAY_ADDRESSES_MAINNET
+      !DEPLOYER_RELAY_API_KEY_MAINNET ||
+      !DEPLOYER_RELAY_SECRET_KEY_MAINNET ||
+      !PAYMENT_RELAY_ADDRESSES_MAINNET
     ) {
-      const mainnetConstObject: DeploymentConstNetworkDependentObject = {
-        deployerRelayApiKey: DEPLOYER_RELAY_API_KEY_MAINNET,
-        deployerRelaySecretKey: DEPLOYER_RELAY_SECRET_KEY_MAINNET,
-        paymentRelayAddresses: PAYMENT_RELAY_ADDRESSES_MAINNET.split(','),
-        sentinelIds: SENTINEL_IDS_MAINNET,
-      };
-      return {
-        ...baseObject,
-        ...mainnetConstObject,
-      };
-    } else {
       throw MISSING_ENV_VARIABLE;
     }
+    const mainnetConstObject: DeploymentConstNetworkDependentObject = {
+      deployerRelayApiKey: DEPLOYER_RELAY_API_KEY_MAINNET,
+      deployerRelaySecretKey: DEPLOYER_RELAY_SECRET_KEY_MAINNET,
+      paymentRelayAddresses: PAYMENT_RELAY_ADDRESSES_MAINNET.split(','),
+      sentinelIds: SENTINEL_IDS_MAINNET,
+    };
+    return {
+      ...baseObject,
+      ...mainnetConstObject,
+    };
   }
 };
