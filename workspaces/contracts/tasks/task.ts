@@ -16,6 +16,7 @@ import { SentinelClient } from 'defender-sentinel-client';
 import type { CreateBlockSubscriberResponse } from 'defender-sentinel-client/lib/models/subscriber';
 import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { getDeploymentConsts, Network } from './utils/getDeploymentConsts';
+import { CoralNftV1__factory } from 'contracts/dist';
 
 import { config } from 'dotenv';
 config();
@@ -131,11 +132,9 @@ subtask('upload', 'Upload metadata via nft.storage')
 subtask('deploy-contract', 'Deploy contract')
   .addParam('constructorArgs', 'Contract constructor arguments', {}, types.json)
   .setAction(async ({ constructorArgs }, hre) => {
-    const { ethers } = hre;
     const network = hre.network.name as Network;
 
-    const { contractName, deployerRelayApiKey, deployerRelaySecretKey } =
-      getDeploymentConsts(network);
+    const { deployerRelayApiKey, deployerRelaySecretKey } = getDeploymentConsts(network);
 
     const args = JSON.parse(constructorArgs);
     console.log('Constructor Args: ', args);
@@ -148,10 +147,8 @@ subtask('deploy-contract', 'Deploy contract')
     const provider = new DefenderRelayProvider(relayerCredentials);
     const signer = new DefenderRelaySigner(relayerCredentials, provider, { speed: 'fast' });
 
-    const contractFactory: ContractFactory = await ethers.getContractFactory(contractName, signer);
-
     try {
-      const contract: Contract = await contractFactory.deploy(
+      const contract = await new CoralNftV1__factory(signer).deploy(
         args.name,
         args.symbol,
         args.usdPricePerToken,
@@ -216,10 +213,9 @@ subtask('verify-contract', 'Verify contract')
 subtask('add-relay-addresses', 'Set Relay Addresses')
   .addParam('address', 'Deployed contract Address')
   .setAction(async ({ address }, hre) => {
-    const { ethers } = hre;
     const network = hre.network.name as Network;
 
-    const { contractName, deployerRelayApiKey, deployerRelaySecretKey, paymentRelayAddresses } =
+    const { deployerRelayApiKey, deployerRelaySecretKey, paymentRelayAddresses } =
       getDeploymentConsts(network);
 
     const relayerCredentials = {
@@ -230,8 +226,7 @@ subtask('add-relay-addresses', 'Set Relay Addresses')
     const provider = new DefenderRelayProvider(relayerCredentials);
     const signer = new DefenderRelaySigner(relayerCredentials, provider, { speed: 'fast' });
 
-    const contractFactory: ContractFactory = await ethers.getContractFactory(contractName);
-    const contract = new Contract(address, contractFactory.interface, signer);
+    const contract = CoralNftV1__factory.connect(address, signer);
 
     for (let i = 0; i < paymentRelayAddresses.length; i++) {
       const txn = await contract.addRelayAddr(paymentRelayAddresses[i]);
