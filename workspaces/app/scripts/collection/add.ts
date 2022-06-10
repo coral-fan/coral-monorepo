@@ -1,5 +1,5 @@
 import { getDocumentReferenceServerSide, initializeFirebaseAdmin } from 'libraries/firebase';
-import { ArtistData, CollectionData, CollectionType, GatedEvent } from 'libraries/models';
+import { ArtistData, CollectionData, CollectionType } from 'libraries/models';
 import { getStorage } from 'firebase-admin/storage';
 import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
@@ -105,7 +105,7 @@ const addCollection = async (projectName: string) => {
     dropDate: dropDate,
     description: description,
     details: details,
-    gatedContent: gatedContent as GatedEvent,
+    gatedContent: gatedContent,
     maxMintablePerWallet: maxTokensPerWallet,
   };
 
