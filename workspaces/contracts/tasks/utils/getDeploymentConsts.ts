@@ -36,8 +36,7 @@ const PAYMENT_RELAY_ADDRESSES_MAINNET = process.env.PAYMENT_RELAY_ADDRESSES_MAIN
 
 /*
 Sentinels listen to relayMint and transfer events, sending events to our webhooks
-that manage indexing and payment captures. These Ids are mapped to their
-events in the sentinel.config.ts file.
+that manage indexing and payment captures.
 */
 const SENTINEL_ID_TRANSFER_IN_PERSON_FUJI = process.env.SENTINEL_ID_TRANSFER_IN_PERSON_FUJI;
 const SENTINEL_ID_RELAY_MINT_FUJI = process.env.SENTINEL_ID_RELAY_MINT_FUJI;
