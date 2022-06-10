@@ -129,7 +129,6 @@ subtask('upload', 'Upload metadata via nft.storage')
 subtask('deploy-contract', 'Deploy contract')
   .addParam('constructorArgs', 'Contract constructor arguments', {}, types.json)
   .setAction(async ({ constructorArgs }, hre) => {
-    const { CoralNftV1__factory } = await import('../dist');
     const network = hre.network.name as Network;
 
     const { deployerRelayApiKey, deployerRelaySecretKey } = getDeploymentConsts(network);
