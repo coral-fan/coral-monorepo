@@ -70,11 +70,7 @@ subtask('upload', 'Upload metadata via nft.storage')
   .setAction(async ({ projectDir }, hre) => {
     const network = hre.network.name as Network;
 
-    const { nftStorageKey } = getDeploymentConsts(network) || {};
-
-    if (!nftStorageKey) {
-      throw `nftStorageKey not found, please check environment variables`;
-    }
+    const { nftStorageKey } = getDeploymentConsts(network);
 
     const imagePath = getImagePath(projectDir);
     const configPath = getConfigFilePath(projectDir);
@@ -139,18 +135,10 @@ subtask('deploy-contract', 'Deploy contract')
     const network = hre.network.name as Network;
 
     const { contractName, deployerRelayApiKey, deployerRelaySecretKey } =
-      getDeploymentConsts(network) || {};
+      getDeploymentConsts(network);
 
     const args = JSON.parse(constructorArgs);
     console.log('Constructor Args: ', args);
-
-    if (!contractName) {
-      throw 'Contract name not found';
-    }
-
-    if (!deployerRelayApiKey || !deployerRelaySecretKey) {
-      throw 'Deployer Relay keys not found';
-    }
 
     const relayerCredentials = {
       apiKey: deployerRelayApiKey,
@@ -232,19 +220,7 @@ subtask('add-relay-addresses', 'Set Relay Addresses')
     const network = hre.network.name as Network;
 
     const { contractName, deployerRelayApiKey, deployerRelaySecretKey, paymentRelayAddresses } =
-      getDeploymentConsts(network) || {};
-
-    if (!contractName) {
-      throw 'Contract name not found';
-    }
-
-    if (!deployerRelayApiKey || !deployerRelaySecretKey) {
-      throw 'Deployer Relay keys not found';
-    }
-
-    if (!paymentRelayAddresses || paymentRelayAddresses.length === 0) {
-      throw 'No relay addresses found';
-    }
+      getDeploymentConsts(network);
 
     const relayerCredentials = {
       apiKey: deployerRelayApiKey,
@@ -274,12 +250,7 @@ task('update-sentinels', 'Update Sentinels')
   .setAction(async ({ newAddress, isInPerson }, hre) => {
     const network = hre.network.name as Network;
 
-    const { defenderTeamApiKey, defenderTeamSecretKey, sentinelIds } =
-      getDeploymentConsts(network) || {};
-
-    if (!defenderTeamApiKey || !defenderTeamSecretKey) {
-      throw 'Defender API Keys Missing';
-    }
+    const { defenderTeamApiKey, defenderTeamSecretKey, sentinelIds } = getDeploymentConsts(network);
 
     const sentinelClient = new SentinelClient({
       apiKey: defenderTeamApiKey,
