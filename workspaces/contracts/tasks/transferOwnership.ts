@@ -1,8 +1,7 @@
 import { task } from 'hardhat/config';
-import { Contract, ContractFactory } from 'ethers';
 import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { getDeploymentConsts, Network } from './utils/getDeploymentConsts';
-import { CoralNftV1__factory } from 'contracts/dist';
+import { CoralNftV1__factory } from '../dist';
 
 /*
 Multi-Sig that ownership will be transferred to.
