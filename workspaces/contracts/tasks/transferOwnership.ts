@@ -2,6 +2,7 @@ import { task } from 'hardhat/config';
 import { Contract, ContractFactory } from 'ethers';
 import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { getDeploymentConsts, Network } from './utils/getDeploymentConsts';
+import { CoralNftV1__factory } from 'contracts/dist';
 
 /*
 Multi-Sig that ownership will be transferred to.
@@ -16,7 +17,6 @@ const APPROVED_MUTLI_SIG_ADDRESSES = process.env.APPROVED_MULTI_SIG_ADDRESSES;
 task('transfer-ownership', 'Transfer contract ownership to Multi-Sig')
   .addParam('contractAddress', 'NFT Contract Address with ownership being transferred')
   .setAction(async ({ contractAddress }, hre) => {
-    const { ethers } = hre;
     const network = hre.network.name as Network;
 
     const { contractName, deployerRelayApiKey, deployerRelaySecretKey } =
@@ -47,8 +47,7 @@ task('transfer-ownership', 'Transfer contract ownership to Multi-Sig')
       const provider = new DefenderRelayProvider(relayerCredentials);
       const signer = new DefenderRelaySigner(relayerCredentials, provider, { speed: 'fast' });
 
-      const contractFactory: ContractFactory = await ethers.getContractFactory(contractName);
-      const contract = new Contract(contractAddress, contractFactory.interface, signer);
+      const contract = CoralNftV1__factory.connect(contractAddress, signer);
 
       console.log(`Transferring ownership of ${contractAddress} to ${NEW_OWNER_ADDRESS}....`);
 
