@@ -1,7 +1,8 @@
-import { subtask, task, types } from 'hardhat/config';
+import { subtask, task } from 'hardhat/config';
 import { NFTStorage } from 'nft.storage';
 import fs from 'fs';
 import { readFile } from 'fs/promises';
+import { types } from 'hardhat/config';
 import {
   fileExists,
   fileFromPath,
@@ -14,6 +15,7 @@ import { SentinelClient } from 'defender-sentinel-client';
 import type { CreateBlockSubscriberResponse } from 'defender-sentinel-client/lib/models/subscriber';
 import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { getDeploymentConsts, Network } from './utils/getDeploymentConsts';
+import { CoralNftV1__factory } from '../dist';
 
 import { config } from 'dotenv';
 import { Contract, ContractFactory } from 'ethers';
