@@ -1,4 +1,3 @@
-import { sentinelIdsFuji, sentinelIdsMainnet } from '../../sentinels.config';
 import { config } from 'dotenv';
 config();
 
@@ -35,6 +34,19 @@ adds this address to the list of allowed relay mint addresses that can make this
 const PAYMENT_RELAY_ADDRESSES_FUJI = process.env.PAYMENT_RELAY_ADDRESSES_FUJI;
 const PAYMENT_RELAY_ADDRESSES_MAINNET = process.env.PAYMENT_RELAY_ADDRESSES_MAINNET;
 
+/*
+Sentinels listen to relayMint and transfer events, sending events to our webhooks
+that manage indexing and payment captures. These Ids are mapped to their
+events in the sentinel.config.ts file.
+*/
+const SENTINEL_ID_TRANSFER_IN_PERSON_FUJI = process.env.SENTINEL_ID_TRANSFER_IN_PERSON_FUJI;
+const SENTINEL_ID_RELAY_MINT_FUJI = process.env.SENTINEL_ID_RELAY_MINT_FUJI;
+const SENTINEL_ID_TRANSFER_FUJI = process.env.SENTINEL_ID_TRANSFER_FUJI;
+
+const SENTINEL_ID_TRANSFER_IN_PERSON_MAINNET = process.env.SENTINEL_ID_TRANSFER_IN_PERSON_MAINNET;
+const SENTINEL_ID_RELAY_MINT_MAINNET = process.env.SENTINEL_ID_RELAY_MINT_MAINNET;
+const SENTINEL_ID_TRANSFER_MAINNET = process.env.SENTINEL_ID_TRANSFER_MAINNET;
+
 const MISSING_ENV_VARIABLE =
   'Missing an environment variable, please consult README and ensure all keys are present';
 
@@ -61,14 +73,6 @@ interface DeploymentConstNetworkDependentObject {
 }
 
 type DeploymentType = DeploymentConstBaseObject & DeploymentConstNetworkDependentObject;
-
-/*
-Sentinels listen to relayMint and transfer events, sending events to our webhooks
-that manage indexing and payment captures. These Ids are mapped to their
-events in the sentinel.config.ts file.
-*/
-const SENTINEL_IDS_FUJI: SentinelObject = sentinelIdsFuji;
-const SENTINEL_IDS_MAINNET: SentinelObject = sentinelIdsMainnet;
 
 export const getDeploymentConsts = (network: Network): DeploymentType => {
   // TODO: Throw more specific error message
@@ -97,15 +101,24 @@ export const getDeploymentConsts = (network: Network): DeploymentType => {
     if (
       !DEPLOYER_RELAY_API_KEY_FUJI ||
       !DEPLOYER_RELAY_SECRET_KEY_FUJI ||
-      !PAYMENT_RELAY_ADDRESSES_FUJI
+      !PAYMENT_RELAY_ADDRESSES_FUJI ||
+      !SENTINEL_ID_TRANSFER_IN_PERSON_FUJI ||
+      !SENTINEL_ID_RELAY_MINT_FUJI ||
+      !SENTINEL_ID_TRANSFER_FUJI
     ) {
       throw MISSING_ENV_VARIABLE;
     }
+    const sentinelIdsFuji: SentinelObject = {
+      transferInPerson: SENTINEL_ID_TRANSFER_IN_PERSON_FUJI,
+      relayMint: SENTINEL_ID_RELAY_MINT_FUJI,
+      transfer: SENTINEL_ID_TRANSFER_FUJI,
+    };
+
     const fujiConstObject: DeploymentConstNetworkDependentObject = {
       deployerRelayApiKey: DEPLOYER_RELAY_API_KEY_FUJI,
       deployerRelaySecretKey: DEPLOYER_RELAY_SECRET_KEY_FUJI,
       paymentRelayAddresses: PAYMENT_RELAY_ADDRESSES_FUJI.split(','),
-      sentinelIds: SENTINEL_IDS_FUJI,
+      sentinelIds: sentinelIdsFuji,
     };
     return {
       ...baseObject,
@@ -118,15 +131,24 @@ export const getDeploymentConsts = (network: Network): DeploymentType => {
     if (
       !DEPLOYER_RELAY_API_KEY_MAINNET ||
       !DEPLOYER_RELAY_SECRET_KEY_MAINNET ||
-      !PAYMENT_RELAY_ADDRESSES_MAINNET
+      !PAYMENT_RELAY_ADDRESSES_MAINNET ||
+      !SENTINEL_ID_TRANSFER_IN_PERSON_MAINNET ||
+      !SENTINEL_ID_RELAY_MINT_MAINNET ||
+      !SENTINEL_ID_TRANSFER_MAINNET
     ) {
       throw MISSING_ENV_VARIABLE;
     }
+    const sentinelIdsMainnet: SentinelObject = {
+      transferInPerson: SENTINEL_ID_TRANSFER_IN_PERSON_MAINNET,
+      relayMint: SENTINEL_ID_RELAY_MINT_MAINNET,
+      transfer: SENTINEL_ID_TRANSFER_MAINNET,
+    };
+
     const mainnetConstObject: DeploymentConstNetworkDependentObject = {
       deployerRelayApiKey: DEPLOYER_RELAY_API_KEY_MAINNET,
       deployerRelaySecretKey: DEPLOYER_RELAY_SECRET_KEY_MAINNET,
       paymentRelayAddresses: PAYMENT_RELAY_ADDRESSES_MAINNET.split(','),
-      sentinelIds: SENTINEL_IDS_MAINNET,
+      sentinelIds: sentinelIdsMainnet,
     };
     return {
       ...baseObject,
