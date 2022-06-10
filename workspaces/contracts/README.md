@@ -5,6 +5,7 @@
 - If deploying to mainnet, you **must** update the `priceFeed` address with the correct mainnet address for the Avax-USD pair: [Chainlink Datafeed - Avalanche](https://docs.chain.link/docs/avalanche-price-feeds/)
 
 - Must have the following environmental variables set in your `contracts/.env` file:
+
   - `SNOWTRACE_API_KEY`
   - `NFT_STORAGE_API_KEY`
   - `DEFENDER_TEAM_API_KEY`
@@ -18,9 +19,11 @@
   - `PAYMENT_RELAY_ADDRESSES_MAINNET`
   - `CONTRACT_NAME`
 
+- Must have the Sentinel IDs configured correctly in `sentinels.config.ts`
+
 ## Setup Project
 
-- From `contracts`, run `node scripts/create.mjs "<PROJECT_NAME>"` and follow the prompts. This creates an initial configuration file.
+- From `contracts`, run `node project-setup-cli.mjs "<PROJECT_NAME>"` and follow the prompts. This creates an initial configuration file.
 
 - For `dropDate`, please enter the date and time in your local environment, the output will be converted to UTC time.
 
@@ -42,13 +45,13 @@
 
 - Are you deploying to `mainnet`? Did you update the Chainlink pricefeed address?
 
-- Run `npx hardhat create-and-deploy --project "<PROJECT_NAME>" --network <NETWORK_NAME>` to trigger the hardhat task that uploads metadata, deploys and verifies the contract.
+- Run `npx hardhat create-and-deploy --project <PROJECT_NAME> --network <NETWORK_NAME>` to trigger the hardhat task that uploads metadata, deploys and verifies the contract.
 
 - Note: For testnet, set `NETWORK_NAME` to `fuji`; To deploy to mainnet, set `NETWORK_NAME` to `mainnet`
 
 ## Update Firestore DB
 
-- From `coral-monorepo` run `yarn app run-script scripts/collection/add.ts '<PROJECT_NAME>'`
+- From `coral-monorepo` run `yarn app run-script scripts/collection/add.ts <PROJECT_NAME>`
 
 ## Run Airdrop Script (if applicable)
 
