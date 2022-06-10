@@ -169,7 +169,7 @@ subtask('deploy-contract', 'Deploy contract')
 
       return contract.address;
     } catch (e: any) {
-      console.error(`ERROR: ${e.error.reason}`);
+      console.error(`ERROR: ${e}`);
     }
   });
 

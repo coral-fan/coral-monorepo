@@ -61,6 +61,6 @@ task('transfer-ownership', 'Transfer contract ownership to Multi-Sig')
         );
       }
     } catch (e: any) {
-      console.error(`ERROR: ${e.error.reason}`);
+      console.error(`ERROR: ${e}`);
     }
   });
