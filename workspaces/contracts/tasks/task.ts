@@ -18,7 +18,6 @@ import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-clien
 import { getDeploymentConsts, Network } from './utils/getDeploymentConsts';
 
 import { config } from 'dotenv';
-import { Contract, ContractFactory } from 'ethers';
 config();
 
 // TODO: Separate tasks and subtasks in more modular way (different files and directories)
