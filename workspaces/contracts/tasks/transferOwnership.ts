@@ -1,7 +1,7 @@
 import { task } from 'hardhat/config';
+import { Contract, ContractFactory } from 'ethers';
 import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { getDeploymentConsts, Network } from './utils/getDeploymentConsts';
-import { ContractFactory } from 'ethers';
 
 /*
 Multi-Sig that ownership will be transferred to.
