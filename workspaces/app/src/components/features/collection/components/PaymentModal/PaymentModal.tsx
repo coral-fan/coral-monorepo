@@ -33,7 +33,6 @@ export const PaymentModal = ({
   artistId,
   artistName,
   artistProfilePhoto,
-  type,
   closePaymentModal,
   usdPrice,
   collectionId,
@@ -108,7 +107,6 @@ export const PaymentModal = ({
             assetId={assetId}
             collectionName={collectionName}
             imageUrl={imageUrl}
-            type={type}
             artistId={artistId}
             artistName={artistName}
             artistProfilePhoto={artistProfilePhoto}
@@ -121,7 +119,6 @@ export const PaymentModal = ({
               collectionName={collectionName}
               artistName={artistName}
               artistProfilePhoto={artistProfilePhoto}
-              type={type}
             />
             <ConditionalSpinner
               size={'60px'}
