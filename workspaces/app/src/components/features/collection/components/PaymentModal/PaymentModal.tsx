@@ -24,6 +24,7 @@ interface PaymentModalProps extends AssetInfoProps {
   collectionId: Collection['id'];
   collectionDetails: Details;
   closePaymentModal: () => void;
+  type: Collection['type'];
 }
 
 export const PaymentModal = ({
@@ -119,7 +120,6 @@ export const PaymentModal = ({
               collectionName={collectionName}
               artistName={artistName}
               artistProfilePhoto={artistProfilePhoto}
-              type={type}
             />
             <ConditionalSpinner
               size={'60px'}
