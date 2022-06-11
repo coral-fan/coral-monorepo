@@ -81,7 +81,7 @@ export const Layout = ({
             <NftContent
               title={name}
               titleHeadingLevel={2}
-              titleStyleVariant={'h1'}
+              titleStyleVariant={isMobile ? 'h2' : 'h1'}
               description={description}
               Badge={Badge}
               isCard={false}
