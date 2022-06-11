@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { ArtistInfo, Heading, Image } from 'components/ui';
+import { getBadge } from 'components/ui/badges/utils';
 import { Collection } from 'libraries/models';
 import tokens from 'styles/tokens';
 
@@ -8,6 +9,7 @@ export interface AssetInfoProps {
   collectionName: Collection['name'];
   artistName: Collection['artistName'];
   artistProfilePhoto: Collection['artistProfilePhoto'];
+  type: Collection['type'];
 }
 
 const Container = styled.div`
@@ -49,7 +51,10 @@ export const AssetInfo = ({
   collectionName,
   artistName,
   artistProfilePhoto,
+  type,
 }: AssetInfoProps) => {
+  const Badge = getBadge(type);
+
   return (
     <Container>
       <TopContainer>
@@ -65,7 +70,9 @@ export const AssetInfo = ({
           <ArtistInfo profilePhoto={artistProfilePhoto}>{artistName}</ArtistInfo>
         </RightContainer>
       </TopContainer>
-      <BottomContainer></BottomContainer>
+      <BottomContainer>
+        <Badge />
+      </BottomContainer>
     </Container>
   );
 };
