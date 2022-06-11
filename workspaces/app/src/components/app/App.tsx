@@ -21,6 +21,10 @@ import { Managers, Layout, ModalOrComponent, ErrorBoundaryFallback, Toast } from
 import { useEffect, useState } from 'react';
 import { initializeStore } from 'libraries/state';
 
+// analytics
+import * as Fathom from 'fathom-client';
+import Router from 'next/router';
+
 initializeFirebaseApp();
 
 export const getRandomSocialMediaPreviewImageUrl = () =>
@@ -41,13 +45,27 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
     setIsMounted(true);
   }, []);
 
+  // Fathom Analytics configuration from https://github.com/derrickreimer/fathom-client
+  // Record a pageview when route changes
+  Router.events.on('routeChangeComplete', (as, routeProps) => {
+    if (!routeProps.shallow) {
+      Fathom.trackPageview();
+    }
+  });
+
+  useEffect(() => {
+    Fathom.load('NSNWRVJL', {
+      includedDomains: ['www.coral.fan', 'coral.fan', 'coral.ngrok.io', 'localhost:3000'],
+    });
+  }, []);
+
   return (
     <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
       <GlobalStyles />
       <Head>
         {/* TODO: update title post sign up campaign */}
         <title>Coral - Sign up for early rewards</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
         <meta
           name="description"
           content="The marketplace for a new era of music is coming soon. Sign up for early access."
