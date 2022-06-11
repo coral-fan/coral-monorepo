@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { ButtonLink, Heading } from 'components/ui';
-import { getBadge } from 'components/ui/badges/utils';
 import { ImageWithInfo, NftAssetContainer } from 'components/ui/nft';
 import { Asset } from 'libraries/models';
 import { useMemo } from 'react';
@@ -9,7 +8,7 @@ import tokens from 'styles/tokens';
 interface PaymentSuccessProps
   extends Pick<
     Asset,
-    'imageUrl' | 'artistName' | 'artistProfilePhoto' | 'artistId' | 'collectionName' | 'type'
+    'imageUrl' | 'artistName' | 'artistProfilePhoto' | 'artistId' | 'collectionName'
   > {
   collectionId: string;
   assetId: number;
@@ -43,10 +42,7 @@ export const PaymentSuccess = ({
   assetId,
   collectionId,
   collectionName,
-  type,
 }: PaymentSuccessProps) => {
-  const Badge = getBadge(type);
-
   const image = useMemo(
     () => (
       <ImageWithInfo
@@ -69,7 +65,6 @@ export const PaymentSuccess = ({
             {collectionName}
           </Heading>
           <AssetInfoBottom>
-            <Badge />
             <Heading level={3} styleVariant={'h4'}>
               #{assetId}
             </Heading>

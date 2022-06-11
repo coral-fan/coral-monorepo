@@ -65,7 +65,6 @@ export const CollectionPage = ({
         artistName={artistName}
         artistProfilePhoto={artistProfilePhoto}
         imageUrl={imageUrl}
-        type={type}
       />
     ),
     [
@@ -77,7 +76,6 @@ export const CollectionPage = ({
       artistName,
       artistProfilePhoto,
       imageUrl,
-      type,
       numMinted,
       id,
       isSoldOut,

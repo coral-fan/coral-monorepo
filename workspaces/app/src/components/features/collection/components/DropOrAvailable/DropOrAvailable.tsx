@@ -48,7 +48,6 @@ export const DropOrAvailable = ({
   artistName,
   imageUrl,
   artistProfilePhoto,
-  type,
   isSoldOut,
   maxMintablePerWallet,
 }: DropOrAvailableProps) => {
@@ -141,7 +140,6 @@ export const DropOrAvailable = ({
           artistId={artistId}
           artistName={artistName}
           artistProfilePhoto={artistProfilePhoto}
-          type={type}
           usdPrice={usdPrice}
         />
       )}
