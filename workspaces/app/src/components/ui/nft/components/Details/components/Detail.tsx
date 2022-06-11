@@ -3,14 +3,19 @@ import coralPlusSVG from './coralPlus.svg';
 import { getIconComponent } from 'components/ui/icons/utils';
 import tokens from 'styles/tokens';
 import { ReactNode } from 'react';
+import { useIsMobile } from 'libraries/window';
 
-const Container = styled.div`
+interface DetailsContainerProps {
+  isMobile: boolean;
+}
+
+const Container = styled.div<DetailsContainerProps>`
   display: flex;
   width: 100%;
   align-items: center;
   padding: 12px 9px 12px 0px;
   border-top: solid 1px ${tokens.border.color.secondary};
-  gap: 100px;
+  gap: ${({ isMobile }) => (isMobile ? '60px' : '90px')};
 `;
 
 const Content = styled.p`
@@ -27,9 +32,12 @@ interface DetailProps {
   children: ReactNode;
 }
 
-export const Detail = ({ children }: DetailProps) => (
-  <Container>
-    <Icon />
-    <Content>{children}</Content>
-  </Container>
-);
+export const Detail = ({ children }: DetailProps) => {
+  const isMobile = useIsMobile();
+  return (
+    <Container isMobile={isMobile}>
+      <Icon />
+      <Content>{children}</Content>
+    </Container>
+  );
+};
