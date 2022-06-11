@@ -47,6 +47,7 @@ interface AvaxPaymentProps {
   handleSwitchPaymentClick: () => void;
   setAssetId: (assetId: number) => void;
   setIsMintingNFT: (isMinting: boolean) => void;
+  isMobile: boolean;
 }
 export const AvaxPayment = ({
   total,
@@ -54,6 +55,7 @@ export const AvaxPayment = ({
   handleSwitchPaymentClick,
   setAssetId,
   setIsMintingNFT,
+  isMobile,
 }: AvaxPaymentProps) => {
   const [sufficientFunds, setSufficientFunds] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -115,7 +117,7 @@ export const AvaxPayment = ({
 
   return (
     <CheckoutContainer>
-      <WalletBalanceContainer>
+      <WalletBalanceContainer isMobile={isMobile}>
         {!isLoading && typeof formattedBalance === 'string' ? (
           <WalletBalance>
             <Heading>Wallet Balance</Heading>

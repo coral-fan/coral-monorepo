@@ -17,6 +17,7 @@ import {
 import { NewCardInput } from './components/NewCardInput';
 import { PaymentSuccess } from './components/PaymentSuccess';
 import { useErrorToast } from 'libraries/utils/toasts';
+import { useIsMobile } from 'libraries/window';
 
 interface PaymentModalProps extends AssetInfoProps {
   usdPrice: number;
@@ -39,6 +40,7 @@ export const PaymentModal = ({
   collectionId,
 }: PaymentModalProps) => {
   const { isActive: isWalletUser } = useWallet();
+  const isMobile = useIsMobile();
 
   const [isAvax, setIsAvax] = useState(isWalletUser);
 
@@ -155,6 +157,7 @@ export const PaymentModal = ({
                   handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
                   setAssetId={setAssetId}
                   setIsMintingNFT={setIsMintingNFT}
+                  isMobile={isMobile}
                 />
               ) : shouldUseExistingCard && stripeCustomerId ? (
                 <ExistingCardPayment
@@ -164,6 +167,7 @@ export const PaymentModal = ({
                   collectionId={collectionId}
                   setPurchaseId={setPurchaseId}
                   isWalletUser={isWalletUser}
+                  isMobile={isMobile}
                 />
               ) : (
                 <NewCardInput
@@ -173,6 +177,7 @@ export const PaymentModal = ({
                   collectionId={collectionId}
                   setPurchaseId={setPurchaseId}
                   isWalletUser={isWalletUser}
+                  isMobile={isMobile}
                 />
               )}
             </ConditionalSpinner>

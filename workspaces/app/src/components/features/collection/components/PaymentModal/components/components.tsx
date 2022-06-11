@@ -10,11 +10,14 @@ export const CheckoutContainer = styled.div`
   align-items: center;
 `;
 
-export const PaymentMethodContainer = styled.div`
+interface PaymentMethodContainerProps {
+  isMobile: boolean;
+}
+export const PaymentMethodContainer = styled.div<PaymentMethodContainerProps>`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 110px;
+  height: ${({ isMobile }) => (isMobile ? '90px' : '110px')};
 `;
 
 export const Form = styled.form`
