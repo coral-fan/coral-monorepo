@@ -24,6 +24,7 @@ interface NewCardInputProps {
   handleSwitchPaymentClick: () => void;
   setPurchaseId: (id: string) => void;
   isWalletUser: boolean;
+  isMobile: boolean;
 }
 
 const PaymentInfoContainer = styled(PaymentMethodContainer)`
@@ -37,6 +38,7 @@ export const NewCardInput = ({
   handleSwitchPaymentClick,
   setPurchaseId,
   isWalletUser,
+  isMobile,
 }: NewCardInputProps) => {
   const elements = useElements();
   const stripe = useStripe();
@@ -139,7 +141,7 @@ export const NewCardInput = ({
     <Form onSubmit={handleSubmit}>
       <CheckoutContainer>
         {isProcessing && <ProcessingOverlay />}
-        <PaymentInfoContainer>
+        <PaymentInfoContainer isMobile={isMobile}>
           <CardElementContainer width={'100%'}>
             <CardElement options={cardElementOptions} onChange={handleOnChange} />
           </CardElementContainer>

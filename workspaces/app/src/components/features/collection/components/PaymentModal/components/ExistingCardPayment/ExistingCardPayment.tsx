@@ -28,6 +28,7 @@ interface CardPaymentProps {
   handleSwitchPaymentClick: () => void;
   setPurchaseId: (id: string) => void;
   isWalletUser: boolean;
+  isMobile: boolean;
 }
 
 interface PaymentMethodData {
@@ -62,6 +63,7 @@ export const ExistingCardPayment = ({
   handleSwitchPaymentClick,
   setPurchaseId,
   isWalletUser,
+  isMobile,
 }: CardPaymentProps) => {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodData>();
   const [error, setError] = useState<StripeError>();
@@ -169,7 +171,7 @@ export const ExistingCardPayment = ({
     <Form onSubmit={handleFormSubmit}>
       <CheckoutContainer>
         {isProcessing && <ProcessingOverlay />}
-        <Container>
+        <Container isMobile={isMobile}>
           <CardInfoContainer>
             {CreditCardIcon ? (
               <CardContainer>
