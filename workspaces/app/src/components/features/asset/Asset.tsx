@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { GetServerSideProps } from 'next';
 
-import { Asset } from 'libraries/models';
+import { Asset, useUserUid } from 'libraries/models';
 import { Layout as AssetLayout } from 'components/ui/nft';
 import { Owner } from './components';
 import { getGatedContentComponent } from 'components/ui/nft/GatedContent/utils';
@@ -10,6 +10,8 @@ import { useIsMobile } from 'libraries/window';
 import tokens, { QUERY } from 'styles/tokens';
 import { getAsset } from 'libraries/models/asset/utils';
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
+import { getTokenOwner$ } from 'libraries/blockchain/observables';
+import { map } from 'rxjs';
 
 type AssetPageProps = Asset;
 
@@ -66,9 +68,21 @@ export const AssetPage = ({
     [ownerAddress, id, ownerProfilePhoto, ownerUsername, ownerType]
   );
 
+  const currentUserId = useUserUid();
+
+  const [isCurrentUserOwner, setIsCurrentUserOwner] = useState(currentUserId === ownerAddress);
+
+  useEffect(() => {
+    const subscription = getTokenOwner$(contractAddress, id)
+      .pipe(map((tokenOwner) => tokenOwner === currentUserId))
+      .subscribe(setIsCurrentUserOwner);
+
+    return () => subscription.unsubscribe();
+  }, [contractAddress, id, currentUserId]);
+
   const gatedContentComponent = useCallback(
-    () => getGatedContentComponent(gatedContent),
-    [gatedContent]
+    () => (isCurrentUserOwner ? getGatedContentComponent(gatedContent) : null),
+    [isCurrentUserOwner, gatedContent]
   )();
 
   const isMobile = useIsMobile();
@@ -112,17 +126,17 @@ export const getServerSideProps: GetServerSideProps<AssetPageProps, AssetParams>
 
   const { collectionId, assetId } = params;
 
-  const assetData = await getAsset(collectionId, parseInt(assetId));
-
-  if (assetData === undefined) {
+  try {
+    // getAsset can throw an exception get tokenId doesn't exist yet in smart contract
+    const assetData = await getAsset(collectionId, parseInt(assetId));
+    return {
+      props: {
+        ...assetData,
+      },
+    };
+  } catch (e) {
     return {
       notFound: true,
     };
   }
-
-  return {
-    props: {
-      ...assetData,
-    },
-  };
 };
