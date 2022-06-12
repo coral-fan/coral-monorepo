@@ -35,12 +35,11 @@ export const useLogin = () => {
           const customToken = await getFirebaseCustomToken(address, signedMessage);
           await signInWithCustomToken(getAuth(), customToken);
           if (connector instanceof MetaMaskConnector) {
-            successToast('Signed in!');
             window.location.reload();
           } else {
             await refetchPageData();
-            successToast('Signed in!');
           }
+          successToast('Signed in!');
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- need any for error handling
       } catch (e: any) {
