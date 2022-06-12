@@ -1,7 +1,7 @@
-import { keyframes } from '@emotion/react';
+import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
-import { SpinnerBaseProp as SpinnerProp } from './types';
+import { SpinnerProps } from './types';
 
 const SIZE = `20px`;
 const COLOR = `${tokens.background.color.primary}`;
@@ -15,7 +15,7 @@ const spin = keyframes`
   }
 `;
 
-const Wrapper = styled.div<SpinnerProp>`
+const Wrapper = styled.div<SpinnerProps>`
   /* spinner css variables */
   --size: ${({ size = SIZE }) => size};
   --ring-size: calc(var(--size));
@@ -26,6 +26,12 @@ const Wrapper = styled.div<SpinnerProp>`
   position: relative;
   width: var(--size);
   height: var(--size);
+
+  ${({ center }) =>
+    center &&
+    css`
+      margin: auto;
+    `}
 `;
 
 const Ring = styled.div`
@@ -52,8 +58,8 @@ const Ring = styled.div`
   }
 `;
 
-export const Spinner = ({ size, color }: SpinnerProp) => (
-  <Wrapper size={size} color={color}>
+export const Spinner = ({ size, color, center }: SpinnerProps) => (
+  <Wrapper size={size} color={color} center={center}>
     <Ring />
     <Ring />
     <Ring />
