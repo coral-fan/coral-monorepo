@@ -1,6 +1,6 @@
 // TODO: Refactor CtaButton and button handler logic
 
-import { CtaButton, DropTimer } from 'components/ui';
+import { CtaButton, DropTimer, ConditionalSpinner } from 'components/ui';
 import { getMilliSecsDiff, getTimeRemaining$ } from 'libraries/time';
 import { useObservable } from 'libraries/utils';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -18,7 +18,7 @@ import tokens from 'styles/tokens';
 import { SignInModal, useOpenSignInModal } from 'components/app';
 
 interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
-  numMinted?: number;
+  numMinted: number;
   maxSupply: number;
   dropDate: string;
   collectionId: string;
@@ -52,12 +52,10 @@ export const DropOrAvailable = ({
   maxMintablePerWallet,
 }: DropOrAvailableProps) => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-  const [isMaxTokensOwned, setIsMaxTokensOwned] = useState(false);
 
   const isAuthenticated = useIsAuthenticated();
   const { isLoggingIn } = useLogin();
   const openSignInModal = useOpenSignInModal();
-  const userId = useUserUid();
 
   const closePaymentModal = useCallback(() => setIsPaymentModalOpen(false), []);
 
@@ -96,15 +94,17 @@ export const DropOrAvailable = ({
 
   const numMintedDisplay = useMemo(() => numMinted ?? 0, [numMinted]);
 
+  const userId = useUserUid();
+  const [isMaxTokensOwned, setIsMaxTokensOwned] = useState<boolean>();
+
   useEffect(() => {
     if (userId) {
       const subscription = getUserTokenBalance$(collectionId, userId).subscribe((tokenBalance) =>
         setIsMaxTokensOwned(tokenBalance >= maxMintablePerWallet)
       );
-
       return () => subscription.unsubscribe();
     }
-  }, [collectionId, userId, maxMintablePerWallet]);
+  }, [collectionId, userId, maxMintablePerWallet, isAuthenticated]);
 
   // TODO: Refactor CtaButton conditional logic
   return (
@@ -112,19 +112,31 @@ export const DropOrAvailable = ({
       {isAvailable === 'true' ? (
         <AvailableContainer>
           <Price usdPrice={usdPrice} />
-          <CtaButton
-            onClick={handleBuyButtonClick}
-            disabled={isSoldOut || isLoggingIn || (isMaxTokensOwned && isAuthenticated)}
-            loading={isLoggingIn}
+          <ConditionalSpinner
+            size={'60px'}
+            color={tokens.background.color.brand}
+            center
+            loading={isMaxTokensOwned === undefined}
           >
-            {isSoldOut ? 'Sold Out' : isAuthenticated ? 'Buy Now' : 'Sign In To Purchase'}
-          </CtaButton>
-          {!isSoldOut && isAuthenticated && isMaxTokensOwned && (
-            <MaxOwnedNotification>
-              Maximum of {maxMintablePerWallet} NFTs per wallet already owned
-            </MaxOwnedNotification>
-          )}
-          <ProgressBar maxSupply={maxSupply} numMinted={numMintedDisplay} />
+            <CtaButton
+              onClick={handleBuyButtonClick}
+              disabled={
+                isSoldOut ||
+                isLoggingIn ||
+                // TODO: revisit to see if there's a better way to deal handle this
+                ((isMaxTokensOwned ?? !Boolean(isMaxTokensOwned)) && isAuthenticated)
+              }
+              loading={isLoggingIn && !isSoldOut}
+            >
+              {isSoldOut ? 'Sold Out' : isAuthenticated ? 'Buy Now' : 'Sign In To Purchase'}
+            </CtaButton>
+            {!isSoldOut && isAuthenticated && isMaxTokensOwned && (
+              <MaxOwnedNotification>
+                Maximum of {maxMintablePerWallet} NFTs per wallet already owned
+              </MaxOwnedNotification>
+            )}
+            <ProgressBar maxSupply={maxSupply} numMinted={numMintedDisplay} />
+          </ConditionalSpinner>
         </AvailableContainer>
       ) : (
         <DropTimer tokenSupply={maxSupply} timestamp={dropDate} />
