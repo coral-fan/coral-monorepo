@@ -39,3 +39,9 @@ export const getOwnedTokensByCollection = async (
   }
   return tokenIds;
 };
+
+export const getTokenTotalSupply = async (address: string) => {
+  const nftContract = CoralNftV1__factory.connect(address, avalancheRpcProvider);
+  const tokenTotalSupply = await nftContract.totalSupply();
+  return tokenTotalSupply.toNumber();
+};
