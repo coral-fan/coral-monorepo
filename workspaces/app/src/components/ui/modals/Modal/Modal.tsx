@@ -63,7 +63,7 @@ type ContentProps = Pick<
 
 const Content = styled(Card)<ContentProps>`
   max-width: ${({ isNarrow }) => (isNarrow ? '400px' : '575px')};
-  max-height: ${({ fullHeight }) => (fullHeight ? '100%' : '420px')};
+  max-height: ${({ fullHeight }) => (fullHeight ? '80%' : '420px')};
   color: ${({ variant }) =>
     variant === 'contrast' ? tokens.font.color.contrast : tokens.font.color.primary};
   padding: ${({ title }) => `${title ? '20px' : '8px'} 18px`};
@@ -116,6 +116,20 @@ export const Modal = ({
     documentBodyRef.current = document.body;
     setIsMounted(true);
   }, []);
+
+  useEffect(() => {
+    document.body.style.position = 'fixed';
+    document.body.style.overflowY = 'hidden';
+    document.body.style.width = '100vw';
+
+    return () => {
+      document.body.style.position = '';
+      document.body.style.overflowY = '';
+      document.body.style.width = '';
+    };
+  }, []);
+
+  if (!isMounted) return null;
 
   return isMounted
     ? ReactDOM.createPortal(
