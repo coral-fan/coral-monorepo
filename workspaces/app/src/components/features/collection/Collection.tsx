@@ -12,16 +12,19 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import { NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY } from 'libraries/stripe/consts';
 import { getTokenTotalSupply$ } from 'libraries/blockchain/observables';
+import { getTokenTotalSupply } from 'libraries/blockchain/utils';
 
 // similarCollections optional so failure to fetch
 // doesn't block page from loading
 interface CollectionPageProps extends Collection {
   similarCollections?: PartialCollection[];
+  tokenTotalSupply: number;
 }
 
 const stripePromise = loadStripe(NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 export const CollectionPage = ({
+  tokenTotalSupply,
   imageUrl,
   artistName,
   artistProfilePhoto,
@@ -37,8 +40,8 @@ export const CollectionPage = ({
   similarCollections,
   maxMintablePerWallet,
 }: CollectionPageProps) => {
-  const [numMinted, setNumMinted] = useState(0);
-  const [isSoldOut, setIsSoldOut] = useState(false);
+  const [numMinted, setNumMinted] = useState(tokenTotalSupply);
+  const [isSoldOut, setIsSoldOut] = useState(tokenTotalSupply >= maxSupply);
 
   useEffect(() => {
     const subscription = getTokenTotalSupply$(id).subscribe((totalSupply) => {
@@ -134,11 +137,16 @@ export const getServerSideProps: GetServerSideProps<CollectionPageProps, Collect
         notFound: true,
       };
     }
-    const similarCollections = await getSimilarCollections(collectionId, 4);
+
+    const [similarCollections, tokenTotalSupply] = await Promise.all([
+      getSimilarCollections(collectionId, 4),
+      getTokenTotalSupply(collectionId),
+    ]);
 
     return {
       props: {
         ...collectionData,
+        tokenTotalSupply,
         similarCollections,
       },
     };
