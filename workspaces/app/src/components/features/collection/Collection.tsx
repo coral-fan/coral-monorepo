@@ -13,12 +13,16 @@ import { Elements } from '@stripe/react-stripe-js';
 import { NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY } from 'libraries/stripe/consts';
 import { getTokenTotalSupply$ } from 'libraries/blockchain/observables';
 import { getTokenTotalSupply } from 'libraries/blockchain/utils';
+import { getDocumentReferenceServerSide } from 'libraries/firebase';
+import { RedeemCode } from 'libraries/models/redeemCode';
+import { NullableString } from 'libraries/models';
 
 // similarCollections optional so failure to fetch
 // doesn't block page from loading
 interface CollectionPageProps extends Collection {
   similarCollections?: PartialCollection[];
   tokenTotalSupply: number;
+  redeemCode: NullableString;
 }
 
 const stripePromise = loadStripe(NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
@@ -39,6 +43,7 @@ export const CollectionPage = ({
   id,
   similarCollections,
   maxMintablePerWallet,
+  redeemCode,
 }: CollectionPageProps) => {
   const [numMinted, setNumMinted] = useState(tokenTotalSupply);
   const [isSoldOut, setIsSoldOut] = useState(tokenTotalSupply >= maxSupply);
@@ -68,6 +73,8 @@ export const CollectionPage = ({
         artistName={artistName}
         artistProfilePhoto={artistProfilePhoto}
         imageUrl={imageUrl}
+        type={type}
+        redeemCode={redeemCode}
       />
     ),
     [
@@ -84,6 +91,8 @@ export const CollectionPage = ({
       isSoldOut,
       details,
       maxMintablePerWallet,
+      type,
+      redeemCode,
     ]
   );
 
@@ -112,6 +121,24 @@ export const CollectionPage = ({
   );
 };
 
+const validateRedeemCode = async (collectionId: string, code: NextParsedUrlQuery[string]) => {
+  if (typeof code === 'string') {
+    const redeemCodeDocRef = await getDocumentReferenceServerSide<RedeemCode>(
+      `app/redeem-codes/${collectionId}`,
+      code
+    );
+
+    const redeemCodeSnapshot = await redeemCodeDocRef.get();
+    if (redeemCodeSnapshot.exists) {
+      const redeemCode = redeemCodeSnapshot.data();
+      if (redeemCode !== undefined && !redeemCode.isRedeemed) {
+        return code;
+      }
+    }
+  }
+  return null;
+};
+
 interface CollectionParams extends NextParsedUrlQuery {
   collectionId: string;
 }
@@ -120,32 +147,27 @@ export const getServerSideProps: GetServerSideProps<CollectionPageProps, Collect
   context
 ) => {
   try {
-    const { params } = context;
+    const { params, query } = context;
 
     if (params === undefined) {
-      return {
-        notFound: true,
-      };
+      throw new Error('params should never be undefined.');
     }
 
     const { collectionId } = params;
 
     const collectionData = await getCollection(collectionId);
 
-    if (collectionData === undefined) {
-      return {
-        notFound: true,
-      };
-    }
-
     const [similarCollections, tokenTotalSupply] = await Promise.all([
       getSimilarCollections(collectionId, 4),
       getTokenTotalSupply(collectionId),
     ]);
 
+    const redeemCode = await validateRedeemCode(collectionId, query.redeem_code);
+
     return {
       props: {
         ...collectionData,
+        redeemCode,
         tokenTotalSupply,
         similarCollections,
       },

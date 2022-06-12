@@ -11,7 +11,7 @@ import { AssetInfoProps } from '../PaymentModal/components/AssetInfo';
 import { PaymentModal } from '../PaymentModal';
 import { FadeOutInSwitchAnimation } from 'libraries/animation';
 import { useIsAuthenticated, useLogin } from 'libraries/authentication';
-import { Details, useUserUid } from 'libraries/models';
+import { Details, NullableString, useUserUid } from 'libraries/models';
 import { getUserTokenBalance$ } from 'libraries/blockchain/observables';
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
@@ -26,6 +26,7 @@ interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
   collectionDetails: Details;
   artistId: string;
   maxMintablePerWallet: number;
+  redeemCode: NullableString;
 }
 
 const MaxOwnedNotification = styled.span`
@@ -50,6 +51,7 @@ export const DropOrAvailable = ({
   artistProfilePhoto,
   isSoldOut,
   maxMintablePerWallet,
+  redeemCode,
 }: DropOrAvailableProps) => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
@@ -106,6 +108,22 @@ export const DropOrAvailable = ({
     }
   }, [collectionId, userId, maxMintablePerWallet, isAuthenticated]);
 
+  const ctaText = useMemo(() => {
+    if (isSoldOut) {
+      return 'Sold Out';
+    }
+
+    if (isAuthenticated) {
+      if (redeemCode !== null) {
+        return 'Redeem Free NFT';
+      } else {
+        return 'Buy Now';
+      }
+    } else {
+      return 'Sign In To Purchase';
+    }
+  }, [isSoldOut, isAuthenticated, redeemCode]);
+
   // TODO: Refactor CtaButton conditional logic
   return (
     <FadeOutInSwitchAnimation isAvailable={isAvailable}>
@@ -116,7 +134,7 @@ export const DropOrAvailable = ({
             size={'60px'}
             color={tokens.background.color.brand}
             center
-            loading={isMaxTokensOwned === undefined}
+            loading={isAuthenticated && isMaxTokensOwned === undefined}
           >
             <CtaButton
               onClick={handleBuyButtonClick}
@@ -128,7 +146,7 @@ export const DropOrAvailable = ({
               }
               loading={isLoggingIn && !isSoldOut}
             >
-              {isSoldOut ? 'Sold Out' : isAuthenticated ? 'Buy Now' : 'Sign In To Purchase'}
+              {ctaText}
             </CtaButton>
             {!isSoldOut && isAuthenticated && isMaxTokensOwned && (
               <MaxOwnedNotification>
@@ -153,6 +171,7 @@ export const DropOrAvailable = ({
           artistName={artistName}
           artistProfilePhoto={artistProfilePhoto}
           usdPrice={usdPrice}
+          redeemCode={redeemCode}
         />
       )}
     </FadeOutInSwitchAnimation>
