@@ -26,7 +26,7 @@ export const UpdateProfileInfoModal = () => {
   }
 
   return (
-    <Modal title={'Update Profile'} onClick={() => setIsModalOpen(false)}>
+    <Modal title={'Update Profile'} onClick={() => setIsModalOpen(false)} fullHeight>
       <Form onSubmit={handleSubmitUpdateProfileInfo}>
         <InputsContainer>
           <Input
