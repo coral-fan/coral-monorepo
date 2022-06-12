@@ -22,6 +22,8 @@ import { useEffect, useState } from 'react';
 import { initializeStore } from 'libraries/state';
 
 // analytics
+import * as Fathom from 'fathom-client';
+import Router from 'next/router';
 
 initializeFirebaseApp();
 
@@ -41,6 +43,25 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
     // `useEffect` never runs on the server, so we must be on the client if
     // we hit this block
     setIsMounted(true);
+  }, []);
+
+  Router.events.on('routeChangeComplete', (as, routeProps) => {
+    if (!routeProps.shallow) {
+      Fathom.trackPageview();
+    }
+  });
+
+  useEffect(() => {
+    Fathom.load('NSNWRVJL', {
+      includedDomains: [
+        'www.coral.fan',
+        'coral.fan',
+        'coral.ngrok.io',
+        'www.coral.ngrok.io',
+        'app-git-main-coral.vercel.app',
+        'www.app-git-main-coral.vercel.app',
+      ],
+    });
   }, []);
 
   return (
