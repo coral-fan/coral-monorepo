@@ -47,16 +47,6 @@ export const ErrorContainer = styled.span`
   color: ${tokens.font.color.error};
 `;
 
-export const ProcessingContainer = styled.div`
-  height: 420px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 60px;
-  align-items: center;
-  justify-content: center;
-`;
-
 export const ContentContainer = styled.div`
   width: 100%;
   display: flex;
