@@ -1,16 +1,17 @@
 import { ReactNode } from 'react';
 import { Spinner } from './Spinner';
+import { SpinnerProps } from './types';
 
-interface ConditionalSpinnerProps {
+interface ConditionalSpinnerProps extends SpinnerProps {
   loading?: boolean;
-  size?: string;
-  color?: string;
   children: ReactNode;
 }
 
 export const ConditionalSpinner = ({
-  loading = false,
+  loading,
   size,
   color,
+  center,
   children,
-}: ConditionalSpinnerProps) => (loading ? <Spinner size={size} color={color} /> : <>{children}</>);
+}: ConditionalSpinnerProps) =>
+  loading ? <Spinner size={size} color={color} center={center} /> : <>{children}</>;
