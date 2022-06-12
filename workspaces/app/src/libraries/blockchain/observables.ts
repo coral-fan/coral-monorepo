@@ -22,6 +22,7 @@ export const getTokenOwner$ = (collectionAddress: string, assetId: number) =>
   newBlock$.pipe(
     startWith(getTokenOwner(collectionAddress, assetId)),
     switchMap(() => getTokenOwner(collectionAddress, assetId)),
+    distinctUntilChanged(),
     retry()
   );
 
@@ -32,6 +33,7 @@ export const getUserTokenBalance$ = (collectionAddress: string, userAddress: str
     startWith(nftContract.balanceOf(userAddress)),
     switchMap(() => nftContract.balanceOf(userAddress)),
     map((tokenBalance) => tokenBalance.toNumber()),
+    distinctUntilChanged(),
     retry()
   );
 };
@@ -39,6 +41,7 @@ export const getUserTokenBalance$ = (collectionAddress: string, userAddress: str
 export const getTokenTotalSupply$ = (address: string) => {
   return newBlock$.pipe(
     switchMap(() => getTokenTotalSupply(address)),
+    distinctUntilChanged(),
     retry()
   );
 };
