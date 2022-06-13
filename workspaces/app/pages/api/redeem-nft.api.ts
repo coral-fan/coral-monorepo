@@ -1,28 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next/types';
-import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
-
-import { getEnvironmentVariableErrorMessage } from 'libraries/utils';
 import { CoralNftV1__factory } from '@coral/contracts';
 
 import { ERROR_RESPONSE } from './consts';
-import { getHandler } from './utils';
+import { getHandler, getRelaySigner } from './utils';
 import { Handler } from './types';
 import { object, string } from 'yup';
 import { RedeemCode } from 'libraries/models/redeemCode';
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
-
-if (!process.env.RELAYER_API_KEY) {
-  throw Error(getEnvironmentVariableErrorMessage('RELAYER_API_KEY'));
-}
-
-if (!process.env.RELAYER_SECRET_KEY) {
-  throw Error(getEnvironmentVariableErrorMessage('RELAYER_SECRET_KEY'));
-}
-
-const RELAYER_API_KEY = process.env.RELAYER_API_KEY;
-const RELAYER_SECRET_KEY = process.env.RELAYER_SECRET_KEY;
-
-const RELAYER_CREDENTIALS = { apiKey: RELAYER_API_KEY, apiSecret: RELAYER_SECRET_KEY };
 
 export const redeemNftParamsSchema = object({
   collectionId: string().required(),
@@ -59,8 +43,7 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
     if (!redeemCode.isRedeemed) {
       await redeemCodeDocRef.set({ isRedeemed: true }, { merge: true });
       // Relayer - Mint NFT
-      const provider = new DefenderRelayProvider(RELAYER_CREDENTIALS);
-      const signer = new DefenderRelaySigner(RELAYER_CREDENTIALS, provider, { speed: 'fast' });
+      const signer = await getRelaySigner();
       const nftContract = CoralNftV1__factory.connect(collectionId, signer);
       const { hash } = await nftContract.relayMint(userId);
 
