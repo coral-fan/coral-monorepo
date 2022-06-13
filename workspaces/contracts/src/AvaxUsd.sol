@@ -8,9 +8,9 @@ import '@openzeppelin/contracts/access/Ownable.sol';
 contract AvaxUsd is Ownable {
   AggregatorV3Interface internal priceFeed;
 
-  constructor() {
+  constructor(address _priceFeedAddress) {
     // Avax-Usd on FUJI Testnet
-    priceFeed = AggregatorV3Interface(0x5498BB86BC934c8D34FDA08E81D444153d0D06aD);
+    priceFeed = AggregatorV3Interface(_priceFeedAddress);
   }
 
   function _getLatestPrice() private view returns (int256) {

@@ -41,8 +41,9 @@ contract CoralNftV1 is ERC721, ERC2981, Ownable, AvaxUsd {
     string memory _baseTokenURI,
     uint256 _saleStartTime,
     address _royaltyRecipient,
-    uint96 _royaltyFeeNumerator
-  ) ERC721(_name, _symbol) {
+    uint96 _royaltyFeeNumerator,
+    address _priceFeedAddress
+  ) ERC721(_name, _symbol) AvaxUsd(_priceFeedAddress) {
     usdPricePerToken = _usdPricePerToken;
     maxSupply = _maxSupply;
     maxTokensPerWallet = _maxTokensPerWallet;
