@@ -23,7 +23,7 @@ export interface LayoutProps {
   description: Collection['description'];
   details: Collection['details'];
   collectionId: Collection['id'];
-  gatedContentElement: JSX.Element | null;
+  gatedContentElement?: JSX.Element | null;
   assetId?: number;
   dropOrAvailable?: JSX.Element;
   similarCollections?: JSX.Element;
