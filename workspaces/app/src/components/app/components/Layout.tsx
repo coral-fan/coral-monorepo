@@ -48,7 +48,6 @@ export const Layout = ({ children }: LayoutProps) => (
       <NavigationBar />
       <Main>{children}</Main>
     </MaxWidthContainer>
-    {/* TODO: remove sign up campaign specific logic */}
-    {CLIENT_ENVIRONMENT !== 'production' && <Footer />}
+    <Footer />
   </Container>
 );
