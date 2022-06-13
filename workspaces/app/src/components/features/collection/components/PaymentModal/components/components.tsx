@@ -88,5 +88,6 @@ export const ConditionalSpinnerContainer = styled.div`
   flex-direction: column;
   gap: 12px;
   align-items: center;
+  justify-content: center;
   min-height: 180px;
 `;
