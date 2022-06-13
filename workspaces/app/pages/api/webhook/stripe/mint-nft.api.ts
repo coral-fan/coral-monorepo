@@ -1,13 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next/types';
 import Stripe from 'stripe';
 import { buffer } from 'micro';
-import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
-
 import { getEnvironmentVariableErrorMessage } from 'libraries/utils';
 import { CoralNftV1__factory } from '@coral/contracts';
 
 import { ERROR_RESPONSE } from '../../consts';
-import { getHandler, getPurchaseDocumentReference } from '../../utils';
+import { getHandler, getPurchaseDocumentReference, getRelaySigner } from '../../utils';
 import { Handler } from '../../types';
 
 if (!process.env.STRIPE_WEBHOOK_SIGNING_SECRET) {
@@ -18,20 +16,8 @@ if (!process.env.STRIPE_SECRET_KEY) {
   throw Error(getEnvironmentVariableErrorMessage('STRIPE_SECRET_KEY'));
 }
 
-if (!process.env.RELAYER_API_KEY) {
-  throw Error(getEnvironmentVariableErrorMessage('RELAYER_API_KEY'));
-}
-
-if (!process.env.RELAYER_SECRET_KEY) {
-  throw Error(getEnvironmentVariableErrorMessage('RELAYER_SECRET_KEY'));
-}
-
 const STRIPE_WEBHOOK_SIGNING_SECRET = process.env.STRIPE_WEBHOOK_SIGNING_SECRET;
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
-const RELAYER_API_KEY = process.env.RELAYER_API_KEY;
-const RELAYER_SECRET_KEY = process.env.RELAYER_SECRET_KEY;
-
-const RELAYER_CREDENTIALS = { apiKey: RELAYER_API_KEY, apiSecret: RELAYER_SECRET_KEY };
 
 // configures Next API
 export const config = {
@@ -72,8 +58,7 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
       const shouldRelayMint = !purchaseDocSnapshot.data()?.transactionHash;
       if (shouldRelayMint) {
         // Relayer - Mint NFT
-        const provider = new DefenderRelayProvider(RELAYER_CREDENTIALS);
-        const signer = new DefenderRelaySigner(RELAYER_CREDENTIALS, provider, { speed: 'fast' });
+        const signer = await getRelaySigner();
 
         const nftContract = CoralNftV1__factory.connect(collectionId, signer);
 
