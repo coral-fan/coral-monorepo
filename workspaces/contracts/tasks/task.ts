@@ -70,7 +70,7 @@ subtask('upload', 'Upload metadata via nft.storage')
   .setAction(async ({ projectDir }, hre) => {
     const network = hre.network.name as Network;
 
-    const { nftStorageKey } = getDeploymentConsts(network);
+    const { nftStorageKey, avaxUsdPriceFeedAddress } = getDeploymentConsts(network);
 
     const imagePath = getImagePath(projectDir);
     const configPath = getConfigFilePath(projectDir);
@@ -117,6 +117,7 @@ subtask('upload', 'Upload metadata via nft.storage')
       saleStartTime,
       royaltyFeeRecipient,
       royaltyFeeNumerator,
+      avaxUsdPriceFeedAddress,
     };
 
     if (upload) {
@@ -134,7 +135,7 @@ subtask('deploy-contract', 'Deploy contract')
     const { ethers } = hre;
     const network = hre.network.name as Network;
 
-    const { contractName, deployerRelayApiKey, deployerRelaySecretKey } =
+    const { contractName, deployerRelayApiKey, deployerRelaySecretKey, avaxUsdPriceFeedAddress } =
       getDeploymentConsts(network);
 
     const args = JSON.parse(constructorArgs);
@@ -160,7 +161,8 @@ subtask('deploy-contract', 'Deploy contract')
         args.baseTokenURI,
         args.saleStartTime,
         args.royaltyFeeRecipient,
-        args.royaltyFeeNumerator
+        args.royaltyFeeNumerator,
+        avaxUsdPriceFeedAddress
       );
 
       await contract.deployed();
@@ -187,6 +189,7 @@ subtask('verify-contract', 'Verify contract')
       saleStartTime,
       royaltyFeeRecipient,
       royaltyFeeNumerator,
+      avaxUsdPriceFeedAddress,
     } = JSON.parse(verifyArgs);
 
     try {
@@ -202,6 +205,7 @@ subtask('verify-contract', 'Verify contract')
           saleStartTime,
           royaltyFeeRecipient,
           royaltyFeeNumerator,
+          avaxUsdPriceFeedAddress,
         ],
       });
     } catch (e: any) {

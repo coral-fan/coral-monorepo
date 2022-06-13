@@ -4,11 +4,25 @@ import fs from 'fs';
 import path from 'path';
 import readline from 'readline';
 
-if (process.argv.length != 3) {
-  throw Error('Please add project name as parameter');
+import { config } from 'dotenv';
+config();
+
+const AVAX_USD_PRICEFEED_FUJI = process.env.AVAX_USD_PRICEFEED_FUJI;
+const AVAX_USD_PRICEFEED_MAINNET = process.env.AVAX_USD_PRICEFEED_MAINNET;
+
+if (process.argv.length != 4) {
+  throw Error('Please add project name and network as parameters');
 }
 
 const projectName = process.argv[2];
+const network = process.argv[3];
+
+if (network !== 'mainnet' && network !== 'fuji') {
+  throw 'Network must be mainnet or fuji';
+}
+
+const avaxUsdPriceFeedAddress =
+  network === 'mainnet' ? AVAX_USD_PRICEFEED_MAINNET : AVAX_USD_PRICEFEED_FUJI;
 
 const dirName = projectName
   .replace(/^\.*\/|\/|\/?[^\/]+\.[a-z]+|\/$/g, '')
@@ -58,6 +72,7 @@ const initialConfig = {
     tokenURI: '',
     numAttributes: 0,
     attributes: [],
+    avaxUsdPriceFeedAddress,
   },
   collectionData: {
     artistId: '',

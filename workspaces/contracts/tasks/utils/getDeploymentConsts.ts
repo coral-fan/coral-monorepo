@@ -46,6 +46,9 @@ const SENTINEL_ID_TRANSFER_IN_PERSON_MAINNET = process.env.SENTINEL_ID_TRANSFER_
 const SENTINEL_ID_RELAY_MINT_MAINNET = process.env.SENTINEL_ID_RELAY_MINT_MAINNET;
 const SENTINEL_ID_TRANSFER_MAINNET = process.env.SENTINEL_ID_TRANSFER_MAINNET;
 
+const AVAX_USD_PRICEFEED_FUJI = process.env.AVAX_USD_PRICEFEED_FUJI;
+const AVAX_USD_PRICEFEED_MAINNET = process.env.AVAX_USD_PRICEFEED_MAINNET;
+
 const MISSING_ENV_VARIABLE =
   'Missing an environment variable, please consult README and ensure all keys are present';
 
@@ -69,6 +72,7 @@ interface DeploymentConstNetworkDependentObject {
   deployerRelaySecretKey: string;
   paymentRelayAddresses: string[];
   sentinelIds: SentinelObject;
+  avaxUsdPriceFeedAddress: string;
 }
 
 type DeploymentType = DeploymentConstBaseObject & DeploymentConstNetworkDependentObject;
@@ -103,7 +107,8 @@ export const getDeploymentConsts = (network: Network): DeploymentType => {
       !PAYMENT_RELAY_ADDRESSES_FUJI ||
       !SENTINEL_ID_TRANSFER_IN_PERSON_FUJI ||
       !SENTINEL_ID_RELAY_MINT_FUJI ||
-      !SENTINEL_ID_TRANSFER_FUJI
+      !SENTINEL_ID_TRANSFER_FUJI ||
+      !AVAX_USD_PRICEFEED_FUJI
     ) {
       throw MISSING_ENV_VARIABLE;
     }
@@ -118,6 +123,7 @@ export const getDeploymentConsts = (network: Network): DeploymentType => {
       deployerRelaySecretKey: DEPLOYER_RELAY_SECRET_KEY_FUJI,
       paymentRelayAddresses: PAYMENT_RELAY_ADDRESSES_FUJI.split(','),
       sentinelIds: sentinelIdsFuji,
+      avaxUsdPriceFeedAddress: AVAX_USD_PRICEFEED_FUJI,
     };
     return {
       ...baseObject,
@@ -133,7 +139,8 @@ export const getDeploymentConsts = (network: Network): DeploymentType => {
       !PAYMENT_RELAY_ADDRESSES_MAINNET ||
       !SENTINEL_ID_TRANSFER_IN_PERSON_MAINNET ||
       !SENTINEL_ID_RELAY_MINT_MAINNET ||
-      !SENTINEL_ID_TRANSFER_MAINNET
+      !SENTINEL_ID_TRANSFER_MAINNET ||
+      !AVAX_USD_PRICEFEED_MAINNET
     ) {
       throw MISSING_ENV_VARIABLE;
     }
@@ -148,6 +155,7 @@ export const getDeploymentConsts = (network: Network): DeploymentType => {
       deployerRelaySecretKey: DEPLOYER_RELAY_SECRET_KEY_MAINNET,
       paymentRelayAddresses: PAYMENT_RELAY_ADDRESSES_MAINNET.split(','),
       sentinelIds: sentinelIdsMainnet,
+      avaxUsdPriceFeedAddress: AVAX_USD_PRICEFEED_MAINNET,
     };
     return {
       ...baseObject,
