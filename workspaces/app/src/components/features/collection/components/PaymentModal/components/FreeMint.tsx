@@ -36,9 +36,7 @@ export const FreeMint = ({
           userId,
         })
         .then(async ({ data: { transactionHash } }) => {
-          console.log(transactionHash);
           const transactionReceipt = await avalancheRpcProvider.waitForTransaction(transactionHash);
-          console.log(transactionReceipt);
           const logs = transactionReceipt.logs[0];
           const assetId = parseInt(logs.topics[3]);
 
