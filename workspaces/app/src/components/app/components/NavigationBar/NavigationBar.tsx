@@ -9,6 +9,7 @@ import tokens, { QUERY } from 'styles/tokens';
 import { CLIENT_ENVIRONMENT } from 'consts';
 import { getIconComponent } from 'components/ui/icons/utils';
 import wordmarkSVG from './wordmark.svg';
+import { useIsAuthenticated } from 'libraries/authentication';
 
 const { mobile, desktop } = tokens.layout.padding;
 
@@ -48,17 +49,15 @@ export const NavigationBar = () => {
   const openMenuModal = useCallback(() => setIsMenuOpen(true), []);
   const closeMenuModal = useCallback(() => setIsMenuOpen(false), []);
 
+  const isAuthenticated = useIsAuthenticated();
+
   return (
     <>
       {isMenuOpen && <Menu closeMenuModal={closeMenuModal} userProfile={userProfile} />}
       <Container>
         <LogoHomeLink />
         {/* TODO: remove conditional logic post sign up campaign */}
-        {CLIENT_ENVIRONMENT === 'production' ? (
-          <WordmarkIcon />
-        ) : (
-          <HamburgerMenuButton onClick={openMenuModal} />
-        )}
+        <HamburgerMenuButton onClick={openMenuModal} />
       </Container>
     </>
   );

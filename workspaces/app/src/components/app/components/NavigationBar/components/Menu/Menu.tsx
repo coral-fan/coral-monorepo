@@ -80,12 +80,10 @@ export const Menu = ({ userProfile, closeMenuModal }: MenuProps) => {
               profilePhoto={userProfile.profilePhoto}
             />
           ) : (
-            <Link href={`/user/${uid}`} onClick={closeMenuModal}>
-              <MenuProfileInfo
-                username={userProfile.username}
-                profilePhoto={userProfile.profilePhoto}
-              />
-            </Link>
+            <MenuProfileInfo
+              username={userProfile.username}
+              profilePhoto={userProfile.profilePhoto}
+            />
           )}
           {/* <NotificationItem handleCloseMenu={useCloseMenuModal} notificationsCount={notificationsCount} /> */}
         </ClickableWrapper>

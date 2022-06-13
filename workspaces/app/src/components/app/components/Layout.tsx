@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { Footer, NavigationBar } from 'components/app/components';
-import { CLIENT_ENVIRONMENT } from 'consts';
 import { FC } from 'react';
 import { QUERY } from 'styles';
 import tokens from 'styles/tokens';
@@ -44,7 +43,6 @@ export const Layout: FC = ({ children }) => (
       <NavigationBar />
       <Main>{children}</Main>
     </MaxWidthContainer>
-    {/* TODO: remove sign up campaign specific logic */}
-    {CLIENT_ENVIRONMENT !== 'production' && <Footer />}
+    <Footer />
   </Container>
 );
