@@ -69,7 +69,6 @@ export const AssetPage = ({
   );
 
   const currentUserId = useUserUid();
-
   const [isCurrentUserOwner, setIsCurrentUserOwner] = useState(currentUserId === ownerAddress);
 
   useEffect(() => {
@@ -80,10 +79,10 @@ export const AssetPage = ({
     return () => subscription.unsubscribe();
   }, [contractAddress, id, currentUserId]);
 
-  const gatedContentComponent = useCallback(
+  const gatedContentElement = useMemo(
     () => (isCurrentUserOwner ? getGatedContentComponent(gatedContent) : null),
     [isCurrentUserOwner, gatedContent]
-  )();
+  );
 
   const isMobile = useIsMobile();
 
@@ -101,7 +100,7 @@ export const AssetPage = ({
         description={collectionDescription}
         details={collectionDetails}
         collectionId={contractAddress}
-        gatedContent={gatedContentComponent}
+        gatedContentElement={gatedContentElement}
         owner={owner}
       />
     </AssetContainer>
