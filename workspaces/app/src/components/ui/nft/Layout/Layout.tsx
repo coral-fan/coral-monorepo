@@ -23,7 +23,7 @@ export interface LayoutProps {
   description: Collection['description'];
   details: Collection['details'];
   collectionId: Collection['id'];
-  gatedContent?: JSX.Element | null;
+  gatedContentElement: JSX.Element | null;
   assetId?: number;
   dropOrAvailable?: JSX.Element;
   similarCollections?: JSX.Element;
@@ -44,7 +44,7 @@ export const Layout = ({
   description,
   details,
   collectionId,
-  gatedContent,
+  gatedContentElement,
   dropOrAvailable,
   similarCollections,
   owner,
@@ -90,7 +90,7 @@ export const Layout = ({
             {owner}
           </AssetContentContainer>
         </NftAssetContainer>
-        <GatedContentWrapper>{gatedContent}</GatedContentWrapper>
+        <GatedContentWrapper>{gatedContentElement}</GatedContentWrapper>
         {details && <Details details={details} />}
         <ShareButton
           onClick={() => {
