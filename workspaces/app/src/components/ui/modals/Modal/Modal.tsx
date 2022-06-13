@@ -29,9 +29,10 @@ const ModalContainer = styled.div<ModalHasControlButton>`
       padding-top: calc(${mobile.vertical} * 2 + ${tokens.buttons.size.mobile});
     `}
 
-  gap: 24px;
+  gap: 18px;
 
   @media ${QUERY.LAPTOP} {
+    gap: 24px;
     padding: ${desktop.vertical} ${desktop.horizontal};
   }
 `;
@@ -63,15 +64,17 @@ type ContentProps = Pick<
 
 const Content = styled(Card)<ContentProps>`
   max-width: ${({ isNarrow }) => (isNarrow ? '400px' : '575px')};
-  max-height: ${({ fullHeight }) => (fullHeight ? '80%' : '420px')};
+  max-height: ${({ fullHeight }) => (fullHeight ? '76vh' : '420px')};
   color: ${({ variant }) =>
     variant === 'contrast' ? tokens.font.color.contrast : tokens.font.color.primary};
   padding: ${({ title }) => `${title ? '20px' : '8px'} 18px`};
   box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.5);
-  gap: 20px;
-  overflow: auto;
+  gap: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   @media ${QUERY.TABLET} {
+    gap: 18px;
     max-height: 750px;
     ${({ modalHasControlButton }) =>
       modalHasControlButton &&

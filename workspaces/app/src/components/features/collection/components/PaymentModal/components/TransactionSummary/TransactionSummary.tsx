@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import tokens from 'styles/tokens';
+import tokens, { QUERY } from 'styles/tokens';
 import { Currency } from '../Currency';
 
 interface TransactionSummaryProps {
@@ -24,7 +24,7 @@ const LineItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 0px;
+  padding: 8px 0px;
   font-size: ${tokens.font.size.sm};
   line-height: ${tokens.font.line_height.sm};
   letter-spacing: ${tokens.font.letter_spacing.sm};
@@ -33,6 +33,10 @@ const LineItem = styled.div`
 
   &:last-of-type {
     border-bottom: var(--borderStyle);
+  }
+
+  @media ${QUERY.TABLET} {
+    padding: 16px 0px;
   }
 `;
 const TransactionFeeContainer = styled.div`
