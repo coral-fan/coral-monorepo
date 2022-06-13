@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { GetServerSideProps } from 'next';
 
 import { Asset, useUserUid } from 'libraries/models';
