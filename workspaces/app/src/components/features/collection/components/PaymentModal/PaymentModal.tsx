@@ -2,7 +2,13 @@ import { ConditionalSpinner, Modal } from 'components/ui';
 import { AVAX_TRANSACTION_FEE, CC_TRANSACTION_FEE } from 'consts';
 import { getPaymentLineItems, useWallet, useAvaxTokenPrice } from 'libraries/blockchain';
 import { getDocumentReferenceClientSide } from 'libraries/firebase';
-import { Collection, Details, PurchaseData, useStripeCustomerId } from 'libraries/models';
+import {
+  Collection,
+  Details,
+  NullableString,
+  PurchaseData,
+  useStripeCustomerId,
+} from 'libraries/models';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { docData } from 'rxfire/firestore';
 import tokens from 'styles/tokens';
@@ -19,13 +25,14 @@ import { NewCardInput } from './components/NewCardInput';
 import { PaymentSuccess } from './components/PaymentSuccess';
 import { useErrorToast } from 'libraries/utils/toasts';
 import { useIsMobile } from 'libraries/window';
-
+import { FreeMint } from './components/FreeMint';
 interface PaymentModalProps extends AssetInfoProps {
   usdPrice: number;
   artistId: string;
   collectionId: Collection['id'];
   collectionDetails: Details;
   closePaymentModal: () => void;
+  redeemCode: NullableString;
 }
 
 export const PaymentModal = ({
@@ -37,6 +44,7 @@ export const PaymentModal = ({
   closePaymentModal,
   usdPrice,
   collectionId,
+  redeemCode,
 }: PaymentModalProps) => {
   const { isActive: isWalletUser } = useWallet();
   const isMobile = useIsMobile();
@@ -136,7 +144,9 @@ export const PaymentModal = ({
                   transactionFeePercentage={transactionFee * 100}
                 />
                 <HeadingContainer>
-                  {isAvax ? (
+                  {redeemCode !== null ? (
+                    <Heading>Redeem Free NFT</Heading>
+                  ) : isAvax ? (
                     <Heading>Paying With AVAX</Heading>
                   ) : (
                     <>
@@ -151,7 +161,14 @@ export const PaymentModal = ({
                     </>
                   )}
                 </HeadingContainer>
-                {isAvax && isWalletUser ? (
+                {redeemCode !== null ? (
+                  <FreeMint
+                    redeemCode={redeemCode}
+                    collectionId={collectionId}
+                    setIsMintingNFT={setIsMintingNFT}
+                    setAssetId={setAssetId}
+                  />
+                ) : isAvax && isWalletUser ? (
                   <AvaxPayment
                     total={total}
                     collectionId={collectionId}

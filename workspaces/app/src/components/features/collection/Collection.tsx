@@ -73,7 +73,6 @@ export const CollectionPage = ({
         artistName={artistName}
         artistProfilePhoto={artistProfilePhoto}
         imageUrl={imageUrl}
-        type={type}
         redeemCode={redeemCode}
       />
     ),
@@ -91,7 +90,6 @@ export const CollectionPage = ({
       isSoldOut,
       details,
       maxMintablePerWallet,
-      type,
       redeemCode,
     ]
   );
