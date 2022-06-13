@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { LinkButton } from 'components/ui';
-import tokens from 'styles/tokens';
+import tokens, { QUERY } from 'styles/tokens';
 
 export const CheckoutContainer = styled.div`
   display: flex;
@@ -51,8 +51,11 @@ export const ContentContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 12px;
   align-items: center;
+
+  @media ${QUERY.TABLET} {
+    gap: 12px;
+  }
 `;
 
 export const HeadingContainer = styled.div`
