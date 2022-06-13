@@ -38,8 +38,6 @@ export const AVALANCHE = {
 };
 
 export const SITE_MAP = {
-  TERMS_OF_SERVICE: ['Terms of Service', '/terms-of-service'],
-  PRIVACY_POLICY: ['Privacy Policy', '/privacy-policy'],
   INSTAGRAM: ['Instagram', 'https://www.instagram.com/coral_fan/'],
   TWITTER: ['Twitter', 'https://twitter.com/coral__fan'],
   HOME: ['Home', '/'],

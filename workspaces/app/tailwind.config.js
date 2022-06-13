@@ -4,7 +4,8 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        's-1': '1900px'
+        's-1': '1900px',
+        's-2': '1100px'
       },
       width: {
         'w-1': '60px'
@@ -17,7 +18,9 @@ module.exports = {
       },
       margin: {
         'm-1': '1.375rem',
-        'm-2': '1.125rem'
+        'm-2': '1.125rem',
+        'm-3': '8.25rem',
+        'm-4': '5.625rem'
       },
       fontSize: {
         '1': '2.125rem',
