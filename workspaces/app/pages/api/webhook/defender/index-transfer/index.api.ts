@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { SentinelConditionRequest, SubscriberType } from 'defender-autotask-utils';
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 
 import { Handler } from '../../../types';
 import { getHandler } from '../../../utils';
@@ -22,6 +22,16 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
             const { name, args: result } = contractInterface.parseLog(log);
             if (name === 'Transfer') {
               const { from, to, tokenId } = result;
+              if (typeof from !== 'string') {
+                throw 'from is not of type string';
+              }
+              if (typeof to !== 'string') {
+                throw 'to is not of type string';
+              }
+              if (!(tokenId instanceof BigNumber)) {
+                throw 'tokenId is not of type BigNumber';
+              }
+
               const tokenIdInt = tokenId.toNumber();
               if (isNotZeroAddress(from)) {
                 await removeNFTOwnership(from, nftContractAddress, tokenIdInt);
