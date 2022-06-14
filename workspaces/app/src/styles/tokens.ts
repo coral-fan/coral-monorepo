@@ -70,13 +70,11 @@ const tokens = createTheme({
   layout: {
     padding: {
       mobile: {
-        // TODO: remove conditional logic post sign up campaign
-        vertical: CLIENT_ENVIRONMENT === 'production' ? '14px' : '22px',
+        vertical: '14px',
         horizontal: '24px',
       },
       desktop: {
-        // TODO: remove conditional logic post sign up campaign
-        vertical: CLIENT_ENVIRONMENT === 'production' ? '24px' : '36px',
+        vertical: '24px',
         horizontal: '64px',
       },
     },
