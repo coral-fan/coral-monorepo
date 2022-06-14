@@ -1,11 +1,13 @@
 import { Artist, ArtistData } from '../artist';
+import { NullableString } from '../types';
 
 export type CollectionType = 'video' | 'music' | 'stream' | 'merch' | 'all_access';
 
 export interface GatedStream {
   type: 'stream';
-  id: string;
+  id: NullableString;
 }
+
 export interface GatedUrl {
   type: 'url';
   url: string;
