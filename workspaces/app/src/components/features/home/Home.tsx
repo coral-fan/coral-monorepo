@@ -8,10 +8,10 @@ export const Home = () => {
 
   const isAuthenticated = useIsAuthenticated();
   return (
-    <div className="-mt-m-4 s-2:-mt-m-3">
-      <section className="grid grid-cols-12 gap-4 lg:gap-5 mb-20 md:mb-24 xl:mb-32 relative duration-300">
-        <div className="col-span-12 lg:col-span-6 mb-2.5 sm:mb-0 relative">
-          <div className="overflow-hidden duration-300 -mx-6 lg:mx-0">
+    <div className="-mt-m-4 s-2:-mt-m-5">
+      <section className="grid grid-cols-12 gap-4 s-2:gap-5 mb-20 md:mb-24 xl:mb-32 relative duration-300">
+        <div className="col-span-12 s-2:col-span-6 mb-2.5 sm:mb-0 relative">
+          <div className="overflow-hidden duration-300 -mx-6 s-2:mx-0">
             <img
               className="w-full"
               src="/images/coral-hero.gif"
@@ -19,17 +19,17 @@ export const Home = () => {
             ></img>
           </div>
         </div>
-        <div className="col-span-12 lg:col-span-6 lg:pt-3 flex flex-col items-start duration-300 -mt-28 md:-mt-32 md:-translate-y-2 lg:translate-y-0 lg:mt-0 relative">
-          <h1 className="max-w-lg text-1 md:text-4 md:leading-none leading-none xl:text-2 xl:leading-none tracking-3 mb-10 lg:mb-24 font-medium duration-300 inline-block">
+        <div className="col-span-12 s-2:col-span-6 s-2:pt-3 flex flex-col items-start duration-300 -mt-28 md:-mt-32 md:-translate-y-2 s-2:translate-y-0 s-2:mt-0 relative">
+          <h1 className="max-w-lg text-1 md:text-4 md:leading-none leading-none xl:text-2 xl:leading-none tracking-3 mb-10 s-2:mb-24 font-medium duration-300 inline-block">
             Collect. Connect. <br></br>Experience.
           </h1>
-          <p className="text-lg leading-lh-3 md:text-2xl md:leading-7 xl:text-1 xl:leading-none font-medium tracking-4 max-w-md lg:max-w-none mb-3.5">
+          <p className="text-lg leading-lh-3 md:text-2xl md:leading-7 xl:text-1 xl:leading-none font-medium tracking-4 max-w-md s-2:max-w-none mb-3.5">
             Coral is a modern marketplace for music, collectibles, events, experiences, and empowered fans. 
           </p>
-          <ul className="mb-20 lg:mb-4 flex space-x-2.5">
+          <ul className="mb-20 s-2:mb-4 flex space-x-2.5">
             <li>
-              <a href="https://www.instagram.com/coral_fan/" className="bg-gray-2 bg-opacity-20 rounded-full hover:bg-opacity-50 duration-300 w-9 h-9 lg:w-11 lg:h-11 flex items-center justify-center duration-300" rel="noopener noreferrer" target="_blank">
-                <svg className="w-5 lg:w-auto h-auto" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <a href="https://www.instagram.com/coral_fan/" className="bg-gray-2 bg-opacity-20 rounded-full hover:bg-opacity-50 duration-300 w-9 h-9 s-2:w-11 s-2:h-11 flex items-center justify-center duration-300" rel="noopener noreferrer" target="_blank">
+                <svg className="w-5 s-2:w-auto h-auto" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M19.8467 5.59838C19.8472 5.31317 19.7631 5.03421 19.605 4.79682C19.447 4.55942 19.222 4.37425 18.9587 4.26475C18.6953 4.15526 18.4054 4.12635 18.1256 4.18169C17.8458 4.23703 17.5887 4.37414 17.3869 4.57565C17.1851 4.77716 17.0475 5.03401 16.9917 5.31371C16.9359 5.59342 16.9644 5.88338 17.0734 6.14692C17.1825 6.41045 17.3673 6.63571 17.6044 6.79418C17.8416 6.95264 18.1204 7.03719 18.4056 7.03713C18.7874 7.03708 19.1535 6.88556 19.4237 6.61582C19.6939 6.34608 19.846 5.98016 19.8467 5.59838Z" fill="#f0f0f0"></path>
                   <path d="M21.7665 16.8484C21.7132 18.0185 21.5175 18.6543 21.355 19.0765C21.1621 19.5983 20.8542 20.0699 20.4542 20.4565C20.0686 20.8554 19.5976 21.1616 19.0765 21.352C18.6543 21.5169 18.0161 21.7132 16.8461 21.769C15.5811 21.8247 15.2063 21.8366 11.9985 21.8366C8.7937 21.8366 8.41592 21.8247 7.15095 21.769C5.9809 21.7132 5.34573 21.5169 4.92345 21.352C4.40565 21.1532 3.93534 20.8479 3.54287 20.4559C3.15041 20.064 2.84453 19.594 2.645 19.0765C2.48248 18.6543 2.28385 18.0185 2.23341 16.8484C2.17176 15.5835 2.16045 15.2027 2.16045 12.0015C2.16045 8.79371 2.17176 8.4159 2.23341 7.15094C2.28385 5.98089 2.48248 5.34573 2.645 4.9199C2.83591 4.39855 3.14319 3.92759 3.54347 3.54285C3.93046 3.14405 4.40205 2.83722 4.92345 2.645C5.34573 2.47954 5.9809 2.2862 7.15095 2.23046C8.41592 2.17469 8.7937 2.16046 11.9985 2.16046C15.2063 2.16046 15.5811 2.17469 16.8461 2.23046C18.0161 2.2862 18.6543 2.47954 19.0765 2.645C19.5931 2.84578 20.0624 3.15165 20.4546 3.54324C20.8468 3.93484 21.1534 4.40362 21.355 4.9199C21.5175 5.34573 21.7132 5.98089 21.7665 7.15094C21.8253 8.41591 21.8395 8.79371 21.8395 12.0015C21.8395 15.2027 21.8253 15.5835 21.7665 16.8484ZM23.927 7.05251C23.8683 5.77388 23.6667 4.90033 23.3672 4.13948C23.0602 3.34196 22.5896 2.61758 21.9856 2.013C21.3816 1.40842 20.6577 0.937044 19.8605 0.629238C19.0967 0.332701 18.2261 0.128677 16.9469 0.0729448C15.6677 0.0112537 15.2591 0 11.9985 0C8.74091 0 8.32935 0.0112527 7.05015 0.0729448C5.77389 0.128677 4.90389 0.332696 4.1365 0.629238C3.34 0.938261 2.61671 1.41006 2.0129 2.01449C1.40909 2.61891 0.938034 3.34266 0.629819 4.13948C0.333285 4.90033 0.13166 5.77388 0.0699676 7.05251C0.0142368 8.33171 0 8.74091 0 12.0015C0 15.2591 0.0142377 15.6677 0.0699676 16.9469C0.13166 18.2231 0.333285 19.0961 0.629819 19.8605C0.939148 20.6566 1.4106 21.3797 2.01428 21.9839C2.61795 22.5881 3.34066 23.0602 4.1365 23.3702C4.90389 23.6667 5.77388 23.8683 7.05015 23.9271C8.32935 23.9858 8.7409 24 11.9985 24C15.2591 24 15.6677 23.9858 16.9469 23.9271C18.2261 23.8683 19.0967 23.6667 19.8605 23.3702C20.6607 23.0679 21.3855 22.5951 21.9848 21.9848C22.5956 21.3865 23.0675 20.6613 23.3672 19.8605C23.6667 19.0961 23.8683 18.2231 23.927 16.9469C23.9858 15.6677 24 15.2591 24 12.0015C24 8.74091 23.9858 8.3317 23.927 7.05251Z" fill="#f0f0f0"></path>
                   <path d="M11.9989 15.9984C11.2078 15.9978 10.4348 15.7626 9.77737 15.3227C9.11999 14.8827 8.60783 14.2577 8.30566 13.5267C8.00349 12.7956 7.92488 11.9914 8.07978 11.2157C8.23467 10.44 8.61613 9.72763 9.17588 9.1687C9.73564 8.60978 10.4486 8.22939 11.2245 8.07564C12.0004 7.92189 12.8045 8.00169 13.5351 8.30494C14.2657 8.60819 14.89 9.12127 15.329 9.77931C15.7679 10.4373 16.0019 11.2108 16.0014 12.0018C16.0012 12.5271 15.8974 13.0472 15.6961 13.5323C15.4948 14.0175 15.1999 14.4583 14.8282 14.8294C14.4565 15.2006 14.0153 15.4948 13.5299 15.6954C13.0444 15.896 12.5241 15.9989 11.9989 15.9984ZM11.9989 5.83594C10.7801 5.83594 9.58866 6.19731 8.57524 6.87437C7.56181 7.55144 6.7719 8.51378 6.30535 9.63974C5.83881 10.7657 5.71658 12.0047 5.95414 13.2001C6.1917 14.3955 6.77838 15.4937 7.63998 16.3557C8.50159 17.2177 9.59945 17.8049 10.7947 18.043C11.99 18.2812 13.2291 18.1595 14.3553 17.6935C15.4815 17.2275 16.4442 16.4381 17.1217 15.4249C17.7993 14.4118 18.1612 13.2206 18.1618 12.0018C18.1622 11.1922 18.003 10.3905 17.6935 9.64248C17.3839 8.89444 16.93 8.21471 16.3577 7.64212C15.7854 7.06953 15.1059 6.61531 14.358 6.3054C13.6101 5.99549 12.8084 5.83597 11.9989 5.83594Z" fill="#f0f0f0"></path>
@@ -37,8 +37,8 @@ export const Home = () => {
               </a>
             </li>
             <li>
-              <a href="https://twitter.com/coral__fan" className="bg-gray-2 bg-opacity-20 rounded-full hover:bg-opacity-50 duration-300 w-9 h-9 lg:w-11 lg:h-11 flex items-center justify-center duration-300" rel="noopener noreferrer" target="_blank">
-                <svg className="w-5 lg:w-auto h-auto" width="26" height="19" viewBox="0 0 26 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <a href="https://twitter.com/coral__fan" className="bg-gray-2 bg-opacity-20 rounded-full hover:bg-opacity-50 duration-300 w-9 h-9 s-2:w-11 s-2:h-11 flex items-center justify-center duration-300" rel="noopener noreferrer" target="_blank">
+                <svg className="w-5 s-2:w-auto h-auto" width="26" height="19" viewBox="0 0 26 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M23.3542 4.71566C24.3718 4.02892 25.2877 3.20482 26 2.24337C25.0841 2.60964 24.0157 2.88434 22.9472 2.9759C24.0665 2.38072 24.8806 1.46506 25.2877 0.320482C24.2701 0.86988 23.0998 1.28193 21.9296 1.51084C20.9119 0.549398 19.5382 0 18.0117 0C15.0607 0 12.6693 2.15181 12.6693 4.80723C12.6693 5.17349 12.7202 5.53976 12.8219 5.90602C8.3953 5.67711 4.42661 3.75422 1.78082 0.86988C1.3229 1.55663 1.06849 2.38072 1.06849 3.29639C1.06849 4.94458 1.98434 6.40964 3.45988 7.27952C2.59491 7.23374 1.72994 7.0506 1.01761 6.68434V6.73012C1.01761 9.06506 2.84932 10.988 5.29159 11.4458C4.88454 11.5373 4.37573 11.6289 3.91781 11.6289C3.56164 11.6289 3.25636 11.5831 2.9002 11.5373C3.56164 13.4602 5.54599 14.8337 7.8865 14.8795C6.05479 16.1614 3.76517 16.9398 1.27202 16.9398C0.81409 16.9398 0.407045 16.894 0 16.8482C2.34051 18.2217 5.13894 19 8.19178 19C18.0117 19 23.3542 11.7205 23.3542 5.35663C23.3542 5.12771 23.3542 4.94458 23.3542 4.71566Z" fill="#f0f0f0"></path>
                 </svg>
               </a>
@@ -52,11 +52,11 @@ export const Home = () => {
                 className="absolute top-0 left-0 w-full h-full"
               ></button>
               <div className="flex flex-col items-start w-3/4">
-                <h3 className="text-lg leading-lh-3 xl:text-1 lg:leading-none tracking-3 uppercase text-gray-1 font-medium mb-4 xl:mb-6">
+                <h3 className="text-lg leading-lh-3 xl:text-1 s-2:leading-none tracking-3 uppercase text-gray-1 font-medium mb-4 xl:mb-6">
                   Create an account
                 </h3>
                 <p className="text-lg leading-lh-3 xl:text-2xl xl:leading-7 text-gray-1">
-                  Sign up with MetaMask or an existing <br className="hidden lg:block"></br>social account
+                  Sign up with MetaMask or an existing <br className="hidden s-2:block"></br>social account
                 </p>
               </div>
               <div className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-1 py-2 px-2.5 bg-gray-2 rounded-full hover:bg-orange-1 duration-300 group-hover:bg-orange-1 text-gray-1">
@@ -92,9 +92,9 @@ export const Home = () => {
               Introducing the Brockton collective of rappers, fashion designers, artists, and creatives. This NFT will grant you access to a live performance, exclusive merch, and a spot in the growing community.
             </p>
             {/* ADD VB LINK HERE */}
-            <div className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-2 py-2 px-2.5 bg-gray-2 bg-opacity-20 rounded-full duration-300 mt-auto">
-              Coming soon
-            </div>
+            <a href="https://editorial.coral.fan/introducing-van-buren-records-the-powerhouse-collective-from-brockton-ma/" className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-2 py-2 px-2.5 bg-gray-2 bg-opacity-20 hover:bg-opacity-50 rounded-full duration-300 mt-auto">
+              Learn more
+            </a>
           </div>
           <div className="col-span-12 sm:col-span-6 mb-2.5 sm:mb-0 relative">
             <div className="rounded-1 overflow-hidden hidden sm:block">
@@ -135,7 +135,7 @@ export const Home = () => {
               You don’t need an existing crypto wallet to sign up. Connect your MetaMask account or sign up with an exsiting social account. 
             </p>
             {!isAuthenticated &&
-              <button onClick={handleOpenSignUpModal} disabled={isAuthenticated} className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-1 py-2 px-2.5 bg-orange-1 rounded-full duration-300">
+              <button onClick={handleOpenSignUpModal} disabled={isAuthenticated} className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-1 py-2 px-2.5 bg-orange-1 hover:bg-gray-2 rounded-full duration-300">
                 SIGN UP
               </button>
             }
