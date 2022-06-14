@@ -48,7 +48,9 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
       const { collectionId, userId, purchaseId } = metadata;
 
       if (!userId || !collectionId || !purchaseId) {
-        throw new Error('userId or collectionId does not exist in metadata field');
+        throw new Error(
+          `userId (${userId}), collectionId (${collectionId}) or purchaseId (${purchaseId}) does not exist in metadata field.`
+        );
       }
       purchaseDocRef = await getPurchaseDocumentReference(purchaseId);
 
