@@ -5,7 +5,7 @@ export const getGatedContentComponent = (gatedContent: GatedContent) => {
   if (gatedContent !== null) {
     switch (gatedContent.type) {
       case 'stream':
-        return <StreamLink eventId={gatedContent.id} />;
+        return <StreamLink streamId={gatedContent.id} />;
       case 'url':
         return <ContentLink url={gatedContent.url} />;
     }
