@@ -2,8 +2,6 @@
 
 ## IMPORTANT
 
-- If deploying to mainnet, you **must** update the `priceFeed` address with the correct mainnet address for the Avax-USD pair: [Chainlink Datafeed - Avalanche](https://docs.chain.link/docs/avalanche-price-feeds/)
-
 - Must have the following environmental variables set in your `contracts/.env` file:
 
   - `SNOWTRACE_API_KEY`
@@ -24,12 +22,14 @@
   - `SENTINEL_ID_TRANSFER_IN_PERSON_MAINNET`
   - `SENTINEL_ID_RELAY_MINT_MAINNET`
   - `SENTINEL_ID_TRANSFER_MAINNET`
+  - `AVAX_USD_PRICEFEED_FUJI`
+  - `AVAX_USD_PRICEFEED_MAINNET`
 
 ## Setup Project
 
-- From `contracts`, run `node project-setup-cli.mjs "<PROJECT_NAME>"` and follow the prompts. This creates an initial configuration file.
+- From `contracts`, run `node project-setup-cli.mjs "<PROJECT_NAME>" "<NETWORK>"` and follow the prompts. This creates an initial configuration file.
 
-- For `dropDate`, please enter the date and time in your local environment, the output will be converted to UTC time.
+- For Drop date and time, please enter the date and time in your local environment, the output will be converted to UTC time.
 
 - After the script finishes running, add the image to the new project directory's image folder, and name it `image.png`.
 
@@ -47,8 +47,6 @@
 
 - IMPORTANT: Review and confirm that the values in the `config.json` file are all correct.
 
-- Are you deploying to `mainnet`? Did you update the Chainlink pricefeed address?
-
 - Run `npx hardhat create-and-deploy --project <PROJECT_NAME> --network <NETWORK_NAME>` to trigger the hardhat task that uploads metadata, deploys and verifies the contract.
 
 - Note: For testnet, set `NETWORK_NAME` to `fuji`; To deploy to mainnet, set `NETWORK_NAME` to `mainnet`
@@ -58,6 +56,10 @@
 - From `coral-monorepo` run `yarn app run-script scripts/collection/add.ts <PROJECT_NAME>`
 
 ## Run Airdrop Script (if applicable)
+
+- Ensure that `airdrops/<PROJECT_DIRECTORY>/<RECIPIENT_DIRECTORY>/airdrop.csv` exists.
+
+- From `contracts`, run `npx hardhat execute-airdrop --project <PROJECT_NAME> --recipient <RECIPIENT_NAME> --network <NETWORK_NAME>`
 
 ## Transfer Ownership
 
