@@ -24,7 +24,7 @@ export const ShareDropModal = ({
 }: ShareDropProps) => (
   <ShareModal
     title={'Share Drop'}
-    url={`https://coral.fan/collection/${id}`}
+    url={`${window.location.origin}/collection/${id}`}
     postTitle={name}
     closeShareModal={closeShareModal}
   >
