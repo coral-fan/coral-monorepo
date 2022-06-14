@@ -128,10 +128,13 @@ export const AssetContentContainer = styled.div<AssetDisplayProps>`
   display: flex;
   flex-direction: column;
   gap: ${spacing.mobile.lg};
-  padding: ${({ isAsset }) => (isAsset ? '16px' : '0px 16px')};
+  padding: ${({ isAsset }) =>
+    isAsset
+      ? `${tokens.layout.padding.mobile.horizontal}`
+      : `0px ${tokens.layout.padding.mobile.horizontal}`};
   background-color: 'transparent';
 
   @media ${QUERY.TABLET} {
-    padding: ${({ isAsset }) => (isAsset ? '16px' : '0px')};
+    padding: ${({ isAsset }) => (isAsset ? `${tokens.layout.padding.mobile.horizontal}` : '0px')};
   }
 `;
