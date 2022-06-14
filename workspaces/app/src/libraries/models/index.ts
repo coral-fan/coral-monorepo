@@ -8,3 +8,4 @@ export * from './types';
 export * from './purchase';
 export * from './ownedNfts';
 export * from './eventGuestLists';
+export * from './redeemCode';
