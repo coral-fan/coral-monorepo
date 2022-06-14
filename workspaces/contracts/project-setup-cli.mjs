@@ -78,7 +78,7 @@ const initialConfig = {
     artistId: '',
     imageUrl: '',
     type: '',
-    dropDate: '',
+    dropTime: '',
     details: [],
     gatedContent: {
       type: '',
@@ -220,7 +220,7 @@ const addSalesStartingTime = () => {
         if (isValidTime(answer)) {
           const timeParts = answer.split(':').map((part) => parseInt(part));
           date.setHours(timeParts[0], timeParts[1]);
-          initialConfig.collectionData.dropDate = date;
+          initialConfig.collectionData.dropTime = date;
           console.log('Drop Date: ', date);
           initialConfig.contract.saleStartTime = convertToSeconds(date);
           resolve();
