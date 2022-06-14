@@ -27,6 +27,7 @@ export const GatedContent = ({
   const [showIsAccessGrantedModal, setIsAccessGrantedModal] = useState(true);
   const { address } = useWallet();
 
+  // TODO: add logic to check on new blocks if user still owns token
   useEffect(() => {
     if (isAuthenticated && address) {
       const doesUserHaveAccess$ = forkJoin(
