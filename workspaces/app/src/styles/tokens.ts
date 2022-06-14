@@ -71,7 +71,7 @@ const tokens = createTheme({
     padding: {
       mobile: {
         vertical: '14px',
-        horizontal: '24px',
+        horizontal: '20px',
       },
       desktop: {
         vertical: '24px',
