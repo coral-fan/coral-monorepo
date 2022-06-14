@@ -101,6 +101,7 @@ contract CoralNftV1 is ERC721, ERC2981, Ownable, AvaxUsd {
 
   function airdropMint(address[] memory _recipients) external onlyOwner {
     require(airdropMintOpen, 'Airdrop mint no longer available');
+    require(isSaleActive, 'Sale not active');
 
     for (uint256 i = 0; i < _recipients.length; ) {
       uint256 newTokenID = _tokenIds.current();
