@@ -23,7 +23,8 @@ const Container = styled.div`
 
 const AssetInfoContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
   padding: 16px;
   background-color: ${tokens.background.color.tertiary};
   gap: 16px;
