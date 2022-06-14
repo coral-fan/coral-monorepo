@@ -111,8 +111,12 @@ const getInitialProps = async (appContext: AppContext) => {
   // below is necessary as per next.js docs (https://nextjs.org/docs/advanced-features/custom-app)
   const initialProps = await NextApp.getInitialProps(appContext);
   const { ctx } = appContext;
-  const uid = isServerSide() ? await getUidServerSide(ctx) : getUidClientSide();
-  const isSigningUp: boolean = uid ? await getIsUserSigningUp(uid) : false;
+  // ! UNCOMMENT OUT
+  // const uid = isServerSide() ? await getUidServerSide(ctx) : getUidClientSide();
+  const uid = undefined;
+  // ! UNCOMMENT OUT
+  // const isSigningUp: boolean = uid ? await getIsUserSigningUp(uid) : false;
+  const isSigningUp = false;
 
   return {
     ...initialProps,
