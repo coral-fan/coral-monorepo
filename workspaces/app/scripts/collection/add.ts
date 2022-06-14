@@ -44,7 +44,7 @@ const addCollection = async (projectName: string) => {
 
   const { contract, collectionData } = configFile;
   const { name, address, description, maxSupply, usdPricePerToken, maxTokensPerWallet } = contract;
-  const { artistId, type, dropDate, details, gatedContent } = collectionData;
+  const { artistId, type, dropTime, details, gatedContent } = collectionData;
 
   const artistRef = await getDocumentReferenceServerSide<ArtistData>('artists', artistId);
 
@@ -96,16 +96,16 @@ const addCollection = async (projectName: string) => {
   }
 
   const collection: CollectionData = {
-    name: name,
-    artistId: artistId,
+    name,
+    artistId,
     imageUrl: fileUrl,
     maxSupply,
     type: type as CollectionType,
     price: usdPricePerToken,
-    dropTime: dropDate,
-    description: description,
-    details: details,
-    gatedContent: gatedContent,
+    dropTime,
+    description,
+    details,
+    gatedContent,
     maxMintablePerWallet: maxTokensPerWallet,
   };
 
