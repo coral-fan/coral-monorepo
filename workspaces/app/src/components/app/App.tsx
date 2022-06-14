@@ -51,16 +51,10 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
     }
   });
 
+  // TODO: Flip to Production URLs
   useEffect(() => {
     Fathom.load('NSNWRVJL', {
-      includedDomains: [
-        'www.coral.fan',
-        'coral.fan',
-        'coral.ngrok.io',
-        'www.coral.ngrok.io',
-        'app-git-main-coral.vercel.app',
-        'www.app-git-main-coral.vercel.app',
-      ],
+      includedDomains: ['app-git-main-coral.vercel.app', 'www.app-git-main-coral.vercel.app'],
     });
   }, []);
 
