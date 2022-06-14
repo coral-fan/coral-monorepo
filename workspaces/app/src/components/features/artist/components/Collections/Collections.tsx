@@ -13,14 +13,14 @@ export const Collections = ({ collections }: CollectionProps) => (
   <ProfileItems>
     {collections.length > 0 ? (
       sortCollectionByDropDateDesc(collections).map((collection) => {
-        const { id, name, type, dropDate } = collection;
+        const { id, name, type, dropTime } = collection;
         const Badge = getBadge(type);
         return (
           <ProfileItemWrapper key={id}>
             <DropCard
               title={name}
               Badge={Badge}
-              dropDateTimestamp={dropDate}
+              dropTimestamp={dropTime}
               {...collection}
               //TODO: Remove description prop after data fetching added
               description={''}

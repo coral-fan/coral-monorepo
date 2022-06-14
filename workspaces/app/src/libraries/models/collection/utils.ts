@@ -50,7 +50,7 @@ export const getSimilarCollections = async (collectionId: Collection['id'], n: n
                 imageUrl,
                 maxSupply,
                 type,
-                dropDate,
+                dropTime,
                 maxMintablePerWallet,
               }) => {
                 const artistData = await getArtist(artistId);
@@ -66,7 +66,7 @@ export const getSimilarCollections = async (collectionId: Collection['id'], n: n
                   imageUrl,
                   maxSupply,
                   type,
-                  dropDate,
+                  dropTime,
                   maxMintablePerWallet,
                   artistName: artistData.name,
                   artistProfilePhoto: artistData.profilePhoto,

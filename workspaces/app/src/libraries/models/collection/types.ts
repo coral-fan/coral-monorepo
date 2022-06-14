@@ -24,7 +24,7 @@ export interface CollectionData {
   maxSupply: number;
   type: CollectionType;
   price: number;
-  dropDate: string;
+  dropTime: string;
   description: string;
   details: Details;
   gatedContent: GatedContent;

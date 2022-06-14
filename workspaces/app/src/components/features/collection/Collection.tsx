@@ -38,7 +38,7 @@ export const CollectionPage = ({
   description,
   maxSupply,
   details,
-  dropDate,
+  dropTime,
   price,
   id,
   similarCollections,
@@ -60,7 +60,7 @@ export const CollectionPage = ({
   const dropOrAvailable = useMemo(
     () => (
       <DropOrAvailable
-        dropDate={dropDate}
+        dropTime={dropTime}
         numMinted={numMinted}
         maxSupply={maxSupply}
         isSoldOut={isSoldOut}
@@ -78,7 +78,7 @@ export const CollectionPage = ({
     ),
     [
       artistId,
-      dropDate,
+      dropTime,
       maxSupply,
       price,
       name,

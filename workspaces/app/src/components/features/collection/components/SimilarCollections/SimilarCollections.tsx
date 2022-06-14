@@ -29,14 +29,14 @@ export const SimilarCollections = ({ similarCollections }: SimilarCollectionsPro
       </Heading>
       <ScrollableContainer>
         {similarCollections.map((collection) => {
-          const { name, type, dropDate } = collection;
+          const { name, type, dropTime } = collection;
           const Badge = getBadge(type);
           return (
-            <ScrollableItemWrapper key={`${collection.artistName}-${name}-${dropDate}`}>
+            <ScrollableItemWrapper key={`${collection.artistName}-${name}-${dropTime}`}>
               <DropCard
                 title={name}
                 Badge={Badge}
-                dropDateTimestamp={dropDate}
+                dropTimestamp={dropTime}
                 {...collection}
                 isCard={true}
               />

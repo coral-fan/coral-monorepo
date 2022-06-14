@@ -102,7 +102,7 @@ const addCollection = async (projectName: string) => {
     maxSupply,
     type: type as CollectionType,
     price: usdPricePerToken,
-    dropDate: dropDate,
+    dropTime: dropDate,
     description: description,
     details: details,
     gatedContent: gatedContent,
