@@ -1,23 +1,41 @@
-import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 import { Link } from 'components/ui';
 import { CtaContent, CtaWrapperStyle } from 'components/ui/buttons/variants/CtaButton';
 import { GatedStream } from 'libraries/models';
 import tokens from 'styles/tokens';
+import { useMemo } from 'react';
+interface StreamLinkProps {
+  streamId: GatedStream['id'];
+}
 
-const Wrapper = styled(Link)`
+const getStreamLinkStyle = (isStreamAvailable: boolean) => css`
   ${CtaWrapperStyle};
   display: block;
   width: 100%;
   padding: 36px 20px;
   border-top: dashed ${tokens.background.color.secondary} 3px;
+
+  ${isStreamAvailable
+    ? css`
+        &:hover {
+          filter: brightness(0.9);
+        }
+      `
+    : css`
+        pointer-events: none;
+        filter: opacity(0.75);
+      `}
 `;
 
-interface StreamLinkProps {
-  eventId: GatedStream['id'];
-}
+export const StreamLink = ({ streamId }: StreamLinkProps) => {
+  const isStreamAvailable = useMemo(() => streamId !== null, [streamId]);
 
-export const StreamLink = ({ eventId }: StreamLinkProps) => (
-  <Wrapper href={`/stream/${eventId}`}>
-    <CtaContent>Access Stream</CtaContent>
-  </Wrapper>
-);
+  return (
+    <Link
+      href={isStreamAvailable ? `/stream/${streamId}` : '#'}
+      css={getStreamLinkStyle(isStreamAvailable)}
+    >
+      <CtaContent>{isStreamAvailable ? 'Access Stream' : 'Stream Coming Soon'}</CtaContent>
+    </Link>
+  );
+};
