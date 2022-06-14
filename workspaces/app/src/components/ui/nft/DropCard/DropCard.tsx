@@ -9,7 +9,7 @@ export interface DropCardProps
   extends Omit<BaseInfoProps, 'titleHeadingLevel' | 'titleStyleVariant' | 'children'> {
   Badge: () => EmotionJSX.Element;
   id: string;
-  dropDateTimestamp: string;
+  dropTimestamp: string;
 }
 
 const DropCardContainer = styled(Card)`
@@ -48,7 +48,7 @@ const formatDropCardDate = (timestamp: string) => {
   return formattedDate;
 };
 
-export const DropCard = ({ Badge, dropDateTimestamp, id, ...baseInfoProps }: DropCardProps) => (
+export const DropCard = ({ Badge, dropTimestamp, id, ...baseInfoProps }: DropCardProps) => (
   <Link href={`/collection/${id}`}>
     <DropCardContainer>
       <BaseInfo titleHeadingLevel={3} titleStyleVariant={'h3'} {...baseInfoProps}>
@@ -56,10 +56,10 @@ export const DropCard = ({ Badge, dropDateTimestamp, id, ...baseInfoProps }: Dro
           <Badge />
           <DropDateContainer>
             <span>
-              {new Date(dropDateTimestamp).getTime() < new Date().getTime() ? 'Dropped ' : 'Drops '}
+              {new Date(dropTimestamp).getTime() < new Date().getTime() ? 'Dropped ' : 'Drops '}
               on
             </span>
-            <span>{formatDropCardDate(dropDateTimestamp)}</span>
+            <span>{formatDropCardDate(dropTimestamp)}</span>
           </DropDateContainer>
         </BadgeAndDropDateContainer>
       </BaseInfo>

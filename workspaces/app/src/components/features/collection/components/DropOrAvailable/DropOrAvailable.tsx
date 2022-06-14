@@ -23,7 +23,7 @@ import { trackGoal } from 'fathom-client';
 interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
   numMinted: number;
   maxSupply: number;
-  dropDate: string;
+  dropTime: string;
   collectionId: string;
   isSoldOut: boolean;
   collectionDetails: Details;
@@ -44,7 +44,7 @@ export const DropOrAvailable = ({
   usdPrice,
   maxSupply,
   numMinted,
-  dropDate,
+  dropTime,
   collectionName,
   collectionId,
   collectionDetails,
@@ -80,13 +80,13 @@ export const DropOrAvailable = ({
   */
 
   const getMilliSecondsRemaining$ = useCallback(
-    () => getTimeRemaining$(dropDate, (milliSecsDiff) => milliSecsDiff),
-    [dropDate]
+    () => getTimeRemaining$(dropTime, (milliSecsDiff) => milliSecsDiff),
+    [dropTime]
   );
 
   const millisecondsRemaining = useObservable(
     getMilliSecondsRemaining$,
-    getMilliSecsDiff(dropDate)
+    getMilliSecsDiff(dropTime)
   );
 
   /*
@@ -160,7 +160,7 @@ export const DropOrAvailable = ({
           </ConditionalSpinner>
         </AvailableContainer>
       ) : (
-        <DropTimer tokenSupply={maxSupply} timestamp={dropDate} />
+        <DropTimer tokenSupply={maxSupply} timestamp={dropTime} />
       )}
       <SignInModal />
       {isAuthenticated && isPaymentModalOpen && (

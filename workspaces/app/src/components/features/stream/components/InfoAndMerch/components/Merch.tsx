@@ -44,14 +44,14 @@ export const Merch = ({ exclusiveCollections }: MerchProps) => {
       {exclusiveCollections.length > 0 ? (
         <ScrollableContainer>
           {exclusiveCollections.map((collection) => {
-            const { id, name, type, dropDate } = collection;
+            const { id, name, type, dropTime } = collection;
             const Badge = getBadge(type);
             return (
               <ScrollableItemWrapper key={id}>
                 <DropCard
                   title={name}
                   Badge={Badge}
-                  dropDateTimestamp={dropDate}
+                  dropTimestamp={dropTime}
                   {...collection}
                   isCard={true}
                 />

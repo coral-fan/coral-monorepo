@@ -9,5 +9,5 @@ export function sortCollectionByDropDateDesc(arr: DocumentDataWithId<CollectionD
 export function sortCollectionByDropDateDesc(
   arr: Collection[] | DocumentDataWithId<CollectionData>[]
 ) {
-  return arr.sort((a, b) => new Date(b.dropDate).getTime() - new Date(a.dropDate).getTime());
+  return arr.sort((a, b) => new Date(b.dropTime).getTime() - new Date(a.dropTime).getTime());
 }
