@@ -23,6 +23,13 @@ const Container = styled.div`
   gap: ${tokens.spacing.mobile.lg};
 `;
 
+const ItemsPlaceholder = styled.div`
+  font-style: italic;
+  font-size: ${tokens.font.size.md};
+  letter-spacing: ${tokens.font.letter_spacing.md};
+  line-height: ${tokens.font.line_height.md};
+`;
+
 interface MerchProps {
   exclusiveCollections: NonNullable<Event['exclusiveCollections']>;
 }
@@ -34,23 +41,27 @@ export const Merch = ({ exclusiveCollections }: MerchProps) => {
       <Heading level={2} styleVariant={isDesktop ? 'h2' : 'h4'}>
         Exclusive Items
       </Heading>
-      <ScrollableContainer>
-        {exclusiveCollections.map((collection) => {
-          const { id, name, type, dropDate } = collection;
-          const Badge = getBadge(type);
-          return (
-            <ScrollableItemWrapper key={id}>
-              <DropCard
-                title={name}
-                Badge={Badge}
-                dropDateTimestamp={dropDate}
-                {...collection}
-                isCard={true}
-              />
-            </ScrollableItemWrapper>
-          );
-        })}
-      </ScrollableContainer>
+      {exclusiveCollections.length > 0 ? (
+        <ScrollableContainer>
+          {exclusiveCollections.map((collection) => {
+            const { id, name, type, dropDate } = collection;
+            const Badge = getBadge(type);
+            return (
+              <ScrollableItemWrapper key={id}>
+                <DropCard
+                  title={name}
+                  Badge={Badge}
+                  dropDateTimestamp={dropDate}
+                  {...collection}
+                  isCard={true}
+                />
+              </ScrollableItemWrapper>
+            );
+          })}
+        </ScrollableContainer>
+      ) : (
+        <ItemsPlaceholder>No items available.</ItemsPlaceholder>
+      )}
     </Container>
   );
 };
