@@ -17,6 +17,9 @@ import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
 import { SignInModal, useOpenSignInModal } from 'components/app';
 
+// analytics
+import { trackGoal } from 'fathom-client';
+
 interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
   numMinted: number;
   maxSupply: number;
@@ -61,15 +64,15 @@ export const DropOrAvailable = ({
 
   const closePaymentModal = useCallback(() => setIsPaymentModalOpen(false), []);
 
-  const handleBuyButtonClick = useCallback(
-    () =>
-      isAuthenticated && !isSoldOut
-        ? setIsPaymentModalOpen(true)
-        : !isAuthenticated && !isSoldOut
-        ? openSignInModal()
-        : null,
-    [isSoldOut, isAuthenticated, openSignInModal]
-  );
+  const handleBuyButtonClick = useCallback(() => {
+    isAuthenticated && !isSoldOut
+      ? setIsPaymentModalOpen(true)
+      : !isAuthenticated && !isSoldOut
+      ? openSignInModal()
+      : null;
+
+    trackGoal('TYARNWD4', 0);
+  }, [isSoldOut, isAuthenticated, openSignInModal]);
 
   /*
     SwitchTransition implementation from:
