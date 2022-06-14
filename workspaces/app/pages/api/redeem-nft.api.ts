@@ -5,7 +5,7 @@ import { ERROR_RESPONSE } from './consts';
 import { getHandler, getRelaySigner } from './utils';
 import { Handler } from './types';
 import { object, string } from 'yup';
-import { RedeemCode } from 'libraries/models/redeemCode';
+import { RedeemCode } from 'libraries/models';
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
 
 export const redeemNftParamsSchema = object({
