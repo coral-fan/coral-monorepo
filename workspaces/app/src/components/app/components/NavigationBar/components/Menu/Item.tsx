@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   padding: 16px 0px;
   font-size: ${tokens.font.size.lg};
   font-weight: ${tokens.font.weight.bold};
-  line-height: ${tokens.font.line_height.lg};
+  line-height: ${tokens.font.line_height.xl};
   letter-spacing: ${tokens.font.letter_spacing.lg};
   border-top: solid ${tokens.border.color.secondary} 1px;
 
