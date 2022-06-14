@@ -1,10 +1,9 @@
 import { WALLET_ADAPTERS } from '@web3auth/base';
 import { getEnvironmentVariableErrorMessage } from 'libraries/utils';
 
-// ! UNCOMMENT OUT
-// if (process.env.NEXT_PUBLIC_WEB3AUTH_CLIENT_ID === undefined) {
-//   throw getEnvironmentVariableErrorMessage('NEXT_PUBLIC_WE3AUTH_CLIENT_ID');
-// }
+if (process.env.NEXT_PUBLIC_WEB3AUTH_CLIENT_ID === undefined) {
+  throw getEnvironmentVariableErrorMessage('NEXT_PUBLIC_WE3AUTH_CLIENT_ID');
+}
 
 export const WEB3AUTH = {
   CLIENT_ID: process.env.NEXT_PUBLIC_WEB3AUTH_CLIENT_ID,
