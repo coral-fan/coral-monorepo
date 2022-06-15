@@ -7,7 +7,7 @@ import hre from 'hardhat';
 /*
 Update constructorArgs here
 */
-import config from '../projects/test-mint-100x/config.json';
+import config from '../projects/house-atreides-genesis/config.json';
 const constructorArgs = config.contract;
 const contractName = constructorArgs.contractName;
 
@@ -46,6 +46,7 @@ describe(`Running Tests on ${contractName}...`, () => {
       saleStartTime,
       royaltyFeeRecipient,
       royaltyFeeNumerator,
+      avaxUsdPriceFeedAddress,
     } = constructorArgs;
 
     contract = await NFTContract.deploy(
@@ -57,7 +58,8 @@ describe(`Running Tests on ${contractName}...`, () => {
       tokenURI,
       saleStartTime,
       royaltyFeeRecipient,
-      royaltyFeeNumerator
+      royaltyFeeNumerator,
+      avaxUsdPriceFeedAddress
     );
 
     // await contract.connect(owner).setSaleState(true);
@@ -70,6 +72,11 @@ describe(`Running Tests on ${contractName}...`, () => {
 
     it('Should return tokenSupply of 0', async () => {
       expect(await contract.totalSupply()).to.equal(ethers.BigNumber.from(0));
+    });
+
+    it('Drop date and contract start time should be equal', async () => {
+      const dropTimeSeconds = new Date(config.collectionData.dropTime).getTime() / 1000;
+      expect(dropTimeSeconds).to.equal(constructorArgs.saleStartTime);
     });
   });
 
@@ -258,6 +265,14 @@ describe(`Running Tests on ${contractName}...`, () => {
       await expect(contract.connect(relayer2).relayMint(addr1.address)).to.be.revertedWith(
         'Not on relay list'
       );
+    });
+
+    it('Should revert, address not on Relay List', async () => {
+      await contract.connect(owner).addRelayAddr(relayer1.address);
+
+      await expect(
+        contract.connect(owner).revokeRelayAddrPrivilege(relayer2.address)
+      ).to.be.revertedWith('Address not found');
     });
 
     it('Owner should be able to revoke all relayList privileges', async () => {
