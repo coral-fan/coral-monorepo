@@ -371,6 +371,12 @@ describe(`Running Tests on ${contractName}...`, () => {
       );
     });
 
+    it('Revoke all privileges should revert because caller is not the owner', async () => {
+      await expect(contract.connect(owner).revokeAllRelayAddrPrivileges()).to.be.revertedWith(
+        'No relay addresses found'
+      );
+    });
+
     it('Should transfer ownership, new owner should be able to withdraw', async () => {
       await expect(contract.connect(newOwner).withdraw()).to.be.revertedWith(
         ONLY_OWNER_ERROR_MESSAGE
