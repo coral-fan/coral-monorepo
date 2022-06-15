@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Card } from 'components/ui';
+import { useIsMobile } from 'libraries/window';
 import tokens, { QUERY } from 'styles/tokens';
 import { ImageWithInfo, ImageWithInfoProps } from '../ImageWithInfo';
 import { NftContent, NftContentProps } from '../NftContent';
@@ -20,7 +21,10 @@ const ShareCardContainer = styled(Card)`
 type ShareCardProps = ImageWithInfoProps & NftContentProps;
 
 const NftContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 10px ${tokens.layout.padding.mobile.vertical};
+  align-self: center;
 
   @media ${QUERY.LAPTOP} {
     padding: 0;
@@ -33,22 +37,25 @@ export const ShareCard = ({
   artistProfilePhoto,
   title,
   Badge,
-}: ShareCardProps) => (
-  <ShareCardContainer>
-    <ImageWithInfo
-      imageUrl={imageUrl}
-      artistName={artistName}
-      artistProfilePhoto={artistProfilePhoto}
-      isCard={true}
-    />
-    <NftContentWrapper>
-      <NftContent
-        title={title}
-        titleHeadingLevel={2}
-        titleStyleVariant={'h2'}
-        Badge={Badge}
-        isCard={false}
+}: ShareCardProps) => {
+  const isMobile = useIsMobile();
+  return (
+    <ShareCardContainer>
+      <ImageWithInfo
+        imageUrl={imageUrl}
+        artistName={artistName}
+        artistProfilePhoto={artistProfilePhoto}
+        isCard={true}
       />
-    </NftContentWrapper>
-  </ShareCardContainer>
-);
+      <NftContentWrapper>
+        <NftContent
+          title={title}
+          titleHeadingLevel={2}
+          titleStyleVariant={isMobile ? 'h3' : 'h2'}
+          isCard={false}
+          Badge={Badge}
+        />
+      </NftContentWrapper>
+    </ShareCardContainer>
+  );
+};
