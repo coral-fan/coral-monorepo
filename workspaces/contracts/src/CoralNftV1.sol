@@ -139,6 +139,7 @@ contract CoralNftV1 is ERC721, ERC2981, Ownable, AvaxUsd {
   }
 
   function revokeAllRelayAddrPrivileges() external onlyOwner {
+    require(_relayAddresses.length > 0, 'No relay addresses found');
     for (uint256 i = 0; i < _relayAddresses.length; ) {
       _relayList[_relayAddresses[i]] = false;
 
