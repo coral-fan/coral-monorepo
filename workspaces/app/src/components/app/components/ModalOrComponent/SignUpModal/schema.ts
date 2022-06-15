@@ -5,8 +5,7 @@ export const getSignUpSchema = (usernames: Set<string>) =>
   object({
     username: getUsernameSchema(usernames),
     email: EMAIL_SCHEMA,
-    // TODO: revert default to false post sign up campaign
-    doesAgree: boolean().required().default(true).isTrue(),
+    doesAgree: boolean().required().default(false).isTrue(),
     doesOptIntoMarketing: boolean().required().default(false),
   });
 

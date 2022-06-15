@@ -37,18 +37,16 @@ export const SignUpModal = () => {
           {email && email !== undefined && (
             <Toggle {...register('doesOptIntoMarketing')}>Opt into marketing</Toggle>
           )}
-          {/* TODO: uncomment post sign up campaign launch */}
-          {/* <Toggle {...register('doesAgree')}>
-            I agree to Coral&apos;s{' '}
+          <Toggle {...register('doesAgree')}>
+            I agree to Coral&apos;
             <Link href={SITE_LINKS.PRIVACY_POLICY} openInNewTab>
               privacy policy
             </Link>
-            and{' '}
+            and
             <Link href={SITE_LINKS.TERMS_OF_SERVICE} openInNewTab>
-              {' '}
               terms of service
             </Link>
-          </Toggle> */}
+          </Toggle>
         </TogglesContainer>
         <Button
           type="submit"
