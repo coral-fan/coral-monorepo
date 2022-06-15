@@ -1,6 +1,0 @@
-[build]
-command = "yarn app build"
-publish = "workspaces/app/.next"
-
-[functions]
-included_files = ["node_modules/microtime/prebuilds/**"]
