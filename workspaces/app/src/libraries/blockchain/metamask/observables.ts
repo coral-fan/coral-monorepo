@@ -1,5 +1,5 @@
 import { AVALANCHE } from 'consts';
-import { catchError, fromEvent, map, mergeMap, Observable, of, retry, startWith, tap } from 'rxjs';
+import { fromEvent, map, mergeMap, Observable, startWith } from 'rxjs';
 
 export const fromMetaMaskEvent = <T>(eventName: string) => {
   if (window.ethereum === undefined) {
