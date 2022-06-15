@@ -1,5 +1,5 @@
 import { AVALANCHE } from 'consts';
-import { catchError, fromEvent, map, Observable, of, retry, startWith, tap } from 'rxjs';
+import { catchError, fromEvent, map, mergeMap, Observable, of, retry, startWith, tap } from 'rxjs';
 
 export const fromMetaMaskEvent = <T>(eventName: string) => {
   if (window.ethereum === undefined) {
@@ -23,36 +23,32 @@ const isBrowserBrave = () =>
 // lowercase in case chainId is capitalized for some reason
 const getChainId = () => window.ethereum?.chainId?.toLowerCase();
 
+const getChainIdAfterDelay = () =>
+  new Promise<ReturnType<typeof getChainId>>((resolve) => {
+    setTimeout(() => {
+      resolve(getChainId());
+    }, 0);
+  });
+
+// TODO: revisit to look into if there's a better solution
 export const getIsNetworkSupported$ = () => {
   let shouldPollMetaMask = true;
   return getChainIdChanged$().pipe(
     map((chainId) => chainId?.toLowerCase()),
     startWith(getChainId()),
-    map((_chainId) => {
-      // retry logic doesn't update chainId value (so if undefined, stays undefined for retries), so need to retrieve if value is nullish
-      const chainId = _chainId ?? getChainId();
+    mergeMap(async (chainId) => {
       if (shouldPollMetaMask) {
         /*
          * chainId is initially nullish when app loads on Chrome
          * on Brave, chainId is initially 0x1 due to injected Brave wallet
          */
         if (!chainId || (chainId === '0x1' && isBrowserBrave())) {
-          //  error is thrown here so retry will trigger
-          throw 'Polling MetaMask.';
+          chainId = await getChainIdAfterDelay();
         }
         shouldPollMetaMask = false;
       }
 
       return chainId === AVALANCHE.CHAIN_ID.HEX;
-    }),
-    // arbitrary values, can adjust as necessary
-    retry({ count: 10, delay: 10 }),
-    catchError(() => {
-      // set this to true so retry logic won't trigger anymore
-      shouldPollMetaMask = false;
-      const chainId = getChainId();
-      // returns observable here because this is what is expected by catchError
-      return of(chainId === AVALANCHE.CHAIN_ID.HEX);
     })
   );
 };
