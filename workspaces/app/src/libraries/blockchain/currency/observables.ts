@@ -1,5 +1,5 @@
 import { JsonRpcProvider } from '@ethersproject/providers';
-import { AVALANCHE, SERVER_ENVIRONMENT } from 'consts';
+import { AVALANCHE, CLIENT_ENVIRONMENT } from 'consts';
 import { ethers } from 'ethers';
 import { distinctUntilChanged, from, map, retry, startWith, switchMap, withLatestFrom } from 'rxjs';
 import {
@@ -13,7 +13,7 @@ import { newBlock$ } from '../observables';
 const avalancheRpcProvider = new JsonRpcProvider(AVALANCHE.RPC_URL);
 
 const avaxUsdPairAddress =
-  AVAX_USD_PAIR_ADDRESS[SERVER_ENVIRONMENT === 'production' ? 'C_CHAIN' : 'FUJI_TESTNET'];
+  AVAX_USD_PAIR_ADDRESS[CLIENT_ENVIRONMENT === 'production' ? 'C_CHAIN' : 'FUJI_TESTNET'];
 
 export type CurrencyType = 'usd' | 'avax';
 
@@ -37,8 +37,8 @@ export const getCurrencyPairPrice$ = (pair: CurrencyPair) => {
     withLatestFrom(decimals$),
     map(([roundData, decimals]) => ethers.utils.formatUnits(roundData.answer, decimals)),
     map((priceString) => parseFloat(priceString)),
-    distinctUntilChanged(),
-    retry()
+    distinctUntilChanged()
+    // retry()
   );
 };
 
@@ -50,7 +50,7 @@ export const getAvaxTokenPrice$ = (collectionId: string) => {
     switchMap(() => nftContract.getTokenPriceInAvax()),
     map((price) => ethers.utils.formatEther(price)),
     map((priceString) => parseFloat(priceString)),
-    distinctUntilChanged(),
-    retry()
+    distinctUntilChanged()
+    // retry()
   );
 };
