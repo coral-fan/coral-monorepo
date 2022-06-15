@@ -17,7 +17,7 @@ const socialLinksMap: Record<SocialType, string> = {
   facebook: 'https://facebook.com/',
   soundcloud: 'https://soundcloud.com/',
   tiktok: 'https://tiktok.com/@',
-  spotify: 'https://open.spotify.com/user/',
+  spotify: 'https://open.spotify.com/artist/',
   discogs: 'https://discogs.com/user/',
 };
 
