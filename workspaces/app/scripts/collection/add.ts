@@ -61,7 +61,7 @@ const addCollection = async (projectName: string) => {
   const { getApp } = await import('firebase-admin/app');
   const app = getApp();
   const imagePath = getImagePath(projectDir);
-  const storageBucket = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
+  const storageBucket = process.env.FIREBASE_STORAGE_BUCKET;
 
   const uuid = uuidv4();
 
