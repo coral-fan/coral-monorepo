@@ -229,7 +229,7 @@ export const Home = () => {
               ></img>
             </div>
             <p className="text-lg leading-lh-3 xl:text-1 xl:leading-none font-medium tracking-4 max-w-xl mb-10 lg:mb-24">
-              Coral enables everything you expect with the benefits os crypto, NFTs, exclusive
+              Coral enables everything you expect with the benefits of crypto, NFTs, exclusive
               experiences, and incentivized fans.
             </p>
             <div className="grid grid-cols-1 gap-10 lg:gap-20">
