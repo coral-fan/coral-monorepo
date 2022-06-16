@@ -43,8 +43,8 @@ export const SignUpModal = () => {
               {'privacy policy '}
             </Link>
             {'and '}
-            <Link href={SITE_LINKS.TERMS_OF_SERVICE} openInNewTab>
-              terms of service
+            <Link href={SITE_LINKS.TERMS_OF_USE} openInNewTab>
+              terms of use
             </Link>
           </Toggle>
         </TogglesContainer>
