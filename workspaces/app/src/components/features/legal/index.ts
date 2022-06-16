@@ -1,2 +1,2 @@
-export * from './TermsOfServices';
+export * from './TermsOfUse';
 export * from './PrivacyPolicy';
