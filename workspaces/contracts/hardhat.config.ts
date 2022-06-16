@@ -22,7 +22,7 @@ const hardhatConfig: HardhatUserConfig = {
   networks: {
     hardhat: {
       forking: {
-        url: 'https://api.avax-test.network/ext/bc/C/rpc',
+        url: 'https://api.avax.network/ext/bc/C/rpc',
       },
     },
     fuji: {
