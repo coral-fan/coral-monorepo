@@ -107,7 +107,7 @@ export const Home = () => {
 
       <section className="mb-20 lg:mb-24 xl:mb-32 relative">
         <h3 className="text-lg leading-lh-3 xl:text-1 xl:leading-none font-medium tracking-4 uppercase mb-3.5">
-          Upcoming drop
+          Current Drops
         </h3>
         <hr className="mb-3 lg:mb-4 border-gray-2 border-opacity-20"></hr>
         <div className="grid grid-cols-12 gap-4 lg:gap-5">
@@ -121,13 +121,16 @@ export const Home = () => {
                 June 16, 2022
               </time>
             </div>
-            <div className="rounded-1 overflow-hidden sm:hidden mb-5">
+            <a
+              href="/artist/0xCa86C97A5f5D8906DAeF4Bc83Ad9665D5298d35B"
+              className="rounded-1 overflow-hidden sm:hidden mb-5"
+            >
               <img
                 className="w-full"
                 src="/images/van-burden-records.jpg"
                 alt="Van Buren Records"
               ></img>
-            </div>
+            </a>
             <p className="text-lg leading-lh-3 xl:text-1 xl:leading-none font-medium tracking-4 max-w-xl mb-5">
               Introducing the Brockton collective of rappers, fashion designers, artists, and
               creatives. This NFT will grant you access to a live performance, exclusive merch, and
@@ -140,7 +143,10 @@ export const Home = () => {
               Get Your NFT
             </a>
           </div>
-          <div className="col-span-12 sm:col-span-6 mb-2.5 sm:mb-0 relative">
+          <a
+            href="/artist/0xCa86C97A5f5D8906DAeF4Bc83Ad9665D5298d35B"
+            className="col-span-12 sm:col-span-6 mb-2.5 sm:mb-0 relative"
+          >
             <div className="rounded-1 overflow-hidden hidden sm:block">
               <img
                 className="w-full"
@@ -148,7 +154,7 @@ export const Home = () => {
                 alt="Van Buren Records"
               ></img>
             </div>
-          </div>
+          </a>
         </div>
       </section>
 
