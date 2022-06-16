@@ -86,6 +86,12 @@ export const AssetPage = ({
 
   const isMobile = useIsMobile();
 
+  // TODO: find a better solution
+  // this fixes an issue with the scroll position isn't at the top after navigating to the asset page from the successful payment modal view
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
   return (
     <AssetContainer>
       {isMobile && <AssetIdWrapper>#{id}</AssetIdWrapper>}
