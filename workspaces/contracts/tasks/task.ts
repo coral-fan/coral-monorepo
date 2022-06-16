@@ -147,7 +147,7 @@ subtask('deploy-contract', 'Deploy contract')
     };
 
     const provider = new DefenderRelayProvider(relayerCredentials);
-    const signer = new DefenderRelaySigner(relayerCredentials, provider, { speed: 'fast' });
+    const signer = new DefenderRelaySigner(relayerCredentials, provider, { speed: 'fastest' });
 
     const contractFactory: ContractFactory = await ethers.getContractFactory(contractName, signer);
 
@@ -232,7 +232,7 @@ subtask('add-relay-addresses', 'Set Relay Addresses')
     };
 
     const provider = new DefenderRelayProvider(relayerCredentials);
-    const signer = new DefenderRelaySigner(relayerCredentials, provider, { speed: 'fast' });
+    const signer = new DefenderRelaySigner(relayerCredentials, provider, { speed: 'fastest' });
 
     const contractFactory: ContractFactory = await ethers.getContractFactory(contractName);
     const contract = new Contract(address, contractFactory.interface, signer);
