@@ -27,7 +27,7 @@ const getChainIdAfterDelay = () =>
   new Promise<ReturnType<typeof getChainId>>((resolve) => {
     setTimeout(() => {
       resolve(getChainId());
-    }, 50);
+    }, 500);
   });
 
 // TODO: revisit to look into if there's a better solution
@@ -36,7 +36,6 @@ export const getIsNetworkSupported$ = () => {
     map((chainId) => chainId?.toLowerCase()),
     startWith(getChainId()),
     mergeMap(async (chainId) => {
-      console.log(chainId);
       /*
        * chainId is initially nullish when app loads on Chrome
        * on Brave, chainId is initially 0x1 due to injected Brave wallet
