@@ -15,7 +15,7 @@ export const ModalOrComponent = ({ component }: ModalOrComponentProps) => {
   const { asPath } = useRouter();
 
   // TODO: revisit to see if there's a better way to do this
-  if (asPath === SITE_LINKS.PRIVACY_POLICY || asPath === SITE_LINKS.TERMS_OF_SERVICE) {
+  if (asPath.includes(SITE_LINKS.PRIVACY_POLICY) || asPath === SITE_LINKS.TERMS_OF_SERVICE) {
     return component;
   }
 
