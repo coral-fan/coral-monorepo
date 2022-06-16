@@ -131,7 +131,7 @@ export const Home = () => {
             <p className="text-lg leading-lh-3 xl:text-1 xl:leading-none font-medium tracking-4 max-w-xl mb-5">
               Introducing the Brockton collective of rappers, fashion designers, artists, and
               creatives. This NFT will grant you access to a live performance, exclusive merch, and
-              a spot in the growing community.
+              a spot in their growing community.
             </p>
             {/* ADD VB LINK HERE */}
             <a
@@ -191,7 +191,7 @@ export const Home = () => {
                     Connect Metamask
                   </h4>
                   <p className="lg:col-span-6 text-base leading-5 lg:text-lg lg:leading-lh-3 tracking-2">
-                    Connect your existiing MetaMask wallet. You will be automatically connected to
+                    Connect your existing MetaMask wallet. You will be automatically connected to
                     the correct network.
                   </p>
                 </div>
@@ -230,8 +230,8 @@ export const Home = () => {
               ></img>
             </div>
             <p className="text-lg leading-lh-3 xl:text-1 xl:leading-none font-medium tracking-4 max-w-xl mb-10 lg:mb-24">
-              Coral enables everything you expect with the benefits of crypto, NFTs, exclusive
-              experiences, and a chance to your for your fandom.
+              Coral enables everything you expect with the benefits os crypto, NFTs, exclusive
+              experiences, and incentivized fans.
             </p>
             <div className="grid grid-cols-1 gap-10 lg:gap-20">
               <div className="border-t border-gray-2 border-opacity-20 pt-3.5 grid grid-cols-10 lg:grid-cols-12 gap-5">
@@ -440,7 +440,7 @@ export const Home = () => {
                 </div>
                 <div className="col-span-8 lg:col-span-10 grid grid-cols-1 lg:grid-cols-10 gap-2.5 lg:gap-5">
                   <h4 className="lg:col-span-4 text-base leading-5 lg:text-lg lg:leading-lh-3 tracking-wide uppercase">
-                    NFT’S
+                    NFTS
                   </h4>
                   <p className="lg:col-span-6 text-base leading-5 lg:text-lg lg:leading-lh-3 tracking-2">
                     NFTs serve as tickets, and membership passes that can be held and used for perks
