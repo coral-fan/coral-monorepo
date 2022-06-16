@@ -54,7 +54,7 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
   // TODO: Flip to Production URLs
   useEffect(() => {
     Fathom.load('NSNWRVJL', {
-      includedDomains: ['app-git-main-coral.vercel.app', 'www.app-git-main-coral.vercel.app'],
+      includedDomains: ['www.coral.fan'],
     });
   }, []);
 
@@ -63,30 +63,21 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
       <GlobalStyles />
       <Head>
         {/* TODO: update title post sign up campaign */}
-        <title>Coral - Sign up for early rewards</title>
+        <title>Coral</title>
         <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
-        <meta
-          name="description"
-          content="The marketplace for a new era of music is coming soon. Sign up for early access."
-        />
+        <meta name="description" content="The marketplace for a new era of music." />
         {/* social media share meta data starts here*/}
-        <meta property="og:url" content="https://coral.fan/" />
+        <meta property="og:url" content="https://www.coral.fan/" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Coral - Sign up for early rewards" />
-        <meta
-          property="og:description"
-          content="The marketplace for a new era of music is coming soon. Sign up for early access."
-        />
+        <meta property="og:title" content="Coral" />
+        <meta property="og:description" content="The marketplace for a new era of music." />
         <meta property="og:image" content={getRandomSocialMediaPreviewImageUrl()} />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta property="twitter:domain" content="coral.fan" />
-        <meta property="twitter:url" content="https://coral.fan/" />
-        <meta name="twitter:title" content="Coral - Sign up for early rewards" />
-        <meta
-          name="twitter:description"
-          content="The marketplace for a new era of music is coming soon. Sign up for early access."
-        />
+        <meta property="twitter:url" content="https://www.coral.fan/" />
+        <meta name="twitter:title" content="Coral" />
+        <meta name="twitter:description" content="The marketplace for a new era of music." />
         <meta name="twitter:image" content={getRandomSocialMediaPreviewImageUrl()} />
         {/* social media share meta data ends here*/}
 
