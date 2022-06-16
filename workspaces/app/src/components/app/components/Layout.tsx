@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { Footer, NavigationBar } from 'components/app/components';
-import { CLIENT_ENVIRONMENT } from 'consts';
 import { ReactNode } from 'react';
 import { QUERY } from 'styles';
 import tokens from 'styles/tokens';
