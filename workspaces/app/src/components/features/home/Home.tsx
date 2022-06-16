@@ -133,12 +133,11 @@ export const Home = () => {
               creatives. This NFT will grant you access to a live performance, exclusive merch, and
               a spot in their growing community.
             </p>
-            {/* ADD VB LINK HERE */}
             <a
-              href="https://editorial.coral.fan/introducing-van-buren-records-the-powerhouse-collective-from-brockton-ma/"
+              href="/artist/0xCa86C97A5f5D8906DAeF4Bc83Ad9665D5298d35B"
               className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-2 py-2 px-2.5 bg-gray-2 bg-opacity-20 hover:bg-opacity-50 rounded-full duration-300 mt-auto"
             >
-              Learn more
+              Get Your NFT
             </a>
           </div>
           <div className="col-span-12 sm:col-span-6 mb-2.5 sm:mb-0 relative">
