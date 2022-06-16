@@ -109,6 +109,7 @@ export const Home = () => {
         <h3 className="text-lg leading-lh-3 xl:text-1 xl:leading-none font-medium tracking-4 uppercase mb-3.5">
           Current Drops
         </h3>
+
         <hr className="mb-3 lg:mb-4 border-gray-2 border-opacity-20"></hr>
         <div className="grid grid-cols-12 gap-4 lg:gap-5">
           <div className="col-span-12 sm:col-span-6">
@@ -116,7 +117,7 @@ export const Home = () => {
               Van Buren Records
             </h2>
             <div className="flex space-x-4 lg:space-x-5 text-xs leading-lh-1 tracking-1 uppercase mb-10 lg:mb-24">
-              <div>Drops on</div>
+              <div>Dropped on</div>
               <time className="inline-block" dateTime="2022-06-16">
                 June 16, 2022
               </time>
@@ -151,6 +152,53 @@ export const Home = () => {
                 className="w-full"
                 src="/images/van-burden-records.jpg"
                 alt="Van Buren Records"
+              ></img>
+            </div>
+          </a>
+        </div>
+
+        <hr className="mt-4 mb-3 lg:mb-4 border-gray-2 border-opacity-20"></hr>
+        <div className="grid grid-cols-12 gap-4 lg:gap-5">
+          <div className="col-span-12 sm:col-span-6">
+            <h2 className="text-1 leading-none xl:text-2 xl:leading-none tracking-3 mb-2 font-medium inline-block">
+              MATTE Presents A Party 3.0
+            </h2>
+            <div className="flex space-x-4 lg:space-x-5 text-xs leading-lh-1 tracking-1 uppercase mb-10 lg:mb-24">
+              <div>Drops on</div>
+              <time className="inline-block" dateTime="2022-06-16">
+                June 17, 2022
+              </time>
+            </div>
+            {/* TODO: UPDATE MATTE LINK */}
+            <a href="#">
+              <div className="rounded-1 overflow-hidden sm:hidden mb-5 hover:rounded-2 duration-300">
+                <img
+                  className="w-full"
+                  src="/images/matte.png"
+                  alt="Matte Presents A Party 3.0"
+                ></img>
+              </div>
+            </a>
+            <p className="text-lg leading-lh-3 xl:text-1 xl:leading-none font-medium tracking-4 max-w-xl mb-5 ">
+              MATTE projects brings together Pools, $FEVER, LUKSO, and Coral for a memorable night
+              on June 23rd during NFT.NYC at Spring Place. This NFT grants access to a livestream of
+              performances by ALUNA and a special guest.
+            </p>
+            {/* TODO: UPDATE MATTE LINK */}
+            <a
+              href="#"
+              className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-2 py-2 px-2.5 bg-gray-2 bg-opacity-20 hover:bg-opacity-50 rounded-full duration-300 mt-auto"
+            >
+              Get Your NFT
+            </a>
+          </div>
+          {/* TODO: UPDATE MATTE LINK */}
+          <a href="#" className="col-span-12 sm:col-span-6 mb-2.5 sm:mb-0 relative">
+            <div className="rounded-1 overflow-hidden hidden sm:block hover:rounded-2 duration-300">
+              <img
+                className="w-full"
+                src="/images/matte.png"
+                alt="Matte Presents A Party 3.0"
               ></img>
             </div>
           </a>
