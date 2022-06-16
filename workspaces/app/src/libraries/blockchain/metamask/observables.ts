@@ -27,25 +27,22 @@ const getChainIdAfterDelay = () =>
   new Promise<ReturnType<typeof getChainId>>((resolve) => {
     setTimeout(() => {
       resolve(getChainId());
-    }, 0);
+    }, 50);
   });
 
 // TODO: revisit to look into if there's a better solution
 export const getIsNetworkSupported$ = () => {
-  let shouldPollMetaMask = true;
   return getChainIdChanged$().pipe(
     map((chainId) => chainId?.toLowerCase()),
     startWith(getChainId()),
     mergeMap(async (chainId) => {
-      if (shouldPollMetaMask) {
-        /*
-         * chainId is initially nullish when app loads on Chrome
-         * on Brave, chainId is initially 0x1 due to injected Brave wallet
-         */
-        if (!chainId || (chainId === '0x1' && isBrowserBrave())) {
-          chainId = await getChainIdAfterDelay();
-        }
-        shouldPollMetaMask = false;
+      console.log(chainId);
+      /*
+       * chainId is initially nullish when app loads on Chrome
+       * on Brave, chainId is initially 0x1 due to injected Brave wallet
+       */
+      if (!chainId || (chainId === '0x1' && isBrowserBrave())) {
+        chainId = await getChainIdAfterDelay();
       }
 
       return chainId === AVALANCHE.CHAIN_ID.HEX;
