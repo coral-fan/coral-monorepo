@@ -53,7 +53,7 @@
 
 ## Update Firestore DB
 
-- From `coral-monorepo` run `yarn app run-script scripts/collection/add.ts <PROJECT_NAME>`
+- From `coral-monorepo` run `yarn app run-script:<development_OR_production> scripts/collection/add.ts <PROJECT_NAME>`
 
 ## Run Airdrop Script (if applicable)
 
