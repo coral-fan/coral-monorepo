@@ -1,5 +1,3 @@
-import { Header, Layout, Paragraph, SubHeader, Section } from './components';
-
 export const PrivacyPolicy = () => (
   <div
     dangerouslySetInnerHTML={{
