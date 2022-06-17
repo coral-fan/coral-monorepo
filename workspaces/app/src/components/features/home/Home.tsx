@@ -169,8 +169,7 @@ export const Home = () => {
                 June 17, 2022
               </time>
             </div>
-            {/* TODO: UPDATE MATTE LINK */}
-            <a href="#">
+            <a href="/collection/0x66fcF6d7DD8FFdA625848ceB63aC5026A3BDD715">
               <div className="rounded-1 overflow-hidden sm:hidden mb-5 hover:rounded-2 duration-300">
                 <img
                   className="w-full"
@@ -184,16 +183,17 @@ export const Home = () => {
               on June 23rd during NFT.NYC at Spring Place. This NFT grants access to a livestream of
               performances by ALUNA and a special guest.
             </p>
-            {/* TODO: UPDATE MATTE LINK */}
             <a
-              href="#"
+              href="/collection/0x66fcF6d7DD8FFdA625848ceB63aC5026A3BDD715"
               className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-2 py-2 px-2.5 bg-gray-2 bg-opacity-20 hover:bg-opacity-50 rounded-full duration-300 mt-auto"
             >
               Get Your NFT
             </a>
           </div>
-          {/* TODO: UPDATE MATTE LINK */}
-          <a href="#" className="col-span-12 sm:col-span-6 mb-2.5 sm:mb-0 relative">
+          <a
+            href="/collection/0x66fcF6d7DD8FFdA625848ceB63aC5026A3BDD715"
+            className="col-span-12 sm:col-span-6 mb-2.5 sm:mb-0 relative"
+          >
             <div className="rounded-1 overflow-hidden hidden sm:block hover:rounded-2 duration-300">
               <img
                 className="w-full"
