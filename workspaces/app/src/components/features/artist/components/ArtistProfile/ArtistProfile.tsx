@@ -7,6 +7,7 @@ import { useMemo } from 'react';
 
 interface ArtistProfileProps {
   artistData: Artist;
+  tag?: string;
 }
 
 const Tag = styled(BaseTag)`
@@ -18,12 +19,12 @@ const Tag = styled(BaseTag)`
   margin-bottom: -8px;
 `;
 
-const artistTag = <Tag>Artist</Tag>;
-
 export const ArtistProfile = ({ artistData }: ArtistProfileProps) => {
-  const { name, bio, profilePhoto, socialHandles, collections } = artistData;
+  const { name, bio, profilePhoto, socialHandles, collections, tag } = artistData;
 
   const artistCollections = useMemo(() => <Collections collections={collections} />, [collections]);
+
+  const artistTag = useMemo(() => <Tag>{tag}</Tag>, [tag]);
 
   return (
     <Profile
