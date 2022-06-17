@@ -7,7 +7,6 @@ import { useMemo } from 'react';
 
 interface ArtistProfileProps {
   artistData: Artist;
-  tag?: string;
 }
 
 const Tag = styled(BaseTag)`
@@ -19,6 +18,7 @@ const Tag = styled(BaseTag)`
   margin-bottom: -8px;
 `;
 
+// TODO: Revisit tag logic, added as override for Matte
 export const ArtistProfile = ({ artistData }: ArtistProfileProps) => {
   const { name, bio, profilePhoto, socialHandles, collections, tag = 'artist' } = artistData;
 
