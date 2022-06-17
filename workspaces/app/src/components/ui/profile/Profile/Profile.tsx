@@ -52,7 +52,16 @@ export const Profile = ({
           </UsernameContainer>
         </MainProfileContainer>
         <UserContentContainer>
-          <Bio>{bio}</Bio>
+          {/* TODO: quick and dirty fix to be able to add arbitrary formatting. fix this in the future */}
+          {artistTag !== undefined && bio ? (
+            <Bio
+              dangerouslySetInnerHTML={{
+                __html: bio,
+              }}
+            />
+          ) : (
+            <Bio>{bio}</Bio>
+          )}
           <SocialLinks socialHandles={socialHandles} />
         </UserContentContainer>
       </ProfileContainer>
