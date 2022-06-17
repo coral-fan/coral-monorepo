@@ -1,24 +1,23 @@
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
 import { ArtistData } from 'libraries/models';
 
-const id = '0xabcdefghijklmnopqrstuvwxyz01234567891011';
+const id = '0xCa86C97A5f5D8906DAeF4Bc83Ad9665D5298d35B';
 
 const artist: ArtistData = {
-  name: 'MATTE',
+  name: 'Van Buren Records',
   profilePhoto: {
-    src: 'https://firebasestorage.googleapis.com/v0/b/coral-c373f.appspot.com/o/artists%2F0xEF43ACE7691A2aA4D4d8FcCE15C8B11be3DC21Fd%2Fmatte_profile.png?alt=media&token=cb7dd084-1ac5-469b-862d-8475229de2ec',
+    src: 'https://firebasestorage.googleapis.com/v0/b/coral-fan.appspot.com/o/artists%2F0xCa86C97A5f5D8906DAeF4Bc83Ad9665D5298d35B%2FVanBuren_ProfilePhoto.jpeg?alt=media&token=66199a10-a4d9-4e81-b2f8-8afbd5f82d06',
     offsetPercentages: [0, 0],
     scale: 1,
   },
-  bio: 'MATTE presents a celebration of the expansive world of WEB3 during NFT.NYC with "A Party 3.0: With P00LS and $FEVER"',
-  quote: 'suspendisse interdum consectetur libero id faucibus nisl tincidunt eget nullam.',
+  bio: ' Community is all about creating a feeling of togetherness that fosters a sense of belonging—elevating each other’s value and leaving a bigger impact than any one individual ever could. Van Buren Records is a community, but also so much more.',
+  quote: '',
   socialHandles: {
-    twitter: 'test',
-    spotify: 'test',
-    soundcloud: 'test',
+    twitter: 'VanBurenRecords',
+    spotify: '2T6EOVQ5lAQc64poyLnXmj',
+    instagram: 'vanburenrecords',
   },
   collectionIds: [],
-  tag: 'artist',
 };
 
 const addArtist = async () => {
