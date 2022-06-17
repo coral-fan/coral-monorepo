@@ -41,16 +41,12 @@ export const getServerSideProps: GetServerSideProps<ArtistPageProps, ArtistParam
     .filter((result): result is PromiseFulfilledResult<Collection> => result.status === 'fulfilled')
     .map((result) => result.value);
 
-  // If ID is Matte, 'Collective', else 'Artist'
-  const tag = id === '0xEF43ACE7691A2aA4D4d8FcCE15C8B11be3DC21Fd' ? 'Collective' : 'Artist';
-
   return {
     props: {
       id,
       ...artist,
       collections,
       assets: [],
-      tag,
     },
   };
 };
