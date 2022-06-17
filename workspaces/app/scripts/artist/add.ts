@@ -4,13 +4,13 @@ import { ArtistData } from 'libraries/models';
 const id = '0xabcdefghijklmnopqrstuvwxyz01234567891011';
 
 const artist: ArtistData = {
-  name: 'Test',
+  name: 'MATTE',
   profilePhoto: {
-    src: '',
+    src: 'https://firebasestorage.googleapis.com/v0/b/coral-c373f.appspot.com/o/artists%2F0xEF43ACE7691A2aA4D4d8FcCE15C8B11be3DC21Fd%2Fmatte_profile.png?alt=media&token=cb7dd084-1ac5-469b-862d-8475229de2ec',
     offsetPercentages: [0, 0],
     scale: 1,
   },
-  bio: 'lacus viverra vitae congue eu consequat ac felis donec et odio pellentesque diam volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae nunc sed velit dignissim sodales ut eu sem integer vitae justo eget magna.',
+  bio: 'MATTE presents a celebration of the expansive world of WEB3 during NFT.NYC with "A Party 3.0: With P00LS and $FEVER"',
   quote: 'suspendisse interdum consectetur libero id faucibus nisl tincidunt eget nullam.',
   socialHandles: {
     twitter: 'test',
@@ -18,6 +18,7 @@ const artist: ArtistData = {
     soundcloud: 'test',
   },
   collectionIds: [],
+  tag: 'artist',
 };
 
 const addArtist = async () => {
