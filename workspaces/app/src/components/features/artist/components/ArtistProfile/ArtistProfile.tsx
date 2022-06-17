@@ -20,7 +20,7 @@ const Tag = styled(BaseTag)`
 `;
 
 export const ArtistProfile = ({ artistData }: ArtistProfileProps) => {
-  const { name, bio, profilePhoto, socialHandles, collections, tag } = artistData;
+  const { name, bio, profilePhoto, socialHandles, collections, tag = 'artist' } = artistData;
 
   const artistCollections = useMemo(() => <Collections collections={collections} />, [collections]);
 
