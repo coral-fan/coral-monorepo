@@ -9,7 +9,7 @@ export interface ArtistData {
   profilePhoto: Photo;
   socialHandles: SocialHandles;
   collectionIds: Collection['id'][];
-  tag: NullableString;
+  tag?: string;
 }
 // id = coral wallet address
 export interface Artist extends Omit<ArtistData, 'collectionIds'> {
