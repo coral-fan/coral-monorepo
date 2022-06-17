@@ -54,6 +54,7 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
       return res.status(200).send(response);
     }
   } catch (e) {
+    await redeemCodeDocRef?.set({ isRedeemed: false }, { merge: true });
     console.error(e);
   }
   return res.status(500).send(ERROR_RESPONSE);
