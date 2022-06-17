@@ -24,6 +24,7 @@ export interface PrivateUserData {
   email: NullableString;
   doesOptIntoMarketing: boolean;
   stripeCustomerId: NullableString;
+  shippingInfoId: NullableString;
 }
 
 //  id = wallet address
