@@ -116,15 +116,16 @@ export const DropOrAvailable = ({
       return 'Sold Out';
     }
 
+    const hasValidRedeemCode = redeemCode !== null;
+
     if (isAuthenticated) {
-      if (redeemCode !== null) {
+      if (hasValidRedeemCode) {
         return 'Redeem Free NFT';
       } else {
         return 'Buy Now';
       }
-    } else {
-      return 'Sign In To Purchase';
     }
+    return `Sign In To ${hasValidRedeemCode ? 'Redeem' : 'Purchase'}`;
   }, [isSoldOut, isAuthenticated, redeemCode]);
 
   // TODO: Refactor CtaButton conditional logic
