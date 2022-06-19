@@ -1,4 +1,5 @@
 import { Artist, ArtistData } from '../artist';
+import { MerchOptionTypes } from '../merch';
 import { NullableString } from '../types';
 
 export type CollectionType = 'video' | 'music' | 'stream' | 'merch' | 'all_access' | 'ticket';
@@ -29,6 +30,8 @@ export interface CollectionData {
   details: Details;
   gatedContent: GatedContent;
   maxMintablePerWallet: number;
+  // undefined to allow flexibility in Firestore
+  merchOptionTypes?: MerchOptionTypes;
 }
 
 export interface Collection extends Omit<CollectionData, 'artistId'> {
