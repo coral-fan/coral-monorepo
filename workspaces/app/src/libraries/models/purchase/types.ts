@@ -4,16 +4,8 @@ import { User } from '../user';
 
 type Status = 'pending' | 'completed' | 'rejected';
 
-export interface ShippingInformation {
-  firstName: string;
-  lastName: string;
-  address: string;
-  fulfilled: boolean;
-}
-
 export interface Metadata {
   stripePaymentIntentId?: string;
-  // shippingInformation?: ShippingInformation;
 }
 
 export interface PurchaseData {
