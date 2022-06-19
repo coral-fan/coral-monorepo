@@ -7,6 +7,7 @@ import { CoralNftV1__factory } from '@coral/contracts';
 import { ERROR_RESPONSE } from '../../consts';
 import { getHandler, getPurchaseDocumentReference, getRelaySigner } from '../../utils';
 import { Handler } from '../../types';
+import { updateMerchOrderTransactionHash } from '../../merch-order/utils';
 
 if (!process.env.STRIPE_WEBHOOK_SIGNING_SECRET) {
   throw Error(getEnvironmentVariableErrorMessage('STRIPE_WEBHOOK_SIGNING_SECRET'));
@@ -45,7 +46,7 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
 
     if (paymentIntent.status === 'requires_capture') {
       const { metadata } = paymentIntent;
-      const { collectionId, userId, purchaseId } = metadata;
+      const { collectionId, userId, purchaseId, merchOrderId } = metadata;
 
       if (!userId || !collectionId || !purchaseId) {
         throw new Error(
@@ -67,6 +68,10 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
         const { hash } = await nftContract.relayMint(userId);
 
         await purchaseDocRef.set({ transactionHash: hash }, { merge: true });
+
+        if (merchOrderId !== undefined) {
+          await updateMerchOrderTransactionHash(merchOrderId, hash);
+        }
       }
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- must type error as any to access properties
