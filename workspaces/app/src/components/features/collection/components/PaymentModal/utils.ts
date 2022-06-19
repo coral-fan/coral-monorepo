@@ -11,6 +11,7 @@ interface CreatePaymentIntentParameters {
   stripeCustomerId: PrivateUserData['stripeCustomerId'];
   userId: string;
   purchaseId: string;
+  merchOrderId?: string;
 }
 
 export const createPaymentIntent = async ({
@@ -21,6 +22,7 @@ export const createPaymentIntent = async ({
   collectionId,
   userId,
   purchaseId,
+  merchOrderId,
 }: CreatePaymentIntentParameters) => {
   const { data } = await axios.post<{
     clientSecret: string;
@@ -33,6 +35,7 @@ export const createPaymentIntent = async ({
     collectionId,
     userId,
     purchaseId,
+    merchOrderId,
   });
 
   return data;
