@@ -29,6 +29,7 @@ interface CardPaymentProps {
   setPurchaseId: (id: string) => void;
   isWalletUser: boolean;
   isMobile: boolean;
+  merchOrderId?: string;
 }
 
 interface PaymentMethodData {
@@ -64,6 +65,7 @@ export const ExistingCardPayment = ({
   setPurchaseId,
   isWalletUser,
   isMobile,
+  merchOrderId,
 }: CardPaymentProps) => {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodData>();
   const [error, setError] = useState<StripeError>();
@@ -127,6 +129,7 @@ export const ExistingCardPayment = ({
           collectionId,
           userId: uid,
           purchaseId,
+          merchOrderId,
         });
 
         const { paymentIntent, error: confirmCardError } = await stripe.confirmCardPayment(
@@ -162,6 +165,7 @@ export const ExistingCardPayment = ({
       stripeCustomerId,
       total,
       uid,
+      merchOrderId,
       setPurchaseId,
       errorToast,
     ]

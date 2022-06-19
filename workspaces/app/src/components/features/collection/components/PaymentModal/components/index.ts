@@ -8,3 +8,4 @@ export * from './AvaxPayment';
 export * from './PaymentSuccess';
 export * from './FreeMint';
 export * from './components';
+export * from './MerchOrder';

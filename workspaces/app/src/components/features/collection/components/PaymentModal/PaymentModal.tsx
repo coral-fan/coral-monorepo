@@ -12,7 +12,13 @@ import {
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { docData } from 'rxfire/firestore';
 import tokens from 'styles/tokens';
-import { AssetInfo, AssetInfoProps, ExistingCardPayment, TransactionSummary } from './components';
+import {
+  AssetInfo,
+  AssetInfoProps,
+  ExistingCardPayment,
+  MerchOrder,
+  TransactionSummary,
+} from './components';
 import { AvaxPayment } from './components/AvaxPayment';
 import {
   ConditionalSpinnerContainer,
@@ -26,6 +32,7 @@ import { PaymentSuccess } from './components/PaymentSuccess';
 import { useErrorToast } from 'libraries/utils/toasts';
 import { useIsMobile } from 'libraries/window';
 import { FreeMint } from './components/FreeMint';
+import { MerchOptionTypes } from 'libraries/models/merch';
 interface PaymentModalProps extends AssetInfoProps {
   usdPrice: number;
   artistId: string;
@@ -33,6 +40,7 @@ interface PaymentModalProps extends AssetInfoProps {
   collectionDetails: Details;
   closePaymentModal: () => void;
   redeemCode: NullableString;
+  merchOptionTypes?: MerchOptionTypes;
 }
 
 export const PaymentModal = ({
@@ -45,6 +53,7 @@ export const PaymentModal = ({
   usdPrice,
   collectionId,
   redeemCode,
+  merchOptionTypes,
 }: PaymentModalProps) => {
   const { isActive: isWalletUser } = useWallet();
   const isMobile = useIsMobile();
@@ -86,6 +95,8 @@ export const PaymentModal = ({
   const [isMintingNFT, setIsMintingNFT] = useState(false);
 
   const errorToast = useErrorToast();
+
+  const [merchOrderId, setMerchOrderId] = useState<string>();
 
   useEffect(() => {
     if (purchaseId !== undefined) {
@@ -129,77 +140,85 @@ export const PaymentModal = ({
               artistName={artistName}
               artistProfilePhoto={artistProfilePhoto}
             />
-            <ConditionalSpinnerContainer>
-              <ConditionalSpinner
-                size={'60px'}
-                color={tokens.background.color.brand}
-                loading={(isAvax && isAvaxPriceLoading) || isMintingNFT}
-              >
-                <TransactionSummary
-                  isAvax={isAvax}
-                  price={formattedPrice}
-                  total={formattedTotal}
-                  altTotal={formattedAltTotal}
-                  transactionFee={formattedTransactionFee}
-                  transactionFeePercentage={transactionFee * 100}
-                />
-                <HeadingContainer>
+            {merchOptionTypes !== undefined && merchOrderId === undefined ? (
+              <MerchOrder merchOptionTypes={merchOptionTypes} setMerchOrderId={setMerchOrderId} />
+            ) : (
+              <ConditionalSpinnerContainer>
+                <ConditionalSpinner
+                  size={'60px'}
+                  color={tokens.background.color.brand}
+                  loading={(isAvax && isAvaxPriceLoading) || isMintingNFT}
+                >
+                  <TransactionSummary
+                    isAvax={isAvax}
+                    price={formattedPrice}
+                    total={formattedTotal}
+                    altTotal={formattedAltTotal}
+                    transactionFee={formattedTransactionFee}
+                    transactionFeePercentage={transactionFee * 100}
+                  />
+                  <HeadingContainer>
+                    {redeemCode !== null ? (
+                      <Heading>Redeem Free NFT</Heading>
+                    ) : isAvax ? (
+                      <Heading>Paying With AVAX</Heading>
+                    ) : (
+                      <>
+                        <Heading>
+                          {shouldUseExistingCard ? 'Card On File' : 'Payment Details'}
+                        </Heading>
+                        {stripeCustomerId && (
+                          <DifferentCardLink type="button" onClick={handleUseDifferentCardClick}>
+                            {shouldUseExistingCard ? 'Use a Different Card' : 'Use Existing Card'}
+                          </DifferentCardLink>
+                        )}
+                      </>
+                    )}
+                  </HeadingContainer>
                   {redeemCode !== null ? (
-                    <Heading>Redeem Free NFT</Heading>
-                  ) : isAvax ? (
-                    <Heading>Paying With AVAX</Heading>
+                    // TODO: possibly need merch order logic?
+                    <FreeMint
+                      redeemCode={redeemCode}
+                      collectionId={collectionId}
+                      setIsMintingNFT={setIsMintingNFT}
+                      setAssetId={setAssetId}
+                    />
+                  ) : isAvax && isWalletUser ? (
+                    <AvaxPayment
+                      total={total}
+                      collectionId={collectionId}
+                      handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
+                      setAssetId={setAssetId}
+                      setIsMintingNFT={setIsMintingNFT}
+                      isMobile={isMobile}
+                      merchOrderId={merchOrderId}
+                    />
+                  ) : shouldUseExistingCard && stripeCustomerId ? (
+                    <ExistingCardPayment
+                      stripeCustomerId={stripeCustomerId}
+                      total={total}
+                      handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
+                      collectionId={collectionId}
+                      setPurchaseId={setPurchaseId}
+                      isWalletUser={isWalletUser}
+                      isMobile={isMobile}
+                      merchOrderId={merchOrderId}
+                    />
                   ) : (
-                    <>
-                      <Heading>
-                        {shouldUseExistingCard ? 'Card On File' : 'Payment Details'}
-                      </Heading>
-                      {stripeCustomerId && (
-                        <DifferentCardLink type="button" onClick={handleUseDifferentCardClick}>
-                          {shouldUseExistingCard ? 'Use a Different Card' : 'Use Existing Card'}
-                        </DifferentCardLink>
-                      )}
-                    </>
+                    <NewCardInput
+                      stripeCustomerId={stripeCustomerId}
+                      total={total}
+                      handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
+                      collectionId={collectionId}
+                      setPurchaseId={setPurchaseId}
+                      isWalletUser={isWalletUser}
+                      isMobile={isMobile}
+                      merchOrderId={merchOrderId}
+                    />
                   )}
-                </HeadingContainer>
-                {redeemCode !== null ? (
-                  <FreeMint
-                    redeemCode={redeemCode}
-                    collectionId={collectionId}
-                    setIsMintingNFT={setIsMintingNFT}
-                    setAssetId={setAssetId}
-                  />
-                ) : isAvax && isWalletUser ? (
-                  <AvaxPayment
-                    total={total}
-                    collectionId={collectionId}
-                    handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
-                    setAssetId={setAssetId}
-                    setIsMintingNFT={setIsMintingNFT}
-                    isMobile={isMobile}
-                  />
-                ) : shouldUseExistingCard && stripeCustomerId ? (
-                  <ExistingCardPayment
-                    stripeCustomerId={stripeCustomerId}
-                    total={total}
-                    handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
-                    collectionId={collectionId}
-                    setPurchaseId={setPurchaseId}
-                    isWalletUser={isWalletUser}
-                    isMobile={isMobile}
-                  />
-                ) : (
-                  <NewCardInput
-                    stripeCustomerId={stripeCustomerId}
-                    total={total}
-                    handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
-                    collectionId={collectionId}
-                    setPurchaseId={setPurchaseId}
-                    isWalletUser={isWalletUser}
-                    isMobile={isMobile}
-                  />
-                )}
-              </ConditionalSpinner>
-            </ConditionalSpinnerContainer>
+                </ConditionalSpinner>
+              </ConditionalSpinnerContainer>
+            )}
             {isMintingNFT && 'Minting NFT...'}
           </>
         )}

@@ -48,6 +48,7 @@ interface AvaxPaymentProps {
   setAssetId: (assetId: number) => void;
   setIsMintingNFT: (isMinting: boolean) => void;
   isMobile: boolean;
+  merchOrderId?: string;
 }
 export const AvaxPayment = ({
   total,
@@ -56,6 +57,7 @@ export const AvaxPayment = ({
   setAssetId,
   setIsMintingNFT,
   isMobile,
+  merchOrderId,
 }: AvaxPaymentProps) => {
   const [sufficientFunds, setSufficientFunds] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -86,6 +88,10 @@ export const AvaxPayment = ({
         });
 
         setIsMintingNFT(true);
+
+        if (merchOrderId !== undefined) {
+          // UPDATE MERCH ID HERE
+        }
 
         const txnReceipt = await txn.wait(1);
         const logs = txnReceipt.logs[0];
