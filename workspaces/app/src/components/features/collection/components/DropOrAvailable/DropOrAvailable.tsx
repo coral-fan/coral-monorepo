@@ -11,7 +11,7 @@ import { AssetInfoProps } from '../PaymentModal/components/AssetInfo';
 import { PaymentModal } from '../PaymentModal';
 import { FadeOutInSwitchAnimation } from 'libraries/animation';
 import { useIsAuthenticated, useLogin } from 'libraries/authentication';
-import { Details, NullableString, useUserUid } from 'libraries/models';
+import { Details, MerchOptionTypes, NullableString, useUserUid } from 'libraries/models';
 import { getUserTokenBalance$ } from 'libraries/blockchain/observables';
 import styled from '@emotion/styled';
 import tokens from 'styles/tokens';
@@ -30,6 +30,7 @@ interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
   artistId: string;
   maxMintablePerWallet: number;
   redeemCode: NullableString;
+  merchOptionTypes?: MerchOptionTypes;
 }
 
 const MaxOwnedNotification = styled.span`
@@ -55,6 +56,7 @@ export const DropOrAvailable = ({
   isSoldOut,
   maxMintablePerWallet,
   redeemCode,
+  merchOptionTypes,
 }: DropOrAvailableProps) => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
@@ -176,6 +178,7 @@ export const DropOrAvailable = ({
           artistProfilePhoto={artistProfilePhoto}
           usdPrice={usdPrice}
           redeemCode={redeemCode}
+          merchOptionTypes={merchOptionTypes}
         />
       )}
     </FadeOutInSwitchAnimation>

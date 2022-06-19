@@ -25,6 +25,7 @@ interface NewCardInputProps {
   setPurchaseId: (id: string) => void;
   isWalletUser: boolean;
   isMobile: boolean;
+  merchOrderId?: string;
 }
 
 const PaymentInfoContainer = styled(PaymentMethodContainer)`
@@ -39,6 +40,7 @@ export const NewCardInput = ({
   setPurchaseId,
   isWalletUser,
   isMobile,
+  merchOrderId,
 }: NewCardInputProps) => {
   const elements = useElements();
   const stripe = useStripe();
@@ -92,6 +94,7 @@ export const NewCardInput = ({
           collectionId,
           userId: uid,
           purchaseId,
+          merchOrderId,
         });
 
         //confirmCardPayment
@@ -131,6 +134,7 @@ export const NewCardInput = ({
       stripeCustomerId,
       total,
       uid,
+      merchOrderId,
       upsertUser,
       setPurchaseId,
       errorToast,

@@ -44,6 +44,7 @@ export const CollectionPage = ({
   similarCollections,
   maxMintablePerWallet,
   redeemCode,
+  merchOptionTypes,
 }: CollectionPageProps) => {
   const [numMinted, setNumMinted] = useState(tokenTotalSupply);
   const [isSoldOut, setIsSoldOut] = useState(tokenTotalSupply >= maxSupply);
@@ -74,6 +75,7 @@ export const CollectionPage = ({
         artistProfilePhoto={artistProfilePhoto}
         imageUrl={imageUrl}
         redeemCode={redeemCode}
+        merchOptionTypes={merchOptionTypes}
       />
     ),
     [
@@ -91,6 +93,7 @@ export const CollectionPage = ({
       details,
       maxMintablePerWallet,
       redeemCode,
+      merchOptionTypes,
     ]
   );
 
@@ -153,7 +156,7 @@ export const getServerSideProps: GetServerSideProps<CollectionPageProps, Collect
 
     const { collectionId } = params;
 
-    const collectionData = await getCollection(collectionId);
+    const collection = await getCollection(collectionId);
 
     const [similarCollections, tokenTotalSupply] = await Promise.all([
       getSimilarCollections(collectionId, 4),
@@ -164,7 +167,7 @@ export const getServerSideProps: GetServerSideProps<CollectionPageProps, Collect
 
     return {
       props: {
-        ...collectionData,
+        ...collection,
         redeemCode,
         tokenTotalSupply,
         similarCollections,
