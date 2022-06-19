@@ -14,6 +14,7 @@ const createPaymentIntentSchema = object({
   stripeCustomerId: string().nullable(),
   userId: string().required(),
   purchaseId: string().required(),
+  merchOrderId: string(),
 });
 
 const stripe = getStripe();
@@ -30,6 +31,7 @@ const post: Handler = async (req, res) => {
       collectionId,
       userId,
       purchaseId,
+      merchOrderId,
     } = await createPaymentIntentSchema.validate(req.body);
 
     purchaseDocRef = await getPurchaseDocumentReference(purchaseId);
@@ -55,6 +57,8 @@ const post: Handler = async (req, res) => {
       stripeCustomerId ??
       (shouldSavePaymentInfo ? (await stripe.customers.create({ name: userId })).id : undefined);
 
+    const requiredMetadata = { collectionId, userId, purchaseId };
+
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
       currency: 'usd',
@@ -63,7 +67,7 @@ const post: Handler = async (req, res) => {
       payment_method_types: ['card'],
       capture_method: 'manual',
       payment_method: paymentMethodId,
-      metadata: { collectionId, userId, purchaseId },
+      metadata: merchOrderId ? { ...requiredMetadata, merchOrderId } : requiredMetadata,
     });
 
     await purchaseDocRef.set(
