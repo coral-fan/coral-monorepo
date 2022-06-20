@@ -47,7 +47,7 @@ const AnimatedLockIcon = styled(LockIcon)`
 
 export interface AccessDeniedModalProps {
   title: string;
-  message: string;
+  message?: string;
   actionElement: EmotionJSX.Element;
 }
 
@@ -57,7 +57,7 @@ export const AccessDeniedModal = ({ title, message, actionElement }: AccessDenie
   return (
     <Modal title={title} mainContainerStyle={mainContainerStyle}>
       <AnimatedLockIcon size={iconSize} />
-      <Message>{message}</Message>
+      {message && <Message>{message}</Message>}
       {actionElement}
     </Modal>
   );
