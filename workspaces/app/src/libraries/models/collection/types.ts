@@ -1,7 +1,7 @@
 import { Artist, ArtistData } from '../artist';
 import { NullableString } from '../types';
 
-export type CollectionType = 'video' | 'music' | 'stream' | 'merch' | 'all_access';
+export type CollectionType = 'video' | 'music' | 'stream' | 'merch' | 'all_access' | 'ticket';
 
 export interface GatedStream {
   type: 'stream';
