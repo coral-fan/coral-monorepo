@@ -29,6 +29,16 @@ const AssetId = styled.span`
   font-size: ${tokens.font.size.lg};
 `;
 
+const truncateRegex = /^(0x[a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/;
+// implementation from https://github.com/gpxl-dev/truncate-eth-address/blob/main/src/index.ts
+const truncateWalletAddress = (address: string) => {
+  const match = address.match(truncateRegex);
+  if (!match) {
+    throw `address ${address} isn't a valid address.`;
+  }
+  return `${match[1]}…${match[2]}`;
+};
+
 export const Owner = ({ userId, assetId, username, profilePhoto, type }: OwnerProps) => (
   <Link
     href={
@@ -36,7 +46,11 @@ export const Owner = ({ userId, assetId, username, profilePhoto, type }: OwnerPr
     }
   >
     <Card variant="secondary">
-      <ProfileInfo {...{ username, profilePhoto, secondaryInfo: getUserType(type) }} />
+      <ProfileInfo
+        username={userId === username ? truncateWalletAddress(userId) : username}
+        profilePhoto={profilePhoto}
+        secondaryInfo={getUserType(type)}
+      />
       <AssetId>#{assetId}</AssetId>
     </Card>
   </Link>
