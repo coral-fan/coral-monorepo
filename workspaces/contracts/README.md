@@ -59,6 +59,10 @@
 
 - Ensure that `airdrops/<PROJECT_DIRECTORY>/<RECIPIENT_DIRECTORY>/airdrop.csv` exists.
 
+- CSV should have a header row and be structured as `tokenId,owner`
+
+- [Snapshot Tool](https://tools.roland.xyz/snapshot)
+
 - From `contracts`, run `npx hardhat execute-airdrop --project <PROJECT_NAME> --recipient <RECIPIENT_NAME> --network <NETWORK_NAME>`
 
 ## Transfer Ownership

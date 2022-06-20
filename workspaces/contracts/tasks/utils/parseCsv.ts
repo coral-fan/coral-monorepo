@@ -25,7 +25,7 @@ export const parseCsv = (file: string) => {
 
     parser.on('end', () => {
       const { lines } = parser.info;
-      console.log(`${lines} addresses processed`);
+      console.log(`${lines} lines processed by CSV Parser \n`);
       resolve(fileRows);
     });
 
