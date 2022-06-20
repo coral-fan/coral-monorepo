@@ -6,7 +6,7 @@ import tokens from 'styles/tokens';
 
 export type PartialCollection = Omit<
   Collection,
-  'gatedContent' | 'price' | 'details' | 'description'
+  'gatedContent' | 'price' | 'details' | 'description' | 'accessGrantingTokenAddresses'
 >;
 
 export interface SimilarCollectionsProp {

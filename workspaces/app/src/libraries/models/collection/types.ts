@@ -32,6 +32,7 @@ export interface CollectionData {
   maxMintablePerWallet: number;
   // undefined to allow flexibility in Firestore
   merchOptionTypes?: MerchOptionTypes;
+  accessGrantingTokenAddresses: Collection['id'][] | null;
 }
 
 export interface Collection extends Omit<CollectionData, 'artistId'> {
