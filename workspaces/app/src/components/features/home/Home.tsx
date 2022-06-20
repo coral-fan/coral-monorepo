@@ -140,7 +140,7 @@ export const Home = () => {
               href="/artist/0xCa86C97A5f5D8906DAeF4Bc83Ad9665D5298d35B"
               className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-2 py-2 px-2.5 bg-gray-2 bg-opacity-20 hover:bg-opacity-50 rounded-full duration-300 mt-auto"
             >
-              Get Your NFT
+              Get Your Ticket
             </a>
           </div>
           <a
@@ -187,7 +187,7 @@ export const Home = () => {
               href="/collection/0x66fcF6d7DD8FFdA625848ceB63aC5026A3BDD715"
               className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-2 py-2 px-2.5 bg-gray-2 bg-opacity-20 hover:bg-opacity-50 rounded-full duration-300 mt-auto"
             >
-              Get Your NFT
+              Get Your Ticket
             </a>
           </div>
           <a
