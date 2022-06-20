@@ -1,6 +1,5 @@
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { Button } from 'components/ui';
-import { CheckingNftModal } from 'components/ui/nft/GatedContent/components';
 import { AVALANCHE } from 'consts';
 import { useUserUid } from 'libraries/models';
 import { getCoralAPIAxios, useRefetchPageData } from 'libraries/utils';
