@@ -24,7 +24,8 @@ const CONTRACT_NAME = process.env.CONTRACT_NAME;
 /*
 Images and metadata are uploaded via an nft.storage API.
 */
-const NFT_STORAGE_KEY = process.env.NFT_STORAGE_API_KEY;
+const NFT_STORAGE_API_KEY_FUJI = process.env.NFT_STORAGE_API_KEY_FUJI;
+const NFT_STORAGE_KEY_MAINNET = process.env.NFT_STORAGE_API_KEY_MAINNET;
 
 /*
 The Payment Relay Address manages credit card mints. This Relay signs the relayMint
@@ -62,7 +63,6 @@ interface SentinelObject {
 
 interface DeploymentConstBaseObject {
   contractName: string;
-  nftStorageKey: string;
   defenderTeamApiKey: string;
   defenderTeamSecretKey: string;
 }
@@ -73,13 +73,14 @@ interface DeploymentConstNetworkDependentObject {
   paymentRelayAddresses: string[];
   sentinelIds: SentinelObject;
   avaxUsdPriceFeedAddress: string;
+  nftStorageKey: string;
 }
 
 type DeploymentType = DeploymentConstBaseObject & DeploymentConstNetworkDependentObject;
 
 export const getDeploymentConsts = (network: Network): DeploymentType => {
   // TODO: Throw more specific error message
-  if (!CONTRACT_NAME || !NFT_STORAGE_KEY || !DEFENDER_TEAM_API_KEY || !DEFENDER_TEAM_SECRET_KEY) {
+  if (!CONTRACT_NAME || !DEFENDER_TEAM_API_KEY || !DEFENDER_TEAM_SECRET_KEY) {
     throw MISSING_ENV_VARIABLE;
   }
 
@@ -92,7 +93,6 @@ export const getDeploymentConsts = (network: Network): DeploymentType => {
   */
   const baseObject: DeploymentConstBaseObject = {
     contractName: CONTRACT_NAME,
-    nftStorageKey: NFT_STORAGE_KEY,
     defenderTeamApiKey: DEFENDER_TEAM_API_KEY,
     defenderTeamSecretKey: DEFENDER_TEAM_SECRET_KEY,
   };
@@ -108,7 +108,8 @@ export const getDeploymentConsts = (network: Network): DeploymentType => {
       !SENTINEL_ID_TRANSFER_IN_PERSON_FUJI ||
       !SENTINEL_ID_RELAY_MINT_FUJI ||
       !SENTINEL_ID_TRANSFER_FUJI ||
-      !AVAX_USD_PRICEFEED_FUJI
+      !AVAX_USD_PRICEFEED_FUJI ||
+      !NFT_STORAGE_API_KEY_FUJI
     ) {
       throw MISSING_ENV_VARIABLE;
     }
@@ -124,6 +125,7 @@ export const getDeploymentConsts = (network: Network): DeploymentType => {
       paymentRelayAddresses: PAYMENT_RELAY_ADDRESSES_FUJI.split(','),
       sentinelIds: sentinelIdsFuji,
       avaxUsdPriceFeedAddress: AVAX_USD_PRICEFEED_FUJI,
+      nftStorageKey: NFT_STORAGE_API_KEY_FUJI,
     };
     return {
       ...baseObject,
@@ -140,7 +142,8 @@ export const getDeploymentConsts = (network: Network): DeploymentType => {
       !SENTINEL_ID_TRANSFER_IN_PERSON_MAINNET ||
       !SENTINEL_ID_RELAY_MINT_MAINNET ||
       !SENTINEL_ID_TRANSFER_MAINNET ||
-      !AVAX_USD_PRICEFEED_MAINNET
+      !AVAX_USD_PRICEFEED_MAINNET ||
+      !NFT_STORAGE_KEY_MAINNET
     ) {
       throw MISSING_ENV_VARIABLE;
     }
@@ -156,6 +159,7 @@ export const getDeploymentConsts = (network: Network): DeploymentType => {
       paymentRelayAddresses: PAYMENT_RELAY_ADDRESSES_MAINNET.split(','),
       sentinelIds: sentinelIdsMainnet,
       avaxUsdPriceFeedAddress: AVAX_USD_PRICEFEED_MAINNET,
+      nftStorageKey: NFT_STORAGE_KEY_MAINNET,
     };
     return {
       ...baseObject,
