@@ -1,3 +1,4 @@
+import { isAddress } from '@ethersproject/address';
 import { getDocumentReferenceServerSide, initializeFirebaseAdmin } from 'libraries/firebase';
 import { ArtistData, CollectionData, CollectionType } from 'libraries/models';
 import { getStorage } from 'firebase-admin/storage';
@@ -32,6 +33,26 @@ Script pulls collection name in from arguments.
 and assets are stored.
 */
 const projectName = process.argv[2];
+
+const parseAccessGrantingTokenAddresses = (addressesArguement: string) => {
+  if (addressesArguement === undefined) {
+    return null;
+  }
+
+  const accessGrantingTokenAddresses = JSON.parse(addressesArguement);
+
+  if (!Array.isArray(accessGrantingTokenAddresses)) {
+    throw 'accessGrantingTokenAddresses must be an array.';
+  }
+
+  if (accessGrantingTokenAddresses.some((address) => !isAddress(address))) {
+    throw `All elements in accessGrantingTokenAddresses [${accessGrantingTokenAddresses}] must be a valid address.`;
+  }
+
+  return accessGrantingTokenAddresses;
+};
+
+const accessGrantingTokenAddresses = parseAccessGrantingTokenAddresses(process.argv[3]);
 
 const addCollection = async (projectName: string) => {
   console.log('Adding collection...');
@@ -107,6 +128,7 @@ const addCollection = async (projectName: string) => {
     details,
     gatedContent,
     maxMintablePerWallet: maxTokensPerWallet,
+    accessGrantingTokenAddresses,
   };
 
   await collectionRef.set(collection);
