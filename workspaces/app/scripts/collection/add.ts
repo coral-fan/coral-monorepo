@@ -65,7 +65,7 @@ const addCollection = async (projectName: string) => {
 
   const { contract, collectionData } = configFile;
   const { name, address, description, maxSupply, usdPricePerToken, maxTokensPerWallet } = contract;
-  const { artistId, type, dropTime, details, gatedContent } = collectionData;
+  const { artistId, type, dropTime, details, gatedContent, merchOptionTypes } = collectionData;
 
   const artistRef = await getDocumentReferenceServerSide<ArtistData>('artists', artistId);
 
@@ -128,7 +128,11 @@ const addCollection = async (projectName: string) => {
     details,
     gatedContent,
     maxMintablePerWallet: maxTokensPerWallet,
+<<<<<<< HEAD
     accessGrantingTokenAddresses,
+=======
+    merchOptionTypes,
+>>>>>>> 0daaecb6 (Add merchOptionTypes to add collections script)
   };
 
   await collectionRef.set(collection);
