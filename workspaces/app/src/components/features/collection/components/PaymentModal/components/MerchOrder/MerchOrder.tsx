@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Button, Heading } from 'components/ui';
 import { SizeOption, ColorOption, MerchOptions, MerchOptionTypes } from 'libraries/models';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import tokens from 'styles/tokens';
 import { MerchOptionSelect } from './components/MerchOptionSelect';
 
@@ -29,8 +29,8 @@ export type MerchOption = SizeOption | ColorOption;
 
 export const MerchOrder = ({ merchOptionTypes, setMerchOrderId }: MerchOrderProps) => {
   const [isHandlingCreateMerchOrder, setIsHandlingCreateMerchOrder] = useState(false);
-
   const [options, setOptions] = useState({});
+  const [optionsSelected, setOptionsSelected] = useState(false);
 
   const handleCreateMerchOrder = useCallback(async () => {
     setIsHandlingCreateMerchOrder(true);
@@ -40,6 +40,10 @@ export const MerchOrder = ({ merchOptionTypes, setMerchOrderId }: MerchOrderProp
   const handleOnChange = (type: string, value: string) => {
     setOptions((options) => ({ ...options, [type]: value }));
   };
+
+  useEffect(() => {
+    setOptionsSelected(() => Object.keys(options).length === merchOptionTypes.length);
+  }, [options, merchOptionTypes]);
 
   return (
     <Container>
@@ -54,7 +58,7 @@ export const MerchOrder = ({ merchOptionTypes, setMerchOrderId }: MerchOrderProp
       <Button
         onClick={handleCreateMerchOrder}
         loading={isHandlingCreateMerchOrder}
-        disabled={isHandlingCreateMerchOrder}
+        disabled={isHandlingCreateMerchOrder || !optionsSelected}
       >
         Next
       </Button>
