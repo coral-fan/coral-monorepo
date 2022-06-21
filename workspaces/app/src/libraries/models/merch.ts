@@ -3,7 +3,7 @@ import { NullableString } from './types';
 import { User } from './user';
 
 export const MERCH_OPTIONS = {
-  size: ['sm', 'md', 'lg'] as const,
+  size: ['xs', 'sm', 'md', 'lg', 'xl'] as const,
   color: ['black', 'white'] as const,
 };
 
@@ -13,12 +13,12 @@ export type MerchOptionType = keyof MerchOptionsMap;
 
 export type MerchOptionTypes = MerchOptionType[];
 
-interface MerchOption<T extends MerchOptionType> {
+export interface MerchOption<T extends MerchOptionType> {
   type: Extract<MerchOptionType, T>;
-  option: MerchOptionsMap[T][number];
+  value: MerchOptionsMap[T][number];
 }
-type SizeOption = MerchOption<'size'>;
-type ColorOption = MerchOption<'color'>;
+export type SizeOption = MerchOption<'size'>;
+export type ColorOption = MerchOption<'color'>;
 
 export type MerchOptions = Array<SizeOption | ColorOption>;
 
