@@ -85,6 +85,7 @@ const initialConfig = {
       id: '',
     },
     isInPerson: false,
+    merchOptionTypes: [],
   },
 };
 
@@ -280,6 +281,44 @@ const addCollectionType = () => {
   });
 };
 
+let numMerchOptions;
+const addNumMerchOptions = () => {
+  return new Promise((resolve, reject) => {
+    rl.question('How many merch options? ', (answer) => {
+      numMerchOptions = parseInt(answer);
+      resolve();
+    });
+  });
+};
+
+const addMerchType = (num) => {
+  const answerArray = ['size', 'color'];
+  return new Promise((resolve, reject) => {
+    rl.question(
+      `Which merch option do you want to add (${
+        num + 1
+      } of ${numMerchOptions})? [ ${answerArray.join(' / ')} ] `,
+      (answer) => {
+        if (answerArray.includes(answer)) {
+          initialConfig.collectionData.merchOptionTypes.push(answer);
+          console.log(`Merch type of ${answer} added...`);
+          resolve();
+        } else {
+          console.log(`Please choose one of: ${answerArray.join(' / ')}`);
+          console.log(` `);
+          resolve(addCollectionType());
+        }
+      }
+    );
+  });
+};
+
+const addMerchOptions = async (numOptions) => {
+  for (let i = 0; i < numOptions; i++) {
+    await addMerchType(i);
+  }
+};
+
 const addIsInPerson = () => {
   const answerArray = ['yes', 'no'];
   return new Promise((resolve, reject) => {
@@ -334,6 +373,12 @@ const main = async () => {
   await addArtistId();
   await addCollectionType();
   await addIsInPerson();
+
+  if (initialConfig.collectionData.type === 'merch') {
+    await addNumMerchOptions();
+    await addMerchOptions(numMerchOptions);
+  }
+
   rl.close();
   createInitialConfigJSON();
   console.log(`---------------------------------------------`);
