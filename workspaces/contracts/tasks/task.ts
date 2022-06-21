@@ -32,37 +32,41 @@ task('create-and-deploy', 'Creates and Deploys a new Project')
     }
 
     const constructorArgs = await hre.run('upload', { projectDir });
-    const address = await hre.run('deploy-contract', { constructorArgs });
 
-    const args = JSON.parse(constructorArgs);
-    const verifyArgs = JSON.stringify({ address, ...args });
+    try {
+      const address = await hre.run('deploy-contract', { constructorArgs });
+      const args = JSON.parse(constructorArgs);
+      const verifyArgs = JSON.stringify({ address, ...args });
 
-    const projectData = await readFile(configPath, 'utf8');
-    const configFile = JSON.parse(projectData);
+      const projectData = await readFile(configPath, 'utf8');
+      const configFile = JSON.parse(projectData);
 
-    configFile.contract.address = address;
-    configFile.contract.tokenURI = args.baseTokenURI;
+      configFile.contract.address = address;
+      configFile.contract.tokenURI = args.baseTokenURI;
 
-    fs.writeFileSync(configPath, JSON.stringify(configFile, null, 2), 'utf8');
+      fs.writeFileSync(configPath, JSON.stringify(configFile, null, 2), 'utf8');
 
-    console.log(' ');
-    console.log('Verifying contract - please wait 15 seconds....');
+      console.log(' ');
+      console.log('Verifying contract - please wait 15 seconds....');
 
-    // TODO: Poll for contract state rater than waiting set amount of time
-    // Wait 15 seconds to verify
-    await sleep(15000);
-    console.log('Starting verification now...');
-    await hre.run('verify-contract', { verifyArgs });
+      // TODO: Poll for contract state rater than waiting set amount of time
+      // Wait 15 seconds to verify
+      await sleep(15000);
+      console.log('Starting verification now...');
+      await hre.run('verify-contract', { verifyArgs });
 
-    console.log('Adding relay addresses...');
-    await hre.run('add-relay-addresses', { address });
+      console.log('Adding relay addresses...');
+      await hre.run('add-relay-addresses', { address });
 
-    console.log('Updating sentinels...');
-    const newAddress = address;
+      console.log('Updating sentinels...');
+      const newAddress = address;
 
-    // Don't think you can pass boolean via hardhat, must be string
-    const isInPerson = configFile.collectionData.isInPerson.toString();
-    await hre.run('update-sentinels', { newAddress, isInPerson });
+      // Don't think you can pass boolean via hardhat, must be string
+      const isInPerson = configFile.collectionData.isInPerson.toString();
+      await hre.run('update-sentinels', { newAddress, isInPerson });
+    } catch (e: any) {
+      console.error(e);
+    }
   });
 
 subtask('upload', 'Upload metadata via nft.storage')
