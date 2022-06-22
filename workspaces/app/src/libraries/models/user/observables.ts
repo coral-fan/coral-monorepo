@@ -30,10 +30,16 @@ export const getUsernames$ = () => {
 //client side only
 export const getPublicUserData$ = (uid: string) => from(getDocumentData<User>('users', uid));
 
-export const getStripeCustomerId$ = () =>
+export const getPrivateUserData$ = () =>
   getUserUid$().pipe(
     filter((uid): uid is string => uid !== undefined),
     mergeMap((uid) => getDocumentData<PrivateUserData>('users', uid, 'private', 'data')),
     filter((privateUserData): privateUserData is PrivateUserData => user !== undefined),
-    map((privateUserData) => privateUserData.stripeCustomerId)
+    map((privateUserData) => privateUserData)
   );
+
+export const getStripeCustomerId$ = () =>
+  getPrivateUserData$().pipe(map((privateUserData) => privateUserData.stripeCustomerId));
+
+export const getShippingInfoId$ = () =>
+  getPrivateUserData$().pipe(map((privateUserData) => privateUserData.shippingInfoId));
