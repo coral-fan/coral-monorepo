@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 import { Button, Heading } from 'components/ui';
-import { SizeOption, ColorOption, MerchOptionTypes } from 'libraries/models';
+import { SizeOption, ColorOption, MerchOptionTypes, useShippingInfoId } from 'libraries/models';
 import { useCallback, useEffect, useState } from 'react';
 import tokens from 'styles/tokens';
+import { ExistingShippingInfo } from './components/ExistingShippingInfo';
 import { MerchOptionSelect } from './components/MerchOptionSelect';
 import { ShippingInfoModal } from './components/ShippingInfoModal';
 
@@ -33,12 +34,20 @@ export const MerchOrder = ({ merchOptionTypes, setMerchOrderId }: MerchOrderProp
   const [options, setOptions] = useState({});
   const [isOptionsSelected, setIsOptionsSelected] = useState(false);
   const [showShippingInfoForm, setShowShippingInfoForm] = useState(false);
+  const [showExistingShippingInfo, setShowExistingShippingInfo] = useState(false);
+
+  // Shipping info Id means user has saved a shipping address
+  const shippingInfoId = '123';
 
   const handleNextClick = useCallback(async () => {
     if (isOptionsSelected) {
-      setShowShippingInfoForm(true);
+      if (shippingInfoId) {
+        setShowExistingShippingInfo(true);
+      } else {
+        setShowShippingInfoForm(true);
+      }
     }
-  }, [isOptionsSelected]);
+  }, [isOptionsSelected, shippingInfoId]);
 
   const handleCreateMerchOrder = useCallback(async () => {
     setIsHandlingCreateMerchOrder(true);
@@ -58,13 +67,22 @@ export const MerchOrder = ({ merchOptionTypes, setMerchOrderId }: MerchOrderProp
   return (
     <Container>
       <Heading level={2} styleVariant={'h3'}>
-        Options
+        {!showExistingShippingInfo ? 'Options' : 'Confirm Current Shipping Info'}
       </Heading>
-      <SelectContainer>
-        {merchOptionTypes.map((type) => (
-          <MerchOptionSelect key={type} type={type} onChange={handleOnChange} />
-        ))}
-      </SelectContainer>
+      {!showExistingShippingInfo ? (
+        <SelectContainer>
+          {merchOptionTypes.map((type) => (
+            <MerchOptionSelect key={type} type={type} onChange={handleOnChange} />
+          ))}
+        </SelectContainer>
+      ) : (
+        shippingInfoId && (
+          <ExistingShippingInfo
+            shippingInfoId={shippingInfoId}
+            useDifferentAddressClick={() => setShowShippingInfoForm(true)}
+          />
+        )
+      )}
 
       {showShippingInfoForm ? (
         <ShippingInfoModal onClose={() => setShowShippingInfoForm(false)} />
