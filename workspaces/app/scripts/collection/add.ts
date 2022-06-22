@@ -128,11 +128,7 @@ const addCollection = async (projectName: string) => {
     details,
     gatedContent,
     maxMintablePerWallet: maxTokensPerWallet,
-<<<<<<< HEAD
     accessGrantingTokenAddresses,
-=======
-    merchOptionTypes,
->>>>>>> 0daaecb6 (Add merchOptionTypes to add collections script)
   };
 
   await collectionRef.set(collection);
