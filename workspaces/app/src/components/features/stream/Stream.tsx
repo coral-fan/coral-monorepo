@@ -25,7 +25,6 @@ type StreamPageProps = InfoAndMerchProps &
 
 export const StreamPage = ({
   accessGrantingTokenAddresses,
-  id,
   sproutMediaId,
   chatId,
   artistId,
@@ -43,7 +42,7 @@ export const StreamPage = ({
         title: 'This is a private stream',
         message:
           'This stream is for members and ticket holders only. Buy a ticket now for special and exclusive perks.',
-        actionElement: <BuyTicketButton collectionId={id} />,
+        actionElement: <BuyTicketButton collectionId={accessGrantingTokenAddresses[0]} />,
       }}
     >
       <StreamContainer>
