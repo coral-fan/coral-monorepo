@@ -14,15 +14,8 @@ export const ShippingInfoModal = ({ onClose }: ShippingInfoProps) => {
   const isAuthenticated = useIsAuthenticated();
   const isNetworkSupported = useIsNetworkSupported();
 
-  const {
-    register,
-    setValue,
-    errors,
-    isValid,
-    isDirty,
-    // isUpdateProfileInfoSubmitting,
-    handleSubmitShippingInfo,
-  } = useUpdateShippingForm();
+  const { register, setValue, errors, isValid, isDirty, handleSubmitShippingInfo } =
+    useUpdateShippingForm();
 
   if (!isAuthenticated || !isNetworkSupported) {
     return null;
@@ -79,11 +72,7 @@ export const ShippingInfoModal = ({ onClose }: ShippingInfoProps) => {
           </InputsContainerDouble>
           <Toggle {...register('saveShippingInfo')}>Save my shipping info</Toggle>
         </InputsContainer>
-        <Button
-          type="submit"
-          disabled={!isDirty || !isValid}
-          // loading={isUpdateProfileInfoSubmitting}
-        >
+        <Button type="submit" disabled={!isDirty || !isValid}>
           Add Shipping Info
         </Button>
       </Form>
