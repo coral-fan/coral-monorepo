@@ -3,7 +3,7 @@ import { getCoralAPIAxios } from 'libraries/utils';
 import { useObservable } from 'libraries/utils/hooks';
 import { useMemo } from 'react';
 import { getStripeCustomerId$, IncomingUserData } from '.';
-import { getUsernames$, getUserUid$ } from './observables';
+import { getShippingInfoId$, getUsernames$, getUserUid$ } from './observables';
 
 const getUserUid = () => getAuth().currentUser?.uid;
 
@@ -25,3 +25,5 @@ const upsertUser = (uid: string, incomingUserData: IncomingUserData) =>
 export const useUpsertUser = () => upsertUser;
 
 export const useStripeCustomerId = () => useObservable(getStripeCustomerId$, null);
+
+export const useShippingInfoId = () => useObservable(getShippingInfoId$, null);
