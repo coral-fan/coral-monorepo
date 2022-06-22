@@ -3,12 +3,12 @@ import styled from '@emotion/styled';
 import { GatedContent } from 'components/ui';
 import {
   BuyTicketButton,
-  Stream,
+  StreamPlayer,
   InfoAndMerch,
   InfoAndMerchProps,
   StreamProps,
 } from './components';
-import { Event } from 'libraries/models/stream';
+import { Stream } from 'libraries/models';
 import { Collection, getCollection, getArtist } from 'libraries/models';
 import { getStreamData } from 'libraries/models/stream/utils';
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
@@ -21,7 +21,7 @@ const StreamContainer = styled.div`
 
 type StreamPageProps = InfoAndMerchProps &
   StreamProps &
-  Pick<Event, 'id' | 'accessGrantingTokenAddresses'>;
+  Pick<Stream, 'id' | 'accessGrantingTokenAddresses'>;
 
 export const StreamPage = ({
   accessGrantingTokenAddresses,
@@ -46,7 +46,7 @@ export const StreamPage = ({
       }}
     >
       <StreamContainer>
-        <Stream sproutMediaId={sproutMediaId} chatId={chatId} />
+        <StreamPlayer sproutMediaId={sproutMediaId} chatId={chatId} />
         <InfoAndMerch
           name={name}
           description={description}
