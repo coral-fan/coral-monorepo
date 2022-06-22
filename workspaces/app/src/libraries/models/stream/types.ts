@@ -5,7 +5,7 @@ export interface StreamData {
   // sprout media id
   sproutMediaId: string;
   // chatango id
-  chatId: string;
+  chatId: string | null;
   name: string;
   date: string;
   description: string;
@@ -14,7 +14,7 @@ export interface StreamData {
   exclusiveCollectionIds: Collection['id'][] | null;
 }
 
-export interface Event extends Omit<StreamData, 'exclusiveCollectionIds'> {
+export interface Stream extends Omit<StreamData, 'exclusiveCollectionIds'> {
   id: string;
   artistName: ArtistData['name'];
   artistProfilePhoto: ArtistData['profilePhoto'];
