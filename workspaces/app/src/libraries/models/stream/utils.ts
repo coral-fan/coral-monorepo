@@ -1,5 +1,5 @@
 import { getDocumentData } from 'libraries/firebase';
-import { StreamData, Event } from './types';
+import { StreamData, Stream } from './types';
 
-export const getStreamData = async (id: Event['id']) =>
+export const getStreamData = async (id: Stream['id']) =>
   await getDocumentData<StreamData>('streams', id);
