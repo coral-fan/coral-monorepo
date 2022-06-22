@@ -32,7 +32,7 @@ export const dropdownStyles: StylesConfig<OptionType, false> = {
   }),
   placeholder: (provided) => ({
     ...provided,
-    color: `${tokens.font.color.primary}`,
+    color: `${tokens.font.color.secondary}`,
   }),
   option: (provided, { isFocused, isSelected }) => ({
     ...provided,
