@@ -36,6 +36,7 @@ type DefaultPrivateUserData = Omit<PrivateUserData, 'doesOptIntoMarketing'>;
 const DEFAULT_PRIVATE_USER_DATA: DefaultPrivateUserData = {
   email: null,
   stripeCustomerId: null,
+  shippingInfoId: null,
 };
 
 export const upsertUser = async (uid: string, incomingUserData: IncomingUserData) => {
