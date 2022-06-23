@@ -159,7 +159,10 @@ export const DropOrAvailable = ({
                 Maximum of {maxMintablePerWallet} NFTs per wallet already owned
               </MaxOwnedNotification>
             )}
-            <ProgressBar maxSupply={maxSupply} numMinted={numMintedDisplay} />
+            {/* TODO: remove this logic after VBs first event */}
+            {artistName !== 'Van Buren Records' && (
+              <ProgressBar maxSupply={maxSupply} numMinted={numMintedDisplay} />
+            )}
           </ConditionalSpinner>
         </AvailableContainer>
       ) : (
