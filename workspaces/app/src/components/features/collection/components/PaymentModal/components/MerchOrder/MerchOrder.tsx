@@ -3,12 +3,10 @@ import { Button, Heading } from 'components/ui';
 import { SizeOption, ColorOption, MerchOptionTypes, useShippingInfoId } from 'libraries/models';
 import { useCallback, useEffect, useState } from 'react';
 import tokens from 'styles/tokens';
-import { ExistingShippingInfo } from './components/ExistingShippingInfo';
-import { MerchOptionSelect } from './components/MerchOptionSelect';
-import { ShippingInfoModal } from './components/ShippingInfoModal';
+import { ConfirmShippingInfo, MerchOptionSelect, ShippingInfoModal } from './components';
 
 interface MerchOrderProps {
-  merchOptionTypes: NonNullable<MerchOptionTypes>;
+  merchOptionTypes: MerchOptionTypes | null;
   setMerchOrderId: (merchOrderId: string) => void;
 }
 
@@ -34,20 +32,18 @@ export const MerchOrder = ({ merchOptionTypes, setMerchOrderId }: MerchOrderProp
   const [options, setOptions] = useState({});
   const [isOptionsSelected, setIsOptionsSelected] = useState(false);
   const [showShippingInfoForm, setShowShippingInfoForm] = useState(false);
-  const [showExistingShippingInfo, setShowExistingShippingInfo] = useState(false);
+  const [showConfirmShippingInfo, setShowConfirmShippingInfo] = useState(
+    () => merchOptionTypes && merchOptionTypes.length === 0
+  );
 
   // Shipping info Id means user has saved a shipping address
-  const shippingInfoId = '123';
+  const shippingInfoId = useShippingInfoId();
 
   const handleNextClick = useCallback(async () => {
     if (isOptionsSelected) {
-      if (shippingInfoId) {
-        setShowExistingShippingInfo(true);
-      } else {
-        setShowShippingInfoForm(true);
-      }
+      setShowConfirmShippingInfo(true);
     }
-  }, [isOptionsSelected, shippingInfoId]);
+  }, [isOptionsSelected]);
 
   const handleCreateMerchOrder = useCallback(async () => {
     setIsHandlingCreateMerchOrder(true);
@@ -61,37 +57,56 @@ export const MerchOrder = ({ merchOptionTypes, setMerchOrderId }: MerchOrderProp
   };
 
   useEffect(() => {
-    setIsOptionsSelected(() => Object.keys(options).length === merchOptionTypes.length);
+    setIsOptionsSelected(() =>
+      merchOptionTypes ? Object.keys(options).length === merchOptionTypes.length : true
+    );
   }, [options, merchOptionTypes]);
+
+  /*
+  Possible States
+
+  1. No merch options + no shipping info
+    > Buy Now -> Shipping Info -> Confirm / Existing -> Mint
+    > !merchOptionTypes  && !shippingInfoId
+
+  2. Merch options + shippingInfo
+    > Buy Now -> Merch Options -> Confirm / Existing -> Mint
+    > merchOptionsTypes && shippingInfoId
+   
+  3. No Merch options + shippingInfo
+    > Buy Now -> Confirm / Existing -> Mint
+    > !merchOptionTypes && shippingInfoId
+   
+  4. Merch Options + no shipping info
+    > Buy Now -> Merch Options -> Confirm / Existing -> Mint
+    > merchOptionTypes && !shippingInfo
+  */
 
   return (
     <Container>
       <Heading level={2} styleVariant={'h3'}>
-        {!showExistingShippingInfo ? 'Options' : 'Confirm Current Shipping Info'}
+        {merchOptionTypes && !isOptionsSelected ? 'Options' : 'Confirm Shipping Info'}
       </Heading>
-      {!showExistingShippingInfo ? (
+      {merchOptionTypes && !showConfirmShippingInfo && (
         <SelectContainer>
           {merchOptionTypes.map((type) => (
             <MerchOptionSelect key={type} type={type} onChange={handleOnChange} />
           ))}
         </SelectContainer>
-      ) : (
-        shippingInfoId && (
-          <ExistingShippingInfo
-            shippingInfoId={shippingInfoId}
-            useDifferentAddressClick={() => setShowShippingInfoForm(true)}
-          />
-        )
+      )}
+      {showConfirmShippingInfo && (
+        <ConfirmShippingInfo
+          shippingInfoId={shippingInfoId}
+          addOrUpdateAddress={() => setShowShippingInfoForm(true)}
+        />
       )}
 
-      {showShippingInfoForm ? (
-        <ShippingInfoModal onClose={() => setShowShippingInfoForm(false)} />
-      ) : null}
+      {showShippingInfoForm && <ShippingInfoModal onClose={() => setShowShippingInfoForm(false)} />}
 
       <Button
-        onClick={!showShippingInfoForm ? handleNextClick : handleCreateMerchOrder}
+        onClick={!showConfirmShippingInfo ? handleNextClick : handleCreateMerchOrder}
         loading={isHandlingCreateMerchOrder}
-        disabled={isHandlingCreateMerchOrder || !isOptionsSelected}
+        disabled={isHandlingCreateMerchOrder || !isOptionsSelected || !shippingInfoId}
       >
         Next
       </Button>
