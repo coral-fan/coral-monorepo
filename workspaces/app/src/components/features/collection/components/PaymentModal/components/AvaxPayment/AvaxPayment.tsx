@@ -89,11 +89,12 @@ export const AvaxPayment = ({
 
         setIsMintingNFT(true);
 
-        if (merchOrderId !== undefined) {
-          // UPDATE MERCH ID HERE
+        const txnReceipt = await txn.wait(1);
+
+        if (merchOrderId !== undefined && txnReceipt.status === 1) {
+          // UPDATE MERCH ID & STATUS HERE
         }
 
-        const txnReceipt = await txn.wait(1);
         const logs = txnReceipt.logs[0];
         const assetId = parseInt(logs.topics[3]);
 
