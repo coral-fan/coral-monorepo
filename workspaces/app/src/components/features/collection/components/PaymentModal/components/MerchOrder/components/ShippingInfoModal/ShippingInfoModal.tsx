@@ -1,5 +1,3 @@
-import { useIsNetworkSupported } from 'libraries/blockchain';
-import { useIsAuthenticated } from 'libraries/authentication';
 import { Modal, Button, Input, Toggle, Select } from 'components/ui';
 
 import { Form, InputsContainer, InputsContainerDouble } from './components';
@@ -11,15 +9,8 @@ interface ShippingInfoProps {
   onClose: () => void;
 }
 export const ShippingInfoModal = ({ onClose }: ShippingInfoProps) => {
-  const isAuthenticated = useIsAuthenticated();
-  const isNetworkSupported = useIsNetworkSupported();
-
   const { register, setValue, errors, isValid, isDirty, handleSubmitShippingInfo } =
     useUpdateShippingForm();
-
-  if (!isAuthenticated || !isNetworkSupported) {
-    return null;
-  }
 
   return (
     <Modal title={'Shipping Info'} onClick={onClose} fullHeight>
