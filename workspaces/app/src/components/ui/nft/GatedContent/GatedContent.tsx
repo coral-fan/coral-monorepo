@@ -10,7 +10,6 @@ import {
   AccessDeniedModalProps,
 } from './components';
 import { getDoesOwnToken } from 'libraries/blockchain/utils';
-import { useUserUid } from 'libraries/models';
 
 interface GatedContentProps {
   accessGrantingTokenAddresses: string[];
@@ -26,8 +25,7 @@ export const GatedContent = ({
   const [doesUserHaveAccess, setDoesUserHaveAccess] = useState(false);
   const [isCheckingWallet, setIsCheckingWallet] = useState(true);
   const [showIsAccessGrantedModal, setIsAccessGrantedModal] = useState(true);
-  // const { address } = useWallet();
-  const address = useUserUid();
+  const { address } = useWallet();
 
   // TODO: add logic to check on new blocks if user still owns token
   useEffect(() => {
