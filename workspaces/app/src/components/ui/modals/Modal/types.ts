@@ -12,4 +12,5 @@ export interface ModalProps {
   onClick?: () => void;
   variant?: Variant;
   isNarrow?: boolean;
+  noOverlayZIndex?: boolean;
 }
