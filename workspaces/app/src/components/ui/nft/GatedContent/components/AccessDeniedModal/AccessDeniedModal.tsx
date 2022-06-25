@@ -55,7 +55,7 @@ export const AccessDeniedModal = ({ title, message, actionElement }: AccessDenie
   const iconSize = useIconSize();
 
   return (
-    <Modal title={title} mainContainerStyle={mainContainerStyle}>
+    <Modal title={title} mainContainerStyle={mainContainerStyle} noOverlayZIndex>
       <AnimatedLockIcon size={iconSize} />
       {message && <Message>{message}</Message>}
       {actionElement}

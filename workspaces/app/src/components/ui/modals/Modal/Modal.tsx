@@ -10,7 +10,7 @@ import { css } from '@emotion/react';
 
 const { mobile, desktop } = tokens.layout.padding;
 
-interface ModalHasControlButton {
+export interface ModalHasControlButton {
   modalHasControlButton: boolean;
 }
 
@@ -108,6 +108,7 @@ export const Modal = ({
   variant,
   fullHeight,
   isNarrow,
+  noOverlayZIndex,
 }: ModalProps) => {
   const documentBodyRef = useRef<Document['body']>();
 
@@ -140,7 +141,7 @@ export const Modal = ({
 
   return isMounted
     ? ReactDOM.createPortal(
-        <Overlay>
+        <Overlay noOverlayZIndex={noOverlayZIndex}>
           <ModalContainer modalHasControlButton={modalHasControlButton}>
             {onClick && (
               <ModalControlContainer>
