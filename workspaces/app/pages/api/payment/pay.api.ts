@@ -71,7 +71,7 @@ const post: Handler = async (req, res) => {
     });
 
     await purchaseDocRef.set(
-      { metadata: { stripePaymentIntentId: paymentIntent.id } },
+      { metadata: { stripePaymentIntentId: paymentIntent.id, merchOrderId } },
       { merge: true }
     );
 
