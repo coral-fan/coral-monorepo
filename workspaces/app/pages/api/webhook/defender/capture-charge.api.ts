@@ -11,6 +11,7 @@ import { Handler } from '../../types';
 import { getHandler, getPurchaseDocumentReference, getStripe } from '../../utils';
 import { getCollectionReferenceServerSide } from 'libraries/firebase';
 import { PurchaseData } from 'libraries/models';
+import { updateMerchOrderStatus } from '../../merch-order/utils';
 
 const relayMintParamsSchema = object({
   tokenId: number()
@@ -84,6 +85,10 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
                       },
                       { merge: true }
                     );
+
+                    if (metadata.merchOrderId) {
+                      await updateMerchOrderStatus(metadata.merchOrderId, 'confirmed');
+                    }
                   } else {
                     throw new Error(
                       `Either the metadata or metadata.stripePaymentIntentId is null or undefined respectively for purchase document with ${id}.`
@@ -91,6 +96,9 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
                   }
                 } catch (e) {
                   await purchaseDocRef.set({ status: 'rejected' }, { merge: true });
+                  if (metadata?.merchOrderId) {
+                    await updateMerchOrderStatus(metadata.merchOrderId, 'rejected');
+                  }
                   throw e;
                 }
               } catch (e) {
