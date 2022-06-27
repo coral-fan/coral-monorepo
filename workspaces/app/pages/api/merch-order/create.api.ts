@@ -1,6 +1,6 @@
 import { getCollectionReferenceServerSide } from 'libraries/firebase';
-import { MerchOptions, MerchOrder } from 'libraries/models';
-import { array, mixed, object, string } from 'yup';
+import { MerchOptions, MerchOptionType, MerchOrder, MERCH_OPTIONS } from 'libraries/models';
+import { array, InferType, object, string } from 'yup';
 import { ERROR_RESPONSE } from '../consts';
 import { Handler } from '../types';
 import { getHandler } from '../utils';
@@ -12,28 +12,59 @@ const DEFAULT_MERCH_ORDER: DefaultMerchOrder = {
   transactionHash: null,
 };
 
-// TODO: revisit this validation
+const merchOptionSchema = object({
+  type: string().required(),
+  option: string().required(),
+});
+
 const createMerchOrderApiSchema = object({
   shippingInfoId: string().required(),
   userId: string().required(),
   collectionId: string().required(),
-  options: array<MerchOptions>(mixed<MerchOptions>()).nullable().defined(),
+  options: array().of(merchOptionSchema).min(1).nullable().defined(),
 });
+
+const isMerchOptionType = (merchOptionType: string): merchOptionType is MerchOptionType =>
+  Object.keys(MERCH_OPTIONS).includes(merchOptionType);
+
+const isMerchOptions = (
+  options: InferType<typeof merchOptionSchema>[] | null
+): options is MerchOptions => {
+  if (options === null) {
+    return true;
+  }
+  const encounteredTypes = new Set<string>();
+  for (const { type, option } of options) {
+    if (encounteredTypes.has(type) || !isMerchOptionType(type)) {
+      return false;
+    }
+    encounteredTypes.add(type);
+    // casting is necessary as a readyonly const array cannot call the includes methods
+    if (!(MERCH_OPTIONS[type] as readonly string[]).includes(option)) {
+      return false;
+    }
+  }
+  return true;
+};
 
 const post: Handler = async (req, res) => {
   try {
-    const partialMerchOrder = await createMerchOrderApiSchema.validate(req.body);
-    const merchOrderCollectionRef = await getCollectionReferenceServerSide('merch-order');
+    const { options, ...partialMerchOrder } = await createMerchOrderApiSchema.validate(req.body);
 
-    const merchOrder: MerchOrder = {
-      ...DEFAULT_MERCH_ORDER,
-      timestamp: new Date().toISOString(),
-      ...partialMerchOrder,
-    };
+    if (isMerchOptions(options)) {
+      const merchOrderCollectionRef = await getCollectionReferenceServerSide('merch-order');
 
-    const { id } = await merchOrderCollectionRef.add(merchOrder);
+      const merchOrder: MerchOrder = {
+        ...DEFAULT_MERCH_ORDER,
+        timestamp: new Date().toISOString(),
+        options,
+        ...partialMerchOrder,
+      };
 
-    return res.status(200).json({ id });
+      const { id } = await merchOrderCollectionRef.add(merchOrder);
+
+      return res.status(200).json({ id });
+    }
   } catch (e) {
     console.error(e);
     return res.status(500).json(ERROR_RESPONSE);
