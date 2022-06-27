@@ -22,7 +22,7 @@ type ColorOption = MerchOption<'color'>;
 
 export type MerchOptions = Array<SizeOption | ColorOption>;
 
-type MerchOrderStatus = 'pending' | 'confirmed' | 'fulfilled';
+type MerchOrderStatus = 'pending' | 'confirmed' | 'rejected' | 'fulfilled';
 
 export interface MerchOrder {
   shippingInfoId: string;
