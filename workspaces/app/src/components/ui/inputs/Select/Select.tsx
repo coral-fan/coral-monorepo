@@ -2,6 +2,7 @@ import { OptionType } from './types';
 import SelectComponent, { ActionMeta, SingleValue } from 'react-select';
 import { dropdownStyles } from './styles';
 import { Container, Label, Error } from '../components';
+import { forwardRef } from 'react';
 
 interface SelectProps {
   label: string;
@@ -10,7 +11,11 @@ interface SelectProps {
   error?: string;
 }
 
-export const Select = ({ label, options, onChange, error }: SelectProps) => {
+// TODO: Figure out this type
+export const Select = forwardRef<any, SelectProps>(function Select(
+  { label, options, onChange, error }: SelectProps,
+  ref
+) {
   const onChangeHandler = (option: SingleValue<OptionType>, action: ActionMeta<OptionType>) => {
     if (action.name === undefined || option === undefined || option === null) {
       throw 'Error: option undefined';
@@ -22,6 +27,7 @@ export const Select = ({ label, options, onChange, error }: SelectProps) => {
     <Container>
       <Label>{label}</Label>
       <SelectComponent
+        ref={ref}
         name={label}
         options={options}
         menuPortalTarget={document.body}
@@ -32,4 +38,4 @@ export const Select = ({ label, options, onChange, error }: SelectProps) => {
       {error && <Error>{error}</Error>}
     </Container>
   );
-};
+});
