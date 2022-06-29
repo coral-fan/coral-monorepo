@@ -14,7 +14,7 @@ const DEFAULT_MERCH_ORDER: DefaultMerchOrder = {
 
 const merchOptionSchema = object({
   type: string().required(),
-  option: string().required(),
+  value: string().required(),
 });
 
 const createMerchOrderApiSchema = object({
@@ -34,13 +34,13 @@ const isMerchOptions = (
     return true;
   }
   const encounteredTypes = new Set<string>();
-  for (const { type, option } of options) {
+  for (const { type, value } of options) {
     if (encounteredTypes.has(type) || !isMerchOptionType(type)) {
       return false;
     }
     encounteredTypes.add(type);
     // casting is necessary as a readyonly const array cannot call the includes methods
-    if (!(MERCH_OPTIONS[type] as readonly string[]).includes(option)) {
+    if (!(MERCH_OPTIONS[type] as readonly string[]).includes(value)) {
       return false;
     }
   }
