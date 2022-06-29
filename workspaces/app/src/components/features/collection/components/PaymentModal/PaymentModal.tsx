@@ -140,7 +140,9 @@ export const PaymentModal = ({
               artistName={artistName}
               artistProfilePhoto={artistProfilePhoto}
             />
-            {merchOptionTypes !== undefined && merchOrderId === undefined ? (
+            {merchOptionTypes !== undefined &&
+            merchOptionTypes.length > 0 &&
+            merchOrderId === undefined ? (
               <MerchOrder merchOptionTypes={merchOptionTypes} setMerchOrderId={setMerchOrderId} />
             ) : (
               <ConditionalSpinnerContainer>
