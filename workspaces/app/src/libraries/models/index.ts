@@ -9,5 +9,5 @@ export * from './purchase';
 export * from './ownedNfts';
 export * from './eventGuestLists';
 export * from './redeemCode';
-export * from './shippingInfo';
+export * from './shippingInfo/shippingInfo';
 export * from './merch';
