@@ -35,12 +35,3 @@ export const SOCIAL_HANDLE_SCHEMA = string()
     'Only alphanumeric characters and _ are allowed, no @ symbol necessary'
   )
   .transform((value: string) => (value === '' ? undefined : value));
-
-export const FIRST_NAME_SCHEMA = string().required().max(40);
-export const LAST_NAME_SCHEMA = string().required().max(40);
-export const ADDRESS_LINE_ONE_SCHEMA = string().required().max(100);
-export const ADDRESS_LINE_TWO_SCHEMA = string().max(100);
-export const CITY_SCHEMA = string().required().max(100);
-export const STATE_SCHEMA = string().required();
-export const POSTAL_CODE_SCHEMA = string().required().length(5);
-export const SAVE_SHIPPING_INFO_SCHEMA = bool().required();
