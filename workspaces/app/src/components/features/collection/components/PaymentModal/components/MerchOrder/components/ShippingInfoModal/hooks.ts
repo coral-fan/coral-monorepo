@@ -1,34 +1,67 @@
-import { useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { getShippingInfoSchema, ShippingInfoSchema } from './schemas';
-import { useUserUid } from 'libraries/models';
-import { useRefetchPageData } from 'libraries/utils/hooks';
+import { shippingInfoSchema, ShippingInfo, useUpsertUser, useUserUid } from 'libraries/models';
+import { getCoralAPIAxios } from 'libraries/utils';
+interface ShippingInfoProps extends ShippingInfo {
+  saveShippingInfo: boolean;
+}
 
-export const useUpdateShippingForm = () => {
-  const shippingInfoSchema = getShippingInfoSchema();
+const axios = getCoralAPIAxios();
 
+export const useUpdateShippingForm = (
+  setShippingInfoId: Dispatch<SetStateAction<string | null>>
+) => {
   const {
     register,
     setValue,
     handleSubmit,
     formState: { errors, isValid, isDirty },
-  } = useForm<ShippingInfoSchema>({
+  } = useForm<ShippingInfoProps>({
     resolver: yupResolver(shippingInfoSchema),
     mode: 'all',
   });
+  const [isAddingShippingAddressSubmitting, setIsAddingShippingAddressSubmitting] = useState(false);
 
+  const upsertUser = useUpsertUser();
   const uid = useUserUid();
-
-  const refetchPageData = useRefetchPageData();
 
   const handleSubmitShippingInfo = useMemo(
     () =>
-      handleSubmit(async () => {
-        // TODO: Handle submit Shipping Info
-        console.log('Submitted Form');
+      handleSubmit(async (addressData) => {
+        const {
+          firstName,
+          lastName,
+          addressLineOne,
+          addressLineTwo,
+          city,
+          state,
+          zipCode,
+          saveShippingInfo,
+        } = addressData;
+        try {
+          const { data } = await axios.post('shipping-info', {
+            firstName,
+            lastName,
+            addressLineOne,
+            addressLineTwo,
+            city,
+            state,
+            zipCode,
+          });
+          const { id: shippingInfoId } = data;
+          setShippingInfoId(shippingInfoId);
+          if (shippingInfoId && saveShippingInfo && uid) {
+            console.log('Upsert user');
+            upsertUser(uid, {
+              shippingInfoId,
+            });
+          }
+        } catch (e) {
+          console.error(e);
+        }
       }),
-    [handleSubmit]
+    [handleSubmit, setShippingInfoId, uid, upsertUser]
   );
 
   return {
@@ -37,7 +70,7 @@ export const useUpdateShippingForm = () => {
     errors,
     isValid,
     isDirty,
-    // isUpdateProfileInfoSubmitting,
+    isAddingShippingAddressSubmitting,
     handleSubmitShippingInfo,
   };
 };

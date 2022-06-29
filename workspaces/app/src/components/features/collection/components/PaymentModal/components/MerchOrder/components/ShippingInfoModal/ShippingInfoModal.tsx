@@ -1,20 +1,32 @@
-import { Modal, Button, Input, Toggle, Select } from 'components/ui';
-
+import { Modal, Button, Input, Toggle, Select, ConditionalSpinner } from 'components/ui';
 import { Form, InputsContainer, InputsContainerDouble } from './components';
-
 import { useUpdateShippingForm } from './hooks';
-import states from './states.json';
+import states from 'libraries/models/shippingInfo/states.json';
+import { SetStateAction, useEffect } from 'react';
 
 interface ShippingInfoProps {
   onClose: () => void;
+  handleAddShippingInfo: React.Dispatch<SetStateAction<string | null>>;
 }
-export const ShippingInfoModal = ({ onClose }: ShippingInfoProps) => {
-  const { register, setValue, errors, isValid, isDirty, handleSubmitShippingInfo } =
-    useUpdateShippingForm();
+export const ShippingInfoModal = ({ onClose, handleAddShippingInfo }: ShippingInfoProps) => {
+  const {
+    register,
+    setValue,
+    errors,
+    isValid,
+    isDirty,
+    handleSubmitShippingInfo,
+    isAddingShippingAddressSubmitting,
+  } = useUpdateShippingForm(handleAddShippingInfo);
 
   return (
     <Modal title={'Shipping Info'} onClick={onClose} fullHeight>
-      <Form onSubmit={handleSubmitShippingInfo}>
+      <Form
+        onSubmit={() => {
+          handleSubmitShippingInfo();
+          onClose();
+        }}
+      >
         <InputsContainer>
           <Input
             label="First Name"
@@ -51,14 +63,16 @@ export const ShippingInfoModal = ({ onClose }: ShippingInfoProps) => {
               label="State"
               options={states}
               {...register('state')}
-              onChange={(value) => setValue('state', value, { shouldValidate: true })}
+              onChange={(_A, action) => {
+                setValue('state', action, { shouldValidate: true });
+              }}
               error={errors?.state?.message}
             />
             <Input
               label="Zip Code"
               placeholder="Zip Code"
-              {...register('postalCode')}
-              error={errors?.postalCode?.message}
+              {...register('zipCode')}
+              error={errors?.zipCode?.message}
             />
           </InputsContainerDouble>
           <Toggle {...register('saveShippingInfo')}>Save my shipping info</Toggle>

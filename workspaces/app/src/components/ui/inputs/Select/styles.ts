@@ -25,10 +25,12 @@ export const dropdownStyles: StylesConfig<OptionType, false> = {
     background: `${tokens.background.color.primary}`,
     color: `${tokens.font.color.primary}`,
     borderRadius: `${tokens.border.radius.sm}`,
+    height: '190px',
   }),
   menuList: (provided) => ({
     ...provided,
     borderRadius: `${tokens.border.radius.sm}`,
+    height: '190px',
   }),
   placeholder: (provided) => ({
     ...provided,
