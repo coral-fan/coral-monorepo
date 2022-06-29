@@ -1,13 +1,20 @@
 import styled from '@emotion/styled';
 import { Button, Heading } from 'components/ui';
-import { SizeOption, ColorOption, MerchOptionTypes, useShippingInfoId } from 'libraries/models';
+import {
+  SizeOption,
+  ColorOption,
+  MerchOptionTypes,
+  useShippingInfoId,
+  useUserUid,
+} from 'libraries/models';
 import { useCallback, useEffect, useState } from 'react';
 import tokens from 'styles/tokens';
 import { ConfirmShippingInfo, MerchOptionSelect, ShippingInfoModal } from './components';
-
+import { getCoralAPIAxios } from 'libraries/utils';
 interface MerchOrderProps {
   merchOptionTypes: MerchOptionTypes | null;
   setMerchOrderId: (merchOrderId: string) => void;
+  collectionId: string;
 }
 
 const Container = styled.div`
@@ -27,17 +34,32 @@ const SelectContainer = styled.div`
 
 export type MerchOption = SizeOption | ColorOption;
 
-export const MerchOrder = ({ merchOptionTypes, setMerchOrderId }: MerchOrderProps) => {
+const axios = getCoralAPIAxios();
+
+export const MerchOrder = ({
+  merchOptionTypes,
+  setMerchOrderId,
+  collectionId,
+}: MerchOrderProps) => {
   const [isHandlingCreateMerchOrder, setIsHandlingCreateMerchOrder] = useState(false);
   const [options, setOptions] = useState({});
   const [isOptionsSelected, setIsOptionsSelected] = useState(false);
   const [showShippingInfoForm, setShowShippingInfoForm] = useState(false);
-  const [showConfirmShippingInfo, setShowConfirmShippingInfo] = useState(
-    () => merchOptionTypes && merchOptionTypes.length === 0
+  const [showConfirmShippingInfo, setShowConfirmShippingInfo] = useState(() =>
+    merchOptionTypes && merchOptionTypes.length === 0 ? true : false
   );
+  const [shippingInfoId, setShippingInfoId] = useState<string | null>(null);
 
   // Shipping info Id means user has saved a shipping address
-  const shippingInfoId = useShippingInfoId();
+  const userShippingInfoId = useShippingInfoId();
+
+  const uid = useUserUid();
+
+  useEffect(() => {
+    if (userShippingInfoId) {
+      setShippingInfoId(userShippingInfoId);
+    }
+  }, [userShippingInfoId]);
 
   const handleNextClick = useCallback(async () => {
     if (isOptionsSelected) {
@@ -47,10 +69,20 @@ export const MerchOrder = ({ merchOptionTypes, setMerchOrderId }: MerchOrderProp
 
   const handleCreateMerchOrder = useCallback(async () => {
     setIsHandlingCreateMerchOrder(true);
+
     const optionsArr = Object.entries(options);
-    const merchOrderOptions = optionsArr.map((arr) => ({ [arr[0]]: arr[1] }));
-    // CREATE MERCH ORDER HERE
-  }, [setMerchOrderId]);
+    const merchOrderOptions = optionsArr.map((arr) => ({ type: arr[0], value: arr[1] }));
+
+    const { data } = await axios.post('merch-order/create', {
+      shippingInfoId,
+      userId: uid,
+      collectionId,
+      options: merchOrderOptions,
+    });
+
+    const { id } = data;
+    setMerchOrderId(id);
+  }, [collectionId, shippingInfoId, options, uid, setMerchOrderId]);
 
   const handleOnChange = (type: string, value: string) => {
     setOptions((options) => ({ ...options, [type]: value }));
@@ -62,31 +94,12 @@ export const MerchOrder = ({ merchOptionTypes, setMerchOrderId }: MerchOrderProp
     );
   }, [options, merchOptionTypes]);
 
-  /*
-  Possible States
-
-  1. No merch options + no shipping info
-    > Buy Now -> Shipping Info -> Confirm / Existing -> Mint
-    > !merchOptionTypes  && !shippingInfoId
-
-  2. Merch options + shippingInfo
-    > Buy Now -> Merch Options -> Confirm / Existing -> Mint
-    > merchOptionsTypes && shippingInfoId
-   
-  3. No Merch options + shippingInfo
-    > Buy Now -> Confirm / Existing -> Mint
-    > !merchOptionTypes && shippingInfoId
-   
-  4. Merch Options + no shipping info
-    > Buy Now -> Merch Options -> Confirm / Existing -> Mint
-    > merchOptionTypes && !shippingInfo
-  */
-
   return (
     <Container>
       <Heading level={2} styleVariant={'h3'}>
         {merchOptionTypes && !isOptionsSelected ? 'Options' : 'Confirm Shipping Info'}
       </Heading>
+
       {merchOptionTypes && !showConfirmShippingInfo && (
         <SelectContainer>
           {merchOptionTypes.map((type) => (
@@ -94,6 +107,7 @@ export const MerchOrder = ({ merchOptionTypes, setMerchOrderId }: MerchOrderProp
           ))}
         </SelectContainer>
       )}
+
       {showConfirmShippingInfo && (
         <ConfirmShippingInfo
           shippingInfoId={shippingInfoId}
@@ -101,12 +115,20 @@ export const MerchOrder = ({ merchOptionTypes, setMerchOrderId }: MerchOrderProp
         />
       )}
 
-      {showShippingInfoForm && <ShippingInfoModal onClose={() => setShowShippingInfoForm(false)} />}
-
+      {showShippingInfoForm && (
+        <ShippingInfoModal
+          handleAddShippingInfo={setShippingInfoId}
+          onClose={() => setShowShippingInfoForm(false)}
+        />
+      )}
       <Button
         onClick={!showConfirmShippingInfo ? handleNextClick : handleCreateMerchOrder}
         loading={isHandlingCreateMerchOrder}
-        disabled={isHandlingCreateMerchOrder || !isOptionsSelected || !shippingInfoId}
+        disabled={
+          isHandlingCreateMerchOrder ||
+          (merchOptionTypes && !isOptionsSelected) ||
+          (showConfirmShippingInfo && !shippingInfoId)
+        }
       >
         Next
       </Button>
