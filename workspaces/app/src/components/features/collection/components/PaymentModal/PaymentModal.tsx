@@ -119,6 +119,8 @@ export const PaymentModal = ({
     }
   }, [purchaseId, errorToast]);
 
+  const isMerch = merchOptionTypes !== undefined && merchOptionTypes.length > 0;
+
   return (
     <Modal title={title} onClick={closePaymentModal} fullHeight isNarrow={assetId !== undefined}>
       <ContentContainer>
@@ -140,10 +142,12 @@ export const PaymentModal = ({
               artistName={artistName}
               artistProfilePhoto={artistProfilePhoto}
             />
-            {merchOptionTypes !== undefined &&
-            merchOptionTypes.length > 0 &&
-            merchOrderId === undefined ? (
-              <MerchOrder merchOptionTypes={merchOptionTypes} setMerchOrderId={setMerchOrderId} />
+            {isMerch && merchOrderId === undefined ? (
+              <MerchOrder
+                merchOptionTypes={merchOptionTypes}
+                setMerchOrderId={setMerchOrderId}
+                collectionId={collectionId}
+              />
             ) : (
               <ConditionalSpinnerContainer>
                 <ConditionalSpinner
