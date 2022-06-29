@@ -12,4 +12,5 @@ export const PRIVATE_USER_DATA_PROPERTIES = new Set<PrivateUserDataProperties>([
   'stripeCustomerId',
   'email',
   'doesOptIntoMarketing',
+  'shippingInfoId',
 ]);
