@@ -73,15 +73,19 @@ export const MerchOrder = ({
     const optionsArr = Object.entries(options);
     const merchOrderOptions = optionsArr.map((arr) => ({ type: arr[0], value: arr[1] }));
 
-    const { data } = await axios.post('merch-order/create', {
-      shippingInfoId,
-      userId: uid,
-      collectionId,
-      options: merchOrderOptions,
-    });
+    try {
+      const { data } = await axios.post('merch-order/create', {
+        shippingInfoId,
+        userId: uid,
+        collectionId,
+        options: merchOrderOptions,
+      });
 
-    const { id } = data;
-    setMerchOrderId(id);
+      const { id } = data;
+      setMerchOrderId(id);
+    } catch (e) {
+      console.error(e);
+    }
   }, [collectionId, shippingInfoId, options, uid, setMerchOrderId]);
 
   const handleOnChange = (type: string, value: string) => {
