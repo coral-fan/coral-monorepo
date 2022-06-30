@@ -11,6 +11,7 @@ import tokens from 'styles/tokens';
 import { CheckoutContainer, PaymentMethodContainer } from '../components';
 import { Currency } from '../Currency';
 import { SwitchPaymentMethod } from '../SwitchPaymentMethod';
+import { getCoralAPIAxios } from 'libraries/utils';
 
 const WalletBalanceContainer = styled(PaymentMethodContainer)`
   justify-content: end;
@@ -50,6 +51,9 @@ interface AvaxPaymentProps {
   isMobile: boolean;
   merchOrderId?: string;
 }
+
+const axios = getCoralAPIAxios();
+
 export const AvaxPayment = ({
   total,
   collectionId,
@@ -90,9 +94,20 @@ export const AvaxPayment = ({
         setIsMintingNFT(true);
 
         const txnReceipt = await txn.wait(1);
+        const { transactionHash } = txnReceipt;
 
         if (merchOrderId !== undefined && txnReceipt.status === 1) {
-          // UPDATE MERCH ID & STATUS HERE
+          const { status } = await axios.post('merch-order/update-transaction-hash', {
+            merchOrderId,
+            transactionHash,
+          });
+
+          if (status === 200) {
+            await axios.post('merch-order/update-status', {
+              merchOrderId,
+              status: 'confirmed',
+            });
+          }
         }
 
         const logs = txnReceipt.logs[0];
@@ -120,7 +135,16 @@ export const AvaxPayment = ({
         }
       }
     }
-  }, [isActive, total, provider, collectionId, setAssetId, setIsMintingNFT, errorToast]);
+  }, [
+    isActive,
+    total,
+    provider,
+    collectionId,
+    setAssetId,
+    setIsMintingNFT,
+    errorToast,
+    merchOrderId,
+  ]);
 
   return (
     <CheckoutContainer>
