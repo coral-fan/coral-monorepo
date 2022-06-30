@@ -86,13 +86,9 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
                       { merge: true }
                     );
 
-<<<<<<< HEAD
                     if (metadata.merchOrderId) {
                       await updateMerchOrderStatus(metadata.merchOrderId, 'confirmed');
                     }
-=======
-                    // ADD LOGIC TO UPDATE MERCH ORDER STATUS HERE
->>>>>>> 8d3e2aba (Add notes / scaffolding)
                   } else {
                     throw new Error(
                       `Either the metadata or metadata.stripePaymentIntentId is null or undefined respectively for purchase document with ${id}.`
