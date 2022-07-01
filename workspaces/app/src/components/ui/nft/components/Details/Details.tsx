@@ -18,7 +18,7 @@ export const Details = ({ details }: DetailsProp) => {
     <Container>
       <div>
         <Heading level={2} styleVariant={'h4'}>
-          Experience Details
+          Details
         </Heading>
       </div>
       <div>
