@@ -93,28 +93,34 @@ export const AvaxPayment = ({
 
         setIsMintingNFT(true);
 
-        const txnReceipt = await txn.wait(1);
-        const { transactionHash } = txnReceipt;
+        const isMerchPurchase = merchOrderId !== undefined;
 
-        if (merchOrderId !== undefined && txnReceipt.status === 1) {
-          const { status } = await axios.post('merch-order/update-transaction-hash', {
+        if (isMerchPurchase) {
+          await axios.post('merch-order/update-transaction-hash', {
             merchOrderId,
-            transactionHash,
+            transactionHash: txn.hash,
           });
+        }
 
-          if (status === 200) {
-            await axios.post('merch-order/update-status', {
-              merchOrderId,
-              status: 'confirmed',
-            });
-          }
+        const txnReceipt = await txn.wait(1);
+
+        const isTxnSuccessful = txnReceipt?.status === 1;
+
+        if (isMerchPurchase) {
+          await axios.post('merch-order/update-status', {
+            merchOrderId,
+            status: isTxnSuccessful ? 'confirmed' : 'rejected',
+          });
+        }
+
+        if (!isTxnSuccessful) {
+          throw 'Transaction was not successful.';
         }
 
         const logs = txnReceipt.logs[0];
         const assetId = parseInt(logs.topics[3]);
 
         setAssetId(assetId);
-        setIsMintingNFT(false);
       }
       // TODO: add type guard for e object
       // eslint-disable-next-line @typescript-eslint/no-explicit-any -- need any for error handling
@@ -134,6 +140,8 @@ export const AvaxPayment = ({
             errorToast();
         }
       }
+    } finally {
+      setIsMintingNFT(false);
     }
   }, [
     isActive,
