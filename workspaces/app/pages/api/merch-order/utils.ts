@@ -1,7 +1,7 @@
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
 import { MerchOrder } from 'libraries/models';
 
-const getMerchOrderDocRef = async (id: string) => {
+export const getMerchOrderDocRef = async (id: string) => {
   const merchOrderDocumentRef = await getDocumentReferenceServerSide<MerchOrder>('merch-order', id);
   const merchOrderSnapshot = await merchOrderDocumentRef.get();
 
