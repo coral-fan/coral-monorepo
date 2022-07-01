@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { shippingInfoSchema, ShippingInfo, useUpsertUser, useUserUid } from 'libraries/models';
@@ -19,9 +19,8 @@ export const useUpdateShippingForm = (
     formState: { errors, isValid, isDirty },
   } = useForm<ShippingInfoProps>({
     resolver: yupResolver(shippingInfoSchema),
-    mode: 'all',
+    mode: 'onBlur',
   });
-  const [isAddingShippingAddressSubmitting, setIsAddingShippingAddressSubmitting] = useState(false);
 
   const upsertUser = useUpsertUser();
   const uid = useUserUid();
@@ -52,7 +51,6 @@ export const useUpdateShippingForm = (
           const { id: shippingInfoId } = data;
           setShippingInfoId(shippingInfoId);
           if (shippingInfoId && saveShippingInfo && uid) {
-            console.log('Upsert user');
             upsertUser(uid, {
               shippingInfoId,
             });
@@ -70,7 +68,6 @@ export const useUpdateShippingForm = (
     errors,
     isValid,
     isDirty,
-    isAddingShippingAddressSubmitting,
     handleSubmitShippingInfo,
   };
 };
