@@ -1,23 +1,18 @@
-import { Modal, Button, Input, Toggle, Select, ConditionalSpinner } from 'components/ui';
+import { Modal, Button, Input, Toggle, Select } from 'components/ui';
 import { Form, InputsContainer, InputsContainerDouble } from './components';
 import { useUpdateShippingForm } from './hooks';
-import states from 'libraries/models/shippingInfo/states.json';
-import { SetStateAction, useEffect } from 'react';
+import { SetStateAction } from 'react';
+import { STATES } from 'libraries/models';
+
+const STATE_OPTIONS = STATES.map((state) => ({ value: state, label: state }));
 
 interface ShippingInfoProps {
   onClose: () => void;
   handleAddShippingInfo: React.Dispatch<SetStateAction<string | null>>;
 }
 export const ShippingInfoModal = ({ onClose, handleAddShippingInfo }: ShippingInfoProps) => {
-  const {
-    register,
-    setValue,
-    errors,
-    isValid,
-    isDirty,
-    handleSubmitShippingInfo,
-    isAddingShippingAddressSubmitting,
-  } = useUpdateShippingForm(handleAddShippingInfo);
+  const { register, setValue, errors, isValid, isDirty, handleSubmitShippingInfo } =
+    useUpdateShippingForm(handleAddShippingInfo);
 
   return (
     <Modal title={'Shipping Info'} onClick={onClose} fullHeight>
@@ -61,7 +56,7 @@ export const ShippingInfoModal = ({ onClose, handleAddShippingInfo }: ShippingIn
           <InputsContainerDouble>
             <Select
               label="State"
-              options={states}
+              options={STATE_OPTIONS}
               {...register('state')}
               onChange={(_A, action) => {
                 setValue('state', action, { shouldValidate: true });
