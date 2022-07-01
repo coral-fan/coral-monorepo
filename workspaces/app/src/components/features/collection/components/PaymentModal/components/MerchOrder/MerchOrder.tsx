@@ -32,6 +32,14 @@ const SelectContainer = styled.div`
   gap: 20px;
 `;
 
+interface MerchHeadingProps {
+  content: string;
+}
+const MerchHeading = ({ content }: MerchHeadingProps) => (
+  <Heading level={2} styleVariant={'h3'}>
+    {content}
+  </Heading>
+);
 export type MerchOption = SizeOption | ColorOption;
 
 const axios = getCoralAPIAxios();
@@ -100,23 +108,25 @@ export const MerchOrder = ({
 
   return (
     <Container>
-      <Heading level={2} styleVariant={'h3'}>
-        {merchOptionTypes && !isOptionsSelected ? 'Options' : 'Confirm Shipping Info'}
-      </Heading>
-
       {merchOptionTypes && !showConfirmShippingInfo && (
-        <SelectContainer>
-          {merchOptionTypes.map((type) => (
-            <MerchOptionSelect key={type} type={type} onChange={handleOnChange} />
-          ))}
-        </SelectContainer>
+        <>
+          <MerchHeading content="Options" />
+          <SelectContainer>
+            {merchOptionTypes.map((type) => (
+              <MerchOptionSelect key={type} type={type} onChange={handleOnChange} />
+            ))}
+          </SelectContainer>
+        </>
       )}
 
       {showConfirmShippingInfo && (
-        <ConfirmShippingInfo
-          shippingInfoId={shippingInfoId}
-          addOrUpdateAddress={() => setShowShippingInfoForm(true)}
-        />
+        <>
+          <MerchHeading content="Shipping Address" />
+          <ConfirmShippingInfo
+            shippingInfoId={shippingInfoId}
+            addOrUpdateAddress={() => setShowShippingInfoForm(true)}
+          />
+        </>
       )}
 
       {showShippingInfoForm && (
