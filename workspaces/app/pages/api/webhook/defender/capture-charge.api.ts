@@ -11,7 +11,7 @@ import { Handler } from '../../types';
 import { getHandler, getPurchaseDocumentReference, getStripe } from '../../utils';
 import { getCollectionReferenceServerSide } from 'libraries/firebase';
 import { PurchaseData } from 'libraries/models';
-import { updateMerchOrderStatus } from '../../merch-order/utils';
+import { getMerchOrderDocRef, updateMerchOrderStatus } from '../../merch-order/utils';
 
 const relayMintParamsSchema = object({
   tokenId: number()
@@ -95,9 +95,17 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
                     );
                   }
                 } catch (e) {
-                  await purchaseDocRef.set({ status: 'rejected' }, { merge: true });
+                  const purchaseDocSnapshot = await purchaseDocRef.get();
+                  if (purchaseDocSnapshot.data()?.status != 'completed') {
+                    await purchaseDocRef.set({ status: 'rejected' }, { merge: true });
+                  }
                   if (metadata?.merchOrderId) {
-                    await updateMerchOrderStatus(metadata.merchOrderId, 'rejected');
+                    const merchOrderDocumentRef = await getMerchOrderDocRef(metadata?.merchOrderId);
+                    const merchOrderSnapshot = await merchOrderDocumentRef.get();
+
+                    if (merchOrderSnapshot.data()?.status !== 'confirmed') {
+                      await updateMerchOrderStatus(metadata.merchOrderId, 'rejected');
+                    }
                   }
                   throw e;
                 }
