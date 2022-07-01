@@ -54,13 +54,16 @@ export const STATES = [
 ];
 
 export const shippingInfoSchema = object({
-  firstName: string().required(),
-  lastName: string().required(),
-  addressLineOne: string().required(),
+  firstName: string().required('First name is a required field.'),
+  lastName: string().required('Last name is a required field'),
+  addressLineOne: string().required('Last name is a required field.'),
   addressLineTwo: string().nullable().defined(),
   city: string().required(),
   state: string().oneOf(STATES).required(),
-  zipCode: string().length(5).required(),
+  zipCode: string()
+    .matches(/\d/, 'Only digits are allowed.')
+    .length(5, 'Zip code must be exactly 5 digits')
+    .required('Zip code is a required field'),
 }).required();
 
 export type ShippingInfo = InferType<typeof shippingInfoSchema>;
