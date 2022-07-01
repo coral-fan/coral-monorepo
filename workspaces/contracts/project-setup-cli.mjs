@@ -314,8 +314,12 @@ const addMerchType = (num) => {
 };
 
 const addMerchOptions = async (numOptions) => {
-  for (let i = 0; i < numOptions; i++) {
-    await addMerchType(i);
+  if (numOptions === 0) {
+    initialConfig.collectionData.merchOptionTypes = null;
+  } else {
+    for (let i = 0; i < numOptions; i++) {
+      await addMerchType(i);
+    }
   }
 };
 
