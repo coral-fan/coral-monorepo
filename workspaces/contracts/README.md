@@ -27,6 +27,8 @@
 
 ## Setup Project
 
+- If you don't already have a `projects` folder in `contract`, please create one.
+
 - From `contracts`, run `node project-setup-cli.mjs "<PROJECT_NAME>" "<NETWORK>"` and follow the prompts. This creates an initial configuration file.
 
 - For Drop date and time, please enter the date and time in your local environment, the output will be converted to UTC time.
