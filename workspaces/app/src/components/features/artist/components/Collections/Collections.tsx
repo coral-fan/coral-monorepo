@@ -17,15 +17,7 @@ export const Collections = ({ collections }: CollectionProps) => (
         const Badge = getBadge(type);
         return (
           <ProfileItemWrapper key={id}>
-            <DropCard
-              title={name}
-              Badge={Badge}
-              dropTimestamp={dropTime}
-              {...collection}
-              //TODO: Remove description prop after data fetching added
-              description={''}
-              isCard
-            />
+            <DropCard title={name} Badge={Badge} dropTimestamp={dropTime} {...collection} isCard />
           </ProfileItemWrapper>
         );
       })
