@@ -6,7 +6,7 @@ import tokens from 'styles/tokens';
 
 export type PartialCollection = Omit<
   Collection,
-  'gatedContent' | 'price' | 'details' | 'description' | 'accessGrantingTokenAddresses'
+  'gatedContent' | 'details' | 'description' | 'accessGrantingTokenAddresses'
 >;
 
 export interface SimilarCollectionsProp {
@@ -29,7 +29,7 @@ export const SimilarCollections = ({ similarCollections }: SimilarCollectionsPro
       </Heading>
       <ScrollableContainer>
         {similarCollections.map((collection) => {
-          const { name, type, dropTime } = collection;
+          const { name, type, dropTime, price } = collection;
           const Badge = getBadge(type);
           return (
             <ScrollableItemWrapper key={`${collection.artistName}-${name}-${dropTime}`}>
@@ -39,6 +39,7 @@ export const SimilarCollections = ({ similarCollections }: SimilarCollectionsPro
                 dropTimestamp={dropTime}
                 {...collection}
                 isCard={true}
+                price={price}
               />
             </ScrollableItemWrapper>
           );
