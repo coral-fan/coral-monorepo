@@ -11,14 +11,14 @@ interface ShippingInfoProps {
   handleAddShippingInfo: React.Dispatch<SetStateAction<string | null>>;
 }
 export const ShippingInfoModal = ({ onClose, handleAddShippingInfo }: ShippingInfoProps) => {
-  const { register, setValue, errors, isValid, isDirty, handleSubmitShippingInfo } =
+  const { register, setValue, errors, isValid, isDirty, isSubmitting, handleSubmitShippingInfo } =
     useUpdateShippingForm(handleAddShippingInfo);
 
   return (
     <Modal title={'Shipping Info'} onClick={onClose} fullHeight>
       <Form
-        onSubmit={() => {
-          handleSubmitShippingInfo();
+        onSubmit={async (e) => {
+          await handleSubmitShippingInfo(e);
           onClose();
         }}
       >
@@ -72,7 +72,11 @@ export const ShippingInfoModal = ({ onClose, handleAddShippingInfo }: ShippingIn
           </InputsContainerDouble>
           <Toggle {...register('saveShippingInfo')}>Save my shipping info</Toggle>
         </InputsContainer>
-        <Button type="submit" disabled={!isDirty || !isValid}>
+        <Button
+          type="submit"
+          disabled={!isDirty || !isValid || isSubmitting}
+          loading={isSubmitting}
+        >
           Add Shipping Info
         </Button>
       </Form>
