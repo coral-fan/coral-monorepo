@@ -17,7 +17,7 @@ export const BaseButton = ({
   ...props
 }: BaseButtonProps) => (
   <button css={buttonBaseStyle} disabled={disabled} {...props}>
-    <ConditionalSpinner loading={loading} size={spinnerSize} center={true}>
+    <ConditionalSpinner loading={loading} size={spinnerSize} center>
       {children}
     </ConditionalSpinner>
   </button>

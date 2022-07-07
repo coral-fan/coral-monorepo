@@ -151,7 +151,7 @@ export const PaymentModal = ({
               <ConditionalSpinner
                 size={'60px'}
                 color={tokens.background.color.brand}
-                center={true}
+                center
                 loading={(isAvax && isAvaxPriceLoading) || isMintingNFT}
               >
                 <TransactionSummary
