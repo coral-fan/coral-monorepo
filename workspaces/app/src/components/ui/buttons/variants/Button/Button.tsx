@@ -7,7 +7,6 @@ const SIZE = tokens.font.size.sm;
 
 export const buttonStyle = css`
   width: 100%;
-  padding: 15px;
   text-transform: uppercase;
   font-size: ${SIZE};
   font-weight: ${tokens.font.weight.bold};
@@ -18,7 +17,7 @@ export const buttonStyle = css`
   background-color: ${tokens.background.color.brand};
   border: ${tokens.background.color.brand};
   min-width: 45px;
-  height: 45px;
+  height: 49px;
 `;
 
 const Wrapper = styled(BaseButton)`
