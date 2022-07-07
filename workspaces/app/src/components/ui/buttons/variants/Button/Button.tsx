@@ -18,7 +18,7 @@ export const buttonStyle = css`
   background-color: ${tokens.background.color.brand};
   border: ${tokens.background.color.brand};
   min-width: 45px;
-  min-height: 45px;
+  height: 45px;
 `;
 
 const Wrapper = styled(BaseButton)`
