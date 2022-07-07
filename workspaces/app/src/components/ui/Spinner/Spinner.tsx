@@ -26,12 +26,6 @@ const Wrapper = styled.div<SpinnerProps>`
   position: relative;
   width: var(--size);
   height: var(--size);
-
-  ${({ center }) =>
-    center &&
-    css`
-      margin: auto;
-    `}
 `;
 
 const Ring = styled.div`
@@ -58,8 +52,8 @@ const Ring = styled.div`
   }
 `;
 
-export const Spinner = ({ size, color, center }: SpinnerProps) => (
-  <Wrapper size={size} color={color} center={center}>
+export const Spinner = ({ size, color }: SpinnerProps) => (
+  <Wrapper size={size} color={color}>
     <Ring />
     <Ring />
     <Ring />
