@@ -80,3 +80,10 @@ export const DifferentCardLink = styled(LinkButton)`
   letter-spacing: ${tokens.font.letter_spacing.xs};
   line-height: ${tokens.font.line_height.xs};
 `;
+
+export const MintingNftWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 16px 0px 8px 0px;
+`;

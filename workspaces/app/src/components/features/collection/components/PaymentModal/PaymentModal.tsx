@@ -25,6 +25,7 @@ import {
   DifferentCardLink,
   Heading,
   HeadingContainer,
+  MintingNftWrapper,
 } from './components/components';
 import { NewCardInput } from './components/NewCardInput';
 import { PaymentSuccess } from './components/PaymentSuccess';
@@ -223,7 +224,8 @@ export const PaymentModal = ({
                 )}
               </ConditionalSpinner>
             )}
-            {isMintingNFT && 'Minting NFT...'}
+
+            {isMintingNFT && <MintingNftWrapper>Minting NFT...</MintingNftWrapper>}
           </>
         )}
       </ContentContainer>
