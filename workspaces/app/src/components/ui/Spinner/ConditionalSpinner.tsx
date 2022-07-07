@@ -12,7 +12,8 @@ export const Wrapper = styled.div<WrapperProp>`
   flex-direction: column;
   gap: 12px;
   justify-content: center;
-  min-height: auto;
+  height: auto;
+
   ${({ center }) => (center ? 'align-items: center;' : null)}
 `;
 
