@@ -21,7 +21,6 @@ import {
 } from './components';
 import { AvaxPayment } from './components/AvaxPayment';
 import {
-  ConditionalSpinnerContainer,
   ContentContainer,
   DifferentCardLink,
   Heading,
@@ -149,81 +148,80 @@ export const PaymentModal = ({
                 collectionId={collectionId}
               />
             ) : (
-              <ConditionalSpinnerContainer>
-                <ConditionalSpinner
-                  size={'60px'}
-                  color={tokens.background.color.brand}
-                  loading={(isAvax && isAvaxPriceLoading) || isMintingNFT}
-                >
-                  <TransactionSummary
-                    isAvax={isAvax}
-                    price={formattedPrice}
-                    total={formattedTotal}
-                    altTotal={formattedAltTotal}
-                    transactionFee={formattedTransactionFee}
-                    transactionFeePercentage={transactionFee * 100}
-                  />
-                  <HeadingContainer>
-                    {redeemCode !== null ? (
-                      <Heading>Redeem Free NFT</Heading>
-                    ) : isAvax ? (
-                      <Heading>Paying With AVAX</Heading>
-                    ) : (
-                      <>
-                        <Heading>
-                          {shouldUseExistingCard ? 'Card On File' : 'Payment Details'}
-                        </Heading>
-                        {stripeCustomerId && (
-                          <DifferentCardLink type="button" onClick={handleUseDifferentCardClick}>
-                            {shouldUseExistingCard ? 'Use a Different Card' : 'Use Existing Card'}
-                          </DifferentCardLink>
-                        )}
-                      </>
-                    )}
-                  </HeadingContainer>
+              <ConditionalSpinner
+                size={'60px'}
+                color={tokens.background.color.brand}
+                center={true}
+                loading={(isAvax && isAvaxPriceLoading) || isMintingNFT}
+              >
+                <TransactionSummary
+                  isAvax={isAvax}
+                  price={formattedPrice}
+                  total={formattedTotal}
+                  altTotal={formattedAltTotal}
+                  transactionFee={formattedTransactionFee}
+                  transactionFeePercentage={transactionFee * 100}
+                />
+                <HeadingContainer>
                   {redeemCode !== null ? (
-                    // TODO: possibly need merch order logic?
-                    <FreeMint
-                      redeemCode={redeemCode}
-                      collectionId={collectionId}
-                      setIsMintingNFT={setIsMintingNFT}
-                      setAssetId={setAssetId}
-                    />
-                  ) : isAvax && isWalletUser ? (
-                    <AvaxPayment
-                      total={total}
-                      collectionId={collectionId}
-                      handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
-                      setAssetId={setAssetId}
-                      setIsMintingNFT={setIsMintingNFT}
-                      isMobile={isMobile}
-                      merchOrderId={merchOrderId}
-                    />
-                  ) : shouldUseExistingCard && stripeCustomerId ? (
-                    <ExistingCardPayment
-                      stripeCustomerId={stripeCustomerId}
-                      total={total}
-                      handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
-                      collectionId={collectionId}
-                      setPurchaseId={setPurchaseId}
-                      isWalletUser={isWalletUser}
-                      isMobile={isMobile}
-                      merchOrderId={merchOrderId}
-                    />
+                    <Heading>Redeem Free NFT</Heading>
+                  ) : isAvax ? (
+                    <Heading>Paying With AVAX</Heading>
                   ) : (
-                    <NewCardInput
-                      stripeCustomerId={stripeCustomerId}
-                      total={total}
-                      handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
-                      collectionId={collectionId}
-                      setPurchaseId={setPurchaseId}
-                      isWalletUser={isWalletUser}
-                      isMobile={isMobile}
-                      merchOrderId={merchOrderId}
-                    />
+                    <>
+                      <Heading>
+                        {shouldUseExistingCard ? 'Card On File' : 'Payment Details'}
+                      </Heading>
+                      {stripeCustomerId && (
+                        <DifferentCardLink type="button" onClick={handleUseDifferentCardClick}>
+                          {shouldUseExistingCard ? 'Use a Different Card' : 'Use Existing Card'}
+                        </DifferentCardLink>
+                      )}
+                    </>
                   )}
-                </ConditionalSpinner>
-              </ConditionalSpinnerContainer>
+                </HeadingContainer>
+                {redeemCode !== null ? (
+                  // TODO: possibly need merch order logic?
+                  <FreeMint
+                    redeemCode={redeemCode}
+                    collectionId={collectionId}
+                    setIsMintingNFT={setIsMintingNFT}
+                    setAssetId={setAssetId}
+                  />
+                ) : isAvax && isWalletUser ? (
+                  <AvaxPayment
+                    total={total}
+                    collectionId={collectionId}
+                    handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
+                    setAssetId={setAssetId}
+                    setIsMintingNFT={setIsMintingNFT}
+                    isMobile={isMobile}
+                    merchOrderId={merchOrderId}
+                  />
+                ) : shouldUseExistingCard && stripeCustomerId ? (
+                  <ExistingCardPayment
+                    stripeCustomerId={stripeCustomerId}
+                    total={total}
+                    handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
+                    collectionId={collectionId}
+                    setPurchaseId={setPurchaseId}
+                    isWalletUser={isWalletUser}
+                    isMobile={isMobile}
+                    merchOrderId={merchOrderId}
+                  />
+                ) : (
+                  <NewCardInput
+                    stripeCustomerId={stripeCustomerId}
+                    total={total}
+                    handleSwitchPaymentClick={handleSwitchPaymentMethodClick}
+                    collectionId={collectionId}
+                    setPurchaseId={setPurchaseId}
+                    isWalletUser={isWalletUser}
+                    isMobile={isMobile}
+                    merchOrderId={merchOrderId}
+                  />
+                )}
+              </ConditionalSpinner>
             )}
             {isMintingNFT && 'Minting NFT...'}
           </>
