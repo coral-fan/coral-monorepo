@@ -80,14 +80,3 @@ export const DifferentCardLink = styled(LinkButton)`
   letter-spacing: ${tokens.font.letter_spacing.xs};
   line-height: ${tokens.font.line_height.xs};
 `;
-
-// TODO: Refactor ConditionalSpinner so we don't need to do this
-export const ConditionalSpinnerContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: center;
-  justify-content: center;
-  min-height: 180px;
-`;
