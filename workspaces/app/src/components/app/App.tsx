@@ -51,7 +51,6 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
     }
   });
 
-  // TODO: Flip to Production URLs
   useEffect(() => {
     Fathom.load('NSNWRVJL', {
       includedDomains: ['www.coral.fan'],
@@ -59,7 +58,7 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
   }, []);
 
   return (
-    <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+    <>
       <GlobalStyles />
       <Head>
         {/* TODO: update title post sign up campaign */}
@@ -83,18 +82,20 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
 
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <ReduxProvider store={store}>
-          <Managers />
-          {isMounted ? (
-            <Layout>
-              <ModalOrComponent component={<Component {...pageProps} />} />
-            </Layout>
-          ) : null}
-        </ReduxProvider>
-        <Toast />
-      </main>
-    </ErrorBoundary>
+      <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+        <main>
+          <ReduxProvider store={store}>
+            <Managers />
+            {isMounted ? (
+              <Layout>
+                <ModalOrComponent component={<Component {...pageProps} />} />
+              </Layout>
+            ) : null}
+          </ReduxProvider>
+          <Toast />
+        </main>
+      </ErrorBoundary>
+    </>
   );
 };
 
