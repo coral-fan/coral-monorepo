@@ -1,8 +1,9 @@
 import { OptionType } from './types';
-import SelectComponent, { ActionMeta, SingleValue } from 'react-select';
+import SelectComponent, { ActionMeta, GroupBase, SingleValue } from 'react-select';
 import { dropdownStyles } from './styles';
 import { Container, Label, Error } from '../components';
 import { forwardRef } from 'react';
+import { default as ReactSelect } from 'react-select/dist/declarations/src/Select';
 
 interface SelectProps {
   label: string;
@@ -11,11 +12,10 @@ interface SelectProps {
   error?: string;
 }
 
-// TODO: Figure out this type
-export const Select = forwardRef<any, SelectProps>(function Select(
-  { label, options, onChange, error }: SelectProps,
-  ref
-) {
+export const Select = forwardRef<
+  ReactSelect<OptionType, false, GroupBase<OptionType>>,
+  SelectProps
+>(function Select({ label, options, onChange, error }: SelectProps, ref) {
   const onChangeHandler = (option: SingleValue<OptionType>, action: ActionMeta<OptionType>) => {
     if (action.name === undefined || option === undefined || option === null) {
       throw 'Error: option undefined';
