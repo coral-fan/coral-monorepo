@@ -2,7 +2,7 @@ import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import styled from '@emotion/styled';
 import { Link } from 'components/ui';
 import { Card } from 'components/ui/Card';
-import { useCallback } from 'react';
+import { createElement } from 'react';
 import tokens from 'styles/tokens';
 import { BaseInfo, BaseInfoProps } from '../components';
 
@@ -12,6 +12,7 @@ export interface DropCardProps
   id: string;
   dropTimestamp: string;
   price: number;
+  serverSideRoute?: boolean;
 }
 
 const DropCardContainer = styled(Card)`
@@ -62,8 +63,17 @@ const formatDropCardDate = (timestamp: string) => {
 const getIsDropped = (dropTimestamp: string) =>
   new Date(dropTimestamp).getTime() < new Date().getTime();
 
-export const DropCard = ({ Badge, dropTimestamp, id, price, ...baseInfoProps }: DropCardProps) => (
-  <Link href={`/collection/${id}`}>
+export const DropCard = ({
+  Badge,
+  dropTimestamp,
+  id,
+  price,
+  serverSideRoute,
+  ...baseInfoProps
+}: DropCardProps) =>
+  createElement(
+    serverSideRoute ? 'a' : Link,
+    { href: `/collection/${id}` },
     <DropCardContainer>
       <BaseInfo titleHeadingLevel={3} titleStyleVariant={'h3'} {...baseInfoProps}>
         <BadgeAndDropDateContainer>
@@ -79,5 +89,4 @@ export const DropCard = ({ Badge, dropTimestamp, id, price, ...baseInfoProps }: 
         </BadgeAndDropDateContainer>
       </BaseInfo>
     </DropCardContainer>
-  </Link>
-);
+  );

@@ -40,6 +40,7 @@ export const SimilarCollections = ({ similarCollections }: SimilarCollectionsPro
                 {...collection}
                 isCard={true}
                 price={price}
+                serverSideRoute
               />
             </ScrollableItemWrapper>
           );
