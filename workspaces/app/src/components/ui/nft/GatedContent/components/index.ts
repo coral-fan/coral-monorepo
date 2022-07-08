@@ -1,4 +1,4 @@
-export * from './AccessDeniedModal';
+export * from './AccessDenied';
 export * from './AccessGrantedModal';
 export * from './ContentLink';
 export * from './StreamLink';
