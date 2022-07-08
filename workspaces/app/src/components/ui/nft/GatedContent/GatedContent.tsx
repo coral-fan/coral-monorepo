@@ -3,7 +3,7 @@ import { delay, forkJoin, map, mergeMap, timer } from 'rxjs';
 import { useIsAuthenticated } from 'libraries/authentication';
 import { useWallet } from 'libraries/blockchain';
 import {
-  AccessDeniedModal,
+  AccessDenied,
   AccessGrantedModal,
   LoginButton,
   CheckingNftModal,
@@ -60,7 +60,7 @@ export const GatedContent = ({
 
   if (!isAuthenticated) {
     return (
-      <AccessDeniedModal
+      <AccessDenied
         title={accessDeniedModalProps.title}
         message="Please log in so we can check your wallet."
         actionElement={<LoginButton />}
@@ -73,7 +73,7 @@ export const GatedContent = ({
   }
 
   if (!doesUserHaveAccess) {
-    return <AccessDeniedModal {...accessDeniedModalProps} />;
+    return <AccessDenied {...accessDeniedModalProps} />;
   }
 
   return (
