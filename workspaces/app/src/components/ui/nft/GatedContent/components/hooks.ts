@@ -1,9 +1,9 @@
-import { useIsDesktop } from 'libraries/window';
+import { useIsMobile } from 'libraries/window';
 import { useMemo } from 'react';
 
 export const useIconSize = () => {
-  const isDesktop = useIsDesktop();
-  const iconSize = useMemo(() => (isDesktop ? 275 : 175), [isDesktop]);
+  const isMobile = useIsMobile();
+  const iconSize = useMemo(() => (isMobile ? 135 : 275), [isMobile]);
 
   return iconSize;
 };
