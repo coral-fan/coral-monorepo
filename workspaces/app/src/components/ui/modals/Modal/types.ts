@@ -12,5 +12,8 @@ export interface ModalProps {
   onClick?: () => void;
   variant?: Variant;
   isNarrow?: boolean;
-  noOverlayZIndex?: boolean;
+}
+
+export interface ModalHasControlButton {
+  modalHasControlButton: boolean;
 }
