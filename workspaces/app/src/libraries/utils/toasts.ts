@@ -4,6 +4,9 @@ const errorToast = (message = 'Something went wrong - please try again') => toas
 
 export const useErrorToast = () => errorToast;
 
-const successToast = (message = 'Success!') => toast.success(message);
+type ToastOptions = NonNullable<Parameters<typeof toast.success>[1]>;
+
+const successToast = (message = 'Success!', options?: ToastOptions) =>
+  toast.success(message, options);
 
 export const useSuccessToast = () => successToast;
