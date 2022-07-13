@@ -19,7 +19,7 @@ export interface LayoutProps {
   imageUrl: string;
   artistName: Artist['name'];
   artistProfilePhoto: Artist['profilePhoto'];
-  artistId: Artist['id'];
+  artistId?: Artist['id'];
   name: Collection['name'];
   description: Collection['description'];
   details: Collection['details'];
