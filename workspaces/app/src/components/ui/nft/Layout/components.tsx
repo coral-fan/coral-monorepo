@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { Link } from 'components/ui';
 import tokens, { QUERY } from 'styles/tokens';
 
 const { layout, spacing, buttons, border } = tokens;
@@ -136,5 +137,21 @@ export const AssetContentContainer = styled.div<AssetDisplayProps>`
 
   @media ${QUERY.TABLET} {
     padding: ${({ isAsset }) => (isAsset ? `${tokens.layout.padding.mobile.horizontal}` : '0px')};
+  }
+`;
+
+export const CollectionBackLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  text-transform: uppercase;
+  font-size: ${tokens.font.size.sm};
+  letter-spacing: ${tokens.font.letter_spacing.sm};
+  line-height: ${tokens.font.line_height.sm};
+
+  &:hover > svg * {
+    stroke: ${tokens.background.color.brand};
   }
 `;
