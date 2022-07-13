@@ -2,7 +2,39 @@ import { PartialCollection } from 'components/features/collection/components';
 import { sortCollectionByDropDateDesc } from 'components/ui';
 import { getAllDocuments, getDocumentData } from 'libraries/firebase';
 import { getArtist } from '../artist';
+import { Photo } from '../types';
 import { Collection, CollectionData } from './types';
+
+const getArtistDataForCollection = async (
+  artistId: string | undefined,
+  artistName: string | undefined,
+  artistProfilePhoto: Photo | undefined
+) => {
+  if (artistId === undefined) {
+    if (!artistName || !artistProfilePhoto) {
+      throw new Error(
+        'artistId is undefined, and either artistName or artistProfilePhoto are undefined.'
+      );
+    }
+
+    return {
+      artistName,
+      artistProfilePhoto,
+    };
+  }
+
+  const artistData = await getArtist(artistId);
+
+  if (!artistData) {
+    throw new Error(`Artist with id ${artistId} doesn't exist.`);
+  }
+
+  return {
+    artistId,
+    artistName: artistData.name,
+    artistProfilePhoto: artistData.profilePhoto,
+  };
+};
 
 export const getCollection = async (id: Collection['id']) => {
   const collectionData = await getDocumentData<CollectionData>('collections', id);
@@ -12,20 +44,16 @@ export const getCollection = async (id: Collection['id']) => {
   }
   const { artistId, ...partialCollectionData } = collectionData;
 
-  const artistData = await getArtist(artistId);
-
-  if (!artistData) {
-    throw new Error(`Artist with id ${artistId} doesn't exist.`);
-  }
-
-  const { name: artistName, profilePhoto: artistProfilePhoto } = artistData;
+  const artistDataForCollection = await getArtistDataForCollection(
+    artistId,
+    partialCollectionData.artistName,
+    partialCollectionData.artistProfilePhoto
+  );
 
   const collection: Collection = {
-    id,
     ...partialCollectionData,
-    artistId,
-    artistName,
-    artistProfilePhoto,
+    id,
+    ...artistDataForCollection,
   };
 
   return collection;
@@ -53,16 +81,17 @@ export const getSimilarCollections = async (collectionId: Collection['id'], n: n
                 dropTime,
                 price,
                 maxMintablePerWallet,
+                artistName,
+                artistProfilePhoto,
               }) => {
-                const artistData = await getArtist(artistId);
-
-                if (!artistData) {
-                  throw new Error(`Artist with id ${artistId} doesn't exist.`);
-                }
+                const artistDataForCollection = await getArtistDataForCollection(
+                  artistId,
+                  artistName,
+                  artistProfilePhoto
+                );
 
                 const partialCollection: PartialCollection = {
                   id,
-                  artistId,
                   name,
                   imageUrl,
                   maxSupply,
@@ -70,8 +99,7 @@ export const getSimilarCollections = async (collectionId: Collection['id'], n: n
                   dropTime,
                   price,
                   maxMintablePerWallet,
-                  artistName: artistData.name,
-                  artistProfilePhoto: artistData.profilePhoto,
+                  ...artistDataForCollection,
                 };
 
                 return partialCollection;
