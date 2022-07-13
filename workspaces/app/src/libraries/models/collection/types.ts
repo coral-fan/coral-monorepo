@@ -20,7 +20,9 @@ export type Details = string[] | null;
 export interface CollectionData {
   name: string;
   /* blockchain data index cache */
-  artistId: Artist['id'];
+  artistId?: Artist['id'];
+  artistName?: ArtistData['name'];
+  artistProfilePhoto?: ArtistData['profilePhoto'];
   imageUrl: string;
   maxSupply: number;
   type: CollectionType;
@@ -35,10 +37,9 @@ export interface CollectionData {
   accessGrantingTokenAddresses: Collection['id'][] | null;
 }
 
-export interface Collection extends Omit<CollectionData, 'artistId'> {
+export interface Collection extends CollectionData {
   // id = nft smart contract address
   id: string;
-  artistId: Artist['id'];
   artistName: ArtistData['name'];
   artistProfilePhoto: ArtistData['profilePhoto'];
 }
