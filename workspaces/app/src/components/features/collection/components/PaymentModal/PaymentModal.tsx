@@ -35,7 +35,7 @@ import { FreeMint } from './components/FreeMint';
 import { MerchOptionTypes } from 'libraries/models/merch';
 interface PaymentModalProps extends AssetInfoProps {
   usdPrice: number;
-  artistId: string;
+  artistId?: string;
   collectionId: Collection['id'];
   collectionDetails: Details;
   closePaymentModal: () => void;

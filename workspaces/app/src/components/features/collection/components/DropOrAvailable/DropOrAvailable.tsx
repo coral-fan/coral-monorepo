@@ -27,7 +27,7 @@ interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
   collectionId: string;
   isSoldOut: boolean;
   collectionDetails: Details;
-  artistId: string;
+  artistId?: string;
   maxMintablePerWallet: number;
   redeemCode: NullableString;
   merchOptionTypes?: MerchOptionTypes;
