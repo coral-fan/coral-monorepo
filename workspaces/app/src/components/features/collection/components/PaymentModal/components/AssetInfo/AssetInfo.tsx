@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
-import { ArtistInfo, Heading, Image } from 'components/ui';
+import { CreatorInfo, Heading, Image } from 'components/ui';
 import { Collection } from 'libraries/models';
 import tokens from 'styles/tokens';
 
 export interface AssetInfoProps {
   imageUrl: string;
   collectionName: Collection['name'];
-  artistName: Collection['artistName'];
-  artistProfilePhoto: Collection['artistProfilePhoto'];
+  creatorName: Collection['creatorName'];
+  creatorProfilePhoto: Collection['creatorProfilePhoto'];
 }
 
 const Container = styled.div`
@@ -47,8 +47,8 @@ const BottomContainer = styled.div`
 export const AssetInfo = ({
   imageUrl,
   collectionName,
-  artistName,
-  artistProfilePhoto,
+  creatorName,
+  creatorProfilePhoto: artistProfilePhoto,
 }: AssetInfoProps) => {
   return (
     <Container>
@@ -62,7 +62,7 @@ export const AssetInfo = ({
           <Heading level={2} styleVariant={'h3'}>
             {collectionName}
           </Heading>
-          <ArtistInfo profilePhoto={artistProfilePhoto}>{artistName}</ArtistInfo>
+          <CreatorInfo profilePhoto={artistProfilePhoto}>{creatorName}</CreatorInfo>
         </RightContainer>
       </TopContainer>
       <BottomContainer></BottomContainer>

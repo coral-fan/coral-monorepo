@@ -33,6 +33,7 @@ import { useErrorToast } from 'libraries/utils/toasts';
 import { useIsMobile } from 'libraries/window';
 import { FreeMint } from './components/FreeMint';
 import { MerchOptionTypes } from 'libraries/models/merch';
+
 interface PaymentModalProps extends AssetInfoProps {
   usdPrice: number;
   artistId?: string;
@@ -47,8 +48,8 @@ export const PaymentModal = ({
   imageUrl,
   collectionName,
   artistId,
-  artistName,
-  artistProfilePhoto,
+  creatorName,
+  creatorProfilePhoto,
   closePaymentModal,
   usdPrice,
   collectionId,
@@ -130,8 +131,8 @@ export const PaymentModal = ({
             collectionName={collectionName}
             imageUrl={imageUrl}
             artistId={artistId}
-            artistName={artistName}
-            artistProfilePhoto={artistProfilePhoto}
+            creatorName={creatorName}
+            creatorProfilePhoto={creatorProfilePhoto}
             collectionId={collectionId}
           />
         ) : (
@@ -139,8 +140,8 @@ export const PaymentModal = ({
             <AssetInfo
               imageUrl={imageUrl}
               collectionName={collectionName}
-              artistName={artistName}
-              artistProfilePhoto={artistProfilePhoto}
+              creatorName={creatorName}
+              creatorProfilePhoto={creatorProfilePhoto}
             />
             {isMerch && merchOrderId === undefined ? (
               <MerchOrder

@@ -38,7 +38,7 @@ export interface ArtistInfoProps extends ComponentPropsWithRef<'div'> {
   profilePhoto: Photo;
 }
 
-export const ArtistInfo = forwardRef<HTMLDivElement, ArtistInfoProps>(function ImageInfo(
+export const CreatorInfo = forwardRef<HTMLDivElement, ArtistInfoProps>(function ImageInfo(
   { profilePhoto, children },
   ref
 ) {

@@ -18,8 +18,8 @@ const BaseInfoContainer = styled.div`
 
 export const BaseInfo = ({
   imageUrl,
-  artistName,
-  artistProfilePhoto,
+  creatorName,
+  creatorProfilePhoto,
   title,
   titleHeadingLevel,
   titleStyleVariant,
@@ -29,8 +29,8 @@ export const BaseInfo = ({
   <BaseInfoContainer>
     <ImageWithInfo
       imageUrl={imageUrl}
-      artistName={artistName}
-      artistProfilePhoto={artistProfilePhoto}
+      creatorName={creatorName}
+      creatorProfilePhoto={creatorProfilePhoto}
       isCard={isCard}
     />
     <NftContent

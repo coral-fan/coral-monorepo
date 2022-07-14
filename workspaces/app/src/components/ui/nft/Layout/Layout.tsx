@@ -17,8 +17,8 @@ export interface LayoutProps {
   isAsset: boolean;
   type: CollectionType;
   imageUrl: string;
-  artistName: Artist['name'];
-  artistProfilePhoto: Artist['profilePhoto'];
+  creatorName: Artist['name'];
+  creatorProfilePhoto: Artist['profilePhoto'];
   artistId?: Artist['id'];
   name: Collection['name'];
   description: Collection['description'];
@@ -38,8 +38,8 @@ export const Layout = ({
   isAsset,
   type,
   imageUrl,
-  artistName,
-  artistProfilePhoto,
+  creatorName,
+  creatorProfilePhoto,
   artistId,
   name,
   description,
@@ -62,14 +62,14 @@ export const Layout = ({
       <ImageWrapper isAsset={isAsset}>
         <ImageWithInfo
           imageUrl={imageUrl}
-          artistName={artistName}
-          artistProfilePhoto={artistProfilePhoto}
+          creatorName={creatorName}
+          creatorProfilePhoto={creatorProfilePhoto}
           artistId={artistId}
           isCard={false}
         />
       </ImageWrapper>
     ),
-    [imageUrl, artistName, artistProfilePhoto, artistId, isAsset]
+    [imageUrl, creatorName, creatorProfilePhoto, artistId, isAsset]
   );
 
   return (
@@ -105,8 +105,8 @@ export const Layout = ({
             id={collectionId}
             closeShareModal={closeShareModal}
             imageUrl={imageUrl}
-            artistName={artistName}
-            artistProfilePhoto={artistProfilePhoto}
+            creatorName={creatorName}
+            creatorArtistPhoto={creatorProfilePhoto}
             description={description}
             Badge={Badge}
           />

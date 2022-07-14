@@ -7,19 +7,19 @@ import { Collection, CollectionData } from './types';
 
 const getArtistDataForCollection = async (
   artistId: string | undefined,
-  artistName: string | undefined,
-  artistProfilePhoto: Photo | undefined
+  creatorName: string | undefined,
+  creatorProfilePhoto: Photo | undefined
 ) => {
   if (artistId === undefined) {
-    if (!artistName || !artistProfilePhoto) {
+    if (!creatorName || !creatorProfilePhoto) {
       throw new Error(
-        'artistId is undefined, and either artistName or artistProfilePhoto are undefined.'
+        'artistId is undefined, and either creatorName or creatorProfilePhoto are undefined.'
       );
     }
 
     return {
-      artistName,
-      artistProfilePhoto,
+      creatorName,
+      creatorProfilePhoto,
     };
   }
 
@@ -31,8 +31,8 @@ const getArtistDataForCollection = async (
 
   return {
     artistId,
-    artistName: artistData.name,
-    artistProfilePhoto: artistData.profilePhoto,
+    creatorName: artistData.name,
+    creatorProfilePhoto: artistData.profilePhoto,
   };
 };
 
@@ -46,8 +46,8 @@ export const getCollection = async (id: Collection['id']) => {
 
   const artistDataForCollection = await getArtistDataForCollection(
     artistId,
-    partialCollectionData.artistName,
-    partialCollectionData.artistProfilePhoto
+    partialCollectionData.creatorName,
+    partialCollectionData.creatorProfilePhoto
   );
 
   const collection: Collection = {
@@ -81,12 +81,12 @@ export const getSimilarCollections = async (collectionId: Collection['id'], n: n
                 dropTime,
                 price,
                 maxMintablePerWallet,
-                artistName,
-                artistProfilePhoto,
+                creatorName,
+                creatorProfilePhoto: artistProfilePhoto,
               }) => {
                 const artistDataForCollection = await getArtistDataForCollection(
                   artistId,
-                  artistName,
+                  creatorName,
                   artistProfilePhoto
                 );
 

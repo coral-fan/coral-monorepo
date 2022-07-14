@@ -1,2 +1,2 @@
 export * from './ImageWithInfo';
-export * from './components/ArtistInfo';
+export * from './components/CreatorInfo';

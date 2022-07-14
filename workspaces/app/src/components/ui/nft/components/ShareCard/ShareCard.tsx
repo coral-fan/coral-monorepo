@@ -33,8 +33,8 @@ const NftContentWrapper = styled.div`
 
 export const ShareCard = ({
   imageUrl,
-  artistName,
-  artistProfilePhoto,
+  creatorName,
+  creatorProfilePhoto,
   title,
   Badge,
 }: ShareCardProps) => {
@@ -43,8 +43,8 @@ export const ShareCard = ({
     <ShareCardContainer>
       <ImageWithInfo
         imageUrl={imageUrl}
-        artistName={artistName}
-        artistProfilePhoto={artistProfilePhoto}
+        creatorName={creatorName}
+        creatorProfilePhoto={creatorProfilePhoto}
         isCard={true}
       />
       <NftContentWrapper>
