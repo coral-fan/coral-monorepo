@@ -3,7 +3,7 @@ import { Artist, Collection, CollectionType } from 'libraries/models';
 import { useIsMobile } from 'libraries/window';
 import { useCallback, useMemo, useState } from 'react';
 import { Details, ImageWithInfo, NftContent, ShareButton, ShareDropModal } from '../components';
-import { RightArrowHoverIcon } from './components/RightArrowHoverIcon';
+import { CollectionBackLink } from './components/CollectionBackLink';
 
 import {
   AssetContentContainer,
@@ -12,7 +12,6 @@ import {
   GatedContentWrapper,
   ImageWrapper,
   NftAssetContainer,
-  CollectionBackLink,
 } from './components';
 export interface LayoutProps {
   isAsset: boolean;
@@ -88,12 +87,7 @@ export const Layout = ({
               Badge={Badge}
               isCard={false}
             />
-            {isAsset && (
-              <CollectionBackLink href={`${window.location.origin}/collection/${collectionId}`}>
-                <RightArrowHoverIcon />
-                Go to Collection
-              </CollectionBackLink>
-            )}
+            {isAsset && <CollectionBackLink collectionId={collectionId} />}
             {dropOrAvailable}
             {owner}
           </AssetContentContainer>
