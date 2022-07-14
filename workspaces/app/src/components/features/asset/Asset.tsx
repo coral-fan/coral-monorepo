@@ -40,8 +40,8 @@ export const AssetContainer = styled.div`
 
 export const AssetPage = ({
   imageUrl,
-  artistName,
-  artistProfilePhoto,
+  creatorName,
+  creatorProfilePhoto,
   artistId,
   collectionName,
   type,
@@ -100,8 +100,8 @@ export const AssetPage = ({
         isAsset={true}
         type={type}
         imageUrl={imageUrl}
-        artistName={artistName}
-        artistProfilePhoto={artistProfilePhoto}
+        creatorName={creatorName}
+        creatorProfilePhoto={creatorProfilePhoto}
         artistId={artistId}
         name={collectionName}
         description={collectionDescription}

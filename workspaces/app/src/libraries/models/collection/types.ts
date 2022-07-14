@@ -21,8 +21,8 @@ export interface CollectionData {
   name: string;
   /* blockchain data index cache */
   artistId?: Artist['id'];
-  artistName?: ArtistData['name'];
-  artistProfilePhoto?: ArtistData['profilePhoto'];
+  creatorName?: ArtistData['name'];
+  creatorProfilePhoto?: ArtistData['profilePhoto'];
   imageUrl: string;
   maxSupply: number;
   type: CollectionType;
@@ -40,6 +40,6 @@ export interface CollectionData {
 export interface Collection extends CollectionData {
   // id = nft smart contract address
   id: string;
-  artistName: ArtistData['name'];
-  artistProfilePhoto: ArtistData['profilePhoto'];
+  creatorName: ArtistData['name'];
+  creatorProfilePhoto: ArtistData['profilePhoto'];
 }

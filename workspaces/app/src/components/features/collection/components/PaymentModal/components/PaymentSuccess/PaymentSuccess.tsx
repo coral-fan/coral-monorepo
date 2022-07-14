@@ -8,7 +8,7 @@ import tokens from 'styles/tokens';
 interface PaymentSuccessProps
   extends Pick<
     Asset,
-    'imageUrl' | 'artistName' | 'artistProfilePhoto' | 'artistId' | 'collectionName'
+    'imageUrl' | 'creatorName' | 'creatorProfilePhoto' | 'artistId' | 'collectionName'
   > {
   collectionId: string;
   assetId: number;
@@ -37,8 +37,8 @@ const AssetInfoBottom = styled.div`
 
 export const PaymentSuccess = ({
   imageUrl,
-  artistName,
-  artistProfilePhoto,
+  creatorName,
+  creatorProfilePhoto,
   artistId,
   assetId,
   collectionId,
@@ -48,13 +48,13 @@ export const PaymentSuccess = ({
     () => (
       <ImageWithInfo
         imageUrl={imageUrl}
-        artistName={artistName}
-        artistProfilePhoto={artistProfilePhoto}
+        creatorName={creatorName}
+        creatorProfilePhoto={creatorProfilePhoto}
         artistId={artistId}
         isCard={true}
       />
     ),
-    [imageUrl, artistName, artistProfilePhoto, artistId]
+    [imageUrl, creatorName, creatorProfilePhoto, artistId]
   );
 
   return (

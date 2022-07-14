@@ -8,11 +8,11 @@ const getAssetWithKnownCollectionAndOwner = async (
   assetId: Asset['id'],
   ownerAddress: User['id'],
   owner?: PublicUserData
-) => {
+): Promise<Asset> => {
   const {
     imageUrl,
-    artistName,
-    artistProfilePhoto,
+    creatorName,
+    creatorProfilePhoto,
     artistId,
     name: collectionName,
     type,
@@ -24,8 +24,8 @@ const getAssetWithKnownCollectionAndOwner = async (
 
   const asset: Asset = {
     imageUrl,
-    artistName,
-    artistProfilePhoto,
+    creatorName,
+    creatorProfilePhoto,
     artistId,
     collectionName,
     type,
@@ -44,6 +44,12 @@ const getAssetWithKnownCollectionAndOwner = async (
     ownerType: owner?.type ?? 'fan',
     id: assetId,
   };
+
+  // necessary to delete key because Next.js can't serialize an undefined value
+  // https://github.com/vercel/next.js/discussions/11209
+  if (asset.artistId === undefined) {
+    delete asset.artistId;
+  }
 
   return asset;
 };

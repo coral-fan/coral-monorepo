@@ -1,1 +1,1 @@
-export * from './ArtistInfo';
+export * from './CreatorInfo';

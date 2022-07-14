@@ -73,8 +73,8 @@ const stripePromise = loadStripe(NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 export const CollectionPage = ({
   tokenTotalSupply,
   imageUrl,
-  artistName,
-  artistProfilePhoto,
+  creatorName,
+  creatorProfilePhoto: artistProfilePhoto,
   artistId,
   name,
   type,
@@ -114,8 +114,8 @@ export const CollectionPage = ({
         collectionDetails={details}
         maxMintablePerWallet={maxMintablePerWallet}
         artistId={artistId}
-        artistName={artistName}
-        artistProfilePhoto={artistProfilePhoto}
+        creatorName={creatorName}
+        creatorProfilePhoto={artistProfilePhoto}
         imageUrl={imageUrl}
         redeemCode={redeemCode}
         merchOptionTypes={merchOptionTypes}
@@ -127,7 +127,7 @@ export const CollectionPage = ({
       maxSupply,
       price,
       name,
-      artistName,
+      creatorName,
       artistProfilePhoto,
       imageUrl,
       numMinted,
@@ -176,8 +176,8 @@ export const CollectionPage = ({
           isAsset={false}
           type={type}
           imageUrl={imageUrl}
-          artistName={artistName}
-          artistProfilePhoto={artistProfilePhoto}
+          creatorName={creatorName}
+          creatorProfilePhoto={artistProfilePhoto}
           artistId={artistId}
           name={name}
           description={description}

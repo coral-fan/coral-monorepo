@@ -50,9 +50,9 @@ export const DropOrAvailable = ({
   collectionId,
   collectionDetails,
   artistId,
-  artistName,
+  creatorName,
   imageUrl,
-  artistProfilePhoto,
+  creatorProfilePhoto: artistProfilePhoto,
   isSoldOut,
   maxMintablePerWallet,
   redeemCode,
@@ -160,7 +160,7 @@ export const DropOrAvailable = ({
               </MaxOwnedNotification>
             )}
             {/* TODO: remove this logic after VBs first event */}
-            {artistName !== 'Van Buren Records' && (
+            {creatorName !== 'Van Buren Records' && (
               <ProgressBar maxSupply={maxSupply} numMinted={numMintedDisplay} />
             )}
           </ConditionalSpinner>
@@ -177,8 +177,8 @@ export const DropOrAvailable = ({
           collectionId={collectionId}
           collectionDetails={collectionDetails}
           artistId={artistId}
-          artistName={artistName}
-          artistProfilePhoto={artistProfilePhoto}
+          creatorName={creatorName}
+          creatorProfilePhoto={artistProfilePhoto}
           usdPrice={usdPrice}
           redeemCode={redeemCode}
           merchOptionTypes={merchOptionTypes}

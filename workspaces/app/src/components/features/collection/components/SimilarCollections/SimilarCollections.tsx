@@ -32,7 +32,7 @@ export const SimilarCollections = ({ similarCollections }: SimilarCollectionsPro
           const { name, type, dropTime, price } = collection;
           const Badge = getBadge(type);
           return (
-            <ScrollableItemWrapper key={`${collection.artistName}-${name}-${dropTime}`}>
+            <ScrollableItemWrapper key={`${collection.creatorName}-${name}-${dropTime}`}>
               <DropCard
                 title={name}
                 Badge={Badge}

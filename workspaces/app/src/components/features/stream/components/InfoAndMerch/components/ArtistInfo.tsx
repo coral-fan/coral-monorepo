@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Link, SocialLinks } from 'components/ui';
-import { ArtistInfo as ArtistBadge } from 'components/ui/nft/components';
+import { CreatorInfo as ArtistBadge } from 'components/ui/nft/components';
 import { Artist } from 'libraries/models';
 
 const Container = styled.div`

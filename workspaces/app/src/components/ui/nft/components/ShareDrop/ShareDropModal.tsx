@@ -1,14 +1,14 @@
 import { ShareModal } from 'components/ui';
 import { ShareCard } from 'components/ui/nft';
-import { Artist } from 'libraries/models';
+import { Photo } from 'libraries/models';
 
 interface ShareDropProps {
   name: string;
   id: string;
   closeShareModal: () => void;
   imageUrl: string;
-  artistName: Artist['name'];
-  artistProfilePhoto: Artist['profilePhoto'];
+  creatorName: string;
+  creatorArtistPhoto: Photo;
   description: string;
   Badge: () => JSX.Element;
 }
@@ -16,8 +16,8 @@ export const ShareDropModal = ({
   name,
   closeShareModal,
   imageUrl,
-  artistName,
-  artistProfilePhoto,
+  creatorName,
+  creatorArtistPhoto,
   description,
   Badge,
   id,
@@ -30,8 +30,8 @@ export const ShareDropModal = ({
   >
     <ShareCard
       imageUrl={imageUrl}
-      artistName={artistName}
-      artistProfilePhoto={artistProfilePhoto}
+      creatorName={creatorName}
+      creatorProfilePhoto={creatorArtistPhoto}
       isCard={true}
       title={name}
       titleHeadingLevel={2}

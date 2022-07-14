@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import styled from '@emotion/styled';
-import { ArtistInfo } from './components';
-import { Artist } from 'libraries/models';
+import { CreatorInfo } from './components';
+import { Artist, Photo } from 'libraries/models';
 import { ConditionalWrap, Image, Link } from 'components/ui';
 
 // parent container
@@ -32,16 +32,16 @@ const LinkWrapper = styled.div`
 
 export interface ImageWithInfoProps {
   imageUrl: string;
-  artistName: Artist['name'];
-  artistProfilePhoto: Artist['profilePhoto'];
+  creatorName: string;
+  creatorProfilePhoto: Photo;
   artistId?: Artist['id'];
   isCard?: boolean;
 }
 
 export const ImageWithInfo = ({
   imageUrl,
-  artistName,
-  artistProfilePhoto,
+  creatorName,
+  creatorProfilePhoto,
   artistId,
   isCard,
 }: ImageWithInfoProps) => {
@@ -67,9 +67,9 @@ export const ImageWithInfo = ({
             </LinkWrapper>
           )}
         >
-          <ArtistInfo ref={imageInfoRef} profilePhoto={artistProfilePhoto}>
-            {artistName}
-          </ArtistInfo>
+          <CreatorInfo ref={imageInfoRef} profilePhoto={creatorProfilePhoto}>
+            {creatorName}
+          </CreatorInfo>
         </ConditionalWrap>
       </ArtistInfoContainer>
     </ImageWithInfoContainer>

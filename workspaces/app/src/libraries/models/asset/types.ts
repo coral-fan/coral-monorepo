@@ -10,8 +10,8 @@ export interface Asset {
   imageUrl: string;
   type: CollectionData['type'];
   gatedContent: CollectionData['gatedContent'];
-  artistName: Collection['artistName'];
-  artistProfilePhoto: Collection['artistProfilePhoto'];
+  creatorName: Collection['creatorName'];
+  creatorProfilePhoto: Collection['creatorProfilePhoto'];
   artistId: Collection['artistId'];
   collectionDescription: CollectionData['description'];
   collectionDetails: CollectionData['details'];
