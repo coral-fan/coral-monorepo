@@ -51,7 +51,13 @@ export const NftContent = ({
       {title}
     </Heading>
     {Badge && <Badge />}
-    {description && <Description>{description}</Description>}
+    {description && (
+      <Description
+        dangerouslySetInnerHTML={{
+          __html: description,
+        }}
+      />
+    )}
     {children}
   </ContentContainer>
 );
