@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Link } from 'components/ui';
 import { Collection } from 'libraries/models';
 import tokens from 'styles/tokens';
-import { RightArrowHoverIcon } from '../RightArrowHoverIcon';
+import { RightArrowHoverIcon } from './RightArrowHoverIcon';
 
 const Container = styled(Link)`
   display: flex;
@@ -25,7 +25,7 @@ interface CollectionBackLinkProps {
 }
 export const CollectionBackLink = ({ collectionId }: CollectionBackLinkProps) => {
   return (
-    <Container href={`${window.location.origin}/collection/${collectionId}`}>
+    <Container href={`/collection/${collectionId}`}>
       <RightArrowHoverIcon />
       Go to Collection
     </Container>
