@@ -1,4 +1,4 @@
-import { CoralNftV1__factory } from '@coral/contracts';
+import { ERC721__factory } from '@coral/contracts';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { AVALANCHE } from 'consts';
 import {
@@ -27,7 +27,7 @@ export const getTokenOwner$ = (collectionAddress: string, assetId: number) =>
   );
 
 export const getUserTokenBalance$ = (collectionAddress: string, userAddress: string) => {
-  const nftContract = CoralNftV1__factory.connect(collectionAddress, avalancheRpcProvider);
+  const nftContract = ERC721__factory.connect(collectionAddress, avalancheRpcProvider);
 
   return newBlock$.pipe(
     startWith(nftContract.balanceOf(userAddress)),
