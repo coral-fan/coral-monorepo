@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { BaseButton } from 'components/ui/buttons/BaseButton';
 import { getIconComponent } from 'components/ui/icons/utils';
 import { QUERY } from 'styles';
-import editAvatarSVG from './editAvatar.svg';
+import editAvatarSVG from './edit.svg';
 
 const EditAvatarIcon = getIconComponent('EditAvatarIcon', editAvatarSVG);
 
