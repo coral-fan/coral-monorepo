@@ -1,5 +1,5 @@
 import amexSVG from '../assets/creditCards/amex.svg';
-import chinaUnionPaySVG from '../assets/creditCards/chinaUnionPay.svg';
+import chinaUnionPaySVG from '../assets/creditCards/china-union-pay.svg';
 import dinersSVG from '../assets/creditCards/diners.svg';
 import discoverSVG from '../assets/creditCards/discover.svg';
 import jcbSVG from '../assets/creditCards/jcb.svg';

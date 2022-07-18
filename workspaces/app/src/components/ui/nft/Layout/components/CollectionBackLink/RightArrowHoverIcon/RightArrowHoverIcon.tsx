@@ -1,5 +1,5 @@
 import SVG, { Props as SVGProps } from 'react-inlinesvg';
-import leftArrowIcon from 'components/ui/icons/LeftArrowIcon/leftArrow.svg';
+import leftArrowIcon from 'components/ui/icons/LeftArrowIcon/left-arrow.svg';
 import styled from '@emotion/styled';
 
 const StyledSVG = styled(SVG)<SVGProps>`

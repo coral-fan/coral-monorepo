@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { ReactNode } from 'react';
 import { BaseButton, BaseButtonProps as CtaButtonProps } from '../../BaseButton';
-import rightArrowSvg from './rightArrow.svg';
+import rightArrowSVG from './right-arrow.svg';
 import tokens from 'styles/tokens';
 import { getIconComponent } from 'components/ui/icons/utils';
 import { css } from '@emotion/react';
@@ -29,7 +29,7 @@ export const Container = styled.div`
   color: ${tokens.font.color.contrast};
 `;
 
-const RightArrowIcon = getIconComponent('rightArrow', rightArrowSvg);
+const RightArrowIcon = getIconComponent('rightArrow', rightArrowSVG);
 
 interface CtaContentProps {
   children: ReactNode;

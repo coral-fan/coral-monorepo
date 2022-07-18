@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import coralPlusSVG from './coralPlus.svg';
+import coralPlusSVG from './coral-plus.svg';
 import { getIconComponent } from 'components/ui/icons/utils';
 import tokens from 'styles/tokens';
 import { ReactNode } from 'react';

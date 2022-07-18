@@ -1,4 +1,4 @@
-import secondaryLogoIconSVG from './secondaryLogo.svg';
+import secondaryLogoIconSVG from './secondary-logo.svg';
 
 export const SecondaryLogoIcon = ({ ...props }) => (
   // eslint-disable-next-line @next/next/no-img-element
