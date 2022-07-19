@@ -120,10 +120,6 @@ export const NftAssetContainer = styled.div<AssetDisplayProps>`
   }
 `;
 
-export const GatedContentWrapper = styled.div`
-  margin-top: calc(-1 * ${spacing.mobile.lg});
-`;
-
 export const AssetContentContainer = styled.div<AssetDisplayProps>`
   display: flex;
   flex-direction: column;
