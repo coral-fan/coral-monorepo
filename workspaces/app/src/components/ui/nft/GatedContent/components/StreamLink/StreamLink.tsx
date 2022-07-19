@@ -14,6 +14,7 @@ const getStreamLinkStyle = (isStreamAvailable: boolean) => css`
   width: 100%;
   padding: 36px 20px;
   border-top: dashed ${tokens.background.color.secondary} 3px;
+  margin-top: calc(-1 * ${tokens.spacing.mobile.lg});
 
   ${isStreamAvailable
     ? css`
