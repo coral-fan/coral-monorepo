@@ -9,7 +9,6 @@ import {
   AssetContentContainer,
   Container,
   ContentContainer,
-  GatedContentWrapper,
   ImageWrapper,
   NftAssetContainer,
 } from './components';
@@ -92,7 +91,7 @@ export const Layout = ({
             {owner}
           </AssetContentContainer>
         </NftAssetContainer>
-        <GatedContentWrapper>{gatedContentElement}</GatedContentWrapper>
+        {gatedContentElement}
         {details && <Details details={details} />}
         <ShareButton
           onClick={() => {
