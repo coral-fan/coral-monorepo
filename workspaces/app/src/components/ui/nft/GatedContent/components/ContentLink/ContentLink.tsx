@@ -6,6 +6,7 @@ import tokens from 'styles/tokens';
 const Wrapper = styled(Link)`
   text-decoration: underline;
   color: ${tokens.font.color.brand};
+  text-align: center;
 `;
 
 type ContentLinkProps = Pick<GatedUrl, 'url'>;
