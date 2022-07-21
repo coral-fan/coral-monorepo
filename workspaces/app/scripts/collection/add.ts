@@ -1,7 +1,10 @@
 import { isAddress } from '@ethersproject/address';
-import { getDocumentReferenceServerSide, initializeFirebaseAdmin } from 'libraries/firebase';
+import {
+  getDocumentReferenceServerSide,
+  getPublicFileUrl,
+  getStorageBucket,
+} from 'libraries/firebase';
 import { ArtistData, CollectionData, CollectionType } from 'libraries/models';
-import { getStorage } from 'firebase-admin/storage';
 import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
 import { readFile } from 'fs/promises';
@@ -78,32 +81,23 @@ const addCollection = async (projectName: string) => {
   /*
   Handle Image
   */
-  await initializeFirebaseAdmin();
-  const { getApp } = await import('firebase-admin/app');
-  const app = getApp();
+  const bucket = await getStorageBucket();
   const imagePath = getImagePath(projectDir);
-  const storageBucket = process.env.FIREBASE_STORAGE_BUCKET;
-
   const uuid = uuidv4();
 
-  const uploadResponse = await getStorage(app)
-    .bucket(storageBucket)
-    .upload(imagePath, {
-      destination: `collections/${address}/image.png`,
-      gzip: true,
+  const uploadResponse = await bucket.upload(imagePath, {
+    destination: `collections/${address}/image.png`,
+    gzip: true,
+    contentType: 'image/png',
+    metadata: {
       contentType: 'image/png',
       metadata: {
-        contentType: 'image/png',
-        metadata: {
-          firebaseStorageDownloadTokens: uuid,
-        },
+        firebaseStorageDownloadTokens: uuid,
       },
-    });
+    },
+  });
 
-  const fileName = uploadResponse[0].name;
-  const fileUrl = `https://firebasestorage.googleapis.com/v0/b/${storageBucket}/o/${encodeURIComponent(
-    fileName
-  )}?alt=media&token=${uuid}`;
+  const fileUrl = getPublicFileUrl(uploadResponse[0].name, uuid);
 
   const collectionRef = await getDocumentReferenceServerSide<CollectionData>(
     'collections',
