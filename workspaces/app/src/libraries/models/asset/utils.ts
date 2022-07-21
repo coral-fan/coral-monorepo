@@ -1,7 +1,38 @@
 import { getTokenOwner } from 'libraries/blockchain/utils';
+import { getPublicFileUrl, getStorageBucket } from 'libraries/firebase';
 import { Asset, Collection, getCollection, getPublicUserData, User } from 'libraries/models';
 import { OwnedNfts } from '../ownedNfts';
 import { PublicUserData } from '../user';
+
+export const getAssetImageUrl = async (collectionId: string, assetId: number) => {
+  const bucket = await getStorageBucket();
+  const destinationPath = `collections/${collectionId}/assets/${assetId}/image.png`;
+
+  const errorMessage = "firebaseStorageDownloadTokens isn't of type string";
+
+  try {
+    /*
+     * this will throw an exception if the asset image path doesn't exist
+     * hacky, but relying on this exception to check whether an asset has an unique image or not
+     * allows for flexible fallback to collection image
+     */
+    const metadataResponse = await bucket.file(destinationPath).getMetadata();
+    const { firebaseStorageDownloadTokens } = metadataResponse[0]?.metadata;
+
+    if (typeof firebaseStorageDownloadTokens === 'string') {
+      throw new Error(errorMessage);
+    }
+
+    return getPublicFileUrl(destinationPath, firebaseStorageDownloadTokens);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- type e as any so can check the message
+  } catch (e: any) {
+    // check if error message is token error as this is not expected behavior and needs to be addressed
+    if (e.message === errorMessage) {
+      console.error(e);
+    }
+    return undefined;
+  }
+};
 
 const getAssetWithKnownCollectionAndOwner = async (
   collection: Collection,
@@ -10,7 +41,7 @@ const getAssetWithKnownCollectionAndOwner = async (
   owner?: PublicUserData
 ): Promise<Asset> => {
   const {
-    imageUrl,
+    imageUrl: collectionImageUrl,
     creatorName,
     creatorProfilePhoto,
     artistId,
@@ -22,8 +53,10 @@ const getAssetWithKnownCollectionAndOwner = async (
     gatedContent,
   } = collection;
 
+  const assetImageUrl = await getAssetImageUrl(contractAddress, assetId);
+
   const asset: Asset = {
-    imageUrl,
+    imageUrl: assetImageUrl ?? collectionImageUrl,
     creatorName,
     creatorProfilePhoto,
     artistId,
