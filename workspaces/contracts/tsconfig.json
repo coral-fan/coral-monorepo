@@ -5,8 +5,19 @@
     "strict": true,
     "esModuleInterop": true,
     "outDir": "dist",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@coral/*": ["../app/src/libraries/*"],
+      // below configurations are necessary since these path aliases are used in code imported above
+      "libraries/*": ["../app/src/libraries/*"],
+      "consts": ["../app/src/consts"]
+    }
   },
-  "include": ["./tasks", "tests", "./dist"],
-  "files": ["./hardhat.config.ts"]
+  "include": ["./tasks", "tests", "./dist", "firebase-test.ts"],
+  "files": ["./hardhat.config.ts"],
+  // this is necessary per https://typestrong.org/ts-node/docs/paths/
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
 }
