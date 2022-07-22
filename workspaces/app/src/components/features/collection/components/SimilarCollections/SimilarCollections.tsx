@@ -1,13 +1,8 @@
 import styled from '@emotion/styled';
 import { DropCard, Heading, ScrollableItemWrapper, ScrollableContainer } from 'components/ui';
 import { getBadge } from 'components/ui/badges/utils';
-import { Collection } from 'libraries/models';
+import { PartialCollection } from 'libraries/models';
 import tokens from 'styles/tokens';
-
-export type PartialCollection = Omit<
-  Collection,
-  'gatedContent' | 'details' | 'description' | 'accessGrantingTokenAddresses'
->;
 
 export interface SimilarCollectionsProp {
   similarCollections: PartialCollection[];

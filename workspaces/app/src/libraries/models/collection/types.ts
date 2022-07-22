@@ -43,3 +43,8 @@ export interface Collection extends CollectionData {
   creatorName: ArtistData['name'];
   creatorProfilePhoto: ArtistData['profilePhoto'];
 }
+
+export type PartialCollection = Omit<
+  Collection,
+  'gatedContent' | 'details' | 'description' | 'accessGrantingTokenAddresses'
+>;
