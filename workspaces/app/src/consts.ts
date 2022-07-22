@@ -9,8 +9,9 @@ export const ID_TOKEN_KEY = 'id_token';
 
 export const SERVER_ENVIRONMENT = process.env.NODE_ENV;
 
-if (!process.env.NEXT_PUBLIC_ENV) {
-  throw Error(getEnvironmentVariableErrorMessage('ENV'));
+// checks npm_package_name to allow code in app to be ran in contracts workspace where NEXT_PUBLIC_ENV won't be defined
+if (!process.env.NEXT_PUBLIC_ENV && process.env.npm_package_name === 'app') {
+  throw Error(getEnvironmentVariableErrorMessage('NEXT_PUBLIC_ENV'));
 }
 
 export const CLIENT_ENVIRONMENT = process.env.NEXT_PUBLIC_ENV;
