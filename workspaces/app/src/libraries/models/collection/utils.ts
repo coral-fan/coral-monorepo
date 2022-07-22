@@ -1,9 +1,7 @@
-import { PartialCollection } from 'components/features/collection/components';
-import { sortCollectionByDropDateDesc } from 'components/ui';
-import { getAllDocuments, getDocumentData } from 'libraries/firebase';
+import { getAllDocuments, getDocumentData, DocumentDataWithId } from 'libraries/firebase';
 import { getArtist } from '../artist';
 import { Photo } from '../types';
-import { Collection, CollectionData } from './types';
+import { Collection, CollectionData, PartialCollection } from './types';
 
 const getArtistDataForCollection = async (
   artistId: string | undefined,
@@ -58,6 +56,17 @@ export const getCollection = async (id: Collection['id']) => {
 
   return collection;
 };
+
+// TODO: hacked this together to fix typing errors using function overloading. revisit to see if this is the best approach
+export function sortCollectionByDropDateDesc(arr: Collection[]): typeof arr;
+
+export function sortCollectionByDropDateDesc(arr: DocumentDataWithId<CollectionData>[]): typeof arr;
+
+export function sortCollectionByDropDateDesc(
+  arr: Collection[] | DocumentDataWithId<CollectionData>[]
+) {
+  return arr.sort((a, b) => new Date(b.dropTime).getTime() - new Date(a.dropTime).getTime());
+}
 
 export const getSimilarCollections = async (collectionId: Collection['id'], n: number) => {
   const similarCollectionData = await getAllDocuments<CollectionData>('collections');
