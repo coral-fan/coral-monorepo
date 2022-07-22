@@ -1,7 +1,7 @@
 import { getBadge } from 'components/ui/badges/utils';
 import { DropCard } from 'components/ui';
-import { Collection } from 'libraries/models';
-import { ItemsPlaceholder, sortCollectionByDropDateDesc } from 'components/ui/profile';
+import { Collection, sortCollectionByDropDateDesc } from 'libraries/models';
+import { ItemsPlaceholder } from 'components/ui/profile';
 import { ProfileItems } from 'components/ui';
 import { ProfileItemWrapper } from 'components/ui/profile';
 
