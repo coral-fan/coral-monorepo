@@ -2,8 +2,13 @@ import { GetServerSideProps } from 'next';
 
 import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
 
-import { Collection, getCollection, getSimilarCollections } from 'libraries/models/collection';
-import { DropOrAvailable, SimilarCollections, PartialCollection } from './components';
+import {
+  Collection,
+  PartialCollection,
+  getCollection,
+  getSimilarCollections,
+} from 'libraries/models';
+import { DropOrAvailable, SimilarCollections } from './components';
 import { GatedContent, Layout as CollectionLayout } from 'components/ui/nft';
 import { useEffect, useMemo, useState } from 'react';
 
