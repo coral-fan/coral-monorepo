@@ -3,6 +3,7 @@ import '@nomiclabs/hardhat-waffle';
 import '@typechain/hardhat';
 import '@nomiclabs/hardhat-ethers';
 import 'hardhat-gas-reporter';
+import 'hardhat-deploy';
 import { HardhatUserConfig } from 'hardhat/types';
 import { config } from 'dotenv';
 
@@ -11,30 +12,38 @@ import './tasks';
 
 config();
 
-const { SNOWTRACE_API_KEY } = process.env;
-
 const hardhatConfig: HardhatUserConfig = {
   defaultNetwork: 'hardhat',
   etherscan: {
-    apiKey: SNOWTRACE_API_KEY,
+    apiKey: process.env.SNOWTRACE_API_KEY,
   },
   solidity: '0.8.14',
   networks: {
     hardhat: {
       forking: {
-        url: 'https://api.avax-test.network/ext/bc/C/rpc',
+        url: process.env.URL_FUJI || '',
       },
     },
     fuji: {
-      url: 'https://api.avax-test.network/ext/bc/C/rpc',
+      url: process.env.URL_FUJI || '',
       chainId: 43113,
       accounts: [],
+      saveDeployments: true,
     },
     mainnet: {
-      url: 'https://api.avax.network/ext/bc/C/rpc',
+      url: process.env.URL_MAINNET || '',
       chainId: 43114,
       accounts: [],
+      saveDeployments: true,
     },
+  },
+  gasReporter: {
+    enabled: true,
+    currency: 'USD',
+    outputFile: 'gas-report.txt',
+    noColors: true,
+    coinmarketcap: process.env.COINMARKETCAP_API_KEY,
+    token: 'AVAX',
   },
   paths: {
     sources: 'src',
