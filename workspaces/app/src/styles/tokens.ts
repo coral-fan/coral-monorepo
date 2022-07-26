@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import { CLIENT_ENVIRONMENT } from 'consts';
 import { createTheme } from 'theme-in-css';
 
 /*
