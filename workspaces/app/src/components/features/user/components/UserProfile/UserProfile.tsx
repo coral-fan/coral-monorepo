@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { EditAvatarButton, EditProfileLinkButton } from './components';
 import {
   useIsUpdateProfilePhotoModalOpen,
@@ -8,17 +9,23 @@ import {
 import { useCallback, useMemo } from 'react';
 import { UpdateProfileInfoModal } from '../UpdateProfile/components/UpdateProfileInfoModal';
 import { UpdateProfilePhotoModal } from '../UpdateProfile/components/UpdateProfilePhotoModal';
-import { ConditionalSpinner, Profile } from 'components/ui';
-import { Assets } from '../Assets';
-import { Asset } from 'libraries/models';
 import { useIsReferralUser, useReferralUserData } from 'libraries/models/referral/hooks';
 import { Points } from '../Points';
 import tokens from 'styles/tokens';
+import { Button, Modal, ConditionalSpinner, Profile } from 'components/ui';
+import { Assets } from '../Assets';
+import { Asset } from 'libraries/models';
+import { useClipboard, useModal } from 'libraries/utils';
+
+const ClaimButton = styled(Button)`
+  height: 45px;
+  margin-top: 10px;
+  padding: 0 15px;
+`;
 
 interface UserProfileProps {
   assets: Asset[];
 }
-
 export const UserProfile = ({ assets }: UserProfileProps) => {
   const [{ id, username, profilePhoto, socialHandles, bio }] = useUser();
   const isCurrentUser = useIsCurrentUser();
@@ -81,6 +88,34 @@ export const UserProfile = ({ assets }: UserProfileProps) => {
     );
   }, [isLoading, isCurrentUser, isReferralUser, referralUserData]);
 
+  const { isModalOpen, openModal, closeModal } = useModal();
+
+  const copyUsernameToClipboard = useClipboard(() => username, 'Username copied to clipboard!');
+
+  const cta = useMemo(
+    () => (
+      <>
+        <ClaimButton onClick={openModal}>Claim Reward</ClaimButton>
+        {isModalOpen && (
+          <Modal title="Claim Reward" onClick={closeModal}>
+            <>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum
+              </p>
+              <Button onClick={copyUsernameToClipboard}>Copy Username</Button>
+            </>
+          </Modal>
+        )}
+      </>
+    ),
+    [openModal, isModalOpen, closeModal, copyUsernameToClipboard]
+  );
+
   return (
     <Profile
       username={username}
@@ -89,6 +124,7 @@ export const UserProfile = ({ assets }: UserProfileProps) => {
       socialHandles={socialHandles}
       editAvatar={editAvatar}
       editProfileInfo={editProfileInfo}
+      cta={cta}
       items={<Assets assets={assets} />}
       referralContent={referralContent}
     />
