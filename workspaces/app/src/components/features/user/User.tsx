@@ -11,15 +11,16 @@ import { NextParsedUrlQuery } from 'next/dist/server/request-meta';
 import { getAssets } from 'libraries/models/asset/utils';
 interface UserPageProps {
   userData: User;
+  doesUserHaveUnclaimedReward: boolean;
 }
 
-export const UserPage = ({ userData }: UserPageProps) => {
+export const UserPage = ({ userData, doesUserHaveUnclaimedReward }: UserPageProps) => {
   // TODO: look to see if asssets can be used from context instead
   const { assets } = userData;
 
   return (
     <UserPageProvider userData={userData}>
-      <UserProfile assets={assets} />
+      <UserProfile assets={assets} doesUserHaveUnclaimedReward={doesUserHaveUnclaimedReward} />
     </UserPageProvider>
   );
 };
@@ -72,6 +73,20 @@ export const getServerSideProps: GetServerSideProps<UserPageProps, UserParams> =
 
   const { followingArtistIds, ...partialPublicUserData } = publicUserData;
 
+  const unclaimedRewards = await getDocumentData<{ userIds: string[] }>(
+    'app',
+    'unclaimed-early-sign-up-rewards'
+  );
+
+  if (unclaimedRewards === undefined) {
+    throw new Error('document app/unclaimed-early-sign-up-rewards cannot be undefined');
+  }
+
+  const doesUserHaveUnclaimedReward =
+    unclaimedRewards.userIds.find(
+      (userWithUnclaimedRewardId) => userWithUnclaimedRewardId === id
+    ) !== undefined;
+
   // TODO: Add real following logic
   const followingArtists = followingArtistIds.length > 0 ? [] : [];
 
@@ -87,6 +102,7 @@ export const getServerSideProps: GetServerSideProps<UserPageProps, UserParams> =
   return {
     props: {
       userData,
+      doesUserHaveUnclaimedReward,
     },
   };
 };
