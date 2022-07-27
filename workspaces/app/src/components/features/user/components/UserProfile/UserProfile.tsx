@@ -25,8 +25,10 @@ const ClaimButton = styled(Button)`
 
 interface UserProfileProps {
   assets: Asset[];
+  doesUserHaveUnclaimedReward: boolean;
 }
-export const UserProfile = ({ assets }: UserProfileProps) => {
+
+export const UserProfile = ({ assets, doesUserHaveUnclaimedReward }: UserProfileProps) => {
   const [{ id, username, profilePhoto, socialHandles, bio }] = useUser();
   const isCurrentUser = useIsCurrentUser();
   const isReferralUser = useIsReferralUser();
@@ -93,27 +95,36 @@ export const UserProfile = ({ assets }: UserProfileProps) => {
   const copyUsernameToClipboard = useClipboard(() => username, 'Username copied to clipboard!');
 
   const cta = useMemo(
-    () => (
-      <>
-        <ClaimButton onClick={openModal}>Claim Reward</ClaimButton>
-        {isModalOpen && (
-          <Modal title="Claim Reward" onClick={closeModal}>
-            <>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim id est laborum
-              </p>
-              <Button onClick={copyUsernameToClipboard}>Copy Username</Button>
-            </>
-          </Modal>
-        )}
-      </>
-    ),
-    [openModal, isModalOpen, closeModal, copyUsernameToClipboard]
+    () =>
+      isCurrentUser &&
+      doesUserHaveUnclaimedReward && (
+        <>
+          <ClaimButton onClick={openModal}>Claim Reward</ClaimButton>
+          {isModalOpen && (
+            <Modal title="Claim Reward" onClick={closeModal}>
+              <>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+                  officia deserunt mollit anim id est laborum
+                </p>
+                <Button onClick={copyUsernameToClipboard}>Copy Username</Button>
+              </>
+            </Modal>
+          )}
+        </>
+      ),
+    [
+      isCurrentUser,
+      doesUserHaveUnclaimedReward,
+      openModal,
+      isModalOpen,
+      closeModal,
+      copyUsernameToClipboard,
+    ]
   );
 
   return (
