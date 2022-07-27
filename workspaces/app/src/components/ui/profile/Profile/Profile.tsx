@@ -1,4 +1,4 @@
-import { Avatar } from 'components/ui';
+import { Avatar, Button } from 'components/ui';
 import {
   ProfileContainer,
   MainProfileContainer,
@@ -20,6 +20,7 @@ interface ProfileProps {
   socialHandles: SocialHandles;
   editAvatar?: JSX.Element | false;
   editProfileInfo?: JSX.Element | false;
+  cta?: JSX.Element | false;
   artistTag?: JSX.Element;
   items?: JSX.Element;
   referralContent?: JSX.Element | false;
@@ -32,6 +33,7 @@ export const Profile = ({
   socialHandles,
   editAvatar,
   editProfileInfo,
+  cta,
   artistTag,
   items,
   referralContent,
@@ -51,6 +53,7 @@ export const Profile = ({
           <UsernameContainer>
             <Username>{username}</Username>
             {editProfileInfo}
+            {cta}
           </UsernameContainer>
         </MainProfileContainer>
         <UserContentContainer>
