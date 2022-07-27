@@ -1,19 +1,10 @@
 import { Button, Message, Modal } from 'components/ui';
-import { useErrorToast, useSuccessToast } from 'libraries/utils/toasts';
-import { useCallback } from 'react';
+import { useClipboard } from 'libraries/utils/clipboard';
+
+const getCurrentUrl = () => window.location.href;
 
 export const UnsupportedBrowserModal = () => {
-  const successToast = useSuccessToast();
-  const errorToast = useErrorToast();
-
-  const addCurrentUrlToClipboard = useCallback(async () => {
-    try {
-      await window.navigator.clipboard.writeText(window.location.href);
-      successToast('Link copied to clipboard!');
-    } catch (e) {
-      errorToast();
-    }
-  }, [successToast, errorToast]);
+  const copyCurrentUrlToClipboard = useClipboard(getCurrentUrl, 'Link copied to clipboard!');
 
   return (
     <Modal title="Unsupported Browser">
@@ -24,7 +15,7 @@ export const UnsupportedBrowserModal = () => {
           Please open the page in a mobile browser.
         </>
       </Message>
-      <Button onClick={addCurrentUrlToClipboard}>Copy Link</Button>
+      <Button onClick={copyCurrentUrlToClipboard}>Copy Link</Button>
     </Modal>
   );
 };
