@@ -25,8 +25,8 @@ const getStreamLinkStyle = (isStreamAvailable: boolean) => css`
       `}
 `;
 
-export const StreamLink = ({ type, value }: GatedContent) => {
-  const isStreamAvailable = useMemo(() => type === 'stream' && value !== null, [type, value]);
+export const StreamLink = ({ value }: Omit<GatedContent, 'type'>) => {
+  const isStreamAvailable = useMemo(() => value !== null, [value]);
 
   return (
     <Link

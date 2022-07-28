@@ -9,8 +9,8 @@ const Wrapper = styled(Link)`
   text-align: center;
 `;
 
-export const ContentLink = ({ type, value }: GatedContent) => {
-  if (type === 'url' && value) {
+export const ContentLink = ({ value }: Omit<GatedContent, 'type'>) => {
+  if (value) {
     return <Wrapper href={value}>Download Content</Wrapper>;
   } else {
     return null;
