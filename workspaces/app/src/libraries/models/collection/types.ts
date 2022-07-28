@@ -4,17 +4,11 @@ import { NullableString } from '../types';
 
 export type CollectionType = 'video' | 'music' | 'stream' | 'merch' | 'all_access' | 'ticket';
 
-export interface GatedStream {
-  type: 'stream';
-  id: NullableString;
+export interface GatedContent {
+  type: 'stream' | 'url';
+  value: NullableString;
 }
 
-export interface GatedUrl {
-  type: 'url';
-  url: string;
-}
-
-export type GatedContent = GatedUrl | GatedStream | null;
 export type Details = string[] | null;
 
 export interface CollectionData {
@@ -30,7 +24,7 @@ export interface CollectionData {
   dropTime: string;
   description: string;
   details: Details;
-  gatedContent: GatedContent;
+  gatedContent?: GatedContent;
   maxMintablePerWallet: number;
   // undefined to allow flexibility in Firestore
   merchOptionTypes?: MerchOptionTypes;
