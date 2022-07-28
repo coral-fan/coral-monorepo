@@ -18,7 +18,8 @@ export const getStorageBucket = async () => {
 
 export const getPublicFileUrl = (destinationPath: string, accessToken: string) => {
   const storageBucketUrl = getStorageBucketUrl();
-  `https://firebasestorage.googleapis.com/v0/b/${storageBucketUrl}/o/${encodeURIComponent(
+
+  return `https://firebasestorage.googleapis.com/v0/b/${storageBucketUrl}/o/${encodeURIComponent(
     destinationPath
   )}?alt=media&token=${accessToken}`;
 };
