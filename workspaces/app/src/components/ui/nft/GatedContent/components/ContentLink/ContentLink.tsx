@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Link } from 'components/ui';
-import { GatedUrl } from 'libraries/models';
+import { GatedContent } from 'libraries/models';
 import tokens from 'styles/tokens';
 
 const Wrapper = styled(Link)`
@@ -9,8 +9,10 @@ const Wrapper = styled(Link)`
   text-align: center;
 `;
 
-type ContentLinkProps = Pick<GatedUrl, 'url'>;
-
-export const ContentLink = ({ url }: ContentLinkProps) => (
-  <Wrapper href={url}>Download Content</Wrapper>
-);
+export const ContentLink = ({ type, value }: GatedContent) => {
+  if (type === 'url' && value) {
+    return <Wrapper href={value}>Download Content</Wrapper>;
+  } else {
+    return null;
+  }
+};

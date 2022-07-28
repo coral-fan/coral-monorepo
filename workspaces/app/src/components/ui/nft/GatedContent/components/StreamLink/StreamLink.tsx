@@ -1,12 +1,9 @@
 import { css } from '@emotion/react';
 import { Link } from 'components/ui';
 import { CtaContent, CtaWrapperStyle } from 'components/ui/buttons/variants/CtaButton';
-import { GatedStream } from 'libraries/models';
+import { GatedContent } from 'libraries/models';
 import tokens from 'styles/tokens';
 import { useMemo } from 'react';
-interface StreamLinkProps {
-  streamId: GatedStream['id'];
-}
 
 const getStreamLinkStyle = (isStreamAvailable: boolean) => css`
   ${CtaWrapperStyle};
@@ -28,12 +25,12 @@ const getStreamLinkStyle = (isStreamAvailable: boolean) => css`
       `}
 `;
 
-export const StreamLink = ({ streamId }: StreamLinkProps) => {
-  const isStreamAvailable = useMemo(() => streamId !== null, [streamId]);
+export const StreamLink = ({ type, value }: GatedContent) => {
+  const isStreamAvailable = useMemo(() => type === 'stream' && value !== null, [type, value]);
 
   return (
     <Link
-      href={isStreamAvailable ? `/stream/${streamId}` : '#'}
+      href={isStreamAvailable ? `/stream/${value}` : '#'}
       css={getStreamLinkStyle(isStreamAvailable)}
     >
       <CtaContent>{isStreamAvailable ? 'Access Stream' : 'Stream Coming Soon'}</CtaContent>
