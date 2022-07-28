@@ -80,7 +80,7 @@ export const AssetPage = ({
   }, [contractAddress, id, currentUserId]);
 
   const gatedContentElement = useMemo(
-    () => (isCurrentUserOwner ? getGatedContentComponent(gatedContent) : null),
+    () => (isCurrentUserOwner && gatedContent ? getGatedContentComponent(gatedContent) : null),
     [isCurrentUserOwner, gatedContent]
   );
 
