@@ -5,9 +5,10 @@ import { ethers, waffle } from 'hardhat';
 import hre from 'hardhat';
 
 /*
-Update constructorArgs here
+Update project here
 */
-import config from '../projects/house-atreides-genesis/config.json';
+import config from '../projects/new-project/config.json';
+
 const constructorArgs = config.contract;
 const contractName = constructorArgs.contractName;
 
@@ -80,7 +81,10 @@ describe(`Running Tests on ${contractName}...`, () => {
     });
   });
 
-  describe('Prior to Drop Date Mints', () => {
+  describe('Prior to Drop Date Mints', async () => {
+    const futureDateInSeconds = Math.floor(new Date().getTime() / 1000) + 1000 * 60;
+    await contract.connect(owner).setSaleStartTime(futureDateInSeconds);
+
     it('Public mint should revert because prior to drop date', async () => {
       const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
 
@@ -90,6 +94,9 @@ describe(`Running Tests on ${contractName}...`, () => {
     });
 
     it('Relay mint should revert because prior to drop date', async () => {
+      const futureDateInSeconds = Math.floor(new Date().getTime() / 1000) + 1000 * 60;
+      await contract.connect(owner).setSaleStartTime(futureDateInSeconds);
+
       await contract.connect(owner).addRelayAddr(relayer1.address);
       await expect(contract.connect(relayer1).relayMint(relayer1.address)).to.be.revertedWith(
         'Sale has not started yet'
@@ -297,6 +304,10 @@ describe(`Running Tests on ${contractName}...`, () => {
       await expect(contract.connect(addr1).withdraw()).to.be.revertedWith(ONLY_OWNER_ERROR_MESSAGE);
     });
 
+    it('Withdraw should revert because balance is zero', async () => {
+      await expect(contract.connect(owner).withdraw()).to.be.revertedWith('Nothing to withdraw');
+    });
+
     it('Owner of contract should be able to withdraw funds', async () => {
       const provider = waffle.provider;
       const startingBalance = await owner.getBalance();
@@ -338,6 +349,89 @@ describe(`Running Tests on ${contractName}...`, () => {
       await contract.connect(owner).transferOwnership(addr1.address);
       expect(await contract.owner()).to.equal(addr1.address);
     });
+
+    it('Should set a new start time', async () => {
+      const todayInSeconds = Math.floor(new Date().getTime() / 1000);
+      await contract.connect(owner).setSaleStartTime(todayInSeconds);
+      expect(await contract.saleStartTime()).to.equal(todayInSeconds);
+    });
+
+    it('Non owner cannot set new start time', async () => {
+      const todayInSeconds = Math.floor(new Date().getTime() / 1000);
+      await expect(contract.connect(addr1).setSaleStartTime(todayInSeconds)).to.be.revertedWith(
+        ONLY_OWNER_ERROR_MESSAGE
+      );
+    });
+
+    it('Royalty info correctly set', async () => {
+      // await contract.connect(owner).setDefaultRoyalty(addr2.address, 250)
+
+      const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
+      await contract.connect(addr1).publicMint({ value: estimatedTokenPrice });
+
+      const [royaltyAddress, royaltyAmount] = await contract.royaltyInfo(
+        1,
+        ethers.utils.parseEther('1')
+      );
+
+      expect(royaltyAddress).to.equal(constructorArgs.royaltyFeeRecipient);
+      expect(royaltyAmount).to.equal(
+        ethers.utils.parseEther((1 * (constructorArgs.royaltyFeeNumerator / 10000)).toString())
+      );
+    });
+
+    it('Should revert because non-owner attempting to set new royalty info', async () => {
+      await expect(
+        contract.connect(addr1).setDefaultRoyalty(addr2.address, 250)
+      ).to.be.revertedWith(ONLY_OWNER_ERROR_MESSAGE);
+    });
+
+    it('Owner able to set new royalty info correctly set', async () => {
+      await contract.connect(owner).setDefaultRoyalty(addr2.address, 250);
+
+      const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
+      await contract.connect(addr1).publicMint({ value: estimatedTokenPrice });
+
+      const [royaltyAddress, royaltyAmount] = await contract.royaltyInfo(
+        1,
+        ethers.utils.parseEther('1')
+      );
+
+      expect(royaltyAddress).to.equal(addr2.address);
+      expect(royaltyAmount).to.equal(ethers.utils.parseEther((1 * (250 / 10000)).toString()));
+    });
+
+    it('Owner should be able to delete default royalty', async () => {
+      await contract.connect(owner).deleteDefaultRoyalty();
+
+      const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
+      await contract.connect(addr1).publicMint({ value: estimatedTokenPrice });
+
+      const [royaltyAddress, royaltyAmount] = await contract.royaltyInfo(
+        1,
+        ethers.utils.parseEther('1')
+      );
+      expect(royaltyAddress).to.equal(ethers.constants.AddressZero);
+      expect(royaltyAmount).to.equal(ethers.utils.parseEther('0'));
+
+      await expect(contract.connect(addr1).deleteDefaultRoyalty()).to.be.revertedWith(
+        ONLY_OWNER_ERROR_MESSAGE
+      );
+    });
+  });
+
+  describe('Supports Interface', () => {
+    it('Should return true for all required interface IDs', async () => {
+      const ERC721InterfaceId = '0x80ac58cd';
+      const ERC2981InterfaceId = '0x2a55205a';
+      const ERC165InterfaceId = '0x01ffc9a7';
+      const FakeInterfaceId = '0x01ffc8a1';
+
+      expect(await contract.supportsInterface(ERC721InterfaceId)).to.equal(true);
+      expect(await contract.supportsInterface(ERC2981InterfaceId)).to.equal(true);
+      expect(await contract.supportsInterface(ERC165InterfaceId)).to.equal(true);
+      expect(await contract.supportsInterface(FakeInterfaceId)).to.equal(false);
+    });
   });
 
   describe('Token URI', () => {
@@ -355,6 +449,15 @@ describe(`Running Tests on ${contractName}...`, () => {
       await contract.connect(addr1).publicMint({ value: estimatedTokenPrice });
 
       expect(await contract.tokenURI(1)).to.equal('ipfs://newTokenURI/metadata.json');
+    });
+
+    it('Should revert because token ID does not exist', async () => {
+      const estimatedTokenPrice = await contract.connect(addr1).getTokenPriceInAvax();
+      await contract.connect(addr1).publicMint({ value: estimatedTokenPrice });
+
+      await expect(contract.tokenURI(2)).to.be.revertedWith(
+        'ERC721Metadata: URI query for nonexistent token'
+      );
     });
 
     it('Should revert because sale is not active', async () => {
