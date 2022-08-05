@@ -4,13 +4,18 @@ import { Contract, ContractFactory } from 'ethers';
 import { ethers, waffle } from 'hardhat';
 import hre from 'hardhat';
 
+import { config } from 'dotenv';
+config();
+
 /*
 Update project here
 */
-import config from '../projects/new-project/config.json';
+import projectConfig from '../projects/new-project/config.json';
 
-const constructorArgs = config.contract;
+const constructorArgs = projectConfig.contract;
 const contractName = constructorArgs.contractName;
+
+const AVAX_USD_PRICEFEED_FUJI = process.env.AVAX_USD_PRICEFEED_FUJI;
 
 const ONLY_OWNER_ERROR_MESSAGE = 'Ownable: caller is not the owner';
 
@@ -47,7 +52,6 @@ describe(`Running Tests on ${contractName}...`, () => {
       saleStartTime,
       royaltyFeeRecipient,
       royaltyFeeNumerator,
-      avaxUsdPriceFeedAddress,
     } = constructorArgs;
 
     contract = await NFTContract.deploy(
@@ -60,7 +64,7 @@ describe(`Running Tests on ${contractName}...`, () => {
       saleStartTime,
       royaltyFeeRecipient,
       royaltyFeeNumerator,
-      avaxUsdPriceFeedAddress
+      AVAX_USD_PRICEFEED_FUJI
     );
 
     // await contract.connect(owner).setSaleState(true);
@@ -76,7 +80,7 @@ describe(`Running Tests on ${contractName}...`, () => {
     });
 
     it('Drop date and contract start time should be equal', async () => {
-      const dropTimeSeconds = new Date(config.collectionData.dropTime).getTime() / 1000;
+      const dropTimeSeconds = new Date(projectConfig.collectionData.dropTime).getTime() / 1000;
       expect(dropTimeSeconds).to.equal(constructorArgs.saleStartTime);
     });
   });
