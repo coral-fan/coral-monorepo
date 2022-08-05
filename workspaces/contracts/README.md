@@ -29,13 +29,13 @@
 
 - If you don't already have a `projects` folder in `contract`, please create one.
 
-- From `contracts`, run `node project-setup-cli.mjs "<PROJECT_NAME>" "<NETWORK>"` and follow the prompts. This creates an initial configuration file.
+- From `contracts`, run `yarn run create "<PROJECT_NAME>"` and follow the prompts. This creates an initial configuration file.
 
 - For Drop date and time, please enter the date and time in your local environment, the output will be converted to UTC time.
 
 - After the script finishes running, add the image to the new project directory's image folder, and name it `image.png`.
 
-- Review and update the `config.json` as needed - please add values for `details` and `gatedContent`.
+- Review and update the `config.json` as needed - please add values for `details`.
 
 ## Test
 
@@ -49,13 +49,9 @@
 
 - IMPORTANT: Review and confirm that the values in the `config.json` file are all correct.
 
-- Run `npx hardhat create-and-deploy --project <PROJECT_NAME> --network <NETWORK_NAME>` to trigger the hardhat task that uploads metadata, deploys and verifies the contract.
+- Run `npx hardhat run-deploy --project-name <PROJECT_NAME> --network <NETWORK_NAME>` to trigger the hardhat task that uploads metadata, deploys and verifies the contract.
 
 - Note: For testnet, set `NETWORK_NAME` to `fuji`; To deploy to mainnet, set `NETWORK_NAME` to `mainnet`
-
-## Update Firestore DB
-
-- From `coral-monorepo` run `yarn app run-script:<development_OR_production> scripts/collection/add.ts <PROJECT_NAME>`
 
 ## Run Airdrop Script (if applicable)
 
