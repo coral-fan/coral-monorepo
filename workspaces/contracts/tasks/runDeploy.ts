@@ -29,14 +29,13 @@ task('run-deploy', 'Creates and Deploys a new Project')
 
       fs.writeFileSync(configPath, JSON.stringify(configFile, null, 2), 'utf8');
 
-      console.log(' ');
-      console.log('Starting verification now...');
+      console.log('\n Starting verification now...');
       await hre.run('verifyContract', { verifyArgs });
 
-      console.log('Adding relay addresses...');
+      console.log('\n Adding relay addresses...');
       await hre.run('addRelayAddresses', { address });
 
-      console.log('Updating sentinels...');
+      console.log('\n Updating sentinels...');
       const newAddress = address;
 
       // Don't think you can pass boolean via hardhat, must be string

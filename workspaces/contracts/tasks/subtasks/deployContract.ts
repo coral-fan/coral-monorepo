@@ -26,8 +26,7 @@ subtask('deployContract', 'Deploy contract')
 
     const contractFactory: ContractFactory = await ethers.getContractFactory(contractName, signer);
 
-    console.log('');
-    console.log('Deploying contract....');
+    console.log('\n Deploying contract....');
 
     try {
       const contract: Contract = await contractFactory.deploy(
@@ -43,11 +42,11 @@ subtask('deployContract', 'Deploy contract')
         avaxUsdPriceFeedAddress
       );
 
-      console.log('Waiting for confirmation....');
+      console.log('\n Waiting for confirmation....');
       // Wait 6 blocks for confirmation
       await contract.deployTransaction.wait(6);
 
-      console.log('Contract deployed to: ', contract.address);
+      console.log('\n Contract deployed to: ', contract.address);
 
       return contract.address;
     } catch (e: any) {

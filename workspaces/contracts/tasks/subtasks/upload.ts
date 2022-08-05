@@ -9,6 +9,8 @@ export const upload = subtask('upload', 'Upload metadata via nft.storage')
   .setAction(async ({ projectDir }, hre) => {
     const network = hre.network.name as Network;
 
+    console.log('\n Uploading image and metadata to nft.storage');
+
     const { nftStorageKey, avaxUsdPriceFeedAddress } = getDeploymentConsts(network);
 
     const imagePath = getImagePath(projectDir);
@@ -60,7 +62,7 @@ export const upload = subtask('upload', 'Upload metadata via nft.storage')
     };
 
     if (upload) {
-      console.log('Upload successful! Metadata URI: ', upload.url);
+      console.log('\n Upload successful! Metadata URI: ', upload.url);
       constructorArgs.baseTokenURI = upload.url;
       return JSON.stringify(constructorArgs);
     } else {

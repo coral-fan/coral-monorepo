@@ -27,9 +27,9 @@ subtask('addRelayAddresses', 'Set Relay Addresses')
       const txn = await contract.addRelayAddr(paymentRelayAddresses[i]);
       const receipt = await txn.wait();
       if (receipt.status === 1) {
-        console.log(`Relay Address: ${paymentRelayAddresses[i]} added...`);
+        console.log(`\n Relay Address: ${paymentRelayAddresses[i]} added...`);
       } else {
-        console.log(`Relay Address not added!`);
+        console.log(`\n Something went wrong: Relay Address not added!`);
       }
     }
   });
