@@ -12,6 +12,7 @@ const getStorageBucketUrl = () => {
 
 export const getStorageBucket = async () => {
   const storageBucketName = getStorageBucketUrl();
+
   await initializeFirebaseAdmin();
   return getStorage().bucket(storageBucketName);
 };
