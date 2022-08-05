@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import readline from 'readline';
 
+import { initialConfig } from '../config/initialConfig';
+
 import { config } from 'dotenv';
 config();
 
@@ -40,83 +42,6 @@ const convertToSeconds = (date: Date) => {
   return Math.floor(d.getTime() / 1000);
 };
 
-interface Attribute {
-  trait_type: string;
-  value: string;
-}
-
-interface Contract {
-  address: string;
-  contractName: string;
-  name: string;
-  symbol: string;
-  usdPricePerToken: number;
-  maxSupply: number;
-  maxTokensPerWallet: number;
-  saleStartTime: number;
-  royaltyFeeRecipient: string;
-  royaltyFeeNumerator: number;
-  description: string;
-  tokenURI: string;
-  numAttributes: number;
-  attributes: Attribute[];
-  avaxUsdPriceFeedAddress: string;
-}
-
-interface CollectionData {
-  artistId: string;
-  imageUrl: string;
-  type: string;
-  dropTime: Date | undefined;
-  details: string[];
-  gatedContent: {
-    type: string;
-    value: string | null;
-  };
-  merchOptionTypes: string[] | null;
-  accessGrantingTokenAddresses: string[];
-}
-
-interface Config {
-  contract: Contract;
-  collectionData: CollectionData;
-}
-/*
-Initial JSON File Config
-*/
-const initialConfig: Config = {
-  contract: {
-    address: '',
-    contractName: 'CoralNftV1',
-    name: projectName,
-    symbol: '',
-    usdPricePerToken: 0,
-    maxSupply: 0,
-    maxTokensPerWallet: 2,
-    saleStartTime: 0,
-    royaltyFeeRecipient: '',
-    royaltyFeeNumerator: 0,
-    description: '',
-    tokenURI: '',
-    numAttributes: 0,
-    attributes: [],
-    avaxUsdPriceFeedAddress: '',
-  },
-  collectionData: {
-    artistId: '',
-    imageUrl: '',
-    type: '',
-    dropTime: undefined,
-    details: [],
-    gatedContent: {
-      type: '',
-      value: '',
-    },
-    merchOptionTypes: [],
-    accessGrantingTokenAddresses: [],
-  },
-};
-
 console.log(`---------------------------------------------`);
 console.log(`>>> Creating new project: ${projectName.toUpperCase()}`);
 console.log(`---------------------------------------------`);
@@ -140,6 +65,9 @@ const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
+
+// Add project name
+initialConfig.contract.name = projectName;
 
 const addSymbol = () => {
   return new Promise<void>((resolve, reject) => {
