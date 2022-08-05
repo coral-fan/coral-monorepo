@@ -11,4 +11,7 @@ types
 
 airdrops
 
+coverage
+coverage.json
+gas-report-current.txt
 gas-report.txt
