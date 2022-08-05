@@ -316,7 +316,10 @@ const getNumAccessGrantingTokenAddresses = () => {
 const addAccessGrantingTokenAddress = async () => {
   return new Promise<void>((resolve, reject) => {
     rl.question(`Add an Access Granting Token Address: `, (answer) => {
-      if (!initialConfig.collectionData.accessGrantingTokenAddresses.includes(answer)) {
+      if (
+        initialConfig.collectionData.accessGrantingTokenAddresses &&
+        !initialConfig.collectionData.accessGrantingTokenAddresses.includes(answer)
+      ) {
         initialConfig.collectionData.accessGrantingTokenAddresses.push(answer);
         resolve();
       } else {
@@ -329,7 +332,7 @@ const addAccessGrantingTokenAddress = async () => {
 
 const addAccessGrantingTokenAddresses = async () => {
   if (numAccessGrantingTokenAddresses === 0) {
-    initialConfig.collectionData.accessGrantingTokenAddresses = [];
+    initialConfig.collectionData.accessGrantingTokenAddresses = null;
   } else {
     for (let i = 0; i < numAccessGrantingTokenAddresses; i++) {
       await addAccessGrantingTokenAddress();
