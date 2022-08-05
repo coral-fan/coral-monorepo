@@ -14,7 +14,7 @@
       "consts": ["../app/src/consts"]
     }
   },
-  "include": ["./tasks", "tests", "./dist", "firebase-test.ts"],
+  "include": ["./tasks", "./tests", "./dist", "firebase-test.ts", "./cli"],
   "files": ["./hardhat.config.ts"],
   // this is necessary per https://typestrong.org/ts-node/docs/paths/
   "ts-node": {
