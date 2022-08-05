@@ -8,7 +8,8 @@
     "compile": "yarn clean && hardhat compile",
     "test": "hardhat test",
     "clean": "hardhat clean",
-    "postinstall": "yarn compile"
+    "postinstall": "yarn compile",
+    "create": "yarn ts-node cli/projectSetup.ts"
   },
   "devDependencies": {
     "@chainlink/contracts": "^0.4.1",
@@ -31,7 +32,6 @@
     "ethers": "^5.6.2",
     "hardhat": "^2.9.3",
     "hardhat-contract-sizer": "^2.6.1",
-    "hardhat-deploy": "^0.11.12",
     "hardhat-gas-reporter": "^1.0.8",
     "mime": "^3.0.0",
     "nft.storage": "^6.3.0",
