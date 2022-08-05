@@ -8,7 +8,6 @@ of the contract until ownership is transferred to the Multi-Sig.
 const DEPLOYER_RELAY_API_KEY_FUJI = process.env.DEPLOYER_RELAY_API_KEY_FUJI;
 const DEPLOYER_RELAY_SECRET_KEY_FUJI = process.env.DEPLOYER_RELAY_SECRET_KEY_FUJI;
 
-//TODO: Create Deployer Relays on Mainnet and add API keys to .env
 const DEPLOYER_RELAY_API_KEY_MAINNET = process.env.DEPLOYER_RELAY_API_KEY_MAINNET;
 const DEPLOYER_RELAY_SECRET_KEY_MAINNET = process.env.DEPLOYER_RELAY_SECRET_KEY_MAINNET;
 
@@ -79,15 +78,13 @@ interface DeploymentConstNetworkDependentObject {
 type DeploymentType = DeploymentConstBaseObject & DeploymentConstNetworkDependentObject;
 
 export const getDeploymentConsts = (network: Network): DeploymentType => {
-  // TODO: Throw more specific error message
-  if (!CONTRACT_NAME || !DEFENDER_TEAM_API_KEY || !DEFENDER_TEAM_SECRET_KEY) {
-    throw MISSING_ENV_VARIABLE;
-  }
-
   if (network !== 'fuji' && network !== 'mainnet') {
     throw 'Network must be fuji or mainnet';
   }
 
+  if (!CONTRACT_NAME || !DEFENDER_TEAM_API_KEY || !DEFENDER_TEAM_SECRET_KEY) {
+    throw MISSING_ENV_VARIABLE;
+  }
   /*
   These environment variables are the same regardless of network.
   */
