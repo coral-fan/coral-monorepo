@@ -11,14 +11,14 @@ contract CoralNftV1 is ERC721, ERC2981, Ownable, AvaxUsd {
   using Counters for Counters.Counter;
   Counters.Counter private _tokenIds;
 
-  uint256 public usdPricePerToken;
-  uint256 public maxSupply;
-  uint8 public maxTokensPerWallet;
-  string private baseTokenURI;
-  uint256 public saleStartTime;
-
+  uint16 public usdPricePerToken;
+  uint16 public immutable maxSupply;
+  uint8 public immutable maxTokensPerWallet;
   bool private airdropMintOpen = true;
   bool public isSaleActive = true;
+
+  string private baseTokenURI;
+  uint256 public saleStartTime;
 
   // Manage approved relay list
   mapping(address => bool) private _relayList;
@@ -35,8 +35,8 @@ contract CoralNftV1 is ERC721, ERC2981, Ownable, AvaxUsd {
   constructor(
     string memory _name,
     string memory _symbol,
-    uint256 _usdPricePerToken,
-    uint256 _maxSupply,
+    uint16 _usdPricePerToken,
+    uint16 _maxSupply,
     uint8 _maxTokensPerWallet,
     string memory _baseTokenURI,
     uint256 _saleStartTime,
@@ -125,7 +125,8 @@ contract CoralNftV1 is ERC721, ERC2981, Ownable, AvaxUsd {
     uint256 balance = address(this).balance;
 
     require(balance > 0, 'Nothing to withdraw');
-    payable(msg.sender).transfer(balance);
+    (bool success, ) = payable(msg.sender).call{ value: balance }('');
+    require(success, 'Withdraw unsuccessful');
   }
 
   function addRelayAddr(address _newRelayAddr) external onlyOwner {
