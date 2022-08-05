@@ -52,6 +52,7 @@ export const getPublicFileUrl = (destinationPath: string, accessToken: string) =
 =======
 export const getPublicFileUrl = (destinationPath: string, accessToken: string) => {
   const storageBucketName = getStorageBucketName();
+
   return `https://firebasestorage.googleapis.com/v0/b/${storageBucketName}/o/${encodeURIComponent(
 >>>>>>> 5304fe12 (Update getStorageBucket logic)
     destinationPath
