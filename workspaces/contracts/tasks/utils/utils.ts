@@ -2,6 +2,7 @@ import { File } from 'nft.storage';
 import mime from 'mime';
 import fs from 'fs';
 import path from 'path';
+import { isAddress } from 'ethers/lib/utils';
 
 export const parseProjectName = (projectName: string) =>
   projectName
@@ -31,6 +32,20 @@ export const fileFromPath = async (filePath: string) => {
   }
 };
 
-export const sleep = (ms: number) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+export const parseAccessGrantingTokenAddresses = (addressesArgument: string) => {
+  if (addressesArgument === undefined) {
+    return null;
+  }
+
+  const accessGrantingTokenAddresses = JSON.parse(addressesArgument);
+
+  if (!Array.isArray(accessGrantingTokenAddresses)) {
+    throw 'accessGrantingTokenAddresses must be an array.';
+  }
+
+  if (accessGrantingTokenAddresses.some((address) => !isAddress(address))) {
+    throw `All elements in accessGrantingTokenAddresses [${accessGrantingTokenAddresses}] must be a valid address.`;
+  }
+
+  return accessGrantingTokenAddresses;
 };
