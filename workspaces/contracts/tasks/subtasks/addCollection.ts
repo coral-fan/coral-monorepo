@@ -17,7 +17,7 @@ import path from 'path';
 export const addCollection = subtask('addCollection', 'Add collection to Firebase')
   .addParam('projectDir', 'The project directory')
   .setAction(async ({ projectDir }, hre) => {
-    console.log('Adding collection...');
+    console.log('\n Adding collection...');
 
     const network = hre.network.name as Network;
 
@@ -64,7 +64,7 @@ export const addCollection = subtask('addCollection', 'Add collection to Firebas
       throw 'storageBucketName not found';
     }
 
-    const bucket = await getStorageBucket(storageBucketName);
+    const bucket = await getStorageBucket();
     const imagePath = getImagePath(projectDir);
     const uuid = uuidv4();
 
@@ -115,5 +115,5 @@ export const addCollection = subtask('addCollection', 'Add collection to Firebas
       collectionIds: FieldValue.arrayUnion(address),
     });
 
-    console.log('Collection added!');
+    console.log('\n Collection added!');
   });
