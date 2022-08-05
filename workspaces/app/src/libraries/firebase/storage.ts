@@ -10,6 +10,7 @@ const getStorageBucketUrl = () => {
   return STORAGE_BUCKET_URL;
 };
 
+<<<<<<< HEAD
 export const getStorageBucket = async () => {
   const storageBucketUrl = getStorageBucketUrl();
   await initializeFirebaseAdmin();
@@ -20,6 +21,20 @@ export const getPublicFileUrl = (destinationPath: string, accessToken: string) =
   const storageBucketUrl = getStorageBucketUrl();
 
   return `https://firebasestorage.googleapis.com/v0/b/${storageBucketUrl}/o/${encodeURIComponent(
+=======
+export const getStorageBucket = async (_storageBucket: string | undefined = storageBucketName) => {
+  await initializeFirebaseAdmin();
+  return getStorage().bucket(_storageBucket);
+};
+
+// export const getNamedStorageBucket = async (namedStorageBucket: string) => {
+//   await initializeFirebaseAdmin();
+//   return getStorage().bucket(namedStorageBucket);
+// };
+
+export const getPublicFileUrl = (destinationPath: string, accessToken: string) =>
+  `https://firebasestorage.googleapis.com/v0/b/${storageBucketName}/o/${encodeURIComponent(
+>>>>>>> 2e639e7a (Parameterize getStorageBucket, include default)
     destinationPath
   )}?alt=media&token=${accessToken}`;
 };
