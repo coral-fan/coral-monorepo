@@ -3,7 +3,7 @@ import '@nomiclabs/hardhat-waffle';
 import '@typechain/hardhat';
 import '@nomiclabs/hardhat-ethers';
 import 'hardhat-gas-reporter';
-import 'hardhat-deploy';
+import 'solidity-coverage';
 import { HardhatUserConfig } from 'hardhat/types';
 import { config } from 'dotenv';
 
@@ -13,28 +13,32 @@ import './tasks';
 config();
 
 const hardhatConfig: HardhatUserConfig = {
+  solidity: {
+    compilers: [{ version: '0.8.14' }],
+  },
   defaultNetwork: 'hardhat',
   etherscan: {
     apiKey: process.env.SNOWTRACE_API_KEY,
   },
-  solidity: '0.8.14',
   networks: {
     hardhat: {
       forking: {
         url: process.env.URL_FUJI || '',
       },
     },
+    localhost: {
+      url: 'http://127.0.0.1:8545',
+      chainId: 31337,
+    },
     fuji: {
       url: process.env.URL_FUJI || '',
       chainId: 43113,
       accounts: [],
-      saveDeployments: true,
     },
     mainnet: {
       url: process.env.URL_MAINNET || '',
       chainId: 43114,
       accounts: [],
-      saveDeployments: true,
     },
   },
   gasReporter: {
