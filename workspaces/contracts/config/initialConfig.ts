@@ -32,7 +32,7 @@ interface CollectionData {
     value: string | null;
   };
   merchOptionTypes: string[] | null;
-  accessGrantingTokenAddresses: string[];
+  accessGrantingTokenAddresses: string[] | null;
 }
 
 interface Config {
