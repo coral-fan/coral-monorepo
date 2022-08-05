@@ -47,6 +47,6 @@ subtask('updateSentinels', 'Update Sentinels')
       const uniqueAddresses = [...addressesSet];
 
       await sentinelClient.update(sentinelId, { type: 'BLOCK', addresses: uniqueAddresses });
-      console.log(`Added ${newAddress} to ${sentinelResponse.name}`);
+      console.log(`\n Added ${newAddress} to ${sentinelResponse.name}`);
     }
   });

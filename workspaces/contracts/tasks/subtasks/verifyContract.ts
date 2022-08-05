@@ -36,7 +36,7 @@ subtask('verifyContract', 'Verify contract')
       });
     } catch (e: any) {
       if (e.message.includes('Reason: Already Verified')) {
-        console.log('Contract is already verified!');
+        console.log('\n Contract is already verified!');
       } else {
         console.log(e.message);
       }
