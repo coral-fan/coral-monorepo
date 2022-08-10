@@ -27,6 +27,7 @@
     "@ethersproject/providers": "^5.4.5",
     "@ethersproject/transactions": "^5.4.0",
     "@ethersproject/wallet": "^5.4.0",
+    "@fingerprintjs/fingerprintjs": "^3.3.4",
     "@hookform/resolvers": "^2.8.8",
     "@metamask/providers": "^8.1.1",
     "@reduxjs/toolkit": "^1.6.2",
@@ -67,6 +68,7 @@
     "stripe": "^8.219.0",
     "theme-in-css": "^0.2.2",
     "yup": "^0.32.11",
+    "zod": "^3.17.10",
     "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
