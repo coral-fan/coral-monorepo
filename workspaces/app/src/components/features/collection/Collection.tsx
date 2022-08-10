@@ -24,6 +24,9 @@ import { NullableString } from 'libraries/models';
 import { ConditionalWrap, Link } from 'components/ui';
 import { css } from '@emotion/react';
 
+import { load as loadFingerprintAgent } from '@fingerprintjs/fingerprintjs';
+import { getCoralAPIAxios } from 'libraries/utils';
+
 interface CollectionLinkProps {
   id: string;
 }
@@ -75,6 +78,8 @@ interface CollectionPageProps extends Collection {
 
 const stripePromise = loadStripe(NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
+const axios = getCoralAPIAxios();
+
 export const CollectionPage = ({
   tokenTotalSupply,
   imageUrl,
@@ -97,6 +102,22 @@ export const CollectionPage = ({
 }: CollectionPageProps) => {
   const [numMinted, setNumMinted] = useState(tokenTotalSupply);
   const [isSoldOut, setIsSoldOut] = useState(tokenTotalSupply >= maxSupply);
+
+  // fingerprint logic
+  useEffect(() => {
+    const referralCode = new URLSearchParams(window.location.search).get('referral_code');
+    if (referralCode) {
+      loadFingerprintAgent().then(async (agent) => {
+        const result = await agent.get();
+        axios
+          .post('record-fingerprint', {
+            referralCode,
+            fingerprint: result.visitorId,
+          })
+          .catch((e) => console.error(e));
+      });
+    }
+  }, []);
 
   useEffect(() => {
     const subscription = getTokenTotalSupply$(id).subscribe((totalSupply) => {
