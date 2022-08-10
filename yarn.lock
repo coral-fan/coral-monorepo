@@ -1843,6 +1843,13 @@
     "@ethersproject/properties" "^5.6.0"
     "@ethersproject/strings" "^5.6.1"
 
+"@fingerprintjs/fingerprintjs@^3.3.4":
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/@fingerprintjs/fingerprintjs/-/fingerprintjs-3.3.4.tgz#5d65fe0ab7220195c436851d02b02f92ac3b5bec"
+  integrity sha512-px1imhVDAEp0pI7LBcsUYAMlGsJZxReXVsJbla6e1+hSePZU7oPEtauyGhJH0cSXrQS5w/uhu5btmltkUgvUTw==
+  dependencies:
+    tslib "^2.0.1"
+
 "@firebase/analytics-compat@0.1.10":
   version "0.1.10"
   resolved "https://registry.yarnpkg.com/@firebase/analytics-compat/-/analytics-compat-0.1.10.tgz#1e14677cdccad5052c6ccec49d2a92aab40be2a1"
@@ -21648,6 +21655,11 @@ yup@^0.32.11:
     nanoclone "^0.2.1"
     property-expr "^2.0.4"
     toposort "^2.0.2"
+
+zod@^3.17.10:
+  version "3.17.10"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.17.10.tgz#8716a05e6869df6faaa878a44ffe3c79e615defb"
+  integrity sha512-IHXnQYQuOOOL/XgHhgl8YjNxBHi3xX0mVcHmqsvJgcxKkEczPshoWdxqyFwsARpf41E0v9U95WUROqsHHxt0UQ==
 
 zustand@^4.0.0-rc.0, zustand@^4.0.0-rc.1:
   version "4.0.0-rc.1"
