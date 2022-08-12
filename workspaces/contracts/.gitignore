@@ -11,14 +11,9 @@ types
 
 airdrops
 
-<<<<<<< HEAD
+
 coverage
 coverage.json
 gas-report-current.txt
 gas-report.txt
-=======
-gas-report-current.txt
-gas-report.txt
-coverage
-coverage.json
->>>>>>> 29630945 (Update gitignore)
+
