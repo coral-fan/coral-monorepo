@@ -7,6 +7,7 @@ import { getHandler } from './utils';
 const RecordFingerprintRequestBody = z.object({
   referralCode: z.string(),
   fingerprint: z.string(),
+  referrer: z.string(),
 });
 
 interface ReferralCode {
@@ -15,7 +16,7 @@ interface ReferralCode {
 
 const post: Handler = async (req, res) => {
   try {
-    const { referralCode, fingerprint } = RecordFingerprintRequestBody.parse(req.body);
+    const { referralCode, fingerprint, referrer } = RecordFingerprintRequestBody.parse(req.body);
     const referralCodeDocumentData = await getDocumentData<ReferralCode>(
       'referral-codes',
       referralCode
@@ -32,6 +33,7 @@ const post: Handler = async (req, res) => {
 
     await fingerprintDocumentRef.set({
       referralCode,
+      referrer,
     });
   } catch (e) {
     console.error(e);
