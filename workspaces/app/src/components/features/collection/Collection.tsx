@@ -111,6 +111,7 @@ export const CollectionPage = ({
         const result = await agent.get();
         axios
           .post('record-fingerprint', {
+            referrer: document.referrer,
             referralCode,
             fingerprint: result.visitorId,
           })
