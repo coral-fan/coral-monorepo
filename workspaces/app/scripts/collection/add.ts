@@ -6,35 +6,11 @@ import {
 } from 'libraries/firebase';
 import { ArtistData, CollectionData, CollectionType } from 'libraries/models';
 import { v4 as uuidv4 } from 'uuid';
-import path from 'path';
 import { readFile } from 'fs/promises';
 import { FieldValue } from 'firebase-admin/firestore';
 
-/*
-Utility Functions
-*/
-// TODO: Create shared library for file / path functions for app and contract workspaces
-const parseProjectName = (projectName: string) =>
-  projectName
-    .replace(/^\.*\/|\/|\/?[^\/]+\.[a-z]+|\/$/g, '')
-    .replaceAll(' ', '-')
-    .toLowerCase();
+import { parseProjectName, getConfigFilePath, getImagePath } from '@coral/contracts/tasks/utils';
 
-const getImagePath = (projectDir: string) => {
-  const __dirname = path.resolve();
-  return path.resolve(__dirname, '..', 'contracts', 'projects', projectDir, 'image', 'image.png');
-};
-
-const getConfigFilePath = (projectDir: string) => {
-  const __dirname = path.resolve();
-  return path.resolve(__dirname, '..', 'contracts', 'projects', projectDir, 'config.json');
-};
-
-/*
-Script pulls collection name in from arguments.
-`projectName` refers to the directory name in `contracts/projects` where configuration files
-and assets are stored.
-*/
 const projectName = process.argv[2];
 
 const parseAccessGrantingTokenAddresses = (addressesArguement: string) => {
