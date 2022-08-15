@@ -1,3 +1,4 @@
+import { Artist } from '../artist';
 import { Collection } from '../collection';
 import { User } from '../user';
 
@@ -34,6 +35,7 @@ export interface RedemptionData {
 export interface ReferralCampaignData {
   name: string;
   description: string;
+  createdBy: Artist['id'];
   baseReferralUrl: string;
   pointsValue: PointValue;
   totalPointsPool: PointValue;
