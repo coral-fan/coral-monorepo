@@ -17,15 +17,14 @@ interface ReferralTransactionMetadata {
   collectionId: Collection['id'];
   purchaseId: string;
 }
-
-interface EarnedPointsData {
+export interface EarnedPointsData {
   referralTransactionId: ReferralTransactionId;
   referralCode: ReferralCode;
   pointsEarned: PointValue;
   timestamp: Timestamp;
 }
 
-interface RedemptionData {
+export interface RedemptionData {
   pointsRedeemed: PointValue;
   redemptionId: RedemptionTransactionId;
   timestamp: Timestamp;
@@ -60,10 +59,10 @@ export interface ReferralTransactionData {
   metadata?: ReferralTransactionMetadata;
 }
 
+// EarnedPointData & RedemptionData stored
+// as SubCollection
 export interface UserReferralAccount {
   pointsBalance: PointValue;
-  earnedPointsTransactions: EarnedPointsData[];
-  redemptionTransactions: RedemptionData[];
   isRedeeming: boolean;
 }
 
