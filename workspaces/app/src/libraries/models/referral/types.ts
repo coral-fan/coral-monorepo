@@ -15,7 +15,7 @@ type RedemptionStatus = 'pending' | 'completed' | 'failed';
 
 interface ReferralTransactionMetadata {
   collectionId: Collection['id'];
-  purchaseId?: string;
+  purchaseId: string;
 }
 
 interface EarnedPointsData {
@@ -62,8 +62,8 @@ export interface ReferralTransactionData {
 
 export interface UserReferralAccount {
   pointsBalance: PointValue;
-  earnedPointsTransactions: EarnedPointsData;
-  redemptionTransactions: RedemptionData;
+  earnedPointsTransactions: EarnedPointsData[];
+  redemptionTransactions: RedemptionData[];
   isRedeeming: boolean;
 }
 
