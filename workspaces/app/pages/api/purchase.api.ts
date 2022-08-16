@@ -4,18 +4,17 @@ import { ERROR_RESPONSE } from './consts';
 import { Handler } from './types';
 import { getHandler } from './utils';
 
-type DefaultPurchaseData = Pick<PurchaseData, 'status' | 'transactionHash' | 'assetId'>;
+type DefaultPurchaseData = Pick<PurchaseData, 'status' | 'assetId'>;
 
 const DEFAULT_PURCHASE_DATA: DefaultPurchaseData = {
   status: 'pending',
-  transactionHash: null,
   assetId: null,
 };
 
 const post: Handler = async (req, res) => {
   try {
     // TODO: add validation!!!
-    const { userId, collectionId, metadata } = req.body;
+    const { userId, collectionId, transactionHash, metadata } = req.body;
     const purchaseCollectionRef = await getCollectionReferenceServerSide('purchases');
 
     const purchaseData: PurchaseData = {
@@ -23,6 +22,7 @@ const post: Handler = async (req, res) => {
       timestamp: new Date().toISOString(),
       userId,
       collectionId,
+      transactionHash: transactionHash ?? null,
       metadata: metadata ?? null,
     };
 

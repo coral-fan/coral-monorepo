@@ -17,10 +17,7 @@ interface ReferralCode {
 const post: Handler = async (req, res) => {
   try {
     const { referralCode, fingerprint, referrer } = RecordFingerprintRequestBody.parse(req.body);
-    const referralCodeDocumentData = await getDocumentData<ReferralCode>(
-      'referral-codes',
-      referralCode
-    );
+    const referralCodeDocumentData = await getDocumentData<ReferralCode>('referrals', referralCode);
 
     if (!referralCodeDocumentData) {
       throw new Error(`Referral code ${referralCode} isn't in database.`);
