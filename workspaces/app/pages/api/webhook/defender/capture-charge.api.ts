@@ -33,45 +33,62 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
               try {
                 const { tokenId } = await relayMintParamsSchema.validate(params);
 
-                const purchaseCollectionRef = await getCollectionReferenceServerSide<PurchaseData>(
-                  'purchases'
-                );
+                const getPurchaseDocumentIdByTransactionHash = async (transactionHash: string) => {
+                  const purchaseCollectionRef =
+                    await getCollectionReferenceServerSide<PurchaseData>('purchases');
 
-                const purchaseDocSnapshots = await purchaseCollectionRef
-                  .where('transactionHash', '==', hash)
-                  .get();
+                  const purchaseDocSnapshots = await purchaseCollectionRef
+                    .where('transactionHash', '==', hash)
+                    .get();
 
-                if (purchaseDocSnapshots.empty) {
+                  if (purchaseDocSnapshots.empty) {
+                    throw new Error(
+                      `No Purchase document exists for transaction hash ${hash} in Firestore.`
+                    );
+                  }
+
+                  let purchases: Record<string, PurchaseData> = {};
+
+                  purchaseDocSnapshots.forEach((purchaseDocSnapshot) => {
+                    purchases = {
+                      ...purchases,
+                      [purchaseDocSnapshot.id]: purchaseDocSnapshot.data(),
+                    };
+                  });
+
+                  const purchaseEntries = Object.entries(purchases);
+
+                  if (purchaseEntries.length > 1) {
+                    purchaseEntries.forEach(async ([id]) => {
+                      const purchaseDocRef = await getPurchaseDocumentReference(id);
+                      await purchaseDocRef.set({ status: 'rejected' }, { merge: true });
+                    });
+
+                    throw new Error(
+                      `There shouldn't be multiple purchases associated with hash ${hash}.`
+                    );
+                  }
+
+                  const [[id]] = purchaseEntries;
+
+                  return id;
+                };
+
+                const id = await getPurchaseDocumentIdByTransactionHash(hash);
+
+                const purchaseDocRef = await getPurchaseDocumentReference(id);
+
+                const purchaseDocSnapshot = await purchaseDocRef.get();
+
+                const purchaseDocData = purchaseDocSnapshot.data();
+
+                if (purchaseDocData === undefined) {
                   throw new Error(
                     `No Purchase document exists for transaction hash ${hash} in Firestore.`
                   );
                 }
 
-                let purchases: Record<string, PurchaseData> = {};
-
-                purchaseDocSnapshots.forEach((purchaseDocSnapshot) => {
-                  purchases = {
-                    ...purchases,
-                    [purchaseDocSnapshot.id]: purchaseDocSnapshot.data(),
-                  };
-                });
-
-                const purchaseEntries = Object.entries(purchases);
-
-                if (purchaseEntries.length > 1) {
-                  purchaseEntries.forEach(async ([id]) => {
-                    const purchaseDocRef = await getPurchaseDocumentReference(id);
-                    await purchaseDocRef.set({ status: 'rejected' }, { merge: true });
-                  });
-
-                  throw new Error(
-                    `There shouldn't be multiple purchases associated with hash ${hash}.`
-                  );
-                }
-
-                const [[id, { metadata }]] = purchaseEntries;
-
-                const purchaseDocRef = await getPurchaseDocumentReference(id);
+                const { metadata } = purchaseDocData;
 
                 try {
                   if (metadata?.stripePaymentIntentId) {
