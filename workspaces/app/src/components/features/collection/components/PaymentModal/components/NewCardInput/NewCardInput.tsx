@@ -26,6 +26,7 @@ interface NewCardInputProps {
   isWalletUser: boolean;
   isMobile: boolean;
   merchOrderId?: string;
+  fingerprint?: string;
 }
 
 const PaymentInfoContainer = styled(PaymentMethodContainer)`
@@ -41,6 +42,7 @@ export const NewCardInput = ({
   isWalletUser,
   isMobile,
   merchOrderId,
+  fingerprint,
 }: NewCardInputProps) => {
   const elements = useElements();
   const stripe = useStripe();
@@ -84,6 +86,7 @@ export const NewCardInput = ({
         const purchaseId = await createPurchase({
           userId: uid,
           collectionId,
+          fingerprint,
         });
 
         const response = await createPaymentIntent({
@@ -138,6 +141,7 @@ export const NewCardInput = ({
       upsertUser,
       setPurchaseId,
       errorToast,
+      fingerprint,
     ]
   );
 
