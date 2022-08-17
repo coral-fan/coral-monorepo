@@ -1,4 +1,4 @@
-import { getCollectionReferenceServerSide } from 'libraries/firebase';
+import { getCollectionReferenceServerSide, getDocumentData } from 'libraries/firebase';
 import { PurchaseData } from 'libraries/models';
 import { ERROR_RESPONSE } from './consts';
 import { Handler } from './types';
@@ -14,8 +14,10 @@ const DEFAULT_PURCHASE_DATA: DefaultPurchaseData = {
 const post: Handler = async (req, res) => {
   try {
     // TODO: add validation!!!
-    const { userId, collectionId, transactionHash, metadata } = req.body;
+    const { userId, collectionId, transactionHash, fingerprint } = req.body;
     const purchaseCollectionRef = await getCollectionReferenceServerSide('purchases');
+
+    const fingerprintData = await getDocumentData('fingerprints', fingerprint);
 
     const purchaseData: PurchaseData = {
       ...DEFAULT_PURCHASE_DATA,
@@ -23,7 +25,7 @@ const post: Handler = async (req, res) => {
       userId,
       collectionId,
       transactionHash: transactionHash ?? null,
-      metadata: metadata ?? null,
+      metadata: fingerprintData ? { fingerprint } : null,
     };
 
     const { id } = await purchaseCollectionRef.add(purchaseData);
