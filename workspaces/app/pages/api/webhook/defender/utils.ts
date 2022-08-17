@@ -20,3 +20,47 @@ export const getNftSmartContractAddress = (addresses: string[], matchedAddresses
 
   return nftContractAddress;
 };
+
+import { getPurchaseDocumentReference } from '../../utils';
+import { getCollectionReferenceServerSide } from 'libraries/firebase';
+import { PurchaseData } from 'libraries/models';
+
+export const getPurchaseDocumentIdByTransactionHash = async (transactionHash: string) => {
+  const purchaseCollectionRef = await getCollectionReferenceServerSide<PurchaseData>('purchases');
+
+  const purchaseDocSnapshots = await purchaseCollectionRef
+    .where('transactionHash', '==', transactionHash)
+    .get();
+
+  if (purchaseDocSnapshots.empty) {
+    throw new Error(
+      `No Purchase document exists for transaction hash ${transactionHash} in Firestore.`
+    );
+  }
+
+  let purchases: Record<string, PurchaseData> = {};
+
+  purchaseDocSnapshots.forEach((purchaseDocSnapshot) => {
+    purchases = {
+      ...purchases,
+      [purchaseDocSnapshot.id]: purchaseDocSnapshot.data(),
+    };
+  });
+
+  const purchaseEntries = Object.entries(purchases);
+
+  if (purchaseEntries.length > 1) {
+    purchaseEntries.forEach(async ([id]) => {
+      const purchaseDocRef = await getPurchaseDocumentReference(id);
+      await purchaseDocRef.set({ status: 'rejected' }, { merge: true });
+    });
+
+    throw new Error(
+      `There shouldn't be multiple purchases associated with hash ${transactionHash}.`
+    );
+  }
+
+  const [[id]] = purchaseEntries;
+
+  return id;
+};
