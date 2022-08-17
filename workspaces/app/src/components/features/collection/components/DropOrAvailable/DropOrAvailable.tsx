@@ -31,6 +31,7 @@ interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
   maxMintablePerWallet: number;
   redeemCode: NullableString;
   merchOptionTypes?: MerchOptionTypes;
+  fingerprint?: string;
 }
 
 const MaxOwnedNotification = styled.span`
@@ -57,6 +58,7 @@ export const DropOrAvailable = ({
   maxMintablePerWallet,
   redeemCode,
   merchOptionTypes,
+  fingerprint,
 }: DropOrAvailableProps) => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
@@ -182,6 +184,7 @@ export const DropOrAvailable = ({
           usdPrice={usdPrice}
           redeemCode={redeemCode}
           merchOptionTypes={merchOptionTypes}
+          fingerprint={fingerprint}
         />
       )}
     </FadeOutInSwitchAnimation>
