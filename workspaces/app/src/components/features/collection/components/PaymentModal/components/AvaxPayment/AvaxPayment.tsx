@@ -12,6 +12,8 @@ import { CheckoutContainer, PaymentMethodContainer } from '../components';
 import { Currency } from '../Currency';
 import { SwitchPaymentMethod } from '../SwitchPaymentMethod';
 import { getCoralAPIAxios } from 'libraries/utils';
+import { createPurchase } from '../../utils';
+import { useUserUid } from 'libraries/models';
 
 const WalletBalanceContainer = styled(PaymentMethodContainer)`
   justify-content: end;
@@ -50,6 +52,7 @@ interface AvaxPaymentProps {
   setIsMintingNFT: (isMinting: boolean) => void;
   isMobile: boolean;
   merchOrderId?: string;
+  fingerprint?: string;
 }
 
 const axios = getCoralAPIAxios();
@@ -62,11 +65,13 @@ export const AvaxPayment = ({
   setIsMintingNFT,
   isMobile,
   merchOrderId,
+  fingerprint,
 }: AvaxPaymentProps) => {
   const [sufficientFunds, setSufficientFunds] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [formattedBalance, setFormattedBalance] = useState<string>();
   const { provider, isActive, balance } = useWallet();
+  const userId = useUserUid();
 
   useEffect(() => {
     if (balance !== undefined) {
@@ -92,6 +97,17 @@ export const AvaxPayment = ({
         });
 
         setIsMintingNFT(true);
+
+        if (!userId) {
+          throw 'uid is undefined.';
+        }
+
+        await createPurchase({
+          collectionId,
+          userId,
+          transactionHash: txn.hash,
+          fingerprint,
+        });
 
         const isMerchPurchase = merchOrderId !== undefined;
 
