@@ -4,7 +4,9 @@ import { Link, LinkProps } from '../Link';
 
 const buttonLinkStyle = css`
   ${buttonStyle};
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 export const ButtonLink = ({ children, ...props }: Omit<LinkProps, 'hoverVariant'>) => (
   <Link hoverVariant="contrast" css={buttonLinkStyle} {...props}>
