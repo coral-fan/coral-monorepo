@@ -21,6 +21,7 @@ import { PaymentButton } from '../PaymentButton';
 import { ProcessingOverlay } from '../ProcessingOverlay';
 import { SwitchPaymentMethod } from '../SwitchPaymentMethod';
 import { useErrorToast } from 'libraries/utils/toasts';
+
 interface CardPaymentProps {
   stripeCustomerId: string;
   total: number;
@@ -30,6 +31,7 @@ interface CardPaymentProps {
   isWalletUser: boolean;
   isMobile: boolean;
   merchOrderId?: string;
+  fingerprint?: string;
 }
 
 interface PaymentMethodData {
@@ -66,6 +68,7 @@ export const ExistingCardPayment = ({
   isWalletUser,
   isMobile,
   merchOrderId,
+  fingerprint,
 }: CardPaymentProps) => {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodData>();
   const [error, setError] = useState<StripeError>();
@@ -119,6 +122,7 @@ export const ExistingCardPayment = ({
         const purchaseId = await createPurchase({
           userId: uid,
           collectionId,
+          fingerprint,
         });
 
         const { clientSecret } = await createPaymentIntent({
