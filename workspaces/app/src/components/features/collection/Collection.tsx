@@ -103,19 +103,22 @@ export const CollectionPage = ({
   const [numMinted, setNumMinted] = useState(tokenTotalSupply);
   const [isSoldOut, setIsSoldOut] = useState(tokenTotalSupply >= maxSupply);
 
+  const [fingerprint, setFingerprint] = useState<string>();
+
   // fingerprint logic
   useEffect(() => {
     const referralCode = new URLSearchParams(window.location.search).get('referral_code');
     if (referralCode) {
       loadFingerprintAgent().then(async (agent) => {
-        const result = await agent.get();
+        const { visitorId: fingerprint } = await agent.get();
         axios
           .post('record-fingerprint', {
             referrer: document.referrer,
             referralCode,
-            fingerprint: result.visitorId,
+            fingerprint,
           })
           .catch((e) => console.error(e));
+        setFingerprint(fingerprint);
       });
     }
   }, []);
@@ -146,6 +149,7 @@ export const CollectionPage = ({
         imageUrl={imageUrl}
         redeemCode={redeemCode}
         merchOptionTypes={merchOptionTypes}
+        fingerprint={fingerprint}
       />
     ),
     [
@@ -164,6 +168,7 @@ export const CollectionPage = ({
       maxMintablePerWallet,
       redeemCode,
       merchOptionTypes,
+      fingerprint,
     ]
   );
 
