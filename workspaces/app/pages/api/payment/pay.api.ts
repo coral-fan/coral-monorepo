@@ -70,10 +70,18 @@ const post: Handler = async (req, res) => {
       metadata: merchOrderId ? { ...requiredMetadata, merchOrderId } : requiredMetadata,
     });
 
-    await purchaseDocRef.set(
-      { metadata: { stripePaymentIntentId: paymentIntent.id, merchOrderId } },
-      { merge: true }
-    );
+    const baseMetadata = { stripePaymentIntentId: paymentIntent.id, merchOrderId };
+
+    const purchaseDataSnapshot = await purchaseDocRef.get();
+
+    const purchaseData = purchaseDataSnapshot.data();
+
+    const metadata =
+      purchaseData && purchaseData.metadata
+        ? { ...purchaseData.metadata, ...baseMetadata }
+        : baseMetadata;
+
+    await purchaseDocRef.set({ metadata }, { merge: true });
 
     res.status(200).send({
       clientSecret: paymentIntent.client_secret,
