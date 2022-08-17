@@ -57,7 +57,8 @@ export const createPaymentMethod = async (cardElement: StripeCardElement, stripe
 interface CreatePurchaseParameters {
   userId: PurchaseData['userId'];
   collectionId: PurchaseData['collectionId'];
-  metadata?: PurchaseData['metadata'];
+  transactionHash?: string;
+  fingerprint?: string;
 }
 
 export const createPurchase = async (createPurchaseParameters: CreatePurchaseParameters) => {
