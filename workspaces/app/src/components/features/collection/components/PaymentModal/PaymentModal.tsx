@@ -42,6 +42,7 @@ interface PaymentModalProps extends AssetInfoProps {
   closePaymentModal: () => void;
   redeemCode: NullableString;
   merchOptionTypes?: MerchOptionTypes;
+  fingerprint?: string;
 }
 
 export const PaymentModal = ({
@@ -55,6 +56,7 @@ export const PaymentModal = ({
   collectionId,
   redeemCode,
   merchOptionTypes,
+  fingerprint,
 }: PaymentModalProps) => {
   const { isActive: isWalletUser } = useWallet();
   const isMobile = useIsMobile();
@@ -199,6 +201,7 @@ export const PaymentModal = ({
                     setIsMintingNFT={setIsMintingNFT}
                     isMobile={isMobile}
                     merchOrderId={merchOrderId}
+                    fingerprint={fingerprint}
                   />
                 ) : shouldUseExistingCard && stripeCustomerId ? (
                   <ExistingCardPayment
@@ -210,6 +213,7 @@ export const PaymentModal = ({
                     isWalletUser={isWalletUser}
                     isMobile={isMobile}
                     merchOrderId={merchOrderId}
+                    fingerprint={fingerprint}
                   />
                 ) : (
                   <NewCardInput
@@ -221,6 +225,7 @@ export const PaymentModal = ({
                     isWalletUser={isWalletUser}
                     isMobile={isMobile}
                     merchOrderId={merchOrderId}
+                    fingerprint={fingerprint}
                   />
                 )}
               </ConditionalSpinner>
