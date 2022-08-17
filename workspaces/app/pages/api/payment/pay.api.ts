@@ -1,6 +1,6 @@
 import { CC_TRANSACTION_FEE } from 'consts';
 import { getDocumentData } from 'libraries/firebase';
-import { Collection } from 'libraries/models';
+import { Collection, Metadata } from 'libraries/models';
 import { boolean, number, object, string } from 'yup';
 import { ERROR_RESPONSE } from '../consts';
 import { Handler } from '../types';
@@ -70,7 +70,11 @@ const post: Handler = async (req, res) => {
       metadata: merchOrderId ? { ...requiredMetadata, merchOrderId } : requiredMetadata,
     });
 
-    const baseMetadata = { stripePaymentIntentId: paymentIntent.id, merchOrderId };
+    const baseMetadata: Metadata = { stripePaymentIntentId: paymentIntent.id };
+
+    if (merchOrderId) {
+      baseMetadata.merchOrderId = merchOrderId;
+    }
 
     const purchaseDataSnapshot = await purchaseDocRef.get();
 
