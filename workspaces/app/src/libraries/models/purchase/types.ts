@@ -7,6 +7,7 @@ type Status = 'pending' | 'completed' | 'rejected';
 export interface Metadata {
   stripePaymentIntentId?: string;
   merchOrderId?: string;
+  fingerprint?: string;
 }
 
 export interface PurchaseData {
