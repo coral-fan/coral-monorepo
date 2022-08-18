@@ -22,6 +22,7 @@ interface ProfileProps {
   editProfileInfo?: JSX.Element | false;
   artistTag?: JSX.Element;
   items?: JSX.Element;
+  referralContent?: JSX.Element | false;
 }
 
 export const Profile = ({
@@ -33,6 +34,7 @@ export const Profile = ({
   editProfileInfo,
   artistTag,
   items,
+  referralContent,
 }: ProfileProps) => {
   const isDesktop = useIsDesktop();
   const avatarSize = isDesktop ? 200 : 125;
@@ -64,6 +66,7 @@ export const Profile = ({
           )}
           <SocialLinks socialHandles={socialHandles} />
         </UserContentContainer>
+        {referralContent}
       </ProfileContainer>
       {items}
     </PageContainer>
