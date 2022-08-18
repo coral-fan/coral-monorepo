@@ -11,6 +11,8 @@ import { UpdateProfilePhotoModal } from '../UpdateProfile/components/UpdateProfi
 import { Profile } from 'components/ui';
 import { Assets } from '../Assets';
 import { Asset } from 'libraries/models';
+import { useIsReferralUser } from 'libraries/models/referral/hooks';
+import { Points } from '../Points';
 
 interface UserProfileProps {
   assets: Asset[];
@@ -19,6 +21,7 @@ interface UserProfileProps {
 export const UserProfile = ({ assets }: UserProfileProps) => {
   const [{ username, profilePhoto, socialHandles, bio }] = useUser();
   const isCurrentUser = useIsCurrentUser();
+  const isReferralUser = useIsReferralUser();
 
   const [isUpdateProfilePhotoModalOpen, setIsUpdateProfilePhotoOpen] =
     useIsUpdateProfilePhotoModalOpen();
@@ -59,6 +62,11 @@ export const UserProfile = ({ assets }: UserProfileProps) => {
     [isCurrentUser, isUpdateProfileInfoModalOpen, openUpdateProfileInfoModal]
   );
 
+  const referralContent = useMemo(
+    () => isReferralUser && <Points pointsEarned={100} />,
+    [isReferralUser]
+  );
+
   return (
     <Profile
       username={username}
@@ -68,6 +76,7 @@ export const UserProfile = ({ assets }: UserProfileProps) => {
       editAvatar={editAvatar}
       editProfileInfo={editProfileInfo}
       items={<Assets assets={assets} />}
+      referralContent={referralContent}
     />
   );
 };
