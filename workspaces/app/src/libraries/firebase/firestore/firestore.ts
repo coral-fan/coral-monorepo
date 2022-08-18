@@ -107,3 +107,15 @@ export const getAllDocuments = async <T extends DocumentData>(collection: string
 
   return documentArray;
 };
+
+export const getDocumentExists = async <T extends DocumentData>(
+  collection: string,
+  id: string,
+  ...subpaths: string[]
+) => {
+  const documentReference = await getDocumentReference<T>(collection, id, ...subpaths);
+
+  return documentReference instanceof DocumentReference
+    ? (await getDoc(documentReference)).exists()
+    : (await documentReference.get()).exists;
+};
