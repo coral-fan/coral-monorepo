@@ -119,3 +119,7 @@ export const getDocumentExists = async <T extends DocumentData>(
     ? (await getDoc(documentReference)).exists()
     : (await documentReference.get()).exists;
 };
+
+export const getBatch = async () => {
+  return (await getFirestoreServerSide()).batch();
+};
