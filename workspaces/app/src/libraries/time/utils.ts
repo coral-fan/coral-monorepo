@@ -5,6 +5,15 @@ export const getMilliSecsDiff = (timestamp: string) => {
   return referenceTime - currentTime;
 };
 
+export const getTimeInsideWindow = (startTimestamp: string, endTimestamp: string) => {
+  const start = new Date(startTimestamp).getTime();
+  const end = new Date(endTimestamp).getTime();
+
+  const current = new Date().getTime();
+
+  return start < current && current <= end;
+};
+
 export const getTimeParts = (milliSecsDiff: number) => {
   if (milliSecsDiff < 0) {
     return { daysDiff: 0, hoursDiff: 0, minutesDiff: 0, secondsDiff: 0 };
