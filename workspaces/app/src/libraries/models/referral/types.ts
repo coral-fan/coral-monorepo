@@ -14,8 +14,8 @@ type Address = string;
 
 type RedemptionStatus = 'pending' | 'completed' | 'failed';
 
-interface ReferralTransactionMetadata {
-  collectionId: Collection['id'];
+export interface ReferralTransactionMetadata {
+  collectionId?: Collection['id'];
   purchaseId: string;
 }
 export interface EarnedPointsData {
@@ -55,6 +55,7 @@ export interface ReferralData {
 export interface ReferralTransactionData {
   campaignId: CampaignId;
   pointsEarned: PointValue;
+  referralSource: string;
   referralCode: ReferralCode;
   timestamp: Timestamp;
   userId: User['id'];
