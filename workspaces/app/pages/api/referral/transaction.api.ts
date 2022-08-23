@@ -44,13 +44,8 @@ const post: Handler = async (req, res) => {
       throw new Error(`Referral campaign ${campaignId} isn't in database.`);
     }
 
-    const { pointsValue, name, isActive, startDate, endDate, totalPointsPool } =
+    const { pointsValue, name, isActive, startDate, endDate, totalPointsEarned, totalPointsPool } =
       referralCampaignDocumentData;
-
-    // Ensure potential new total doesn't exceed total points pool
-    if (pointsValue + totalPointsPool > totalPointsPool) {
-      throw new Error('Campaign max points already awarded');
-    }
 
     // Confirm that purchaseId is valid
     const purchasesDocumentData = await getDocumentData<PurchaseData>('purchases', purchaseId);
@@ -59,15 +54,13 @@ const post: Handler = async (req, res) => {
       throw new Error(`Purchase ${purchaseId} isn't in database.`);
     }
 
-    // Check that campaign is active and inside time window
-    const isInsideTimeWindow = getTimeInsideWindow(startDate, endDate);
-
     // Ensure campaign is active
     if (!isActive) {
       throw new Error(`The ${name} campaign (${campaignId}) is not currently active`);
     }
 
     // Ensure event is in between startDate and endDate
+    const isInsideTimeWindow = getTimeInsideWindow(startDate, endDate);
     if (!isInsideTimeWindow) {
       throw new Error(`The ${name} campaign (${campaignId}) has not started yet or is over`);
     }
@@ -121,9 +114,15 @@ const post: Handler = async (req, res) => {
       campaignId
     );
 
+    // Ensure potential new total doesn't exceed total points pool
+    if (pointsValue + totalPointsEarned > totalPointsPool) {
+      throw new Error('Campaign max points already awarded');
+    }
+
+    // Create batch firestore transaction
     const batch = await getBatch();
 
-    // Cerate referral-transaction document
+    // Create referral-transaction document
     batch.set(referralTransactionsRef, referralTransactionData);
 
     // Update referral-campaigns campaign document with total points earned
