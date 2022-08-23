@@ -1,7 +1,7 @@
-import { Handler } from '../types';
+import { Handler } from './types';
 import { z } from 'zod';
-import { ERROR_RESPONSE } from '../consts';
-import { getHandler } from '../utils';
+import { ERROR_RESPONSE } from './consts';
+import { getHandler } from './utils';
 import { getBatch, getCollectionReferenceServerSide, getDocumentData } from 'libraries/firebase';
 import {
   PurchaseData,
