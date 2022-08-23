@@ -2,7 +2,12 @@ import { Handler } from './types';
 import { z } from 'zod';
 import { ERROR_RESPONSE } from './consts';
 import { getHandler } from './utils';
-import { getBatch, getCollectionReferenceServerSide, getDocumentData } from 'libraries/firebase';
+import {
+  getBatch,
+  getCollectionReferenceServerSide,
+  getDocumentData,
+  getDocumentReferenceServerSide,
+} from 'libraries/firebase';
 import {
   PurchaseData,
   ReferralCampaignData,
@@ -98,9 +103,10 @@ const post: Handler = async (req, res) => {
     const referralTransactionId = referralTransactionsRef.id;
 
     // Get reference to user-referral-account
-    const userReferralAccountsRef = (
-      await getCollectionReferenceServerSide('user-referral-accounts')
-    ).doc(userId);
+    const userReferralAccountsRef = await getDocumentReferenceServerSide(
+      'user-referral-accounts',
+      userId
+    );
 
     // Get reference to user-referral-account subcollection
     const userPointsEarnedTransactionsRef = (
@@ -133,7 +139,6 @@ const post: Handler = async (req, res) => {
 
     // Create user-referral-accounts pointsEarned subcollection
     batch.set(userPointsEarnedTransactionsRef, {
-      referralTransactionId,
       referralCode,
       pointsEarned: pointsValue,
       timestamp: referralTransactionData.timestamp,
