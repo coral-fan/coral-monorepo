@@ -1,15 +1,10 @@
 import { getDocumentExists, getDocumentData } from 'libraries/firebase';
-import { filter, map, mergeMap } from 'rxjs';
+import { filter, from, map, mergeMap } from 'rxjs';
 import { getUserUid$ } from '../user';
 import { UserReferralAccount } from './types';
 
-export const getUserReferralAccount$ = () =>
-  getUserUid$().pipe(
-    filter((uid): uid is string => uid !== undefined),
-    mergeMap((uid) => getDocumentData<UserReferralAccount>('user-referral-accounts', uid)),
-    filter((user) => user !== undefined),
-    map((user) => user)
-  );
+export const getUserReferralAccount$ = (uid: string) =>
+  from(getDocumentData<UserReferralAccount>('user-referral-accounts', uid));
 
 export const getIsReferralUser$ = () =>
   getUserUid$().pipe(
