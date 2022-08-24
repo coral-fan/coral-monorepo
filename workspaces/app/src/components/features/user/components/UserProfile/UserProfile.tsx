@@ -6,11 +6,13 @@ import {
   useUser,
   useIsCurrentUser,
 } from '../../hooks';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { UpdateProfileInfoModal } from '../UpdateProfile/components/UpdateProfileInfoModal';
 import { UpdateProfilePhotoModal } from '../UpdateProfile/components/UpdateProfilePhotoModal';
 import { useIsReferralUser, useReferralUserData } from 'libraries/models/referral/hooks';
 import { Points } from '../Points';
+import { PointsRedemptionModal } from '../PointsRedemptionModal';
+import { POINTS_AVAX_VALUE } from 'consts';
 import tokens from 'styles/tokens';
 import { Button, Modal, Link, ConditionalSpinner, Profile } from 'components/ui';
 import { Assets } from '../Assets';
@@ -30,6 +32,7 @@ interface UserProfileProps {
 }
 
 export const UserProfile = ({ assets, doesUserHaveUnclaimedReward }: UserProfileProps) => {
+  const [showPointsRedemptionModal, setShowPointsRedemptionModal] = useState(false);
   const [{ id, username, profilePhoto, socialHandles, bio }] = useUser();
   const isCurrentUser = useIsCurrentUser();
   const isReferralUser = useIsReferralUser();
@@ -49,6 +52,9 @@ export const UserProfile = ({ assets, doesUserHaveUnclaimedReward }: UserProfile
     () => setIsProfileInfoModalOpen(true),
     [setIsProfileInfoModalOpen]
   );
+
+  const openPointsRedemptionModal = useCallback(() => setShowPointsRedemptionModal(true), []);
+  const closePointsRedemptionModal = useCallback(() => setShowPointsRedemptionModal(false), []);
 
   const editAvatar = useMemo(
     () =>
@@ -74,8 +80,12 @@ export const UserProfile = ({ assets, doesUserHaveUnclaimedReward }: UserProfile
     [isCurrentUser, isUpdateProfileInfoModalOpen, openUpdateProfileInfoModal]
   );
 
+  const pointsEarned = useMemo(
+    () => (referralUserData && referralUserData.pointsBalance) || 0,
+    [referralUserData]
+  );
+
   const referralContent = useMemo(() => {
-    const pointsEarned = (referralUserData && referralUserData.pointsBalance) || 0;
     return (
       isCurrentUser &&
       isReferralUser && (
@@ -85,11 +95,14 @@ export const UserProfile = ({ assets, doesUserHaveUnclaimedReward }: UserProfile
           center
           loading={isLoading}
         >
-          <Points pointsEarned={pointsEarned} />
+          <Points
+            handleRedemptionButtonClick={openPointsRedemptionModal}
+            pointsEarned={pointsEarned}
+          />
         </ConditionalSpinner>
       )
     );
-  }, [isLoading, isCurrentUser, isReferralUser, referralUserData]);
+  }, [isLoading, isCurrentUser, isReferralUser, pointsEarned, openPointsRedemptionModal]);
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
@@ -140,16 +153,23 @@ export const UserProfile = ({ assets, doesUserHaveUnclaimedReward }: UserProfile
   );
 
   return (
-    <Profile
-      username={username}
-      profilePhoto={profilePhoto}
-      bio={bio}
-      socialHandles={socialHandles}
-      editAvatar={editAvatar}
-      editProfileInfo={editProfileInfo}
-      cta={cta}
-      items={<Assets assets={assets} />}
-      referralContent={referralContent}
-    />
+    <>
+      <Profile
+        username={username}
+        profilePhoto={profilePhoto}
+        bio={bio}
+        socialHandles={socialHandles}
+        editAvatar={editAvatar}
+        editProfileInfo={editProfileInfo}
+        items={<Assets assets={assets} />}
+        referralContent={referralContent}
+      />
+      {showPointsRedemptionModal && isReferralUser && (
+        <PointsRedemptionModal
+          closeModal={closePointsRedemptionModal}
+          redemptionAmount={pointsEarned / POINTS_AVAX_VALUE}
+        />
+      )}
+    </>
   );
 };
