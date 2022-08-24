@@ -109,14 +109,14 @@ const post: Handler = async (req, res) => {
     );
 
     // Get reference to user-referral-account subcollection
-    const userPointsEarnedTransactionsRef = (
-      await getCollectionReferenceServerSide(
-        `user-referral-accounts/${userId}/pointsEarnedTransactions`
-      )
-    ).doc(referralTransactionId);
+    const userPointsEarnedTransactionsRef = await getDocumentReferenceServerSide(
+      `user-referral-accounts/${userId}/pointsEarnedTransactions`,
+      referralTransactionId
+    );
 
     // Get reference to referral-campaign
-    const referralCampaignsRef = (await getCollectionReferenceServerSide('referral-campaigns')).doc(
+    const referralCampaignsRef = await getDocumentReferenceServerSide(
+      'referral-campaigns',
       campaignId
     );
 
