@@ -5,6 +5,7 @@ import tokens from 'styles/tokens';
 
 interface PointsProps {
   pointsEarned: number;
+  handleRedemptionButtonClick: () => void;
 }
 
 const PointsContainer = styled.div`
@@ -43,7 +44,7 @@ const PointsValue = styled.span`
 `;
 
 // TODO: Handle Redemption Logic in CtaButton
-export const Points = ({ pointsEarned }: PointsProps) => (
+export const Points = ({ pointsEarned, handleRedemptionButtonClick }: PointsProps) => (
   <PointsContainer>
     <PointsDetailsContainer>
       <PointsDetailContainer>
@@ -55,6 +56,6 @@ export const Points = ({ pointsEarned }: PointsProps) => (
         <PointsValue>{pointsEarned / POINTS_AVAX_VALUE} AVAX</PointsValue>
       </PointsDetailContainer>
     </PointsDetailsContainer>
-    <CtaButton onClick={() => console.log('Redeem my points!')}>redeem my points</CtaButton>
+    <CtaButton onClick={handleRedemptionButtonClick}>redeem my points</CtaButton>
   </PointsContainer>
 );
