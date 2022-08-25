@@ -36,7 +36,7 @@ export const UserProfile = ({ assets, doesUserHaveUnclaimedReward }: UserProfile
   const [{ id, username, profilePhoto, socialHandles, bio }] = useUser();
   const isCurrentUser = useIsCurrentUser();
   const isReferralUser = useIsReferralUser();
-  const { referralUserData, isLoading } = useReferralUserData(id);
+  const { referralUserData } = useReferralUserData(id);
 
   const [isUpdateProfilePhotoModalOpen, setIsUpdateProfilePhotoOpen] =
     useIsUpdateProfilePhotoModalOpen();
@@ -96,20 +96,13 @@ export const UserProfile = ({ assets, doesUserHaveUnclaimedReward }: UserProfile
     return (
       isCurrentUser &&
       isReferralUser && (
-        <ConditionalSpinner
-          size={'60px'}
-          color={tokens.background.color.brand}
-          center
-          loading={isLoading}
-        >
-          <Points
-            handleRedemptionButtonClick={openPointsRedemptionModal}
-            pointsEarned={pointsEarned}
-          />
-        </ConditionalSpinner>
+        <Points
+          handleRedemptionButtonClick={openPointsRedemptionModal}
+          pointsEarned={pointsEarned}
+        />
       )
     );
-  }, [isLoading, isCurrentUser, isReferralUser, pointsEarned, openPointsRedemptionModal]);
+  }, [isCurrentUser, isReferralUser, pointsEarned, openPointsRedemptionModal]);
 
   const { isModalOpen, openModal, closeModal } = useModal();
 

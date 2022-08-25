@@ -1,10 +1,16 @@
-import { getDocumentExists, getDocumentData } from 'libraries/firebase';
-import { filter, from, map, mergeMap } from 'rxjs';
+import { getDocumentExists, getDocumentReferenceClientSide } from 'libraries/firebase';
+import { docData } from 'rxfire/firestore';
+import { filter, map, mergeMap } from 'rxjs';
 import { getUserUid$ } from '../user';
 import { UserReferralAccount } from './types';
 
-export const getUserReferralAccount$ = (uid: string) =>
-  from(getDocumentData<UserReferralAccount>('user-referral-accounts', uid));
+export const getUserReferralAccount$ = (uid: string) => {
+  const userReferralAccountDocRef = getDocumentReferenceClientSide<UserReferralAccount>(
+    'user-referral-accounts',
+    uid
+  );
+  return docData(userReferralAccountDocRef);
+};
 
 export const getIsReferralUser$ = () =>
   getUserUid$().pipe(
