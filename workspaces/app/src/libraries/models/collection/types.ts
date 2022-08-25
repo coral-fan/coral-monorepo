@@ -29,6 +29,7 @@ export interface CollectionData {
   // undefined to allow flexibility in Firestore
   merchOptionTypes?: MerchOptionTypes;
   accessGrantingTokenAddresses: Collection['id'][] | null;
+  activeCampaign?: string;
 }
 
 export interface Collection extends CollectionData {
