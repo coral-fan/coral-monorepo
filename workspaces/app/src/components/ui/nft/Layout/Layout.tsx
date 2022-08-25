@@ -12,6 +12,8 @@ import {
   ImageWrapper,
   NftAssetContainer,
 } from './components';
+
+import { ShareToEarn } from './components/ShareToEarn';
 export interface LayoutProps {
   isAsset: boolean;
   type: CollectionType;
@@ -28,6 +30,7 @@ export interface LayoutProps {
   dropOrAvailable?: JSX.Element;
   similarCollections?: JSX.Element;
   owner?: JSX.Element;
+  activeCampaign?: string;
 }
 
 /*
@@ -48,6 +51,7 @@ export const Layout = ({
   dropOrAvailable,
   similarCollections,
   owner,
+  activeCampaign,
 }: LayoutProps) => {
   const isMobile = useIsMobile();
 
@@ -93,11 +97,19 @@ export const Layout = ({
         </NftAssetContainer>
         {gatedContentElement}
         {details && <Details details={details} />}
-        <ShareButton
-          onClick={() => {
-            setIsShareModalOpen(true);
-          }}
-        />
+        {activeCampaign ? (
+          <ShareToEarn
+            campaignId={activeCampaign}
+            collectionId={collectionId}
+            collectionName={name}
+          />
+        ) : (
+          <ShareButton
+            onClick={() => {
+              setIsShareModalOpen(true);
+            }}
+          />
+        )}
         {isShareModalOpen && (
           <ShareDropModal
             name={name}
