@@ -19,7 +19,7 @@ export const getAssetImageUrl = async (collectionId: string, assetId: number) =>
     const metadataResponse = await bucket.file(destinationPath).getMetadata();
     const { firebaseStorageDownloadTokens } = metadataResponse[0]?.metadata;
 
-    if (typeof firebaseStorageDownloadTokens === 'string') {
+    if (typeof firebaseStorageDownloadTokens !== 'string') {
       throw new Error(errorMessage);
     }
 
@@ -54,6 +54,8 @@ const getAssetWithKnownCollectionAndOwner = async (
   } = collection;
 
   const assetImageUrl = await getAssetImageUrl(contractAddress, assetId);
+
+  console.log(assetImageUrl);
 
   const asset: Asset = {
     imageUrl: assetImageUrl ?? collectionImageUrl,
