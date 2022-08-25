@@ -53,8 +53,15 @@ export const UserProfile = ({ assets, doesUserHaveUnclaimedReward }: UserProfile
     [setIsProfileInfoModalOpen]
   );
 
-  const openPointsRedemptionModal = useCallback(() => setShowPointsRedemptionModal(true), []);
-  const closePointsRedemptionModal = useCallback(() => setShowPointsRedemptionModal(false), []);
+  const openPointsRedemptionModal = useCallback(
+    () => setShowPointsRedemptionModal(true),
+    [setShowPointsRedemptionModal]
+  );
+
+  const closePointsRedemptionModal = useCallback(
+    () => setShowPointsRedemptionModal(false),
+    [setShowPointsRedemptionModal]
+  );
 
   const editAvatar = useMemo(
     () =>
