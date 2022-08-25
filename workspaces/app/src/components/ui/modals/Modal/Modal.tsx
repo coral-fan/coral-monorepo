@@ -42,6 +42,7 @@ const ModalControlContainer = styled.div`
 export const Modal = ({
   children,
   title,
+  subtitle,
   onClick,
   contentStyle,
   mainContainerStyle,
@@ -90,6 +91,7 @@ export const Modal = ({
             )}
             <Content
               title={title}
+              subtitle={subtitle}
               variant={variant}
               contentStyle={contentStyle}
               fullHeight={fullHeight}

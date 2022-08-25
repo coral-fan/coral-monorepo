@@ -5,6 +5,7 @@ import { Variant } from '../../Card';
 export interface ModalProps {
   children: ReactNode;
   title?: string;
+  subtitle?: string;
   mainContainerHasNoGap?: boolean;
   contentStyle?: SerializedStyles;
   mainContainerStyle?: SerializedStyles;

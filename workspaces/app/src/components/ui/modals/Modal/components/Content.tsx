@@ -8,6 +8,7 @@ import { ModalHasControlButton, ModalProps } from '../types';
 type ContentCardProps = Pick<
   ModalProps,
   | 'title'
+  | 'subtitle'
   | 'variant'
   | 'contentStyle'
   | 'fullHeight'
@@ -66,8 +67,13 @@ const Main = styled.div<Pick<ModalProps, 'mainContainerHasNoGap' | 'mainContaine
   ${({ mainContainerStyle }) => mainContainerStyle}
 `;
 
+const Subtitle = styled.span`
+  color: ${tokens.font.color.brand};
+`;
+
 export const Content = ({
   title,
+  subtitle,
   variant,
   modalHasControlButton,
   contentStyle,
@@ -89,6 +95,7 @@ export const Content = ({
       {title && (
         <Heading level={1} styleVariant={'h2'} colorVariant={variant}>
           {title}
+          <Subtitle>&nbsp;{subtitle}</Subtitle>
         </Heading>
       )}
       <Main mainContainerStyle={mainContainerStyle} mainContainerHasNoGap={mainContainerHasNoGap}>
