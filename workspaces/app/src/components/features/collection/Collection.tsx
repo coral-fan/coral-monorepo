@@ -99,6 +99,7 @@ export const CollectionPage = ({
   redeemCode,
   merchOptionTypes,
   accessGrantingTokenAddresses,
+  activeCampaign,
 }: CollectionPageProps) => {
   const [numMinted, setNumMinted] = useState(tokenTotalSupply);
   const [isSoldOut, setIsSoldOut] = useState(tokenTotalSupply >= maxSupply);
@@ -217,6 +218,7 @@ export const CollectionPage = ({
           collectionId={id}
           dropOrAvailable={dropOrAvailable}
           similarCollections={similarCollectionsSection}
+          activeCampaign={activeCampaign}
         />
       </Elements>
     </ConditionalWrap>
