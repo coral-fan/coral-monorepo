@@ -5,6 +5,7 @@ import { useUserUid } from 'libraries/models';
 import tokens from 'styles/tokens';
 import { getUseRedeemPointsForm } from './hooks';
 import { useMemo } from 'react';
+import { POINTS_AVAX_VALUE } from 'consts';
 
 interface PointsRedemptionModalProps {
   redemptionAmount: number;
@@ -53,7 +54,7 @@ export const PointsRedemptionModal = ({
           error={errors?.address?.message}
         />
         <TextContent>{REDEMPTION_CONTENT}</TextContent>
-        <Button type="submit">Claim {redemptionAmount} AVAX</Button>
+        <Button type="submit">Claim {redemptionAmount / POINTS_AVAX_VALUE} AVAX</Button>
       </Form>
     </Modal>
   );
