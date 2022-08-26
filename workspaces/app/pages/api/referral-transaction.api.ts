@@ -18,7 +18,7 @@ import {
 import { getTimeInsideWindow } from 'libraries/time';
 import { FieldValue } from 'firebase-admin/firestore';
 
-const RecordTransactionRequestBody = z.object({
+const ReferralTransactionRequestBody = z.object({
   referralCode: z.string(),
   referralSource: z.string(),
   purchaseId: z.string(),
@@ -26,11 +26,11 @@ const RecordTransactionRequestBody = z.object({
 
 const post: Handler = async (req, res) => {
   try {
-    const { referralCode, referralSource, purchaseId } = RecordTransactionRequestBody.parse(
+    const { referralCode, referralSource, purchaseId } = ReferralTransactionRequestBody.parse(
       req.body
     );
 
-    // Geet referral document
+    // Get referral document
     const referralDocumentData = await getDocumentData<ReferralData>('referrals', referralCode);
 
     if (!referralDocumentData) {
