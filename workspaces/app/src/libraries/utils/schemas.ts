@@ -1,4 +1,6 @@
+import { ethers } from 'ethers';
 import { bool, string } from 'yup';
+import { z } from 'zod';
 
 export const getUsernameSchema = (usernames: Set<string>, currentUsername?: string) => {
   return string()
@@ -35,3 +37,11 @@ export const SOCIAL_HANDLE_SCHEMA = string()
     'Only alphanumeric characters and _ are allowed, no @ symbol necessary'
   )
   .transform((value: string) => (value === '' ? undefined : value));
+
+export const validateAddress = z
+  .function()
+  .args(z.string())
+  .returns(z.boolean())
+  .implement((x) => {
+    return ethers.utils.isAddress(x);
+  });
