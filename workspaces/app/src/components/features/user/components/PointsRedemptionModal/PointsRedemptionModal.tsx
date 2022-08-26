@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
 import { Button, Input, Modal } from 'components/ui';
 import { useIsAuthenticated } from 'libraries/authentication';
+import { useUserUid } from 'libraries/models';
 import tokens from 'styles/tokens';
-import { useRedeemPointsForm } from './hooks';
+import { getUseRedeemPointsForm } from './hooks';
+import { useMemo } from 'react';
 
 interface PointsRedemptionModalProps {
   redemptionAmount: number;
@@ -28,8 +30,14 @@ export const PointsRedemptionModal = ({
   redemptionAmount,
   closeModal,
 }: PointsRedemptionModalProps) => {
+  const uid = useUserUid();
   const isAuthenticated = useIsAuthenticated();
-  const { register, errors, handleSubmitAddress } = useRedeemPointsForm(closeModal);
+
+  const useRedeemPointsForm = useMemo(
+    () => getUseRedeemPointsForm(uid, redemptionAmount, closeModal),
+    [uid, redemptionAmount, closeModal]
+  );
+  const { register, errors, handleSubmitAddress } = useRedeemPointsForm();
 
   if (!isAuthenticated) {
     return null;
@@ -43,7 +51,7 @@ export const PointsRedemptionModal = ({
           label={'Enter Wallet Address'}
           {...register('address')}
           error={errors?.address?.message}
-        ></Input>
+        />
         <TextContent>{REDEMPTION_CONTENT}</TextContent>
         <Button type="submit">Claim {redemptionAmount} AVAX</Button>
       </Form>
