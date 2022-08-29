@@ -8,28 +8,31 @@ import {
   getDocumentData,
   getDocumentReferenceServerSide,
 } from 'libraries/firebase';
-import {
-  PurchaseData,
-  ReferralCampaignData,
-  ReferralData,
-  ReferralTransactionData,
-  UserReferralAccount,
-} from 'libraries/models';
-import { FieldValue } from 'firebase-admin/firestore';
+import { UserReferralAccount } from 'libraries/models';
 import { validateAddress } from 'libraries/utils';
 import { POINTS_AVAX_VALUE } from 'consts';
 import { ethers } from 'ethers';
+import { getApp } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
 
 const ReferralRedemptionRequestBody = z.object({
-  uid: z.string(),
   address: z.string().refine((addr) => validateAddress(addr)),
-  points: z.number(),
+});
+
+const GenerateReferralCodeCookies = z.object({
+  id_token: z.string(),
 });
 
 const post: Handler = async (req, res) => {
-  console.log('Request received...');
+  let userReferralAccountsRef;
+
   try {
-    const { uid, address, points } = ReferralRedemptionRequestBody.parse(req.body);
+    const { address } = ReferralRedemptionRequestBody.parse(req.body);
+
+    // Get uid
+    const { id_token } = GenerateReferralCodeCookies.parse(req.cookies);
+    const app = getApp();
+    const { uid } = await getAuth(app).verifyIdToken(id_token);
 
     // Get user document
     const userReferralAccountDocumentData = await getDocumentData<UserReferralAccount>(
@@ -47,30 +50,20 @@ const post: Handler = async (req, res) => {
     }
 
     // Get reference to user-referral-account
-    const userReferralAccountsRef = await getDocumentReferenceServerSide(
-      'user-referral-accounts',
-      uid
-    );
+    userReferralAccountsRef = await getDocumentReferenceServerSide('user-referral-accounts', uid);
 
     // Set isRedeeming to true
     await userReferralAccountsRef.update({
       isRedeeming: true,
     });
 
-    // Validate points balance
     const { pointsBalance } = userReferralAccountDocumentData;
-
-    if (points > pointsBalance) {
-      throw new Error(
-        `User has insufficient points balance for request: ${points} requested, points balance only ${pointsBalance}`
-      );
-    }
 
     /*
     Send crypto to provided address from Relayer
     */
     // Convert points to AVAX
-    const avaxBalance = points / POINTS_AVAX_VALUE;
+    const avaxBalance = pointsBalance / POINTS_AVAX_VALUE;
 
     // Create transaction request
     const transactionRequest = {
@@ -104,7 +97,7 @@ const post: Handler = async (req, res) => {
     );
 
     const referralRedemptionTransactionData = {
-      pointsRedeemed: points,
+      pointsRedeemed: pointsBalance,
       avaxValue: avaxBalance,
       timestamp: new Date().toISOString(),
       toAddress: address,
@@ -118,13 +111,14 @@ const post: Handler = async (req, res) => {
     // Create referral-redemption-transactions document
     batch.set(referralRedemptionTransactionsRef, referralRedemptionTransactionData);
     batch.set(userPointsRedeemedTransactionsRef, {
-      pointsRedeemed: points,
+      pointsRedeemed: pointsBalance,
       timestamp: new Date().toISOString(),
       toAddress: address,
     });
     batch.set(userReferralAccountsRef, { pointsBalance: 0 });
 
     await batch.commit();
+
     // Set isRedeeming to false
     await userReferralAccountsRef.update({
       isRedeeming: false,
@@ -132,6 +126,8 @@ const post: Handler = async (req, res) => {
 
     return res.status(200).json({ transactionHash });
   } catch (e) {
+    // Reset isRedeeming in case of error
+    await userReferralAccountsRef?.update({ isRedeeming: false });
     console.error(e);
     return res.status(500).json(ERROR_RESPONSE);
   }
