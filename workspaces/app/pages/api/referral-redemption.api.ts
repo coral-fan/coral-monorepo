@@ -31,10 +31,6 @@ const post: Handler = async (req, res) => {
   try {
     const { uid, address, points } = ReferralRedemptionRequestBody.parse(req.body);
 
-    console.log(`uid: ${uid}`);
-    console.log(`addr: ${address}`);
-    console.log(`points: ${points}`);
-
     // Get user document
     const userReferralAccountDocumentData = await getDocumentData<UserReferralAccount>(
       'user-referral-accounts',
@@ -49,8 +45,6 @@ const post: Handler = async (req, res) => {
     if (userReferralAccountDocumentData.isRedeeming) {
       throw new Error(`User ${uid} has already requested a redemption`);
     }
-
-    console.log(`Redemption status: ${userReferralAccountDocumentData.isRedeeming}`);
 
     // Get reference to user-referral-account
     const userReferralAccountsRef = await getDocumentReferenceServerSide(
@@ -71,7 +65,7 @@ const post: Handler = async (req, res) => {
         `User has insufficient points balance for request: ${points} requested, points balance only ${pointsBalance}`
       );
     }
-    console.log(`Confirming that ${points} === ${pointsBalance}`);
+
     /*
     Send crypto to provided address from Relayer
     */
@@ -87,11 +81,12 @@ const post: Handler = async (req, res) => {
     // Get relay signer from Defender
     const signer = await getRelaySigner();
 
+    // Send transaction
     const txn = await signer.sendTransaction(transactionRequest);
     const { hash: transactionHash } = txn;
-    console.log(transactionHash);
+
+    // Wait 1 block for confirmation, and confirm success
     const txnReceipt = await txn.wait(1);
-    console.log(txnReceipt);
 
     if (txnReceipt.status !== 1) {
       throw new Error(`Transaction ${transactionHash} reverted`);
