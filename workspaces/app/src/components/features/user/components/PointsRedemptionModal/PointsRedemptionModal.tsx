@@ -68,7 +68,10 @@ export const PointsRedemptionModal = ({
               error={errors?.address?.message}
             />
             <TextContent>{REDEMPTION_CONTENT}</TextContent>
-            <Button disabled={!isDirty || !isValid || redemptionAmount <= 0} type="submit">
+            <Button
+              disabled={!isRedeemingPoints || !isDirty || !isValid || redemptionAmount <= 0}
+              type="submit"
+            >
               {redemptionAmount > 0
                 ? `Claim ${redemptionAmount / POINTS_AVAX_VALUE} AVAX`
                 : `No Points to Redeem`}
