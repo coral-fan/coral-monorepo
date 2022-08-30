@@ -12,10 +12,11 @@ import { UpdateProfilePhotoModal } from '../UpdateProfile/components/UpdateProfi
 import { useIsReferralUser, useReferralUserData } from 'libraries/models/referral/hooks';
 import { Points } from '../Points';
 import tokens from 'styles/tokens';
-import { Button, Modal, ConditionalSpinner, Profile } from 'components/ui';
+import { Button, Modal, Link, ConditionalSpinner, Profile } from 'components/ui';
 import { Assets } from '../Assets';
 import { Asset } from 'libraries/models';
 import { useClipboard, useModal } from 'libraries/utils';
+import { css } from '@emotion/react';
 
 const ClaimButton = styled(Button)`
   height: 45px;
@@ -104,12 +105,23 @@ export const UserProfile = ({ assets, doesUserHaveUnclaimedReward }: UserProfile
             <Modal title="Claim Reward" onClick={closeModal}>
               <>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                  officia deserunt mollit anim id est laborum
+                  Thank you for being one of the first to sign up on Coral. To show our
+                  appreciation, we will send 10 USDCe ($10) to the wallet associated with your Coral
+                  account. USDCe is a stable coin on the Avalanche blockchain do not send this to an
+                  address on another blockchain.
+                  <br />
+                  <br />
+                  To claim your $10, simply copy your Coral username and paste it in the{' '}
+                  <Link
+                    href="https://discord.com/invite/qYbRMd7BGd"
+                    css={css`
+                      text-decoration: underline;
+                    `}
+                    openInNewTab
+                  >
+                    #introductions channel in our Discord
+                  </Link>
+                  . Once you have done this, we will send you your tokens.
                 </p>
                 <Button onClick={copyUsernameToClipboard}>Copy Username</Button>
               </>
