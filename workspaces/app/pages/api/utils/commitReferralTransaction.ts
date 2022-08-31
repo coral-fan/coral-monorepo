@@ -1,7 +1,3 @@
-import { Handler } from './types';
-import { z } from 'zod';
-import { ERROR_RESPONSE } from './consts';
-import { getHandler } from './utils';
 import {
   getBatch,
   getCollectionReferenceServerSide,
@@ -18,18 +14,21 @@ import {
 import { getTimeInsideWindow } from 'libraries/time';
 import { FieldValue } from 'firebase-admin/firestore';
 
-const ReferralTransactionRequestBody = z.object({
-  referralCode: z.string(),
-  referralSource: z.string(),
-  purchaseId: z.string(),
-});
+interface ReferralTransaction {
+  referralCode: string;
+  referralSource: string;
+  purchaseId: string;
+}
 
-const post: Handler = async (req, res) => {
+export const commitReferralTransaction = async ({
+  referralCode,
+  referralSource,
+  purchaseId,
+}: ReferralTransaction) => {
+  console.log('commitReferralTransaction__rc: ', referralCode);
+  console.log('commitReferralTransaction__rs: ', referralSource);
+  console.log('commitReferralTransaction__pi: ', purchaseId);
   try {
-    const { referralCode, referralSource, purchaseId } = ReferralTransactionRequestBody.parse(
-      req.body
-    );
-
     // Get referral document
     const referralDocumentData = await getDocumentData<ReferralData>('referrals', referralCode);
 
@@ -146,11 +145,8 @@ const post: Handler = async (req, res) => {
 
     await batch.commit();
 
-    return res.status(200).json({ referralTransactionId });
+    return referralTransactionId;
   } catch (e) {
     console.error(e);
-    return res.status(500).json(ERROR_RESPONSE);
   }
 };
-
-export default getHandler({ post });
