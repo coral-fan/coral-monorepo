@@ -8,6 +8,8 @@ export interface Metadata {
   stripePaymentIntentId?: string;
   merchOrderId?: string;
   fingerprint?: string;
+  referralCode?: string;
+  referrer?: string;
 }
 
 export interface PurchaseData {
