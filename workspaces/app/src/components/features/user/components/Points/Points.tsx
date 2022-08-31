@@ -56,6 +56,8 @@ export const Points = ({ pointsEarned, handleRedemptionButtonClick }: PointsProp
         <PointsValue>{pointsEarned / POINTS_AVAX_VALUE} AVAX</PointsValue>
       </PointsDetailContainer>
     </PointsDetailsContainer>
-    <CtaButton onClick={handleRedemptionButtonClick}>redeem my points</CtaButton>
+    <CtaButton disabled={pointsEarned <= 0} onClick={handleRedemptionButtonClick}>
+      {pointsEarned > 0 ? 'redeem my points' : 'no points earned'}
+    </CtaButton>
   </PointsContainer>
 );
