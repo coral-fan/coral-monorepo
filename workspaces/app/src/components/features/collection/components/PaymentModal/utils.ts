@@ -59,6 +59,8 @@ interface CreatePurchaseParameters {
   collectionId: PurchaseData['collectionId'];
   transactionHash?: string;
   fingerprint?: string;
+  referrer?: string;
+  referralCode?: string;
 }
 
 export const createPurchase = async (createPurchaseParameters: CreatePurchaseParameters) => {
