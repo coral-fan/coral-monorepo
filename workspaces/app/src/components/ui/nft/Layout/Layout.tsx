@@ -1,5 +1,5 @@
 import { getBadge } from 'components/ui/badges/utils';
-import { Artist, Collection, CollectionType } from 'libraries/models';
+import { Artist, Collection, CollectionType, ReferralCampaignData } from 'libraries/models';
 import { useIsMobile } from 'libraries/window';
 import { useCallback, useMemo, useState } from 'react';
 import { Details, ImageWithInfo, NftContent, ShareButton, ShareDropModal } from '../components';
@@ -31,6 +31,7 @@ export interface LayoutProps {
   similarCollections?: JSX.Element;
   owner?: JSX.Element;
   activeCampaign?: string;
+  referralCampaign?: ReferralCampaignData;
 }
 
 /*

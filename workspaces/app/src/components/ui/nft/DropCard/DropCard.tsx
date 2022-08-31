@@ -2,6 +2,7 @@ import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import styled from '@emotion/styled';
 import { Link } from 'components/ui';
 import { Card } from 'components/ui/Card';
+import { ReferralCampaignData } from 'libraries/models';
 import { createElement } from 'react';
 import tokens from 'styles/tokens';
 import { BaseInfo, BaseInfoProps } from '../components';
@@ -13,6 +14,7 @@ export interface DropCardProps
   dropTimestamp: string;
   price: number;
   serverSideRoute?: boolean;
+  referralCampaign?: ReferralCampaignData;
 }
 
 const DropCardContainer = styled(Card)`
