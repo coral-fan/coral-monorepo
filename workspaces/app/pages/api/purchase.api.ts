@@ -1,5 +1,6 @@
 import { getCollectionReferenceServerSide, getDocumentData } from 'libraries/firebase';
 import { PurchaseData, ReferralData } from 'libraries/models';
+import { z } from 'zod';
 import { ERROR_RESPONSE } from './consts';
 import { Handler } from './types';
 import { getHandler } from './utils';
@@ -11,27 +12,40 @@ const DEFAULT_PURCHASE_DATA: DefaultPurchaseData = {
   assetId: null,
 };
 
+const PurchaseRequestBody = z.object({
+  userId: z.string(),
+  collectionId: z.string(),
+  transactionHash: z.string().optional(),
+  fingerprint: z.string().optional(),
+});
+
 const post: Handler = async (req, res) => {
   try {
-    // TODO: add validation!!!
-    const { userId, collectionId, transactionHash, fingerprint } = req.body;
-    const purchaseCollectionRef = await getCollectionReferenceServerSide('purchases');
-
-    const fingerprintData = await getDocumentData<{ referralCode: string }>(
-      'fingerprints',
-      fingerprint
+    const { userId, collectionId, transactionHash, fingerprint } = PurchaseRequestBody.parse(
+      req.body
     );
+
+    const purchaseCollectionRef = await getCollectionReferenceServerSide('purchases');
+    console.log(purchaseCollectionRef);
+
+    let fingerprintData;
+    if (fingerprint) {
+      fingerprintData = await getDocumentData<{ referralCode: string; referrer: string }>(
+        'fingerprints',
+        fingerprint
+      );
+    }
 
     let metadata = null;
 
     // check to ensure referral code is for correct collection
     if (fingerprintData) {
-      const { referralCode } = fingerprintData;
+      const { referralCode, referrer } = fingerprintData;
 
       const referral = await getDocumentData<ReferralData>('referrals', referralCode);
 
       if (referral && referral.collectionId === collectionId) {
-        metadata = { fingerprint };
+        metadata = { fingerprint, referrer, referralCode };
       }
     }
 
