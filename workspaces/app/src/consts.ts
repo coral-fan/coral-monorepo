@@ -63,4 +63,5 @@ const CHARGE_CC_TRANSACTION_FEE = false;
 export const AVAX_TRANSACTION_FEE = CHARGE_AVAX_TRANSACTION_FEE ? BASE_TRANSACTION_FEE : 0;
 export const CC_TRANSACTION_FEE = CHARGE_CC_TRANSACTION_FEE ? BASE_TRANSACTION_FEE : 0;
 
-export const POINTS_AVAX_VALUE = 10; // 10 points per 1 AVAX
+// TODO: Update to final exchange rate
+export const POINTS_AVAX_VALUE = 1000; // 10 points per 1 AVAX
