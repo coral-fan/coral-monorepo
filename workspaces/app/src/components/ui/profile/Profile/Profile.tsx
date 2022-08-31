@@ -1,4 +1,4 @@
-import { Avatar, Button } from 'components/ui';
+import { Avatar } from 'components/ui';
 import {
   ProfileContainer,
   MainProfileContainer,
