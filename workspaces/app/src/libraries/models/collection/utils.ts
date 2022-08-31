@@ -1,5 +1,6 @@
 import { getAllDocuments, getDocumentData, DocumentDataWithId } from 'libraries/firebase';
 import { getArtist } from '../artist';
+import { ReferralCampaignData } from '../referral';
 import { Photo } from '../types';
 import { Collection, CollectionData, PartialCollection } from './types';
 
@@ -40,7 +41,7 @@ export const getCollection = async (id: Collection['id']) => {
   if (collectionData === undefined) {
     throw new Error(`Collection with id ${id} doesn't exist.`);
   }
-  const { artistId, ...partialCollectionData } = collectionData;
+  const { artistId, activeCampaign, ...partialCollectionData } = collectionData;
 
   const artistDataForCollection = await getArtistDataForCollection(
     artistId,
@@ -53,6 +54,16 @@ export const getCollection = async (id: Collection['id']) => {
     id,
     ...artistDataForCollection,
   };
+
+  if (activeCampaign) {
+    const referralCampaignData = await getDocumentData<ReferralCampaignData>(
+      'referral-campaigns',
+      activeCampaign
+    );
+
+    collection.activeCampaign = activeCampaign;
+    collection.referralCampaign = referralCampaignData;
+  }
 
   return collection;
 };
