@@ -9,6 +9,7 @@ import { number, object } from 'yup';
 import { Handler } from '../../types';
 import { getPurchaseDocumentIdByTransactionHash } from './utils';
 import { getHandler, getPurchaseDocumentReference } from '../../utils';
+import { commitReferralTransaction } from '../../utils/commitReferralTransaction';
 
 const transferParamsSchema = object({
   tokenId: number()
@@ -50,6 +51,22 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
                   },
                   { merge: true }
                 );
+
+                console.log('purchaseDocData.metadata: ', purchaseDocData.metadata);
+
+                if (
+                  purchaseDocData.metadata?.fingerprint &&
+                  purchaseDocData.metadata?.referralCode &&
+                  purchaseDocData.metadata?.referrer
+                ) {
+                  const { referralCode, referrer } = purchaseDocData.metadata;
+
+                  await commitReferralTransaction({
+                    purchaseId: id,
+                    referralCode,
+                    referralSource: referrer,
+                  });
+                }
               } catch (e) {
                 console.error(e);
               }
