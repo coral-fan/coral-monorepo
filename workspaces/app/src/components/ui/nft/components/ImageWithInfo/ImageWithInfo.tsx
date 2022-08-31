@@ -1,8 +1,9 @@
 import { useCallback, useMemo, useState } from 'react';
 import styled from '@emotion/styled';
 import { CreatorInfo } from './components';
-import { Artist, Photo } from 'libraries/models';
+import { Artist, Photo, ReferralCampaignData } from 'libraries/models';
 import { ConditionalWrap, Image, Link } from 'components/ui';
+import tokens from 'styles/tokens';
 
 // parent container
 const ImageWithInfoContainer = styled.div`
@@ -14,6 +15,26 @@ interface ImageInfoContainerProps {
   imageInfoHeight: number;
   isCard?: boolean;
 }
+
+const ShareToEarnStickerContainer = styled.div<Omit<ImageInfoContainerProps, 'isCard'>>`
+  position: absolute;
+  right: 14px;
+  top: 17px;
+  /* height: 0;
+  width: 0; */
+`;
+
+const ShareToEarnPill = styled.span`
+  width: max-content;
+  background: ${tokens.background.color.contrast};
+  color: ${tokens.font.color.contrast};
+  font-size: ${tokens.font.size.xs};
+  font-weight: 500;
+  text-transform: uppercase;
+  border-radius: ${tokens.border.radius.md};
+  text-align: center;
+  padding: 7px 11px;
+`;
 
 const ArtistInfoContainer = styled.div<ImageInfoContainerProps>`
   position: absolute;
@@ -36,6 +57,7 @@ export interface ImageWithInfoProps {
   creatorProfilePhoto: Photo;
   artistId?: Artist['id'];
   isCard?: boolean;
+  referralCampaign?: ReferralCampaignData;
 }
 
 export const ImageWithInfo = ({
@@ -44,6 +66,7 @@ export const ImageWithInfo = ({
   creatorProfilePhoto,
   artistId,
   isCard,
+  referralCampaign,
 }: ImageWithInfoProps) => {
   const [imageInfoHeight, setImageInfoHeight] = useState(0);
 
@@ -58,6 +81,12 @@ export const ImageWithInfo = ({
   return (
     <ImageWithInfoContainer>
       <Image src={imageUrl} alt="" />
+      {referralCampaign && (
+        <ShareToEarnStickerContainer imageInfoHeight={imageInfoHeight}>
+          <ShareToEarnPill>Share To Earn</ShareToEarnPill>
+          <ShareToEarnPill>{`${referralCampaign.pointsValue} Pts`}</ShareToEarnPill>
+        </ShareToEarnStickerContainer>
+      )}
       <ArtistInfoContainer isCard={isCard} imageInfoHeight={imageInfoHeight}>
         <ConditionalWrap
           shouldWrap={hasArtistId}
