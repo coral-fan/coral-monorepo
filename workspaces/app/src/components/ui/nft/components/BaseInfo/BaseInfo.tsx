@@ -25,6 +25,7 @@ export const BaseInfo = ({
   titleStyleVariant,
   isCard,
   children,
+  referralCampaign,
 }: BaseInfoProps) => (
   <BaseInfoContainer>
     <ImageWithInfo
@@ -32,6 +33,7 @@ export const BaseInfo = ({
       creatorName={creatorName}
       creatorProfilePhoto={creatorProfilePhoto}
       isCard={isCard}
+      referralCampaign={referralCampaign}
     />
     <NftContent
       title={title}
