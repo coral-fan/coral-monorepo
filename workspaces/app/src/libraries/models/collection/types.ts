@@ -1,5 +1,6 @@
 import { Artist, ArtistData } from '../artist';
 import { MerchOptionTypes } from '../merch';
+import { ReferralCampaignData } from '../referral';
 import { NullableString } from '../types';
 
 export type CollectionType = 'video' | 'music' | 'stream' | 'merch' | 'all_access' | 'ticket';
@@ -37,6 +38,7 @@ export interface Collection extends CollectionData {
   id: string;
   creatorName: ArtistData['name'];
   creatorProfilePhoto: ArtistData['profilePhoto'];
+  referralCampaign?: ReferralCampaignData;
 }
 
 export type PartialCollection = Omit<
