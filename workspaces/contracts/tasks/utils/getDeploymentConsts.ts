@@ -41,6 +41,8 @@ that manage indexing and payment captures.
 const SENTINEL_ID_TRANSFER_IN_PERSON_FUJI = process.env.SENTINEL_ID_TRANSFER_IN_PERSON_FUJI;
 const SENTINEL_ID_RELAY_MINT_FUJI = process.env.SENTINEL_ID_RELAY_MINT_FUJI;
 const SENTINEL_ID_TRANSFER_FUJI = process.env.SENTINEL_ID_TRANSFER_FUJI;
+const SENTINEL_ID_TRANSFER_CRYPTO_PURCHASES_FUJI =
+  process.env.SENTINEL_ID_TRANSFER_CRYPTO_PURCHASES_FUJI;
 
 const SENTINEL_ID_TRANSFER_IN_PERSON_MAINNET = process.env.SENTINEL_ID_TRANSFER_IN_PERSON_MAINNET;
 const SENTINEL_ID_RELAY_MINT_MAINNET = process.env.SENTINEL_ID_RELAY_MINT_MAINNET;
@@ -58,6 +60,7 @@ interface SentinelObject {
   transferInPerson: string;
   relayMint: string;
   transfer: string;
+  completeCryptoPurchase: string;
 }
 
 interface DeploymentConstBaseObject {
@@ -105,6 +108,7 @@ export const getDeploymentConsts = (network: Network): DeploymentType => {
       !SENTINEL_ID_TRANSFER_IN_PERSON_FUJI ||
       !SENTINEL_ID_RELAY_MINT_FUJI ||
       !SENTINEL_ID_TRANSFER_FUJI ||
+      !SENTINEL_ID_TRANSFER_CRYPTO_PURCHASES_FUJI ||
       !AVAX_USD_PRICEFEED_FUJI ||
       !NFT_STORAGE_API_KEY_FUJI
     ) {
@@ -114,6 +118,7 @@ export const getDeploymentConsts = (network: Network): DeploymentType => {
       transferInPerson: SENTINEL_ID_TRANSFER_IN_PERSON_FUJI,
       relayMint: SENTINEL_ID_RELAY_MINT_FUJI,
       transfer: SENTINEL_ID_TRANSFER_FUJI,
+      completeCryptoPurchase: SENTINEL_ID_TRANSFER_CRYPTO_PURCHASES_FUJI,
     };
 
     const fujiConstObject: DeploymentConstNetworkDependentObject = {
@@ -144,10 +149,12 @@ export const getDeploymentConsts = (network: Network): DeploymentType => {
     ) {
       throw MISSING_ENV_VARIABLE;
     }
+    // TODO: Create mainnet complete-crypto-purchase sentinel
     const sentinelIdsMainnet: SentinelObject = {
       transferInPerson: SENTINEL_ID_TRANSFER_IN_PERSON_MAINNET,
       relayMint: SENTINEL_ID_RELAY_MINT_MAINNET,
       transfer: SENTINEL_ID_TRANSFER_MAINNET,
+      completeCryptoPurchase: 'tbd',
     };
 
     const mainnetConstObject: DeploymentConstNetworkDependentObject = {
