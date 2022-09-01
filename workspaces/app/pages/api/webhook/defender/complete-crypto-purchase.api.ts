@@ -52,19 +52,16 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
                   { merge: true }
                 );
 
-                console.log('purchaseDocData.metadata: ', purchaseDocData.metadata);
-
                 if (
                   purchaseDocData.metadata?.fingerprint &&
-                  purchaseDocData.metadata?.referralCode &&
-                  purchaseDocData.metadata?.referrer
+                  purchaseDocData.metadata?.referralCode
                 ) {
                   const { referralCode, referrer } = purchaseDocData.metadata;
 
                   await commitReferralTransaction({
                     purchaseId: id,
                     referralCode,
-                    referralSource: referrer,
+                    referralSource: referrer || '',
                   });
                 }
               } catch (e) {
