@@ -167,7 +167,7 @@ export const UserProfile = ({ assets, doesUserHaveUnclaimedReward }: UserProfile
       {showPointsRedemptionModal && isReferralUser && (
         <PointsRedemptionModal
           closeModal={closePointsRedemptionModal}
-          redemptionAmount={pointsEarned / POINTS_AVAX_VALUE}
+          redemptionAmount={pointsEarned}
         />
       )}
     </>
