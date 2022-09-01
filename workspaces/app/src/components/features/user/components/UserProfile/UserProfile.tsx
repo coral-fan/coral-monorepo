@@ -12,9 +12,7 @@ import { UpdateProfilePhotoModal } from '../UpdateProfile/components/UpdateProfi
 import { useIsReferralUser, useReferralUserData } from 'libraries/models/referral/hooks';
 import { Points } from '../Points';
 import { PointsRedemptionModal } from '../PointsRedemptionModal';
-import { POINTS_AVAX_VALUE } from 'consts';
-import tokens from 'styles/tokens';
-import { Button, Modal, Link, ConditionalSpinner, Profile } from 'components/ui';
+import { Button, Modal, Link, Profile } from 'components/ui';
 import { Assets } from '../Assets';
 import { Asset } from 'libraries/models';
 import { useClipboard, useModal } from 'libraries/utils';
@@ -161,6 +159,7 @@ export const UserProfile = ({ assets, doesUserHaveUnclaimedReward }: UserProfile
         socialHandles={socialHandles}
         editAvatar={editAvatar}
         editProfileInfo={editProfileInfo}
+        cta={cta}
         items={<Assets assets={assets} />}
         referralContent={referralContent}
       />
