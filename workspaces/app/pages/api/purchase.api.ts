@@ -26,7 +26,6 @@ const post: Handler = async (req, res) => {
     );
 
     const purchaseCollectionRef = await getCollectionReferenceServerSide('purchases');
-    console.log(purchaseCollectionRef);
 
     let fingerprintData;
     if (fingerprint) {
