@@ -121,7 +121,7 @@ export const Home = () => {
               <img className="w-full" src="/images/share-to-earn.png" alt="Share to earn"></img>
             </div>
             <p className="text-lg leading-lh-3 xl:text-1 xl:leading-none font-medium tracking-4 max-w-xl mb-5">
-              Generate a referral link for each NFT you own. Every time someone purchases a ticket
+              Generate a referral link for each NFT you own. Every time someone purchases an item
               through your link, you earn Coral points redeemable for crypto.
             </p>
           </div>
