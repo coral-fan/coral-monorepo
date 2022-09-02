@@ -55,8 +55,6 @@ const getAssetWithKnownCollectionAndOwner = async (
 
   const assetImageUrl = await getAssetImageUrl(contractAddress, assetId);
 
-  console.log(assetImageUrl);
-
   const asset: Asset = {
     imageUrl: assetImageUrl ?? collectionImageUrl,
     creatorName,
