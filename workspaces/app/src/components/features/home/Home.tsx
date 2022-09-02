@@ -105,6 +105,29 @@ export const Home = () => {
         </div>
       </section>
 
+      <section className="mb-20 lg:mb-24 xl:mb-32">
+        <hr className="mb-3 lg:mb-5 border-gray-2 border-opacity-20"></hr>
+        <div className="grid grid-cols-12 gap-4 lg:gap-5 group relative">
+          <div className="col-span-12 sm:col-span-6 mb-2.5 sm:mb-0 relative hidden sm:block">
+            <div className="rounded-1 overflow-hidden">
+              <img className="w-full" src="/images/share-to-earn.png" alt="Share to earn"></img>
+            </div>
+          </div>
+          <div className="col-span-12 sm:col-span-6 flex flex-col items-start duration-300">
+            <h2 className="text-1 leading-none xl:text-2 xl:leading-none tracking-3 font-medium duration-300 inline-block mb-10 lg:mb-16 xl:mb-24">
+              Share To Earn
+            </h2>
+            <div className="rounded-1 overflow-hidden mb-5 sm:hidden">
+              <img className="w-full" src="/images/share-to-earn.png" alt="Share to earn"></img>
+            </div>
+            <p className="text-lg leading-lh-3 xl:text-1 xl:leading-none font-medium tracking-4 max-w-xl mb-5">
+              Generate a referral link for each NFT you own. Every time someone purchases a ticket
+              through your link, you earn Coral points redeemable for crypto.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section className="mb-20 lg:mb-24 xl:mb-32 relative">
         <h3 className="text-lg leading-lh-3 xl:text-1 xl:leading-none font-medium tracking-4 uppercase mb-3.5">
           Current Drops
