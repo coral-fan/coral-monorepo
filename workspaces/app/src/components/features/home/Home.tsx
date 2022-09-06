@@ -104,8 +104,7 @@ export const Home = () => {
           )}
         </div>
       </section>
-
-      <section className="mb-20 lg:mb-24 xl:mb-32">
+      {/* <section className="mb-20 lg:mb-24 xl:mb-32">
         <hr className="mb-3 lg:mb-5 border-gray-2 border-opacity-20"></hr>
         <div className="grid grid-cols-12 gap-4 lg:gap-5 group relative">
           <div className="col-span-12 sm:col-span-6 mb-2.5 sm:mb-0 relative hidden sm:block">
@@ -126,8 +125,7 @@ export const Home = () => {
             </p>
           </div>
         </div>
-      </section>
-
+      </section> */}
       <section className="mb-20 lg:mb-24 xl:mb-32 relative">
         <h3 className="text-lg leading-lh-3 xl:text-1 xl:leading-none font-medium tracking-4 uppercase mb-3.5">
           Current Drops
