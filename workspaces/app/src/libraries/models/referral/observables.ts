@@ -1,8 +1,12 @@
-import { getDocumentExists, getDocumentReferenceClientSide } from 'libraries/firebase';
-import { docData } from 'rxfire/firestore';
-import { filter, map, mergeMap } from 'rxjs';
+import {
+  getCollectionReferenceClientSide,
+  getDocumentExists,
+  getDocumentReferenceClientSide,
+} from 'libraries/firebase';
+import { collectionChanges, docData } from 'rxfire/firestore';
+import { filter, map, mergeMap, skip } from 'rxjs';
 import { getUserUid$ } from '../user';
-import { UserReferralAccount } from './types';
+import { RedemptionData, UserReferralAccount } from './types';
 
 export const getUserReferralAccount$ = (uid: string) => {
   const userReferralAccountDocRef = getDocumentReferenceClientSide<UserReferralAccount>(
@@ -18,3 +22,11 @@ export const getIsReferralUser$ = () =>
     mergeMap((uid) => getDocumentExists<UserReferralAccount>('user-referral-accounts', uid)),
     map((documentExists) => documentExists)
   );
+
+export const getUserReferralRedemptionDocumentAdded$ = (uid: string) => {
+  const userPointsRedeemedTransactionsRef = getCollectionReferenceClientSide<RedemptionData>(
+    `user-referral-accounts/${uid}/pointsRedeemedTransactions`
+  );
+
+  return collectionChanges(userPointsRedeemedTransactionsRef, { events: ['added'] }).pipe(skip(1));
+};
