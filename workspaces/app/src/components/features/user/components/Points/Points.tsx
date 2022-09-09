@@ -43,7 +43,6 @@ const PointsValue = styled.span`
   text-transform: uppercase;
 `;
 
-// TODO: Handle Redemption Logic in CtaButton
 export const Points = ({ pointsEarned, handleRedemptionButtonClick }: PointsProps) => (
   <PointsContainer>
     <PointsDetailsContainer>
@@ -56,8 +55,10 @@ export const Points = ({ pointsEarned, handleRedemptionButtonClick }: PointsProp
         <PointsValue>{pointsEarned / POINTS_AVAX_VALUE} AVAX</PointsValue>
       </PointsDetailContainer>
     </PointsDetailsContainer>
-    <CtaButton disabled={pointsEarned <= 0} onClick={handleRedemptionButtonClick}>
-      {pointsEarned > 0 ? 'redeem my points' : 'no points earned'}
-    </CtaButton>
+    {pointsEarned > 0 && (
+      <CtaButton disabled={pointsEarned <= 0} onClick={handleRedemptionButtonClick}>
+        Redeem my Points
+      </CtaButton>
+    )}
   </PointsContainer>
 );
