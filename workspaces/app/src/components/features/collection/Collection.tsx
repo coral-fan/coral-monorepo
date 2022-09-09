@@ -108,10 +108,11 @@ export const CollectionPage = ({
 
   // fingerprint logic
   useEffect(() => {
-    const referralCode = new URLSearchParams(window.location.search).get('referral_code');
-    if (referralCode) {
-      loadFingerprintAgent().then(async (agent) => {
-        const { visitorId: fingerprint } = await agent.get();
+    loadFingerprintAgent().then(async (agent) => {
+      const { visitorId: fingerprint } = await agent.get();
+
+      const referralCode = new URLSearchParams(window.location.search).get('referral_code');
+      if (referralCode) {
         axios
           .post('record-fingerprint', {
             referrer: document.referrer,
@@ -119,9 +120,9 @@ export const CollectionPage = ({
             fingerprint,
           })
           .catch((e) => console.error(e));
-        setFingerprint(fingerprint);
-      });
-    }
+      }
+      setFingerprint(fingerprint);
+    });
   }, []);
 
   useEffect(() => {
