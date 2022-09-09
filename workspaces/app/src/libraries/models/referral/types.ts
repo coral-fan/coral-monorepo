@@ -30,6 +30,7 @@ export interface RedemptionData {
   redemptionId: RedemptionTransactionId;
   timestamp: Timestamp;
   toAddress: Address;
+  transactionHash: string;
 }
 
 export interface ReferralCampaignData {
