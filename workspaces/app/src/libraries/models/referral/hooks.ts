@@ -1,7 +1,11 @@
 import { useObservable } from 'libraries/utils';
-import { useEffect, useMemo, useState } from 'react';
-import { getIsReferralUser$, getUserReferralAccount$ } from './observables';
-import { UserReferralAccount } from './types';
+import { useEffect, useState } from 'react';
+import {
+  getIsReferralUser$,
+  getUserReferralAccount$,
+  getUserReferralRedemptionDocumentAdded$,
+} from './observables';
+import { RedemptionData, UserReferralAccount } from './types';
 
 export const useIsReferralUser = () => useObservable(getIsReferralUser$, false);
 
@@ -16,4 +20,21 @@ export const useReferralUserData = (uid: string) => {
   }, [uid]);
 
   return { referralUserData };
+};
+
+export const useUserReferralRedemptionDocumentAdded = (uid: string) => {
+  const [isSuccessfulRedemption, setIsSuccessfulRedemption] = useState(false);
+  const [redemptionData, setRedemptionData] = useState<RedemptionData>();
+
+  useEffect(() => {
+    const subscription = getUserReferralRedemptionDocumentAdded$(uid).subscribe((addedEvent) => {
+      if (addedEvent) {
+        setRedemptionData(addedEvent[0].doc.data());
+        setIsSuccessfulRedemption(true);
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [uid]);
+
+  return { isSuccessfulRedemption, redemptionData };
 };

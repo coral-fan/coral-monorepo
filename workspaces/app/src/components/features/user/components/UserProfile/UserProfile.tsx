@@ -9,7 +9,11 @@ import {
 import { useCallback, useMemo, useState } from 'react';
 import { UpdateProfileInfoModal } from '../UpdateProfile/components/UpdateProfileInfoModal';
 import { UpdateProfilePhotoModal } from '../UpdateProfile/components/UpdateProfilePhotoModal';
-import { useIsReferralUser, useReferralUserData } from 'libraries/models/referral/hooks';
+import {
+  useIsReferralUser,
+  useReferralUserData,
+  useUserReferralRedemptionDocumentAdded,
+} from 'libraries/models/referral/hooks';
 import { Points } from '../Points';
 import { PointsRedemptionModal } from '../PointsRedemptionModal';
 import { Button, Modal, Link, Profile } from 'components/ui';
@@ -35,6 +39,7 @@ export const UserProfile = ({ assets, doesUserHaveUnclaimedReward }: UserProfile
   const isCurrentUser = useIsCurrentUser();
   const isReferralUser = useIsReferralUser();
   const { referralUserData } = useReferralUserData(id);
+  const pointsRedemptionReturnData = useUserReferralRedemptionDocumentAdded(id);
 
   const [isUpdateProfilePhotoModalOpen, setIsUpdateProfilePhotoOpen] =
     useIsUpdateProfilePhotoModalOpen();
@@ -166,6 +171,7 @@ export const UserProfile = ({ assets, doesUserHaveUnclaimedReward }: UserProfile
       {showPointsRedemptionModal && isReferralUser && (
         <PointsRedemptionModal
           closeModal={closePointsRedemptionModal}
+          pointsRedemptionReturnData={pointsRedemptionReturnData}
           redemptionAmount={pointsEarned}
         />
       )}
