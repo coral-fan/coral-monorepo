@@ -3,11 +3,17 @@ import { Button, ConditionalSpinner, Input, Modal } from 'components/ui';
 import { useIsAuthenticated } from 'libraries/authentication';
 import tokens from 'styles/tokens';
 import { getUseRedeemPointsForm } from './hooks';
-import { useMemo } from 'react';
 import { POINTS_AVAX_VALUE } from 'consts';
+import { RedemptionData } from 'libraries/models';
+import { SuccessContent } from './components';
 
+interface PointsRedemptionReturnData {
+  isSuccessfulRedemption: boolean;
+  redemptionData: RedemptionData | undefined;
+}
 interface PointsRedemptionModalProps {
   redemptionAmount: number;
+  pointsRedemptionReturnData: PointsRedemptionReturnData;
   closeModal: () => void;
 }
 
@@ -23,7 +29,7 @@ const Form = styled.form`
   gap: 30px;
 `;
 
-const SpinnerWrapper = styled.div`
+export const SpinnerWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -35,19 +41,29 @@ const REDEMPTION_CONTENT =
 
 export const PointsRedemptionModal = ({
   redemptionAmount,
+  pointsRedemptionReturnData,
   closeModal,
 }: PointsRedemptionModalProps) => {
   const isAuthenticated = useIsAuthenticated();
 
-  const useRedeemPointsForm = useMemo(() => getUseRedeemPointsForm(closeModal), [closeModal]);
+  const useRedeemPointsForm = getUseRedeemPointsForm();
   const { register, errors, isRedeemingPoints, isDirty, isValid, handleSubmitAddress } =
     useRedeemPointsForm();
+
+  const { isSuccessfulRedemption, redemptionData } = pointsRedemptionReturnData;
+  const { pointsRedeemed, toAddress, transactionHash } = redemptionData || {};
 
   if (!isAuthenticated) {
     return null;
   }
 
-  return (
+  return isSuccessfulRedemption && pointsRedeemed && toAddress && transactionHash ? (
+    <SuccessContent
+      pointsRedeemed={pointsRedeemed}
+      transactionHash={transactionHash}
+      closeModal={closeModal}
+    />
+  ) : (
     <Modal
       onClick={closeModal}
       title={isRedeemingPoints ? 'Redeeming Points...' : 'Redeem My Points'}
@@ -69,7 +85,7 @@ export const PointsRedemptionModal = ({
             />
             <TextContent>{REDEMPTION_CONTENT}</TextContent>
             <Button
-              disabled={!isRedeemingPoints || !isDirty || !isValid || redemptionAmount <= 0}
+              disabled={isRedeemingPoints || !isDirty || !isValid || redemptionAmount <= 0}
               type="submit"
             >
               {redemptionAmount > 0
