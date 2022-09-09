@@ -114,6 +114,7 @@ const post: Handler = async (req, res) => {
       pointsRedeemed: pointsBalance,
       timestamp: new Date().toISOString(),
       toAddress: address,
+      transactionHash,
     });
     batch.set(userReferralAccountsRef, { pointsBalance: 0 });
 
