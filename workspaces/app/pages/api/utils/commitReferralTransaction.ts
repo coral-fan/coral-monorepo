@@ -25,9 +25,6 @@ export const commitReferralTransaction = async ({
   referralSource,
   purchaseId,
 }: ReferralTransaction) => {
-  console.log('commitReferralTransaction__rc: ', referralCode);
-  console.log('commitReferralTransaction__rs: ', referralSource);
-  console.log('commitReferralTransaction__pi: ', purchaseId);
   try {
     // Get referral document
     const referralDocumentData = await getDocumentData<ReferralData>('referrals', referralCode);
