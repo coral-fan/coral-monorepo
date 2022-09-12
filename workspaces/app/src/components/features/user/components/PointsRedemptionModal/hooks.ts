@@ -15,7 +15,7 @@ const axios = getCoralAPIAxios();
 
 type AddressInputSchema = z.infer<typeof ADDRESS_INPUT_SCHEMA>;
 
-export const getUseRedeemPointsForm = () => () => {
+export const useRedeemPointsForm = () => {
   const {
     register,
     handleSubmit,
@@ -27,14 +27,11 @@ export const getUseRedeemPointsForm = () => () => {
 
   const [isRedeemingPoints, setIsRedeemingPoints] = useState(false);
   const uid = useUserUid();
-
+  const errorToast = useErrorToast();
   const handleSubmitAddress = useMemo(
     () =>
       handleSubmit(async ({ address }) => {
-        const errorToast = useErrorToast();
-
         setIsRedeemingPoints(true);
-
         try {
           // Check that redemption is not already in process
           const referralUserDocument =
@@ -53,7 +50,7 @@ export const getUseRedeemPointsForm = () => () => {
         }
         setIsRedeemingPoints(false);
       }),
-    [uid, handleSubmit]
+    [uid, handleSubmit, errorToast]
   );
 
   return {
