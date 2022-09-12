@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Button, ConditionalSpinner, Input, Modal } from 'components/ui';
 import { useIsAuthenticated } from 'libraries/authentication';
 import tokens from 'styles/tokens';
-import { getUseRedeemPointsForm } from './hooks';
+import { useRedeemPointsForm } from './hooks';
 import { POINTS_AVAX_VALUE } from 'consts';
 import { RedemptionData } from 'libraries/models';
 import { SuccessContent } from './components';
@@ -46,7 +46,6 @@ export const PointsRedemptionModal = ({
 }: PointsRedemptionModalProps) => {
   const isAuthenticated = useIsAuthenticated();
 
-  const useRedeemPointsForm = getUseRedeemPointsForm();
   const { register, errors, isRedeemingPoints, isDirty, isValid, handleSubmitAddress } =
     useRedeemPointsForm();
 
