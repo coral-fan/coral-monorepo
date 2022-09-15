@@ -84,7 +84,7 @@ export const getCollectionReferenceServerSide = async <
   return firestore.collection(collection) as FirebaseFirestore.CollectionReference<T>;
 };
 
-export const getCollectionReference = async <T>(collection: string) => {
+export const getCollectionReference = async <T extends DocumentData>(collection: string) => {
   return (isServerSide() ? getCollectionReferenceServerSide : getCollectionReferenceClientSide)<T>(
     collection
   );
