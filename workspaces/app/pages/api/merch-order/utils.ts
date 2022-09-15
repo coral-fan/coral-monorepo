@@ -2,7 +2,10 @@ import { getDocumentReferenceServerSide } from 'libraries/firebase';
 import { MerchOrder } from 'libraries/models';
 
 export const getMerchOrderDocRef = async (id: string) => {
-  const merchOrderDocumentRef = await getDocumentReferenceServerSide<MerchOrder>('merch-order', id);
+  const merchOrderDocumentRef = await getDocumentReferenceServerSide<MerchOrder>(
+    'merch-orders',
+    id
+  );
   const merchOrderSnapshot = await merchOrderDocumentRef.get();
 
   if (!merchOrderSnapshot.exists) {
