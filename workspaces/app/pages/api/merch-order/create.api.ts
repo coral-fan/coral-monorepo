@@ -52,7 +52,7 @@ const post: Handler = async (req, res) => {
     const { options, ...partialMerchOrder } = await createMerchOrderApiSchema.validate(req.body);
 
     if (isMerchOptions(options)) {
-      const merchOrderCollectionRef = await getCollectionReferenceServerSide('merch-order');
+      const merchOrderCollectionRef = await getCollectionReferenceServerSide('merch-orders');
 
       const merchOrder: MerchOrder = {
         ...DEFAULT_MERCH_ORDER,
