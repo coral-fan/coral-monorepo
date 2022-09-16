@@ -51,6 +51,9 @@ export interface ReferralData {
   createdAt: Timestamp;
   userId: User['id'];
   collectionId: Collection['id'];
+  seenFingerprints: string[];
+  visits: number;
+  uniqueVisits: number;
 }
 
 export interface ReferralTransactionData {
