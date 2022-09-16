@@ -1,7 +1,7 @@
 import { getApp } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
-import { getReferralCode } from 'libraries/models';
+import { getReferralCode, ReferralData } from 'libraries/models';
 import { z } from 'zod';
 import { ERROR_RESPONSE } from './consts';
 import { Handler } from './types';
@@ -25,7 +25,10 @@ const post: Handler = async (req, res) => {
     const { uid } = await getAuth(app).verifyIdToken(id_token);
     const referralCode = getReferralCode(uid, collectionId);
 
-    const referralDocRef = await getDocumentReferenceServerSide('referrals', referralCode);
+    const referralDocRef = await getDocumentReferenceServerSide<ReferralData>(
+      'referrals',
+      referralCode
+    );
 
     const referralDocSnapshot = await referralDocRef.get();
 
@@ -35,6 +38,9 @@ const post: Handler = async (req, res) => {
         collectionId,
         userId: uid,
         createdAt: new Date().toISOString(),
+        seenFingerprints: [],
+        visits: 0,
+        uniqueVisits: 0,
       });
 
       const userReferralAccountsDocRef = await getDocumentReferenceServerSide(
