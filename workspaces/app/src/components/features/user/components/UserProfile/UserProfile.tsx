@@ -122,8 +122,8 @@ export const UserProfile = ({ assets, doesUserHaveUnclaimedReward }: UserProfile
               <>
                 <p>
                   Thank you for being one of the first to sign up on Coral. To show our
-                  appreciation, we will send 10 USDCe ($10) to the wallet associated with your Coral
-                  account. USDCe is a stable coin on the Avalanche blockchain do not send this to an
+                  appreciation, we will send $10 in AVAX to the wallet associated with your Coral
+                  account. AVAX is a token on the Avalanche blockchain so do not send this to an
                   address on another blockchain.
                   <br />
                   <br />
