@@ -73,21 +73,19 @@ export const getServerSideProps: GetServerSideProps<UserPageProps, UserParams> =
 
   const { followingArtistIds, ...partialPublicUserData } = publicUserData;
 
-  // const unclaimedRewards = await getDocumentData<{ userIds: string[] }>(
-  //   'app',
-  //   'unclaimed-early-sign-up-rewards'
-  // );
+  const unclaimedRewards = await getDocumentData<{ userIds: string[] }>(
+    'app',
+    'unclaimed-early-sign-up-rewards'
+  );
 
-  // if (unclaimedRewards === undefined) {
-  //   throw new Error('document app/unclaimed-early-sign-up-rewards cannot be undefined');
-  // }
+  if (unclaimedRewards === undefined) {
+    throw new Error('document app/unclaimed-early-sign-up-rewards cannot be undefined');
+  }
 
-  // const doesUserHaveUnclaimedReward =
-  //   unclaimedRewards.userIds.find(
-  //     (userWithUnclaimedRewardId) => userWithUnclaimedRewardId === id
-  //   ) !== undefined;
-
-  const doesUserHaveUnclaimedReward = false;
+  const doesUserHaveUnclaimedReward =
+    unclaimedRewards.userIds.find(
+      (userWithUnclaimedRewardId) => userWithUnclaimedRewardId === id
+    ) !== undefined;
 
   // TODO: Add real following logic
   const followingArtists = followingArtistIds.length > 0 ? [] : [];
