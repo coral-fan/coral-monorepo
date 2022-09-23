@@ -4,7 +4,7 @@ import { getCollectionReferenceServerSide } from 'libraries/firebase';
 import { User } from 'libraries/models';
 import path from 'path';
 
-const usernames = ['bchcash', 'okes', '147258', 'cool'];
+const usernames = ['Abigail', 'paomian'];
 
 const columns = ['Username', 'User ID'];
 
@@ -22,7 +22,9 @@ const generateCSV = async () => {
     stringifier.write([username, id]);
   }
 
-  const writableStream = fs.createWriteStream(path.join(__dirname, 'ids-by-username.csv'));
+  const writableStream = fs.createWriteStream(
+    path.join(__dirname, `ids-by-username_${new Date().valueOf()}.csv`)
+  );
 
   stringifier.pipe(writableStream);
 };
