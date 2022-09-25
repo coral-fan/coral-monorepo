@@ -54,6 +54,7 @@ export interface ReferralData {
   seenFingerprints: string[];
   visits: number;
   uniqueVisits: number;
+  conversions: number;
 }
 
 export interface ReferralTransactionData {
