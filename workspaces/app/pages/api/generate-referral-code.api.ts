@@ -33,6 +33,7 @@ const post: Handler = async (req, res) => {
         seenFingerprints: [],
         visits: 0,
         uniqueVisits: 0,
+        conversions: 0,
       });
 
       const userReferralAccountsDocRef = await getDocumentReferenceServerSide(
