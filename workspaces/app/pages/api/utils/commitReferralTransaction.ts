@@ -121,6 +121,9 @@ export const commitReferralTransaction = async ({
       throw new Error('Campaign max points already awarded');
     }
 
+    // Get reference to referral for conversion tracking
+    const referralRef = await getDocumentReferenceServerSide('referrals', referralCode);
+
     // Create batch firestore transaction
     const batch = await getBatch();
 
@@ -132,6 +135,9 @@ export const commitReferralTransaction = async ({
 
     // Update user-referral-accounts document
     batch.update(userReferralAccountsRef, 'pointsBalance', FieldValue.increment(pointsValue));
+
+    // Update conversions-tracking on referrals
+    batch.update(referralRef, 'conversions', FieldValue.increment(1));
 
     // Create user-referral-accounts pointsEarned subcollection
     batch.set(userPointsEarnedTransactionsRef, {
