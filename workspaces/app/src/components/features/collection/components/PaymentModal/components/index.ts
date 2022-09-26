@@ -6,6 +6,7 @@ export * from './ExistingCardPayment';
 export * from './NewCardInput';
 export * from './AvaxPayment';
 export * from './PaymentSuccess';
-export * from './FreeMint';
+export * from './RedeemMint';
 export * from './components';
 export * from './MerchOrder';
+export * from './FreeMint';

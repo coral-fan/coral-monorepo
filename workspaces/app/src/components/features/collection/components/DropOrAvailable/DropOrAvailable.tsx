@@ -121,16 +121,29 @@ export const DropOrAvailable = ({
     }
 
     const hasValidRedeemCode = redeemCode !== null;
+    const isFreeNft = usdPrice === 0;
 
     if (isAuthenticated) {
       if (hasValidRedeemCode) {
         return 'Redeem Free NFT';
+      } else if (isFreeNft) {
+        return 'Mint Free NFT';
       } else {
         return 'Buy Now';
       }
     }
-    return `Sign In To ${hasValidRedeemCode ? 'Redeem' : 'Purchase'}`;
-  }, [isSoldOut, isAuthenticated, redeemCode]);
+
+    let signInAction: string;
+
+    if (hasValidRedeemCode) {
+      signInAction = 'Redeem';
+    } else if (isFreeNft) {
+      signInAction = 'Mint For Free';
+    } else {
+      signInAction = 'Purchase';
+    }
+    return `Sign In To ${signInAction}`;
+  }, [isSoldOut, isAuthenticated, redeemCode, usdPrice]);
 
   // TODO: Refactor CtaButton conditional logic
   return (
