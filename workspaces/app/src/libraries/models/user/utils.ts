@@ -8,24 +8,41 @@ import { initializeFirebaseAdmin } from 'libraries/firebase';
 import { getAuth } from 'firebase/auth';
 import { getApp } from 'firebase/app';
 import { User } from './types';
+import { NextApiRequest } from 'next';
+import { z } from 'zod';
 
 type Context = Parameters<typeof parseCookies>[0] & Parameters<typeof destroyCookie>[0];
 
-export const getUidServerSide = async (ctx: Context) => {
+const GenerateReferralCodeCookies = z.object({
+  id_token: z.string(),
+});
+
+const isNextApiResponse = (ctxOrReq: Context | NextApiRequest): ctxOrReq is NextApiRequest =>
+  ctxOrReq?.hasOwnProperty('cookies') ?? false;
+
+export async function getUidServerSide(req: NextApiRequest): Promise<string>;
+export async function getUidServerSide(ctx: Context): Promise<string | undefined>;
+
+export async function getUidServerSide(ctxOrReq: Context | NextApiRequest) {
   await initializeFirebaseAdmin();
+
   try {
     const { getApp } = await import('firebase-admin/app');
     const app = getApp();
     const { getAuth } = await import('firebase-admin/auth');
-    // TODO: think of way to globally type cookies more strictly
-    const cookies = parseCookies(ctx);
-    const { uid } = await getAuth(app).verifyIdToken(cookies[ID_TOKEN_KEY]);
+    const cookies = isNextApiResponse(ctxOrReq) ? ctxOrReq.cookies : parseCookies(ctxOrReq);
+    const { id_token } = GenerateReferralCodeCookies.parse(cookies);
+    const { uid } = await getAuth(app).verifyIdToken(id_token);
     return uid;
-  } catch (_) {
-    destroyCookie(ctx, ID_TOKEN_KEY, COOKIE_OPTIONS);
-    return undefined;
+  } catch (e) {
+    if (isNextApiResponse(ctxOrReq)) {
+      throw e;
+    } else {
+      destroyCookie(ctxOrReq, ID_TOKEN_KEY, COOKIE_OPTIONS);
+      return undefined;
+    }
   }
-};
+}
 
 export const getUidClientSide = () => getAuth(getApp()).currentUser?.uid;
 
