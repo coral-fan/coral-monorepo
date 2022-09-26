@@ -163,7 +163,6 @@ export const PaymentModal = ({
                 {!isFreeOrRedeemMint && (
                   <>
                     <TransactionSummary
-                      shouldShow={!isFreeOrRedeemMint}
                       isAvax={isAvax}
                       price={formattedPrice}
                       total={formattedTotal}
