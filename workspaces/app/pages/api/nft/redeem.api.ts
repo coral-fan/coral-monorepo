@@ -1,23 +1,23 @@
 import { NextApiRequest, NextApiResponse } from 'next/types';
 import { CoralNftV1__factory } from '@coral/contracts';
 
-import { ERROR_RESPONSE } from './consts';
-import { getHandler, getRelaySigner } from './utils';
-import { Handler } from './types';
+import { ERROR_RESPONSE } from '../consts';
+import { getHandler, getRelaySigner } from '../utils';
+import { Handler } from '../types';
 import { object, string } from 'yup';
-import { RedeemCode } from 'libraries/models';
+import { getUidServerSide, RedeemCode } from 'libraries/models';
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
+import { relayMint } from './utils';
 
 export const redeemNftParamsSchema = object({
   collectionId: string().required(),
-  userId: string().required(),
   code: string().required(),
 });
 
 export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) => {
   let redeemCodeDocRef;
   try {
-    const { collectionId, code, userId } = await redeemNftParamsSchema.validate(req.body);
+    const { collectionId, code } = await redeemNftParamsSchema.validate(req.body);
 
     redeemCodeDocRef = await getDocumentReferenceServerSide<RedeemCode>(
       `app/redeem-codes/${collectionId}`,
@@ -33,21 +33,22 @@ export const post: Handler = async (req: NextApiRequest, res: NextApiResponse) =
         `Redeem code ${redeemCode} doesn't exist for collection with id ${collectionId} doesn't exist in database.`
       );
     }
-    const userDocRef = await getDocumentReferenceServerSide('users', userId);
+
+    const uid = await getUidServerSide(req);
+
+    const userDocRef = await getDocumentReferenceServerSide('users', uid);
     const userDocSnapshot = await userDocRef.get();
 
     if (!userDocSnapshot.exists) {
-      throw new Error(`user with id ${userId} doesn't exist in database.`);
+      throw new Error(`user with id ${uid} doesn't exist in database.`);
     }
 
     if (!redeemCode.isRedeemed) {
       await redeemCodeDocRef.set({ isRedeemed: true }, { merge: true });
-      // Relayer - Mint NFT
-      const signer = await getRelaySigner();
-      const nftContract = CoralNftV1__factory.connect(collectionId, signer);
-      const { hash } = await nftContract.relayMint(userId);
 
-      const response = { transactionHash: hash };
+      const transactionHash = await relayMint(collectionId, uid);
+
+      const response = { transactionHash };
 
       await redeemCodeDocRef.set(response, { merge: true });
 
