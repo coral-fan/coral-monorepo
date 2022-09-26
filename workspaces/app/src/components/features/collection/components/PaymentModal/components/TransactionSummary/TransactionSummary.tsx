@@ -3,6 +3,7 @@ import tokens, { QUERY } from 'styles/tokens';
 import { Currency } from '../Currency';
 
 interface TransactionSummaryProps {
+  shouldShow: boolean;
   isAvax: boolean;
   price: string;
   total: string;
@@ -57,35 +58,34 @@ const TotalPriceContainer = styled.div`
 `;
 
 export const TransactionSummary = ({
+  shouldShow,
   isAvax,
   price,
   total,
   altTotal,
   transactionFee,
   transactionFeePercentage,
-}: TransactionSummaryProps) => {
-  return (
-    <Container>
-      <LineItem>
-        <span>Item Price</span>
-        <Currency value={price} isAvax={isAvax} />
-      </LineItem>
-      <LineItem>
-        <TransactionFeeContainer>
-          <span>Transaction Fee</span>
-          {transactionFeePercentage !== 0 && (
-            <TransactionFeeDetail>{`${transactionFeePercentage}% of item price`}</TransactionFeeDetail>
-          )}
-        </TransactionFeeContainer>
-        <Currency value={transactionFee} isAvax={isAvax} />
-      </LineItem>
-      <LineItem>
-        <span>Total</span>
-        <TotalPriceContainer>
-          <Currency value={total} isAvax={isAvax} />
-          <Currency value={altTotal} isAvax={!isAvax} isAlt={true} />
-        </TotalPriceContainer>
-      </LineItem>
-    </Container>
-  );
-};
+}: TransactionSummaryProps) => (
+  <Container>
+    <LineItem>
+      <span>Item Price</span>
+      <Currency value={price} isAvax={isAvax} />
+    </LineItem>
+    <LineItem>
+      <TransactionFeeContainer>
+        <span>Transaction Fee</span>
+        {transactionFeePercentage !== 0 && (
+          <TransactionFeeDetail>{`${transactionFeePercentage}% of item price`}</TransactionFeeDetail>
+        )}
+      </TransactionFeeContainer>
+      <Currency value={transactionFee} isAvax={isAvax} />
+    </LineItem>
+    <LineItem>
+      <span>Total</span>
+      <TotalPriceContainer>
+        <Currency value={total} isAvax={isAvax} />
+        <Currency value={altTotal} isAvax={!isAvax} isAlt={true} />
+      </TotalPriceContainer>
+    </LineItem>
+  </Container>
+);

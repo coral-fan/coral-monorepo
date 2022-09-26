@@ -18,6 +18,8 @@ import {
   ExistingCardPayment,
   MerchOrder,
   TransactionSummary,
+  RedeemMint,
+  FreeMint,
 } from './components';
 import { AvaxPayment } from './components/AvaxPayment';
 import {
@@ -31,9 +33,7 @@ import { NewCardInput } from './components/NewCardInput';
 import { PaymentSuccess } from './components/PaymentSuccess';
 import { useErrorToast } from 'libraries/utils/toasts';
 import { useIsMobile } from 'libraries/window';
-import { FreeMint } from './components/FreeMint';
 import { MerchOptionTypes } from 'libraries/models/merch';
-
 interface PaymentModalProps extends AssetInfoProps {
   usdPrice: number;
   artistId?: string;
@@ -124,6 +124,8 @@ export const PaymentModal = ({
 
   const isMerch = merchOptionTypes !== undefined && merchOptionTypes.length > 0;
 
+  const isFreeOrRedeemMint = redeemCode !== null || usdPrice === 0;
+
   return (
     <Modal title={title} onClick={closePaymentModal} fullHeight isNarrow={assetId !== undefined}>
       <ContentContainer>
@@ -158,36 +160,46 @@ export const PaymentModal = ({
                 center
                 loading={(isAvax && isAvaxPriceLoading) || isMintingNFT}
               >
-                <TransactionSummary
-                  isAvax={isAvax}
-                  price={formattedPrice}
-                  total={formattedTotal}
-                  altTotal={formattedAltTotal}
-                  transactionFee={formattedTransactionFee}
-                  transactionFeePercentage={transactionFee * 100}
-                />
-                <HeadingContainer>
-                  {redeemCode !== null ? (
-                    <Heading>Redeem Free NFT</Heading>
-                  ) : isAvax ? (
-                    <Heading>Paying With AVAX</Heading>
-                  ) : (
-                    <>
-                      <Heading>
-                        {shouldUseExistingCard ? 'Card On File' : 'Payment Details'}
-                      </Heading>
-                      {stripeCustomerId && (
-                        <DifferentCardLink type="button" onClick={handleUseDifferentCardClick}>
-                          {shouldUseExistingCard ? 'Use a Different Card' : 'Use Existing Card'}
-                        </DifferentCardLink>
+                {!isFreeOrRedeemMint && (
+                  <>
+                    <TransactionSummary
+                      shouldShow={!isFreeOrRedeemMint}
+                      isAvax={isAvax}
+                      price={formattedPrice}
+                      total={formattedTotal}
+                      altTotal={formattedAltTotal}
+                      transactionFee={formattedTransactionFee}
+                      transactionFeePercentage={transactionFee * 100}
+                    />
+                    <HeadingContainer>
+                      {/* no header if is free mint or redeem mint */}
+                      {isFreeOrRedeemMint ? null : isAvax ? (
+                        <Heading>Paying With AVAX</Heading>
+                      ) : (
+                        <>
+                          <Heading>
+                            {shouldUseExistingCard ? 'Card On File' : 'Payment Details'}
+                          </Heading>
+                          {stripeCustomerId && (
+                            <DifferentCardLink type="button" onClick={handleUseDifferentCardClick}>
+                              {shouldUseExistingCard ? 'Use a Different Card' : 'Use Existing Card'}
+                            </DifferentCardLink>
+                          )}
+                        </>
                       )}
-                    </>
-                  )}
-                </HeadingContainer>
+                    </HeadingContainer>
+                  </>
+                )}
                 {redeemCode !== null ? (
                   // TODO: possibly need merch order logic?
-                  <FreeMint
+                  <RedeemMint
                     redeemCode={redeemCode}
+                    collectionId={collectionId}
+                    setIsMintingNFT={setIsMintingNFT}
+                    setAssetId={setAssetId}
+                  />
+                ) : usdPrice === 0 ? (
+                  <FreeMint
                     collectionId={collectionId}
                     setIsMintingNFT={setIsMintingNFT}
                     setAssetId={setAssetId}
