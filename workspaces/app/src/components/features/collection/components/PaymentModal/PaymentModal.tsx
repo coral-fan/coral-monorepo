@@ -171,8 +171,7 @@ export const PaymentModal = ({
                       transactionFeePercentage={transactionFee * 100}
                     />
                     <HeadingContainer>
-                      {/* no header if is free mint or redeem mint */}
-                      {isFreeOrRedeemMint ? null : isAvax ? (
+                      {isAvax ? (
                         <Heading>Paying With AVAX</Heading>
                       ) : (
                         <>
