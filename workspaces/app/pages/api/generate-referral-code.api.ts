@@ -1,7 +1,5 @@
-import { getApp } from 'firebase-admin/app';
-import { getAuth } from 'firebase-admin/auth';
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
-import { getReferralCode, ReferralData } from 'libraries/models';
+import { getReferralCode, getUidServerSide, ReferralData } from 'libraries/models';
 import { z } from 'zod';
 import { ERROR_RESPONSE } from './consts';
 import { Handler } from './types';
@@ -12,17 +10,11 @@ const GenerateReferralCodeRequestBody = z.object({
   campaignId: z.string(),
 });
 
-const GenerateReferralCodeCookies = z.object({
-  id_token: z.string(),
-});
-
 const post: Handler = async (req, res) => {
   const { collectionId, campaignId } = GenerateReferralCodeRequestBody.parse(req.body);
-  const { id_token } = GenerateReferralCodeCookies.parse(req.cookies);
 
   try {
-    const app = getApp();
-    const { uid } = await getAuth(app).verifyIdToken(id_token);
+    const uid = await getUidServerSide(req);
     const referralCode = getReferralCode(uid, collectionId);
 
     const referralDocRef = await getDocumentReferenceServerSide<ReferralData>(
