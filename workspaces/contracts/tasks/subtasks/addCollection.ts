@@ -43,7 +43,7 @@ export const addCollection = subtask('addCollection', 'Add collection to Firebas
       dropTime,
       details,
       gatedContent,
-      merchOptions,
+      merchOptionTypes,
       accessGrantingTokenAddresses,
     } = collectionData;
 
@@ -106,7 +106,7 @@ export const addCollection = subtask('addCollection', 'Add collection to Firebas
       gatedContent,
       maxMintablePerWallet: maxTokensPerWallet,
       accessGrantingTokenAddresses,
-      merchOptions,
+      merchOptionTypes,
     };
 
     await collectionRef.set(collection);
