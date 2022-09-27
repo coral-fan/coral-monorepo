@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { Link, Modal } from 'components/ui';
 import { POINTS_AVAX_VALUE } from 'consts';
-import { RedemptionData } from 'libraries/models';
 import tokens from 'styles/tokens';
 import { SpinnerWrapper } from '../../PointsRedemptionModal';
 

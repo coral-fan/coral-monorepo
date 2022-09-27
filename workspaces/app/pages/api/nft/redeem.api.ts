@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next/types';
-import { CoralNftV1__factory } from '@coral/contracts';
 
 import { ERROR_RESPONSE } from '../consts';
-import { getHandler, getRelaySigner } from '../utils';
+import { getHandler } from '../utils';
 import { Handler } from '../types';
 import { object, string } from 'yup';
 import { getUidServerSide, RedeemCode } from 'libraries/models';
