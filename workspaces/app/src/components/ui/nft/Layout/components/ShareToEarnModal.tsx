@@ -15,7 +15,7 @@ import { useErrorToast, useSuccessToast } from 'libraries/utils/toasts';
 interface ShareToEarnModalProps extends Pick<ModalProps, 'onClick'> {
   pointsValue: number;
   userId: string;
-  collectionId: string;
+  campaignId: string;
   collectionName: string;
 }
 
@@ -75,10 +75,10 @@ export const ShareToEarnModal = ({
   pointsValue,
   onClick,
   userId,
-  collectionId,
+  campaignId,
   collectionName,
 }: ShareToEarnModalProps) => {
-  const referralCode = useMemo(() => getReferralCode(userId, collectionId), [userId, collectionId]);
+  const referralCode = useMemo(() => getReferralCode(userId, campaignId), [userId, campaignId]);
   const referralUrl = useMemo(
     () => `${window.location.href}?referral_code=${referralCode}`,
     [referralCode]
