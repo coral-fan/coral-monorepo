@@ -1,3 +1,5 @@
+import { MerchOptions } from '@coral/models';
+
 interface Attribute {
   trait_type: string;
   value: string;
@@ -31,7 +33,7 @@ interface CollectionData {
     type: string;
     value: string | null;
   };
-  merchOptionTypes: string[] | null;
+  merchOptions: MerchOptions | undefined;
   accessGrantingTokenAddresses: string[] | null;
 }
 
@@ -70,7 +72,7 @@ export const initialConfig: Config = {
       type: '',
       value: '',
     },
-    merchOptionTypes: [],
+    merchOptions: undefined,
     accessGrantingTokenAddresses: [],
   },
 };
