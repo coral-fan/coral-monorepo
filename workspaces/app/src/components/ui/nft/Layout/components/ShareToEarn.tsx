@@ -38,15 +38,15 @@ const getReferralCampaignById$ = (campaignId: string) => () => {
   return docData(referralCampaignDataDocRef);
 };
 
-const getDoesHaveReferralCodeByUserAndCollection$ =
-  (userId: string | undefined, collectionId: string) => () =>
+const getDoesHaveReferralCodeByUserAndCampaignId$ =
+  (userId: string | undefined, campaignId: string) => () =>
     iif(
       () => userId === undefined,
       of(undefined),
       of(userId).pipe(
         filter((userId): userId is string => userId !== undefined),
         mergeMap((userId) => {
-          const referralCode = getReferralCode(userId, collectionId);
+          const referralCode = getReferralCode(userId, campaignId);
           const referralDocRef = getDocumentReferenceClientSide<ReferralData>(
             'referrals',
             referralCode
@@ -86,8 +86,8 @@ export const ShareToEarn = ({ collectionId, campaignId, collectionName }: ShareT
   const referralCampaignData = useObservable(getReferralCampaign$, undefined);
 
   const getDoesHaveReferralCode$ = useMemo(
-    () => getDoesHaveReferralCodeByUserAndCollection$(userId, collectionId),
-    [userId, collectionId]
+    () => getDoesHaveReferralCodeByUserAndCampaignId$(userId, campaignId),
+    [userId, campaignId]
   );
 
   const doesHaveReferralCode = useObservable(getDoesHaveReferralCode$, undefined);
@@ -127,7 +127,7 @@ export const ShareToEarn = ({ collectionId, campaignId, collectionName }: ShareT
                 onClick={closeModal}
                 pointsValue={referralCampaignData.pointsValue}
                 userId={userId}
-                collectionId={collectionId}
+                campaignId={campaignId}
                 collectionName={collectionName}
               />
             )}
