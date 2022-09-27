@@ -2,10 +2,27 @@ import { Collection } from './collection';
 import { NullableString } from './types';
 import { User } from './user';
 
-export interface MerchOrderOption {
-  type: string;
-  value: string;
+// TODO: start delete
+export const MERCH_OPTIONS = {
+  size: ['xs', 'sm', 'md', 'lg', 'xl'] as const,
+  color: ['black', 'white'] as const,
+};
+
+type MerchOptionsMap = typeof MERCH_OPTIONS;
+
+export type MerchOptionType = keyof MerchOptionsMap;
+
+export type MerchOptionTypes = MerchOptionType[];
+
+export interface MerchOption<T extends MerchOptionType> {
+  type: Extract<MerchOptionType, T>;
+  value: MerchOptionsMap[T][number];
 }
+export type SizeOption = MerchOption<'size'>;
+export type ColorOption = MerchOption<'color'>;
+
+export type MerchOptions = Array<SizeOption | ColorOption>;
+// end delete
 
 type MerchOrderStatus = 'pending' | 'confirmed' | 'rejected' | 'fulfilled';
 
@@ -13,7 +30,7 @@ export interface MerchOrder {
   shippingInfoId: string;
   userId: User['id'];
   collectionId: Collection['id'];
-  options?: MerchOrderOption[];
+  options: MerchOptions | null;
   timestamp: string;
   status: MerchOrderStatus;
   transactionHash: NullableString;
