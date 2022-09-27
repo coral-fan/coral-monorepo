@@ -164,6 +164,8 @@ export const AvaxPayment = ({
     total,
     provider,
     collectionId,
+    userId,
+    fingerprint,
     setAssetId,
     setIsMintingNFT,
     errorToast,

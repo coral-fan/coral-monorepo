@@ -166,6 +166,7 @@ export const ExistingCardPayment = ({
       elements,
       paymentMethod,
       stripe,
+      fingerprint,
       stripeCustomerId,
       total,
       uid,
