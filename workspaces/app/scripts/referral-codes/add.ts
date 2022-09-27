@@ -18,7 +18,7 @@ const addReferralCode = async () => {
 
   const campaignId = collectionData.activeCampaign;
 
-  const referralCode = getReferralCode(uid, collectionId);
+  const referralCode = getReferralCode(uid, campaignId);
 
   const referralDocRef = await getDocumentReferenceServerSide<ReferralData>(
     'referrals',
