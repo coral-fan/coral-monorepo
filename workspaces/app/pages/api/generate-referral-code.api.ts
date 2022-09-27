@@ -15,7 +15,7 @@ const post: Handler = async (req, res) => {
 
   try {
     const uid = await getUidServerSide(req);
-    const referralCode = getReferralCode(uid, collectionId);
+    const referralCode = getReferralCode(uid, campaignId);
 
     const referralDocRef = await getDocumentReferenceServerSide<ReferralData>(
       'referrals',
@@ -50,7 +50,7 @@ const post: Handler = async (req, res) => {
       return res.status(200).send({ referralCode });
     } else {
       throw new Error(
-        `Referral code for user with id ${uid} for collection ${collectionId} already exists`
+        `Referral code for user with id ${uid} for campaign ${campaignId} already exists`
       );
     }
   } catch (e) {
