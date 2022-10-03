@@ -142,12 +142,12 @@ export const Home = () => {
               {/* date starts here */}
               <time className="inline-block" dateTime="2022-10-03">
                 {/* date ends here */}
-                October 10, 2022
+                October 03, 2022
               </time>
             </div>
             {/* start mobile image link */}
             {/* collection link */}
-            <a href="#">
+            <a href="https://coral.fan/collection/0x7fFE7860F74b30deF853295E12a64506BCE22cF0">
               <div className="rounded-1 overflow-hidden sm:hidden mb-5 hover:rounded-2 duration-300">
                 <img className="w-full" src="/images/rome.jpeg" alt="Rome Fortune"></img>
               </div>
@@ -162,7 +162,7 @@ export const Home = () => {
             {/* CTA starts here */}
             {/* collection link */}
             <a
-              href="#"
+              href="https://coral.fan/collection/0x7fFE7860F74b30deF853295E12a64506BCE22cF0"
               className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-2 py-2 px-2.5 bg-gray-2 bg-opacity-20 hover:bg-opacity-50 rounded-full duration-300 mt-auto"
             >
               Claim Your Free NFT
@@ -171,7 +171,10 @@ export const Home = () => {
           </div>
           {/* start desktop image link  */}
           {/* collection link */}
-          <a href="#" className="col-span-12 sm:col-span-6 mb-2.5 sm:mb-0 relative">
+          <a
+            href="https://coral.fan/collection/0x7fFE7860F74b30deF853295E12a64506BCE22cF0"
+            className="col-span-12 sm:col-span-6 mb-2.5 sm:mb-0 relative"
+          >
             <div className="rounded-1 overflow-hidden hidden sm:block hover:rounded-2 duration-300">
               <img className="w-full" src="/images/rome.jpeg" alt="Rome Fortune"></img>
             </div>
