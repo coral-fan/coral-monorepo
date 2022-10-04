@@ -43,14 +43,6 @@ export const Menu = ({ userProfile, closeMenuModal }: MenuProps) => {
     closeMenuModal();
   }, [logout, closeMenuModal]);
 
-  const authenticatedMenuItems: MenuItemProps[] = useMemo(
-    () => [
-      { name: 'Home', to: '/' },
-      { name: 'Sign Out', onClick: handleLogout },
-    ],
-    [handleLogout]
-  );
-
   const openSignInModal = useOpenSignInModal();
 
   const handleSignIn = useCallback(() => {
@@ -58,15 +50,16 @@ export const Menu = ({ userProfile, closeMenuModal }: MenuProps) => {
     openSignInModal();
   }, [closeMenuModal, openSignInModal]);
 
-  const unauthenticatedMenuItems: MenuItemProps[] = useMemo(
+  const menuItems: MenuItemProps[] = useMemo(
     () => [
       { name: 'Home', to: '/' },
-      { name: 'Sign In', onClick: handleSignIn },
+      { name: 'Coral Editorial', to: 'https://editorial.coral.fan/' },
+      isAuthenticated
+        ? { name: 'Sign Out', onClick: handleLogout }
+        : { name: 'Sign In', onClick: handleSignIn },
     ],
-    [handleSignIn]
+    [isAuthenticated, handleSignIn, handleLogout]
   );
-
-  const menuItems = isAuthenticated ? authenticatedMenuItems : unauthenticatedMenuItems;
 
   return (
     <Modal onClick={closeMenuModal} mainContainerHasNoGap>
