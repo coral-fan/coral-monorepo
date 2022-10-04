@@ -43,7 +43,10 @@ export const SITE_MAP = {
   PRIVACY_POLICY: ['Privacy Policy', '/privacy-policy'],
   INSTAGRAM: ['Instagram', 'https://www.instagram.com/coral_fan/'],
   TWITTER: ['Twitter', 'https://twitter.com/coral__fan'],
+  YOUTUBE: ['Youtube', 'https://www.youtube.com/channel/UCaq1Ap2bA-63VrVUsdiNKvA'],
+  DISCORD: ['Discord', 'https://discord.gg/qYbRMd7BGd'],
   HOME: ['Home', '/'],
+  CORAL_EDITORIAL: ['Coral Editorial', 'https://editorial.coral.fan/'],
 };
 
 export const SITE_LINKS = Object.entries(SITE_MAP).reduce(
