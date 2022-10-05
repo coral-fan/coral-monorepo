@@ -109,6 +109,35 @@ export const Home = () => {
                 </svg>
               </a>
             </li>
+            <li>
+              <a
+                href="https://www.youtube.com/channel/UCaq1Ap2bA-63VrVUsdiNKvA"
+                className="bg-gray-2 bg-opacity-20 rounded-full hover:bg-opacity-50 duration-300 w-9 h-9 s-2:w-11 s-2:h-11 flex items-center justify-center duration-300"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <svg
+                  width="44"
+                  height="44"
+                  viewBox="0 0 44 44"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle cx="22" cy="22" r="22" fill="#F0F0F0" fillOpacity="0" />
+                  <g clipPath="url(#clip0_502_3035)">
+                    <path
+                      d="M34.9993 22.0168C35.0126 24.0953 34.832 26.1705 34.4596 28.2164C34.312 28.758 34.0208 29.2511 33.6158 29.6454C33.2109 30.0396 32.7068 30.3208 32.1552 30.4602C30.1335 31 22.0039 31 22.0039 31C22.0039 31 13.8743 31 11.8441 30.4602C11.2928 30.3219 10.7892 30.041 10.3855 29.6464C9.98179 29.2519 9.69268 28.7581 9.54819 28.2164C8.81727 24.1147 8.81727 19.919 9.54819 15.8172C9.69144 15.2713 9.97956 14.7726 10.383 14.3724C10.7864 13.9722 11.2907 13.6848 11.8441 13.5397C13.8743 12.9999 22.0039 13 22.0039 13C22.0039 13 30.1335 12.9999 32.1552 13.5397C32.7089 13.6859 33.2137 13.9735 33.6183 14.3735C34.023 14.7734 34.3132 15.2714 34.4596 15.8172C34.832 17.8631 35.0126 19.9384 34.9993 22.0168ZM26.133 22.0168L19.3397 18.2127V25.8041L26.133 22.0168Z"
+                      fill="#F0F0F0"
+                    />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_502_3035">
+                      <rect width="26" height="18" fill="white" transform="translate(9 13)" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </a>
+            </li>
           </ul>
           {!isAuthenticated && (
             <div className="group w-full sm:mt-auto flex items-start justify-between bg-orange-1 rounded-1 py-4 px-5 mb-5 relative hover:bg-gray-2 duration-300">
