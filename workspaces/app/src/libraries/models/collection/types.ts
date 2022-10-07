@@ -1,5 +1,4 @@
 import { Artist, ArtistData } from '../artist';
-import { MerchOptionTypes } from '../merch';
 import { ReferralCampaignData } from '../referral';
 import { NullableString } from '../types';
 
@@ -11,9 +10,7 @@ export interface GatedContent {
 }
 
 export type Details = string[] | null;
-
-// TODO: export MerchOptions
-interface MerchOptions {
+export interface MerchOptions {
   type: string;
   values: string[];
   quantities: number[];
@@ -37,8 +34,6 @@ export interface CollectionData {
   maxMintablePerWallet: number;
   // undefined to allow flexibility in Firestore
   merchOptions?: MerchOptions;
-  // TODO: remove merchOptionTypes
-  merchOptionTypes?: MerchOptionTypes;
   accessGrantingTokenAddresses: Collection['id'][] | null;
   activeCampaign?: string;
 }
