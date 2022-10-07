@@ -27,6 +27,7 @@ export const Select = forwardRef<
     <Container>
       <Label>{label}</Label>
       <SelectComponent
+        key={options.join()}
         ref={ref}
         name={label}
         options={options}
