@@ -33,7 +33,7 @@ import { NewCardInput } from './components/NewCardInput';
 import { PaymentSuccess } from './components/PaymentSuccess';
 import { useErrorToast } from 'libraries/utils/toasts';
 import { useIsMobile } from 'libraries/window';
-import { MerchOptionTypes } from 'libraries/models/merch';
+import { MerchOptions } from 'libraries/models';
 interface PaymentModalProps extends AssetInfoProps {
   usdPrice: number;
   artistId?: string;
@@ -41,7 +41,7 @@ interface PaymentModalProps extends AssetInfoProps {
   collectionDetails: Details;
   closePaymentModal: () => void;
   redeemCode: NullableString;
-  merchOptionTypes?: MerchOptionTypes;
+  merchOptions?: MerchOptions;
   fingerprint?: string;
 }
 
@@ -55,7 +55,7 @@ export const PaymentModal = ({
   usdPrice,
   collectionId,
   redeemCode,
-  merchOptionTypes,
+  merchOptions,
   fingerprint,
 }: PaymentModalProps) => {
   const { isActive: isWalletUser } = useWallet();
@@ -122,7 +122,7 @@ export const PaymentModal = ({
     }
   }, [purchaseId, errorToast]);
 
-  const isMerch = merchOptionTypes !== undefined && merchOptionTypes.length > 0;
+  const isMerch = merchOptions !== undefined;
 
   const isFreeOrRedeemMint = redeemCode !== null || usdPrice === 0;
 
@@ -149,7 +149,7 @@ export const PaymentModal = ({
             />
             {isMerch && merchOrderId === undefined ? (
               <MerchOrder
-                merchOptionTypes={merchOptionTypes}
+                merchOptionsData={merchOptions}
                 setMerchOrderId={setMerchOrderId}
                 collectionId={collectionId}
               />
@@ -196,7 +196,8 @@ export const PaymentModal = ({
                     setIsMintingNFT={setIsMintingNFT}
                     setAssetId={setAssetId}
                   />
-                ) : usdPrice === 0 ? (
+                ) : // TODO: possibly need merch order logic?
+                usdPrice === 0 ? (
                   <FreeMint
                     collectionId={collectionId}
                     setIsMintingNFT={setIsMintingNFT}
