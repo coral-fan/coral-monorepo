@@ -1,18 +1,13 @@
 import styled from '@emotion/styled';
 import { Button, Heading } from 'components/ui';
-import {
-  SizeOption,
-  ColorOption,
-  MerchOptionTypes,
-  useShippingInfoId,
-  useUserUid,
-} from 'libraries/models';
+import { MerchOptions, useShippingInfoId, useUserUid } from 'libraries/models';
 import { useCallback, useEffect, useState } from 'react';
 import tokens from 'styles/tokens';
 import { ConfirmShippingInfo, MerchOptionSelect, ShippingInfoModal } from './components';
 import { getCoralAPIAxios } from 'libraries/utils';
+
 interface MerchOrderProps {
-  merchOptionTypes: MerchOptionTypes | null;
+  merchOptionsData?: MerchOptions;
   setMerchOrderId: (merchOrderId: string) => void;
   collectionId: string;
 }
@@ -35,26 +30,59 @@ const SelectContainer = styled.div`
 interface MerchHeadingProps {
   content: string;
 }
+
 const MerchHeading = ({ content }: MerchHeadingProps) => (
   <Heading level={2} styleVariant={'h3'}>
     {content}
   </Heading>
 );
-export type MerchOption = SizeOption | ColorOption;
 
 const axios = getCoralAPIAxios();
 
 export const MerchOrder = ({
-  merchOptionTypes,
+  merchOptionsData,
   setMerchOrderId,
   collectionId,
 }: MerchOrderProps) => {
+  // dummy data to muck around with
+  // merchOptionsData = {
+  //   type: 'color',
+  //   values: ['Gold Plate Overlay', 'White Rhodium Overlay'],
+  //   quantities: [103, 64],
+  //   subOptions: [
+  //     {
+  //       type: 'size',
+  //       values: ['7', '8', '9', '10', '11', '12'],
+  //       quantities: [8, 14, 20, 32, 20, 9],
+  //     },
+  //     { type: 'size', values: ['7', '8', '9', '10', '11', '12'], quantities: [9, 9, 14, 14, 9, 9] },
+  //   ],
+  // };
+
+  // merch
+  const [merchOptions, setMerchOptions] = useState<[string, string[], MerchOptions[]?][]>(
+    merchOptionsData
+      ? [
+          [
+            merchOptionsData.type,
+            merchOptionsData.values.filter((_, i) =>
+              merchOptionsData?.quantities ? merchOptionsData.quantities[i] > 0 : true
+            ),
+            merchOptionsData.subOptions,
+          ],
+        ]
+      : []
+  );
+
   const [isHandlingCreateMerchOrder, setIsHandlingCreateMerchOrder] = useState(false);
-  const [options, setOptions] = useState({});
+  // options represents currently selected set of options by user
+  // an object is used so that values can arbitarilybe overwritten
+  const [options, setOptions] = useState<Record<string, string>>({});
+  // isOptionsSelected represents whether user has selected all necessary options to proceed to providing a shipping address and payment method
   const [isOptionsSelected, setIsOptionsSelected] = useState(false);
   const [showShippingInfoForm, setShowShippingInfoForm] = useState(false);
-  const [showConfirmShippingInfo, setShowConfirmShippingInfo] = useState(() =>
-    merchOptionTypes && merchOptionTypes.length === 0 ? true : false
+  const [showConfirmShippingInfo, setShowConfirmShippingInfo] = useState(
+    () => merchOptionsData === undefined
   );
   const [shippingInfoId, setShippingInfoId] = useState<string | null>(null);
 
@@ -78,8 +106,7 @@ export const MerchOrder = ({
   const handleCreateMerchOrder = useCallback(async () => {
     setIsHandlingCreateMerchOrder(true);
 
-    const optionsArr = Object.entries(options);
-    const merchOrderOptions = optionsArr.map((arr) => ({ type: arr[0], value: arr[1] }));
+    const merchOrderOptions = Object.entries(options).map(([type, value]) => ({ type, value }));
 
     try {
       const { data } = await axios.post('merch-order/create', {
@@ -96,24 +123,66 @@ export const MerchOrder = ({
     }
   }, [collectionId, shippingInfoId, options, uid, setMerchOrderId]);
 
-  const handleOnChange = (type: string, value: string) => {
-    setOptions((options) => ({ ...options, [type]: value }));
-  };
+  const handleOnChange = useCallback(
+    (type: string, value: string) => {
+      /* since merch options are nested, the order is maintained in the merchOptions array as a stack (first in, last out data structure)
+         example:
+          merchOptionsData = {
+              type: 'color'
+              ...
+              subOptions: [
+                {
+                  type: 'size'
+                },
+                ...
+              ]
+            }
+        
+        merchOptions = [ ['color', [<color values>], ...], ['size', [<size values>], ...] ]
+        ordering = color => size
 
-  useEffect(() => {
-    setIsOptionsSelected(() =>
-      merchOptionTypes ? Object.keys(options).length === merchOptionTypes.length : true
-    );
-  }, [options, merchOptionTypes]);
+        if most recently selected type is size, then keep the merch options array the same.
+        result: [ ['color', [<color values>], ...], ['size',[<size values>], ...] ]
+        if most recently selected type is color, then remove last element from merchOptions until current option type is color
+        result: [ [type: 'color', values:[<color values>], ...] ]
+      */
+      while (merchOptions.length > 0 && merchOptions[merchOptions.length - 1][0] !== type) {
+        delete options[merchOptions[merchOptions.length - 1][0]];
+        merchOptions.pop();
+      }
+
+      const [, optionValues, subOptions] = merchOptions[merchOptions.length - 1];
+
+      const valueIndex = optionValues.findIndex((option) => option === value);
+
+      // when subOptions is undefined, this means all merch options are currently displayed, and there's no need to add additional options to the merchOptions array
+      if (subOptions !== undefined) {
+        const nextOption = subOptions[valueIndex];
+        setMerchOptions((options) => [
+          ...options,
+          [
+            nextOption.type,
+            nextOption.values.filter((_, i) => nextOption.quantities[i] > 0),
+            nextOption.subOptions,
+          ],
+        ]);
+      } else {
+        setIsOptionsSelected(true);
+      }
+
+      setOptions((options) => ({ ...options, [type]: value }));
+    },
+    [merchOptions, options]
+  );
 
   return (
     <Container>
-      {merchOptionTypes && !showConfirmShippingInfo && (
+      {!showConfirmShippingInfo && (
         <>
           <MerchHeading content="Options" />
           <SelectContainer>
-            {merchOptionTypes.map((type) => (
-              <MerchOptionSelect key={type} type={type} onChange={handleOnChange} />
+            {merchOptions.map(([type, values]) => (
+              <MerchOptionSelect key={type} type={type} values={values} onChange={handleOnChange} />
             ))}
           </SelectContainer>
         </>
@@ -140,7 +209,7 @@ export const MerchOrder = ({
         loading={isHandlingCreateMerchOrder}
         disabled={
           isHandlingCreateMerchOrder ||
-          (merchOptionTypes && !isOptionsSelected) ||
+          (merchOptions && !isOptionsSelected) ||
           (showConfirmShippingInfo && !shippingInfoId)
         }
       >
