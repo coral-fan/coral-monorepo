@@ -1,6 +1,6 @@
 import { getCollectionReferenceServerSide } from 'libraries/firebase';
-import { MerchOptions, MerchOrder } from 'libraries/models';
-import { array, InferType, object, string } from 'yup';
+import { MerchOrder } from 'libraries/models';
+import { array, object, string } from 'yup';
 import { ERROR_RESPONSE } from '../consts';
 import { Handler } from '../types';
 import { getHandler } from '../utils';
