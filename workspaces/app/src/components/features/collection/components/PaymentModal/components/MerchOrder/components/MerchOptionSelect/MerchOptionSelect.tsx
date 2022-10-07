@@ -1,14 +1,12 @@
 import { Select } from 'components/ui';
-import { MerchOptionType, MERCH_OPTIONS } from 'libraries/models';
-
 interface MerchOptionSelectProps {
-  type: MerchOptionType;
+  type: string;
+  values: string[];
   onChange: (type: string, value: string) => void;
 }
 
-export const MerchOptionSelect = ({ type, onChange }: MerchOptionSelectProps) => {
-  const merchOptions = MERCH_OPTIONS[type];
-  const options = merchOptions.map((merchOption) => ({ value: merchOption, label: merchOption }));
+export const MerchOptionSelect = ({ type, values, onChange }: MerchOptionSelectProps) => {
+  const options = values.map((value) => ({ value, label: value }));
 
   return <Select label={type} options={options} onChange={onChange} />;
 };
