@@ -97,7 +97,7 @@ export const CollectionPage = ({
   similarCollections,
   maxMintablePerWallet,
   redeemCode,
-  merchOptionTypes,
+  merchOptions,
   accessGrantingTokenAddresses,
   activeCampaign,
 }: CollectionPageProps) => {
@@ -150,7 +150,7 @@ export const CollectionPage = ({
         creatorProfilePhoto={artistProfilePhoto}
         imageUrl={imageUrl}
         redeemCode={redeemCode}
-        merchOptionTypes={merchOptionTypes}
+        merchOptions={merchOptions}
         fingerprint={fingerprint}
       />
     ),
@@ -169,7 +169,7 @@ export const CollectionPage = ({
       details,
       maxMintablePerWallet,
       redeemCode,
-      merchOptionTypes,
+      merchOptions,
       fingerprint,
     ]
   );
