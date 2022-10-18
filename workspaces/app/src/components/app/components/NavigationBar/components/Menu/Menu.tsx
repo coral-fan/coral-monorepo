@@ -1,4 +1,4 @@
-import { createElement, useCallback, useMemo } from 'react';
+import { createElement, useCallback, useMemo, useState } from 'react';
 import styled from '@emotion/styled';
 import { Link, Modal } from 'components/ui';
 import { useIsAuthenticated, useLogout } from 'libraries/authentication';
@@ -7,6 +7,8 @@ import { UserProfile } from '../../NavigationBar';
 import { Item } from './Item';
 import { MenuProfileInfo } from '../MenuProfileInfo';
 import { useOpenSignInModal } from 'components/app/components/SignInModal';
+import { useWallet } from 'libraries/blockchain';
+import { WithdrawAvaxModal } from '../WithdrawAvaxModal';
 
 interface MenuProps {
   userProfile?: UserProfile;
@@ -37,11 +39,17 @@ export const Menu = ({ userProfile, closeMenuModal }: MenuProps) => {
   const logout = useLogout();
   const isAuthenticated = useIsAuthenticated();
   const uid = useUserUid();
+  const { connectorType, balance } = useWallet();
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
 
   const handleLogout = useCallback(() => {
     logout();
     closeMenuModal();
   }, [logout, closeMenuModal]);
+
+  const handleWithdraw = useCallback(() => {
+    setShowWithdrawModal(true);
+  }, []);
 
   const openSignInModal = useOpenSignInModal();
 
@@ -61,7 +69,19 @@ export const Menu = ({ userProfile, closeMenuModal }: MenuProps) => {
     [isAuthenticated, handleSignIn, handleLogout]
   );
 
-  return (
+  const isWithdrawAvailable = useMemo(() => {
+    if (balance && balance > 0) return true;
+    return false;
+  }, [balance]);
+
+  return showWithdrawModal ? (
+    <WithdrawAvaxModal
+      closeWithdrawModal={() => {
+        setShowWithdrawModal(false);
+        closeMenuModal();
+      }}
+    />
+  ) : (
     <Modal onClick={closeMenuModal} mainContainerHasNoGap>
       {isAuthenticated && userProfile && (
         <ClickableWrapper>
@@ -73,6 +93,11 @@ export const Menu = ({ userProfile, closeMenuModal }: MenuProps) => {
           </Link>
           {/* <NotificationItem handleCloseMenu={useCloseMenuModal} notificationsCount={notificationsCount} /> */}
         </ClickableWrapper>
+      )}
+      {isWithdrawAvailable && isAuthenticated && connectorType === 'WEB3AUTH' && (
+        <Item key="withdraw" handleCloseMenu={closeMenuModal} onClick={handleWithdraw}>
+          {`Withdraw AVAX`}
+        </Item>
       )}
       {menuItems.map(({ to, name, onClick }) =>
         createElement(
