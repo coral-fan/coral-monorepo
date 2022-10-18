@@ -40,6 +40,7 @@ const useConnectorState = create<ConnectorState>()(
     }
   )
 );
+
 // TODO: refactor to stop exposing connector direcly through hook?
 export const useWallet = () => {
   const isMetaMaskInjected = useIsMetaMaskInjected();
@@ -83,5 +84,6 @@ export const useWallet = () => {
     balance,
     error,
     setConnectorType,
+    connectorType,
   };
 };
