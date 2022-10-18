@@ -80,8 +80,6 @@ export const useWithdrawAvaxForm = () => {
 
           // Set Txn Receipt
           setWithdrawTxnReceipt(txnReceipt);
-
-          console.log(txnReceipt);
         } catch (e) {
           errorToast(`Error: ${getErrorMessage(e)}`);
           console.error(e);
