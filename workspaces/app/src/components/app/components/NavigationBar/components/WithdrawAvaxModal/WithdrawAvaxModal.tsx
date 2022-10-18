@@ -1,5 +1,12 @@
 import styled from '@emotion/styled';
-import { Button, ConditionalSpinner, Input, Modal, TransactionSuccessModal } from 'components/ui';
+import {
+  Button,
+  ConditionalSpinner,
+  Input,
+  Modal,
+  SpinnerWrapper,
+  TransactionSuccessModal,
+} from 'components/ui';
 import { useIsAuthenticated } from 'libraries/authentication';
 import { useWallet } from 'libraries/blockchain';
 import tokens from 'styles/tokens';
@@ -19,13 +26,6 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 30px;
-`;
-
-export const SpinnerWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 260px;
 `;
 
 const SEND_AVAX_CONTENT =
