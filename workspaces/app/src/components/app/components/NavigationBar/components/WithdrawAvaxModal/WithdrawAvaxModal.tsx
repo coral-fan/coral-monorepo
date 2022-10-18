@@ -4,7 +4,6 @@ import { useIsAuthenticated } from 'libraries/authentication';
 import { useWallet } from 'libraries/blockchain';
 import tokens from 'styles/tokens';
 import { useWithdrawAvaxForm } from './hooks';
-// import { SuccessContent } from './components';
 
 interface WithdrawAvaxModalProps {
   closeWithdrawModal: () => void;
