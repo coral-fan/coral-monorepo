@@ -1,11 +1,17 @@
 import styled from '@emotion/styled';
-import { Button, ConditionalSpinner, Input, Modal } from 'components/ui';
+import {
+  Button,
+  ConditionalSpinner,
+  Input,
+  Modal,
+  SpinnerWrapper,
+  TransactionSuccessModal,
+} from 'components/ui';
 import { useIsAuthenticated } from 'libraries/authentication';
 import tokens from 'styles/tokens';
 import { useRedeemPointsForm } from './hooks';
 import { POINTS_AVAX_VALUE } from 'consts';
 import { RedemptionData } from 'libraries/models';
-import { SuccessContent } from './components';
 
 interface PointsRedemptionReturnData {
   isSuccessfulRedemption: boolean;
@@ -29,15 +35,8 @@ const Form = styled.form`
   gap: 30px;
 `;
 
-export const SpinnerWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 260px;
-`;
-
 const REDEMPTION_CONTENT =
-  'Enter a wallet address you would like to send your $AVAX to. Please be careful you enter the address in accurately. Once you hit claim, this action can not be done and we cannot retrieve assets once sent. ';
+  'Enter a wallet address you would like to send your $AVAX to. Please be careful you enter the address in accurately. Once you hit claim, this action can not be undone and we cannot retrieve assets once sent. ';
 
 export const PointsRedemptionModal = ({
   redemptionAmount,
@@ -57,7 +56,8 @@ export const PointsRedemptionModal = ({
   }
 
   return isSuccessfulRedemption && pointsRedeemed && toAddress && transactionHash ? (
-    <SuccessContent
+    <TransactionSuccessModal
+      transactionType="redemption"
       pointsRedeemed={pointsRedeemed}
       transactionHash={transactionHash}
       closeModal={closeModal}
