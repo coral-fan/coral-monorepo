@@ -1,16 +1,13 @@
 import styled from '@emotion/styled';
 import { Link, Modal } from 'components/ui';
-import { CLIENT_ENVIRONMENT } from 'consts';
+import { AVALANCHE } from 'consts';
 import tokens from 'styles/tokens';
 import { SpinnerWrapper } from 'components/ui';
 import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import { useWallet } from 'libraries/blockchain';
 
-const TRANSACTION_URL =
-  CLIENT_ENVIRONMENT == 'production'
-    ? 'https://snowtrace.io/tx/'
-    : 'https://testnet.snowtrace.io/tx/';
+const { BLOCK_EXPLORER_URL } = AVALANCHE;
 
 const SuccessContainer = styled.div`
   display: flex;
@@ -93,7 +90,7 @@ export const TransactionSuccessModal = ({
           <SuccessSubText>
             {`${txnAvaxValue}`} AVAX has been sent to the address you provided
           </SuccessSubText>
-          <RedemptionTransactionLink href={`${TRANSACTION_URL}${transactionHash}`}>
+          <RedemptionTransactionLink href={`${BLOCK_EXPLORER_URL}/tx/${transactionHash}`}>
             View Transaction
           </RedemptionTransactionLink>
         </SuccessContainer>
