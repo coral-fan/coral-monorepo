@@ -69,10 +69,7 @@ export const Menu = ({ userProfile, closeMenuModal }: MenuProps) => {
     [isAuthenticated, handleSignIn, handleLogout]
   );
 
-  const isWithdrawAvailable = useMemo(() => {
-    if (balance && balance > 0) return true;
-    return false;
-  }, [balance]);
+  const isWithdrawAvailable = useMemo(() => balance != undefined && balance > 0, [balance]);
 
   return showWithdrawModal ? (
     <WithdrawAvaxModal
@@ -96,7 +93,7 @@ export const Menu = ({ userProfile, closeMenuModal }: MenuProps) => {
       )}
       {isWithdrawAvailable && isAuthenticated && connectorType === 'WEB3AUTH' && (
         <Item key="withdraw" handleCloseMenu={closeMenuModal} onClick={handleWithdraw}>
-          {`Withdraw AVAX`}
+          Withdraw AVAX
         </Item>
       )}
       {menuItems.map(({ to, name, onClick }) =>
