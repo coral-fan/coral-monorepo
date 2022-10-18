@@ -116,7 +116,7 @@ export const DropOrAvailable = ({
   }, [collectionId, userId, maxMintablePerWallet, isAuthenticated]);
 
   const ctaText = useMemo(() => {
-    if (isSoldOut) {
+    if (isSoldOut || collectionId === '0x1e7EaEC099c34843721d93B0A90bbDbb693CD7Ea') {
       return 'Sold Out';
     }
 
@@ -143,7 +143,7 @@ export const DropOrAvailable = ({
       signInAction = 'Purchase';
     }
     return `Sign In To ${signInAction}`;
-  }, [isSoldOut, isAuthenticated, redeemCode, usdPrice]);
+  }, [isSoldOut, collectionId, isAuthenticated, redeemCode, usdPrice]);
 
   // TODO: Refactor CtaButton conditional logic
   return (
@@ -175,9 +175,16 @@ export const DropOrAvailable = ({
               </MaxOwnedNotification>
             )}
             {/* TODO: remove this logic after VBs first event */}
-            {creatorName !== 'Van Buren Records' && (
-              <ProgressBar maxSupply={maxSupply} numMinted={numMintedDisplay} />
-            )}
+            {
+              <ProgressBar
+                maxSupply={maxSupply}
+                numMinted={
+                  collectionId === '0x1e7EaEC099c34843721d93B0A90bbDbb693CD7Ea'
+                    ? maxSupply
+                    : numMintedDisplay
+                }
+              />
+            }
           </ConditionalSpinner>
         </AvailableContainer>
       ) : (
