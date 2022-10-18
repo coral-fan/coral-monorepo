@@ -220,10 +220,10 @@ export const Home = () => {
             {/* CTA starts here */}
             {/* collection link */}
             <a
-              href="https://coral.fan/collection/0x7fFE7860F74b30deF853295E12a64506BCE22cF0"
+              href="https://www.coral.fan/artist/0xbE74cdF5C499A8B21dE8A19c5F757c3abF7F3BEc"
               className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-2 py-2 px-2.5 bg-gray-2 bg-opacity-20 hover:bg-opacity-50 rounded-full duration-300 mt-auto"
             >
-              Claim Your Free NFT
+              View Collections
             </a>
             {/* CTA ends here */}
           </div>
