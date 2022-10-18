@@ -29,7 +29,7 @@ const Form = styled.form`
 `;
 
 const SEND_AVAX_CONTENT =
-  'Enter a wallet address you would like to send your $AVAX to. Please be careful you enter the address in accurately. Once you hit claim, this action can not be undone and we cannot retrieve assets once sent. Amount sent will be your total balance net of gas costs.';
+  'Enter a wallet address you would like to send your $AVAX to. Please be careful you enter the address in accurately. Once you hit claim, this action can not be undone and we cannot retrieve assets once sent. The amount you receive will be slightly less than your balance - this is due to the transaction cost of using the Avalanche network with your wallet.';
 
 export const WithdrawAvaxModal = ({ closeWithdrawModal }: WithdrawAvaxModalProps) => {
   const { balance } = useWallet();
