@@ -233,48 +233,6 @@ const addCollectionType = () => {
   });
 };
 
-let numMerchOptions: number;
-const addNumMerchOptions = () => {
-  return new Promise<void>((resolve, reject) => {
-    rl.question('How many merch options? ', (answer) => {
-      numMerchOptions = parseInt(answer);
-      resolve();
-    });
-  });
-};
-
-const addMerchType = (num: number) => {
-  const answerArray = ['size', 'color'];
-  return new Promise<void>((resolve, reject) => {
-    rl.question(
-      `Which merch option do you want to add (${
-        num + 1
-      } of ${numMerchOptions})? [ ${answerArray.join(' / ')} ] `,
-      (answer) => {
-        if (answerArray.includes(answer)) {
-          initialConfig.collectionData.merchOptionTypes?.push(answer);
-          console.log(`Merch type of ${answer} added...`);
-          resolve();
-        } else {
-          console.log(`Please choose one of: ${answerArray.join(' / ')}`);
-          console.log(` `);
-          resolve(addCollectionType());
-        }
-      }
-    );
-  });
-};
-
-const addMerchOptions = async (numOptions: number) => {
-  if (numOptions === 0) {
-    initialConfig.collectionData.merchOptionTypes = null;
-  } else {
-    for (let i = 0; i < numOptions; i++) {
-      await addMerchType(i);
-    }
-  }
-};
-
 const addGatedContentType = () => {
   const answerArray = ['url', 'stream'];
   return new Promise<void>((resolve, reject) => {
@@ -384,11 +342,6 @@ const main = async () => {
   console.log(` `);
   await getNumAccessGrantingTokenAddresses();
   await addAccessGrantingTokenAddresses();
-
-  if (initialConfig.collectionData.type === 'merch') {
-    await addNumMerchOptions();
-    await addMerchOptions(numMerchOptions);
-  }
 
   rl.close();
   createInitialConfigJSON();

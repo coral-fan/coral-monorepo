@@ -31,7 +31,6 @@ interface CollectionData {
     type: string;
     value: string | null;
   };
-  merchOptionTypes: string[] | null;
   accessGrantingTokenAddresses: string[] | null;
 }
 
@@ -70,7 +69,6 @@ export const initialConfig: Config = {
       type: '',
       value: '',
     },
-    merchOptionTypes: [],
     accessGrantingTokenAddresses: [],
   },
 };
