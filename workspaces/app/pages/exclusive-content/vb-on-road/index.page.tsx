@@ -5,6 +5,7 @@ import 'flickity/css/flickity.css';
 import { WebPlayer } from 'components/features/stream/components/StreamPlayer/components';
 import { ButtonLink, GatedContent } from 'components/ui';
 import styles from './styles.module.css';
+import { CLIENT_ENVIRONMENT } from 'consts';
 
 const FlickitySlide = styled.img`
   width: 80%;
@@ -30,8 +31,9 @@ export default function VanBurenGatedContent() {
   return (
     <GatedContent
       accessGrantingTokenAddresses={[
-        '0xaA1c5956dcE213733377eAa8ae6D4f9Cf9f5d570',
-        // '0xc56E1b0734f25D17D7A68eb969f8eB00B287136d',
+        CLIENT_ENVIRONMENT === 'development'
+          ? '0xaA1c5956dcE213733377eAa8ae6D4f9Cf9f5d570'
+          : '0xc56E1b0734f25D17D7A68eb969f8eB00B287136d',
       ]}
       accessDeniedModalProps={{
         title: 'This is exclusive VB ON ROAD content',
