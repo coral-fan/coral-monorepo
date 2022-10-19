@@ -47,6 +47,8 @@ const SENTINEL_ID_TRANSFER_CRYPTO_PURCHASES_FUJI =
 const SENTINEL_ID_TRANSFER_IN_PERSON_MAINNET = process.env.SENTINEL_ID_TRANSFER_IN_PERSON_MAINNET;
 const SENTINEL_ID_RELAY_MINT_MAINNET = process.env.SENTINEL_ID_RELAY_MINT_MAINNET;
 const SENTINEL_ID_TRANSFER_MAINNET = process.env.SENTINEL_ID_TRANSFER_MAINNET;
+const SENTINEL_ID_TRANSFER_CRYPTO_PURCHASES_MAINNET =
+  process.env.SENTINEL_ID_CRYPTO_PURCHASES_MAINNET;
 
 const AVAX_USD_PRICEFEED_FUJI = process.env.AVAX_USD_PRICEFEED_FUJI;
 const AVAX_USD_PRICEFEED_MAINNET = process.env.AVAX_USD_PRICEFEED_MAINNET;
@@ -145,16 +147,17 @@ export const getDeploymentConsts = (network: Network): DeploymentType => {
       !SENTINEL_ID_RELAY_MINT_MAINNET ||
       !SENTINEL_ID_TRANSFER_MAINNET ||
       !AVAX_USD_PRICEFEED_MAINNET ||
-      !NFT_STORAGE_KEY_MAINNET
+      !NFT_STORAGE_KEY_MAINNET ||
+      !SENTINEL_ID_TRANSFER_CRYPTO_PURCHASES_MAINNET
     ) {
       throw MISSING_ENV_VARIABLE;
     }
-    // TODO: Create mainnet complete-crypto-purchase sentinel
+
     const sentinelIdsMainnet: SentinelObject = {
       transferInPerson: SENTINEL_ID_TRANSFER_IN_PERSON_MAINNET,
       relayMint: SENTINEL_ID_RELAY_MINT_MAINNET,
       transfer: SENTINEL_ID_TRANSFER_MAINNET,
-      completeCryptoPurchase: 'tbd',
+      completeCryptoPurchase: SENTINEL_ID_TRANSFER_CRYPTO_PURCHASES_MAINNET,
     };
 
     const mainnetConstObject: DeploymentConstNetworkDependentObject = {
