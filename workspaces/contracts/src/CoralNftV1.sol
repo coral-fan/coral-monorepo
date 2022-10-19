@@ -80,8 +80,8 @@ contract CoralNftV1 is ERC721, ERC2981, Ownable, AvaxUsd {
     uint256 newTokenID = _tokenIds.current();
     require(newTokenID <= maxSupply, 'Already Sold Out');
 
-    _mint(to, newTokenID);
     _tokenIds.increment();
+    _mint(to, newTokenID);
 
     emit RelayMint(newTokenID);
   }
@@ -95,8 +95,8 @@ contract CoralNftV1 is ERC721, ERC2981, Ownable, AvaxUsd {
     uint256 newTokenID = _tokenIds.current();
     require(newTokenID <= maxSupply, 'Already Sold Out');
 
-    _mint(msg.sender, newTokenID);
     _tokenIds.increment();
+    _mint(msg.sender, newTokenID);
   }
 
   function airdropMint(address[] memory _recipients) external onlyOwner {
@@ -107,8 +107,8 @@ contract CoralNftV1 is ERC721, ERC2981, Ownable, AvaxUsd {
       uint256 newTokenID = _tokenIds.current();
       require(newTokenID <= maxSupply, 'Already Sold Out');
 
-      _mint(_recipients[i], newTokenID);
       _tokenIds.increment();
+      _mint(_recipients[i], newTokenID);
 
       unchecked {
         ++i;
@@ -121,11 +121,11 @@ contract CoralNftV1 is ERC721, ERC2981, Ownable, AvaxUsd {
   }
 
   /// Admin
-  function withdraw() external onlyOwner {
+  function withdraw(address _to) external onlyOwner {
     uint256 balance = address(this).balance;
 
     require(balance > 0, 'Nothing to withdraw');
-    (bool success, ) = payable(msg.sender).call{ value: balance }('');
+    (bool success, ) = payable(_to).call{ value: balance }('');
     require(success, 'Withdraw unsuccessful');
   }
 
