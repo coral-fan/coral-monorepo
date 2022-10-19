@@ -116,7 +116,7 @@ export const DropOrAvailable = ({
   }, [collectionId, userId, maxMintablePerWallet, isAuthenticated]);
 
   const ctaText = useMemo(() => {
-    if (isSoldOut || collectionId === '0x1e7EaEC099c34843721d93B0A90bbDbb693CD7Ea') {
+    if (isSoldOut) {
       return 'Sold Out';
     }
 
@@ -143,7 +143,7 @@ export const DropOrAvailable = ({
       signInAction = 'Purchase';
     }
     return `Sign In To ${signInAction}`;
-  }, [isSoldOut, collectionId, isAuthenticated, redeemCode, usdPrice]);
+  }, [isSoldOut, isAuthenticated, redeemCode, usdPrice]);
 
   // TODO: Refactor CtaButton conditional logic
   return (
@@ -178,11 +178,7 @@ export const DropOrAvailable = ({
             {
               <ProgressBar
                 maxSupply={maxSupply}
-                numMinted={
-                  collectionId === '0x1e7EaEC099c34843721d93B0A90bbDbb693CD7Ea'
-                    ? maxSupply
-                    : numMintedDisplay
-                }
+                numMinted={isSoldOut ? maxSupply : numMintedDisplay}
               />
             }
           </ConditionalSpinner>
