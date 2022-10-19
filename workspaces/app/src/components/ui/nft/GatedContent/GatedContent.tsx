@@ -24,7 +24,7 @@ export const GatedContent = ({
   const isAuthenticated = useIsAuthenticated();
   const [doesUserHaveAccess, setDoesUserHaveAccess] = useState(false);
   const [isCheckingWallet, setIsCheckingWallet] = useState(true);
-  const [showIsAccessGrantedModal, setIsAccessGrantedModal] = useState(true);
+  const [showIsAccessGrantedModal, setShowIsAccessGrantedModal] = useState(true);
   const { address } = useWallet();
 
   // TODO: add logic to check on new blocks if user still owns token
@@ -35,7 +35,7 @@ export const GatedContent = ({
           getDoesOwnToken(collectionAddress, address)
         )
       ).pipe(
-        delay(8000),
+        delay(5750),
         map((doesUserHaveAccessArray) =>
           doesUserHaveAccessArray.some((doesHaveAccess) => doesHaveAccess === true)
         )
@@ -48,13 +48,13 @@ export const GatedContent = ({
 
       doesUserHaveAccess$
         .pipe(mergeMap(() => timer(2500)))
-        .subscribe(() => setIsAccessGrantedModal(false));
+        .subscribe(() => setShowIsAccessGrantedModal(false));
 
       return () => subscription.unsubscribe();
     } else {
       setDoesUserHaveAccess(false);
       setIsCheckingWallet(true);
-      setIsAccessGrantedModal(true);
+      setShowIsAccessGrantedModal(true);
     }
   }, [accessGrantingTokenAddresses, isAuthenticated, address]);
 
