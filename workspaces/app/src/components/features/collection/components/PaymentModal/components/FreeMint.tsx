@@ -43,5 +43,11 @@ export const FreeMint = ({ collectionId, setIsMintingNFT, setAssetId }: FreeMint
     }
   }, [setIsMintingNFT, collectionId, userId, setAssetId, errorToast]);
 
-  return <Button onClick={handleFreeMint}>Mint Free NFT</Button>;
+  return (
+    <Button onClick={handleFreeMint}>
+      {collectionId === '0xc56E1b0734f25D17D7A68eb969f8eB00B287136d'
+        ? 'Claim Free Pass'
+        : 'Mint Free NFT'}
+    </Button>
+  );
 };
