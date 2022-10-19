@@ -38,7 +38,7 @@ export default function VanBurenGatedContent() {
       accessDeniedModalProps={{
         title: 'This is exclusive VB ON ROAD content',
         message:
-          'This content is for ALL ACCESS: VB ON ROAD holders only. Redeem your FREE access pass for special and exclusive content.',
+          'This content is for Van Buren Records All Access Pass holders only. Redeem your FREE access pass for special and exclusive content.',
         actionElement: (
           <ButtonLink href="https://www.coral.fan/collection/0xc56E1b0734f25D17D7A68eb969f8eB00B287136d">
             Redeem FREE Access Pass
