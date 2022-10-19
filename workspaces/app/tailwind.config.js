@@ -1,5 +1,5 @@
 module.exports = {
-  content: ['./src/components/features/home/*.tsx'],
+  content: ['./src/components/features/home/*.tsx', './pages/exclusive-content/vb-on-road/*.tsx'],
   mode: 'jit',
   theme: {
     extend: {
