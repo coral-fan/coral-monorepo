@@ -116,6 +116,9 @@ export const DropOrAvailable = ({
   }, [collectionId, userId, maxMintablePerWallet, isAuthenticated]);
 
   const ctaText = useMemo(() => {
+    if (collectionId === '0xc56E1b0734f25D17D7A68eb969f8eB00B287136d') {
+      return 'Claim Free Pass';
+    }
     if (isSoldOut) {
       return 'Sold Out';
     }
