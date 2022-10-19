@@ -37,15 +37,8 @@ export const addCollection = subtask('addCollection', 'Add collection to Firebas
     const { contract, collectionData } = configFile;
     const { name, address, description, maxSupply, usdPricePerToken, maxTokensPerWallet } =
       contract;
-    const {
-      artistId,
-      type,
-      dropTime,
-      details,
-      gatedContent,
-      merchOptions,
-      accessGrantingTokenAddresses,
-    } = collectionData;
+    const { artistId, type, dropTime, details, gatedContent, accessGrantingTokenAddresses } =
+      collectionData;
 
     const artistRef = await getDocumentReferenceServerSide<ArtistData>('artists', artistId);
 
@@ -106,7 +99,6 @@ export const addCollection = subtask('addCollection', 'Add collection to Firebas
       gatedContent,
       maxMintablePerWallet: maxTokensPerWallet,
       accessGrantingTokenAddresses,
-      merchOptions,
     };
 
     await collectionRef.set(collection);
