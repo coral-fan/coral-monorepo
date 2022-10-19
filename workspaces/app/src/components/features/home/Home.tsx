@@ -198,9 +198,9 @@ export const Home = () => {
             <div className="flex space-x-4 lg:space-x-5 text-xs leading-lh-1 tracking-1 uppercase mb-10 lg:mb-24">
               <div>Dropped on</div>
               {/* date starts here */}
-              <time className="inline-block" dateTime="2022-10-20">
+              <time className="inline-block" dateTime="2022-10-19">
                 {/* date ends here */}
-                October 18, 2022
+                October 19, 2022
               </time>
             </div>
             {/* start mobile image link */}
