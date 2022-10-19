@@ -146,7 +146,7 @@ export const DropOrAvailable = ({
       signInAction = 'Purchase';
     }
     return `Sign In To ${signInAction}`;
-  }, [isSoldOut, isAuthenticated, redeemCode, usdPrice]);
+  }, [collectionId, isSoldOut, isAuthenticated, redeemCode, usdPrice]);
 
   // TODO: Refactor CtaButton conditional logic
   return (
