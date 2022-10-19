@@ -80,6 +80,8 @@ const stripePromise = loadStripe(NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 const axios = getCoralAPIAxios();
 
+const SOLD_OUT_COLLECTIONS = ['0x1e7EaEC099c34843721d93B0A90bbDbb693CD7Ea'];
+
 export const CollectionPage = ({
   tokenTotalSupply,
   imageUrl,
@@ -102,8 +104,12 @@ export const CollectionPage = ({
   activeCampaign,
 }: CollectionPageProps) => {
   const [numMinted, setNumMinted] = useState(tokenTotalSupply);
-  const [isSoldOut, setIsSoldOut] = useState(tokenTotalSupply >= maxSupply);
+  const [isSoldOut, setIsSoldOut] = useState(
+    tokenTotalSupply >= maxSupply ||
+      SOLD_OUT_COLLECTIONS.find((soldOutCollectionId) => id === soldOutCollectionId) !== undefined
+  );
 
+  console.log(id);
   const [fingerprint, setFingerprint] = useState<string>();
 
   // fingerprint logic
@@ -128,7 +134,7 @@ export const CollectionPage = ({
   useEffect(() => {
     const subscription = getTokenTotalSupply$(id).subscribe((totalSupply) => {
       setNumMinted(totalSupply);
-      setIsSoldOut(totalSupply >= maxSupply);
+      setIsSoldOut((isSoldOut) => isSoldOut || totalSupply >= maxSupply);
     });
     return () => subscription.unsubscribe();
   }, [id, maxSupply]);
