@@ -229,7 +229,7 @@ export const Home = () => {
           {/* start desktop image link  */}
           {/* collection link */}
           <a
-            href="https://coral.fan/collection/0x7fFE7860F74b30deF853295E12a64506BCE22cF0"
+            href="https://www.coral.fan/collection/0xc56E1b0734f25D17D7A68eb969f8eB00B287136d"
             className="col-span-12 sm:col-span-6 mb-2.5 sm:mb-0 relative"
           >
             <div className="rounded-1 overflow-hidden hidden sm:block hover:rounded-2 duration-300">
