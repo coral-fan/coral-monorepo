@@ -23,7 +23,9 @@ export const ShareDropModal = ({
   id,
 }: ShareDropProps) => (
   <ShareModal
-    title={'Share Drop'}
+    title={
+      id === '0xc56E1b0734f25D17D7A68eb969f8eB00B287136d' ? 'Share All Access Pass' : 'Share Drop'
+    }
     url={`${window.location.origin}/collection/${id}`}
     postTitle={name}
     closeShareModal={closeShareModal}
