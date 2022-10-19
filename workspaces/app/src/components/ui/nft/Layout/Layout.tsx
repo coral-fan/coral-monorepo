@@ -2,7 +2,7 @@ import { getBadge } from 'components/ui/badges/utils';
 import { Artist, Collection, CollectionType, ReferralCampaignData } from 'libraries/models';
 import { useIsMobile } from 'libraries/window';
 import { useCallback, useMemo, useState } from 'react';
-import { Details, ImageWithInfo, NftContent, ShareButton, ShareDropModal } from '../components';
+import { Details, ImageWithInfo, NftContent, ShareDropModal } from '../components';
 import { CollectionBackLink } from './components/CollectionBackLink';
 
 import {
@@ -14,6 +14,7 @@ import {
 } from './components';
 
 import { ShareToEarn } from './components/ShareToEarn';
+import { Button } from 'components/ui/buttons';
 export interface LayoutProps {
   isAsset: boolean;
   type: CollectionType;
@@ -105,11 +106,15 @@ export const Layout = ({
             collectionName={name}
           />
         ) : (
-          <ShareButton
+          <Button
             onClick={() => {
               setIsShareModalOpen(true);
             }}
-          />
+          >
+            {collectionId === '0xc56E1b0734f25D17D7A68eb969f8eB00B287136d'
+              ? 'Share All Access Pass'
+              : 'Share This NFT'}
+          </Button>
         )}
         {isShareModalOpen && (
           <ShareDropModal
