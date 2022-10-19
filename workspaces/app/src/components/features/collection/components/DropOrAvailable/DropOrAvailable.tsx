@@ -116,9 +116,6 @@ export const DropOrAvailable = ({
   }, [collectionId, userId, maxMintablePerWallet, isAuthenticated]);
 
   const ctaText = useMemo(() => {
-    if (collectionId === '0xc56E1b0734f25D17D7A68eb969f8eB00B287136d') {
-      return 'Claim Free Pass';
-    }
     if (isSoldOut) {
       return 'Sold Out';
     }
@@ -126,26 +123,19 @@ export const DropOrAvailable = ({
     const hasValidRedeemCode = redeemCode !== null;
     const isFreeNft = usdPrice === 0;
 
-    if (isAuthenticated) {
-      if (hasValidRedeemCode) {
-        return 'Redeem Free NFT';
-      } else if (isFreeNft) {
-        return 'Mint Free NFT';
-      } else {
-        return 'Buy Now';
-      }
-    }
-
-    let signInAction: string;
-
-    if (hasValidRedeemCode) {
-      signInAction = 'Redeem';
+    let ctaAction;
+    // custom logic specific to VB ON ROAD campaign
+    if (collectionId === '0xc56E1b0734f25D17D7A68eb969f8eB00B287136d') {
+      ctaAction = 'Claim Free Pass';
+    } else if (hasValidRedeemCode) {
+      ctaAction = 'Redeem Free NFT';
     } else if (isFreeNft) {
-      signInAction = 'Mint For Free';
+      ctaAction = 'Mint Free NFT';
     } else {
-      signInAction = 'Purchase';
+      ctaAction = 'Buy Now';
     }
-    return `Sign In To ${signInAction}`;
+
+    return isAuthenticated ? ctaAction : `Sign In To ${ctaAction}`;
   }, [collectionId, isSoldOut, isAuthenticated, redeemCode, usdPrice]);
 
   // TODO: Refactor CtaButton conditional logic
