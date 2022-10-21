@@ -52,11 +52,18 @@ export const GatedContent = ({
 
       return () => subscription.unsubscribe();
     } else {
+      // resets state if user logs out
+      // will also reset state if wallet isn't connected, but shouldn't cause any issues
       setDoesUserHaveAccess(false);
       setIsCheckingWallet(true);
       setShowIsAccessGrantedModal(true);
     }
   }, [accessGrantingTokenAddresses, isAuthenticated, address]);
+
+  // show empty screen if authenticated but wallet hasn't connected yet
+  if (isAuthenticated && !address) {
+    return null;
+  }
 
   if (!isAuthenticated) {
     return (
@@ -67,13 +74,12 @@ export const GatedContent = ({
       />
     );
   }
+  if (!doesUserHaveAccess) {
+    return <AccessDenied {...accessDeniedModalProps} />;
+  }
 
   if (isCheckingWallet) {
     return <CheckingNftModal />;
-  }
-
-  if (!doesUserHaveAccess) {
-    return <AccessDenied {...accessDeniedModalProps} />;
   }
 
   return (
