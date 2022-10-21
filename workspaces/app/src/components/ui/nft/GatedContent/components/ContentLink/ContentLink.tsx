@@ -7,6 +7,7 @@ const Wrapper = styled(Link)`
   text-decoration: underline;
   color: ${tokens.font.color.brand};
   text-align: center;
+  text-transform: uppercase;
 `;
 
 export const ContentLink = ({ value }: Omit<GatedContent, 'type'>) => {
