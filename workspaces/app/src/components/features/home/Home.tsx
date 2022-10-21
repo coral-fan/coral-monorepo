@@ -207,7 +207,11 @@ export const Home = () => {
             {/* collection link */}
             <a href="https://www.coral.fan/collection/0xc56E1b0734f25D17D7A68eb969f8eB00B287136d">
               <div className="rounded-1 overflow-hidden sm:hidden mb-5 hover:rounded-2 duration-300">
-                <img className="w-full" src="/images/vb-on-road.jpg" alt="Van Buren Records"></img>
+                <img
+                  className="w-full"
+                  src="/images/van-buren-records/vb-on-road.jpg"
+                  alt="Van Buren Records"
+                ></img>
               </div>
             </a>
             {/* start mobile image link */}
@@ -233,7 +237,11 @@ export const Home = () => {
             className="col-span-12 sm:col-span-6 mb-2.5 sm:mb-0 relative"
           >
             <div className="rounded-1 overflow-hidden hidden sm:block hover:rounded-2 duration-300">
-              <img className="w-full" src="/images/vb-on-road.jpg" alt="Van Buren Records"></img>
+              <img
+                className="w-full"
+                src="/images/van-buren-records/vb-on-road.jpg"
+                alt="Van Buren Records"
+              ></img>
             </div>
           </a>
           {/* end desktop image link  */}
