@@ -11,7 +11,7 @@ const Wrapper = styled(Link)`
 
 export const ContentLink = ({ value }: Omit<GatedContent, 'type'>) => {
   if (value) {
-    return <Wrapper href={value}>Download Content</Wrapper>;
+    return <Wrapper href={value}>Exclusive Content</Wrapper>;
   } else {
     return null;
   }
