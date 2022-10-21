@@ -51,57 +51,21 @@ export default function VanBurenGatedContent() {
           Exclusive VB ON ROAD Content
         </h1>
       </div>
-      <section id="2022-10-22">
+      <section id="2022-10-21">
         {/* header */}
         <div className="max-w-screen-s-1 mx-auto px-4 lg:px-5 grid grid-cols-12 mt-12 md:mt-14 lg:mt-24">
           <h2 className="text-1 leading-none sm:leading-none lg:text-4 lg:leading-none tracking-5 col-span-12 sm:col-span-10 sm:col-start-2 font-medium duration-300">
-            Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-            velit
+            Night One of VB ON ROAD: Philly
           </h2>
           <div className="col-span-12 sm:col-span-10 sm:col-start-2 tiny-1 mb-3 sm:mb-4 lg:mb-5 mt-8 lg:mt-12">
             <div className="flex space-x-5">
-              <time dateTime="2022-10-22">October 22, 2022</time>
-            </div>
-          </div>
-        </div>
-        {/* video */}
-        <div className="max-w-screen-s-1 mx-auto px-4 lg:px-5">
-          <WebPlayer mediaId="449ed8b51d17e9cecd/fabf472242b19884" />
-        </div>
-        {/* video */}
-        {/* content */}
-        <div className="overflow-hidden">
-          <div className="max-w-screen-s-1 mx-auto px-5 mt-10 sm:mt-20 lg:mt-24">
-            <div className={styles.content}>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nec aliquet lorem.
-                Proin dictum nulla vel feugiat sollicitudin. Sed eget dolor eu turpis ullamcorper
-                aliquam. Vivamus vulputate elit sed lectus tincidunt, vel commodo massa ullamcorper.
-                Cras id feugiat libero. Proin a imperdiet tortor, quis lobortis ex. Vestibulum ante
-                ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In hac
-                habitasse platea dictumst. Quisque nec magna vehicula, malesuada tortor quis,
-                aliquet ligula.
-              </p>
-            </div>
-          </div>
-        </div>
-        {/* content */}
-      </section>
-      <section id="2022-10-20">
-        {/* header */}
-        <div className="max-w-screen-s-1 mx-auto px-4 lg:px-5 grid grid-cols-12 mt-12 md:mt-14 lg:mt-24">
-          <h2 className="text-1 leading-none sm:leading-none lg:text-4 lg:leading-none tracking-5 col-span-12 sm:col-span-10 sm:col-start-2 font-medium duration-300">
-            Lorem ipsum dolor sit amet velit
-          </h2>
-          <div className="col-span-12 sm:col-span-10 sm:col-start-2 tiny-1 mb-3 sm:mb-4 lg:mb-5 mt-8 lg:mt-12">
-            <div className="flex space-x-5">
-              <time dateTime="2022-10-20">October 20, 2022</time>
+              <time dateTime="2022-10-21">October 21, 2022</time>
             </div>
           </div>
         </div>
         {/* image */}
         <div className="max-w-screen-s-1 mx-auto px-4 lg:px-5">
-          <img src="/images/van-buren-records.jpg" alt="" className="w-full" />
+          <WebPlayer mediaId="119ed4bb1818e1cf98/90e2b16927376e3c" />
         </div>
         {/* image */}
         {/* content */}
@@ -109,63 +73,39 @@ export default function VanBurenGatedContent() {
           <div className="max-w-screen-s-1 mx-auto px-5 mt-10 sm:mt-20 lg:mt-24">
             <div className={styles.content}>
               <p>
-                <em>
-                  Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur,
-                  adipisci velit...
-                </em>
+                First leg of the Colture presents VB on Road Tour and first up - the city of
+                brotherly love. Van Buren Records launched their first official tour since the
+                release of the critically acclaimed “Dover Street Market” studio album at PhilaMOCA.
+                High energy, high intensity, and the beginning of a slow burn six date tour across
+                America begins.
               </p>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nibh odio, pulvinar
-                et erat quis, volutpat tincidunt arcu. Suspendisse aliquet imperdiet pretium. Morbi
-                hendrerit neque eu mauris gravida, et sagittis leo vestibulum. Etiam gravida
-                ultrices mi, id lacinia metus ornare ac. Curabitur maximus luctus mi vitae blandit.
-                Fusce placerat purus quis nisi congue, sed consectetur ante placerat. Proin
-                hendrerit commodo lorem quis tempor. Aenean in lacinia dui, in maximus nibh. Sed
-                ipsum quam, dapibus non sodales dapibus, sollicitudin quis magna. Vivamus sit amet
-                nunc dictum, viverra nisl ac, tempor velit. Aliquam at blandit arcu, sed porta
-                dolor. Suspendisse potenti. Curabitur consectetur, metus et viverra tempor, est
-                risus molestie nisl, a efficitur mauris quam nec tortor.
-              </p>
-              <figure className={`${styles['kg-card']}`}>
-                <img
-                  className={styles['kg-image']}
-                  src="https://editorial.coral.fan/content/images/size/w1400/2022/06/Coral-Editorial-VanBuren.jpg"
-                  alt=""
-                />
-                <figcaption>Quis viverra nibh cras pulvinar mattis nunc sed</figcaption>
-              </figure>
-              <p>
-                Donec sollicitudin vitae mi sed aliquet. Vivamus viverra, libero at euismod semper,
-                diam risus faucibus tortor, vel hendrerit ipsum metus ut dolor. Ut purus risus,
-                fringilla vitae varius ac, viverra eget metus. Vestibulum mi nulla, congue eget orci
-                vel, consequat commodo nunc. Nulla facilisi. Suspendisse ac dignissim lorem.
-                Phasellus lobortis, dui sed viverra consequat, sapien risus pharetra justo, ut
-                eleifend nunc massa eget enim.
-              </p>
+              <p>Jiles put it simply:</p>
               <blockquote>
-                “Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lacinia felis
-                magna, nec placerat quam consequat vel. Maecenas egestas elit.”
+                “Felt good performing the new tracks. Accomplishing night in a new city.”
               </blockquote>
-              <h3>Lorem ipsum dolor sit amet</h3>
               <p>
-                Maecenas tristique ipsum arcu. Maecenas consectetur at metus sed eleifend. Praesent
-                varius, arcu at dictum tincidunt, erat mi commodo massa, quis maximus diam nisi quis
-                risus. Vestibulum mollis sed felis a lobortis. Cras sit amet sapien odio. Morbi
-                aliquam at arcu ac vehicula. Aliquam tristique hendrerit justo, sed egestas elit
-                commodo in. Nulla nec nisl porta nisl lobortis bibendum. Class aptent taciti
-                sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nunc at
-                augue orci. Phasellus sed est tellus. Pellentesque id venenatis dui. Quisque eu
-                sagittis sem.
+                One down, two to go on the East Coast. DC and NYC get ready. Follow Coral on{' '}
+                <a
+                  href="https://www.instagram.com/coral_fan/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Instagram
+                </a>{' '}
+                and{' '}
+                <a href="https://twitter.com/coral__fan" target="_blank" rel="noopener noreferrer">
+                  Twitter
+                </a>{' '}
+                for live updates, and come back for more behind the scenes content, show recaps,
+                interviews, and exclusive merch coming down the pipeline.
               </p>
 
               <Carousel
                 imageSrcs={[
-                  'https://editorial.coral.fan/content/images/size/w1000/2022/06/VBR-BC-1-3.jpg',
-                  'https://editorial.coral.fan/content/images/size/w1000/2022/06/VBR-BC-1-2.jpg',
-                  'https://editorial.coral.fan/content/images/size/w1000/2022/06/VBR-BC-2-2--1-.jpg',
-                  'https://editorial.coral.fan/content/images/size/w1000/2022/06/VBR-BC-1-4.jpg',
-                  'https://editorial.coral.fan/content/images/size/w1000/2022/06/DSC08798.jpg',
-                  'https://editorial.coral.fan/content/images/size/w1000/2022/06/DSC08610.jpg',
+                  '/images/vb-on-road/philly/1.jpg',
+                  '/images/vb-on-road/philly/2.jpg',
+                  '/images/vb-on-road/philly/3.jpg',
+                  '/images/vb-on-road/philly/4.jpg',
                 ]}
               />
             </div>
