@@ -106,8 +106,7 @@ export default function VanBurenGatedContent() {
                   '/images/van-buren-records/vb-on-road/philly/2.jpg',
                   '/images/van-buren-records/vb-on-road/philly/3.jpg',
                   '/images/van-buren-records/vb-on-road/philly/4.jpg',
-                  '/images/van-buren-records/merch/rings.jpg',
-                  '/images/van-buren-records/merch/t-shirts.jpg',
+                  '/images/van-buren-records/merch/rings.png',
                 ]}
               />
             </div>
