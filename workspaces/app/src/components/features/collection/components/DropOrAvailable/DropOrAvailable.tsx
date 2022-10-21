@@ -167,13 +167,12 @@ export const DropOrAvailable = ({
                 Maximum of {maxMintablePerWallet} NFTs per wallet already owned
               </MaxOwnedNotification>
             )}
-            {/* TODO: remove this logic after VBs first event */}
-            {
+            {collectionId !== '0xc56E1b0734f25D17D7A68eb969f8eB00B287136d' && (
               <ProgressBar
                 maxSupply={maxSupply}
                 numMinted={isSoldOut ? maxSupply : numMintedDisplay}
               />
-            }
+            )}
           </ConditionalSpinner>
         </AvailableContainer>
       ) : (
