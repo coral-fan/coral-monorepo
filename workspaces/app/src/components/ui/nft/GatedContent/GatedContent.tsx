@@ -74,12 +74,13 @@ export const GatedContent = ({
       />
     );
   }
-  if (!doesUserHaveAccess) {
-    return <AccessDenied {...accessDeniedModalProps} />;
-  }
 
   if (isCheckingWallet) {
     return <CheckingNftModal />;
+  }
+
+  if (!doesUserHaveAccess) {
+    return <AccessDenied {...accessDeniedModalProps} />;
   }
 
   return (
