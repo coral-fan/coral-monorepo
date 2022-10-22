@@ -51,9 +51,75 @@ export default function VanBurenGatedContent() {
           Exclusive VB ON ROAD Content
         </h1>
       </div>
-      <section id="2022-10-21">
+      <section id="2022-10-22">
         {/* header */}
         <div className="max-w-screen-s-1 mx-auto px-4 lg:px-5 grid grid-cols-12 mt-12 md:mt-14 lg:mt-24">
+          <h2 className="text-1 leading-none sm:leading-none lg:text-4 lg:leading-none tracking-5 col-span-12 sm:col-span-10 sm:col-start-2 font-medium duration-300">
+            Night Two of VB ON ROAD: Washington DC
+          </h2>
+          <div className="col-span-12 sm:col-span-10 sm:col-start-2 tiny-1 mb-3 sm:mb-4 lg:mb-5 mt-8 lg:mt-12">
+            <div className="flex space-x-5">
+              <time dateTime="2022-10-22">October 22, 2022</time>
+            </div>
+          </div>
+        </div>
+        <div className="max-w-screen-s-1 mx-auto px-4 lg:px-5">
+          <Carousel
+            imageSrcs={[
+              '/images/van-buren-records/vb-on-road/dc/1.jpg',
+              '/images/van-buren-records/vb-on-road/dc/2.jpg',
+              '/images/van-buren-records/vb-on-road/dc/3.jpg',
+              '/images/van-buren-records/vb-on-road/dc/4.jpg',
+              '/images/van-buren-records/vb-on-road/dc/5.jpg',
+              '/images/van-buren-records/vb-on-road/dc/6.jpg',
+              '/images/van-buren-records/vb-on-road/dc/7.jpg',
+              '/images/van-buren-records/vb-on-road/dc/8.jpg',
+              '/images/van-buren-records/vb-on-road/dc/9.jpg',
+              '/images/van-buren-records/vb-on-road/dc/10.jpg',
+              '/images/van-buren-records/vb-on-road/dc/11.png',
+              '/images/van-buren-records/vb-on-road/dc/12.png',
+              '/images/van-buren-records/vb-on-road/dc/13.png',
+              '/images/van-buren-records/vb-on-road/dc/14.png',
+              '/images/van-buren-records/vb-on-road/dc/15.png',
+            ]}
+          />
+        </div>
+        {/* content */}
+        <div className="overflow-hidden">
+          <div className="max-w-screen-s-1 mx-auto px-5 mt-10 sm:mt-20 lg:mt-24">
+            <div className={styles.content}>
+              <p>
+                The second leg of Colture presents VB on Road Tour takes Van Buren Records to D.C.
+                The VB boys are showing the US exactly why their studio album “Dover Street Market”
+                is so critically acclaimed. They brought energy and the packed crowd at D.C.’s
+                Songbyrd Music House was there for all of it.
+              </p>
+              <p>
+                Follow Van Buren Records and go behind the scenes and get exclusive content right
+                here with Coral. Get ready for exclusive merch dropping next week. VB Rings and a
+                capsule collection T coming for Van Buren Records “All Access Pass” holders.
+                Oh....and go stream “Dover Street Market” right now.
+              </p>
+              <p>Stay tuned for scenes of the NYC show.</p>
+              <p>
+                Photos by{' '}
+                <a
+                  href="https://www.instagram.com/ya___z/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Yaz
+                </a>
+                .
+              </p>
+            </div>
+          </div>
+        </div>
+        {/* content */}
+      </section>
+      <section id="2022-10-21">
+        {/* header */}
+        <div className="max-w-screen-s-1 mx-auto px-4 lg:px-5 grid grid-cols-12">
           <h2 className="text-1 leading-none sm:leading-none lg:text-4 lg:leading-none tracking-5 col-span-12 sm:col-span-10 sm:col-start-2 font-medium duration-300">
             Night One of VB ON ROAD: Philly
           </h2>
