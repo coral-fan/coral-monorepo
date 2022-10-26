@@ -24,6 +24,11 @@ export const getConfigFilePath = (projectDir: string) => {
   return path.resolve(__dirname, 'projects', projectDir, 'config.json');
 };
 
+export const getMerchFilePath = (projectDir: string) => {
+  const __dirname = path.resolve();
+  return path.resolve(__dirname, 'projects', projectDir, 'merch.json');
+};
+
 export const fileFromPath = async (filePath: string) => {
   const content = await fs.promises.readFile(filePath);
   const type = mime.getType(filePath);
