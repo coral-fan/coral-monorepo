@@ -19,6 +19,8 @@ interface Contract {
   numAttributes: number;
   attributes: Attribute[];
   avaxUsdPriceFeedAddress: string;
+  deployedToNetwork: string;
+  deployedTransactionHash: string;
 }
 
 interface CollectionData {
@@ -58,6 +60,8 @@ export const initialConfig: Config = {
     numAttributes: 0,
     attributes: [],
     avaxUsdPriceFeedAddress: '',
+    deployedToNetwork: '',
+    deployedTransactionHash: '',
   },
   collectionData: {
     artistId: '',
