@@ -8,8 +8,6 @@ const collectionId = '0xcB846098C5f6a86D9775a183F80aFdF174eD1171';
 const addReferralCode = async () => {
   console.log(`Adding referral code to ${collectionId}`);
 
-  // TODO: Change referral code logic to hash of campaignId + collectionId?
-
   const collectionData = await getDocumentData<CollectionData>('collections', collectionId);
 
   if (!collectionData?.activeCampaign) {
