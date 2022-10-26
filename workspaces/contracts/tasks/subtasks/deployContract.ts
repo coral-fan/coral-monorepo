@@ -3,6 +3,7 @@ import { types } from 'hardhat/config';
 import { Contract, ContractFactory } from 'ethers';
 import { DefenderRelayProvider, DefenderRelaySigner } from 'defender-relay-client/lib/ethers';
 import { getDeploymentConsts, Network } from '../utils/getDeploymentConsts';
+import { getErrorMessage } from '@coral/utils';
 
 subtask('deployContract', 'Deploy contract')
   .addParam('constructorArgs', 'Contract constructor arguments', {}, types.json)
@@ -44,13 +45,13 @@ subtask('deployContract', 'Deploy contract')
 
       console.log('\n Waiting for confirmation....');
       // Wait 6 blocks for confirmation
-      await contract.deployTransaction.wait(6);
+      const txnReceipt = await contract.deployTransaction.wait(6);
 
       console.log('\n Contract deployed to: ', contract.address);
 
-      return contract.address;
+      return { network, txnReceipt };
     } catch (e: any) {
-      console.error(`ERROR: ${e}`);
+      console.error(`ERROR: ${getErrorMessage(e)}`);
       console.error(`ERROR: ${e.message}`);
     }
   });

@@ -2,6 +2,13 @@ import { task } from 'hardhat/config';
 import fs from 'fs';
 import { readFile } from 'fs/promises';
 import { fileExists, getConfigFilePath, parseProjectName } from './utils/utils';
+import { Network } from './utils/getDeploymentConsts';
+import { TransactionReceipt } from '@ethersproject/providers';
+
+interface DeployReturn {
+  network: Network;
+  txnReceipt: TransactionReceipt;
+}
 
 task('run-deploy', 'Creates and Deploys a new Project')
   .addParam('projectName', 'The name of the Project')
@@ -16,7 +23,12 @@ task('run-deploy', 'Creates and Deploys a new Project')
     const constructorArgs = await hre.run('upload', { projectDir });
 
     try {
-      const address = await hre.run('deployContract', { constructorArgs });
+      const { network, txnReceipt }: DeployReturn = await hre.run('deployContract', {
+        constructorArgs,
+      });
+
+      const address = txnReceipt.contractAddress;
+
       const args = JSON.parse(constructorArgs);
       const verifyArgs = JSON.stringify({ address, ...args });
 
@@ -26,6 +38,8 @@ task('run-deploy', 'Creates and Deploys a new Project')
       configFile.contract.address = address;
       configFile.contract.tokenURI = args.baseTokenURI;
       configFile.contract.avaxUsdPriceFeedAddress = args.avaxUsdPriceFeedAddress;
+      configFile.contract.deployedToNetwork = network;
+      configFile.contract.deployedTransactionHash = txnReceipt.transactionHash;
 
       fs.writeFileSync(configPath, JSON.stringify(configFile, null, 2), 'utf8');
 
