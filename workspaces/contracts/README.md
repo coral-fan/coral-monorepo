@@ -55,6 +55,12 @@
 
 - Note: For testnet, set `NETWORK_NAME` to `fuji`; To deploy to mainnet, set `NETWORK_NAME` to `mainnet`
 
+## Add Merch Options (if applicable)
+
+- Populate a `merch.json` file with `merchOptions` and add to the project directory (similar to `config.json`);
+
+- Run `npx hardhat addMerchOptions --project-dir <PROJECT_DIRECTORY> --network <NETWORK_NAME>`
+
 ## Run Airdrop Script (if applicable)
 
 - Ensure that `airdrops/<PROJECT_DIRECTORY>/<RECIPIENT_DIRECTORY>/airdrop.csv` exists.
