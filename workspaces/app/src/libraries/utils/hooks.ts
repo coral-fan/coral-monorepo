@@ -24,8 +24,8 @@ export const useRefetchPageData = () => {
   const router = useRouter();
 
   const refetchPageData = useCallback(
-    async (overridePath?: string) => {
-      await router.replace(overridePath ?? router.asPath);
+    async (overridePath = router.asPath) => {
+      await router.replace(overridePath);
     },
     [router]
   );
