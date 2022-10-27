@@ -24,25 +24,25 @@ const useSignInModalState = create<SignInModalState>((set) => ({
   closeModal: () => set(() => ({ isModalOpen: false })),
 }));
 
-const useLoginWithWeb3Auth = () => {
+const useLoginWithConnectorType = (connectorType: 'WEB3AUTH' | 'METAMASK') => {
   const { setConnectorType } = useWallet();
   const { closeModal } = useSignInModalState();
 
   const { login } = useLogin();
 
-  const loginWithWeb3Auth = useCallback(async () => {
-    setConnectorType('WEB3AUTH');
+  const loginWithConnectorType = useCallback(async () => {
+    setConnectorType(connectorType);
     closeModal();
-    await login('WEB3AUTH');
-  }, [setConnectorType, closeModal, login]);
+    await login(connectorType);
+  }, [connectorType, setConnectorType, closeModal, login]);
 
-  return loginWithWeb3Auth;
+  return loginWithConnectorType;
 };
 
 export const useOpenSignInModal = (options?: SignInModalOptions) => {
   const { openModal } = useSignInModalState();
   const isMetaMaskInjected = useIsMetaMaskInjected();
-  const loginWithWeb3Auth = useLoginWithWeb3Auth();
+  const loginWithWeb3Auth = useLoginWithConnectorType('WEB3AUTH');
   const openSignInModalHandler = useCallback(
     () => (isMetaMaskInjected ? openModal(options) : loginWithWeb3Auth()),
     [isMetaMaskInjected, openModal, options, loginWithWeb3Auth]
@@ -58,20 +58,13 @@ const Footnote = styled.span`
 `;
 
 export const SignInModal = () => {
-  const { setConnectorType } = useWallet();
   const { isModalOpen, closeModal, isSignUp } = useSignInModalState();
 
   const actionText = useMemo(() => (isSignUp ? 'Sign Up' : 'Sign In'), [isSignUp]);
 
-  const { login } = useLogin();
+  const loginWithMetaMask = useLoginWithConnectorType('METAMASK');
 
-  const loginWithMetaMask = useCallback(async () => {
-    setConnectorType('METAMASK');
-    closeModal();
-    await login('METAMASK');
-  }, [setConnectorType, closeModal, login]);
-
-  const loginWithWeb3Auth = useLoginWithWeb3Auth();
+  const loginWithWeb3Auth = useLoginWithConnectorType('WEB3AUTH');
 
   const isMetaMaskInjected = useIsMetaMaskInjected();
 
