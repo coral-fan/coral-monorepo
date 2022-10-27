@@ -5,25 +5,18 @@ import { SignUpModal } from './SignUpModal';
 import { SignInModal } from '../SignInModal';
 import { useRouter } from 'next/router';
 import { SITE_LINKS } from 'consts';
-import { useIsBrowserInstagram } from './hooks';
-import { UnsupportedBrowserModal } from './UnsupportedBrowserModal';
 interface ModalOrComponentProps {
   component: JSX.Element;
 }
 export const ModalOrComponent = ({ component }: ModalOrComponentProps) => {
   const isNetworkSupported = useIsNetworkSupported();
   const [isSigningUp] = useIsSigningUp();
-  const isBrowserInstagram = useIsBrowserInstagram();
 
   const { asPath } = useRouter();
 
   // TODO: revisit to see if there's a better way to do this
   if (asPath.includes(SITE_LINKS.PRIVACY_POLICY) || asPath === SITE_LINKS.TERMS_OF_USE) {
     return component;
-  }
-
-  if (isBrowserInstagram) {
-    return <UnsupportedBrowserModal />;
   }
 
   if (!isNetworkSupported) {
