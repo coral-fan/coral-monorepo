@@ -1,15 +1,9 @@
-import type { Actions, ProviderConnectInfo } from '@web3-react/types';
+import type { Actions } from '@web3-react/types';
 import { Connector } from '@web3-react/types';
 import { AVALANCHE, CLIENT_ENVIRONMENT } from 'consts';
 import type { Web3Auth } from '@web3auth/web3auth';
 import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from '@web3auth/base';
 import { WEB3AUTH } from './consts';
-
-const parseChainId = (chainId: string | number) =>
-  typeof chainId === 'number'
-    ? chainId
-    : Number.parseInt(chainId, chainId.startsWith('0x') ? 16 : 10);
-
 export class Web3AuthConnector extends Connector {
   private web3Auth?: Web3Auth;
 
@@ -113,7 +107,11 @@ export class Web3AuthConnector extends Connector {
     this.provider = undefined;
   }
 
-  public connectEagerly() {
-    this.activate();
+  public async connectEagerly() {
+    await this.activate();
+  }
+
+  public async getUserInfo() {
+    return this.web3Auth?.getUserInfo();
   }
 }
