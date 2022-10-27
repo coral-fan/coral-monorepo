@@ -40,14 +40,13 @@ export class Web3AuthConnector extends Connector {
         adapterSettings: {
           network: CLIENT_ENVIRONMENT === 'production' ? 'mainnet' : 'testnet',
           clientId: WEB3AUTH.CLIENT_ID,
+          uxMode: 'redirect',
+          redirectUrl: window.location.href,
           whiteLabel: {
             name: 'Coral',
             logoDark: WEB3AUTH.APP_LOGO,
             dark: true,
           },
-        },
-        loginSettings: {
-          relogin: true,
         },
       });
 
