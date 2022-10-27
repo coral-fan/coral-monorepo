@@ -3,6 +3,7 @@ import { Button } from 'components/ui';
 import { AVALANCHE } from 'consts';
 import { useUserUid } from 'libraries/models';
 import { getCoralAPIAxios, useRefetchPageData } from 'libraries/utils';
+import { useCleanUrl } from 'libraries/utils/location';
 import { useErrorToast } from 'libraries/utils/toasts';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
@@ -28,6 +29,7 @@ export const RedeemMint = ({
   const errorToast = useErrorToast();
   const refetchPageData = useRefetchPageData();
   const router = useRouter();
+  const cleanUrl = useCleanUrl();
 
   const handleRedeemNFT = useCallback(() => {
     if (userId !== undefined) {
@@ -46,9 +48,8 @@ export const RedeemMint = ({
           setAssetId(assetId);
           // below logic ensures after a successful redeem mint the URL updates & data is refetched to update the collection page so the redeem code is null
           delete router.query['redeem_code'];
-          router.replace({ pathname: router.pathname, query: router.query }, undefined, {
-            shallow: true,
-          });
+          cleanUrl();
+
           refetchPageData(router.asPath.split('?')[0]);
         })
         .catch((e) => {
@@ -67,6 +68,7 @@ export const RedeemMint = ({
     setAssetId,
     refetchPageData,
     router,
+    cleanUrl,
     errorToast,
   ]);
 
