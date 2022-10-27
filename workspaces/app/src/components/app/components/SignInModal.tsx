@@ -24,9 +24,29 @@ const useSignInModalState = create<SignInModalState>((set) => ({
   closeModal: () => set(() => ({ isModalOpen: false })),
 }));
 
+const useLoginWithWeb3Auth = () => {
+  const { setConnectorType } = useWallet();
+  const { closeModal } = useSignInModalState();
+
+  const { login } = useLogin();
+
+  const loginWithWeb3Auth = useCallback(async () => {
+    setConnectorType('WEB3AUTH');
+    closeModal();
+    await login('WEB3AUTH');
+  }, [setConnectorType, closeModal, login]);
+
+  return loginWithWeb3Auth;
+};
+
 export const useOpenSignInModal = (options?: SignInModalOptions) => {
   const { openModal } = useSignInModalState();
-  const openSignInModalHandler = useCallback(() => openModal(options), [openModal, options]);
+  const isMetaMaskInjected = useIsMetaMaskInjected();
+  const loginWithWeb3Auth = useLoginWithWeb3Auth();
+  const openSignInModalHandler = useCallback(
+    () => (isMetaMaskInjected ? openModal(options) : loginWithWeb3Auth()),
+    [isMetaMaskInjected, openModal, options, loginWithWeb3Auth]
+  );
 
   return openSignInModalHandler;
 };
@@ -51,11 +71,7 @@ export const SignInModal = () => {
     await login('METAMASK');
   }, [setConnectorType, closeModal, login]);
 
-  const loginWithWeb3Auth = useCallback(async () => {
-    setConnectorType('WEB3AUTH');
-    closeModal();
-    await login('WEB3AUTH');
-  }, [setConnectorType, closeModal, login]);
+  const loginWithWeb3Auth = useLoginWithWeb3Auth();
 
   const isMetaMaskInjected = useIsMetaMaskInjected();
 
