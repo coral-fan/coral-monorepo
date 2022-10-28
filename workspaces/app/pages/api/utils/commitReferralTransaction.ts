@@ -9,7 +9,7 @@ import {
   ReferralCampaignData,
   ReferralData,
   ReferralTransactionData,
-  UserReferralAccount,
+  UserPointsAccount,
 } from 'libraries/models';
 import { getTimeInsideWindow } from 'libraries/time';
 import { FieldValue } from 'firebase-admin/firestore';
@@ -67,12 +67,12 @@ export const commitReferralTransaction = async ({
     }
 
     // Get user referral accounts document
-    const userReferralAccountDocumentData = await getDocumentData<UserReferralAccount>(
-      'user-referral-accounts',
+    const userPointsAccountDocumentData = await getDocumentData<UserPointsAccount>(
+      'user-points-accounts',
       userId
     );
 
-    if (!userReferralAccountDocumentData) {
+    if (!userPointsAccountDocumentData) {
       throw new Error(`User ${userId} does not have a user referral account`);
     }
 
@@ -99,14 +99,14 @@ export const commitReferralTransaction = async ({
     const referralTransactionId = referralTransactionsRef.id;
 
     // Get reference to user-referral-account
-    const userReferralAccountsRef = await getDocumentReferenceServerSide(
-      'user-referral-accounts',
+    const userPointsAccountRef = await getDocumentReferenceServerSide(
+      'user-points-accounts',
       userId
     );
 
     // Get reference to user-referral-account subcollection
     const userPointsEarnedTransactionsRef = await getDocumentReferenceServerSide(
-      `user-referral-accounts/${userId}/pointsEarnedTransactions`,
+      `user-points-accounts/${userId}/pointsEarnedTransactions`,
       referralTransactionId
     );
 
@@ -133,13 +133,13 @@ export const commitReferralTransaction = async ({
     // Update referral-campaigns campaign document with total points earned
     batch.update(referralCampaignsRef, 'totalPointsEarned', FieldValue.increment(pointsValue));
 
-    // Update user-referral-accounts document
-    batch.update(userReferralAccountsRef, 'pointsBalance', FieldValue.increment(pointsValue));
+    // Update user-points-accounts document
+    batch.update(userPointsAccountRef, 'pointsBalance', FieldValue.increment(pointsValue));
 
     // Update conversions-tracking on referrals
     batch.update(referralRef, 'conversions', FieldValue.increment(1));
 
-    // Create user-referral-accounts pointsEarned subcollection
+    // Create user-points-accounts pointsEarned subcollection
     batch.set(userPointsEarnedTransactionsRef, {
       referralCode,
       pointsEarned: pointsValue,

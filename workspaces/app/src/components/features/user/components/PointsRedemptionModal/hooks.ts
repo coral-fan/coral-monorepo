@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import { getCoralAPIAxios, validateAddress } from 'libraries/utils';
 import { z } from 'zod';
 import { getDocumentData } from 'libraries/firebase';
-import { UserReferralAccount, useUserUid } from 'libraries/models';
+import { UserPointsAccount, useUserUid } from 'libraries/models';
 import { useErrorToast } from 'libraries/utils/toasts';
 
 const ADDRESS_INPUT_SCHEMA = z.object({
@@ -35,13 +35,13 @@ export const useRedeemPointsForm = () => {
         try {
           // Check that redemption is not already in process
           const referralUserDocument =
-            uid && (await getDocumentData<UserReferralAccount>('user-referral-accounts', uid));
+            uid && (await getDocumentData<UserPointsAccount>('user-points-accounts', uid));
 
           if (!referralUserDocument || referralUserDocument.isRedeeming) {
             throw new Error(`User ${uid} has already requested a redemption that is in process`);
           }
 
-          await axios.post('referral-redemption', {
+          await axios.post('point-redemption', {
             address,
           });
         } catch (e) {

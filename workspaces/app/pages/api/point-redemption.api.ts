@@ -8,14 +8,14 @@ import {
   getDocumentData,
   getDocumentReferenceServerSide,
 } from 'libraries/firebase';
-import { UserReferralAccount } from 'libraries/models';
+import { UserPointsAccount } from 'libraries/models';
 import { validateAddress } from 'libraries/utils';
 import { POINTS_AVAX_VALUE } from 'consts';
 import { ethers } from 'ethers';
 import { getApp } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 
-const ReferralRedemptionRequestBody = z.object({
+const PointRedemptionRequestBody = z.object({
   address: z.string().refine((addr) => validateAddress(addr)),
 });
 
@@ -24,10 +24,10 @@ const GenerateReferralCodeCookies = z.object({
 });
 
 const post: Handler = async (req, res) => {
-  let userReferralAccountsRef;
+  let userPointAccountsRef;
 
   try {
-    const { address } = ReferralRedemptionRequestBody.parse(req.body);
+    const { address } = PointRedemptionRequestBody.parse(req.body);
 
     // Get uid
     const { id_token } = GenerateReferralCodeCookies.parse(req.cookies);
@@ -35,29 +35,29 @@ const post: Handler = async (req, res) => {
     const { uid } = await getAuth(app).verifyIdToken(id_token);
 
     // Get user document
-    const userReferralAccountDocumentData = await getDocumentData<UserReferralAccount>(
-      'user-referral-accounts',
+    const userPointAccountDocumentData = await getDocumentData<UserPointsAccount>(
+      'user-points-accounts',
       uid
     );
 
-    if (!userReferralAccountDocumentData) {
+    if (!userPointAccountDocumentData) {
       throw new Error(`User ${uid} does not have a user referral account`);
     }
 
     // Validate redemption is not already in process
-    if (userReferralAccountDocumentData.isRedeeming) {
+    if (userPointAccountDocumentData.isRedeeming) {
       throw new Error(`User ${uid} has already requested a redemption`);
     }
 
     // Get reference to user-referral-account
-    userReferralAccountsRef = await getDocumentReferenceServerSide('user-referral-accounts', uid);
+    userPointAccountsRef = await getDocumentReferenceServerSide('user-points-accounts', uid);
 
     // Set isRedeeming to true
-    await userReferralAccountsRef.update({
+    await userPointAccountsRef.update({
       isRedeeming: true,
     });
 
-    const { pointsBalance } = userReferralAccountDocumentData;
+    const { pointsBalance } = userPointAccountDocumentData;
 
     /*
     Send crypto to provided address from Relayer
@@ -78,21 +78,21 @@ const post: Handler = async (req, res) => {
     const txn = await signer.sendTransaction(transactionRequest);
     const { hash: transactionHash } = txn;
 
-    // Wait 1 block for confirmation, and confirm success
-    const txnReceipt = await txn.wait(1);
+    // Wait 3 blocks for confirmation, and confirm success
+    const txnReceipt = await txn.wait(3);
 
     if (txnReceipt.status !== 1) {
       throw new Error(`Transaction ${transactionHash} reverted`);
     }
 
-    // Create reference to referral-redemption-transactons collection
+    // Create reference to point-redemption-transactons collection
     const referralRedemptionTransactionsRef = (
-      await getCollectionReferenceServerSide('referral-redemption-transactions')
+      await getCollectionReferenceServerSide('point-redemption-transactions')
     ).doc();
 
     // Get reference to user-referral-account subcollection
     const userPointsRedeemedTransactionsRef = await getDocumentReferenceServerSide(
-      `user-referral-accounts/${uid}/pointsRedeemedTransactions`,
+      `user-points-accounts/${uid}/pointsRedeemedTransactions`,
       referralRedemptionTransactionsRef.id
     );
 
@@ -108,7 +108,7 @@ const post: Handler = async (req, res) => {
 
     const batch = await getBatch();
 
-    // Create referral-redemption-transactions document
+    // Create point-redemption-transactions document
     batch.set(referralRedemptionTransactionsRef, referralRedemptionTransactionData);
     batch.set(userPointsRedeemedTransactionsRef, {
       pointsRedeemed: pointsBalance,
@@ -116,19 +116,19 @@ const post: Handler = async (req, res) => {
       toAddress: address,
       transactionHash,
     });
-    batch.set(userReferralAccountsRef, { pointsBalance: 0 });
+    batch.set(userPointAccountsRef, { pointsBalance: 0 });
 
     await batch.commit();
 
     // Set isRedeeming to false
-    await userReferralAccountsRef.update({
+    await userPointAccountsRef.update({
       isRedeeming: false,
     });
 
     return res.status(200).json({ transactionHash });
   } catch (e) {
     // Reset isRedeeming in case of error
-    await userReferralAccountsRef?.update({ isRedeeming: false });
+    await userPointAccountsRef?.update({ isRedeeming: false });
     console.error(e);
     return res.status(500).json(ERROR_RESPONSE);
   }

@@ -2,18 +2,18 @@ import { useObservable } from 'libraries/utils';
 import { useEffect, useState } from 'react';
 import {
   getIsReferralUser$,
-  getUserReferralAccount$,
+  getUserPointsAccount$,
   getUserReferralRedemptionDocumentAdded$,
 } from './observables';
-import { RedemptionData, UserReferralAccount } from './types';
+import { RedemptionData, UserPointsAccount } from './types';
 
 export const useIsReferralUser = () => useObservable(getIsReferralUser$, false);
 
 export const useReferralUserData = (uid: string) => {
-  const [referralUserData, setReferralUserData] = useState<UserReferralAccount>();
+  const [referralUserData, setReferralUserData] = useState<UserPointsAccount>();
 
   useEffect(() => {
-    const subscription = getUserReferralAccount$(uid).subscribe((data) => {
+    const subscription = getUserPointsAccount$(uid).subscribe((data) => {
       setReferralUserData(data);
     });
     return () => subscription.unsubscribe();

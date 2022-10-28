@@ -38,7 +38,7 @@ const addReferralCode = async () => {
     });
 
     const userReferralAccountsDocRef = await getDocumentReferenceServerSide(
-      'user-referral-accounts',
+      'user-points-accounts',
       uid
     );
 
