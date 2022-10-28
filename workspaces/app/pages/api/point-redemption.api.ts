@@ -8,19 +8,13 @@ import {
   getDocumentData,
   getDocumentReferenceServerSide,
 } from 'libraries/firebase';
-import { UserPointsAccount } from 'libraries/models';
+import { getUidServerSide, UserPointsAccount } from 'libraries/models';
 import { validateAddress } from 'libraries/utils';
 import { POINTS_AVAX_VALUE } from 'consts';
 import { ethers } from 'ethers';
-import { getApp } from 'firebase-admin/app';
-import { getAuth } from 'firebase-admin/auth';
 
 const PointRedemptionRequestBody = z.object({
   address: z.string().refine((addr) => validateAddress(addr)),
-});
-
-const GenerateReferralCodeCookies = z.object({
-  id_token: z.string(),
 });
 
 const post: Handler = async (req, res) => {
@@ -30,9 +24,7 @@ const post: Handler = async (req, res) => {
     const { address } = PointRedemptionRequestBody.parse(req.body);
 
     // Get uid
-    const { id_token } = GenerateReferralCodeCookies.parse(req.cookies);
-    const app = getApp();
-    const { uid } = await getAuth(app).verifyIdToken(id_token);
+    const uid = await getUidServerSide(req);
 
     // Get user document
     const userPointAccountDocumentData = await getDocumentData<UserPointsAccount>(
