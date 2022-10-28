@@ -71,7 +71,7 @@ export class Web3AuthConnector extends Connector {
         (isModalVisible: boolean) => {
           if (!isModalVisible) {
             this?.web3Auth?.loginModal.removeAllListeners(LOGIN_MODAL_EVENTS.MODAL_VISIBILITY);
-            // below is necessary to ensure login redirect won't be where user initially open web3auth modal
+            // below is necessary to ensure login redirect won't be where user initially opens web3auth modal rather than the most recent open
             this.web3Auth = undefined;
             reject('OpenLogin Modal was closed by user.');
           }
@@ -104,17 +104,23 @@ export class Web3AuthConnector extends Connector {
   }
 
   public async deactivate() {
-    // below logic is necessary to ensure that when user logs out, it won't redirect the user to where web3auth auto-connected
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- need to set web3auth as any because walletAdapters is protected field
-    (this.web3Auth as any).walletAdapters.openlogin.openloginInstance.state.uxMode = 'popup';
-
+    /**
+     * this logic is necessary to track where the user logged out as web3modal will redirect to where the adapter was configures
+     * (see ~line 39 in this file where the adapter is instantiated)
+     * the value for logout redirect is used in redirect.js
+     **/
+    localStorage.setItem(WEB3AUTH.LOGOUT_REDIRECT_URL_KEY, window.location.href);
     await this.web3Auth?.logout();
-    // this is necesary to ensure next login redirect won't be where web3auth auto-connected
-    this.web3Auth = undefined;
     this.provider = undefined;
   }
 
   public async connectEagerly() {
+    /**
+     * this logic is necessary on browsers where 3rd party cookies are blocked like in app browsers or brave
+     * hash contains values necessary for web3auth to connect with user needing to interact with the sign in modal
+     * activate hash value is set in Web3AuthManager.tsx in login redirect logic
+     * */
+    window.location.hash = localStorage.getItem(WEB3AUTH.ACTIVATION_HASH_KEY) ?? '';
     await this.activate();
   }
 
