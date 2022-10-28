@@ -71,6 +71,8 @@ export class Web3AuthConnector extends Connector {
         (isModalVisible: boolean) => {
           if (!isModalVisible) {
             this?.web3Auth?.loginModal.removeAllListeners(LOGIN_MODAL_EVENTS.MODAL_VISIBILITY);
+            // below is necessary to ensure login redirect won't be where user initially open web3auth modal
+            this.web3Auth = undefined;
             reject('OpenLogin Modal was closed by user.');
           }
         }
@@ -102,7 +104,13 @@ export class Web3AuthConnector extends Connector {
   }
 
   public async deactivate() {
+    // below logic is necessary to ensure that when user logs out, it won't redirect the user to where web3auth auto-connected
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- need to set web3auth as any because walletAdapters is protected field
+    (this.web3Auth as any).walletAdapters.openlogin.openloginInstance.state.uxMode = 'popup';
+
     await this.web3Auth?.logout();
+    // this is necesary to ensure next login redirect won't be where web3auth auto-connected
+    this.web3Auth = undefined;
     this.provider = undefined;
   }
 
