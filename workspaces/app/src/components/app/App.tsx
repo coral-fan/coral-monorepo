@@ -24,6 +24,7 @@ import { initializeStore } from 'libraries/state';
 // analytics
 import * as Fathom from 'fathom-client';
 import Router from 'next/router';
+import Script from 'next/script';
 
 initializeFirebaseApp();
 
@@ -59,6 +60,10 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
 
   return (
     <>
+      {/* below script is necessary to ensure user return to correct page when logging out with web3auth
+        value for logout redirect url is set in deactivate method in connector.ts
+     */}
+      <Script src="/scripts/redirect.js" strategy="beforeInteractive" />
       <GlobalStyles />
       <Head>
         {/* TODO: update title post sign up campaign */}
