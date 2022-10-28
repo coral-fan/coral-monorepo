@@ -6,6 +6,8 @@ if (process.env.NEXT_PUBLIC_WEB3AUTH_CLIENT_ID === undefined) {
 }
 
 export const WEB3AUTH = {
+  LOGOUT_REDIRECT_URL_KEY: 'web3auth_logout_redirect_url',
+  ACTIVATION_HASH_KEY: 'web3auth_activation_hash',
   CLIENT_ID: process.env.NEXT_PUBLIC_WEB3AUTH_CLIENT_ID,
   APP_LOGO: '/images/coral-logo.svg',
   LOGIN_METHOD_ORDER: [
