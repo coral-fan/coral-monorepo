@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useWallet } from 'libraries/blockchain';
 import { useIsAuthenticated, useLogin } from 'libraries/authentication';
 import { useCleanUrl } from 'libraries/utils/location';
+import { WEB3AUTH } from 'libraries/blockchain/wallet/connectors/web3auth/consts';
 
 const getWindowHash = () => window.location.hash;
 
@@ -25,9 +26,16 @@ export const Web3AuthManager = () => {
 
   useEffect(() => {
     if (!isAuthenticated && !isActive && !isLoggingIn && isWeb3AuthLoginRedirect()) {
-      login('WEB3AUTH').then(cleanUrl);
+      login('WEB3AUTH').then(() => {
+        /*
+         activation hash is used in connectEagerly method in connector.ts
+         see comment there for why this is necessary
+         */
+        localStorage.setItem(WEB3AUTH.ACTIVATION_HASH_KEY, getWindowHash());
+        cleanUrl();
+      });
     }
-  }, [cleanUrl, isActive, isAuthenticated, isLoggingIn, login]);
+  }, [isActive, isAuthenticated, isLoggingIn, login, cleanUrl]);
 
   return <></>;
 };
