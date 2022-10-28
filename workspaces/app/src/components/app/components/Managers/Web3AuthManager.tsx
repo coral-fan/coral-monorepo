@@ -17,11 +17,6 @@ const isWeb3AuthLoginRedirect = () => {
   return isWeb3Auth() && hash.includes('sessionId');
 };
 
-const isWeb3AuthLogoutRedirect = () => {
-  const hash = getWindowHash();
-
-  return isWeb3Auth() && !hash.includes('sessionId');
-};
 export const Web3AuthManager = () => {
   const { isActive } = useWallet();
   const isAuthenticated = useIsAuthenticated();
@@ -34,10 +29,5 @@ export const Web3AuthManager = () => {
     }
   }, [cleanUrl, isActive, isAuthenticated, isLoggingIn, login]);
 
-  useEffect(() => {
-    if (isWeb3AuthLogoutRedirect()) {
-      cleanUrl();
-    }
-  }, [cleanUrl]);
   return <></>;
 };
