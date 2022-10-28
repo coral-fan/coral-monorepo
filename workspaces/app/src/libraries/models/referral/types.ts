@@ -69,12 +69,12 @@ export interface ReferralTransactionData {
 
 // EarnedPointData & RedemptionData stored
 // as SubCollection
-export interface UserReferralAccount {
+export interface UserPointsAccount {
   pointsBalance: PointValue;
   isRedeeming: boolean;
 }
 
-export interface ReferralRedemptionTransactionData {
+export interface PointRedemptionTransactionData {
   pointsRedeemed: PointValue;
   status: RedemptionStatus;
   timestamp: Timestamp;

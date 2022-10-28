@@ -37,7 +37,7 @@ const post: Handler = async (req, res) => {
       });
 
       const userReferralAccountsDocRef = await getDocumentReferenceServerSide(
-        'user-referral-accounts',
+        'user-points-accounts',
         uid
       );
 
