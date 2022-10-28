@@ -109,7 +109,6 @@ export const CollectionPage = ({
       SOLD_OUT_COLLECTIONS.find((soldOutCollectionId) => id === soldOutCollectionId) !== undefined
   );
 
-  console.log(id);
   const [fingerprint, setFingerprint] = useState<string>();
 
   // fingerprint logic
