@@ -51,6 +51,41 @@ export default function VanBurenGatedContent() {
           Exclusive VB ON ROAD Content
         </h1>
       </div>
+      <section id="2022-10-29">
+        {/* header */}
+        <div className="max-w-screen-s-1 mx-auto px-4 lg:px-5 grid grid-cols-12 mt-12 md:mt-14 lg:mt-24">
+          <h2 className="text-1 leading-none sm:leading-none lg:text-4 lg:leading-none tracking-5 col-span-12 sm:col-span-10 sm:col-start-2 font-medium duration-300">
+            Night Three of VB ON Road: NYC
+          </h2>
+          <div className="col-span-12 sm:col-span-10 sm:col-start-2 tiny-1 mb-3 sm:mb-4 lg:mb-5 mt-8 lg:mt-12">
+            <div className="flex space-x-5">
+              <time dateTime="2022-10-22">October 22, 2022</time>
+            </div>
+          </div>
+        </div>
+        {/* image */}
+        <div className="max-w-screen-s-1 mx-auto px-4 lg:px-5">
+          <WebPlayer mediaId="119ed4b51711edcb98/850c585073124931" />
+        </div>
+        {/* image */}
+        {/* content */}
+        <div className="overflow-hidden">
+          <div className="max-w-screen-s-1 mx-auto px-5 mt-10 sm:mt-20 lg:mt-24">
+            <div className={styles.content}>
+              <p>
+                The East Coast leg of VB On Road is a wrap and ended with a big night at the Mercury
+                Lounge in NYC. The guys deliver three amazing performances across Philly, DC, and
+                NYC showing everyone exactly what the hype is all about.
+              </p>
+              <p>
+                Thanks all who joined us in the east coast and get ready for 4 nights on the west
+                coast as Van Buren Records travels to LA, San Francisco, Seattle and Portland.
+              </p>
+            </div>
+          </div>
+        </div>
+        {/* content */}
+      </section>
       <section id="2022-10-22">
         {/* header */}
         <div className="max-w-screen-s-1 mx-auto px-4 lg:px-5 grid grid-cols-12 mt-12 md:mt-14 lg:mt-24">
