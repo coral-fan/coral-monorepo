@@ -1,11 +1,9 @@
 import styled from '@emotion/styled';
 import { Link, Modal } from 'components/ui';
-import { AVALANCHE } from 'consts';
+import { AVALANCHE, POINTS_AVAX_VALUE } from 'consts';
 import tokens from 'styles/tokens';
 import { SpinnerWrapper } from 'components/ui';
-import { useEffect, useState } from 'react';
-import { ethers } from 'ethers';
-import { useWallet } from 'libraries/blockchain';
+import { useMemo } from 'react';
 
 const { BLOCK_EXPLORER_URL } = AVALANCHE;
 
@@ -62,19 +60,10 @@ export const TransactionSuccessModal = ({
   transactionType,
   closeModal,
 }: TransactionSuccessModalProps) => {
-  const { provider } = useWallet();
-  const [txnAvaxValue, setTxnAvaxValue] = useState('0');
-
-  useEffect(() => {
-    if (!provider) throw Error('Provider not found');
-
-    const getAvaxValue = async () => {
-      const { value } = await provider.getTransaction(transactionHash);
-      setTxnAvaxValue(parseFloat(ethers.utils.formatEther(value)).toFixed(2));
-    };
-
-    getAvaxValue();
-  }, [transactionHash, provider]);
+  const avaxValue = useMemo(
+    () => pointsRedeemed && pointsRedeemed / POINTS_AVAX_VALUE,
+    [pointsRedeemed]
+  );
 
   return (
     <Modal onClick={closeModal} fullHeight>
@@ -85,10 +74,10 @@ export const TransactionSuccessModal = ({
             You&#39;ve {`${transactionType === 'withdraw' ? 'withdrawn' : 'redeemed'}:`}
           </SuccessText>
           <SuccessStatistic>
-            {transactionType == 'withdraw' ? `${txnAvaxValue} AVAX` : `${pointsRedeemed} PTS`}
+            {transactionType == 'withdraw' ? `${avaxValue} AVAX` : `${pointsRedeemed} PTS`}
           </SuccessStatistic>
           <SuccessSubText>
-            {`${txnAvaxValue}`} AVAX has been sent to the address you provided
+            {`${avaxValue}`} AVAX has been sent to the address you provided
           </SuccessSubText>
           <RedemptionTransactionLink href={`${BLOCK_EXPLORER_URL}/tx/${transactionHash}`}>
             View Transaction
