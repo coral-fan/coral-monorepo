@@ -1,6 +1,6 @@
 import { getAllDocuments, getDocumentData, DocumentDataWithId } from 'libraries/firebase';
 import { getArtist } from '../artist';
-import { ReferralCampaignData } from '../referral';
+import { ReferralCampaignData } from '../earn';
 import { Photo } from '../types';
 import { Collection, CollectionData, PartialCollection } from './types';
 
