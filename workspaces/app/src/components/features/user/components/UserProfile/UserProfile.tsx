@@ -13,7 +13,7 @@ import {
   useIsReferralUser,
   useReferralUserData,
   useUserReferralRedemptionDocumentAdded,
-} from 'libraries/models/referral/hooks';
+} from 'libraries/models/earn/hooks';
 import { Points } from '../Points';
 import { PointsRedemptionModal } from '../PointsRedemptionModal';
 import { Button, Modal, Link, Profile } from 'components/ui';

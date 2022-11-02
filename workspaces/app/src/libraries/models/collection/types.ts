@@ -1,5 +1,5 @@
 import { Artist, ArtistData } from '../artist';
-import { ReferralCampaignData } from '../referral';
+import { ReferralCampaignData } from '../earn';
 import { NullableString } from '../types';
 
 export type CollectionType = 'video' | 'music' | 'stream' | 'merch' | 'all_access' | 'ticket';
