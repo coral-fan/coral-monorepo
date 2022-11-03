@@ -19,6 +19,7 @@ type RedemptionStatus = 'pending' | 'completed' | 'failed';
 type SocialPlatform = 'twitter' | 'instagram' | 'facebook' | 'tiktok';
 
 type SocialShareId = string;
+type DefaultContent = string;
 
 export interface RequiredContent {
   urls: Url[];
@@ -62,6 +63,7 @@ export interface SocialShareCampaignData extends BaseCampaignData {
   shareUrl: string;
   socials: SocialPlatform[];
   requiredContent: RequiredContent;
+  defaultContent: DefaultContent;
 }
 
 /*
