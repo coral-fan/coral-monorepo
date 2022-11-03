@@ -6,7 +6,7 @@ import SVG, { Props as SVGProps } from 'react-inlinesvg';
 import twitterIconSVG from './twitter.svg';
 import facebookIconSVG from './facebook.svg';
 import { TwitterShareButton, FacebookShareButton } from 'react-share';
-import { getReferralCode } from 'libraries/models';
+import { getEarnCode } from 'libraries/models';
 import { useCallback, useMemo } from 'react';
 import tokens from 'styles/tokens';
 import { Button } from 'components/ui/buttons';
@@ -78,7 +78,7 @@ export const ShareToEarnModal = ({
   campaignId,
   collectionName,
 }: ShareToEarnModalProps) => {
-  const referralCode = useMemo(() => getReferralCode(userId, campaignId), [userId, campaignId]);
+  const referralCode = useMemo(() => getEarnCode(userId, campaignId), [userId, campaignId]);
   const referralUrl = useMemo(
     () => `${window.location.href}?referral_code=${referralCode}`,
     [referralCode]

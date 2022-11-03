@@ -1,6 +1,6 @@
 import { getDocumentData, getDocumentReferenceServerSide } from 'libraries/firebase';
 
-import { CollectionData, getReferralCode, ReferralData } from 'libraries/models';
+import { CollectionData, getEarnCode, ReferralData } from 'libraries/models';
 
 const uid = '0xA34D4367Bd647B996b1e2A790073e9022fa73De8';
 const collectionId = '0xcB846098C5f6a86D9775a183F80aFdF174eD1171';
@@ -16,7 +16,7 @@ const addReferralCode = async () => {
 
   const campaignId = collectionData.activeCampaign;
 
-  const referralCode = getReferralCode(uid, campaignId);
+  const referralCode = getEarnCode(uid, campaignId);
 
   const referralDocRef = await getDocumentReferenceServerSide<ReferralData>(
     'referrals',
