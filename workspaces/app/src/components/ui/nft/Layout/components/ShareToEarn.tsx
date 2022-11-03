@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Card, Heading, Button, ConditionalSpinner } from 'components/ui';
 import { getDocumentReferenceClientSide } from 'libraries/firebase';
-import { ReferralCampaignData, ReferralData, getReferralCode, useUserUid } from 'libraries/models';
+import { ReferralCampaignData, ReferralData, getEarnCode, useUserUid } from 'libraries/models';
 import { getCoralAPIAxios, useModal, useObservable } from 'libraries/utils';
 import { docData } from 'rxfire/firestore';
 import { filter, iif, map, mergeMap, of } from 'rxjs';
@@ -46,7 +46,7 @@ const getDoesHaveReferralCodeByUserAndCampaignId$ =
       of(userId).pipe(
         filter((userId): userId is string => userId !== undefined),
         mergeMap((userId) => {
-          const referralCode = getReferralCode(userId, campaignId);
+          const referralCode = getEarnCode(userId, campaignId);
           const referralDocRef = getDocumentReferenceClientSide<ReferralData>(
             'referrals',
             referralCode

@@ -1,5 +1,5 @@
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
-import { getReferralCode, getUidServerSide, ReferralData } from 'libraries/models';
+import { getEarnCode, getUidServerSide, ReferralData } from 'libraries/models';
 import { z } from 'zod';
 import { ERROR_RESPONSE } from './consts';
 import { Handler } from './types';
@@ -15,7 +15,7 @@ const post: Handler = async (req, res) => {
 
   try {
     const uid = await getUidServerSide(req);
-    const referralCode = getReferralCode(uid, campaignId);
+    const referralCode = getEarnCode(uid, campaignId);
 
     const referralDocRef = await getDocumentReferenceServerSide<ReferralData>(
       'referrals',
