@@ -19,6 +19,7 @@ const socialShareCampaign: SocialShareCampaignData = {
     usernames: ['@coral__fan'],
     topics: ['#coral'],
   },
+  defaultContent: 'Test video wow',
 };
 
 const addSocialShareCampaign = async () => {
