@@ -36,15 +36,15 @@ const post: Handler = async (req, res) => {
         conversions: 0,
       });
 
-      const userReferralAccountsDocRef = await getDocumentReferenceServerSide(
+      const userPointsAccountsDocRef = await getDocumentReferenceServerSide(
         'user-points-accounts',
         uid
       );
 
-      const userReferralAccountsDocSnapshot = await userReferralAccountsDocRef.get();
+      const userPointsAccountsDocSnapshot = await userPointsAccountsDocRef.get();
 
-      if (!userReferralAccountsDocSnapshot.exists) {
-        userReferralAccountsDocRef.set({ pointsBalance: 0 });
+      if (!userPointsAccountsDocSnapshot.exists) {
+        userPointsAccountsDocRef.set({ pointsBalance: 0 });
       }
 
       return res.status(200).send({ referralCode });
