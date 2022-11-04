@@ -21,6 +21,8 @@ type SocialPlatform = 'twitter' | 'instagram' | 'facebook' | 'tiktok';
 type SocialShareId = string;
 type DefaultContent = string;
 
+export type SharedSocials = Record<SocialPlatform, boolean | undefined>;
+
 export interface RequiredContent {
   urls: Url[];
   usernames: Username[];
@@ -83,7 +85,7 @@ export interface ReferralData extends BaseEarnData {
 }
 
 export interface SocialShareData extends BaseEarnData {
-  sharedSocials: Record<SocialPlatform, boolean>[];
+  sharedSocials: SharedSocials;
 }
 
 /*
