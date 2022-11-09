@@ -16,7 +16,7 @@ export const getUserPointsAccount$ = (uid: string) => {
   return docData(userReferralAccountDocRef);
 };
 
-export const getIsReferralUser$ = () =>
+export const getIsEarnUser$ = () =>
   getUserUid$().pipe(
     filter((uid): uid is string => uid !== undefined),
     mergeMap((uid) => getDocumentExists<UserPointsAccount>('user-points-accounts', uid)),
