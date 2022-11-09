@@ -10,7 +10,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { UpdateProfileInfoModal } from '../UpdateProfile/components/UpdateProfileInfoModal';
 import { UpdateProfilePhotoModal } from '../UpdateProfile/components/UpdateProfilePhotoModal';
 import {
-  useIsReferralUser,
+  useIsEarnUser,
   useReferralUserData,
   useUserReferralRedemptionDocumentAdded,
 } from 'libraries/models/earn/hooks';
@@ -37,7 +37,7 @@ export const UserProfile = ({ assets, doesUserHaveUnclaimedReward }: UserProfile
   const [showPointsRedemptionModal, setShowPointsRedemptionModal] = useState(false);
   const [{ id, username, profilePhoto, socialHandles, bio }] = useUser();
   const isCurrentUser = useIsCurrentUser();
-  const isReferralUser = useIsReferralUser();
+  const isReferralUser = useIsEarnUser();
   const { referralUserData } = useReferralUserData(id);
   const pointsRedemptionReturnData = useUserReferralRedemptionDocumentAdded(id);
 
