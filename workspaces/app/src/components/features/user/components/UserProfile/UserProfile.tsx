@@ -11,7 +11,7 @@ import { UpdateProfileInfoModal } from '../UpdateProfile/components/UpdateProfil
 import { UpdateProfilePhotoModal } from '../UpdateProfile/components/UpdateProfilePhotoModal';
 import {
   useIsEarnUser,
-  useReferralUserData,
+  useUserPointsData,
   useUserReferralRedemptionDocumentAdded,
 } from 'libraries/models/earn/hooks';
 import { Points } from '../Points';
@@ -38,7 +38,7 @@ export const UserProfile = ({ assets, doesUserHaveUnclaimedReward }: UserProfile
   const [{ id, username, profilePhoto, socialHandles, bio }] = useUser();
   const isCurrentUser = useIsCurrentUser();
   const isReferralUser = useIsEarnUser();
-  const { referralUserData } = useReferralUserData(id);
+  const { userPointsData } = useUserPointsData(id);
   const pointsRedemptionReturnData = useUserReferralRedemptionDocumentAdded(id);
 
   const [isUpdateProfilePhotoModalOpen, setIsUpdateProfilePhotoOpen] =
@@ -91,8 +91,8 @@ export const UserProfile = ({ assets, doesUserHaveUnclaimedReward }: UserProfile
   );
 
   const pointsEarned = useMemo(
-    () => (referralUserData && referralUserData.pointsBalance) || 0,
-    [referralUserData]
+    () => (userPointsData && userPointsData.pointsBalance) || 0,
+    [userPointsData]
   );
 
   const referralContent = useMemo(() => {

@@ -5,21 +5,21 @@ import {
   getUserPointsAccount$,
   getUserReferralRedemptionDocumentAdded$,
 } from './observables';
-import { RedemptionData, UserPointsAccount } from './types';
+import { RedemptionData, SocialShareData, UserPointsAccount } from './types';
 
 export const useIsEarnUser = () => useObservable(getIsEarnUser$, false);
 
-export const useReferralUserData = (uid: string) => {
-  const [referralUserData, setReferralUserData] = useState<UserPointsAccount>();
+export const useUserPointsData = (uid: string) => {
+  const [userPointsData, setUserPointsData] = useState<UserPointsAccount>();
 
   useEffect(() => {
     const subscription = getUserPointsAccount$(uid).subscribe((data) => {
-      setReferralUserData(data);
+      setUserPointsData(data);
     });
     return () => subscription.unsubscribe();
   }, [uid]);
 
-  return { referralUserData };
+  return { userPointsData };
 };
 
 export const useUserReferralRedemptionDocumentAdded = (uid: string) => {
