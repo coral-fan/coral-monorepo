@@ -107,6 +107,7 @@ export interface ReferralTransactionData extends BaseTransactionData {
 export interface SocialShareTransactionData extends BaseTransactionData {
   socialShareId: SocialShareId;
   social: SocialPlatform;
+  url: string;
 }
 
 export interface UserPointsAccount {
