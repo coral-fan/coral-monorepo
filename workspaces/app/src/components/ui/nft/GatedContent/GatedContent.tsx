@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { delay, forkJoin, map, mergeMap, timer } from 'rxjs';
 import { useIsAuthenticated } from 'libraries/authentication';
-import { useWallet } from 'libraries/blockchain';
+
 import {
   AccessDenied,
   AccessGrantedModal,
