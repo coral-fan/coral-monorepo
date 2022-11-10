@@ -4,6 +4,7 @@ import {
   getIsEarnUser$,
   getUserPointsAccount$,
   getUserReferralRedemptionDocumentAdded$,
+  getUserSocialShares$,
 } from './observables';
 import { RedemptionData, SocialShareData, UserPointsAccount } from './types';
 
@@ -37,4 +38,17 @@ export const useUserReferralRedemptionDocumentAdded = (uid: string) => {
   }, [uid]);
 
   return { isSuccessfulRedemption, redemptionData };
+};
+
+export const useUserSocialShareData = (uid: string, campaignId: string) => {
+  const [userSocialShareData, setUserSocialShareData] = useState<SocialShareData>();
+
+  useEffect(() => {
+    const subscription = getUserSocialShares$(uid, campaignId).subscribe((data) => {
+      setUserSocialShareData(data);
+    });
+    return () => subscription.unsubscribe();
+  }, [campaignId, uid]);
+
+  return { userSocialShareData };
 };

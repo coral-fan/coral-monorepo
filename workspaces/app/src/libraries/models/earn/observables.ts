@@ -6,7 +6,8 @@ import {
 import { collectionChanges, docData } from 'rxfire/firestore';
 import { filter, map, mergeMap, skip } from 'rxjs';
 import { getUserUid$ } from '../user';
-import { RedemptionData, UserPointsAccount } from './types';
+import { RedemptionData, SocialShareData, UserPointsAccount } from './types';
+import { getEarnCode } from './utils';
 
 export const getUserPointsAccount$ = (uid: string) => {
   const userReferralAccountDocRef = getDocumentReferenceClientSide<UserPointsAccount>(
@@ -14,6 +15,17 @@ export const getUserPointsAccount$ = (uid: string) => {
     uid
   );
   return docData(userReferralAccountDocRef);
+};
+
+export const getUserSocialShares$ = (uid: string, campaignId: string) => {
+  const socialShareId = getEarnCode(uid, campaignId);
+
+  const socialShareDocRef = getDocumentReferenceClientSide<SocialShareData>(
+    'social-shares',
+    socialShareId
+  );
+
+  return docData(socialShareDocRef);
 };
 
 export const getIsEarnUser$ = () =>
