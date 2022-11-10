@@ -23,8 +23,8 @@ const socialLinksMap: Record<SocialType, string> = {
 
 const Link = styled(LinkComponent)`
   display: flex;
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
 `;
 
 export const SocialLink = ({ socialType, username }: SocialLinkProps) => {
