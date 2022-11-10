@@ -12,7 +12,7 @@ import {
 import { initializeFirebaseAdmin } from '..';
 import { isServerSide } from 'libraries/utils/environment';
 
-const getFirestoreServerSide = async () => {
+export const getFirestoreServerSide = async () => {
   await initializeFirebaseAdmin();
   const { getApp } = await import('firebase-admin/app');
   const app = getApp();
