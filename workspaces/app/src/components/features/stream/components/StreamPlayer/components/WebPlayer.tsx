@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import tokens from 'styles/tokens';
 
 const Container = styled.div`
   width: 100%;
@@ -11,6 +12,7 @@ const PlayerContainer = styled.div`
 `;
 
 const Player = styled.iframe`
+  border-radius: ${tokens.border.radius.md};
   position: absolute;
   width: 100%;
   height: 100%;
