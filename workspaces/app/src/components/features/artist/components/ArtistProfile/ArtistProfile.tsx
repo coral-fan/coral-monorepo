@@ -42,7 +42,6 @@ const ReferralContent = () => (
 
 // TODO: Revisit tag logic, added as override for Matte
 export const ArtistProfile = ({ artistData }: ArtistProfileProps) => {
-  console.log(artistData);
   const { name, bio, profilePhoto, socialHandles, collections, tag = 'artist' } = artistData;
 
   const artistCollections = useMemo(() => <Collections collections={collections} />, [collections]);
