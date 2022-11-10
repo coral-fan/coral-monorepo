@@ -1,5 +1,5 @@
-import { useObservable } from 'libraries/utils';
-import { useEffect, useState } from 'react';
+import { getCoralAPIAxios, useObservable } from 'libraries/utils';
+import { useCallback, useEffect, useState } from 'react';
 import {
   getIsEarnUser$,
   getUserPointsAccount$,
@@ -51,4 +51,28 @@ export const useUserSocialShareData = (uid: string, campaignId: string) => {
   }, [campaignId, uid]);
 
   return { userSocialShareData };
+};
+
+const coralAPI = getCoralAPIAxios();
+
+export const useGenerateSocialShareCode = (campaignId: string) => {
+  const [isGeneratingSocialShareCode, setIsGeneratingSocialShareCode] = useState(false);
+  const [socialShareCode, setSocialShareCode] = useState<string>();
+
+  const generateSocialShareCode = useCallback(async () => {
+    setIsGeneratingSocialShareCode(true);
+    try {
+      const {
+        data: { socialShareCode },
+      } = await coralAPI.post<{ socialShareCode: string }>('generate-social-share-code', {
+        campaignId,
+      });
+      setSocialShareCode(socialShareCode);
+    } catch (e) {
+      console.error(e);
+    }
+    setIsGeneratingSocialShareCode(false);
+  }, [campaignId]);
+
+  return { isGeneratingSocialShareCode, socialShareCode, generateSocialShareCode };
 };
