@@ -175,7 +175,7 @@ export const EarnModal = ({ closeEarnModal, campaignId }: EarnModalProps) => {
             <ConditionalSpinner
               size={'60px'}
               color={tokens.background.color.brand}
-              loading={true}
+              loading={isCheckingSocialShareCode}
               center
             >
               {socialShareCode && socialShareCampaignData.isActive && !isCampaignExpired && (
