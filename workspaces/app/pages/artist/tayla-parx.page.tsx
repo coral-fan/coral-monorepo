@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { WebPlayer } from 'components/features/stream/components/StreamPlayer/components';
-import { Avatar, Card, CtaButton, Heading } from 'components/ui';
+import { Avatar, Card, Heading } from 'components/ui';
+import { EarnButton } from 'components/ui/buttons/variants/EarnButton';
 import { AvatarContainer, SocialLinks } from 'components/ui/profile/Profile/components';
 import { useIsAuthenticated } from 'libraries/authentication';
 import { newBlock$ } from 'libraries/blockchain/observables';
@@ -132,10 +133,7 @@ const ReferralContentText = styled.p`
   line-height: 22px;
 `;
 
-const EarnNowButton = styled(CtaButton)`
-  padding: 20px;
-`;
-
+// TODO: Fetch campaignId
 const PrimaryShareToEarn = () => (
   <ReferralContentContainer>
     <Heading level={2} styleVariant={'h3'}>
@@ -145,7 +143,17 @@ const PrimaryShareToEarn = () => (
       Coral rewards you for being a fan. When you share content on Twitter, you earn points that can
       be redeemed any time. Start by sharing your Tayla Parx All Access Pass.
     </ReferralContentText>
-    <EarnNowButton>Earn Now</EarnNowButton>
+    <EarnButton campaignId="xqSPsvjg8w88feqYlCIc" />
+  </ReferralContentContainer>
+);
+
+const SecondaryShareToEarn = () => (
+  <ReferralContentContainer>
+    <Heading level={2} styleVariant={'h3'}>
+      Share To Earn 3
+    </Heading>
+    <ReferralContentText>This is ANOTHER Share to earn Campaign</ReferralContentText>
+    <EarnButton campaignId="4Evm4vhCy3AiqAuY3jw9" />
   </ReferralContentContainer>
 );
 
@@ -212,6 +220,7 @@ export default function TaylaParxArtistPage({ initialDoesUserHaveAccess }: Tayla
             </BioSocialsContainer>
           </InfoContainer>
           <PrimaryShareToEarn />
+          <SecondaryShareToEarn />
         </InfoShareToEarnContainer>
       </ProfileContainer>
       <Section>
