@@ -160,26 +160,33 @@ export const EarnModal = ({ closeEarnModal, campaignId }: EarnModalProps) => {
   const CampaignExpired = () => <ContentContainer>This Campaign has ended</ContentContainer>;
 
   return (
-    <SpinnerWrapper>
-      <ConditionalSpinner loading={isCheckingSocialShareCode}>
-        {socialShareCampaignData && (
-          <Modal
-            title={
-              socialShareCampaignData.isActive && !isCampaignExpired
-                ? `Share to Earn ${socialShareCampaignData.pointsValue} Coral Points`
-                : `Campaign Unavailable`
-            }
-            onClick={closeEarnModal}
-            fullHeight
-          >
-            {socialShareCode && socialShareCampaignData.isActive && !isCampaignExpired && (
-              <CampaignAvailable />
-            )}
-            {!socialShareCampaignData.isActive && <CampaignNotActive />}
-            {isCampaignExpired && <CampaignExpired />}
-          </Modal>
-        )}
-      </ConditionalSpinner>
-    </SpinnerWrapper>
+    <>
+      {socialShareCampaignData && (
+        <Modal
+          title={
+            socialShareCampaignData.isActive && !isCampaignExpired
+              ? `Share to Earn ${socialShareCampaignData.pointsValue} Coral Points`
+              : `Campaign Unavailable`
+          }
+          onClick={closeEarnModal}
+          fullHeight
+        >
+          <SpinnerWrapper>
+            <ConditionalSpinner
+              size={'60px'}
+              color={tokens.background.color.brand}
+              loading={true}
+              center
+            >
+              {socialShareCode && socialShareCampaignData.isActive && !isCampaignExpired && (
+                <CampaignAvailable />
+              )}
+              {!socialShareCampaignData.isActive && <CampaignNotActive />}
+              {isCampaignExpired && <CampaignExpired />}
+            </ConditionalSpinner>
+          </SpinnerWrapper>
+        </Modal>
+      )}
+    </>
   );
 };
