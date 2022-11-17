@@ -50,7 +50,7 @@ export const useUserSocialShareData = (uid: string, campaignId: string) => {
     return () => subscription.unsubscribe();
   }, [campaignId, uid]);
 
-  return { userSocialShareData };
+  return userSocialShareData;
 };
 
 const coralAPI = getCoralAPIAxios();
