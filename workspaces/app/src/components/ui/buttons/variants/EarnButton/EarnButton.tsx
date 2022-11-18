@@ -23,6 +23,7 @@ export const EarnButton = ({ campaignId }: EarnButtonProps) => {
         <EarnModal
           closeEarnModal={() => setShowEarnModal(false)}
           campaignId={campaignId}
+          uid={uid}
         ></EarnModal>
       )}
       <EarnButtonWrapper disabled={!uid} onClick={() => setShowEarnModal(true)}>
