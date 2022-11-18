@@ -1,36 +1,26 @@
 import { ConditionalSpinner, Modal, SpinnerWrapper } from 'components/ui';
-import { getDocumentData, getDocumentExists } from 'libraries/firebase';
-import {
-  getEarnCode,
-  SocialShareCampaignData,
-  SocialShareData,
-  useUserUid,
-} from 'libraries/models';
+import { getDocumentData } from 'libraries/firebase';
+import { getEarnCode, SocialShareCampaignData, SocialShareData } from 'libraries/models';
 import { getCoralAPIAxios } from 'libraries/utils';
 import { useErrorToast } from 'libraries/utils/toasts';
 import { useEffect, useMemo, useState } from 'react';
 import tokens from 'styles/tokens';
-import { Heading, PrimaryContainer } from './components';
+import { CampaignExpired, CampaignNotActive, HasVerified } from './components';
 import { ShareOnTwitter } from './components/ShareOnTwitter/ShareOnTwiter';
 
 interface EarnModalProps {
   closeEarnModal: () => void;
+  uid: string;
   campaignId: string;
 }
 
 const coralAPI = getCoralAPIAxios();
 
-export const EarnModal = ({ closeEarnModal, campaignId }: EarnModalProps) => {
+export const EarnModal = ({ closeEarnModal, campaignId, uid }: EarnModalProps) => {
   const [isCheckingSocialShareCode, setIsCheckingSocialShareCode] = useState(false);
   const [socialShareCode, setSocialShareCode] = useState<string>();
   const [socialShareCampaignData, setSocialShareCampaignData] = useState<SocialShareCampaignData>();
-
-  const uid = useUserUid();
-
-  // Should never error because uid is checked in EarnButton
-  if (!uid) {
-    throw Error('UID not found');
-  }
+  const [hasVerified, setHasVerified] = useState(false);
 
   const potentialEarnCode = useMemo(() => getEarnCode(uid, campaignId), [uid, campaignId]);
 
@@ -59,8 +49,8 @@ export const EarnModal = ({ closeEarnModal, campaignId }: EarnModalProps) => {
       }
     };
 
-    const checkPotentialEarnCode = async () => {
-      return await getDocumentExists<SocialShareData>('social-shares', potentialEarnCode);
+    const getShareCodeData = async () => {
+      return await getDocumentData<SocialShareData>('social-shares', potentialEarnCode);
     };
 
     const generateSocialShareCode = async () => {
@@ -81,9 +71,11 @@ export const EarnModal = ({ closeEarnModal, campaignId }: EarnModalProps) => {
 
     getSocialShareCampaignData().then((data) => {
       if (data && !isCampaignExpired) {
-        checkPotentialEarnCode().then((hasEarnCode) => {
-          if (hasEarnCode) {
-            setSocialShareCode(potentialEarnCode);
+        getShareCodeData().then((data) => {
+          if (data) {
+            data.sharedSocials.twitter
+              ? setHasVerified(true)
+              : setSocialShareCode(potentialEarnCode);
           } else {
             generateSocialShareCode();
           }
@@ -93,18 +85,6 @@ export const EarnModal = ({ closeEarnModal, campaignId }: EarnModalProps) => {
 
     setIsCheckingSocialShareCode(false);
   }, [campaignId, potentialEarnCode, errorToast, isCampaignExpired]);
-
-  const CampaignNotActive = () => (
-    <PrimaryContainer>
-      <Heading>This Campaign is not currently Active</Heading>
-    </PrimaryContainer>
-  );
-
-  const CampaignExpired = () => (
-    <PrimaryContainer>
-      <Heading>This Campaign has Ended</Heading>
-    </PrimaryContainer>
-  );
 
   return (
     <>
@@ -117,13 +97,17 @@ export const EarnModal = ({ closeEarnModal, campaignId }: EarnModalProps) => {
               loading={isCheckingSocialShareCode}
               center
             >
-              {socialShareCode && socialShareCampaignData.isActive && !isCampaignExpired && (
-                <ShareOnTwitter
-                  socialShareCode={socialShareCode}
-                  defaultContent={socialShareCampaignData.defaultContent}
-                  closeEarnModal={closeEarnModal}
-                />
-              )}
+              {hasVerified && <HasVerified points={socialShareCampaignData.pointsValue} />}
+              {!hasVerified &&
+                socialShareCode &&
+                socialShareCampaignData.isActive &&
+                !isCampaignExpired && (
+                  <ShareOnTwitter
+                    socialShareCode={socialShareCode}
+                    defaultContent={socialShareCampaignData.defaultContent}
+                    points={socialShareCampaignData.pointsValue}
+                  />
+                )}
               {!socialShareCampaignData.isActive && <CampaignNotActive />}
               {socialShareCampaignData.isActive && isCampaignExpired && <CampaignExpired />}
             </ConditionalSpinner>

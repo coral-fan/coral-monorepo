@@ -5,12 +5,12 @@ import { Input } from 'components/ui/inputs';
 import { useMemo } from 'react';
 import { TwitterShareButton } from 'react-share';
 import tokens from 'styles/tokens';
-import { ContentContainer, Heading, PrimaryContainer } from '../components';
+import { BrandColor, ContentContainer, Heading, PrimaryContainer } from '../components';
 
 interface ShareOnTwitterProps {
   socialShareCode: string;
   defaultContent: string;
-  closeEarnModal: () => void;
+  points: number;
 }
 
 const ShareButton = styled.div`
@@ -20,10 +20,6 @@ const ShareButton = styled.div`
   align-items: center;
   justify-content: center;
   width: 175px;
-`;
-
-const BrandColor = styled.span`
-  color: ${tokens.font.color.brand};
 `;
 
 const ShareButtonWrapper = styled.div`
@@ -48,14 +44,18 @@ const VerifyButton = styled(Button)`
   height: 44px;
 `;
 
-export const ShareOnTwitter = ({ socialShareCode, defaultContent }: ShareOnTwitterProps) => {
+export const ShareOnTwitter = ({
+  socialShareCode,
+  defaultContent,
+  points,
+}: ShareOnTwitterProps) => {
   const postContent = useMemo(() => defaultContent.replaceAll('/n', '\n'), [defaultContent]);
 
   return (
     <PrimaryContainer>
       <ContentContainer>
         <Heading>
-          1. Share this page on Twitter and <BrandColor>earn 5 Coral points</BrandColor>
+          1. Share this page on Twitter and <BrandColor>earn {points} Coral points</BrandColor>
         </Heading>
         <ModalText>Post a public tweet containing your unique identifier:</ModalText>
         <ModalText>{socialShareCode}</ModalText>
