@@ -19,11 +19,6 @@ interface EarnModalProps {
   campaignId: string;
 }
 
-interface GenerateTweetProps {
-  urls: string[];
-  defaultContent: string;
-}
-
 const ContentContainer = styled.div`
   width: 90%;
   display: flex;
@@ -41,12 +36,6 @@ const ShareButton = styled.div`
 `;
 
 const contentText = `Post a public tweet containing your unique identifier:`;
-
-const generateTweet = ({ defaultContent, urls }: GenerateTweetProps) => {
-  const urlsString = urls.reduce((str, url) => str + url + '\n', '');
-
-  return `${defaultContent.replaceAll('/n', '\n')}\n\n${urlsString}\n`;
-};
 
 const coralAPI = getCoralAPIAxios();
 
@@ -124,26 +113,14 @@ export const EarnModal = ({ closeEarnModal, campaignId }: EarnModalProps) => {
     setIsCheckingSocialShareCode(false);
   }, [campaignId, potentialEarnCode, errorToast, isCampaignExpired]);
 
-  const postContent = useMemo(() => {
-    if (socialShareCode && socialShareCampaignData) {
-      const { defaultContent, requiredContent } = socialShareCampaignData;
-      const { urls } = requiredContent;
-
-      return generateTweet({
-        defaultContent,
-        urls,
-      });
-    }
-  }, [socialShareCode, socialShareCampaignData]);
-
   const CampaignAvailable = () => (
     <>
       <ContentContainer>{contentText}</ContentContainer>
       <ContentContainer>{socialShareCode}</ContentContainer>
-      {socialShareCode && (
+      {socialShareCode && socialShareCampaignData && (
         <TwitterShareButton
           key={'twitter'}
-          title={postContent}
+          title={socialShareCampaignData.defaultContent}
           url={socialShareCode}
           onClick={closeEarnModal}
         >
@@ -162,15 +139,7 @@ export const EarnModal = ({ closeEarnModal, campaignId }: EarnModalProps) => {
   return (
     <>
       {socialShareCampaignData && (
-        <Modal
-          title={
-            socialShareCampaignData.isActive && !isCampaignExpired
-              ? `Share to Earn ${socialShareCampaignData.pointsValue} Coral Points`
-              : `Campaign Unavailable`
-          }
-          onClick={closeEarnModal}
-          fullHeight
-        >
+        <Modal onClick={closeEarnModal} fullHeight>
           <SpinnerWrapper>
             <ConditionalSpinner
               size={'60px'}
