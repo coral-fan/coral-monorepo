@@ -1,6 +1,4 @@
-import styled from '@emotion/styled';
-import { buttonStyle, ConditionalSpinner, Modal, SpinnerWrapper } from 'components/ui';
-import { buttonBaseStyle } from 'components/ui/buttons/styles';
+import { ConditionalSpinner, Modal, SpinnerWrapper } from 'components/ui';
 import { getDocumentData, getDocumentExists } from 'libraries/firebase';
 import {
   getEarnCode,
@@ -11,31 +9,14 @@ import {
 import { getCoralAPIAxios } from 'libraries/utils';
 import { useErrorToast } from 'libraries/utils/toasts';
 import { useEffect, useMemo, useState } from 'react';
-import { TwitterShareButton } from 'react-share';
 import tokens from 'styles/tokens';
+import { Heading, PrimaryContainer } from './components';
+import { ShareOnTwitter } from './components/ShareOnTwitter/ShareOnTwiter';
 
 interface EarnModalProps {
   closeEarnModal: () => void;
   campaignId: string;
 }
-
-const ContentContainer = styled.div`
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  gap: ${tokens.spacing.mobile.md};
-  margin: auto;
-`;
-
-const ShareButton = styled.div`
-  ${buttonBaseStyle}
-  ${buttonStyle}
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const contentText = `Post a public tweet containing your unique identifier:`;
 
 const coralAPI = getCoralAPIAxios();
 
@@ -113,28 +94,17 @@ export const EarnModal = ({ closeEarnModal, campaignId }: EarnModalProps) => {
     setIsCheckingSocialShareCode(false);
   }, [campaignId, potentialEarnCode, errorToast, isCampaignExpired]);
 
-  const CampaignAvailable = () => (
-    <>
-      <ContentContainer>{contentText}</ContentContainer>
-      <ContentContainer>{socialShareCode}</ContentContainer>
-      {socialShareCode && socialShareCampaignData && (
-        <TwitterShareButton
-          key={'twitter'}
-          title={socialShareCampaignData.defaultContent}
-          url={socialShareCode}
-          onClick={closeEarnModal}
-        >
-          <ShareButton>Post On Twitter</ShareButton>
-        </TwitterShareButton>
-      )}
-    </>
-  );
-
   const CampaignNotActive = () => (
-    <ContentContainer>This Campaign is not currently active</ContentContainer>
+    <PrimaryContainer>
+      <Heading>This Campaign is not currently Active</Heading>
+    </PrimaryContainer>
   );
 
-  const CampaignExpired = () => <ContentContainer>This Campaign has ended</ContentContainer>;
+  const CampaignExpired = () => (
+    <PrimaryContainer>
+      <Heading>This Campaign has Ended</Heading>
+    </PrimaryContainer>
+  );
 
   return (
     <>
@@ -148,10 +118,14 @@ export const EarnModal = ({ closeEarnModal, campaignId }: EarnModalProps) => {
               center
             >
               {socialShareCode && socialShareCampaignData.isActive && !isCampaignExpired && (
-                <CampaignAvailable />
+                <ShareOnTwitter
+                  socialShareCode={socialShareCode}
+                  defaultContent={socialShareCampaignData.defaultContent}
+                  closeEarnModal={closeEarnModal}
+                />
               )}
               {!socialShareCampaignData.isActive && <CampaignNotActive />}
-              {isCampaignExpired && <CampaignExpired />}
+              {socialShareCampaignData.isActive && isCampaignExpired && <CampaignExpired />}
             </ConditionalSpinner>
           </SpinnerWrapper>
         </Modal>
