@@ -2,8 +2,14 @@ import styled from '@emotion/styled';
 import { SocialLink, SocialType } from 'components/ui';
 import { SocialHandles } from 'libraries/models';
 
-export const SOCIAL_TYPES: SocialType[] = ['twitter', 'instagram', 'soundcloud', 'spotify'];
-
+export const SOCIAL_TYPES: SocialType[] = [
+  'twitter',
+  'instagram',
+  'soundcloud',
+  'spotify',
+  'facebook',
+  'youtube',
+];
 const SocialLinkContainer = styled.div`
   display: flex;
   gap: 10px;

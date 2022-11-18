@@ -19,6 +19,7 @@ const socialLinksMap: Record<SocialType, string> = {
   tiktok: 'https://tiktok.com/@',
   spotify: 'https://open.spotify.com/artist/',
   discogs: 'https://discogs.com/user/',
+  youtube: 'https://www.youtube.com/channel/',
 };
 
 const Link = styled(LinkComponent)`
