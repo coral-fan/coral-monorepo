@@ -16,9 +16,12 @@ if (!process.env.NEXT_PUBLIC_ENV && process.env.npm_package_name === 'app') {
 
 export const CLIENT_ENVIRONMENT = process.env.NEXT_PUBLIC_ENV;
 
+const ALCHEMY_ENDPOINT = process.env.ALCHEMY_ENDPOINT;
+
 export const CORAL_API_ENDPOINT = '/api';
 
 const CHAIN_ID_HEX = CLIENT_ENVIRONMENT === 'production' ? '0xa86a' : '0xa869';
+const CHAIN_ID_HEX_ETH = CLIENT_ENVIRONMENT === 'production' ? '0x1' : '0x5';
 
 export const AVALANCHE = {
   CHAIN_ID: {
@@ -35,6 +38,24 @@ export const AVALANCHE = {
         CHAIN_NAME: 'Avalanche FUJI C-Chain',
         RPC_URL: 'https://api.avax-test.network/ext/bc/C/rpc',
         BLOCK_EXPLORER_URL: 'https://testnet.snowtrace.io',
+      }),
+};
+
+export const ETHEREUM = {
+  CHAIN_ID: {
+    HEX: CHAIN_ID_HEX_ETH,
+    INT: parseInt(CHAIN_ID_HEX_ETH),
+  },
+  ...(CLIENT_ENVIRONMENT === 'production'
+    ? {
+        CHAIN_NAME: 'Ethereum Mainnet',
+        RPC_URL: ALCHEMY_ENDPOINT,
+        BLOCK_EXPLORER_URL: 'https://etherscan.io',
+      }
+    : {
+        CHAIN_NAME: 'Ethereum Goerli Testnet',
+        RPC_URL: ALCHEMY_ENDPOINT,
+        BLOCK_EXPLORER_URL: 'https://goerli.etherscan.io/',
       }),
 };
 
@@ -68,3 +89,7 @@ export const CC_TRANSACTION_FEE = CHARGE_CC_TRANSACTION_FEE ? BASE_TRANSACTION_F
 
 // TODO: Update to final exchange rate
 export const POINTS_AVAX_VALUE = 1000; // 10 points per 1 AVAX
+
+// TODO: Replace with actual contract
+export const PINDER_NFT_CONTRACT_ADDRESS = '0xF38d6BF300d52bA7880b43cDDB3F94ee3C6C4Ea6';
+export const PINDER_MULTIPLE = 2;
