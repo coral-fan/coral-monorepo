@@ -20,6 +20,8 @@ import {
 } from 'libraries/firebase';
 import { getTimeInsideWindow } from 'libraries/time';
 import { FieldValue } from 'firebase-admin/firestore';
+import { getDoesOwnToken } from 'libraries/blockchain/utils';
+import { PINDER_MULTIPLE, PINDER_NFT_CONTRACT_ADDRESS } from 'consts';
 
 const BEARER_TOKEN = process.env.TWITTER_BEARER_TOKEN;
 
@@ -153,8 +155,12 @@ const post: Handler = async (req, res) => {
         );
       }
 
+      // apply multiplier if eligible
+      const doesOwnEthNft = await getDoesOwnToken(PINDER_NFT_CONTRACT_ADDRESS, userId, false);
+      const appliedPointsValue = doesOwnEthNft ? pointsValue * PINDER_MULTIPLE : pointsValue;
+
       // ensures new total points earned doesn't exceed total points pool
-      if (pointsValue + totalPointsEarned > totalPointsPool) {
+      if (appliedPointsValue + totalPointsEarned > totalPointsPool) {
         throw new Error(
           `Max points (${totalPointsEarned}) awarded for social share campaign (${campaignId}).`
         );
@@ -214,7 +220,7 @@ const post: Handler = async (req, res) => {
 
       const socialShareTransactionData: SocialShareTransactionData = {
         campaignId,
-        pointsEarned: pointsValue,
+        pointsEarned: appliedPointsValue,
         timestamp: new Date().toISOString(),
         userId,
         social: 'twitter',
@@ -227,7 +233,7 @@ const post: Handler = async (req, res) => {
       transaction.update(
         socialShareCampaignDocRef,
         'totalPointsEarned',
-        FieldValue.increment(pointsValue)
+        FieldValue.increment(appliedPointsValue)
       );
 
       transaction.set(socialUserWithVerifiedShareDocRef, { hasVerifiedShare: true });
@@ -235,11 +241,11 @@ const post: Handler = async (req, res) => {
       transaction.update(
         userPointsAccountDocRef,
         'pointsBalance',
-        FieldValue.increment(pointsValue)
+        FieldValue.increment(appliedPointsValue)
       );
 
       transaction.set(userPointsEarnedTransactionsRef, {
-        pointsEarned: pointsValue,
+        pointsEarned: appliedPointsValue,
         social: 'twitter',
         shareCode: socialShareId,
         timestamp: socialShareTransactionData.timestamp,
