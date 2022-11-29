@@ -6,6 +6,8 @@ import soundcloudSVG from './assets/soundcloud.svg';
 import tiktokSVG from './assets/tiktok.svg';
 import spotifySVG from './assets/spotify.svg';
 import discogsSVG from './assets/discogs.svg';
+import youtubeSVG from './assets/youtube.svg';
+
 import { SocialHandles } from 'libraries/models';
 import { getIconComponent } from 'components/ui/icons/utils';
 
@@ -23,6 +25,7 @@ const socialSVGs: Record<SocialType, string> = {
   tiktok: tiktokSVG,
   spotify: spotifySVG,
   discogs: discogsSVG,
+  youtube: youtubeSVG,
 };
 
 export const SocialIcon = ({ socialType }: SocialIconProp) => {
