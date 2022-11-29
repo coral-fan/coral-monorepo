@@ -1,0 +1,1 @@
+export { ShareOnTwitter } from './ShareOnTwitter';
