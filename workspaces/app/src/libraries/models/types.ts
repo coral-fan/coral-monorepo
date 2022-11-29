@@ -16,4 +16,5 @@ export interface SocialHandles {
   tiktok?: string;
   soundcloud?: string;
   discogs?: string;
+  youtube?: string;
 }
