@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { SocialLinks } from 'components/ui/profile/Profile/components';
-import { Artist } from 'libraries/models';
+import { Artist, getUidServerSide } from 'libraries/models';
 import Image from 'next/image';
 import tokens, { QUERY } from 'styles/tokens';
 import { FeaturedContent } from './components/FeaturedContent';
@@ -10,6 +10,9 @@ import { GetPaidForBeingAFan } from './components/GetPaidForBeingAFan';
 import { ShareToEarn } from './components/ShareToEarn';
 import { useIsAuthenticated } from 'libraries/authentication';
 import { CommunityBenefits } from './components/CommunityBenefits';
+import { GetServerSideProps } from 'next';
+import { getDoesOwnToken } from 'libraries/blockchain/utils';
+import { PINDER_NFT_CONTRACT_ADDRESS } from 'consts';
 
 const artist: Artist = {
   id: 'pinder',
@@ -21,9 +24,9 @@ const artist: Artist = {
     src: '/images/pinder/profile-photo.png',
   },
   socialHandles: {
-    instagram: 'taylaparx',
-    spotify: '1LzWWI9v4UKdbBgz8fqi15',
-    twitter: 'TAYLAPARX',
+    instagram: 'pindersongs',
+    spotify: '4VNhdOgxfxVzFRWLNPP2kz',
+    twitter: 'JPinder',
   },
   quote: null,
   collections: [],
@@ -163,12 +166,15 @@ const SplitLayout = styled.div`
   }
 `;
 
-export default function PinderArtistPage() {
+interface PinderArtistPageProps {
+  doesOwnPinderNft: boolean;
+}
+
+export default function PinderArtistPage({ doesOwnPinderNft }: PinderArtistPageProps) {
   const { name, bio, profilePhoto, socialHandles } = artist;
 
   const isAuthenticated = useIsAuthenticated();
 
-  const doesOwnPinderNft = true;
   return (
     <PageContainer>
       <ProfileContainer>
@@ -233,3 +239,18 @@ export default function PinderArtistPage() {
     </PageContainer>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<PinderArtistPageProps> = async (context) => {
+  const address = await getUidServerSide(context);
+
+  const doesOwnPinderNft =
+    address === undefined
+      ? false
+      : await getDoesOwnToken(PINDER_NFT_CONTRACT_ADDRESS, address, false);
+
+  return {
+    props: {
+      doesOwnPinderNft,
+    },
+  };
+};
