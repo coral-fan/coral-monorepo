@@ -106,6 +106,8 @@ export const EarnModal = ({ closeEarnModal, campaignId, uid }: EarnModalProps) =
                     socialShareCode={socialShareCode}
                     defaultContent={socialShareCampaignData.defaultContent}
                     points={socialShareCampaignData.pointsValue}
+                    campaignId={campaignId}
+                    setHasVerified={setHasVerified}
                   />
                 )}
               {!socialShareCampaignData.isActive && <CampaignNotActive />}
