@@ -12,9 +12,11 @@ module.exports = {
       },
       height: {
         'h-1': '60px',
+        'h-2': '6.75rem',
       },
       minHeight: {
         'min-h-1': '335px',
+        'min-h-2': '15.625rem',
       },
       margin: {
         'm-1': '1.375rem',
