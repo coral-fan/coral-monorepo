@@ -172,9 +172,9 @@ export const Home = () => {
               rel="noreferrer"
               className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-2 py-2 px-2.5 bg-gray-2 ml-2.5 bg-opacity-20 rounded-full duration-300 mt-auto hover:bg-opacity-50"
             >
-              Learn more{' '}
+              Learn more
             </a>
-          </div>{' '}
+          </div>
           {/* Share to earn Pinder */}
           {/* <div className="group w-full sm:mt-auto flex items-start justify-between bg-orange-1 rounded-1 py-4 px-5 relative hover:bg-gray-2 duration-300">
             <button className="absolute top-0 left-0 w-full h-full"></button>
@@ -303,11 +303,9 @@ export const Home = () => {
         <div className="grid grid-cols-12 gap-4 lg:gap-5 relative">
           <div className="col-span-12 sm:col-span-6 flex flex-col items-start">
             <h2 className="text-1 leading-none xl:text-2 xl:leading-none tracking-3 font-medium inline-block mb-10 lg:mb-16 xl:mb-24">
-              {' '}
-              How Coral Works{' '}
+              How Coral Works
             </h2>
             <p className="text-lg leading-lh-3 xl:text-1 xl:leading-none font-medium tracking-4">
-              {' '}
               Coral rewards fans for supporting and promoting artists. The more you support, the
               more you earn.
             </p>
@@ -320,12 +318,10 @@ export const Home = () => {
                 </div>
                 <div className="col-span-8 lg:col-span-10 grid grid-cols-1 lg:grid-cols-10 gap-2.5 lg:gap-5">
                   <h4 className="lg:col-span-4 text-base leading-5 lg:text-lg lg:leading-lh-3 tracking-wide uppercase">
-                    {' '}
                     Browse, explore, discover
                   </h4>
                   <div className="lg:col-span-6">
                     <p className="text-base leading-5 lg:text-lg lg:leading-lh-3 tracking-2 mb-3">
-                      {' '}
                       Exclusive interviews, videos, BTS footage, and existing music, playlists,
                       events, and news.
                     </p>
@@ -335,8 +331,7 @@ export const Home = () => {
                       rel="noreferrer"
                       className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-2 py-2 px-2.5 bg-gray-2 bg-opacity-20 rounded-full duration-300 mt-auto hover:bg-opacity-50"
                     >
-                      {' '}
-                      Learn more{' '}
+                      Learn more
                     </a>
                   </div>
                 </div>
@@ -361,8 +356,7 @@ export const Home = () => {
                       rel="noreferrer"
                       className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-2 py-2 px-2.5 bg-gray-2 bg-opacity-20 rounded-full duration-300 mt-auto hover:bg-opacity-50"
                     >
-                      {' '}
-                      Learn more{' '}
+                      Learn more
                     </a>
                   </div>
                 </div>
@@ -387,8 +381,7 @@ export const Home = () => {
                       rel="noreferrer"
                       className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-2 py-2 px-2.5 bg-gray-2 bg-opacity-20 rounded-full duration-300 mt-auto hover:bg-opacity-50"
                     >
-                      {' '}
-                      Learn more{' '}
+                      Learn more
                     </a>
                   </div>
                 </div>
@@ -399,13 +392,11 @@ export const Home = () => {
                 </div>
                 <div className="col-span-8 lg:col-span-10 grid grid-cols-1 lg:grid-cols-10 gap-2.5 lg:gap-5">
                   <h4 className="lg:col-span-4 text-base leading-5 lg:text-lg lg:leading-lh-3 tracking-wide uppercase">
-                    {' '}
-                    Redeem points for rewards{' '}
+                    Redeem points for rewards
                   </h4>
                   <div className="lg:col-span-6">
                     <p className="text-base leading-5 lg:text-lg lg:leading-lh-3 tracking-2 mb-3">
-                      {' '}
-                      Redeem your CORAL points for cryptocurrency or special benefits.{' '}
+                      Redeem your CORAL points for cryptocurrency or special benefits.
                     </p>
                   </div>
                 </div>
@@ -638,7 +629,7 @@ export const Home = () => {
             <a href="mailto:support@coral.fan" className="absolute top-0 left-0 w-full h-full"></a>
             <div className="flex flex-col items-start lg:w-3/4">
               <h3 className="text-1 leading-none lg:text-2 lg:leading-lh-2 tracking-3 font-medium mb-8">
-                Coral For Artists{' '}
+                Coral For Artists
               </h3>
               <div className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-1 py-2 px-2.5 bg-gray-2 rounded-full hover:bg-orange-1 duration-300 mt-auto mb-4 group-hover:bg-orange-1 text-gray-1">
                 Contact us
