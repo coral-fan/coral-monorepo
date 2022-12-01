@@ -5,13 +5,13 @@ import { getHandler } from '../../utils';
 import { getEnvironmentVariableErrorMessage } from 'libraries/utils';
 import { ERROR_RESPONSE } from '../../consts';
 import {
+  getEarnCode,
   getUidServerSide,
   SocialShareCampaignData,
   SocialShareData,
   SocialShareTransactionData,
   UserPointsAccount,
 } from 'libraries/models';
-import md5 from 'md5';
 import {
   getCollectionReferenceServerSide,
   getDocumentData,
@@ -55,7 +55,7 @@ const post: Handler = async (req, res) => {
     const userId = await getUidServerSide(req);
     const { campaignId, tweetUrl } = RequestBody.parse(req.body);
 
-    const socialShareId = md5(`${userId}${campaignId}`);
+    const socialShareId = getEarnCode(userId, campaignId);
 
     // Get user referral accounts document
     const userPointsAccountDocumentData = await getDocumentData<UserPointsAccount>(
@@ -202,6 +202,7 @@ const post: Handler = async (req, res) => {
           entities?.urls === undefined ||
           entities.urls.find((twitterUrl) => twitterUrl.unwound_url === url) === undefined
         ) {
+          console.log(entities?.urls);
           throw new Error(`Url ${url} is not included in tweet with url ${tweetUrl}.`);
         }
       }
