@@ -241,6 +241,12 @@ export default function PinderArtistPage({ doesOwnPinderNft }: PinderArtistPageP
 }
 
 export const getServerSideProps: GetServerSideProps<PinderArtistPageProps> = async (context) => {
+  if (process.env.NODE_ENV === 'production') {
+    return {
+      notFound: true,
+    };
+  }
+
   const address = await getUidServerSide(context);
 
   const doesOwnPinderNft =
