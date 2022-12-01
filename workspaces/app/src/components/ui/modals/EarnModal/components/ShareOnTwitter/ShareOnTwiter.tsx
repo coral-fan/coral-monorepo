@@ -116,7 +116,8 @@ export const ShareOnTwitter = ({
     <PrimaryContainer>
       <ContentContainer>
         <Heading>
-          1. Share This On Twitter And <BrandColor>Earn {points} Coral points</BrandColor>
+          1. Share This On Twitter And{' '}
+          <BrandColor>Earn {points} Coral points (~$5 in AVAX)</BrandColor>
         </Heading>
         <ModalText>
           {`If you change the Tweet, be sure to include all urls, mentions (@), tags (#) and unique code (${socialShareCode}) from the pre-populated content to earn your
