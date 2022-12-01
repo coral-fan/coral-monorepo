@@ -4,6 +4,7 @@ import { ImageWithInfo, NftAssetContainer } from 'components/ui/nft';
 import { Asset } from 'libraries/models';
 import { useMemo } from 'react';
 import tokens from 'styles/tokens';
+import { TAYLA_PARX_ALL_ACCESS_PASS_CONTRACT_ADDRESS } from '../../../../../../../../pages/artist/tayla-parx/index.page';
 
 interface PaymentSuccessProps
   extends Pick<
@@ -57,6 +58,8 @@ export const PaymentSuccess = ({
     [imageUrl, creatorName, creatorProfilePhoto, artistId]
   );
 
+  const isTaylaParxAllAccessPass = collectionId === TAYLA_PARX_ALL_ACCESS_PASS_CONTRACT_ADDRESS;
+
   return (
     <Container>
       <NftAssetContainer isAsset={true}>
@@ -72,7 +75,16 @@ export const PaymentSuccess = ({
           </AssetInfoBottom>
         </AssetInfoContainer>
       </NftAssetContainer>
-      <ButtonLink href={`/collection/${collectionId}/asset/${assetId}`}>View Your NFT</ButtonLink>
+      <ButtonLink
+        href={
+          isTaylaParxAllAccessPass
+            ? '/artist/tayla-parx'
+            : `/collection/${collectionId}/asset/${assetId}`
+        }
+      >
+        {/* TODO: Remove post tayla parx */}
+        {isTaylaParxAllAccessPass ? "Go To Tayla Parx's Artist Page" : 'View Your NFT'}
+      </ButtonLink>
     </Container>
   );
 };
