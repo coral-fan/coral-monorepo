@@ -226,6 +226,12 @@ export default function TaylaParxArtistPage({
 }
 
 export const getServerSideProps: GetServerSideProps<TaylaParxPageProps> = async (context) => {
+  if (process.env.NODE_ENV === 'production') {
+    return {
+      notFound: true,
+    };
+  }
+
   const address = await getUidServerSide(context);
 
   const initialDoesUserHaveAccessPass =
