@@ -90,16 +90,16 @@ export const CommunityBenefits = () => (
     <RowContainer>
       <ContentImage src="/images/pinder/the-mop-sound-xyz.png" />
       <Content>
-        <Header>Promote my Upcoming Drop On sound.xyz</Header>
+        <Header>2x Points for “The Mop” NFT Holders.</Header>
         <CTAContainer>
           <ShareAndEarnButton points={100} />
-          <ViewLink href="#" />
+          <ViewLink href="https://www.sound.xyz/pinder/the-mop" openInNewTab>
+            Claim on sound.xyz
+          </ViewLink>
         </CTAContainer>
         <Text>
-          Share now and all holders of the “The Mop” NFT dropped on sound.xyz will recieve{' '}
-          <Highlight>2x</Highlight>
-          rewards if you claim the NFT. Be sure to sign up on Coral with the same wallet you claim
-          the NFT.
+          All holders of “The Mop” NFT recently dropped on sound.xyz will recieve{' '}
+          <Highlight>2x</Highlight> Coral Points when then share. Make sure to use the same wallet.
         </Text>
       </Content>
     </RowContainer>
