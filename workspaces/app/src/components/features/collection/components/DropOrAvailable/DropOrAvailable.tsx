@@ -19,6 +19,7 @@ import { SignInModal, useOpenSignInModal } from 'components/app';
 
 // analytics
 import { trackGoal } from 'fathom-client';
+import { TAYLA_PARX_ALL_ACCESS_PASS_CONTRACT_ADDRESS } from '../../../../../../pages/artist/tayla-parx/index.page';
 
 interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
   numMinted: number;
@@ -125,7 +126,10 @@ export const DropOrAvailable = ({
 
     let ctaAction;
     // custom logic specific to VB ON ROAD campaign
-    if (collectionId === '0xc56E1b0734f25D17D7A68eb969f8eB00B287136d') {
+    if (
+      collectionId === '0xc56E1b0734f25D17D7A68eb969f8eB00B287136d' ||
+      collectionId === TAYLA_PARX_ALL_ACCESS_PASS_CONTRACT_ADDRESS
+    ) {
       ctaAction = 'Claim Free Pass';
     } else if (hasValidRedeemCode) {
       ctaAction = 'Redeem Free NFT';
