@@ -1,9 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { useOpenSignInModal } from 'components/app';
+import { CLIENT_ENVIRONMENT } from 'consts';
 import { useIsAuthenticated } from 'libraries/authentication';
 import { Earn } from '../../../../pages/artist/tayla-parx/components/Earn';
 import { ShareAndEarnButton } from '../../../../pages/artist/tayla-parx/components/pills';
+
+const SHARE_CORAL_CAMPAIGN_ID = CLIENT_ENVIRONMENT === 'production' ? '' : 'QQkH98o20uk7pktMi9WA';
 
 export const Home = () => {
   const handleOpenSignUpModal = useOpenSignInModal({ isSignUp: true });
@@ -153,17 +156,17 @@ export const Home = () => {
             {/* main heading copy */}
             {/* Support Pinder&apos;s sound.xyz Drop
              */}
-            Share Coral and earn Rewards
+            Get Paid for Being a Fan
           </h3>
           <p className="text-lg leading-lh-3 lg:text-2xl lg:leading-7 mt-3 lg:mt-10 mb-5 lg:mb-4">
             {/* Share a promo for Pinder’s upcoming drop on sound.xyz of his new single “The Mop” and
             earn points. */}
-            A whole new Coral is coming next week. Share Coral now and earn points redeemable
-            anytime for $AVAX.
+            A brand new Coral is coming soon – get paid for spreading the word. Share Coral and earn
+            points redeemable for $AVAX.
           </p>
           <div className="flex mb-10 lg:mb-0">
-            <Earn campaignId="xqSPsvjg8w88feqYlCIc">
-              <ShareAndEarnButton points={2} />
+            <Earn campaignId={SHARE_CORAL_CAMPAIGN_ID}>
+              <ShareAndEarnButton points={40} />
             </Earn>
             {/* add blog post link here */}
             <a
