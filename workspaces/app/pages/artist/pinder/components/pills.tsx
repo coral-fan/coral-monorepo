@@ -47,7 +47,7 @@ const secondaryPillStyle = css`
 
 export const ViewLink = (props: LinkProps) => (
   <Link css={secondaryPillStyle} {...props}>
-    View
+    {props.children ? props.children : 'View'}
   </Link>
 );
 
