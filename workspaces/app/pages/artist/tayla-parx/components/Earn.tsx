@@ -24,14 +24,12 @@ export const Earn = ({ campaignId, children }: EarnProps) => {
 
   const uid = useUserUid();
 
+  const closeEarnModal = useCallback(() => setShowEarnModal(false), []);
+
   return (
     <>
       {uid && showEarnModal && (
-        <EarnModal
-          closeEarnModal={() => setShowEarnModal(false)}
-          campaignId={campaignId}
-          uid={uid}
-        ></EarnModal>
+        <EarnModal closeEarnModal={closeEarnModal} campaignId={campaignId} uid={uid}></EarnModal>
       )}
       {cloneElement(children, { onClick: onClickHandler })}
     </>
