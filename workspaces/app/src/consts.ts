@@ -87,8 +87,7 @@ const CHARGE_CC_TRANSACTION_FEE = false;
 export const AVAX_TRANSACTION_FEE = CHARGE_AVAX_TRANSACTION_FEE ? BASE_TRANSACTION_FEE : 0;
 export const CC_TRANSACTION_FEE = CHARGE_CC_TRANSACTION_FEE ? BASE_TRANSACTION_FEE : 0;
 
-// TODO: Update to final exchange rate
-export const POINTS_AVAX_VALUE = 1000; // 10 points per 1 AVAX
+export const POINTS_AVAX_VALUE = 100; // 100 points per 1 AVAX
 
 // TODO: Replace with actual contract
 export const PINDER_NFT_CONTRACT_ADDRESS = '0xF38d6BF300d52bA7880b43cDDB3F94ee3C6C4Ea6';
