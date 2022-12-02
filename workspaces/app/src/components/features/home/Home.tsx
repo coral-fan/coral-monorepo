@@ -113,7 +113,7 @@ export const Home = () => {
               </li>
               <li>
                 <a
-                  href="https://youtube.com"
+                  href="https://youtube.com/channel/UCaq1Ap2bA-63VrVUsdiNKvA"
                   className="bg-gray-2 bg-opacity-20 rounded-full hover:bg-opacity-50 duration-300 w-7 h-7 flex items-center justify-center text-gray-2 hover:text-orange-1 duration-300"
                   rel="noopener noreferrer"
                   target="_blank"
@@ -354,14 +354,14 @@ export const Home = () => {
                       {' '}
                       Share existing content or create your own based on prompts from the artists.{' '}
                     </p>
-                    <a
+                    {/* <a
                       href="#"
                       target="_blank"
                       rel="noreferrer"
                       className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-2 py-2 px-2.5 bg-gray-2 bg-opacity-20 rounded-full duration-300 mt-auto hover:bg-opacity-50"
                     >
                       Learn more
-                    </a>
+                    </a> */}
                   </div>
                 </div>
               </div>
@@ -379,14 +379,14 @@ export const Home = () => {
                       {' '}
                       Earn CORAL POINTS for your contributions.{' '}
                     </p>
-                    <a
+                    {/* <a
                       href="#"
                       target="_blank"
                       rel="noreferrer"
                       className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-2 py-2 px-2.5 bg-gray-2 bg-opacity-20 rounded-full duration-300 mt-auto hover:bg-opacity-50"
                     >
                       Learn more
-                    </a>
+                    </a> */}
                   </div>
                 </div>
               </div>
