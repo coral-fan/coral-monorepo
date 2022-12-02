@@ -171,7 +171,7 @@ export const Home = () => {
             </Earn>
             {/* add blog post link here */}
             <a
-              href="#"
+              href="https://editorial.coral.fan/introducing-a-new-coral-get-paid-for-being-a-fan/"
               target="_blank"
               rel="noreferrer"
               className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-2 py-2 px-2.5 bg-gray-2 ml-2.5 bg-opacity-20 rounded-full duration-300 mt-auto hover:bg-opacity-50"
@@ -330,7 +330,7 @@ export const Home = () => {
                       events, and news.
                     </p>
                     <a
-                      href="#"
+                      href="https://editorial.coral.fan/introducing-a-new-coral-get-paid-for-being-a-fan/"
                       target="_blank"
                       rel="noreferrer"
                       className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-2 py-2 px-2.5 bg-gray-2 bg-opacity-20 rounded-full duration-300 mt-auto hover:bg-opacity-50"
