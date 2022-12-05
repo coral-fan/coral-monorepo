@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
+import { CLIENT_ENVIRONMENT } from 'consts';
 import tokens, { QUERY } from 'styles/tokens';
 import { ContentImage } from './ContentImage';
+import { Earn } from './Earn';
 import { ShareAndEarnButton, ViewLink } from './pills';
 
 const Container = styled.div`
@@ -85,14 +87,23 @@ const Highlight = styled.span`
   color: ${tokens.font.color.brand};
 `;
 
-export const CommunityBenefits = () => (
+const CAMPAIGN_ID =
+  CLIENT_ENVIRONMENT === 'production' ? 'xqSPsvjg8w88feqYlCIc' : 'xqSPsvjg8w88feqYlCIc';
+
+interface CommunityBenefitsProps {
+  doesOwnPinderNft: boolean;
+}
+
+export const CommunityBenefits = ({ doesOwnPinderNft }: CommunityBenefitsProps) => (
   <Container>
     <RowContainer>
       <ContentImage src="/images/pinder/the-mop-sound-xyz.png" />
       <Content>
         <Header>2x Points for “The Mop” NFT Holders.</Header>
         <CTAContainer>
-          <ShareAndEarnButton points={100} />
+          <Earn campaignId={CAMPAIGN_ID} doesOwnPinderNft={doesOwnPinderNft}>
+            <ShareAndEarnButton points={20} />
+          </Earn>
           <ViewLink href="https://www.sound.xyz/pinder/the-mop" openInNewTab>
             Claim on sound.xyz
           </ViewLink>
