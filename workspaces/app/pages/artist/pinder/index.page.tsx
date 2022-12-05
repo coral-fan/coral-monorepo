@@ -13,6 +13,8 @@ import { CommunityBenefits } from './components/CommunityBenefits';
 import { GetServerSideProps } from 'next';
 import { getDoesOwnToken } from 'libraries/blockchain/utils';
 import { PINDER_NFT_CONTRACT_ADDRESS } from 'consts';
+import { GatedContent } from './components/GatedContent';
+import { Link } from 'components/ui';
 
 const artist: Artist = {
   id: 'pinder',
@@ -176,6 +178,26 @@ export default function PinderArtistPage({ doesOwnPinderNft }: PinderArtistPageP
   const isAuthenticated = useIsAuthenticated();
 
   return (
+    // <GatedContent
+    //   doesOwnPinderNft
+    //   accessDeniedModalProps={{
+    //     title: "You don't have access",
+    //     actionElement: (
+    //       <div>
+    //         {'Only holders of '}
+    //         <Link
+    //           css={css`
+    //             text-decoration: underline;
+    //           `}
+    //           href={`https://www.sound.xyz/pinder/the-mop`}
+    //         >
+    //           The Mop NFT
+    //         </Link>
+    //         {" have access to Pinder's Artist page."}
+    //       </div>
+    //     ),
+    //   }}
+    // >
     <PageContainer>
       <ProfileContainer>
         <ProfilePhotoWrapper>
@@ -216,7 +238,7 @@ export default function PinderArtistPage({ doesOwnPinderNft }: PinderArtistPageP
           </SplitLayout>
           <Section>
             <SectionHeader>Community Benefits</SectionHeader>
-            <CommunityBenefits />
+            <CommunityBenefits doesOwnPinderNft={doesOwnPinderNft} />
           </Section> */}
           {/* post drop ends */}
           {/* pre drop starts */}
@@ -237,16 +259,11 @@ export default function PinderArtistPage({ doesOwnPinderNft }: PinderArtistPageP
         </>
       )}
     </PageContainer>
+    // </GatedContent>
   );
 }
 
 export const getServerSideProps: GetServerSideProps<PinderArtistPageProps> = async (context) => {
-  if (process.env.NODE_ENV === 'production') {
-    return {
-      notFound: true,
-    };
-  }
-
   const address = await getUidServerSide(context);
 
   const doesOwnPinderNft =
