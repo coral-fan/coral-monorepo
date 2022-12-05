@@ -23,13 +23,33 @@ import { initializeStore } from 'libraries/state';
 
 // analytics
 import * as Fathom from 'fathom-client';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import Script from 'next/script';
 
 initializeFirebaseApp();
 
-export const getRandomSocialMediaPreviewImageUrl = () =>
-  `https://coral.fan/images/social-media-preview/${Math.ceil(Math.random() * 5)}.jpg`;
+const getSocialMediaPreviewImageUrl = (route: string) => {
+  switch (route) {
+    case '/artist/pinder':
+      return 'https://coral.ngrok.io/images/pinder/social-share.jpg';
+    default:
+      return `https://coral.fan/images/social-media-preview/${Math.ceil(Math.random() * 5)}.jpg`;
+  }
+};
+
+const getTitle = (route: string) => {
+  let title = 'Coral';
+  switch (route) {
+    case '/artist/pinder':
+      title += ' | Artist - Pinder';
+      break;
+    case '/artist/tayla-parx':
+      title += ' | Artist - Tayla Parx';
+      break;
+  }
+
+  return title;
+};
 
 export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
   const store = initializeStore(initialState);
@@ -58,6 +78,13 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
     });
   }, []);
 
+  const { asPath: route } = useRouter();
+
+  const socialMediaPreviewImageUrl = getSocialMediaPreviewImageUrl(route);
+  const url = `https://www.coral.fan${route}`;
+
+  const title = getTitle(route);
+
   return (
     <>
       {/* below script is necessary to ensure user return to correct page when logging out with web3auth
@@ -67,22 +94,22 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
       <GlobalStyles />
       <Head>
         {/* TODO: update title post sign up campaign */}
-        <title>Coral</title>
+        <title>{title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
-        <meta name="description" content="The marketplace for a new era of music." />
+        <meta name="description" content="Support Your Favorite Artists. Earn Rewards." />
         {/* social media share meta data starts here*/}
-        <meta property="og:url" content="https://www.coral.fan/" />
+        <meta property="og:url" content={url} />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Coral" />
-        <meta property="og:description" content="The marketplace for a new era of music." />
-        <meta property="og:image" content={getRandomSocialMediaPreviewImageUrl()} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content="Support Your Favorite Artists. Earn Rewards." />
+        <meta property="og:image" content={socialMediaPreviewImageUrl} />
 
         <meta name="twitter:card" content="summary_large_image" />
-        <meta property="twitter:domain" content="coral.fan" />
-        <meta property="twitter:url" content="https://www.coral.fan/" />
-        <meta name="twitter:title" content="Coral" />
-        <meta name="twitter:description" content="The marketplace for a new era of music." />
-        <meta name="twitter:image" content={getRandomSocialMediaPreviewImageUrl()} />
+        <meta property="twitter:domain" content={url} />
+        <meta property="twitter:url" content={url} />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content="Support Your Favorite Artists. Earn Rewards." />
+        <meta name="twitter:image" content={socialMediaPreviewImageUrl} />
         {/* social media share meta data ends here*/}
 
         <link rel="icon" href="/favicon.ico" />
