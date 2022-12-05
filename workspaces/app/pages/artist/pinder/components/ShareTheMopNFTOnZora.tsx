@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { CLIENT_ENVIRONMENT } from 'consts';
 import tokens, { QUERY } from 'styles/tokens';
 import { ContentImage } from './ContentImage';
 import { Earn } from './Earn';
@@ -54,6 +55,9 @@ const CTAContainer = styled.div`
   }
 `;
 
+const CAMPAIGN_ID =
+  CLIENT_ENVIRONMENT === 'production' ? 'xqSPsvjg8w88feqYlCIc' : 'xqSPsvjg8w88feqYlCIc';
+
 interface ShareTheMopNFTOnZoraProps {
   doesOwnPinderNft: boolean;
 }
@@ -64,8 +68,8 @@ export const ShareTheMopNFTOnZora = ({ doesOwnPinderNft }: ShareTheMopNFTOnZoraP
     <Content>
       <Header>Share a link to claim the Visual NFT “The Mop” on Zora</Header>
       <CTAContainer>
-        <Earn campaignId="xqSPsvjg8w88feqYlCIc" doesOwnPinderNft={doesOwnPinderNft}>
-          <ShareAndEarnButton points={(doesOwnPinderNft ? 2 : 1) * 200} />
+        <Earn campaignId={CAMPAIGN_ID} doesOwnPinderNft={doesOwnPinderNft}>
+          <ShareAndEarnButton points={(doesOwnPinderNft ? 2 : 1) * 20} />
         </Earn>
       </CTAContainer>
     </Content>

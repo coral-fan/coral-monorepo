@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { CLIENT_ENVIRONMENT } from 'consts';
 import tokens, { QUERY } from 'styles/tokens';
 import { ContentImage } from './ContentImage';
 import { Earn } from './Earn';
@@ -86,6 +87,9 @@ const Highlight = styled.span`
   color: ${tokens.font.color.brand};
 `;
 
+const CAMPAIGN_ID =
+  CLIENT_ENVIRONMENT === 'production' ? 'xqSPsvjg8w88feqYlCIc' : 'xqSPsvjg8w88feqYlCIc';
+
 interface FeaturedContentProps {
   doesOwnPinderNft: boolean;
 }
@@ -97,10 +101,10 @@ export const FeaturedContent = ({ doesOwnPinderNft }: FeaturedContentProps) => (
       <Content>
         <Header>Promote my Upcoming Drop On sound.xyz</Header>
         <CTAContainer>
-          <Earn campaignId="xqSPsvjg8w88feqYlCIc" doesOwnPinderNft={doesOwnPinderNft}>
-            <ShareAndEarnButton points={(doesOwnPinderNft ? 2 : 1) * 200} />
+          <Earn campaignId={CAMPAIGN_ID} doesOwnPinderNft={doesOwnPinderNft}>
+            <ShareAndEarnButton points={(doesOwnPinderNft ? 2 : 1) * 20} />
           </Earn>
-          <ViewLink href="#" />
+          <ViewLink href="https://www.sound.xyz/pinder/the-mop" openInNewTab />
         </CTAContainer>
         <Text>
           Share now and all holders of the “The Mop” NFT dropped on sound.xyz will recieve{' '}
