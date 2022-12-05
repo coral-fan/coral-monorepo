@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useOpenSignInModal } from 'components/app';
 import { Card, CtaButton as CtaButtonBase, Heading } from 'components/ui';
+import { CLIENT_ENVIRONMENT } from 'consts';
 import { useIsAuthenticated, useLogin } from 'libraries/authentication';
 import { QUERY } from 'styles';
 import { Earn } from './Earn';
@@ -32,7 +33,10 @@ interface ShareToEarnProps {
   doesOwnPinderNft: boolean;
 }
 
-const POINTS = 200;
+const POINTS = 20;
+
+const CAMPAIGN_ID =
+  CLIENT_ENVIRONMENT === 'production' ? 'xqSPsvjg8w88feqYlCIc' : 'xqSPsvjg8w88feqYlCIc';
 
 export const ShareToEarn = ({ doesOwnPinderNft }: ShareToEarnProps) => {
   const isAuthenticated = useIsAuthenticated();
@@ -49,7 +53,7 @@ export const ShareToEarn = ({ doesOwnPinderNft }: ShareToEarnProps) => {
         can be redeemed any time. Start by sharing Pinders Coral Profile page.
       </Text>
       {isAuthenticated ? (
-        <Earn campaignId="xqSPsvjg8w88feqYlCIc" doesOwnPinderNft={doesOwnPinderNft}>
+        <Earn campaignId={CAMPAIGN_ID} doesOwnPinderNft={doesOwnPinderNft}>
           <CtaButton>Earn Now</CtaButton>
         </Earn>
       ) : (
