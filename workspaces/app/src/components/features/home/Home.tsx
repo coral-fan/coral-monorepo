@@ -146,8 +146,7 @@ export const Home = () => {
           <div className="rounded-1 overflow-hidden">
             <img
               className="w-full"
-              // src="/images/pinder/pinder.png"
-              src="/images/coral-hero.gif"
+              src="/images/pinder/pinder.png"
               alt="Support Pinder’s sound.xyz Drop"
             />
           </div>
@@ -155,33 +154,15 @@ export const Home = () => {
         <div className="col-span-12 sm:col-span-6 flex flex-col">
           <h3 className="text-1 leading-none xl:text-2 xl:leading-none tracking-3 mb-2 font-medium inline-block">
             {/* main heading copy */}
-            {/* Support Pinder&apos;s sound.xyz Drop
-             */}
-            Get Paid for Being a Fan
+            Support Pinder&apos;s sound.xyz Drop
           </h3>
           <p className="text-lg leading-lh-3 lg:text-2xl lg:leading-7 mt-3 lg:mt-10 mb-5 lg:mb-4">
-            {/* Share a promo for Pinder’s upcoming drop on sound.xyz of his new single “The Mop” and
-            earn points. */}
-            A brand new Coral is coming soon – get paid for spreading the word. Share Coral and earn
-            points redeemable for $AVAX.
+            Share a promo for Pinder’s upcoming drop on sound.xyz of his new single “The Mop” and
+            earn points.
           </p>
-          <div className="flex mb-10 lg:mb-0">
-            <Earn campaignId={SHARE_CORAL_CAMPAIGN_ID}>
-              <ShareAndEarnButton points={40} />
-            </Earn>
-            {/* add blog post link here */}
-            <a
-              href="https://editorial.coral.fan/introducing-a-new-coral-get-paid-for-being-a-fan/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-2 py-2 px-2.5 bg-gray-2 ml-2.5 bg-opacity-20 rounded-full duration-300 mt-auto hover:bg-opacity-50"
-            >
-              Learn more
-            </a>
-          </div>
           {/* Share to earn Pinder */}
-          {/* <div className="group w-full sm:mt-auto flex items-start justify-between bg-orange-1 rounded-1 py-4 px-5 relative hover:bg-gray-2 duration-300">
-            <button className="absolute top-0 left-0 w-full h-full"></button>
+          <div className="group w-full sm:mt-auto flex items-start justify-between bg-orange-1 rounded-1 py-4 px-5 relative hover:bg-gray-2 duration-300">
+            <a className="absolute top-0 left-0 w-full h-full" href="/artist/pinder" />
             <div className="flex flex-col items-start w-4/5">
               <h3 className="text-lg leading-lh-3 xl:text-1 s-2:leading-none tracking-3 uppercase text-gray-1 font-medium mb-4 xl:mb-6">
                 Share to Earn
@@ -194,7 +175,7 @@ export const Home = () => {
             <div className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-1 py-2 px-2.5 bg-gray-2 rounded-full hover:bg-orange-1 duration-300 group-hover:bg-orange-1 text-gray-1">
               Get it
             </div>
-          </div> */}
+          </div>
           {!isAuthenticated && (
             <div className="group w-full sm:mt-auto flex items-start justify-between bg-orange-1 rounded-1 py-4 px-5 relative hover:bg-gray-2 duration-300">
               <button
@@ -219,7 +200,7 @@ export const Home = () => {
         </div>
       </article>
       {/* featured artist section */}
-      {/* <section className="mb-20 lg:mb-24 xl:mb-32">
+      <section className="mb-20 lg:mb-24 xl:mb-32">
         <hr className="mb-3 lg:mb-5 border-gray-2 border-opacity-20" />
         <div className="grid grid-cols-12 gap-4 lg:gap-5 relative mb-10 lg:mb-20">
           <div className="col-span-12 sm:col-span-6 flex flex-col items-start">
@@ -300,7 +281,7 @@ export const Home = () => {
             </h4>
           </div>
         </div>
-      </section> */}
+      </section>
 
       <section className="mb-20 lg:mb-24 xl:mb-32">
         <hr className="mb-3 lg:mb-5 border-gray-2 border-opacity-20"></hr>
