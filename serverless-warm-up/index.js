@@ -38,14 +38,7 @@ exports.keepServerlessApiEndpointsWarm = functions.pubsub
   .schedule('every 3 minutes')
   .onRun(warmUpApiEndpoints);
 
-const pageUrls = [
-  'collection/0x7fFE7860F74b30deF853295E12a64506BCE22cF0',
-  'collection/0x7fFE7860F74b30deF853295E12a64506BCE22cF0/asset/1',
-  '',
-  'artist',
-  'stream',
-  'user',
-].map((pageUrl) => `${baseUrl}/${pageUrl}`);
+const pageUrls = ['', 'artist/pinder', 'stream', 'user'].map((pageUrl) => `${baseUrl}/${pageUrl}`);
 
 const warmUpPageEndpoints = async () => {
   const requests = pageUrls.map((url) => axios.get(url));
