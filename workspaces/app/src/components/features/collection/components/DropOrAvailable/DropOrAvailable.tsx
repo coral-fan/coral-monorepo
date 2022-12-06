@@ -19,7 +19,7 @@ import { SignInModal, useOpenSignInModal } from 'components/app';
 
 // analytics
 import { trackGoal } from 'fathom-client';
-import { TAYLA_PARX_ALL_ACCESS_PASS_CONTRACT_ADDRESS } from '../../../../../../pages/artist/tayla-parx/index.page';
+import { TAYLA_PARX_ALL_ACCESS_PASS_CONTRACT_ADDRESS } from 'consts';
 
 interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
   numMinted: number;
