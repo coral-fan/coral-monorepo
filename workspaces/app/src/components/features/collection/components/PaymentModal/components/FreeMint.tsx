@@ -1,11 +1,10 @@
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { Button } from 'components/ui';
-import { AVALANCHE } from 'consts';
+import { AVALANCHE, TAYLA_PARX_ALL_ACCESS_PASS_CONTRACT_ADDRESS } from 'consts';
 import { useUserUid } from 'libraries/models';
 import { getCoralAPIAxios } from 'libraries/utils';
 import { useErrorToast } from 'libraries/utils/toasts';
 import { useCallback } from 'react';
-import { TAYLA_PARX_ALL_ACCESS_PASS_CONTRACT_ADDRESS } from '../../../../../../../pages/artist/tayla-parx/index.page';
 
 interface FreeMintProps {
   collectionId: string;
