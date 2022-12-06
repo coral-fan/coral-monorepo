@@ -176,7 +176,7 @@ export const Home = () => {
               Get it
             </div>
           </div>
-          {!isAuthenticated && (
+          {/* {!isAuthenticated && (
             <div className="group w-full sm:mt-auto flex items-start justify-between bg-orange-1 rounded-1 py-4 px-5 relative hover:bg-gray-2 duration-300">
               <button
                 onClick={handleOpenSignUpModal}
@@ -196,7 +196,7 @@ export const Home = () => {
                 Sign up
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </article>
       {/* featured artist section */}
