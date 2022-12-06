@@ -31,7 +31,7 @@ initializeFirebaseApp();
 const getSocialMediaPreviewImageUrl = (route: string) => {
   switch (route) {
     case '/artist/pinder':
-      return 'https://coral.ngrok.io/images/pinder/social-share.jpg';
+      return 'https://coral.fan/images/pinder/social-share.jpg';
     default:
       return `https://coral.fan/images/social-media-preview/${Math.ceil(Math.random() * 5)}.jpg`;
   }
