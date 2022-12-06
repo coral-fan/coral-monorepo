@@ -89,6 +89,5 @@ export const CC_TRANSACTION_FEE = CHARGE_CC_TRANSACTION_FEE ? BASE_TRANSACTION_F
 
 export const POINTS_AVAX_VALUE = 100; // 100 points per 1 AVAX
 
-// TODO: Replace with actual contract
 export const PINDER_NFT_CONTRACT_ADDRESS = '0x7cb1cC76d08ec8F079697838e1463E1585eFeaE3';
 export const PINDER_MULTIPLE = 2;
