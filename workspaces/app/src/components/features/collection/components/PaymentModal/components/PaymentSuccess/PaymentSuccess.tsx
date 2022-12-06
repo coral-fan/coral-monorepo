@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { ButtonLink, Heading } from 'components/ui';
 import { ImageWithInfo, NftAssetContainer } from 'components/ui/nft';
+import { TAYLA_PARX_ALL_ACCESS_PASS_CONTRACT_ADDRESS } from 'consts';
 import { Asset } from 'libraries/models';
 import { useMemo } from 'react';
 import tokens from 'styles/tokens';
-import { TAYLA_PARX_ALL_ACCESS_PASS_CONTRACT_ADDRESS } from '../../../../../../../../pages/artist/tayla-parx/index.page';
 
 interface PaymentSuccessProps
   extends Pick<
