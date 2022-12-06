@@ -224,10 +224,8 @@ export default function PinderArtistPage({ doesOwnPinderNft }: PinderArtistPageP
           <ShareToEarn doesOwnPinderNft={doesOwnPinderNft} />
         </InfoShareToEarnContainer>
       </ProfileContainer>
-      {isAuthenticated && (
-        <>
-          {/* post drop starts */}
-          {/* <SplitLayout>
+      {/* post drop starts */}
+      {/* <SplitLayout>
             <Section>
               <SectionHeader>Featured Campaigns</SectionHeader>
               <ShareTheMopNFTOnZora doesOwnPinderNft={doesOwnPinderNft} />
@@ -240,24 +238,22 @@ export default function PinderArtistPage({ doesOwnPinderNft }: PinderArtistPageP
             <SectionHeader>Community Benefits</SectionHeader>
             <CommunityBenefits doesOwnPinderNft={doesOwnPinderNft} />
           </Section> */}
-          {/* post drop ends */}
-          {/* pre drop starts */}
-          <Section>
-            <SectionHeader>Featured Content</SectionHeader>
-            <FeaturedContent doesOwnPinderNft={doesOwnPinderNft} />
-          </Section>
-          <SplitLayout>
-            <Section>
-              <SectionHeader>Upcoming Campaigns</SectionHeader>
-              <ShareTheMopNFTOnZora doesOwnPinderNft={doesOwnPinderNft} />
-            </Section>
-            <Section>
-              <GetPaidForBeingAFan />
-            </Section>
-          </SplitLayout>
-          {/* pre drop end */}
-        </>
-      )}
+      {/* post drop ends */}
+      {/* pre drop starts */}
+      <Section>
+        <SectionHeader>Featured Content</SectionHeader>
+        <FeaturedContent doesOwnPinderNft={doesOwnPinderNft} />
+      </Section>
+      <SplitLayout>
+        <Section>
+          <SectionHeader>Upcoming Campaigns</SectionHeader>
+          <ShareTheMopNFTOnZora doesOwnPinderNft={doesOwnPinderNft} />
+        </Section>
+        <Section>
+          <GetPaidForBeingAFan />
+        </Section>
+      </SplitLayout>
+      {/* pre drop end */}
     </PageContainer>
     // </GatedContent>
   );
