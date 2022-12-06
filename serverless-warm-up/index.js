@@ -18,6 +18,7 @@ const defenderWebhookUrls = ['index-transfer', 'capture-charge', 'complete-crypt
 const apiUrls = [
   'auth',
   'nonce',
+  'share-to-earn/verify/tweet',
   ...paymentApiUrls,
   ...defenderWebhookUrls,
   'webhook/stripe/mint-nft',
