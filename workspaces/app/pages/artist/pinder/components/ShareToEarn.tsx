@@ -36,7 +36,7 @@ interface ShareToEarnProps {
 const POINTS = 20;
 
 const CAMPAIGN_ID =
-  CLIENT_ENVIRONMENT === 'production' ? 'xqSPsvjg8w88feqYlCIc' : 'xqSPsvjg8w88feqYlCIc';
+  CLIENT_ENVIRONMENT === 'production' ? 'ZbBw6EMKfMMJtITRWBAC' : 'vuOt5N0PwthHBhw4sewA';
 
 export const ShareToEarn = ({ doesOwnPinderNft }: ShareToEarnProps) => {
   const isAuthenticated = useIsAuthenticated();

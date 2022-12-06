@@ -88,7 +88,7 @@ const Highlight = styled.span`
 `;
 
 const CAMPAIGN_ID =
-  CLIENT_ENVIRONMENT === 'production' ? 'xqSPsvjg8w88feqYlCIc' : 'xqSPsvjg8w88feqYlCIc';
+  CLIENT_ENVIRONMENT === 'production' ? 'diCKL40bt3ofgHW7eQFU' : 'ukgEh7yJJABKyxRRf60l';
 
 interface CommunityBenefitsProps {
   doesOwnPinderNft: boolean;
