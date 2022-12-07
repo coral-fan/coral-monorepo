@@ -117,9 +117,11 @@ export const CommunityBenefits = ({ doesOwnPinderNft }: CommunityBenefitsProps) 
     <RowContainer>
       <Content>
         <Header>Earn A Free Vinyl Pressing of &quot;Everything Cost&quot; 12&quot;</Header>
+        {/* <ViewLink href="#">Claim On Coral</ViewLink> */}
         <Text>
-          Share my Coral Profile Page and a link to stream “Let that shxt go” above and you will
-          receive a free vinyl pressing.
+          {
+            'To say thank you for your support and reward you for holding "The Mop" NFT, you can claim a free vinyl pressing of "Everything Cost". Dropping December 12'
+          }
         </Text>
       </Content>
       <ContentImage src="/images/pinder/free-vinyl-press.gif" />
