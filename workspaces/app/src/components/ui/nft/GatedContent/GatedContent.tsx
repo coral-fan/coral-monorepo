@@ -11,6 +11,7 @@ import {
 } from './components';
 import { getDoesOwnToken } from 'libraries/blockchain/utils';
 import { useUserUid } from 'libraries/models';
+import { PINDER_NFT_CONTRACT_ADDRESS } from 'consts';
 
 interface GatedContentProps {
   accessGrantingTokenAddresses: string[];
@@ -33,7 +34,11 @@ export const GatedContent = ({
     if (isAuthenticated && address) {
       const doesUserHaveAccess$ = forkJoin(
         accessGrantingTokenAddresses.map((collectionAddress) =>
-          getDoesOwnToken(collectionAddress, address)
+          getDoesOwnToken(
+            collectionAddress,
+            address,
+            !(collectionAddress === PINDER_NFT_CONTRACT_ADDRESS)
+          )
         )
       ).pipe(
         delay(5750),
