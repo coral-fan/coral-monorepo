@@ -67,11 +67,11 @@ export const ShareTheMopNFTOnZora = ({ doesOwnPinderNft }: ShareTheMopNFTOnZoraP
     <ContentImage src="/images/pinder/the-mop-zora.png" />
     <Content>
       <Header>Share a link to claim the Visual NFT “The Mop” on Zora</Header>
-      {/* <CTAContainer>
+      <CTAContainer>
         <Earn campaignId={CAMPAIGN_ID} doesOwnPinderNft={doesOwnPinderNft}>
           <ShareAndEarnButton points={(doesOwnPinderNft ? 2 : 1) * 20} />
         </Earn>
-      </CTAContainer> */}
+      </CTAContainer>
     </Content>
   </Container>
 );
