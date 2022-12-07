@@ -26,20 +26,33 @@ import { css } from '@emotion/react';
 
 import { load as loadFingerprintAgent } from '@fingerprintjs/fingerprintjs';
 import { getCoralAPIAxios } from 'libraries/utils';
+import { PINDER_NFT_CONTRACT_ADDRESS } from 'consts';
 
 interface CollectionLinkProps {
   id: string;
 }
-const CollectionLink = ({ id }: CollectionLinkProps) => (
-  <Link
-    css={css`
-      text-decoration: underline;
-    `}
-    href={`/collection/${id}`}
-  >
-    {id}
-  </Link>
-);
+const CollectionLink = ({ id }: CollectionLinkProps) => {
+  return id === PINDER_NFT_CONTRACT_ADDRESS ? (
+    <Link
+      css={css`
+        text-decoration: underline;
+      `}
+      href={`https://www.sound.xyz/pinder/the-mop`}
+      openInNewTab
+    >
+      The Mop
+    </Link>
+  ) : (
+    <Link
+      css={css`
+        text-decoration: underline;
+      `}
+      href={`/collection/${id}`}
+    >
+      {id}
+    </Link>
+  );
+};
 
 const getPunctuation = (index: number, length: number) => {
   if (index === length - 1) {
