@@ -4,11 +4,9 @@ import { SocialLinks } from 'components/ui/profile/Profile/components';
 import { Artist, getUidServerSide } from 'libraries/models';
 import Image from 'next/image';
 import tokens, { QUERY } from 'styles/tokens';
-import { FeaturedContent } from './components/FeaturedContent';
 import { ShareTheMopNFTOnZora } from './components/ShareTheMopNFTOnZora';
 import { GetPaidForBeingAFan } from './components/GetPaidForBeingAFan';
 import { ShareToEarn } from './components/ShareToEarn';
-import { useIsAuthenticated } from 'libraries/authentication';
 import { CommunityBenefits } from './components/CommunityBenefits';
 import { GetServerSideProps } from 'next';
 import { getDoesOwnToken } from 'libraries/blockchain/utils';
@@ -175,70 +173,68 @@ interface PinderArtistPageProps {
 export default function PinderArtistPage({ doesOwnPinderNft }: PinderArtistPageProps) {
   const { name, bio, profilePhoto, socialHandles } = artist;
 
-  const isAuthenticated = useIsAuthenticated();
-
   return (
-    // <GatedContent
-    //   doesOwnPinderNft
-    //   accessDeniedModalProps={{
-    //     title: "You don't have access",
-    //     actionElement: (
-    //       <div>
-    //         {'Only holders of '}
-    //         <Link
-    //           css={css`
-    //             text-decoration: underline;
-    //           `}
-    //           href={`https://www.sound.xyz/pinder/the-mop`}
-    //         >
-    //           The Mop NFT
-    //         </Link>
-    //         {" have access to Pinder's Artist page."}
-    //       </div>
-    //     ),
-    //   }}
-    // >
-    <PageContainer>
-      <ProfileContainer>
-        <ProfilePhotoWrapper>
-          <Image
-            src={profilePhoto.src}
-            alt=""
-            layout="fill"
-            objectFit="cover"
-            objectPosition="35% 50%"
-          />
-        </ProfilePhotoWrapper>
-        <InfoShareToEarnContainer>
-          <InfoContainer>
-            <Username>{name}</Username>
-            <BioSocialsContainer>
-              <Bio
-                dangerouslySetInnerHTML={{
-                  __html: bio,
-                }}
-              />
-              <SocialLinks socialHandles={socialHandles} />
-            </BioSocialsContainer>
-          </InfoContainer>
-          <ShareToEarn doesOwnPinderNft={doesOwnPinderNft} />
-        </InfoShareToEarnContainer>
-      </ProfileContainer>
-      <SplitLayout>
+    <GatedContent
+      doesOwnPinderNft={doesOwnPinderNft}
+      accessDeniedModalProps={{
+        title: "You don't have access",
+        actionElement: (
+          <div>
+            {'Only holders of '}
+            <Link
+              css={css`
+                text-decoration: underline;
+              `}
+              href={`https://www.sound.xyz/pinder/the-mop`}
+            >
+              The Mop NFT
+            </Link>
+            {" have access to Pinder's Artist page."}
+          </div>
+        ),
+      }}
+    >
+      <PageContainer>
+        <ProfileContainer>
+          <ProfilePhotoWrapper>
+            <Image
+              src={profilePhoto.src}
+              alt=""
+              layout="fill"
+              objectFit="cover"
+              objectPosition="35% 50%"
+            />
+          </ProfilePhotoWrapper>
+          <InfoShareToEarnContainer>
+            <InfoContainer>
+              <Username>{name}</Username>
+              <BioSocialsContainer>
+                <Bio
+                  dangerouslySetInnerHTML={{
+                    __html: bio,
+                  }}
+                />
+                <SocialLinks socialHandles={socialHandles} />
+              </BioSocialsContainer>
+            </InfoContainer>
+            <ShareToEarn doesOwnPinderNft={doesOwnPinderNft} />
+          </InfoShareToEarnContainer>
+        </ProfileContainer>
+        <SplitLayout>
+          <Section>
+            <SectionHeader>Featured Campaigns</SectionHeader>
+            <ShareTheMopNFTOnZora doesOwnPinderNft={doesOwnPinderNft} />
+          </Section>
+          <Section>
+            <GetPaidForBeingAFan />
+          </Section>
+        </SplitLayout>
         <Section>
-          <SectionHeader>Featured Campaigns</SectionHeader>
-          <ShareTheMopNFTOnZora doesOwnPinderNft={doesOwnPinderNft} />
+          <SectionHeader>Community Benefits</SectionHeader>
+          <CommunityBenefits doesOwnPinderNft={doesOwnPinderNft} />
         </Section>
-        <Section>
-          <GetPaidForBeingAFan />
-        </Section>
-      </SplitLayout>
-      <Section>
-        <SectionHeader>Community Benefits</SectionHeader>
-        <CommunityBenefits doesOwnPinderNft={doesOwnPinderNft} />
-      </Section>
-    </PageContainer>
-    // </GatedContent>
+      </PageContainer>
+    </GatedContent>
   );
 }
 
