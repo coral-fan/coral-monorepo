@@ -10,7 +10,12 @@ module.exports = withImages({
   productionBrowserSourceMaps: true,
   images: {
     // TODO: clean up allowed domains
-    domains: ['upload.wikimedia.org', 'firebasestorage.googleapis.com', 'www.stereofox.com'], // Placeholder Avatar Image
+    domains: [
+      'upload.wikimedia.org',
+      'firebasestorage.googleapis.com',
+      'www.stereofox.com',
+      'www.coral.fan',
+    ], // Placeholder Avatar Image
   },
   experimental: {
     externalDir: true,
