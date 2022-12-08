@@ -56,7 +56,7 @@ const CTAContainer = styled.div`
 `;
 
 const CAMPAIGN_ID =
-  CLIENT_ENVIRONMENT === 'production' ? 'xqSPsvjg8w88feqYlCIc' : 'xqSPsvjg8w88feqYlCIc';
+  CLIENT_ENVIRONMENT === 'production' ? 'E7KcdPed9LFsA8YADK1b' : 'TFrfO4VN0F8wWJtN3yTw';
 
 interface ShareTheMopNFTOnZoraProps {
   doesOwnPinderNft: boolean;
