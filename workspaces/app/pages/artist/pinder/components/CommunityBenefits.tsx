@@ -90,6 +90,10 @@ const Highlight = styled.span`
 const CAMPAIGN_ID =
   CLIENT_ENVIRONMENT === 'production' ? 'diCKL40bt3ofgHW7eQFU' : 'ukgEh7yJJABKyxRRf60l';
 
+const VINYL_NFT_CONTRACT_ADDRESS =
+  CLIENT_ENVIRONMENT === 'production'
+    ? '0x196CFFCE5DdAd4c9212452F9613B8D9b25193b7D'
+    : '0xBC7f4e6b489d19292D1EDFffbAadf48CE56E8CC8';
 interface CommunityBenefitsProps {
   doesOwnPinderNft: boolean;
 }
@@ -117,9 +121,7 @@ export const CommunityBenefits = ({ doesOwnPinderNft }: CommunityBenefitsProps) 
     <RowContainer>
       <Content>
         <Header>Earn A Free Vinyl Pressing of &quot;Everything Cost&quot; 12&quot;</Header>
-        <ViewLink href="/collection/0xcB846098C5f6a86D9775a183F80aFdF174eD1171">
-          Claim On Coral
-        </ViewLink>
+        <ViewLink href={`/collection/${VINYL_NFT_CONTRACT_ADDRESS}`}>Claim On Coral</ViewLink>
         <Text>
           {
             'To say thank you for your support and reward you for holding "The Mop" NFT, you can claim a free vinyl pressing of "Everything Cost".'
