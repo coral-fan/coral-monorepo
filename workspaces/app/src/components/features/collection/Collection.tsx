@@ -32,26 +32,43 @@ interface CollectionLinkProps {
   id: string;
 }
 const CollectionLink = ({ id }: CollectionLinkProps) => {
-  return id === PINDER_NFT_CONTRACT_ADDRESS ? (
-    <Link
-      css={css`
-        text-decoration: underline;
-      `}
-      href={`https://www.sound.xyz/pinder/the-mop`}
-      openInNewTab
-    >
-      The Mop
-    </Link>
-  ) : (
-    <Link
-      css={css`
-        text-decoration: underline;
-      `}
-      href={`/collection/${id}`}
-    >
-      {id}
-    </Link>
-  );
+  switch (id) {
+    case PINDER_NFT_CONTRACT_ADDRESS:
+      return (
+        <Link
+          css={css`
+            text-decoration: underline;
+          `}
+          href={`https://www.sound.xyz/pinder/the-mop`}
+          openInNewTab
+        >
+          The Mop
+        </Link>
+      );
+    case '0x23b68fefbf940e4952528da8fb3081f82d52a255':
+      return (
+        <Link
+          css={css`
+            text-decoration: underline;
+          `}
+          href={`https://create.zora.co/collections/0x23b68fefbf940e4952528da8fb3081f82d52a255`}
+          openInNewTab
+        >
+          The Mop (Anime Visual)
+        </Link>
+      );
+    default:
+      return (
+        <Link
+          css={css`
+            text-decoration: underline;
+          `}
+          href={`/collection/${id}`}
+        >
+          {id}
+        </Link>
+      );
+  }
 };
 
 const getPunctuation = (index: number, length: number) => {
