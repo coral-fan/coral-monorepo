@@ -92,7 +92,7 @@ const CAMPAIGN_ID =
 
 const VINYL_NFT_CONTRACT_ADDRESS =
   CLIENT_ENVIRONMENT === 'production'
-    ? '0x196CFFCE5DdAd4c9212452F9613B8D9b25193b7D'
+    ? '0x15564E2AaE9B7EC061e38db58709ea69241DDD10'
     : '0xBC7f4e6b489d19292D1EDFffbAadf48CE56E8CC8';
 interface CommunityBenefitsProps {
   doesOwnPinderNft: boolean;
