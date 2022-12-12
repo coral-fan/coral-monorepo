@@ -37,7 +37,10 @@ export const GatedContent = ({
           getDoesOwnToken(
             collectionAddress,
             address,
-            !(collectionAddress === PINDER_NFT_CONTRACT_ADDRESS)
+            !(
+              collectionAddress === PINDER_NFT_CONTRACT_ADDRESS ||
+              collectionAddress === '0x23b68fefbf940e4952528da8fb3081f82d52a255'
+            )
           )
         )
       ).pipe(
