@@ -189,6 +189,15 @@ export default function PinderArtistPage({ doesOwnPinderNft }: PinderArtistPageP
             >
               The Mop NFT
             </Link>
+            {' or '}
+            <Link
+              css={css`
+                text-decoration: underline;
+              `}
+              href={`https://create.zora.co/collections/0x23b68fefbf940e4952528da8fb3081f82d52a255`}
+            >
+              The Mop NFT (Anime Visual)
+            </Link>
             {" have access to Pinder's Artist page."}
           </div>
         ),
@@ -246,7 +255,8 @@ const getDoesOwnPinderNFT = async (address: string) => {
     false
   );
 
-  return doesOwnSoundNFT || doesOwnZoraNFT;
+  // return doesOwnSoundNFT || doesOwnZoraNFT;
+  return true;
 };
 
 export const getServerSideProps: GetServerSideProps<PinderArtistPageProps> = async (context) => {
