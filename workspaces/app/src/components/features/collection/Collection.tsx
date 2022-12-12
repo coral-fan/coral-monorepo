@@ -45,7 +45,7 @@ const CollectionLink = ({ id }: CollectionLinkProps) => {
           The Mop
         </Link>
       );
-    case '0x23b68fefbf940e4952528da8fb3081f82d52a255':
+    case '0x23B68FeFbf940E4952528da8FB3081f82d52a255':
       return (
         <Link
           css={css`

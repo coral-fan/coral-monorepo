@@ -39,7 +39,7 @@ export const GatedContent = ({
             address,
             !(
               collectionAddress === PINDER_NFT_CONTRACT_ADDRESS ||
-              collectionAddress === '0x23b68fefbf940e4952528da8fb3081f82d52a255'
+              collectionAddress === '0x23B68FeFbf940E4952528da8FB3081f82d52a255'
             )
           )
         )
