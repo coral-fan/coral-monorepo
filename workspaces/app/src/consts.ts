@@ -16,7 +16,7 @@ if (!process.env.NEXT_PUBLIC_ENV && process.env.npm_package_name === 'app') {
 
 export const CLIENT_ENVIRONMENT = process.env.NEXT_PUBLIC_ENV;
 
-const ALCHEMY_ENDPOINT = process.env.ALCHEMY_ENDPOINT;
+const ALCHEMY_ENDPOINT = process.env.NEXT_PUBLIC_ALCHEMY_ENDPOINT;
 
 export const CORAL_API_ENDPOINT = '/api';
 
