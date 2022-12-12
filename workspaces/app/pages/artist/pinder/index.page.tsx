@@ -255,8 +255,7 @@ const getDoesOwnPinderNFT = async (address: string) => {
     false
   );
 
-  // return doesOwnSoundNFT || doesOwnZoraNFT;
-  return true;
+  return doesOwnSoundNFT || doesOwnZoraNFT;
 };
 
 export const getServerSideProps: GetServerSideProps<PinderArtistPageProps> = async (context) => {
