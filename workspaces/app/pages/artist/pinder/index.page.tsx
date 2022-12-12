@@ -238,13 +238,21 @@ export default function PinderArtistPage({ doesOwnPinderNft }: PinderArtistPageP
   );
 }
 
+const getDoesOwnPinderNFT = async (address: string) => {
+  const doesOwnSoundNFT = await getDoesOwnToken(PINDER_NFT_CONTRACT_ADDRESS, address, false);
+  const doesOwnZoraNFT = await getDoesOwnToken(
+    '0x23b68fefbf940e4952528da8fb3081f82d52a255',
+    address,
+    false
+  );
+
+  return doesOwnSoundNFT || doesOwnZoraNFT;
+};
+
 export const getServerSideProps: GetServerSideProps<PinderArtistPageProps> = async (context) => {
   const address = await getUidServerSide(context);
 
-  const doesOwnPinderNft =
-    address === undefined
-      ? false
-      : await getDoesOwnToken(PINDER_NFT_CONTRACT_ADDRESS, address, false);
+  const doesOwnPinderNft = address === undefined ? false : await getDoesOwnPinderNFT(address);
 
   return {
     props: {
