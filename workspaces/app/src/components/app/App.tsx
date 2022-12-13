@@ -32,6 +32,8 @@ const getSocialMediaPreviewImageUrl = (route: string) => {
   switch (route) {
     case '/artist/pinder':
       return 'https://coral.fan/images/pinder/social-share.jpg?1';
+    case '/artist/tayla-parx':
+      return 'https://firebasestorage.googleapis.com/v0/b/coral-fan.appspot.com/o/artists%2Ftayla-parx%2FTaylaParx-OG%20Image.jpg?alt=media&token=e4dfba01-906e-4ada-ae5e-64799e7b6e6a';
     default:
       return `https://coral.fan/images/social-media-preview/${Math.ceil(Math.random() * 5)}.jpg`;
   }
