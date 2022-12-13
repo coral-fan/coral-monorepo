@@ -3,7 +3,7 @@ import { CLIENT_ENVIRONMENT } from 'consts';
 import tokens, { QUERY } from 'styles/tokens';
 import { ContentImage } from './ContentImage';
 import { Earn } from './Earn';
-import { ShareAndEarnButton, ViewLink } from './pills';
+import { ShareAndEarnButton } from './pills';
 
 const Container = styled.div`
   display: grid;
