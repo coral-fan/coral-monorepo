@@ -14,7 +14,7 @@ git clone https://github.com/Coral-Music/coral-monorepo.git
 cd coral-monorepo
 yarn install
 
-npm i -g firebase-cli
+npm i -g firebase-tools
 # please make sure you've been added to the firebase project before proceeding with this step
 firebase login
 ```
