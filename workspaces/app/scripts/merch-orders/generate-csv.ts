@@ -5,7 +5,7 @@ import { getCollectionReferenceServerSide, getDocumentData } from 'libraries/fir
 import { MerchOrder, ShippingInfo } from 'libraries/models';
 import { Stringifier, stringify } from 'csv-stringify';
 
-const COLLECTION_ID = '0x108e06a8c2C4197c0209518cA509d7b21B49740e';
+const COLLECTION_ID = 'PLACEHOLDER';
 
 const merchOrdersColumns = ['Merch Order ID', 'User ID', 'Shipping Address', 'Processed'];
 const columnLength = merchOrdersColumns.length;
@@ -27,7 +27,7 @@ const generateCSV = async () => {
   for (const merchOrderSnapshot of merchOrderSnapshots) {
     const { options, shippingInfoId, userId } = merchOrderSnapshot.data();
 
-    if (options !== null && merchOrdersColumns.length === columnLength) {
+    if (options !== undefined && merchOrdersColumns.length === columnLength) {
       for (const { type } of options) {
         merchOrdersColumns.splice(
           merchOrdersColumns.length - 1,
@@ -56,7 +56,7 @@ const generateCSV = async () => {
       addressLineTwo ? ` ${addressLineTwo}` : ''
     }, ${city}, ${state}, ${zipCode}`;
 
-    const optionValues = options === null ? [] : options.map(({ value }) => value);
+    const optionValues = options === undefined ? [] : options.map(({ value }) => value);
 
     if (stringifier === undefined) {
       throw 'stringifier cannot be undefined.';
