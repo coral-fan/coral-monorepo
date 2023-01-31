@@ -25,10 +25,12 @@ interface ShareAndEarnProps extends Omit<BaseButtonProps, 'children'> {
   points: number;
 }
 
+export const PillButton = styled(BaseButton)`
+  ${primaryPillStyle}
+`;
+
 export const ShareAndEarnButton = ({ points, ...props }: ShareAndEarnProps) => (
-  <BaseButton css={primaryPillStyle} {...props}>{`Share & Earn ${points} Pt${
-    points > 1 ? 's' : ''
-  }`}</BaseButton>
+  <PillButton {...props}>{`Share & Earn ${points} Pt${points > 1 ? 's' : ''}`}</PillButton>
 );
 
 export const linkHoverStyle = css`
