@@ -138,11 +138,7 @@ export const Home = () => {
       >
         <div className="col-span-12 sm:col-span-6 mb-2.5 sm:mb-0 relative">
           <div className="rounded-1 overflow-hidden">
-            <img
-              className="w-full"
-              src="/images/tayla-parx/home.jpeg"
-              alt="Support Pinder’s sound.xyz Drop"
-            />
+            <img className="w-full" src="/images/tayla-parx/home.jpeg" alt="Tayla Parx" />
           </div>
         </div>
         <div className="col-span-12 sm:col-span-6 flex flex-col">
@@ -254,7 +250,7 @@ export const Home = () => {
             <h4 className="text-lg leading-none lg:text-1 lg:leading-none tracking-2 font-medium">
               Tayla Parx
             </h4>
-            <a href="/artist/pinder/" className="inset-0 absolute"></a>
+            <a href="/artist/tayla-parx" className="inset-0 absolute"></a>
           </div>
           <div className="flex flex-col">
             <div className="group flex-1 flex bg-gray-2 bg-opacity-10 rounded-1 mb-4 p-2.5 lg:py-4 lg:px-5 relative hover:bg-opacity-20 duration-300">
