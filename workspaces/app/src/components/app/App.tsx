@@ -50,7 +50,7 @@ const getHeaderMetadata = (origin: string, route: string) => {
       metadata.socialMediaPreviewImageUrl = `${imageBaseUrl}/pinder/social-share.jpg`;
       break;
     case '/artist/tayla-parx':
-      metadata.title += 'Coral | Artist - Tayla Parx';
+      metadata.title += ' | Artist - Tayla Parx';
       metadata.socialMediaPreviewImageUrl = `${imageBaseUrl}/tayla-parx/social-share/music-video.png`;
       break;
     case `/collection/${TAYLA_ALL_ACCESS_PASS_ID}`:
