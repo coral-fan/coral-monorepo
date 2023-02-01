@@ -56,7 +56,12 @@ export const GetPaidForBeingAFan = () => (
   <Container>
     <Heading>Get Paid For Being A Fan.</Heading>
     <InfoContainer>
-      <PillLink href="#">Learn More</PillLink>
+      <PillLink
+        href="https://editorial.coral.fan/introducing-a-new-coral-get-paid-for-being-a-fan/"
+        openInNewTab
+      >
+        Learn More
+      </PillLink>
       <Text>
         Earn Coral Points and redeem them any time for $AVAX, or hold on to them for special
         rewards, access, and free stuff.
