@@ -140,7 +140,7 @@ export const Home = () => {
           <div className="rounded-1 overflow-hidden">
             <img
               className="w-full"
-              src="/images/pinder/pinder.png"
+              src="/images/tayla-parx/home.jpeg"
               alt="Support Pinder’s sound.xyz Drop"
             />
           </div>
@@ -148,22 +148,23 @@ export const Home = () => {
         <div className="col-span-12 sm:col-span-6 flex flex-col">
           <h3 className="text-1 leading-none xl:text-2 xl:leading-none tracking-3 mb-2 font-medium inline-block">
             {/* main heading copy */}
-            Support Pinder&apos;s sound.xyz Drop
+            Watch Tayla Parx&apos;s new video &quot;Rich&quot;
           </h3>
           <p className="text-lg leading-lh-3 lg:text-2xl lg:leading-7 mt-3 lg:mt-10 mb-5 lg:mb-4">
-            Share a promo for Pinder’s upcoming drop on sound.xyz of his new single “The Mop” and
-            earn points.
+            Watch the latest music video “Rich” and claim your free All Access Pass to exclusive
+            content and rewards.
           </p>
           {/* Share to earn Pinder */}
           <div className="group w-full sm:mt-auto flex items-start justify-between bg-orange-1 rounded-1 py-4 px-5 relative hover:bg-gray-2 duration-300">
-            <a className="absolute top-0 left-0 w-full h-full" href="/artist/pinder" />
+            {/* TODO: Update collection url here */}
+            <a className="absolute top-0 left-0 w-full h-full" href="/collection/" />
             <div className="flex flex-col items-start w-4/5">
               <h3 className="text-lg leading-lh-3 xl:text-1 s-2:leading-none tracking-3 uppercase text-gray-1 font-medium mb-4 xl:mb-6">
-                Share to Earn
+                Get your all Access Pass
               </h3>
               <p className="text-lg leading-lh-3 xl:text-2xl xl:leading-7 text-gray-1">
-                Support Pinder by sharing his content on Twitter and earn points redeemable for
-                $AVAX.
+                Get access to all Tayla Parx&apos;s related content including exclusive merch and
+                releases.
               </p>
             </div>
             <div className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-1 py-2 px-2.5 bg-gray-2 rounded-full hover:bg-orange-1 duration-300 group-hover:bg-orange-1 text-gray-1">
@@ -246,12 +247,12 @@ export const Home = () => {
             <div className="rounded-1 overflow-hidden mb-4">
               <img
                 className="w-full group-hover:rounded-2 duration-300"
-                src="/images/pinder/pinder.png"
-                alt="Support Pinder’s sound.xyz Drop"
+                src="/images/tayla-parx/featured.jpeg"
+                alt="Tayla Parx"
               />
             </div>
             <h4 className="text-lg leading-none lg:text-1 lg:leading-none tracking-2 font-medium">
-              Pinder
+              Tayla Parx
             </h4>
             <a href="/artist/pinder/" className="inset-0 absolute"></a>
           </div>
@@ -321,13 +322,11 @@ export const Home = () => {
                 </div>
                 <div className="col-span-8 lg:col-span-10 grid grid-cols-1 lg:grid-cols-10 gap-2.5 lg:gap-5">
                   <h4 className="lg:col-span-4 text-base leading-5 lg:text-lg lg:leading-lh-3 tracking-wide uppercase">
-                    {' '}
-                    Share or create your own content{' '}
+                    Share or create your own content
                   </h4>
                   <div className="lg:col-span-6">
                     <p className="lg:col-span-6 text-base leading-5 lg:text-lg lg:leading-lh-3 tracking-2 mb-3">
-                      {' '}
-                      Share existing content or create your own based on prompts from the artists.{' '}
+                      Share existing content or create your own based on prompts from the artists.
                     </p>
                     {/* <a
                       href="#"
