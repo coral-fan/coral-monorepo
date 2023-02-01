@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react';
-import { delay, forkJoin, map, mergeMap, of, timer } from 'rxjs';
+import { delay, mergeMap, of, timer } from 'rxjs';
 import { useIsAuthenticated } from 'libraries/authentication';
 
 import {
@@ -9,7 +9,6 @@ import {
   CheckingNftModal,
   AccessDeniedModalProps,
 } from './components';
-import { getDoesOwnToken } from 'libraries/blockchain/utils';
 import { useUserUid } from 'libraries/models';
 
 interface GatedContentProps {

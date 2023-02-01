@@ -1,13 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { useOpenSignInModal } from 'components/app';
-import { CLIENT_ENVIRONMENT } from 'consts';
 import { useIsAuthenticated } from 'libraries/authentication';
-import { Earn } from '../../../../pages/artist/tayla-parx/components/Earn';
-import { ShareAndEarnButton } from '../../../../pages/artist/tayla-parx/components/pills';
-
-const SHARE_CORAL_CAMPAIGN_ID =
-  CLIENT_ENVIRONMENT === 'production' ? 'VgNtvEVDLBXhu57Qxm6T' : 'QQkH98o20uk7pktMi9WA';
 
 export const Home = () => {
   const handleOpenSignUpModal = useOpenSignInModal({ isSignUp: true });
