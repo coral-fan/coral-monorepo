@@ -128,7 +128,7 @@ export const App = ({ Component, pageProps, initialState, origin }: CustomAppPro
             <Managers />
             {isMounted ? (
               <Layout>
-                <ModalOrComponent component={<Component {...pageProps} />} or />
+                <ModalOrComponent component={<Component {...pageProps} />} />
               </Layout>
             ) : null}
           </ReduxProvider>
