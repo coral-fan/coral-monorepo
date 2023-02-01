@@ -25,35 +25,44 @@ import { initializeStore } from 'libraries/state';
 import * as Fathom from 'fathom-client';
 import Router, { useRouter } from 'next/router';
 import Script from 'next/script';
+import { CLIENT_ENVIRONMENT } from 'consts';
 
 initializeFirebaseApp();
 
-const getSocialMediaPreviewImageUrl = (route: string) => {
+const TAYLA_ALL_ACCESS_PASS_ID =
+  CLIENT_ENVIRONMENT === 'development'
+    ? '0xcB846098C5f6a86D9775a183F80aFdF174eD1171'
+    : '0xcB846098C5f6a86D9775a183F80aFdF174eD1171';
+
+const getHeaderMetadata = (origin: string, route: string) => {
+  const imageBaseUrl = `${origin}/images`;
+  const metadata = {
+    url: `${origin}${route}`,
+    title: 'Coral',
+    socialMediaPreviewImageUrl: `${imageBaseUrl}/social-media-preview/${Math.ceil(
+      Math.random() * 5
+    )}.jpg`,
+  };
+
   switch (route) {
     case '/artist/pinder':
-      return 'https://coral.fan/images/pinder/social-share.jpg?1';
-    case '/artist/tayla-parx':
-      return 'https://firebasestorage.googleapis.com/v0/b/coral-fan.appspot.com/o/artists%2Ftayla-parx%2FTaylaParx-OG%20Image.jpg?alt=media&token=e4dfba01-906e-4ada-ae5e-64799e7b6e6a';
-    default:
-      return `https://coral.fan/images/social-media-preview/${Math.ceil(Math.random() * 5)}.jpg`;
-  }
-};
-
-const getTitle = (route: string) => {
-  let title = 'Coral';
-  switch (route) {
-    case '/artist/pinder':
-      title += ' | Artist - Pinder';
+      metadata.title += ' | Artist - Pinder';
+      metadata.socialMediaPreviewImageUrl = `${imageBaseUrl}/pinder/social-share.jpg`;
       break;
     case '/artist/tayla-parx':
-      title += ' | Artist - Tayla Parx';
+      metadata.title += 'Coral | Artist - Tayla Parx';
+      metadata.socialMediaPreviewImageUrl = `${imageBaseUrl}/tayla-parx/social-share/music-video.png`;
+      break;
+    case `/collection/${TAYLA_ALL_ACCESS_PASS_ID}`:
+      metadata.title += ' | Collection - Tayla Parx All Access Pass';
+      metadata.socialMediaPreviewImageUrl = `${imageBaseUrl}/tayla-parx/social-share/access-pass.jpeg`;
       break;
   }
 
-  return title;
+  return metadata;
 };
 
-export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
+export const App = ({ Component, pageProps, initialState, origin }: CustomAppProps) => {
   const store = initializeStore(initialState);
 
   /*
@@ -82,10 +91,7 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
 
   const { asPath: route } = useRouter();
 
-  const socialMediaPreviewImageUrl = getSocialMediaPreviewImageUrl(route);
-  const url = `https://www.coral.fan${route}`;
-
-  const title = getTitle(route);
+  const { url, title, socialMediaPreviewImageUrl } = getHeaderMetadata(origin, route);
 
   return (
     <>
@@ -122,7 +128,7 @@ export const App = ({ Component, pageProps, initialState }: CustomAppProps) => {
             <Managers />
             {isMounted ? (
               <Layout>
-                <ModalOrComponent component={<Component {...pageProps} />} />
+                <ModalOrComponent component={<Component {...pageProps} />} or />
               </Layout>
             ) : null}
           </ReduxProvider>
@@ -140,9 +146,26 @@ const getInitialProps = async (appContext: AppContext) => {
   const uid = isServerSide() ? await getUidServerSide(ctx) : getUidClientSide();
   const isSigningUp: boolean = uid ? await getIsUserSigningUp(uid) : false;
 
+  const {
+    ctx: { req },
+  } = appContext;
+
+  let origin: string;
+
+  if (req === undefined) {
+    origin = window.location.origin;
+  } else {
+    const host = req.headers.host;
+    if (host === undefined) {
+      throw new Error('host is undefined.');
+    }
+    origin = `http${host.includes('localhost') ? '' : 's'}://${host}`;
+  }
+
   return {
     ...initialProps,
     initialState: { isSigningUp },
+    origin,
   };
 };
 
