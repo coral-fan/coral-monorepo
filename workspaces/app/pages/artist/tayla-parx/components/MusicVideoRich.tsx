@@ -30,6 +30,6 @@ export const MusicVideoRich = () => (
       </Earn>
       <ViewLink href="#" />
     </CTAContainer>
-    <WebPlayer mediaId="119ed4b51711edcb98/850c585073124931" />
+    <WebPlayer mediaId="4d9ed8b51e1ee6c6c4/f69a45cc7fc1f763" />
   </Container>
 );
