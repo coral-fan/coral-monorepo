@@ -4,7 +4,6 @@ import { useMemo, useState } from 'react';
 import { getErrorMessage, validateAddress } from 'libraries/utils';
 import { z } from 'zod';
 import { useErrorToast } from 'libraries/utils/toasts';
-import { ethers } from 'ethers';
 import { useWallet } from 'libraries/blockchain';
 import { TransactionReceipt } from '@ethersproject/providers';
 
