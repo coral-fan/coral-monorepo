@@ -3,7 +3,7 @@ import { SocialLinks } from 'components/ui/profile/Profile/components';
 import { useIsAuthenticated } from 'libraries/authentication';
 import { newBlock$ } from 'libraries/blockchain/observables';
 import { getDoesOwnToken } from 'libraries/blockchain/utils';
-import { ArtistData, getArtist, getUidServerSide, useUserUid } from 'libraries/models';
+import { getArtist, getUidServerSide, useUserUid } from 'libraries/models';
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -13,13 +13,17 @@ import { ShareRichOnSpotify } from './components/ShareRichOnSpotify';
 import { GetPaidForBeingAFan } from './components/GetPaidForBeingAFan';
 import { ShareToEarn } from './components/ShareToEarn';
 import { MusicVideoRich } from './components/MusicVideoRich';
-import { Merch } from './components/Merch';
+import { RedeemPoints } from './components/RedeemPoints';
+import { TaylaParxCampaignMetadata, TaylaParxData } from './types';
+import {
+  initializeTaylaParxStore,
+  TaylaParxProvider,
+  useCreateTaylaParxStore,
+  useTaylaParxStore,
+} from './store';
 
-export const TAYLA_PARX_ALL_ACCESS_PASS_CONTRACT_ADDRESS =
-  '0xcB846098C5f6a86D9775a183F80aFdF174eD1171';
-
-interface TaylaParxPageProps extends ArtistData {
-  initialDoesUserHaveAccessPass: boolean;
+interface TaylaParxPageProps {
+  initialStoreState: TaylaParxData;
 }
 
 export const PageContainer = styled.div`
@@ -146,14 +150,11 @@ const SplitLayout = styled.div`
   }
 `;
 
-export default function TaylaParxArtistPage({
-  initialDoesUserHaveAccessPass,
-  name,
-  bio,
-  profilePhoto,
-  socialHandles,
-}: TaylaParxPageProps) {
+const TaylaParx = () => {
   const address = useUserUid();
+
+  const { initialDoesUserHaveAccessPass, metadata, profilePhoto, name, bio, socialHandles } =
+    useTaylaParxStore();
 
   const [doesUserHaveAccessPass, setDoesUserHaveAccessPass] = useState<boolean>(
     initialDoesUserHaveAccessPass
@@ -165,15 +166,14 @@ export default function TaylaParxArtistPage({
     if (isAuthenticated && address) {
       newBlock$
         .pipe(
-          switchMap(() => getDoesOwnToken(TAYLA_PARX_ALL_ACCESS_PASS_CONTRACT_ADDRESS, address)),
+          switchMap(() => getDoesOwnToken(metadata.ids.allAccessPass, address)),
           distinctUntilChanged()
         )
         .subscribe(setDoesUserHaveAccessPass);
     } else if (!isAuthenticated) {
       setDoesUserHaveAccessPass(false);
     }
-  }, [isAuthenticated, address]);
-
+  }, [isAuthenticated, address, metadata.ids.allAccessPass]);
   return (
     <PageContainer>
       <ProfileContainer>
@@ -211,41 +211,57 @@ export default function TaylaParxArtistPage({
               <GetPaidForBeingAFan />
             </SplitLayout>
           </Section>
-          <Section>
+          {/* <Section>
             <SectionHeader>Merch</SectionHeader>
             <Merch />
-          </Section>
+          </Section> */}
           {/* <Section>
             <SectionHeader>Exclusive Content</SectionHeader>
             <ExclusiveContent />
           </Section> */}
+          <Section>
+            <SectionHeader>Redeem Points</SectionHeader>
+            <RedeemPoints />
+          </Section>
         </>
       )}
     </PageContainer>
+  );
+};
+
+export default function TaylaParxArtistPage({ initialStoreState }: TaylaParxPageProps) {
+  const createStore = useCreateTaylaParxStore(initialStoreState);
+  return (
+    <TaylaParxProvider createStore={createStore}>
+      <TaylaParx />
+    </TaylaParxProvider>
   );
 }
 
 export const getServerSideProps: GetServerSideProps<TaylaParxPageProps> = async (context) => {
   const address = await getUidServerSide(context);
 
-  const initialDoesUserHaveAccessPass =
-    address === undefined
-      ? false
-      : await getDoesOwnToken('0xcB846098C5f6a86D9775a183F80aFdF174eD1171', address);
-
   const id = 'tayla-parx';
-  const artistData = await getArtist(id);
+  const artistData = await getArtist<TaylaParxCampaignMetadata>(id);
 
   if (!artistData) {
     return {
       notFound: true,
     };
   }
+  const initialDoesUserHaveAccessPass =
+    address === undefined
+      ? false
+      : await getDoesOwnToken(artistData.metadata.ids.allAccessPass, address);
+
+  const store = initializeTaylaParxStore({
+    ...artistData,
+    initialDoesUserHaveAccessPass,
+  });
+
   return {
     props: {
-      id,
-      ...artistData,
-      initialDoesUserHaveAccessPass,
+      initialStoreState: JSON.parse(JSON.stringify(store.getState())),
     },
   };
 };
