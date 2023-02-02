@@ -140,7 +140,15 @@ const post: Handler = async (req, res) => {
         totalPointsPool,
         requiredContent,
         pointsValue,
+        whitelistId,
       } = socialShareCampaignData;
+
+      if (whitelistId !== undefined) {
+        const whitelistData = await getDocumentData('whitelists', whitelistId, 'users', author_id);
+        if (whitelistData === undefined) {
+          throw new Error(`Twitter user with ID ${author_id} is not on whitelist ${whitelistId}`);
+        }
+      }
 
       // check campaign is active
       if (!isActive) {
