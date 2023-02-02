@@ -66,6 +66,7 @@ export interface SocialShareCampaignData extends BaseCampaignData {
   socials: SocialPlatform[];
   requiredContent: RequiredContent;
   defaultContent: DefaultContent;
+  whitelistId?: string;
 }
 
 /*
