@@ -1,7 +1,7 @@
 import { NullableString, Photo, SocialHandles } from '../types';
 import { Collection } from '../collection';
 
-export interface ArtistData {
+export type ArtistData<T = undefined> = {
   // id = coral wallet address, not artist's personal wallet address
   name: string;
   bio: string;
@@ -10,9 +10,12 @@ export interface ArtistData {
   socialHandles: SocialHandles;
   collectionIds: Collection['id'][];
   tag?: string;
-}
+} & (T extends undefined
+  ? // eslint-disable-next-line @typescript-eslint/ban-types
+    {}
+  : { metadata: T });
 // id = coral wallet address
-export interface Artist extends Omit<ArtistData, 'collectionIds'> {
+export type Artist<T = undefined> = Omit<ArtistData<T>, 'collectionIds'> & {
   id: string;
   collections: Collection[];
-}
+};
