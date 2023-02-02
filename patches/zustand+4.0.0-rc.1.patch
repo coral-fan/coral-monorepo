@@ -1,0 +1,26 @@
+diff --git a/node_modules/zustand/context.d.ts b/node_modules/zustand/context.d.ts
+index 013ce40..3d703bd 100644
+--- a/node_modules/zustand/context.d.ts
++++ b/node_modules/zustand/context.d.ts
+@@ -10,7 +10,7 @@ declare type ExtractState<S> = S extends {
+ declare type WithoutCallSignature<T> = {
+     [K in keyof T]: T[K];
+ };
+-declare function createContext<S extends StoreApi<State>>(): {
++declare function createContext<S>(): {
+     Provider: ({ createStore, children, }: {
+         createStore: () => S;
+         children: ReactNode;
+diff --git a/node_modules/zustand/vanilla.d.ts b/node_modules/zustand/vanilla.d.ts
+index 9355be1..e46cd14 100644
+--- a/node_modules/zustand/vanilla.d.ts
++++ b/node_modules/zustand/vanilla.d.ts
+@@ -13,7 +13,7 @@ export declare type Subscribe<T extends State> = {
+ export declare type SetState<T extends State> = {
+     _(partial: T | Partial<T> | ((state: T) => T | Partial<T>), replace?: boolean | undefined): void;
+ }['_'];
+-export declare type GetState<T extends State> = () => T;
++export declare type GetState<T> = () => T;
+ export declare type Destroy = () => void;
+ export declare type StoreApi<T extends State> = {
+     setState: SetState<T>;
