@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import tokens, { QUERY } from 'styles/tokens';
+import { useTaylaParxStore } from '../store';
 import { ContentImage } from './ContentImage';
 import { Earn } from './Earn';
 import { ShareAndEarnButton } from './pills';
@@ -48,14 +49,20 @@ const Header = styled.h3`
   }
 `;
 
-export const ShareRichOnSpotify = () => (
-  <Container>
-    <ContentImage src="https://firebasestorage.googleapis.com/v0/b/coral-fan.appspot.com/o/artists%2Ftayla-parx%2FTaylaParx-RICH-Thumbnail.jpg?alt=media&token=3bb9b57f-c6dd-4a1c-b530-7ecf4b0c3995" />
-    <Content>
-      <Header>Share a link to stream “Rich” on Spotify.</Header>
-      <Earn campaignId="xqSPsvjg8w88feqYlCIc">
-        <ShareAndEarnButton points={2} />
-      </Earn>
-    </Content>
-  </Container>
-);
+export const ShareRichOnSpotify = () => {
+  const {
+    metadata: { ids },
+  } = useTaylaParxStore();
+
+  return (
+    <Container>
+      <ContentImage src="https://firebasestorage.googleapis.com/v0/b/coral-fan.appspot.com/o/artists%2Ftayla-parx%2FTaylaParx-RICH-Thumbnail.jpg?alt=media&token=3bb9b57f-c6dd-4a1c-b530-7ecf4b0c3995" />
+      <Content>
+        <Header>Share a link to stream “Rich” on Spotify.</Header>
+        <Earn campaignId={ids.shareToEarnCampaign.musicVideoRich}>
+          <ShareAndEarnButton points={2} />
+        </Earn>
+      </Content>
+    </Container>
+  );
+};

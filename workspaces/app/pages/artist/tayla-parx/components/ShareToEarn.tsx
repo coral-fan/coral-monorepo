@@ -7,6 +7,7 @@ import { TAYLA_PARX_ALL_ACCESS_PASS_CONTRACT_ADDRESS } from 'consts';
 import { useIsAuthenticated, useLogin } from 'libraries/authentication';
 import { useMemo } from 'react';
 import { QUERY } from 'styles';
+import { useTaylaParxStore } from '../store';
 import { Earn } from './Earn';
 
 const Container = styled(Card)`
@@ -50,21 +51,22 @@ export const ShareToEarn = ({ doesUserHaveAccessPass }: PrimaryCtaProps) => {
   const { isLoggingIn } = useLogin();
   const openSignModal = useOpenSignInModal();
 
+  const {
+    metadata: { ids },
+  } = useTaylaParxStore();
+
   const cta = useMemo(() => {
     if (isAuthenticated) {
       if (doesUserHaveAccessPass) {
         return (
-          <Earn campaignId="xqSPsvjg8w88feqYlCIc">
+          <Earn campaignId={ids.shareToEarnCampaign.allAccessPass}>
             <CtaButton>Earn Now</CtaButton>
           </Earn>
         );
       }
 
       return (
-        <Link
-          css={ctaLinkStyle}
-          href={`/collection/${TAYLA_PARX_ALL_ACCESS_PASS_CONTRACT_ADDRESS}`}
-        >
+        <Link css={ctaLinkStyle} href={`/collection/${ids.allAccessPass}`}>
           <CtaContent>Get All Access Pass</CtaContent>
         </Link>
       );
@@ -75,7 +77,14 @@ export const ShareToEarn = ({ doesUserHaveAccessPass }: PrimaryCtaProps) => {
         Login
       </CtaButton>
     );
-  }, [doesUserHaveAccessPass, isAuthenticated, isLoggingIn, openSignModal]);
+  }, [
+    doesUserHaveAccessPass,
+    ids.shareToEarnCampaign.allAccessPass,
+    ids.allAccessPass,
+    isAuthenticated,
+    isLoggingIn,
+    openSignModal,
+  ]);
 
   return (
     <Container>
