@@ -51,16 +51,16 @@ const Header = styled.h3`
 
 export const ShareRichOnSpotify = () => {
   const {
-    metadata: { ids },
+    metadata: { id: ids },
   } = useTaylaParxStore();
 
   return (
     <Container>
-      <ContentImage src="https://firebasestorage.googleapis.com/v0/b/coral-fan.appspot.com/o/artists%2Ftayla-parx%2FTaylaParx-RICH-Thumbnail.jpg?alt=media&token=3bb9b57f-c6dd-4a1c-b530-7ecf4b0c3995" />
+      <ContentImage src="/images/tayla-parx/rich-album-art.jpeg" />
       <Content>
         <Header>Share a link to stream “Rich” on Spotify.</Header>
         <Earn campaignId={ids.shareToEarnCampaign.musicVideoRich}>
-          <ShareAndEarnButton points={2} />
+          <ShareAndEarnButton />
         </Earn>
       </Content>
     </Container>
