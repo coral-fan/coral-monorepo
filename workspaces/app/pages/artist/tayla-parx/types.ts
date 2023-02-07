@@ -1,7 +1,7 @@
 import { ArtistData } from 'libraries/models';
 
-export interface TaylaParxCampaignMetadata {
-  ids: {
+export interface TaylaParxMetadata {
+  id: {
     allAccessPass: string;
     shareToEarnCampaign: {
       allAccessPass: string;
@@ -11,6 +11,6 @@ export interface TaylaParxCampaignMetadata {
   };
 }
 
-export interface TaylaParxData extends ArtistData<TaylaParxCampaignMetadata> {
+export interface TaylaParxData extends ArtistData<TaylaParxMetadata> {
   initialDoesUserHaveAccessPass: boolean;
 }
