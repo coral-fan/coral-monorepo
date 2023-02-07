@@ -118,7 +118,7 @@ export const RedeemPoints = () => {
       );
 
       docData(userPointsAccountsDocRef).subscribe((userPoints) =>
-        setUserPoints(userPoints.pointsBalance ?? 0)
+        setUserPoints(userPoints?.pointsBalance ?? 0)
       );
     }
 
