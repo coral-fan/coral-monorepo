@@ -3,8 +3,6 @@ import { SocialLinks } from 'components/ui/profile/Profile/components';
 import { useIsAuthenticated } from 'libraries/authentication';
 import { newBlock$ } from 'libraries/blockchain/observables';
 import { getDoesOwnToken } from 'libraries/blockchain/utils';
-import { getArtist, getUidServerSide, useUserUid } from 'libraries/models';
-import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { distinctUntilChanged, switchMap } from 'rxjs';
@@ -14,17 +12,8 @@ import { GetPaidForBeingAFan } from './components/GetPaidForBeingAFan';
 import { ShareToEarn } from './components/ShareToEarn';
 import { MusicVideoRich } from './components/MusicVideoRich';
 import { RedeemPoints } from './components/RedeemPoints';
-import { TaylaParxCampaignMetadata, TaylaParxData } from './types';
-import {
-  initializeTaylaParxStore,
-  TaylaParxProvider,
-  useCreateTaylaParxStore,
-  useTaylaParxStore,
-} from './store';
-
-interface TaylaParxPageProps {
-  initialStoreState: TaylaParxData;
-}
+import { useTaylaParxStore } from './store';
+import { useUserUid } from 'libraries/models';
 
 export const PageContainer = styled.div`
   --gap: 80px;
@@ -150,7 +139,7 @@ const SplitLayout = styled.div`
   }
 `;
 
-const TaylaParx = () => {
+export default function TaylaParxArtistPage() {
   const address = useUserUid();
 
   const { initialDoesUserHaveAccessPass, metadata, profilePhoto, name, bio, socialHandles } =
@@ -166,14 +155,14 @@ const TaylaParx = () => {
     if (isAuthenticated && address) {
       newBlock$
         .pipe(
-          switchMap(() => getDoesOwnToken(metadata.ids.allAccessPass, address)),
+          switchMap(() => getDoesOwnToken(metadata.id.allAccessPass, address)),
           distinctUntilChanged()
         )
         .subscribe(setDoesUserHaveAccessPass);
     } else if (!isAuthenticated) {
       setDoesUserHaveAccessPass(false);
     }
-  }, [isAuthenticated, address, metadata.ids.allAccessPass]);
+  }, [isAuthenticated, address, metadata.id.allAccessPass]);
   return (
     <PageContainer>
       <ProfileContainer>
@@ -227,41 +216,4 @@ const TaylaParx = () => {
       )}
     </PageContainer>
   );
-};
-
-export default function TaylaParxArtistPage({ initialStoreState }: TaylaParxPageProps) {
-  const createStore = useCreateTaylaParxStore(initialStoreState);
-  return (
-    <TaylaParxProvider createStore={createStore}>
-      <TaylaParx />
-    </TaylaParxProvider>
-  );
 }
-
-export const getServerSideProps: GetServerSideProps<TaylaParxPageProps> = async (context) => {
-  const address = await getUidServerSide(context);
-
-  const id = 'tayla-parx';
-  const artistData = await getArtist<TaylaParxCampaignMetadata>(id);
-
-  if (!artistData) {
-    return {
-      notFound: true,
-    };
-  }
-  const initialDoesUserHaveAccessPass =
-    address === undefined
-      ? false
-      : await getDoesOwnToken(artistData.metadata.ids.allAccessPass, address);
-
-  const store = initializeTaylaParxStore({
-    ...artistData,
-    initialDoesUserHaveAccessPass,
-  });
-
-  return {
-    props: {
-      initialStoreState: JSON.parse(JSON.stringify(store.getState())),
-    },
-  };
-};
