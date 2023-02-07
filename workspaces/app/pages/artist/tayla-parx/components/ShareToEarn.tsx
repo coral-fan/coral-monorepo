@@ -51,21 +51,21 @@ export const ShareToEarn = ({ doesUserHaveAccessPass }: PrimaryCtaProps) => {
   const openSignModal = useOpenSignInModal();
 
   const {
-    metadata: { id: ids },
+    metadata: { id },
   } = useTaylaParxStore();
 
   const cta = useMemo(() => {
     if (isAuthenticated) {
       if (doesUserHaveAccessPass) {
         return (
-          <Earn campaignId={ids.shareToEarnCampaign.allAccessPass}>
+          <Earn campaignId={id.shareToEarnCampaign.allAccessPass}>
             <CtaButton>Earn Now</CtaButton>
           </Earn>
         );
       }
 
       return (
-        <Link css={ctaLinkStyle} href={`/collection/${ids.allAccessPass}`}>
+        <Link css={ctaLinkStyle} href={`/collection/${id.allAccessPass}`}>
           <CtaContent>Get All Access Pass</CtaContent>
         </Link>
       );
@@ -78,8 +78,8 @@ export const ShareToEarn = ({ doesUserHaveAccessPass }: PrimaryCtaProps) => {
     );
   }, [
     doesUserHaveAccessPass,
-    ids.shareToEarnCampaign.allAccessPass,
-    ids.allAccessPass,
+    id.allAccessPass,
+    id.shareToEarnCampaign.allAccessPass,
     isAuthenticated,
     isLoggingIn,
     openSignModal,
