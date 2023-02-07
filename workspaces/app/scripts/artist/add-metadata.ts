@@ -1,11 +1,11 @@
 import { getDocumentReferenceServerSide } from 'libraries/firebase';
-import { TaylaParxCampaignMetadata } from '../../pages/artist/tayla-parx/types';
+import { TaylaParxMetadata } from '../../pages/artist/tayla-parx/types';
 
 const id = 'tayla-parx';
 
-const metadata: TaylaParxCampaignMetadata = {
-  ids: {
-    allAccessPass: '0xcB846098C5f6a86D9775a183F80aFdF174eD1171',
+const metadata: TaylaParxMetadata = {
+  id: {
+    allAccessPass: '0x7918FBA5af536098e7d33700cfb5fCecB1B8a11B',
     shareToEarnCampaign: {
       allAccessPass: 'xqSPsvjg8w88feqYlCIc',
       musicVideoRich: 'xqSPsvjg8w88feqYlCIc',
