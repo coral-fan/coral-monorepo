@@ -1,6 +1,6 @@
 import { getDoesOwnToken } from 'libraries/blockchain/utils';
 import { getArtist } from 'libraries/models';
-import { createStore } from 'libraries/store/store';
+import { createStore } from 'libraries/store';
 import { TaylaParxData, TaylaParxMetadata } from './types';
 
 export const {
