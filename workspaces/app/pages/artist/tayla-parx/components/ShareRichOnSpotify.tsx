@@ -51,7 +51,7 @@ const Header = styled.h3`
 
 export const ShareRichOnSpotify = () => {
   const {
-    metadata: { id: ids },
+    metadata: { id },
   } = useTaylaParxStore();
 
   return (
@@ -59,7 +59,7 @@ export const ShareRichOnSpotify = () => {
       <ContentImage src="/images/tayla-parx/rich-album-art.jpeg" />
       <Content>
         <Header>Share a link to stream “Rich” on Spotify.</Header>
-        <Earn campaignId={ids.shareToEarnCampaign.musicVideoRich}>
+        <Earn campaignId={id.shareToEarnCampaign.musicVideoRich}>
           <ShareAndEarnButton />
         </Earn>
       </Content>
