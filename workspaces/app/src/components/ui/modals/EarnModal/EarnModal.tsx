@@ -12,14 +12,19 @@ interface EarnModalProps {
   closeEarnModal: () => void;
   uid: string;
   campaignId: string;
+  socialShareCampaignData: SocialShareCampaignData;
 }
 
 const coralAPI = getCoralAPIAxios();
 
-export const EarnModal = ({ closeEarnModal, campaignId, uid }: EarnModalProps) => {
+export const EarnModal = ({
+  closeEarnModal,
+  campaignId,
+  uid,
+  socialShareCampaignData,
+}: EarnModalProps) => {
   const [isCheckingSocialShareCode, setIsCheckingSocialShareCode] = useState(false);
   const [socialShareCode, setSocialShareCode] = useState<string>();
-  const [socialShareCampaignData, setSocialShareCampaignData] = useState<SocialShareCampaignData>();
   const [hasVerified, setHasVerified] = useState(false);
 
   const potentialEarnCode = useMemo(() => getEarnCode(uid, campaignId), [uid, campaignId]);
@@ -45,20 +50,6 @@ export const EarnModal = ({ closeEarnModal, campaignId, uid }: EarnModalProps) =
   );
 
   useEffect(() => {
-    const getSocialShareCampaignData = async () => {
-      try {
-        const data = await getDocumentData<SocialShareCampaignData>(
-          'social-share-campaigns',
-          campaignId
-        );
-        setSocialShareCampaignData(data);
-        return data;
-      } catch (e) {
-        errorToast();
-        console.error(e);
-      }
-    };
-
     const getShareCodeData = async () => {
       return await getDocumentData<SocialShareData>('social-shares', potentialEarnCode);
     };
@@ -82,23 +73,20 @@ export const EarnModal = ({ closeEarnModal, campaignId, uid }: EarnModalProps) =
       }
     };
 
-    setIsCheckingSocialShareCode(true);
-
-    getSocialShareCampaignData()
-      .then((data) => {
-        if (data && !isCampaignExpired) {
-          getShareCodeData().then((data) => {
-            if (data) {
-              data.sharedSocials.twitter
-                ? setHasVerified(true)
-                : setSocialShareCode(potentialEarnCode);
-            } else {
-              generateSocialShareCode();
-            }
-          });
-        }
-      })
-      .finally(() => setIsCheckingSocialShareCode(false));
+    if (!isCampaignExpired) {
+      setIsCheckingSocialShareCode(true);
+      getShareCodeData()
+        .then((data) => {
+          if (data) {
+            data.sharedSocials.twitter
+              ? setHasVerified(true)
+              : setSocialShareCode(potentialEarnCode);
+          } else {
+            generateSocialShareCode();
+          }
+        })
+        .finally(() => setIsCheckingSocialShareCode(false));
+    }
   }, [campaignId, potentialEarnCode, errorToast, isCampaignExpired]);
 
   return (
