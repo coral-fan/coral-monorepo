@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { ButtonLink, Heading } from 'components/ui';
 import { ImageWithInfo, NftAssetContainer } from 'components/ui/nft';
-import { TAYLA_PARX_ALL_ACCESS_PASS_CONTRACT_ADDRESS } from 'consts';
 import { Asset } from 'libraries/models';
 import { useMemo } from 'react';
 import tokens from 'styles/tokens';
+import { useTaylaParxStore } from '../../../../../../../../pages/artist/tayla-parx/store';
 
 interface PaymentSuccessProps
   extends Pick<
@@ -58,7 +58,11 @@ export const PaymentSuccess = ({
     [imageUrl, creatorName, creatorProfilePhoto, artistId]
   );
 
-  const isTaylaParxAllAccessPass = collectionId === TAYLA_PARX_ALL_ACCESS_PASS_CONTRACT_ADDRESS;
+  const {
+    metadata: { id },
+  } = useTaylaParxStore();
+
+  const isTaylaParxAllAccessPass = collectionId === id.allAccessPass;
 
   return (
     <Container>
