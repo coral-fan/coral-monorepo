@@ -22,16 +22,23 @@ export const primaryPillStyle = css`
 `;
 
 interface ShareAndEarnProps extends Omit<BaseButtonProps, 'children'> {
-  points: number;
+  points?: number;
 }
 
 export const PillButton = styled(BaseButton)`
   ${primaryPillStyle}
+  width: 170px;
 `;
 
-export const ShareAndEarnButton = ({ points, ...props }: ShareAndEarnProps) => (
-  <PillButton {...props}>{`Share & Earn ${points} Pt${points > 1 ? 's' : ''}`}</PillButton>
-);
+const isPlural = (num = 0) => num > 1;
+
+export const ShareAndEarnButton = ({ points, ...props }: ShareAndEarnProps) => {
+  return (
+    <PillButton {...props} loading={!points} spinnerSize={'14px'}>{`Share & Earn ${points} Pt${
+      isPlural(points) ? 's' : ''
+    }`}</PillButton>
+  );
+};
 
 export const linkHoverStyle = css`
   &:hover {
