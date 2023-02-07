@@ -4,8 +4,7 @@ import { ImageWithInfo, NftAssetContainer } from 'components/ui/nft';
 import { Asset } from 'libraries/models';
 import { useMemo } from 'react';
 import tokens from 'styles/tokens';
-import { useTaylaParxStore } from '../../../../../../../../pages/artist/tayla-parx/store';
-
+import { useTaylaParxAllAccessPassId } from '../../../../../../../../pages/artist/tayla-parx/hooks';
 interface PaymentSuccessProps
   extends Pick<
     Asset,
@@ -58,11 +57,9 @@ export const PaymentSuccess = ({
     [imageUrl, creatorName, creatorProfilePhoto, artistId]
   );
 
-  const {
-    metadata: { id },
-  } = useTaylaParxStore();
+  const taylaParxAllAccessPassId = useTaylaParxAllAccessPassId();
 
-  const isTaylaParxAllAccessPass = collectionId === id.allAccessPass;
+  const isTaylaParxAllAccessPass = collectionId === taylaParxAllAccessPassId;
 
   return (
     <Container>

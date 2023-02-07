@@ -20,7 +20,7 @@ import { SignInModal, useOpenSignInModal } from 'components/app';
 // analytics
 import { trackGoal } from 'fathom-client';
 
-import { useTaylaParxStore } from '../../../../../../pages/artist/tayla-parx/store';
+import { useTaylaParxAllAccessPassId } from '../../../../../../pages/artist/tayla-parx/hooks';
 
 interface DropOrAvailableProps extends PriceProp, AssetInfoProps {
   numMinted: number;
@@ -117,11 +117,7 @@ export const DropOrAvailable = ({
     }
   }, [collectionId, userId, maxMintablePerWallet, isAuthenticated]);
 
-  const {
-    metadata: {
-      id: { allAccessPass: taylaParxAllAccessPassId },
-    },
-  } = useTaylaParxStore();
+  const taylaParxAllAccessPassId = useTaylaParxAllAccessPassId();
 
   const ctaText = useMemo(() => {
     if (isSoldOut) {

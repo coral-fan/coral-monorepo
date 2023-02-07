@@ -2,12 +2,12 @@
 
 import { useOpenSignInModal } from 'components/app';
 import { useIsAuthenticated } from 'libraries/authentication';
-import { useTaylaParxStore } from '../../../../pages/artist/tayla-parx/store';
+import { useTaylaParxAllAccessPassId } from '../../../../pages/artist/tayla-parx/hooks';
 
 export const Home = () => {
   const handleOpenSignUpModal = useOpenSignInModal({ isSignUp: true });
 
-  const { metadata: taylaParxMetaData } = useTaylaParxStore();
+  const taylaParxAllAccessPassId = useTaylaParxAllAccessPassId();
 
   const isAuthenticated = useIsAuthenticated();
 
@@ -157,7 +157,7 @@ export const Home = () => {
           <div className="group w-full sm:mt-auto flex items-start justify-between bg-orange-1 rounded-1 py-4 px-5 relative hover:bg-gray-2 duration-300">
             <a
               className="absolute top-0 left-0 w-full h-full"
-              href={`/collection/${taylaParxMetaData.id.allAccessPass}`}
+              href={`/collection/${taylaParxAllAccessPassId}`}
             />
             <div className="flex flex-col items-start w-4/5">
               <h3 className="text-lg leading-lh-3 xl:text-1 s-2:leading-none tracking-3 uppercase text-gray-1 font-medium mb-4 xl:mb-6">
