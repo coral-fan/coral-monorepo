@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { docData } from 'rxfire/firestore';
 import { Subscription } from 'rxjs';
 import tokens, { QUERY } from 'styles/tokens';
+import { useTaylaParxStore } from '../store';
 import { ContentImage } from './ContentImage';
 import { PillButton } from './pills';
 
@@ -81,8 +82,6 @@ const Text = styled.p`
 
 const coralAxios = getCoralAPIAxios();
 
-const rewardPath: [string, string] = ['rewards', 'jMTrwJegcqqRN2irEffl'];
-
 export const RedeemPoints = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
@@ -93,6 +92,12 @@ export const RedeemPoints = () => {
   const [hasRedeemedReward, setHasRedeemedReward] = useState<boolean>();
 
   const [userPoints, setUserPoints] = useState<number>();
+
+  const {
+    metadata: { id },
+  } = useTaylaParxStore();
+
+  const rewardPath: [string, string] = ['rewards', id.redeemPointsForReward];
 
   useEffect(() => {
     const rewardDocRef = getDocumentReferenceClientSide<Reward>(...rewardPath);
