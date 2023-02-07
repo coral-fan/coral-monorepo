@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import { useOpenSignInModal } from 'components/app';
 import { Card, CtaButton as CtaButtonBase, Heading, Link } from 'components/ui';
 import { CtaContent, CtaWrapperStyle } from 'components/ui/buttons/variants/CtaButton';
-import { TAYLA_PARX_ALL_ACCESS_PASS_CONTRACT_ADDRESS } from 'consts';
 import { useIsAuthenticated, useLogin } from 'libraries/authentication';
 import { useMemo } from 'react';
 import { QUERY } from 'styles';
@@ -52,7 +51,7 @@ export const ShareToEarn = ({ doesUserHaveAccessPass }: PrimaryCtaProps) => {
   const openSignModal = useOpenSignInModal();
 
   const {
-    metadata: { ids },
+    metadata: { id: ids },
   } = useTaylaParxStore();
 
   const cta = useMemo(() => {
