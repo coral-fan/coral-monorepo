@@ -24,13 +24,13 @@ const CTAContainer = styled.div`
 
 export const MusicVideoRich = () => {
   const {
-    metadata: { ids },
+    metadata: { id },
   } = useTaylaParxStore();
   return (
     <Container>
       <LargeHeader>Watch Tayla Parx’s new music video “Rich”</LargeHeader>
       <CTAContainer>
-        <Earn campaignId={ids.shareToEarnCampaign.musicVideoRich}>
+        <Earn campaignId={id.shareToEarnCampaign.musicVideoRich}>
           <ShareAndEarnButton points={2} />
         </Earn>
         <ViewLink href="#" />
