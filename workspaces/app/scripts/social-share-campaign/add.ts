@@ -2,34 +2,43 @@ import { getCollectionReferenceServerSide } from 'libraries/firebase';
 
 import { SocialShareCampaignData } from 'libraries/models';
 
-const socialShareCampaign: SocialShareCampaignData = {
-  name: 'Test Social Share Campaign',
-  description: 'Test social share description',
-  shareUrl: 'https://coral.fan/test/',
-  pointsValue: 10,
-  totalPointsPool: 1000,
-  totalPointsEarned: 0,
-  startDate: '2022-11-03T12:00:00.000Z',
-  endDate: '2022-12-31T17:00:00.000Z',
-  isActive: true,
-  createdBy: '0xA34D4367Bd647B996b1e2A790073e9022fa73De8',
-  socials: ['twitter'],
-  requiredContent: {
-    urls: ['https://coral.fan/share-this-url'],
-    usernames: ['@coral__fan'],
-    topics: ['#coral'],
-  },
-  defaultContent: 'Test video wow',
-};
+const NEW_LINE_CHARS = '/n/n';
 
-const addSocialShareCampaign = async () => {
+const getDefaultContentString = (defaultContent: string[]) =>
+  defaultContent.join(NEW_LINE_CHARS).concat(NEW_LINE_CHARS);
+
+const socialShareCampaigns: SocialShareCampaignData[] = [
+  {
+    name: 'Tayla Parx All Access Pass NFT Social Share Campaign',
+    description: 'Tayla Parx All Access Pass NFT social share campaign',
+    shareUrl: 'N/A',
+    pointsValue: 150,
+    totalPointsPool: 3000,
+    totalPointsEarned: 0,
+    startDate: '2023-2-09T00:00:00.000Z',
+    endDate: '2024-2-09T00:00:00.000Z',
+    isActive: true,
+    createdBy: 'tayla-parx',
+    socials: ['twitter'],
+    requiredContent: {
+      urls: [],
+      usernames: ['TAYLAPARX', 'coral__fan'],
+      topics: [],
+    },
+    defaultContent: getDefaultContentString([
+      'Claim your free @TAYLAPARX All Access Pass from @coral__fan now and get an exclusive view of the music video for the single “Rich” along with other holder perks.',
+    ]),
+    whitelistId: 'test-whitelist',
+  },
+];
+
+const addSocialShareCampaign = async (socialShareCampaign: SocialShareCampaignData) => {
   console.log('Adding social share campaign...');
   const socialShareCollection = await getCollectionReferenceServerSide('social-share-campaigns');
 
   const res = await socialShareCollection.add(socialShareCampaign);
 
   console.log('Added social-share-campaign with ID: ', res.id);
-  console.log('Updating collection... \n');
 };
 
-addSocialShareCampaign();
+socialShareCampaigns.forEach(addSocialShareCampaign);
