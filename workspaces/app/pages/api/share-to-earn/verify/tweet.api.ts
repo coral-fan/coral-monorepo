@@ -146,7 +146,9 @@ const post: Handler = async (req, res) => {
       if (whitelistId !== undefined) {
         const whitelistData = await getDocumentData('whitelists', whitelistId, 'users', author_id);
         if (whitelistData === undefined) {
-          throw new Error(`Twitter user with ID ${author_id} is not on whitelist ${whitelistId}`);
+          throw new Error(
+            `Whitelist with id ${whitelistId} does not exist or Twitter user with ID ${author_id} is not on whitelist ${whitelistId}.`
+          );
         }
       }
 
