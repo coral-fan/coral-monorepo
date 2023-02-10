@@ -4,7 +4,7 @@ import { QUERY } from 'styles';
 import { useTaylaParxStore } from '../store';
 import { Earn } from './Earn';
 import { LargeHeader } from './LargeHeader';
-import { ShareAndEarnButton, ViewLink } from './pills';
+import { ShareAndEarnButton } from './pills';
 
 const Container = styled.div`
   display: flex;
@@ -31,9 +31,8 @@ export const MusicVideoRich = () => {
       <LargeHeader>Watch Tayla Parx’s new music video “Rich”</LargeHeader>
       <CTAContainer>
         <Earn campaignId={id.shareToEarnCampaign.musicVideoRich}>
-          <ShareAndEarnButton points={2} />
+          <ShareAndEarnButton />
         </Earn>
-        <ViewLink href="#" />
       </CTAContainer>
       <WebPlayer mediaId="ac9fdfb31a11efc125/0de95e08f5cfb66f" />
     </Container>
