@@ -5,10 +5,7 @@ import path from 'path';
 import { isAddress } from 'ethers/lib/utils';
 
 export const parseProjectName = (projectName: string) =>
-  projectName
-    .replace(/^\.*\/|\/|\/?[^\/]+\.[a-z]+|\/$/g, '')
-    .replaceAll(' ', '-')
-    .toLowerCase();
+  projectName.replace(/^\.*\/|\/|\/?[^\/]+\.[a-z]+|\/$/g, '').toLowerCase();
 
 export const fileExists = (filepath: string) => {
   return fs.existsSync(filepath);
