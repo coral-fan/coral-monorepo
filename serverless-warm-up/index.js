@@ -3,9 +3,9 @@ const axios = require('axios');
 
 const baseUrl = 'https://coral.fan';
 
-const merchOrderApiUrls = ['create', 'update-status', 'update-transaction-hash'].map(
-  (merchOrderApiUrl) => `merch-order/${merchOrderApiUrl}`
-);
+// const merchOrderApiUrls = ['create', 'update-status', 'update-transaction-hash'].map(
+//   (merchOrderApiUrl) => `merch-order/${merchOrderApiUrl}`
+// );
 
 const nftApiUrls = ['mint-for-free', 'redeem'].map((nftApiUrl) => `nft/${nftApiUrl}`);
 
@@ -26,7 +26,7 @@ const apiUrls = [
   'purchase',
   'shipping-info',
   ...nftApiUrls,
-  ...merchOrderApiUrls,
+  // ...merchOrderApiUrls,
 ].map((apiUrl) => `${baseUrl}/api/${apiUrl}`);
 
 const warmUpApiEndpoints = async () => {
@@ -39,7 +39,7 @@ exports.keepServerlessApiEndpointsWarm = functions.pubsub
   .schedule('every 3 minutes')
   .onRun(warmUpApiEndpoints);
 
-const pageUrls = ['', 'artist/pinder', 'stream', 'user'].map((pageUrl) => `${baseUrl}/${pageUrl}`);
+const pageUrls = ['', 'artist/tayla-parx', 'user'].map((pageUrl) => `${baseUrl}/${pageUrl}`);
 
 const warmUpPageEndpoints = async () => {
   const requests = pageUrls.map((url) => axios.get(url));
