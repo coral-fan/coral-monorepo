@@ -5,10 +5,10 @@ const id = 'tayla-parx';
 
 const metadata: TaylaParxMetadata = {
   id: {
-    allAccessPass: '0x7918FBA5af536098e7d33700cfb5fCecB1B8a11B',
+    allAccessPass: '0x1eAf0DB4Bb72cE5596c729f839e554a4F806982a',
     shareToEarnCampaign: {
-      allAccessPass: 'xqSPsvjg8w88feqYlCIc',
-      musicVideoRich: 'xqSPsvjg8w88feqYlCIc',
+      allAccessPass: 'AZ5769qiksqsW8ZkMFhB',
+      forWhatItsWorthOnSpotify: 'sYLWQCBSjlS7IQvn2iJC',
     },
     redeemPointsForReward: 'jMTrwJegcqqRN2irEffl',
   },
