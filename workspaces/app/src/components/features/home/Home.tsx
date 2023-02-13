@@ -147,13 +147,12 @@ export const Home = () => {
         <div className="col-span-12 sm:col-span-6 flex flex-col">
           <h3 className="text-1 leading-none xl:text-2 xl:leading-none tracking-3 mb-2 font-medium inline-block">
             {/* main heading copy */}
-            Watch Tayla Parx&apos;s new video &quot;Rich&quot;
+            Exclusive access to Tayla Parx’s new video for “Rich”
           </h3>
           <p className="text-lg leading-lh-3 lg:text-2xl lg:leading-7 mt-3 lg:mt-10 mb-5 lg:mb-4">
-            Watch the latest music video “Rich” and claim your free All Access Pass to exclusive
-            content and rewards.
+            Claim a free all access pass and get access to exclusive access to content and
+            opportunities from Tayla.
           </p>
-          {/* Share to earn Pinder */}
           <div className="group w-full sm:mt-auto flex items-start justify-between bg-orange-1 rounded-1 py-4 px-5 relative hover:bg-gray-2 duration-300">
             <a
               className="absolute top-0 left-0 w-full h-full"
@@ -164,8 +163,8 @@ export const Home = () => {
                 Get your all Access Pass
               </h3>
               <p className="text-lg leading-lh-3 xl:text-2xl xl:leading-7 text-gray-1">
-                Get access to all Tayla Parx&apos;s related content including exclusive merch and
-                releases.
+                Gain access to exclusive Tayla Parx’s content including a special version of the new
+                music video for “Rich”
               </p>
             </div>
             <div className="inline-flex text-xs leading-3 tracking-1 uppercase text-gray-1 py-2 px-2.5 bg-gray-2 rounded-full hover:bg-orange-1 duration-300 group-hover:bg-orange-1 text-gray-1">
