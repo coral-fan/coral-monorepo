@@ -5,7 +5,7 @@ export interface TaylaParxMetadata {
     allAccessPass: string;
     shareToEarnCampaign: {
       allAccessPass: string;
-      musicVideoRich: string;
+      forWhatItsWorthOnSpotify: string;
     };
     redeemPointsForReward: string;
   };
