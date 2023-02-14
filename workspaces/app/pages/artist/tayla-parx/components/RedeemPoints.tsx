@@ -182,7 +182,7 @@ export const RedeemPoints = () => {
             exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
           </Text>
         </Content>
-        <ContentImage src="/images/tayla-parx/merch-rewards.png" />
+        <ContentImage src="/images/tayla-parx/merch.png" />
       </RowContainer>
     </Container>
   );
