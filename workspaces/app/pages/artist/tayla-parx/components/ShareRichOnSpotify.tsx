@@ -58,7 +58,7 @@ export const ShareRichOnSpotify = () => {
     <Container>
       <ContentImage src="/images/tayla-parx/rich-album-art.jpeg" />
       <Content>
-        <Header>Share a link to stream “Rich” on Spotify.</Header>
+        <Header>Share a link to stream “For What It's Worth” on Spotify.</Header>
         <Earn campaignId={id.shareToEarnCampaign.forWhatItsWorthOnSpotify}>
           <ShareAndEarnButton />
         </Earn>
