@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { distinctUntilChanged, switchMap } from 'rxjs';
 import tokens, { QUERY } from 'styles/tokens';
-import { ShareRichOnSpotify } from './components/ShareRichOnSpotify';
+import { ShareForWhatItsWorthOnSpotify } from './components/ShareForWhatItsWorthOnSpotify';
 import { GetPaidForBeingAFan } from './components/GetPaidForBeingAFan';
 import { ShareToEarn } from './components/ShareToEarn';
 import { MusicVideoRich } from './components/MusicVideoRich';
@@ -196,7 +196,7 @@ export default function TaylaParxArtistPage() {
             <SectionHeader>Share To Earn</SectionHeader>
             <MusicVideoRich />
             <SplitLayout>
-              <ShareRichOnSpotify />
+              <ShareForWhatItsWorthOnSpotify />
               <GetPaidForBeingAFan />
             </SplitLayout>
           </Section>
