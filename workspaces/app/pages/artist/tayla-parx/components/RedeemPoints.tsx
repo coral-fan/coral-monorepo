@@ -5,7 +5,7 @@ import { UserPointsAccount, useUserUid } from 'libraries/models';
 import { Reward } from 'libraries/models/reward';
 import { getCoralAPIAxios, useModal } from 'libraries/utils';
 import { useErrorToast, useSuccessToast } from 'libraries/utils/toasts';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { docData } from 'rxfire/firestore';
 import { Subscription } from 'rxjs';
 import tokens, { QUERY } from 'styles/tokens';
@@ -97,7 +97,10 @@ export const RedeemPoints = () => {
     metadata: { id },
   } = useTaylaParxStore();
 
-  const rewardPath: [string, string] = ['rewards', id.redeemPointsForReward];
+  const rewardPath: [string, string] = useMemo(
+    () => ['rewards', id.redeemPointsForReward],
+    [id.redeemPointsForReward]
+  );
 
   useEffect(() => {
     const rewardDocRef = getDocumentReferenceClientSide<Reward>(...rewardPath);
