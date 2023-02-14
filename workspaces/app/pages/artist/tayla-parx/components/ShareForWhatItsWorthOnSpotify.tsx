@@ -49,16 +49,16 @@ const Header = styled.h3`
   }
 `;
 
-export const ShareRichOnSpotify = () => {
+export const ShareForWhatItsWorthOnSpotify = () => {
   const {
     metadata: { id },
   } = useTaylaParxStore();
 
   return (
     <Container>
-      <ContentImage src="/images/tayla-parx/rich-album-art.jpeg" />
+      <ContentImage src="/images/tayla-parx/for-what-its-worth-album-art.png" />
       <Content>
-        <Header>Share a link to stream “For What It's Worth” on Spotify.</Header>
+        <Header>Share a link to stream “For What It&apos;s Worth” on Spotify.</Header>
         <Earn campaignId={id.shareToEarnCampaign.forWhatItsWorthOnSpotify}>
           <ShareAndEarnButton />
         </Earn>
