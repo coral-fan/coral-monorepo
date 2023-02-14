@@ -130,7 +130,7 @@ export const RedeemPoints = () => {
     subscriptions.push(docData(rewardDocRef).subscribe(setReward));
 
     return () => subscriptions.forEach((subscription) => subscription.unsubscribe());
-  }, [userId]);
+  }, [rewardPath, userId]);
 
   const [isRedeemingPoints, setIsRedeemingPoints] = useState(false);
 
@@ -147,10 +147,10 @@ export const RedeemPoints = () => {
     <Container>
       <RowContainer>
         <Content>
-          <Header>Phone Call With Tayla</Header>
+          <Header>Merch Raffle</Header>
           <PillButton onClick={openModal}>Enter For Chance</PillButton>
           {isModalOpen && (
-            <Modal title="Redeem Points To Meet Tayla" onClick={closeModal}>
+            <Modal title="Redeem Points To Win Merch" onClick={closeModal}>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
@@ -182,7 +182,7 @@ export const RedeemPoints = () => {
             exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
           </Text>
         </Content>
-        <ContentImage src="/images/tayla-parx/exclusive-content-photo.png" />
+        <ContentImage src="/images/tayla-parx/merch-rewards.png" />
       </RowContainer>
     </Container>
   );
