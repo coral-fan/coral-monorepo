@@ -36,7 +36,7 @@
     "@toruslabs/customauth": "^7.0.3",
     "@types/micro": "^7.3.7",
     "@web3-react/core": "^8.0.31-beta.0",
-    "@web3-react/metamask": "^8.0.24-beta.0",
+    "@web3-react/metamask": "^8.2.0",
     "@web3auth/base": "^0.9.3",
     "@web3auth/openlogin-adapter": "^0.9.3",
     "@web3auth/ui": "^0.9.3",
